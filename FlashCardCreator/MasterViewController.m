@@ -2,39 +2,223 @@
 //  MasterViewController.m
 //  FlashCardCreator
 //
-//  Created by Clive France on 13/12/2012.
-//  Copyright (c) 2012 Clive France. All rights reserved.
+//  Created by Wang Bourne on 13/12/12.
+//  Copyright (c) 2012 Internetics. All rights reserved.
 //
 
 #import "MasterViewController.h"
-
 #import "DetailViewController.h"
+#import "User.h"
+#import "PackCell.h"
+#import "AddViewController.h"
+#import "PackListTableViewController.h"
+#import "DataManager.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "ZipFileDownloadHelper.h"
 
-@interface MasterViewController ()
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-@end
 
 @implementation MasterViewController
 
-- (void)awakeFromNib
+@synthesize currentPack = _currentPack;
+@synthesize publicPack = _publicPack;
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"Master-card list", @"Master");
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            self.clearsSelectionOnViewWillAppear = NO;
+            self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+        }
+        
+        _currentPack = [[Pack alloc] init];
+        _publicPack = [[Pack alloc] init];
     }
-    [super awakeFromNib];
+    return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[[UIBarButtonItem alloc]initWithTitle:@"Add card" style:UIBarButtonSystemItemAdd target:self action:@selector(insertNewCard:)] autorelease];
     self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    UIBarButtonItem *selectPackButton = [[[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)] autorelease];
+    self.navigationItem.leftBarButtonItem = selectPackButton;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCardsInSelectedPackNotification:) name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
+    
+#warning just for test,by default, we will load the public pack
+    _isPublicPack = TRUE;
+    
+    PublicPackRequest *publicPackRequest = [[[PublicPackRequest alloc] init] autorelease];
+    [publicPackRequest requestPublicPack];
+    publicPackRequest.delegate = self;
+    
 }
+
+-(void)newPackAddedNotification:(NSNotification *)notification{
+	[self.tableView reloadData];
+}
+
+
+- (void)selectAvailablePacks:(id)sender
+{
+    PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:packListTableViewController animated:YES];
+        
+    } else {
+        packListTableViewController.delegate = self;
+        _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListTableViewController];
+        self.contentSizeForViewInPopover = CGSizeMake(500, 44*([[[User defaultUser] packs] count]+1));
+        
+        [_packListPickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+    [packListTableViewController release];
+}
+
+- (void)insertNewCard:(id)sender
+{
+    AddViewController *addViewController = [[AddViewController alloc] initWithNibName:@"AddViewController" bundle:nil];
+    [self.navigationController pushViewController:addViewController animated:YES];
+    [addViewController release];
+    
+#warning need to be completed here.
+    //[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+- (void) showCardsInSelectedPackNotification:(NSNotification *) notification {
+    int index = [(NSString *)[notification object] intValue];
+    if (index ==0) {
+        _isPublicPack = TRUE;
+#warning need to be completed here.
+        self.currentPack = _publicPack;
+    } else {
+        _isPublicPack = FALSE;
+        self.currentPack = [[[User defaultUser] packs] objectAtIndex:(index-1)];
+    }
+    
+    [self.tableView reloadData];
+    
+}
+
+#pragma mark -
+#pragma mark UITableViewDataSource and UITableViewDelegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return ([[_currentPack cards] count]); //test purpose
+}
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CardCell";
+    
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+	}
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    Card *card = [[[_currentPack cards] objectAtIndex:indexPath.row] retain];
+    cell.textLabel.text = card.cardName;
+    
+    [cell.imageView setImageWithURL:[NSURL URLWithString:card.thumbPicURL]
+                   placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+
+	
+    return cell;
+
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return NO;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Card *card = [[_currentPack cards] objectAtIndex:indexPath.row];
+    
+
+    if (card.isOnline) {
+        #warning this is not finally completed
+        //step1: download zip file;
+        //step2: unzip it, including json file;
+        //step3: show download progress percent;
+        //step4: fill content of card
+        //step5: show card content (question/answer)
+        
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+	    if (!self.detailViewController) {
+	        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
+	    }
+	    self.detailViewController.detailItem = card.cardName;
+        [self.navigationController pushViewController:self.detailViewController animated:YES];
+    } else {
+        self.detailViewController.detailItem = card.cardName;
+    }
+}
+
+#pragma mark -
+#pragma mark PublicPackRequestDelegate
+
+- (void)didReceiveJSONResponse:(NSArray*)JSONResponse {
+#warning since the requirement is not clear, so i just simuate data here.
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"card_name",@"dropbox_zip_link",@"thumb_pic",@"card_id", nil];
+    
+    NSMutableArray *publicCardRawArray = [[[NSMutableArray alloc] init] autorelease];
+    for (int i =0; i<[JSONResponse count]; i++) {
+        [publicCardRawArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[JSONResponse[i] objectForKey:@"card_name"],[JSONResponse[i] objectForKey:@"dropbox_zip_link"],[JSONResponse[i] objectForKey:@"thumb_pic"],[JSONResponse[i] objectForKey:@"card_id"], nil] forKeys:keys]];
+    }
+    
+    self.publicPack = [DataManager parseRemotePublicPack:publicCardRawArray];
+    
+}
+
+- (void)didNotReceiveJSONResponse {
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error when getting public pack info from server" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	[view show];
+	[view release];
+}
+
+#pragma mark -
+#pragma mark PackListDelegate
+
+- (void)packListSelected:(int) index {
+    [_packListPickerPopover dismissPopoverAnimated:YES];
+    
+    if (index ==0) {
+        _isPublicPack = TRUE;
+#warning need to be completed here.
+        self.currentPack = _publicPack;
+    } else {
+        _isPublicPack = FALSE;
+        self.currentPack = [[[User defaultUser] packs] objectAtIndex:(index-1)];
+    }
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark Memory Management
 
 - (void)didReceiveMemoryWarning
 {
@@ -42,194 +226,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)dealloc
 {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    [_detailViewController release];
+    FCC_RELEASE_SAFELY(_currentPack);
+    FCC_RELEASE_SAFELY(_packListPickerPopover);
     
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NEW_PACK_ADDED_NOTIFICATION object:nil];
     
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
-
-#pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [[self.fetchedResultsController sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }   
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // The table view should not be re-orderable.
-    return NO;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
-    }
-}
-
-#pragma mark - Fetched results controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    return _fetchedResultsController;
-}    
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
+    [super dealloc];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView *tableView = self.tableView;
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
-
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+#pragma mark -
+#pragma mark Rotate control
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (isUserInterfaceIdiomPhone)
+        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+    else
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 @end

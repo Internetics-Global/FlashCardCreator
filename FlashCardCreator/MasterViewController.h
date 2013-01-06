@@ -2,21 +2,27 @@
 //  MasterViewController.h
 //  FlashCardCreator
 //
-//  Created by Clive France on 13/12/2012.
-//  Copyright (c) 2012 Clive France. All rights reserved.
+//  Created by Wang Bourne on 13/12/12.
+//  Copyright (c) 2012 Internetics. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "PublicPackRequest.h"
+#import "PackListTableViewController.h"
 
 @class DetailViewController;
+@class Pack;
 
-#import <CoreData/CoreData.h>
-
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface MasterViewController : UITableViewController <PublicPackRequestDelegate, PackListDelegate> {
+    BOOL _isPublicPack;
+    Pack *_currentPack;
+    Pack *_publicPack;
+    UIPopoverController *_packListPickerPopover;
+}
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) Pack *currentPack;
+@property (nonatomic, retain) Pack *publicPack;
 
 @end

@@ -1,0 +1,167 @@
+//
+//  Pack.m
+//  FlashCardCreator
+//
+//  Created by Wang Bourne on 14/12/12.
+//  Copyright (c) 2012 Internetics. All rights reserved.
+//
+
+#import "Pack.h"
+#import "SQLiteHelper.h"
+#import "Card.h"
+#import "User.h"
+#include "Card.h"
+
+@implementation Pack
+
+@synthesize packID = _packID;
+@synthesize packName = _packName;
+@synthesize thumbPicURL = _thumbPicURL;
+@synthesize userID = _userID;
+@synthesize languageName = _languageName;
+@synthesize isPublic = _isPubilc;
+
+@synthesize cards = _cards;
+
+#pragma mark -
+#pragma mark Initialization
+
+-(id)init{
+	self = [super init];
+    _packID = -1;
+    _userID = -1;
+    _isPubilc = FALSE;
+    _cards = [[NSMutableArray alloc] init];
+	return self;
+}
+
+-(id)initWithDictionary:(NSDictionary *)dict{
+	[self init];
+    
+    if ([[dict allKeys] containsObject:@"pack_id"]) {
+        _packID = [[dict valueForKey:@"pack_id"] intValue];
+    } else {
+        _packID = -1;
+    }
+    _packName = [[dict valueForKey:@"pack_name"] retain];
+    
+     _thumbPicURL = [[dict valueForKey:@"thumb_pic"] retain];
+    
+    if ([[dict allKeys] containsObject:@"user_id"]) {
+        _userID = [[dict valueForKey:@"user_id"] intValue];
+    } else {
+        _userID = -1;
+    }
+    _languageName = [[dict valueForKey:@"language_name"] retain];
+    _isPubilc= [[dict valueForKey:@"is_public"] intValue] == 1;
+    
+	if ([[dict allKeys] containsObject:@"cards"]) {
+		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
+		for (int i = 0; i < [cardsArray count]; i++) {
+			Card *card = [[Card alloc] initWithDictionary:[cardsArray objectAtIndex:i]];
+			[_cards addObject:card];
+			[card release];
+		}
+	}
+
+	return self;
+}
+
+#pragma mark -
+#pragma mark Operation
+
+-(void)save{
+	if (_packID == -1) {
+		[self performSelector:@selector(insert)];
+	}else {
+		if ([SQLiteHelper checkIntegerValueExists:_packID forColumn:@"pack_id" inTable:@"Packs"]) {
+			[self performSelector:@selector(update)];
+		}else {
+			[self performSelector:@selector(insert)];
+		}
+	}
+	for (int i = 0; i < [_cards count]; i++) {
+		NSLog(@"%s:saving cards next...",__FUNCTION__);
+		[[_cards objectAtIndex:i] save];
+	}
+}
+
+
+-(void)update{
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, thumb_pic=\"%@\" WHERE id=%d", _packName, _languageName, (_isPubilc?1:0), _thumbPicURL, _packID];
+	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+	sqlite3_step(queryStatement);
+	sqlite3_finalize(queryStatement);
+	[query release];
+}
+
+-(void)insert{
+	if (_packID == -1) {
+		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
+		//[[DataManager defaultManager] postEvent:self];
+	}
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, thumb_pic) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, (_isPubilc?1:0), _thumbPicURL];
+	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+	sqlite3_step(queryStatement);
+	sqlite3_finalize(queryStatement);
+	[query release];
+	
+}
+
+
+
+- (void)destroy{
+	//[[DataManager defaultManager] deleteEvent:self];
+	NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Packs_Tables WHERE pack_id=%d", self.packID];
+	sqlite3_stmt *statement = [SQLiteHelper prepareStatementForQuery:query];
+	sqlite3_step(statement);
+	sqlite3_finalize(statement);
+}
+
+- (void)addCard:(Card *)card{
+	if (_cards == nil) {
+		NSLog(@"%s:could not enter an empty card",__FUNCTION__);
+	}
+	[_cards addObject:card];
+	[card save];
+    
+}
+
+-(void)removeCard:(Card *)card{
+	[_cards removeObject:card];
+	[card destroy];
+}
+
++(NSMutableArray *) packsForUserID:(NSInteger)userID{
+	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Packs_Tables WHERE user_id=%d", userID];
+	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+	NSMutableArray *returnArray = nil;
+	while (sqlite3_step(queryStatement) == SQLITE_ROW) {
+		if (returnArray == nil) {
+			returnArray = [[NSMutableArray alloc] init];
+		}
+		NSMutableDictionary *packDict = [[NSMutableDictionary alloc] init];
+		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:0] forKey:@"pack_id"];
+		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"pack_name"];
+		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"user_id"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"language_name"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"is_public"];
+        [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
+		[returnArray addObject:packDict];
+		[packDict release];
+	}
+	sqlite3_finalize(queryStatement);
+	return [returnArray autorelease];
+}
+
+#pragma mark -
+#pragma mark Memory Management
+
+-(void)dealloc{
+    FCC_RELEASE_SAFELY(_packName);
+    FCC_RELEASE_SAFELY(_thumbPicURL);
+    FCC_RELEASE_SAFELY(_languageName);
+	[super dealloc];
+}
+
+@end

@@ -4,12 +4,37 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
 #endif
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import <CoreData/CoreData.h>
 #endif
+
+// iPhone,iPad, iPhone5 diff
+#define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+// release operation
+#define FCC_RELEASE_SAFELY(var) { [var release]; var = nil; }
+
+// notification
+#define PACK_ADDED_TO_USER_NOTIFICATION @"PACK_ADDED_TO_USER_NOTIFICATION"
+#define UPDATE_USER_PACKS_LIST_NOTIFICATION @"UPDATE_USER_PACKS_LIST_NOTIFICATION"
+#define GET_USER_COMPLETE_NOTIFICATION @"GET_USER_COMPLETE_NOTIFICATION"
+#define NEW_PACK_ADDED_NOTIFICATION @"NEW_PACK_ADDED_NOTIFICATION"
+#define NEW_SELECTED_PACK_NOTIFICATION @"NEW_SELECTED_PACK_NOTIFICATION"
+
+//Global user_id
+#define GLOBAL_USER_ID @"314"
+
+//Dropbox APP_KEY and APP_SECRET
+#define DROPBOX_APP_KEY @"1sn1igzypb8udmy"
+#define DROPBOX_APP_SECRET @"sy3sdmu93rcxjt1"
+#define DROPBOX_APP_ROOT kDBRootDropbox
+
+//Public Pack
+#define PUBLIC_PACK_ID 1
+#define PUBLIC_PACK_THUMB_IMAGE_URL @"https://www.dropbox.com/s/obpi5snlp4tp6a6/public_pack_thumb_pic.png" 
