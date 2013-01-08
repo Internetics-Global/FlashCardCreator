@@ -36,9 +36,7 @@
     } else {
         _userID = -1;
     }
-    
 	_nickName = [[dict valueForKey:@"nick_name"] retain];
-    
 	if ([[dict allKeys] containsObject:@"packs"]) {
 		NSArray *packsDictArray = (NSArray *)[dict valueForKey:@"packs"];
 		for (int i = 0; i < [packsDictArray count]; i++) {
@@ -47,10 +45,11 @@
 			[newPack release];
 		}
 	} else {
-       NSLog(@"%s:no pack under current user",__FUNCTION__);
+       //NSLog(@"%s:no pack under current user",__FUNCTION__);
     }
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserPacks:) name:UPDATE_USER_PACKS_LIST_NOTIFICATION object:nil];
-	return self;
+	
+    return self;
 }
 
 #pragma mark -

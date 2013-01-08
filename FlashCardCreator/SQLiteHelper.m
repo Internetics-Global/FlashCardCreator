@@ -100,11 +100,6 @@
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
-    if (![SQLiteHelper tableExists:@"Image_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Image_Tables (image_id integer, file_name text, card_id integer, is_question_card integer);"];
-		sqlite3_step(createNotes);
-		sqlite3_finalize(createNotes);
-	}
     
     //type could be "true/false" or "multiple choice", 1,2,3,4, something like that
     if (![SQLiteHelper tableExists:@"Type_Tables"]) {

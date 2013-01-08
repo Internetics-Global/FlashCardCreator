@@ -12,6 +12,7 @@
     NSInteger _questionID;
     NSInteger _cardID;
 	NSString *_title;
+    NSString *_content;
     NSString *_type;  //????????
     NSString *_imageName;
 }
@@ -19,9 +20,13 @@
 @property (nonatomic, assign) NSInteger questionID;
 @property (nonatomic, assign) NSInteger cardID;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *imageName;
 
-+ (NSMutableArray *) questionsForCardID:(NSInteger)cardID;
+- (id)initWithDictionary:(NSDictionary *)dict;
+- (void)save;
+
++ (NSMutableDictionary *) questionForCardID:(NSInteger)cardID;
 
 @end

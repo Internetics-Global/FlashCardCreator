@@ -8,6 +8,9 @@
 
 #import "AddViewController.h"
 #import "User.h"
+#import "Question.h"
+#import "Answer.h"
+#import "SQLiteHelper.h"
 
 @interface AddViewController ()
 
@@ -60,6 +63,16 @@
 #warning this is not finally completed
     _card.packID = _pack.packID;
     _card.cardName = [NSString stringWithFormat:@"card name(pack_%@): %d",_pack.packName,rand()];
+    _card.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
+    
+    _card.question.title = [NSString stringWithFormat:@"title%d", rand()];
+    _card.question.cardID = _card.cardID;
+    _card.question.content = [NSString stringWithFormat:@"content%d", rand()];
+    
+    _card.answer.title = [NSString stringWithFormat:@"answer%d", rand()];
+    _card.answer.cardID = _card.cardID;
+    _card.answer.content = [NSString stringWithFormat:@"answer%d", rand()];
+    
     [_pack addCard:_card];
     
     [self.navigationController popViewControllerAnimated:YES];

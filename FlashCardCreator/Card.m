@@ -10,7 +10,6 @@
 #import "SQLiteHelper.h"
 #import "Answer.h"
 #import "Question.h"
-#import "Image.h"
 #import "SQLiteHelper.h"
 
 @implementation Card
@@ -22,37 +21,39 @@
 @synthesize onlineFileURLL = _onlineFileURL;
 @synthesize isOnline = _isOnline;
 
+@synthesize answer = _answer;
+@synthesize question = _question;
+
 #pragma mark -
 #pragma mark Initialization
 
 -(id)init{
 	self = [super init];
+    
     _cardID = -1;
     _packID = -1;
     _isOnline = TRUE;
+    _question = [[Question alloc] init];
+    _answer = [[Answer alloc] init];
+    
 	return self;
 }
 
 -(id)initWithDictionary:(NSDictionary *)dataDict{
 	[self init];
-	_cardID = [[dataDict valueForKey:@"card_id"] intValue];
     
-    _cardName = [[dataDict valueForKey:@"card_name"] retain];
-    
+	_cardID = [[dataDict valueForKey:@"card_id"] intValue];    
+    _cardName = [[dataDict valueForKey:@"card_name"] retain];    
     _thumbPicURL = [[dataDict valueForKey:@"thumb_pic"] retain];
-    
     _isOnline= [[dataDict valueForKey:@"is_online"] intValue] == 1;
 
 	if ([[dataDict allKeys] containsObject:@"question"]) {
-        //need to be updated
-	}
-    
+        NSDictionary *questionArray = (NSDictionary *)[dataDict valueForKey:@"question"];
+        self.question = [[[Question alloc] initWithDictionary:questionArray] autorelease];
+	}    
     if ([[dataDict allKeys] containsObject:@"answer"]) {
-        //need to be updated
-	}
-    
-    if ([[dataDict allKeys] containsObject:@"image"]) {
-        //need to be updated
+        NSDictionary *answerArray = (NSDictionary *)[dataDict valueForKey:@"answer"];
+        self.answer = [[[Answer alloc] initWithDictionary:answerArray] autorelease];
 	}
     
 	return self;
@@ -65,12 +66,15 @@
 	if (_cardID == -1) {
 		[self performSelector:@selector(insert)];
 	}else {
-		if ([SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards"]) {
+		if ([SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"]) {
 			[self performSelector:@selector(update)];
 		}else {
 			[self performSelector:@selector(insert)];
 		}
 	}
+    
+    [_question save];
+    [_answer save];
 }
 
 -(void)update{
@@ -113,10 +117,8 @@
 		[cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:0] forKey:@"card_id"];
 		[cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"pack_id"];
         [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"card_name"];
-		[cardDict setValue:[Question questionsForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"questions"];
-        [cardDict setValue:[Answer answersForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"answers"];
-#warning this is not finally completed
-        [cardDict setValue:[Image imagesForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"images"];
+		[cardDict setValue:[Question questionForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"question"];
+        [cardDict setValue:[Answer answerForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"answer"];
 		[returnArray addObject:cardDict];
 		[cardDict release];
 	}
@@ -132,6 +134,8 @@
     FCC_RELEASE_SAFELY(_cardName);
     FCC_RELEASE_SAFELY(_thumbPicURL)
     FCC_RELEASE_SAFELY(_onlineFileURL);
+    FCC_RELEASE_SAFELY(_question);
+    FCC_RELEASE_SAFELY(_answer);
 }
 
 @end

@@ -22,7 +22,7 @@
 @property (nonatomic, retain, readonly) NSMutableArray *packs;
 
 + (User *)defaultUser;
--(id)initWithDictionary:(NSDictionary *)dict;
+- (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addPack:(Pack *)pack;
 
 @end

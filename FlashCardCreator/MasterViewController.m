@@ -15,18 +15,27 @@
 #import "DataManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ZipFileDownloadHelper.h"
+#import "ZipArchive.h"
+#import "MBProgressHUD.h"
+#import "Question.h"
+#import "Answer.h"
 
 
 @implementation MasterViewController
 
 @synthesize currentPack = _currentPack;
 @synthesize publicPack = _publicPack;
+@synthesize currentCard = _currentCard;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCardsInSelectedPackNotification:) name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDetailView:) name:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+        
         self.title = NSLocalizedString(@"Master-card list", @"Master");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
@@ -35,6 +44,7 @@
         
         _currentPack = [[Pack alloc] init];
         _publicPack = [[Pack alloc] init];
+        _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
     }
     return self;
 }
@@ -48,8 +58,6 @@
     UIBarButtonItem *selectPackButton = [[[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)] autorelease];
     self.navigationItem.leftBarButtonItem = selectPackButton;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCardsInSelectedPackNotification:) name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
     
 #warning just for test,by default, we will load the public pack
     _isPublicPack = TRUE;
@@ -108,6 +116,24 @@
     
 }
 
+- (void) updateDetailView:(NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone) {
+	    if (!self.detailViewController) {
+	        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
+	    }
+        [self.navigationController pushViewController:self.detailViewController animated:YES];
+    } else {
+        
+    }
+    
+    self.detailViewController.answerTitleLabel.text = _currentCard.answer.title;
+    self.detailViewController.answerContentLabel.text = _currentCard.answer.content;
+    self.detailViewController.questionTitleLabel.text = _currentCard.question.title;
+    self.detailViewController.questionContentLabel.text = _currentCard.question.content;
+    self.detailViewController.detailItem = _currentCard.cardName;
+}
+
 #pragma mark -
 #pragma mark UITableViewDataSource and UITableViewDelegate
 
@@ -152,27 +178,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Card *card = [[_currentPack cards] objectAtIndex:indexPath.row];
+    self.currentCard = [[_currentPack cards] objectAtIndex:indexPath.row];
     
 
-    if (card.isOnline) {
-        #warning this is not finally completed
-        //step1: download zip file;
-        //step2: unzip it, including json file;
-        //step3: show download progress percent;
-        //step4: fill content of card
-        //step5: show card content (question/answer)
+    if (_currentCard.isOnline) {
+        _progressivePercent = 0;
+        [self showProgressIndicator];
         
-    }
-    
-    if (isUserInterfaceIdiomPhone) {
-	    if (!self.detailViewController) {
-	        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
-	    }
-	    self.detailViewController.detailItem = card.cardName;
-        [self.navigationController pushViewController:self.detailViewController animated:YES];
+        //The reson why to do it: https://www.dropbox.com/help/201/en
+        NSString *downloadableFile = [_currentCard.onlineFileURLL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
+        _saveZipFilePath = nil;
+        _saveZipFilePath = [_zipFileDownloadHelp downloadZipFile:downloadableFile];
+        _zipFileDownloadHelp.delegate = self;
+        
     } else {
-        self.detailViewController.detailItem = card.cardName;
+        [self updateDetailView:nil];
     }
 }
 
@@ -180,7 +200,6 @@
 #pragma mark PublicPackRequestDelegate
 
 - (void)didReceiveJSONResponse:(NSArray*)JSONResponse {
-#warning since the requirement is not clear, so i just simuate data here.
     
     NSArray *keys = [NSArray arrayWithObjects:@"card_name",@"dropbox_zip_link",@"thumb_pic",@"card_id", nil];
     
@@ -218,6 +237,130 @@
 }
 
 #pragma mark -
+#pragma mark Rotate control
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    if (isUserInterfaceIdiomPhone)
+        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+    else
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+
+#pragma mark -
+#pragma mark - ZipFileDownloadHelperDelegate, Unzip and assemble card
+
+- (void)downloadProgressivePercent:(long long)current totalLength:(long long)total {
+    _progressivePercent = (float) current/total;
+}
+
+- (void)downloadSuccess:(BOOL)isSucess {
+    if (isSucess == YES) {
+        [self unzipFileThenAssembleCard];
+    }
+}
+
+
+- (void) unzipFileThenAssembleCard {
+    
+    //step1: unzip file
+    if (_saveZipFilePath) {
+        ZipArchive* za = [[ZipArchive alloc] init];
+        if( [za UnzipOpenFile:_saveZipFilePath] )
+        {
+            NSString *unzipFolder = [[_saveZipFilePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:_currentPack.packName];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:unzipFolder]) {
+                [[NSFileManager defaultManager] createDirectoryAtPath:unzipFolder withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+            
+            BOOL ret = [za UnzipFileTo:unzipFolder overWrite:YES];
+            if( NO==ret ) {
+                // error handler here
+            } else {
+                NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
+            }
+            [za UnzipCloseFile];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:_saveZipFilePath error:nil];
+        }
+        
+        [za release];
+    }
+    
+    //step2: assemable card
+    NSError *error = nil;
+    NSString *questionDir = [_saveZipFilePath stringByDeletingLastPathComponent];
+    NSString *questionJsonPath = [questionDir stringByAppendingFormat:@"/%@/Question/questionTextContent.json",_currentPack.packName];
+    NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];
+    id questionJsonObject = [NSJSONSerialization JSONObjectWithData:questionData options:NSJSONReadingMutableContainers error:&error];
+    if (questionJsonObject != nil && error == nil) {
+        
+        if ([questionJsonObject isKindOfClass:[NSDictionary class]]){
+            NSDictionary *questionDict = (NSDictionary *)questionJsonObject;
+            [_currentCard question].questionID = [[questionDict objectForKey:@"question_id"] intValue];
+            [_currentCard question].cardID = [[questionDict objectForKey:@"card_id"] intValue];
+            [_currentCard question].title = [questionDict objectForKey:@"title"];
+            [_currentCard question].content = [questionDict objectForKey:@"content"];
+            [_currentCard question].type = [questionDict objectForKey:@"type"];
+            [_currentCard question].imageName = [questionDict objectForKey:@"image"];
+        }
+    } else {
+        NSLog(@"Unexpected questionTextContent.json format");
+    }
+    
+    error = nil;
+    NSString *answerDir = [_saveZipFilePath stringByDeletingLastPathComponent];
+    NSString *answerJsonPath = [answerDir stringByAppendingFormat:@"/%@/Question/questionTextContent.json",_currentPack.packName];
+    NSData *answerData = [NSData dataWithContentsOfFile:answerJsonPath];
+    id answerJsonObject = [NSJSONSerialization JSONObjectWithData:answerData options:
+        NSJSONReadingMutableContainers error:&error];
+    if (answerJsonObject != nil && error == nil) {
+        if ([answerJsonObject isKindOfClass:[NSDictionary class]]){
+            NSDictionary *answerDict = (NSDictionary *)answerJsonObject;
+            [_currentCard answer].answerID = [[answerDict objectForKey:@"answer_id"] intValue];
+            [_currentCard answer].cardID = [[answerDict objectForKey:@"card_id"] intValue];
+            [_currentCard answer].title = [answerDict objectForKey:@"title"];
+            [_currentCard answer].content = [answerDict objectForKey:@"content"];
+            [_currentCard answer].imageName = [answerDict objectForKey:@"image"];
+        }
+    } else {
+        NSLog(@"Unexpected questionTextContent.json format");
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+    
+}
+
+#pragma mark -
+#pragma mark - MBProgressHUDDelegate and related
+
+- (void)showProgressIndicator {
+	
+	_HUD = [[MBProgressHUD alloc] initWithView:self.view];
+	[self.view addSubview:_HUD];
+	
+	// Set determinate mode
+	_HUD.mode = MBProgressHUDModeDeterminate;
+	
+	_HUD.delegate = self;
+	_HUD.labelText = @"Loading...";
+	
+	// myProgressTask uses the HUD instance to update progress
+	[_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)myProgressTask {
+	while (_progressivePercent < 1.0f) {
+		_HUD.progress = _progressivePercent;
+		usleep(50000);
+	}
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[_HUD removeFromSuperview];
+}
+
+#pragma mark -
 #pragma mark Memory Management
 
 - (void)didReceiveMemoryWarning
@@ -230,22 +373,16 @@
 {
     [_detailViewController release];
     FCC_RELEASE_SAFELY(_currentPack);
+    FCC_RELEASE_SAFELY(_currentCard);
     FCC_RELEASE_SAFELY(_packListPickerPopover);
+    FCC_RELEASE_SAFELY(_saveZipFilePath);
+    FCC_RELEASE_SAFELY(_HUD);
+    FCC_RELEASE_SAFELY(_zipFileDownloadHelp);
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NEW_PACK_ADDED_NOTIFICATION object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark Rotate control
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (isUserInterfaceIdiomPhone)
-        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
-    else
-        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
 
 @end

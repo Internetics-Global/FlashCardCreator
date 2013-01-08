@@ -16,14 +16,14 @@
 
 - (void) requestPublicPack {
 #warning simuated function, since requirement is not clear.
-    __block NSArray *jsonDictionary;
-    NSURL *url = [NSURL URLWithString:@"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"];
+    __block NSArray *jsonDict;
+    NSURL *url = [NSURL URLWithString:PUBLIC_PACK_JSON_FILE];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:
                                          ^(NSURLRequest *req, NSHTTPURLResponse *response, id JSON) {
-                                             jsonDictionary = (NSArray *) [JSON objectForKey:@"public_packs"];
-                                             [_delegate performSelector:@selector(didReceiveJSONResponse:) withObject:jsonDictionary];
+                                             jsonDict = (NSArray *) [JSON objectForKey:@"public_packs"];
+                                             [_delegate performSelector:@selector(didReceiveJSONResponse:) withObject:jsonDict];
                                          }
                                                                                         failure:
                                          ^(NSURLRequest *req , NSURLResponse *response , NSError *error , id JSON) {

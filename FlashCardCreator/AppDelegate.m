@@ -14,7 +14,7 @@
 #import "DataManager.h"
 #import <DropboxSDK/DropboxSDK.h>
 
-#import "ZipFileDownloadHelper.h"
+#import "NSString+QueryString.h"
 
 @implementation AppDelegate
 
@@ -55,10 +55,33 @@
     }
     [self.window makeKeyAndVisible];
     
-    //Test code, test only, will be removed in production line
-    ZipFileDownloadHelper *temp =[[ZipFileDownloadHelper alloc] init];
-    [temp downloadZipFile:@"https://dl.dropbox.com/s/ecocdzmj4tmvlrh/1.zip"];
+    //Test code, only for test
+    
+    return YES;
+}
 
+#pragma mark -
+#pragma mark - Handle when call from outside like safari
+
+//url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([[url scheme] isEqualToString:@"fcc"]) {
+        NSString *httpURL = [[url absoluteString] stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
+        NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
+        NSDictionary *params = [NSString queryParamsFromString:[url absoluteString]];
+        NSString *fromWho = [params objectForKey:@"from"];
+        NSString *packName = [params objectForKey:@"packname"];
+        NSString *cardName = [params objectForKey:@"cardname"];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:[NSString stringWithFormat:@"From:%@:\n download this card(%@) and save to pack(%@)",fromWho,cardName,packName]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    } 
     
     return YES;
 }
@@ -75,5 +98,7 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark - Test code, only for test
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D2A1B17169BA31000175D14 /* NSString+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2A1B16169BA31000175D14 /* NSString+QueryString.m */; };
 		2D3E9D11167D95760053FA31 /* PackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E9D10167D95760053FA31 /* PackCell.m */; };
 		2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3CF31679D29C009D2ADC /* SQLiteHelper.m */; };
 		2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */; };
@@ -54,6 +55,7 @@
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
 		2DC0629516802C8400F2EA07 /* PackListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0629416802C8400F2EA07 /* PackListTableViewController.m */; };
+		2DC151D0169A849B00A61969 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC151CF169A849B00A61969 /* MBProgressHUD.m */; };
 		2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0B16798E04007A8CAD /* UIKit.framework */; };
 		2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0D16798E04007A8CAD /* Foundation.framework */; };
 		2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */; };
@@ -77,6 +79,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D2A1B15169BA31000175D14 /* NSString+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QueryString.h"; sourceTree = "<group>"; };
+		2D2A1B16169BA31000175D14 /* NSString+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QueryString.m"; sourceTree = "<group>"; };
 		2D3E9D0F167D95760053FA31 /* PackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackCell.h; sourceTree = "<group>"; };
 		2D3E9D10167D95760053FA31 /* PackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackCell.m; sourceTree = "<group>"; };
 		2D5F3CF21679D29C009D2ADC /* SQLiteHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteHelper.h; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2DC0629316802C8400F2EA07 /* PackListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackListTableViewController.h; sourceTree = "<group>"; };
 		2DC0629416802C8400F2EA07 /* PackListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackListTableViewController.m; sourceTree = "<group>"; };
+		2DC151CE169A849B00A61969 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		2DC151CF169A849B00A61969 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DCE0B0B16798E04007A8CAD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2DCE0B0D16798E04007A8CAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -211,6 +217,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2D2A1B15169BA31000175D14 /* NSString+QueryString.h */,
+				2D2A1B16169BA31000175D14 /* NSString+QueryString.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		2D3E9D0E167D954F0053FA31 /* Custom UIs */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +316,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2DC151CC169A849200A61969 /* MBProgressHUD */,
 				2D7A8CD416910F84002EDF77 /* ZipArchive */,
 				2D7A8C84168EECA3002EDF77 /* AFDownloadRequestOperation */,
 				2D89231F1680415E00B43BCD /* AFNetworking */,
@@ -312,6 +328,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D2A1B13169BA2AF00175D14 /* Utilities */,
 				2DC0629216802C6000F2EA07 /* PackList */,
 				2DC06257167EA4D700F2EA07 /* AddCard */,
 				2D3E9D0E167D954F0053FA31 /* Custom UIs */,
@@ -410,6 +427,15 @@
 				2DC0629416802C8400F2EA07 /* PackListTableViewController.m */,
 			);
 			name = PackList;
+			sourceTree = "<group>";
+		};
+		2DC151CC169A849200A61969 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				2DC151CE169A849B00A61969 /* MBProgressHUD.h */,
+				2DC151CF169A849B00A61969 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		2DCE0AFC16798E04007A8CAD = {
@@ -598,6 +624,8 @@
 				2D7A8CE316910F84002EDF77 /* unzip.c in Sources */,
 				2D7A8CE416910F84002EDF77 /* zip.c in Sources */,
 				2D7A8CE516910F84002EDF77 /* ZipArchive.m in Sources */,
+				2DC151D0169A849B00A61969 /* MBProgressHUD.m in Sources */,
+				2D2A1B17169BA31000175D14 /* NSString+QueryString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

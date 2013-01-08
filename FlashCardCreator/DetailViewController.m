@@ -129,6 +129,10 @@
     [_detailItem release];
     [_detailDescriptionLabel release];
     [_masterPopoverController release];
+    [_questionTitleLabel release];
+    [_questionContentLabel release];
+    [_answerTitleLabel release];
+    [_answerContentLabel release];
     [super dealloc];
 }
 
@@ -143,4 +147,11 @@
 }
 
 
+- (void)viewDidUnload {
+    [self setQuestionTitleLabel:nil];
+    [self setQuestionContentLabel:nil];
+    [self setAnswerTitleLabel:nil];
+    [self setAnswerContentLabel:nil];
+    [super viewDidUnload];
+}
 @end

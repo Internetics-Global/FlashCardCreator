@@ -44,9 +44,7 @@
         _packID = -1;
     }
     _packName = [[dict valueForKey:@"pack_name"] retain];
-    
      _thumbPicURL = [[dict valueForKey:@"thumb_pic"] retain];
-    
     if ([[dict allKeys] containsObject:@"user_id"]) {
         _userID = [[dict valueForKey:@"user_id"] intValue];
     } else {
@@ -54,7 +52,6 @@
     }
     _languageName = [[dict valueForKey:@"language_name"] retain];
     _isPubilc= [[dict valueForKey:@"is_public"] intValue] == 1;
-    
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
 		for (int i = 0; i < [cardsArray count]; i++) {
@@ -74,7 +71,7 @@
 	if (_packID == -1) {
 		[self performSelector:@selector(insert)];
 	}else {
-		if ([SQLiteHelper checkIntegerValueExists:_packID forColumn:@"pack_id" inTable:@"Packs"]) {
+		if ([SQLiteHelper checkIntegerValueExists:_packID forColumn:@"pack_id" inTable:@"Packs_Tables"]) {
 			[self performSelector:@selector(update)];
 		}else {
 			[self performSelector:@selector(insert)];

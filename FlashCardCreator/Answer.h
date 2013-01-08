@@ -22,6 +22,9 @@
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *imageName;
 
-+ (NSMutableArray *) answersForCardID:(NSInteger)cardID;
+- (id)initWithDictionary:(NSDictionary *)dict;
+- (void)save;
+
++ (NSMutableDictionary *) answerForCardID:(NSInteger)cardID;
 
 @end

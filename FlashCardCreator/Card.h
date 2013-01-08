@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class Question;
+@class Answer;
+
 @interface Card : NSObject {
     NSInteger _cardID;
     NSInteger _packID;
@@ -15,6 +18,11 @@
     NSString *_thumbPicURL;
     NSString *_onlineFileURL; //this only applies to online cards
     BOOL _isOnline;   // when true, indicate local card does not exist or imcomplete and need to download from remote
+    
+    Question *_question;
+    Answer *_answer;
+    
+    
 }
 
 @property (nonatomic, assign) NSInteger cardID;
@@ -23,6 +31,9 @@
 @property (nonatomic, copy) NSString *thumbPicURL;
 @property (nonatomic, copy) NSString *onlineFileURLL;
 @property (nonatomic, assign) BOOL isOnline;
+
+@property (retain, nonatomic) Question *question;
+@property (retain, nonatomic) Answer *answer;
 
 
 - (id)initWithDictionary:(NSDictionary *)dict;
