@@ -20,10 +20,12 @@
     
     Pack *_currentPack;
     Card *_currentCard;
+    int _indexCard;  //selected card index
+    
     UIPopoverController *_packListPickerPopover;
     
     //public pack related
-    BOOL _isPublicPack;
+    BOOL _isCurrentPackPublic;
     Pack *_publicPack;
     NSString *_saveZipFilePath;
     ZipFileDownloadHelper *_zipFileDownloadHelp;
@@ -35,8 +37,10 @@
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
-@property (nonatomic, retain) Pack *currentPack;
-@property (nonatomic, retain) Card *currentCard;
-@property (nonatomic, retain) Pack *publicPack;
+@property (nonatomic, strong) Pack *currentPack;
+@property (nonatomic, strong) Card *currentCard;
+@property (nonatomic, strong) Pack *publicPack;
+@property (nonatomic, assign) int indexCard;
+@property (nonatomic, assign) BOOL isCurrentPackPublic;
 
 @end

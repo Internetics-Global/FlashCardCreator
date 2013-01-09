@@ -17,11 +17,11 @@
 
 @interface ZipFileDownloadHelper : NSObject {
     NSOperationQueue *_queue;
-    id <ZipFileDownloadHelperDelegate> _delegate;
+    id <ZipFileDownloadHelperDelegate> __weak _delegate;
     NSString *_savedPath;
 }
 
-@property (nonatomic,assign) id <ZipFileDownloadHelperDelegate> delegate;
+@property (nonatomic,weak) id <ZipFileDownloadHelperDelegate> delegate;
 @property (copy, nonatomic) NSString *savedPath;
 
 

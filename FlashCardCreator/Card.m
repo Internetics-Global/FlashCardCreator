@@ -17,7 +17,7 @@
 @synthesize cardID = _cardID;
 @synthesize packID = _packID;
 @synthesize cardName = _cardName;
-@synthesize thumbPicURL = _thumbPicURL;
+@synthesize coverImageURL = _coverImageURL;
 @synthesize onlineFileURLL = _onlineFileURL;
 @synthesize isOnline = _isOnline;
 
@@ -40,20 +40,20 @@
 }
 
 -(id)initWithDictionary:(NSDictionary *)dataDict{
-	[self init];
+	if (!(self = [self init])) return nil;
     
 	_cardID = [[dataDict valueForKey:@"card_id"] intValue];    
-    _cardName = [[dataDict valueForKey:@"card_name"] retain];    
-    _thumbPicURL = [[dataDict valueForKey:@"thumb_pic"] retain];
+    _cardName = [dataDict valueForKey:@"card_name"];    
+    _coverImageURL = [dataDict valueForKey:@"thumb_pic"];
     _isOnline= [[dataDict valueForKey:@"is_online"] intValue] == 1;
 
 	if ([[dataDict allKeys] containsObject:@"question"]) {
         NSDictionary *questionArray = (NSDictionary *)[dataDict valueForKey:@"question"];
-        self.question = [[[Question alloc] initWithDictionary:questionArray] autorelease];
+        self.question = [[Question alloc] initWithDictionary:questionArray];
 	}    
     if ([[dataDict allKeys] containsObject:@"answer"]) {
         NSDictionary *answerArray = (NSDictionary *)[dataDict valueForKey:@"answer"];
-        self.answer = [[[Answer alloc] initWithDictionary:answerArray] autorelease];
+        self.answer = [[Answer alloc] initWithDictionary:answerArray];
 	}
     
 	return self;
@@ -78,22 +78,20 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", is_online=%d WHERE card_id=%d", _packID, _cardName, _thumbPicURL, (_isOnline?1:0), _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", is_online=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, (_isOnline?1:0), _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 -(void)insert{
 	if (_cardID == -1) {
 		_cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic,  is_online) VALUES (%d, %d, \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _thumbPicURL, (_isOnline?1:0)];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic,  is_online) VALUES (%d, %d, \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, (_isOnline?1:0)];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 -(void)destroy{
@@ -101,7 +99,6 @@
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 	//[[DataManager defaultManager] deleteItem:self];
 }
 
@@ -120,22 +117,9 @@
 		[cardDict setValue:[Question questionForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"question"];
         [cardDict setValue:[Answer answerForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"answer"];
 		[returnArray addObject:cardDict];
-		[cardDict release];
 	}
 	sqlite3_finalize(queryStatement);
-	return [returnArray autorelease];
-}
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (void)dealloc{
-	[super dealloc];
-    FCC_RELEASE_SAFELY(_cardName);
-    FCC_RELEASE_SAFELY(_thumbPicURL)
-    FCC_RELEASE_SAFELY(_onlineFileURL);
-    FCC_RELEASE_SAFELY(_question);
-    FCC_RELEASE_SAFELY(_answer);
+	return returnArray;
 }
 
 @end

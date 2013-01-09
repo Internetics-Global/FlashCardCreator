@@ -44,7 +44,6 @@
         _queue =[[NSOperationQueue alloc] init];
     }
     [_queue addOperation:operation];
-    [operation release];
     
     return path;
 }
@@ -52,7 +51,7 @@
 - (NSString *)downloadedZipFilePath {
     static NSString *completeDir;
         NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory,    NSUserDomainMask ,YES );
-        completeDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Complete"];
+        completeDir = [paths[0] stringByAppendingPathComponent:@"Complete"];
         NSError *error = nil;
         if (![[NSFileManager defaultManager] fileExistsAtPath:completeDir]) {
             if(![[NSFileManager defaultManager] createDirectoryAtPath:completeDir withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -62,19 +61,10 @@
     
     NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
     self.savedPath = [completeDir stringByAppendingPathComponent:[NSString stringWithFormat:@"temp%llu.zip",
-                                                               [[NSNumber numberWithDouble:time] longLongValue]]];
+                                                               [@(time) longLongValue]]];
     
     return _savedPath;
 }
 
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (void)dealloc{
-    FCC_RELEASE_SAFELY(_queue);
-    FCC_RELEASE_SAFELY(_savedPath);
-	[super dealloc];
-}
 
 @end

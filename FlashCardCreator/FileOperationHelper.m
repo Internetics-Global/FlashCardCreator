@@ -12,7 +12,7 @@
 
 + (NSString *)documentsDirectory{
 	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentFolderPath = [[searchPaths objectAtIndex:0] retain];
+	NSString *documentFolderPath = searchPaths[0];
 	return documentFolderPath;
 }
 

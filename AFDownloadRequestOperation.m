@@ -257,7 +257,6 @@ typedef void (^AFURLConnectionProgressiveOperationProgressBlock)(NSInteger bytes
     return cacheFolder;
 }
 
-
 // calculates the MD5 hash of a key
 + (NSString *)md5StringForString:(NSString *)string {
     const char *str = [string UTF8String];

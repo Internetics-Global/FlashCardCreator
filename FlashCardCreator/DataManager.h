@@ -11,8 +11,6 @@
 
 @interface DataManager : NSObject
 
-- (void)getUser;
-
 + (void)apiReachableAlert;
 
 + (Pack *) parseRemotePublicPack:(NSArray *) publicCardRawArray;

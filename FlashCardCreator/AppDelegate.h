@@ -8,10 +8,21 @@
 
 #import <UIKit/UIKit.h> 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class MasterViewController;
+@class DetailViewController;
+@class Pack;
+@class Card;
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
+    Card *_lastCreatedCard;
+    Pack *_lastCreatedPack;
+    int _indexCard;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (strong, nonatomic) UISplitViewController *splitViewController;
+@property (strong, nonatomic) MasterViewController *masterViewController;
+@property (strong, nonatomic) DetailViewController *detailViewController;
 
 @end

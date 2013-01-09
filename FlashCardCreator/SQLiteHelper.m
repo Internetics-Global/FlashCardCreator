@@ -49,7 +49,6 @@
 	while ((dbrc = sqlite3_step(existing)) == SQLITE_ROW) {
 		value = [[NSNumber alloc] initWithInt:sqlite3_column_int(existing, 0)];
 	}
-	[value autorelease];
 	return [value intValue];
 }
 
@@ -61,14 +60,12 @@
         break;
     }
     sqlite3_finalize(queryStatement);
-    [query release];
     
     //will execute following only when no GLOBAL_USER_ID table exists
     NSString *query2 = [[NSString alloc] initWithFormat:@"INSERT INTO Users_Tables(user_id, nick_name) VALUES (%d,\"%@\")", [GLOBAL_USER_ID intValue], @"vistor"];
 	sqlite3_stmt *queryStatement2 = [SQLiteHelper prepareStatementForQuery:query2];
 	sqlite3_step(queryStatement2);
 	sqlite3_finalize(queryStatement2);
-	[query2 release];
     
     
 }
@@ -81,7 +78,7 @@
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
-		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, user_id integer, language_name text, is_public text, thumb_pic text);"];
+		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, user_id integer, language_name text, is_public text, cover_image text);"];
 		sqlite3_step(createItems);
 		sqlite3_finalize(createItems);
 	}
@@ -121,7 +118,7 @@
 + (NSString *)getStringFromQuery:(sqlite3_stmt *)statement inColumn:(NSInteger)colNum{
 	const char *columnText = (const char *)sqlite3_column_text(statement, colNum);
 	if (columnText != NULL) {
-		return [NSString stringWithUTF8String:columnText];
+		return @(columnText);
 	}else {
 		return @"";
 	}
@@ -129,13 +126,12 @@
 
 //should be used in "while (sqlite3_step(queryStatement) == SQLITE_ROW)"
 + (NSNumber *)getNumberFromQuery:(sqlite3_stmt *)statement inColumn:(NSInteger)colNum{
-	return [NSNumber numberWithInt:sqlite3_column_int(statement, colNum)];
+	return @(sqlite3_column_int(statement, colNum));
 }
 
 + (BOOL)checkIntegerValueExists:(NSInteger)value forColumn:(NSString *)columnName inTable:(NSString *)table{
 	NSString *queryString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@=%d", table, columnName, value];
 	sqlite3_stmt *query = [SQLiteHelper prepareStatementForQuery:queryString];
-	[queryString release];
 	BOOL exists = NO;
 	if (sqlite3_step(query) == SQLITE_ROW) {
 		exists = YES;
@@ -147,7 +143,6 @@
 + (BOOL)checkStringValueExists:(NSString *)value forColumn:(NSString *)columnName inTable:(NSString *)table{
 	NSString *queryString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@=\"%@\"", table, columnName, value];
 	sqlite3_stmt *query = [SQLiteHelper prepareStatementForQuery:queryString];
-	[queryString release];
 	BOOL exists = NO;
 	if (sqlite3_step(query) == SQLITE_ROW) {
 		exists = YES;

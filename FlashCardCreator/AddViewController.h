@@ -18,8 +18,8 @@
     NSMutableArray *_availablePackArray;
 }
 
-@property (retain, nonatomic) IBOutlet UIPickerView *myPackPickerView;
-@property (retain, nonatomic) IBOutlet UITextField *packTextField;
+@property (strong, nonatomic) IBOutlet UIPickerView *myPackPickerView;
+@property (strong, nonatomic) IBOutlet UITextField *packTextField;
 
 
 @end

@@ -12,7 +12,7 @@
 @interface Pack : NSObject {
     NSInteger _packID;
 	NSString *_packName;
-    NSString *_thumbPicURL;
+    NSString *_coverImageURL;
 	NSInteger _userID;
     NSString *_languageName;
     BOOL _isPubilc;
@@ -22,16 +22,17 @@
 
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, copy) NSString *packName;
-@property (nonatomic, copy) NSString *thumbPicURL;
+@property (nonatomic, copy) NSString *coverImageURL;
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *languageName;
 @property (nonatomic, assign) BOOL isPublic;
 
-@property (nonatomic, retain) NSMutableArray *cards;
+@property (nonatomic, strong) NSMutableArray *cards;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;
 - (void)removeCard:(Card *)card;
+- (void)save;
 
 + (NSMutableArray *) packsForUserID:(NSInteger)userID;
 

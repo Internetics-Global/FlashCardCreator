@@ -29,7 +29,7 @@
         _pack = [[Pack alloc] init];
         _card = [[Card alloc] init];
         _availablePackNameArray = [[NSMutableArray alloc] init];
-        _availablePackArray = [[[User defaultUser] packs] retain];
+        _availablePackArray = [[User defaultUser] packs];
     }
     return self;
 }
@@ -38,7 +38,7 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *saveButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveNewCard:)] autorelease];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveNewCard:)];
     self.navigationItem.rightBarButtonItem = saveButton;
 
     
@@ -54,28 +54,41 @@
     [self checkNewPack];
     if (_isNewPack == TRUE) {
         _pack.languageName = @"French "; //test purpose
-        //don't need to assign a pack_id, since insert fucntion takes care it
+        _pack.coverImageURL = [self createPackCoverImage];
         [[User defaultUser] addPack:_pack];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:nil];
     }
     
-#warning this is not finally completed
+    //warning: need to be completed, ccaa
     _card.packID = _pack.packID;
     _card.cardName = [NSString stringWithFormat:@"card name(pack_%@): %d",_pack.packName,rand()];
     _card.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
     
     _card.question.title = [NSString stringWithFormat:@"title%d", rand()];
     _card.question.cardID = _card.cardID;
-    _card.question.content = [NSString stringWithFormat:@"content%d", rand()];
+    _card.question.content = [NSString stringWithFormat:@"contentcontentcontentcontent%d", rand()];
+    //warning, need to be completed
+    NSString *imageStr = [NSString stringWithFormat:@"question%d.png",arc4random()%7];
+    _card.question.imageName = imageStr;
     
     _card.answer.title = [NSString stringWithFormat:@"answer%d", rand()];
     _card.answer.cardID = _card.cardID;
-    _card.answer.content = [NSString stringWithFormat:@"answer%d", rand()];
+    _card.answer.content = [NSString stringWithFormat:@"answeransweransweransweranswer%d", rand()];
+    imageStr = [NSString stringWithFormat:@"answer%d.png",arc4random()%7];
+    _card.answer.imageName = imageStr;
     
     [_pack addCard:_card];
     
+    [[NSUserDefaults standardUserDefaults] setInteger:([[_pack cards] count]-1) forKey:@"indexCard"];
+    [[NSUserDefaults standardUserDefaults] setInteger:_pack.packID forKey:@"lastCreatedPackID"];
+    [[NSUserDefaults standardUserDefaults] setInteger:_card.cardID forKey:@"lastCreatedCardID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];
     
 }
 
@@ -98,7 +111,7 @@
         _pack.packName = self.packTextField.text;
     } else {
         _isNewPack = FALSE;
-        _pack = [[_availablePackArray objectAtIndex:index] retain];
+        _pack = _availablePackArray[index];
     }
 }
 
@@ -126,7 +139,7 @@
 	if (pickerView == _myPackPickerView)	// don't show selection for the custom picker
 	{
 		// report the selection to the UI label
-		_pack = [_availablePackArray objectAtIndex:[pickerView selectedRowInComponent:0]];
+		_pack = _availablePackArray[[pickerView selectedRowInComponent:0]];
         NSLog(@"%s:selected pack is: %@",__FUNCTION__,_pack.packName);
 	}
 }
@@ -141,11 +154,11 @@
 	{
 		if (component == 0)
 		{
-			returnStr= [_availablePackNameArray objectAtIndex:row];
+			returnStr= _availablePackNameArray[row];
 		}
 		else
 		{
-			returnStr = [[NSNumber numberWithInt:row] stringValue];
+			returnStr = [@(row) stringValue];
 		}
 	}
 	
@@ -179,18 +192,27 @@
 	return 2;
 }
 
+- (NSString *) createPackCoverImage {
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory,    NSUserDomainMask ,YES );
+    NSString *packCoverImageDir = [paths[0] stringByAppendingPathComponent:@"Pack Cover Image"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:packCoverImageDir]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:packCoverImageDir withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", packCoverImageDir);
+        }
+    }
+    
+    NSString *packCoverImageName = [NSString stringWithFormat:@"%f%d.png", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]];
+    
+    //warning: need to be completed
+    NSString *coverImageFile = [NSString stringWithFormat:@"%@/image2.png", [[NSBundle mainBundle] resourcePath]];
+    return coverImageFile;
+}
+
 #pragma mark -
 #pragma mark Memory Management
 
-- (void)dealloc {
-    [_packTextField release];
-    [super dealloc];
-    FCC_RELEASE_SAFELY(_availablePackArray);
-    FCC_RELEASE_SAFELY(_myPackPickerView);
-    FCC_RELEASE_SAFELY(_availablePackNameArray);
-    FCC_RELEASE_SAFELY(_pack);
-    FCC_RELEASE_SAFELY(_card);
-}
 
 - (void)viewDidUnload {
     [self setMyPackPickerView:nil];

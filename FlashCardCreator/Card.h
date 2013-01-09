@@ -15,7 +15,7 @@
     NSInteger _cardID;
     NSInteger _packID;
     NSString *_cardName;
-    NSString *_thumbPicURL;
+    NSString *_coverImageURL;
     NSString *_onlineFileURL; //this only applies to online cards
     BOOL _isOnline;   // when true, indicate local card does not exist or imcomplete and need to download from remote
     
@@ -28,12 +28,12 @@
 @property (nonatomic, assign) NSInteger cardID;
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, copy) NSString *cardName;
-@property (nonatomic, copy) NSString *thumbPicURL;
+@property (nonatomic, copy) NSString *coverImageURL;
 @property (nonatomic, copy) NSString *onlineFileURLL;
 @property (nonatomic, assign) BOOL isOnline;
 
-@property (retain, nonatomic) Question *question;
-@property (retain, nonatomic) Answer *answer;
+@property (strong, nonatomic) Question *question;
+@property (strong, nonatomic) Answer *answer;
 
 
 - (id)initWithDictionary:(NSDictionary *)dict;

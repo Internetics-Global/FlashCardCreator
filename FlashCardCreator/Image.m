@@ -43,19 +43,12 @@
 		[imageDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"card_id"];
         [imageDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"is_question_card"];
 		[returnArray addObject:imageDict];
-		[imageDict release];
 	}
 	sqlite3_finalize(queryStatement);
-	return [returnArray autorelease];
+	return returnArray;
 }
 
-#pragma mark -
-#pragma mark Memory Management
 
-- (void)dealloc {
-    FCC_RELEASE_SAFELY(_imageFileName);
-	[super dealloc];
-}
 
 @end
 

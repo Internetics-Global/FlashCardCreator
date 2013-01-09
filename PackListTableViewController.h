@@ -13,9 +13,10 @@
 @end
 
 @interface PackListTableViewController : UITableViewController {
-    id<PackListDelegate> _delegate;
+    id<PackListDelegate> __weak _delegate;
 }
 
-@property (nonatomic, assign) id<PackListDelegate> delegate;
+@property (weak, nonatomic) id<PackListDelegate> delegate;
+
 
 @end

@@ -11,7 +11,6 @@
 #import "User.h"
 #import "PackCell.h"
 #import "AddViewController.h"
-#import "PackListTableViewController.h"
 #import "DataManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ZipFileDownloadHelper.h"
@@ -19,6 +18,9 @@
 #import "MBProgressHUD.h"
 #import "Question.h"
 #import "Answer.h"
+#import "Pack.h"
+#import "PackListViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @implementation MasterViewController
@@ -26,25 +28,37 @@
 @synthesize currentPack = _currentPack;
 @synthesize publicPack = _publicPack;
 @synthesize currentCard = _currentCard;
+@synthesize indexCard = _indexCard;
+@synthesize isCurrentPackPublic = _isCurrentPackPublic;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        //1. Setup notification
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newCardAddedNotification:) name:NEW_CARD_ADDED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCardsInSelectedPackNotification:) name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDetailView:) name:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterViewOnPublicStartup:) name:DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION object:nil];
         
+        //2. Initialize
+        _currentPack = [[Pack alloc] init];
+        _publicPack = [[Pack alloc] init];
+        _indexCard = 0;
+        _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
+        
+        //3. others
         self.title = NSLocalizedString(@"Master-card list", @"Master");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         
-        _currentPack = [[Pack alloc] init];
-        _publicPack = [[Pack alloc] init];
-        _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
+        
+        
     }
     return self;
 }
@@ -53,86 +67,120 @@
 {
     [super viewDidLoad];
 
-    UIBarButtonItem *addButton = [[[UIBarButtonItem alloc]initWithTitle:@"Add card" style:UIBarButtonSystemItemAdd target:self action:@selector(insertNewCard:)] autorelease];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"Add card" style:UIBarButtonSystemItemAdd target:self action:@selector(insertNewCard:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    UIBarButtonItem *selectPackButton = [[[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)] autorelease];
+    UIBarButtonItem *selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     self.navigationItem.leftBarButtonItem = selectPackButton;
     
+    if (!_isCurrentPackPublic) {
+        self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
+        [self.tableView reloadData];
+    } else {
+        self.navigationItem.leftBarButtonItem.title = @"public pack";
+    }
     
-#warning just for test,by default, we will load the public pack
-    _isPublicPack = TRUE;
-    
-    PublicPackRequest *publicPackRequest = [[[PublicPackRequest alloc] init] autorelease];
-    [publicPackRequest requestPublicPack];
-    publicPackRequest.delegate = self;
+    //Do only once at startup for non-public pack
+    if (!_isCurrentPackPublic) {
+        //only check once during start up
+        static dispatch_once_t once_nonpublic;
+        dispatch_once(&once_nonpublic, ^{
+            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self updateDetailView:nil];
+            
+        });
+    }
     
 }
-
--(void)newPackAddedNotification:(NSNotification *)notification{
-	[self.tableView reloadData];
-}
-
 
 - (void)selectAvailablePacks:(id)sender
 {
-    PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    
     if (isUserInterfaceIdiomPhone) {
+        PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:packListTableViewController animated:YES];
         
     } else {
-        packListTableViewController.delegate = self;
-        _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListTableViewController];
-        self.contentSizeForViewInPopover = CGSizeMake(500, 44*([[[User defaultUser] packs] count]+1));
+        PackListViewController *packListViewController = [[PackListViewController alloc] init];
+        packListViewController.view.frame = CGRectMake(10, 10, 700, 262);
+        packListViewController.view.clipsToBounds = YES;
+        packListViewController.view.layer.cornerRadius = 0;
+        packListViewController.view.backgroundColor =[UIColor grayColor];
+        packListViewController.contentSizeForViewInPopover = CGSizeMake(700, 262);
         
-        [_packListPickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        if (_packListPickerPopover == nil) {
+            _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListViewController];
+        }
+        self.contentSizeForViewInPopover = CGSizeMake(720, 282);
+        [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+//        [_packListPickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
-    [packListTableViewController release];
 }
+
+#pragma mark -
+#pragma mark Insert new card
 
 - (void)insertNewCard:(id)sender
 {
     AddViewController *addViewController = [[AddViewController alloc] initWithNibName:@"AddViewController" bundle:nil];
     [self.navigationController pushViewController:addViewController animated:YES];
-    [addViewController release];
-    
-#warning need to be completed here.
-    //[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+
+#pragma mark -
+#pragma mark Notfication related
+
+-(void)newPackAddedNotification:(NSNotification *)notification{
+	[self.tableView reloadData];
+}
+
+-(void)newCardAddedNotification:(NSNotification *)notification{
+	[self.tableView reloadData];
+}
 
 - (void) showCardsInSelectedPackNotification:(NSNotification *) notification {
     int index = [(NSString *)[notification object] intValue];
     if (index ==0) {
-        _isPublicPack = TRUE;
-#warning need to be completed here.
+        _isCurrentPackPublic = TRUE;
         self.currentPack = _publicPack;
     } else {
-        _isPublicPack = FALSE;
-        self.currentPack = [[[User defaultUser] packs] objectAtIndex:(index-1)];
+        _isCurrentPackPublic = FALSE;
+        self.currentPack = [[User defaultUser] packs][(index-1)];
     }
     
+    if (!isUserInterfaceIdiomPhone) {
+        [_packListPickerPopover dismissPopoverAnimated:YES];
+    }
+    
+    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
+
     [self.tableView reloadData];
     
+}
+
+- (void) updateMasterViewOnPublicStartup:(NSNotification *) notification {
+    [self.tableView reloadData];
+    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
 }
 
 - (void) updateDetailView:(NSNotification *) notification {
     
     if (isUserInterfaceIdiomPhone) {
 	    if (!self.detailViewController) {
-	        self.detailViewController = [[[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil] autorelease];
+	        self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil];
 	    }
         [self.navigationController pushViewController:self.detailViewController animated:YES];
     } else {
         
     }
     
-    self.detailViewController.answerTitleLabel.text = _currentCard.answer.title;
-    self.detailViewController.answerContentLabel.text = _currentCard.answer.content;
-    self.detailViewController.questionTitleLabel.text = _currentCard.question.title;
-    self.detailViewController.questionContentLabel.text = _currentCard.question.content;
     self.detailViewController.detailItem = _currentCard.cardName;
+    self.detailViewController.currentCard = _currentCard;
+    self.detailViewController.currentPack = _currentPack;
+    self.detailViewController.indexCard = _indexCard;
+    [self.detailViewController showCurrentCardInScrollView];
+    
 }
+
 
 #pragma mark -
 #pragma mark UITableViewDataSource and UITableViewDelegate
@@ -154,17 +202,16 @@
     
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    Card *card = [[[_currentPack cards] objectAtIndex:indexPath.row] retain];
+    Card *card = [_currentPack cards][indexPath.row];
     cell.textLabel.text = card.cardName;
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:card.thumbPicURL]
+    [cell.imageView setImageWithURL:[NSURL URLWithString:card.coverImageURL]
                    placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 
-	
     return cell;
 
 }
@@ -178,10 +225,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.currentCard = [[_currentPack cards] objectAtIndex:indexPath.row];
+    if (_isCurrentPackPublic){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"This is public pack"
+                                                        message:@"save to local? not sure, so have been implemented completedly"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    self.currentCard = [_currentPack cards][indexPath.row];
+    
+    _indexCard = indexPath.row;
     
 
-    if (_currentCard.isOnline) {
+    if (_currentPack.packID == PUBLIC_PACK_ID) {
         _progressivePercent = 0;
         [self showProgressIndicator];
         
@@ -192,7 +250,19 @@
         _zipFileDownloadHelp.delegate = self;
         
     } else {
-        [self updateDetailView:nil];
+        self.detailViewController.currentCard = _currentCard;
+        self.detailViewController.currentPack = _currentPack;
+        self.detailViewController.indexCard = _indexCard;
+        if (isUserInterfaceIdiomPhone) {
+            //need to be implemented
+            if (!self.detailViewController) {
+                self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil];
+            }
+            [self.navigationController pushViewController:self.detailViewController animated:YES];
+        } else {
+            [self.detailViewController showCurrentCardInScrollView];
+            
+        }
     }
 }
 
@@ -201,22 +271,26 @@
 
 - (void)didReceiveJSONResponse:(NSArray*)JSONResponse {
     
-    NSArray *keys = [NSArray arrayWithObjects:@"card_name",@"dropbox_zip_link",@"thumb_pic",@"card_id", nil];
+    NSArray *keys = @[@"card_name",@"dropbox_zip_link",@"thumb_pic",@"card_id"];
     
-    NSMutableArray *publicCardRawArray = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *publicCardRawArray = [[NSMutableArray alloc] init];
     for (int i =0; i<[JSONResponse count]; i++) {
-        [publicCardRawArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[JSONResponse[i] objectForKey:@"card_name"],[JSONResponse[i] objectForKey:@"dropbox_zip_link"],[JSONResponse[i] objectForKey:@"thumb_pic"],[JSONResponse[i] objectForKey:@"card_id"], nil] forKeys:keys]];
+        [publicCardRawArray addObject:[NSDictionary dictionaryWithObjects:@[(JSONResponse[i])[@"card_name"],(JSONResponse[i])[@"dropbox_zip_link"],(JSONResponse[i])[@"thumb_pic"],(JSONResponse[i])[@"card_id"]] forKeys:keys]];
     }
     
     self.publicPack = [DataManager parseRemotePublicPack:publicCardRawArray];
+
+    if (_isCurrentPackPublic) {
+        self.currentPack = self.publicPack;
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION object:nil];
+    }
     
 }
 
 - (void)didNotReceiveJSONResponse {
-    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error when getting public pack info from server" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[view show];
-	[view release];
+    NSLog(@"%s:Error to receive public pack json response",__FUNCTION__);
 }
+
 
 #pragma mark -
 #pragma mark PackListDelegate
@@ -225,19 +299,22 @@
     [_packListPickerPopover dismissPopoverAnimated:YES];
     
     if (index ==0) {
-        _isPublicPack = TRUE;
-#warning need to be completed here.
+        _isCurrentPackPublic = TRUE;
         self.currentPack = _publicPack;
     } else {
-        _isPublicPack = FALSE;
-        self.currentPack = [[[User defaultUser] packs] objectAtIndex:(index-1)];
+        _isCurrentPackPublic = FALSE;
+        self.currentPack = [[User defaultUser] packs][(index-1)];
     }
+    
+    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
     
     [self.tableView reloadData];
 }
 
+
 #pragma mark -
 #pragma mark Rotate control
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     if (isUserInterfaceIdiomPhone)
         return UIInterfaceOrientationIsPortrait(interfaceOrientation);
@@ -283,7 +360,6 @@
             [[NSFileManager defaultManager] removeItemAtPath:_saveZipFilePath error:nil];
         }
         
-        [za release];
     }
     
     //step2: assemable card
@@ -296,12 +372,12 @@
         
         if ([questionJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *questionDict = (NSDictionary *)questionJsonObject;
-            [_currentCard question].questionID = [[questionDict objectForKey:@"question_id"] intValue];
-            [_currentCard question].cardID = [[questionDict objectForKey:@"card_id"] intValue];
-            [_currentCard question].title = [questionDict objectForKey:@"title"];
-            [_currentCard question].content = [questionDict objectForKey:@"content"];
-            [_currentCard question].type = [questionDict objectForKey:@"type"];
-            [_currentCard question].imageName = [questionDict objectForKey:@"image"];
+            [_currentCard question].questionID = [questionDict[@"question_id"] intValue];
+            [_currentCard question].cardID = [questionDict[@"card_id"] intValue];
+            [_currentCard question].title = questionDict[@"title"];
+            [_currentCard question].content = questionDict[@"content"];
+            [_currentCard question].type = questionDict[@"type"];
+            [_currentCard question].imageName = questionDict[@"image"];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -316,11 +392,11 @@
     if (answerJsonObject != nil && error == nil) {
         if ([answerJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *answerDict = (NSDictionary *)answerJsonObject;
-            [_currentCard answer].answerID = [[answerDict objectForKey:@"answer_id"] intValue];
-            [_currentCard answer].cardID = [[answerDict objectForKey:@"card_id"] intValue];
-            [_currentCard answer].title = [answerDict objectForKey:@"title"];
-            [_currentCard answer].content = [answerDict objectForKey:@"content"];
-            [_currentCard answer].imageName = [answerDict objectForKey:@"image"];
+            [_currentCard answer].answerID = [answerDict[@"answer_id"] intValue];
+            [_currentCard answer].cardID = [answerDict[@"card_id"] intValue];
+            [_currentCard answer].title = answerDict[@"title"];
+            [_currentCard answer].content = answerDict[@"content"];
+            [_currentCard answer].imageName = answerDict[@"image"];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -371,17 +447,7 @@
 
 - (void)dealloc
 {
-    [_detailViewController release];
-    FCC_RELEASE_SAFELY(_currentPack);
-    FCC_RELEASE_SAFELY(_currentCard);
-    FCC_RELEASE_SAFELY(_packListPickerPopover);
-    FCC_RELEASE_SAFELY(_saveZipFilePath);
-    FCC_RELEASE_SAFELY(_HUD);
-    FCC_RELEASE_SAFELY(_zipFileDownloadHelp);
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [super dealloc];
 }
 
 

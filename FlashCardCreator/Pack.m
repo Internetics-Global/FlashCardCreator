@@ -16,7 +16,7 @@
 
 @synthesize packID = _packID;
 @synthesize packName = _packName;
-@synthesize thumbPicURL = _thumbPicURL;
+@synthesize coverImageURL = _coverImageURL;
 @synthesize userID = _userID;
 @synthesize languageName = _languageName;
 @synthesize isPublic = _isPubilc;
@@ -36,28 +36,27 @@
 }
 
 -(id)initWithDictionary:(NSDictionary *)dict{
-	[self init];
+	if (!(self = [self init])) return nil;
     
     if ([[dict allKeys] containsObject:@"pack_id"]) {
         _packID = [[dict valueForKey:@"pack_id"] intValue];
     } else {
         _packID = -1;
     }
-    _packName = [[dict valueForKey:@"pack_name"] retain];
-     _thumbPicURL = [[dict valueForKey:@"thumb_pic"] retain];
+    _packName = [dict valueForKey:@"pack_name"];
+     _coverImageURL = [dict valueForKey:@"cover_image"];
     if ([[dict allKeys] containsObject:@"user_id"]) {
         _userID = [[dict valueForKey:@"user_id"] intValue];
     } else {
         _userID = -1;
     }
-    _languageName = [[dict valueForKey:@"language_name"] retain];
+    _languageName = [dict valueForKey:@"language_name"];
     _isPubilc= [[dict valueForKey:@"is_public"] intValue] == 1;
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
 		for (int i = 0; i < [cardsArray count]; i++) {
-			Card *card = [[Card alloc] initWithDictionary:[cardsArray objectAtIndex:i]];
+			Card *card = [[Card alloc] initWithDictionary:cardsArray[i]];
 			[_cards addObject:card];
-			[card release];
 		}
 	}
 
@@ -79,17 +78,16 @@
 	}
 	for (int i = 0; i < [_cards count]; i++) {
 		NSLog(@"%s:saving cards next...",__FUNCTION__);
-		[[_cards objectAtIndex:i] save];
+		[_cards[i] save];
 	}
 }
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, thumb_pic=\"%@\" WHERE id=%d", _packName, _languageName, (_isPubilc?1:0), _thumbPicURL, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\" WHERE id=%d", _packName, _languageName, (_isPubilc?1:0), _coverImageURL, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 -(void)insert{
@@ -97,11 +95,10 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, thumb_pic) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, (_isPubilc?1:0), _thumbPicURL];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, (_isPubilc?1:0), _coverImageURL];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 	
 }
 
@@ -143,22 +140,13 @@
 		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"user_id"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"language_name"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"is_public"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"cover_image"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
-		[packDict release];
 	}
 	sqlite3_finalize(queryStatement);
-	return [returnArray autorelease];
+	return returnArray;
 }
 
-#pragma mark -
-#pragma mark Memory Management
-
--(void)dealloc{
-    FCC_RELEASE_SAFELY(_packName);
-    FCC_RELEASE_SAFELY(_thumbPicURL);
-    FCC_RELEASE_SAFELY(_languageName);
-	[super dealloc];
-}
 
 @end

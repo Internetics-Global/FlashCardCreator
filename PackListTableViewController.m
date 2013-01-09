@@ -63,7 +63,7 @@
     
     PackCell *cell = (PackCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[[PackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[PackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -71,7 +71,7 @@
     if (indexPath.row == 0) {
         cell.textLabel.text=@"Public pack";
     } else {
-        Pack *pack = [[[User defaultUser] packs] objectAtIndex:(indexPath.row-1)];
+        Pack *pack = [[User defaultUser] packs][(indexPath.row-1)];
         cell.textLabel.text =pack.packName;
     }
 	
@@ -108,9 +108,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 
 @end

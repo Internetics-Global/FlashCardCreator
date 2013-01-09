@@ -29,20 +29,19 @@
 
 //used to get _userID, _nickName and _packs
 -(id)initWithDictionary:(NSDictionary *)dict{
-	[self init];
+	if (!(self = [self init])) return nil;
     
     if ([[dict allKeys] containsObject:@"user_id"]) {
         _userID = [[dict valueForKey:@"user_id"] intValue];
     } else {
         _userID = -1;
     }
-	_nickName = [[dict valueForKey:@"nick_name"] retain];
+	_nickName = [dict valueForKey:@"nick_name"];
 	if ([[dict allKeys] containsObject:@"packs"]) {
 		NSArray *packsDictArray = (NSArray *)[dict valueForKey:@"packs"];
 		for (int i = 0; i < [packsDictArray count]; i++) {
-			Pack *newPack = [[Pack alloc] initWithDictionary:[packsDictArray objectAtIndex:i]];
+			Pack *newPack = [[Pack alloc] initWithDictionary:packsDictArray[i]];
 			[_packs addObject:newPack];
-			[newPack release];
 		}
 	} else {
        //NSLog(@"%s:no pack under current user",__FUNCTION__);
@@ -59,7 +58,6 @@
 	static User *defaultUser;
 	@synchronized(self){
 		if (defaultUser == nil) {
-#warning this is not finally completed
 			NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Users_Tables WHERE user_id=\"%@\"", GLOBAL_USER_ID];
 			sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 			while (sqlite3_step(queryStatement) == SQLITE_ROW) {
@@ -68,7 +66,6 @@
 				[dataDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"nick_name"];
 				[dataDict setValue:[Pack packsForUserID:[[dataDict valueForKey:@"user_id"] intValue]] forKey:@"packs"];
 				defaultUser = [[User alloc] initWithDictionary:dataDict];
-				[dataDict release];
 			}
 			sqlite3_finalize(queryStatement);
 		}
@@ -80,7 +77,7 @@
 -(void)addPack:(Pack *)pack{
 	BOOL exists = NO;
 	for (int i = 0; i < [_packs count]; i++) {
-		if ([[_packs objectAtIndex:i] packID] == pack.packID) {
+		if ([_packs[i] packID] == pack.packID) {
 			exists = YES;
             NSLog(@"%s:addPack failure because already existence",__FUNCTION__);
 			break;
@@ -93,13 +90,5 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PACK_ADDED_TO_USER_NOTIFICATION object:self];
 }
 
-#pragma mark -
-#pragma mark Memory Management
-
--(void)dealloc{
-    FCC_RELEASE_SAFELY(_nickName);
-    FCC_RELEASE_SAFELY(_packs);
-	[super dealloc];
-}
 
 @end

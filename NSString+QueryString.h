@@ -11,6 +11,4 @@
 @interface NSString (QueryString)
 
 + (NSDictionary *)queryParamsFromString:(NSString *)str;
-+ (NSString *)queryStringFromParams:(NSDictionary *)dict;
-- (NSString*)stringForHttpRequest;
 @end

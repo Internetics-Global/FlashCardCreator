@@ -19,7 +19,7 @@
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy, readonly) NSString *nickName;
 
-@property (nonatomic, retain, readonly) NSMutableArray *packs;
+@property (nonatomic, strong, readonly) NSMutableArray *packs;
 
 + (User *)defaultUser;
 - (id)initWithDictionary:(NSDictionary *)dict;

@@ -14,10 +14,6 @@
 
 @implementation DataManager
 
-- (void)getUser{
-#warning this is not finally completed
-}
-
 -(void)getUserCompleteNotification:(NSNotification *)notification{
 
     [[NSNotificationCenter defaultCenter] postNotificationName:GET_USER_COMPLETE_NOTIFICATION object:nil];
@@ -43,27 +39,25 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        [alert release];
 	}
 }
 
 + (Pack *) parseRemotePublicPack:(NSArray *) publicCardRawArray {
-#warning to use simulated data
-    Pack *pack = [[[Pack alloc] init] autorelease];
+    Pack *pack = [[Pack alloc] init];
     pack.packID = PUBLIC_PACK_ID;
     pack.userID = [User defaultUser].userID;
     pack.packName = @"public";
     pack.languageName = @"en";
     pack.isPublic = YES;
-    pack.thumbPicURL = PUBLIC_PACK_THUMB_IMAGE_URL;
+    //pack.coverImageURL = , we set during packlist
     
     for (int i =0; i<[publicCardRawArray count]; i++) {
-        Card *card = [[[Card alloc] init] autorelease];
+        Card *card = [[Card alloc] init];
         card.packID = pack.packID;
-        card.cardID = [[publicCardRawArray[i] objectForKey:@"card_id"] integerValue];
-        card.cardName = [publicCardRawArray[i] objectForKey:@"card_name"];
-        card.thumbPicURL = [publicCardRawArray[i] objectForKey:@"thumb_pic"];
-        card.onlineFileURLL = [publicCardRawArray[i] objectForKey:@"dropbox_zip_link"];
+        card.cardID = [(publicCardRawArray[i])[@"card_id"] integerValue];
+        card.cardName = (publicCardRawArray[i])[@"card_name"];
+        card.coverImageURL = (publicCardRawArray[i])[@"thumb_pic"];
+        card.onlineFileURLL = (publicCardRawArray[i])[@"dropbox_zip_link"];
         [[pack cards] addObject:card];
     }
     

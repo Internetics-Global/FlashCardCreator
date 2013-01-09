@@ -29,14 +29,14 @@
 }
 
 -(id)initWithDictionary:(NSDictionary *)dataDict{
-	[self init];
+	if (!(self = [self init])) return nil;
     
 	_questionID = [[dataDict valueForKey:@"question_id"] intValue];    
     _cardID = [[dataDict valueForKey:@"card_id"] intValue];
-    _title = [[dataDict valueForKey:@"title"] retain];
-    _content= [[dataDict valueForKey:@"content"] retain];
-    _type= [[dataDict valueForKey:@"type"] retain];
-    _imageName= [[dataDict valueForKey:@"image"] retain];
+    _title = [dataDict valueForKey:@"title"];
+    _content= [dataDict valueForKey:@"content"];
+    _type= [dataDict valueForKey:@"type"];
+    _imageName= [dataDict valueForKey:@"image"];
     
 	return self;
 }
@@ -63,7 +63,6 @@
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 -(void)insert{
@@ -74,7 +73,6 @@
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 
@@ -91,18 +89,9 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"image"];
 	}
 	sqlite3_finalize(queryStatement);
-	return [questionDict autorelease];
+	return questionDict;
 }
 
-#pragma mark -
-#pragma mark Memory Management
 
--(void)dealloc{
-    FCC_RELEASE_SAFELY(_title);
-    FCC_RELEASE_SAFELY(_content);
-    FCC_RELEASE_SAFELY(_type);
-    FCC_RELEASE_SAFELY(_imageName);
-	[super dealloc];
-}
 
 @end

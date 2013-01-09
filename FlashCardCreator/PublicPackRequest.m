@@ -15,14 +15,13 @@
 @synthesize delegate = _delegate;
 
 - (void) requestPublicPack {
-#warning simuated function, since requirement is not clear.
     __block NSArray *jsonDict;
     NSURL *url = [NSURL URLWithString:PUBLIC_PACK_JSON_FILE];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:
                                          ^(NSURLRequest *req, NSHTTPURLResponse *response, id JSON) {
-                                             jsonDict = (NSArray *) [JSON objectForKey:@"public_packs"];
+                                             jsonDict = (NSArray *) JSON[@"public_packs"];
                                              [_delegate performSelector:@selector(didReceiveJSONResponse:) withObject:jsonDict];
                                          }
                                                                                         failure:

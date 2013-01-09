@@ -28,13 +28,13 @@
 }
 
 -(id)initWithDictionary:(NSDictionary *)dataDict{
-	[self init];
+	if (!(self = [self init])) return nil;
     
 	_answerID = [[dataDict valueForKey:@"answer_id"] intValue];
     _cardID = [[dataDict valueForKey:@"card_id"] intValue];    
-    _title = [[dataDict valueForKey:@"title"] retain];    
-    _content= [[dataDict valueForKey:@"content"] retain];    
-    _imageName= [[dataDict valueForKey:@"image"] retain];
+    _title = [dataDict valueForKey:@"title"];    
+    _content= [dataDict valueForKey:@"content"];    
+    _imageName= [dataDict valueForKey:@"image"];
 	return self;
 }
 
@@ -58,7 +58,6 @@
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 -(void)insert{
@@ -69,7 +68,6 @@
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	[query release];
 }
 
 +(NSMutableDictionary *) answerForCardID:(NSInteger)cardID{
@@ -84,17 +82,7 @@
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"image"];
 	}
 	sqlite3_finalize(queryStatement);
-	return [answerDict autorelease];
-}
-
-#pragma mark -
-#pragma mark Memory Management
-
--(void)dealloc{
-    FCC_RELEASE_SAFELY(_title);
-    FCC_RELEASE_SAFELY(_content);
-    FCC_RELEASE_SAFELY(_imageName);
-	[super dealloc];
+	return answerDict;
 }
 
 @end

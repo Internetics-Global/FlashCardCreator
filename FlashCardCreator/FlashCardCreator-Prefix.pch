@@ -13,6 +13,11 @@
     #import <Foundation/Foundation.h>
 #endif
 
+
+//Reachablity requirement
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
 // iPhone,iPad, iPhone5 diff
 #define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
@@ -25,7 +30,9 @@
 #define UPDATE_USER_PACKS_LIST_NOTIFICATION @"UPDATE_USER_PACKS_LIST_NOTIFICATION"
 #define GET_USER_COMPLETE_NOTIFICATION @"GET_USER_COMPLETE_NOTIFICATION"
 #define NEW_PACK_ADDED_NOTIFICATION @"NEW_PACK_ADDED_NOTIFICATION"
+#define NEW_CARD_ADDED_NOTIFICATION @"NEW_CARD_ADDED_NOTIFICATION"
 #define NEW_SELECTED_PACK_NOTIFICATION @"NEW_SELECTED_PACK_NOTIFICATION"
+#define DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION @"DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION"
 #define DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION @"DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION"
 
 //Global user_id
@@ -37,7 +44,6 @@
 #define DROPBOX_APP_ROOT kDBRootDropbox
 
 //Public Pack
-#define PUBLIC_PACK_ID 1
-#define PUBLIC_PACK_THUMB_IMAGE_URL @"https://www.dropbox.com/s/obpi5snlp4tp6a6/public_pack_thumb_pic.png" 
-#define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json" 
+#define PUBLIC_PACK_ID 31415
+#define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"
 

@@ -21,10 +21,10 @@
 
 @interface PublicPackRequest : NSObject {
     
-    id <PublicPackRequestDelegate> _delegate;
+    id <PublicPackRequestDelegate> __weak _delegate;
 }
 
-@property (assign, nonatomic) id <PublicPackRequestDelegate> delegate;
+@property (weak, nonatomic) id <PublicPackRequestDelegate> delegate;
 
 - (void) requestPublicPack;
 
