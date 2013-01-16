@@ -23,6 +23,9 @@
 
 @property (nonatomic, strong) Card *currentCard;
 
+@property (strong, nonatomic) QuestionView *questionView;
+@property (strong, nonatomic) AnswerView *answerView;
+
 - (void) refreshQuestionAnserView;
 
 @end

@@ -11,6 +11,7 @@
 #import "User.h"
 #import "PackCell.h"
 #import "AddViewController.h"
+#import "CreateCardViewController.h"
 #import "DataManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ZipFileDownloadHelper.h"
@@ -21,6 +22,10 @@
 #import "Pack.h"
 #import "PackListViewController.h"
 #import <QuartzCore/QuartzCore.h>
+
+#import "PackCell.h"
+#import "UIImageView+AFNetworking.h"
+#import "CreatePackViewController.h"
 
 
 @implementation MasterViewController
@@ -54,10 +59,8 @@
         self.title = NSLocalizedString(@"Master-card list", @"Master");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
-            self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
-        
-        
+    
         
     }
     return self;
@@ -67,10 +70,11 @@
 {
     [super viewDidLoad];
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"Add card" style:UIBarButtonSystemItemAdd target:self action:@selector(insertNewCard:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    
     UIBarButtonItem *selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
-    self.navigationItem.leftBarButtonItem = selectPackButton;
+    
+    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Pack" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
+    self.navigationItem.leftBarButtonItems = @[selectPackButton,newPackButton];
     
     if (!_isCurrentPackPublic) {
         self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
@@ -91,28 +95,51 @@
         });
     }
     
+    UIButton *addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    
+    if (isUserInterfaceIdiomPhone ) {
+        addCardButton.center = CGPointMake(480,UI_SCREEN_WIDTH-80);
+    } else {
+        addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -50);
+    }
+    [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
+    [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
+    [addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
+    [self.splitViewController.view insertSubview:addCardButton atIndex:0];
+    [self.splitViewController.view bringSubviewToFront:addCardButton];
+    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.title = @"";
+    
+}
+
+- (void) createNewPack:(id)sender {
+    CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
+	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+	[self presentModalViewController:navController animated:YES];
+
 }
 
 - (void)selectAvailablePacks:(id)sender
 {
     if (isUserInterfaceIdiomPhone) {
-        PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:packListTableViewController animated:YES];
+//        PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
+//        [self.navigationController pushViewController:packListTableViewController animated:YES];
         
     } else {
-        PackListViewController *packListViewController = [[PackListViewController alloc] init];
-        packListViewController.view.frame = CGRectMake(10, 10, 700, 262);
+        PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
+        packListViewController.view.frame = CGRectMake(10, 10, 640, 262);
         packListViewController.view.clipsToBounds = YES;
         packListViewController.view.layer.cornerRadius = 0;
-        packListViewController.view.backgroundColor =[UIColor grayColor];
-        packListViewController.contentSizeForViewInPopover = CGSizeMake(700, 262);
+        packListViewController.view.backgroundColor =[UIColor clearColor];
+        packListViewController.contentSizeForViewInPopover = CGSizeMake(660, 262);
         
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListViewController];
         }
-        self.contentSizeForViewInPopover = CGSizeMake(720, 282);
-        [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-//        [_packListPickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }
 
@@ -124,6 +151,26 @@
     AddViewController *addViewController = [[AddViewController alloc] initWithNibName:@"AddViewController" bundle:nil];
     [self.navigationController pushViewController:addViewController animated:YES];
 }
+
+- (void)createNewCard:(id)sender
+{
+    if (_isCurrentPackPublic) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"Can not add card under online public pack"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    
+    CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
+    createCardViewController.currentPack = _currentPack;
+    createCardViewController.view.frame =CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
+    [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+}
+
 
 
 #pragma mark -
@@ -195,22 +242,32 @@
     return ([[_currentPack cards] count]); //test purpose
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 200;
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"CardCell";
     
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PackCell *cell = (PackCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[PackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SelectedCellBackground.png"]];
+        backgroundView.layer.cornerRadius =5;
+        [backgroundView.layer setMasksToBounds:YES];
+        cell.selectedBackgroundView = backgroundView;
 	}
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     Card *card = [_currentPack cards][indexPath.row];
-    cell.textLabel.text = card.cardName;
+    cell.indexLabel.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:card.coverImageURL]
-                   placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [cell.cellImageView setImageWithURL:[NSURL URLWithString:card.coverImageURL]
+                       placeholderImage:[UIImage imageNamed:@"card_list_placeholder.png"]];
+
+    
 
     return cell;
 
@@ -293,33 +350,10 @@
 
 
 #pragma mark -
-#pragma mark PackListDelegate
-
-- (void)packListSelected:(int) index {
-    [_packListPickerPopover dismissPopoverAnimated:YES];
-    
-    if (index ==0) {
-        _isCurrentPackPublic = TRUE;
-        self.currentPack = _publicPack;
-    } else {
-        _isCurrentPackPublic = FALSE;
-        self.currentPack = [[User defaultUser] packs][(index-1)];
-    }
-    
-    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
-    
-    [self.tableView reloadData];
-}
-
-
-#pragma mark -
 #pragma mark Rotate control
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (isUserInterfaceIdiomPhone)
-        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
-    else
-        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 
@@ -377,7 +411,7 @@
             [_currentCard question].title = questionDict[@"title"];
             [_currentCard question].content = questionDict[@"content"];
             [_currentCard question].type = questionDict[@"type"];
-            [_currentCard question].imageName = questionDict[@"image"];
+            [_currentCard question].imageFullPath = questionDict[@"image"];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -396,7 +430,7 @@
             [_currentCard answer].cardID = [answerDict[@"card_id"] intValue];
             [_currentCard answer].title = answerDict[@"title"];
             [_currentCard answer].content = answerDict[@"content"];
-            [_currentCard answer].imageName = answerDict[@"image"];
+            [_currentCard answer].imageFullPath = answerDict[@"image"];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");

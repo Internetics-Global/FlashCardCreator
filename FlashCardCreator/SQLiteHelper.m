@@ -88,12 +88,12 @@
 		sqlite3_finalize(createNotes);
 	}
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, content text, type text, image text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, content text, type text, image text, logo text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, content text, image text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, content text, image text, logo text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}

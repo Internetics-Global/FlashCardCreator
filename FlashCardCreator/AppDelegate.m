@@ -76,7 +76,11 @@
     [publicPackRequest requestPublicPack];
     publicPackRequest.delegate = self.masterViewController;
     
+    //7.Golbal UI setting
+    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    [UIApplication sharedApplication].statusBarHidden = YES;
     
+    //8. Show UI
     [self.window makeKeyAndVisible];
     
     

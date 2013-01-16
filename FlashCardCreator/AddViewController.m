@@ -70,13 +70,13 @@
     _card.question.content = [NSString stringWithFormat:@"contentcontentcontentcontent%d", rand()];
     //warning, need to be completed
     NSString *imageStr = [NSString stringWithFormat:@"question%d.png",arc4random()%7];
-    _card.question.imageName = imageStr;
+    _card.question.imageFullPath = imageStr;
     
     _card.answer.title = [NSString stringWithFormat:@"answer%d", rand()];
     _card.answer.cardID = _card.cardID;
     _card.answer.content = [NSString stringWithFormat:@"answeransweransweransweranswer%d", rand()];
     imageStr = [NSString stringWithFormat:@"answer%d.png",arc4random()%7];
-    _card.answer.imageName = imageStr;
+    _card.answer.imageFullPath = imageStr;
     
     [_pack addCard:_card];
     
@@ -91,6 +91,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];
     
 }
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];

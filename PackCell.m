@@ -7,8 +7,13 @@
 //
 
 #import "PackCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PackCell
+
+@synthesize indexLabel = _indexLabel;
+@synthesize cellImageView = _cellImageView;
+
 
 #pragma mark -
 #pragma mark Initialization
@@ -17,7 +22,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        self.contentView.backgroundColor = [UIColor clearColor];
+        [self setupView];
     }
     return self;
 }
@@ -27,6 +33,21 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void) setupView {
+    self.contentView.frame = CGRectMake(0, 0, 320, 200);
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 40, 40)];
+    _indexLabel.text = @"N";
+    _indexLabel.textColor = [UIColor whiteColor];
+    _indexLabel.font = [UIFont systemFontOfSize:17];
+    _indexLabel.backgroundColor = [UIColor clearColor];
+    _indexLabel.textAlignment = UITextAlignmentCenter;
+    [self.contentView addSubview:_indexLabel];
+    
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 10, 250, 180)];
+    _cellImageView.image = [UIImage imageNamed:@"card_list_placeholder.png"];
+    [self.contentView addSubview:_cellImageView];
 }
 
 @end

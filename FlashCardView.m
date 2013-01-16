@@ -14,8 +14,9 @@
 
 #define kSegmentLeftMargin 20.0
 #define kSegmentHeight 30.0
+#define kSegmentButtomMargin 20.0
 
-#define kQuestionViewLeftMargin 30.0
+#define kQuestionViewLeftMargin 10.0
 #define kQuestionViewTopMargin 30.0
 #define kQuestionViewButtomMargin 60.0
 #define kQuestionViewCornerRadius 30.0
@@ -24,12 +25,14 @@
 @implementation FlashCardView
 
 @synthesize currentCard = _currentCard;
+@synthesize questionView = _questionView;
+@synthesize answerView = _answerView;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blueColor];
+        self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
         
         _isQuestionShowing = YES; //default to show question
         [self loadView];
@@ -43,24 +46,25 @@
                          @"Answer"]];
     
     CGRect frame = CGRectMake(kSegmentLeftMargin,
-                              self.frame.size.height-kSegmentHeight-kSegmentLeftMargin,
-                              self.frame.size.width-2*kSegmentLeftMargin,
+                              self.bounds.size.height-kSegmentHeight-kSegmentButtomMargin,
+                              self.bounds.size.width-2*kSegmentLeftMargin,
                               kSegmentHeight);
     _segmentedControl.frame = frame;
     [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    _segmentedControl.tintColor = [UIColor grayColor];
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
     
     if (_questionView == nil) {
-        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewLeftMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
+        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewTopMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadius;
         _questionView.currentCard = _currentCard;
         [self addSubview:_questionView];
     }
     
     if (_answerView == nil) {
-        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewLeftMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
+        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewTopMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadius;
         _answerView.currentCard = _currentCard;
     }

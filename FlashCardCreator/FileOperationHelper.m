@@ -33,5 +33,21 @@
 	return [[self temporaryDirectory] stringByAppendingPathComponent:fileName];
 }
 
++ (NSString *) generateUniqueImageFilePath {
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory,    NSUserDomainMask ,YES );
+    NSString *cardListDir = [paths[0] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:cardListDir]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:cardListDir withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", cardListDir);
+        }
+    }
+    
+    
+    NSString *uid = [NSString stringWithFormat:@"%f%i.png", [[NSDate date] timeIntervalSince1970], arc4random()];
+    return ([cardListDir stringByAppendingPathComponent:uid]);
+}
+
 
 @end

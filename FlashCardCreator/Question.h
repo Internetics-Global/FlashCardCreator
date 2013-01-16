@@ -14,7 +14,8 @@
 	NSString *_title;
     NSString *_content;
     NSString *_type;  //????????
-    NSString *_imageName;
+    NSString *_imageFullPath;
+    NSString *_logoFullPath;
 }
 
 @property (nonatomic, assign) NSInteger questionID;
@@ -22,7 +23,8 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *type;
-@property (nonatomic, copy) NSString *imageName;
+@property (nonatomic, copy) NSString *imageFullPath;
+@property (nonatomic, copy) NSString *logoFullPath;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;

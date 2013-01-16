@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PackCell : UITableViewCell
+@interface PackCell : UITableViewCell {
+    UILabel *_indexLabel;
+    UIImageView *_cellImageView;
+}
+
+@property (strong, nonatomic) UILabel *indexLabel;
+@property (strong, nonatomic) UIImageView *cellImageView;
 
 @end

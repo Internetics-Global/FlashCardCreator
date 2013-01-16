@@ -16,7 +16,8 @@
 @synthesize title = _title;
 @synthesize content = _content;
 @synthesize type = _type;
-@synthesize imageName = _imageName;
+@synthesize imageFullPath = _imageFullPath;
+@synthesize logoFullPath = _logoFullPath;
 
 #pragma mark -
 #pragma mark Initialization
@@ -36,7 +37,8 @@
     _title = [dataDict valueForKey:@"title"];
     _content= [dataDict valueForKey:@"content"];
     _type= [dataDict valueForKey:@"type"];
-    _imageName= [dataDict valueForKey:@"image"];
+    _imageFullPath= [dataDict valueForKey:@"image"];
+    _logoFullPath= [dataDict valueForKey:@"logo"];
     
 	return self;
 }
@@ -59,7 +61,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", content=\"%@\", type=\"%@\", image=\"%@\" WHERE card_id=%d", _questionID, _title, _content, _type, _imageName, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", content=\"%@\", type=\"%@\", image=\"%@\", logo=\"%@\" WHERE card_id=%d", _questionID, _title, _content, _type, _imageFullPath, _logoFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -69,7 +71,7 @@
 	if (_questionID == -1) {
 		_questionID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, content,  type, image) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\")", _questionID, _cardID, _title, _content, _type, _imageName];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, content,  type, image, logo) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")", _questionID, _cardID, _title, _content, _type, _imageFullPath, _logoFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -87,6 +89,7 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"content"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"type"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"image"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"logo"];
 	}
 	sqlite3_finalize(queryStatement);
 	return questionDict;

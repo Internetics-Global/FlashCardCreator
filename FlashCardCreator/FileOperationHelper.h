@@ -16,4 +16,6 @@
 + (NSString *) temporaryDirectory;
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 
++ (NSString *) generateUniqueImageFilePath;
+
 @end

@@ -15,7 +15,8 @@
 @synthesize cardID = _cardID;
 @synthesize title = _title;
 @synthesize content = _content;
-@synthesize imageName = _imageName;
+@synthesize imageFullPath = _imageFullPath;
+@synthesize logoFullPath = _logoFullPath;
 
 #pragma mark -
 #pragma mark Initialization
@@ -34,7 +35,8 @@
     _cardID = [[dataDict valueForKey:@"card_id"] intValue];    
     _title = [dataDict valueForKey:@"title"];    
     _content= [dataDict valueForKey:@"content"];    
-    _imageName= [dataDict valueForKey:@"image"];
+    _imageFullPath= [dataDict valueForKey:@"image"];
+    _logoFullPath= [dataDict valueForKey:@"logo"];
 	return self;
 }
 
@@ -54,7 +56,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", content=\"%@\", image=\"%@\" WHERE card_id=%d", _answerID, _title, _content, _imageName, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", content=\"%@\", image=\"%@\", logo=\"%@\" WHERE card_id=%d", _answerID, _title, _content, _imageFullPath, _logoFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -64,7 +66,7 @@
 	if (_answerID == -1) {
 		_answerID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, content,  image) VALUES (%d, %d, \"%@\", \"%@\", \"%@\")", _answerID, _cardID, _title, _content, _imageName];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, content, image, logo) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\")", _answerID, _cardID, _title, _content, _imageFullPath, _logoFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -80,6 +82,7 @@
 		[answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"title"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"content"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"image"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"logo"];
 	}
 	sqlite3_finalize(queryStatement);
 	return answerDict;

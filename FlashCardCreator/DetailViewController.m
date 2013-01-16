@@ -15,8 +15,8 @@
 #import "Card.h"
 #import "Pack.h"
 
-#define kScrollViewObjectWidth_iPad 650.0
-#define kScrollViewObjectHeight_iPad 650.0
+#define kScrollViewObjectWidth_iPad 680.0
+#define kScrollViewObjectHeight_iPad 660.0
 #define kScrollViewObjectMargin_iPad 30
 
 #define kScrollViewObjectWidth_iPhone 300.0
@@ -41,7 +41,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Detail", @"Detail");
+        self.title = NSLocalizedString(@"Q/A", @"Q/A");
         _cardArray = [[NSMutableArray alloc] init];
     }
     return self;
@@ -50,15 +50,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
 }
+
 
 - (void)loadView {
     [super loadView];
     
-    UIBarButtonItem *aboutButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                    target:self
-                                    action:@selector(aboutButtonClicked)];
+    UIBarButtonItem *aboutButton = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonClicked)];
     
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
@@ -66,15 +65,16 @@
     
     self.navigationItem.rightBarButtonItems =
     @[aboutButton, playButton];
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 690, 690)];
+    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _scrollView.delegate = self;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.clipsToBounds = YES;
     _scrollView.pagingEnabled = YES;
     _scrollView.bounces = NO;
-    _scrollView.backgroundColor =[UIColor grayColor];
+    _scrollView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:_scrollView];
     [self layoutScrollObjects];
     
@@ -97,19 +97,20 @@
 - (void)layoutScrollObjects
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = 20;
+    CGFloat curXLoc = 0;
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
-		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,30,kScrollViewObjectWidth_iPad,kScrollViewObjectHeight_iPad)];
+		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = self.currentCard;
 		CGRect rect = cardView.frame;
-		rect.size.width = kScrollViewObjectWidth_iPad;
-        rect.origin = CGPointMake(curXLoc, 30);
+        rect.origin = CGPointMake(curXLoc, 0);
         cardView.frame = rect;
 		[_scrollView addSubview:cardView];
         curXLoc += (kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad);
         [_cardArray addObject:cardView];
+        
+        
 	}
 	
 	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * (kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad)), kScrollViewObjectHeight_iPad)];
@@ -149,6 +150,7 @@
 {
     AboutTableViewController *aboutTableViewController = [[AboutTableViewController alloc] init];
     [self presentModalViewController:aboutTableViewController animated:YES];
+    
 }
 
 - (void)playButtonClicked
@@ -191,10 +193,7 @@
 #pragma mark Rotate control
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if (isUserInterfaceIdiomPhone)
-        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
-    else
-        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 

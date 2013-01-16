@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PublicPackRequest.h"
-#import "PackListTableViewController.h"
 #import "ZipFileDownloadHelper.h"
 #import "MBProgressHUD.h"
 
@@ -16,7 +15,7 @@
 @class Pack;
 @class Card;
 
-@interface MasterViewController : UITableViewController <PublicPackRequestDelegate, PackListDelegate, ZipFileDownloadHelperDelegate, MBProgressHUDDelegate> {
+@interface MasterViewController : UITableViewController <PublicPackRequestDelegate, ZipFileDownloadHelperDelegate, MBProgressHUDDelegate> {
     
     Pack *_currentPack;
     Card *_currentCard;

@@ -7,10 +7,19 @@
 //
 
 #import "BaseView.h"
+#import "UIImagePickerController+NoRotate.h"
+#import "QuestionView.h"
+#import "FileOperationHelper.h"
 
 @implementation BaseView
 
 @synthesize currentCard = _currentCard;
+@synthesize logoImage = _logoImage;
+@synthesize logoImageFullPath = _logoImageFullPath;
+@synthesize content = _content;
+@synthesize title = _title;
+@synthesize image = _image;
+@synthesize imageFullPath = _imageFullPath;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -25,6 +34,15 @@
         [self loadView];
         _keyboardShown = FALSE;
         [self setInputAccessoryViewDone];
+        
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
+        _picker.delegate = self;
+        
+        if (_imagePickerPopover == nil) {
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+        }
     }
     return self;
 }
@@ -34,28 +52,38 @@
     _title.frame = CGRectMake(0, 0, 600, 60);
     _title.text =@"Question";
     _title.font =[UIFont systemFontOfSize:30];
-    _title.textAlignment = NSTextAlignmentLeft;
+    _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
     [self addSubview:_title];
     
-    _logoImage = [[UIImageView  alloc] initWithImage:[UIImage imageNamed:@"question_logo.png"]];
+    _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(500, 0, 60, 60);
+    _logoImage.frame = CGRectMake(550, 10, 120, 120);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
+    _logoImage.userInteractionEnabled = FALSE;
+    _logoImage.tag = 0;
     [self addSubview:_logoImage];
     
     _image= [[UIImageView  alloc] init];
+    _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
-    _image.frame = CGRectMake(270, 120, 300, 300);
+    _image.frame = CGRectMake(370, 150, 300, 300);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
+    _image.tag = 1;
     [self addSubview:_image];
     
+    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+    [_image addGestureRecognizer:imageSingeTap];
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
+    
     _content = [[UITextView alloc]init];
-    _content.frame = CGRectMake(0, 60, 600, 500);
+    _content.frame = CGRectMake(0, 100, 370, 500);
     _content.font =[UIFont systemFontOfSize:20];
+    _content.userInteractionEnabled = FALSE;
     _content.backgroundColor = [UIColor clearColor];
     _content.keyboardType = UIKeyboardAppearanceDefault;
     _content.returnKeyType = UIReturnKeyDefault;
@@ -113,6 +141,48 @@
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+- (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
+    
+    
+    _isLogoImageViewClicked = YES;
+    
+    CGPoint point = [sender locationInView:self];
+    CGRect rect = CGRectMake(point.x, point.y, 50, 50);
+    
+    [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    
+}
+
+- (void)selectFromImageLibraryByImage:(UITapGestureRecognizer *)sender {
+    
+    _isLogoImageViewClicked = NO;
+    
+    CGPoint point = [sender locationInView:self];
+    CGRect rect = CGRectMake(point.x, point.y, 50, 50);
+    
+    [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [_imagePickerPopover dismissPopoverAnimated:YES];
+    NSData *imageData = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerOriginalImage]);
+    NSString *savedFullPath = [FileOperationHelper generateUniqueImageFilePath];
+    [imageData writeToFile:savedFullPath atomically:YES];
+    if (_isLogoImageViewClicked) {
+        _logoImageFullPath = savedFullPath;
+        _logoImage.image = [UIImage imageWithContentsOfFile:savedFullPath];
+    } else {
+        _imageFullPath = savedFullPath;
+        _image.image = [UIImage imageWithContentsOfFile:savedFullPath];
+    }
+    
+    
+}
+
+
 
 
 @end
