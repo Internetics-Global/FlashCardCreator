@@ -9,7 +9,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "User.h"
-#import "PackCell.h"
+#import "CardCell.h"
 #import "AddViewController.h"
 #import "CreateCardViewController.h"
 #import "DataManager.h"
@@ -20,12 +20,13 @@
 #import "Question.h"
 #import "Answer.h"
 #import "Pack.h"
+#import "Card.h"
 #import "PackListViewController.h"
-#import <QuartzCore/QuartzCore.h>
 
-#import "PackCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "CreatePackViewController.h"
+#import "UINavigationController+DismissKeyboard.h"
+#import "DataManager.h"
 
 
 @implementation MasterViewController
@@ -35,13 +36,13 @@
 @synthesize currentCard = _currentCard;
 @synthesize indexCard = _indexCard;
 @synthesize isCurrentPackPublic = _isCurrentPackPublic;
+@synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
         //1. Setup notification
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newCardAddedNotification:) name:NEW_CARD_ADDED_NOTIFICATION object:nil];
@@ -80,7 +81,7 @@
         self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
         [self.tableView reloadData];
     } else {
-        self.navigationItem.leftBarButtonItem.title = @"public pack";
+        self.navigationItem.leftBarButtonItem.title = PUBLIC_PACK_NAME;
     }
     
     //Do only once at startup for non-public pack
@@ -139,7 +140,7 @@
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListViewController];
         }
-        [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 10, 10) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }
 
@@ -164,11 +165,25 @@
         return;
     }
     
+    if (_backgroundOfCreateCardView == nil) {
+        _backgroundOfCreateCardView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];    
+    }
+    _backgroundOfCreateCardView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.8];
+    [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
+    [self.navigationController.view addSubview:_backgroundOfCreateCardView];
+    
     
     CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
     createCardViewController.currentPack = _currentPack;
     createCardViewController.view.frame =CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
     [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+}
+
+- (void) dismissCreateCardView:(id)sender {
+    if ([sender isMemberOfClass:[UIButton class]]) {
+        [(UIButton *)sender removeFromSuperview];
+    }
+    [self.detailViewController.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -182,6 +197,8 @@
 
 -(void)newCardAddedNotification:(NSNotification *)notification{
 	[self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:([[_currentPack cards] count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [_backgroundOfCreateCardView removeFromSuperview];
 }
 
 - (void) showCardsInSelectedPackNotification:(NSNotification *) notification {
@@ -189,16 +206,17 @@
     if (index ==0) {
         _isCurrentPackPublic = TRUE;
         self.currentPack = _publicPack;
+        self.navigationItem.leftBarButtonItem.title = PUBLIC_PACK_NAME;
     } else {
         _isCurrentPackPublic = FALSE;
         self.currentPack = [[User defaultUser] packs][(index-1)];
+        self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
     }
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
     }
     
-    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
 
     [self.tableView reloadData];
     
@@ -239,6 +257,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (([DataManager apiReachable] == FALSE) && (_isCurrentPackPublic)) {
+        return 0;
+    }
+    
     return ([[_currentPack cards] count]); //test purpose
 }
 
@@ -251,21 +273,33 @@
 {
     static NSString *CellIdentifier = @"CardCell";
     
-    PackCell *cell = (PackCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CardCell *cell = (CardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
-		cell = [[PackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SelectedCellBackground.png"]];
         backgroundView.layer.cornerRadius =5;
         [backgroundView.layer setMasksToBounds:YES];
         cell.selectedBackgroundView = backgroundView;
 	}
     
+    
     cell.accessoryType = UITableViewCellAccessoryNone;
     Card *card = [_currentPack cards][indexPath.row];
     cell.indexLabel.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
     
-    [cell.cellImageView setImageWithURL:[NSURL URLWithString:card.coverImageURL]
-                       placeholderImage:[UIImage imageNamed:@"card_list_placeholder.png"]];
+    
+    if (_isCurrentPackPublic) {
+        
+        [cell.cellImageView setImageWithURL:[NSURL URLWithString:card.coverImageURL]
+                           placeholderImage:[UIImage imageNamed:@"card_list_placeholder.png"]];
+    } else {
+        cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    }
+    
+    
+    if (_indexCard == indexPath.row) {
+        [cell setSelected:YES animated:YES];
+    }
 
     
 

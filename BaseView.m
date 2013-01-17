@@ -64,6 +64,8 @@
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
     _logoImage.tag = 0;
+    _logoImage.layer.cornerRadius = 5;
+    _logoImage.layer.masksToBounds = YES;
     [self addSubview:_logoImage];
     
     _image= [[UIImageView  alloc] init];
@@ -73,6 +75,8 @@
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.tag = 1;
+    _image.layer.cornerRadius = 10;
+    _image.layer.masksToBounds = YES;
     [self addSubview:_image];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
@@ -178,11 +182,19 @@
         _imageFullPath = savedFullPath;
         _image.image = [UIImage imageWithContentsOfFile:savedFullPath];
     }
-    
-    
 }
 
-
+- (UIImage *)captureWholeViewAsImage {
+    CGRect screenRect = self.bounds;
+    UIGraphicsBeginImageContext(screenRect.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [self.backgroundColor set];
+    CGContextFillRect(ctx, screenRect);
+    [self.layer renderInContext:ctx];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 
 @end

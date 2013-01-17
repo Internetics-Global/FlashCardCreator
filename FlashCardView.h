@@ -17,14 +17,13 @@
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
-    BOOL _isQuestionShowing;
     Card *_currentCard;
+    BOOL _isQuestionShowing;
 }
-
-@property (nonatomic, strong) Card *currentCard;
 
 @property (strong, nonatomic) QuestionView *questionView;
 @property (strong, nonatomic) AnswerView *answerView;
+@property (nonatomic, strong) Card *currentCard;
 
 - (void) refreshQuestionAnserView;
 

@@ -32,6 +32,9 @@
     //progress indicator related
     MBProgressHUD *_HUD;
     float _progressivePercent;
+    
+    UIButton *_backgroundOfCreateCardView;
+    
 }
 
 @property (strong, nonatomic) DetailViewController *detailViewController;
@@ -41,5 +44,7 @@
 @property (nonatomic, strong) Pack *publicPack;
 @property (nonatomic, assign) int indexCard;
 @property (nonatomic, assign) BOOL isCurrentPackPublic;
+
+@property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 
 @end

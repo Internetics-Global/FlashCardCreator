@@ -80,6 +80,8 @@
         [view addSubview:indexLabel];
         
         coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 210.0f, 180.0f)];
+        coverImageView.layer.cornerRadius = 10;
+        coverImageView.layer.masksToBounds = YES;
         [view addSubview:coverImageView];
     }
     
@@ -87,7 +89,7 @@
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
     if (index == 0) {
-        indexLabel.text = @"public pack";
+        indexLabel.text = PUBLIC_PACK_NAME;
     } else {
         Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:(index-1)];
         

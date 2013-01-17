@@ -9,16 +9,15 @@
 #import "FlashCardView.h"
 #import "QuestionView.h"
 #import "AnswerView.h"
-#import <QuartzCore/QuartzCore.h>
 #import "Card.h"
 
-#define kSegmentLeftMargin 20.0
-#define kSegmentHeight 30.0
+#define kSegmentLeftMargin 30.0
+#define kSegmentHeight 44.0
 #define kSegmentButtomMargin 20.0
 
-#define kQuestionViewLeftMargin 10.0
-#define kQuestionViewTopMargin 30.0
-#define kQuestionViewButtomMargin 60.0
+#define kQuestionViewLeftMargin 0.0
+#define kQuestionViewTopMargin 10.0
+#define kQuestionViewButtomMargin 80.0
 #define kQuestionViewCornerRadius 30.0
 
 
@@ -41,20 +40,6 @@
 }
 
 - (void) loadView {
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                         @[@"Question",
-                         @"Answer"]];
-    
-    CGRect frame = CGRectMake(kSegmentLeftMargin,
-                              self.bounds.size.height-kSegmentHeight-kSegmentButtomMargin,
-                              self.bounds.size.width-2*kSegmentLeftMargin,
-                              kSegmentHeight);
-    _segmentedControl.frame = frame;
-    [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-    _segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
-    _segmentedControl.tintColor = [UIColor grayColor];
-    _segmentedControl.selectedSegmentIndex = 0;
-    [self addSubview:_segmentedControl];
     
     if (_questionView == nil) {
         _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewTopMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
@@ -68,6 +53,20 @@
         _answerView.layer.cornerRadius = kQuestionViewCornerRadius;
         _answerView.currentCard = _currentCard;
     }
+    
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                         @[@"Question",
+                         @"Answer"]];
+    
+    CGRect frame = CGRectMake(kSegmentLeftMargin,
+                              self.bounds.size.height-kSegmentHeight-kSegmentButtomMargin,
+                              self.bounds.size.width-2*kSegmentLeftMargin,
+                              kSegmentHeight);
+    _segmentedControl.frame = frame;
+    [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+    _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    _segmentedControl.selectedSegmentIndex = 0;
+    [self addSubview:_segmentedControl];
 }
 
 - (void) refreshQuestionAnserView {

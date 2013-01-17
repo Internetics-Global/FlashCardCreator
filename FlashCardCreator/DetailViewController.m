@@ -8,16 +8,17 @@
 
 #import "DetailViewController.h"
 #import "AboutTableViewController.h"
-#import <QuartzCore/QuartzCore.h>
 #import "QuestionView.h"
 #import "AnswerView.h"
 #import "FlashCardView.h"
 #import "Card.h"
 #import "Pack.h"
+#import "SHK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
-#define kScrollViewObjectWidth_iPad 680.0
+#define kScrollViewObjectWidth_iPad 660.0
 #define kScrollViewObjectHeight_iPad 660.0
-#define kScrollViewObjectMargin_iPad 30
+#define kScrollViewObjectMargin_iPad 50
 
 #define kScrollViewObjectWidth_iPhone 300.0
 #define kScrollViewObjectHeight_iPhone 300.0
@@ -41,8 +42,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Q/A", @"Q/A");
+        self.title = NSLocalizedString(@"Question & Answer", @"Question & Answer");
         _cardArray = [[NSMutableArray alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
     }
     return self;
 }
@@ -51,20 +54,23 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
+    
 }
 
 
 - (void)loadView {
     [super loadView];
     
-    UIBarButtonItem *aboutButton = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonClicked)];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonClicked)];
     
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                    target:self action:@selector(playButtonClicked)];
     
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the card" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
+    
     self.navigationItem.rightBarButtonItems =
-    @[aboutButton, playButton];
+    @[settingButton, playButton, shareButton];
     _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -88,7 +94,7 @@
 - (void) showCurrentCardInScrollView {
     [self layoutScrollObjects];
     
-    [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad),0) animated:YES];
+    [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad),0) animated:NO];
     
     [_cardArray[_indexCard] refreshQuestionAnserView];
 }
@@ -156,11 +162,64 @@
 - (void)playButtonClicked
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"example"
-                                                    message:@"this is an example"
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
+                                                  message:@"this is an example"
+                                                  delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
     [alert show];
+}
+
+
+#pragma mark -
+#pragma mark - Dropbox and Share related
+
+- (void)shareButtonClicked
+{
+    if (![[DBSession sharedSession] isLinked]) {
+		[[DBSession sharedSession] linkFromController:self.splitViewController];
+    } else {
+        [self exectueShareAfterDropboxLinked];
+    }
+
+}
+
+- (void) dropboxLinked:(id)notification
+{
+    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
+    
+    if(![linkedNum boolValue])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error."
+                                                        message:@"Failed to login to Dropbox."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    } else
+    {
+        [self exectueShareAfterDropboxLinked];
+    }
+}
+
+- (void) exectueShareAfterDropboxLinked {
+    NSString *shareLink = [self createDropboxShareLinkForCurrentCard:nil];
+    [self shareCardViaShareLinkage:shareLink];
+}
+
+//warning, need to be finished
+- (NSString *) createDropboxShareLinkForCurrentCard:(id)notification {
+    NSString *shareLink;
+    return shareLink;
+}
+
+//warning, need to be finished
+- (void) shareCardViaShareLinkage:(NSString *) shareLink {
+    NSURL *url = [NSURL URLWithString:@"www.microsoft.com"];
+    SHKItem *item = [SHKItem URL:url title:@"Hi Friend, I get a incredible card for you" contentType:SHKURLContentTypeWebpage];
+    item.shareType = SHKShareTypeURL;
+    SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+    [SHK setRootViewController:self];
+    [actionSheet showFromToolbar:self.navigationController.toolbar];
 }
 							
 #pragma mark -
@@ -187,6 +246,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark -

@@ -13,9 +13,9 @@
 @class Card;
 
 @interface CreateCardViewController : UIViewController {
-    Pack *_currentPack;
     FlashCardView *_cardView;
     Card *_newCard;
+    Pack *_currentPack;
 }
 
 @property (strong, nonatomic) Pack *currentPack;

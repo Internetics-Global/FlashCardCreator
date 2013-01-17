@@ -34,4 +34,6 @@
 @property (strong, nonatomic) UIImageView *image;
 @property (copy, nonatomic)  NSString *imageFullPath;
 
+- (UIImage *)captureWholeViewAsImage;
+
 @end

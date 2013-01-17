@@ -7,7 +7,6 @@
 //
 
 #import "CreatePackViewController.h"
-#import <QuartzCore/QuartzCore.h>
 #import "Pack.h"
 #import "User.h"
 #import "FileOperationHelper.h"
@@ -36,12 +35,13 @@
 - (void)loadView {
     [super loadView];
     
-    _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 50)];
+    _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];
     _packNameText.textAlignment = UITextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor clearColor];
     _packNameText.text = @"New Pack Name";
     _packNameText.font = [UIFont systemFontOfSize:20];
     _packNameText.delegate = self;
+    _packNameText.borderStyle = UITextBorderStyleRoundedRect;
     [_packNameText setClearsOnBeginEditing:YES];
     _packNameText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_packNameText];
@@ -102,7 +102,7 @@
             return NO;
     }
     
-    if (_packNameText.text == @"public pack")
+    if (_packNameText.text == PUBLIC_PACK_NAME)
         return NO;
     
     return YES;
@@ -150,12 +150,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
 }
+
 
 
 @end

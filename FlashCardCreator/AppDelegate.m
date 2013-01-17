@@ -20,6 +20,9 @@
 
 #import "NSString+QueryString.h"
 
+#import "MySHKConfigurator.h"
+#import "SHKConfiguration.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -80,7 +83,12 @@
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [UIApplication sharedApplication].statusBarHidden = YES;
     
-    //8. Show UI
+    //8.Sharekit configuration
+    //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
+    DefaultSHKConfigurator *configurator = [[MySHKConfigurator alloc] init];
+    [SHKConfiguration sharedInstanceWithConfigurator:configurator];
+    
+    //9. Show UI
     [self.window makeKeyAndVisible];
     
     
@@ -109,7 +117,19 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-    } 
+    } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
+        if ([[DBSession sharedSession] handleOpenURL:url])
+        {
+            if ([[DBSession sharedSession] isLinked])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"linked"]];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"linked"]];
+            }
+            return YES;
+        }
+    
+    }
     
     return YES;
 }

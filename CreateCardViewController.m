@@ -16,6 +16,9 @@
 #import "SQLiteHelper.h"
 #import "Question.h"
 #import "Answer.h"
+#import "FileOperationHelper.h"
+#import "AppDelegate.h"
+#import "MasterViewController.h"
 
 @interface CreateCardViewController ()
 
@@ -32,6 +35,8 @@
         self.view.backgroundColor = [UIColor greenColor];
         UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAndCloseCreateCardView)];
         self.navigationItem.rightBarButtonItem = saveButton;
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
+        self.navigationItem.leftBarButtonItem = backButton;
         self.title = @"Create a new card";
         _newCard = [[Card alloc] init];
     }
@@ -64,7 +69,6 @@
 	// Do any additional setup after loading the view.
 }
 
-
 - (void) saveAndCloseCreateCardView {
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -73,10 +77,15 @@
         return;
     }
     
-    if ([_currentPack.packName isEqualToString:@"public pack"]) {
+    if ([_currentPack.packName isEqualToString:PUBLIC_PACK_NAME]) {
         NSLog(@"Can not create card under public online pack");
         return;
     }
+    
+    NSData *imageData = UIImagePNGRepresentation([_cardView.questionView captureWholeViewAsImage]);
+    NSString *savedFullPath = [FileOperationHelper generateUniqueImageFilePath];
+    [imageData writeToFile:savedFullPath atomically:YES];
+    _newCard.coverImageURL = savedFullPath;
     
     //card.cardName = _cardView.questionView.title.text;   //warning, need to be confirmed
     _newCard.packID = _currentPack.packID;
@@ -105,10 +114,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) backAndPopCreateCardView {
+    [self.navigationController popViewControllerAnimated:YES];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.masterViewController.backgroundOfCreateCardView removeFromSuperview];
 }
+
 
 @end
