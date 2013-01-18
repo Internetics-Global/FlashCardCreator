@@ -33,7 +33,7 @@
 	return [[self temporaryDirectory] stringByAppendingPathComponent:fileName];
 }
 
-+ (NSString *) generateUniqueImageFilePath {
++ (NSString *) generateUniquePNGImageFilePath {
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory,    NSUserDomainMask ,YES );
     NSString *cardListDir = [paths[0] stringByAppendingPathComponent:@"Images"];
@@ -45,7 +45,7 @@
     }
     
     
-    NSString *uid = [NSString stringWithFormat:@"%f%i.png", [[NSDate date] timeIntervalSince1970], arc4random()];
+    NSString *uid = [NSString stringWithFormat:@"%f%d.png", [[NSDate date] timeIntervalSince1970], arc4random()];
     return ([cardListDir stringByAppendingPathComponent:uid]);
 }
 

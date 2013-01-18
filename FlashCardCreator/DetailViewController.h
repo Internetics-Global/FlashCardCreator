@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DropboxSDK/DropboxSDK.h>
+#import "MBProgressHUD.h"
 
 @class QuestionView;
 @class AnswerView;
 @class Card;
 @class Pack;
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate> {
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -24,6 +26,14 @@
     int _indexCard;  //selected card index in master view
     
     NSMutableArray *_cardArray;
+    
+    MBProgressHUD *_HUD;
+    
+    DBRestClient *_restClient;
+    
+    UIPopoverController *_settingPopoverController;
+    
+    BOOL _isShare;
 }
 
 @property (strong, nonatomic) id detailItem;

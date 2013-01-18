@@ -39,7 +39,6 @@
 		2D5F3D42167ACAAD009D2ADC /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D41167ACAAD009D2ADC /* Image.m */; };
 		2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D49167B50F6009D2ADC /* DataManager.m */; };
 		2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5F3D50167B537C009D2ADC /* SystemConfiguration.framework */; };
-		2D5F3D5B167D55F6009D2ADC /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D5A167D55F6009D2ADC /* AboutTableViewController.m */; };
 		2D66BF6316A64C4500795CF9 /* UINavigationController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D66BF6216A64C4500795CF9 /* UINavigationController+DismissKeyboard.m */; };
 		2D66C17716A6B2CB00795CF9 /* libShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C13216A6B26A00795CF9 /* libShareKit.a */; };
 		2D66C17816A6B2FE00795CF9 /* ShareKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2D66C13416A6B26A00795CF9 /* ShareKit.bundle */; };
@@ -98,6 +97,8 @@
 		2DE3E9141681A25900AB3AEC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9131681A25800AB3AEC /* Icon@2x.png */; };
 		2DE3E9161681A2E000AB3AEC /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9151681A2E000AB3AEC /* Icon-72.png */; };
 		2DE3E9181681A2ED00AB3AEC /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9171681A2ED00AB3AEC /* Icon-72@2x.png */; };
+		2DE77DF416A7B2B900E15884 /* DropboxHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE77DF316A7B2B800E15884 /* DropboxHelp.m */; };
+		2DE77E2416A93ED000E15884 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */; };
 		2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */; };
 		2DEDA1E81682E7CD0074AC9E /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E71682E7CD0074AC9E /* SDWebImage.framework */; };
 		2DEDA1EA1682E9770074AC9E /* card_list_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DEDA1E91682E9770074AC9E /* card_list_placeholder.png */; };
@@ -423,8 +424,6 @@
 		2D5F3D48167B50F6009D2ADC /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		2D5F3D49167B50F6009D2ADC /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		2D5F3D50167B537C009D2ADC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		2D5F3D59167D55F6009D2ADC /* AboutTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTableViewController.h; sourceTree = "<group>"; };
-		2D5F3D5A167D55F6009D2ADC /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		2D66BF6116A64C4500795CF9 /* UINavigationController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+DismissKeyboard.h"; sourceTree = "<group>"; };
 		2D66BF6216A64C4500795CF9 /* UINavigationController+DismissKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+DismissKeyboard.m"; sourceTree = "<group>"; };
 		2D66C10416A6B26800795CF9 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
@@ -516,6 +515,10 @@
 		2DE3E9131681A25800AB3AEC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		2DE3E9151681A2E000AB3AEC /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
 		2DE3E9171681A2ED00AB3AEC /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
+		2DE77DF216A7B2B800E15884 /* DropboxHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxHelp.h; sourceTree = "<group>"; };
+		2DE77DF316A7B2B800E15884 /* DropboxHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxHelp.m; sourceTree = "<group>"; };
+		2DE77E2216A93ED000E15884 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoTableViewController.h; sourceTree = "<group>"; };
+		2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoTableViewController.m; sourceTree = "<group>"; };
 		2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2DEDA1E71682E7CD0074AC9E /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		2DEDA1E91682E9770074AC9E /* card_list_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_list_placeholder.png; sourceTree = "<group>"; };
@@ -647,6 +650,8 @@
 				2D5F3CF81679D334009D2ADC /* FileOperationHelper.m */,
 				2D89234816806BF200B43BCD /* PublicPackRequest.h */,
 				2D89234916806BF200B43BCD /* PublicPackRequest.m */,
+				2DE77DF216A7B2B800E15884 /* DropboxHelp.h */,
+				2DE77DF316A7B2B800E15884 /* DropboxHelp.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -718,19 +723,19 @@
 				2D09AF1316A5046900B1C0C9 /* CreatePack */,
 				2DC06257167EA4D700F2EA07 /* CreateCard */,
 				2D3E9D0E167D954F0053FA31 /* Custom UIs */,
-				2D5F3D58167D5590009D2ADC /* About */,
+				2D5F3D58167D5590009D2ADC /* Settings */,
 				2D5F3CEF1679D256009D2ADC /* Data */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		2D5F3D58167D5590009D2ADC /* About */ = {
+		2D5F3D58167D5590009D2ADC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				2D5F3D59167D55F6009D2ADC /* AboutTableViewController.h */,
-				2D5F3D5A167D55F6009D2ADC /* AboutTableViewController.m */,
+				2DE77E2216A93ED000E15884 /* MoreInfoTableViewController.h */,
+				2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */,
 			);
-			name = About;
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		2D66C10516A6B26800795CF9 /* Products */ = {
@@ -1348,7 +1353,6 @@
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
 				2D5F3D42167ACAAD009D2ADC /* Image.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
-				2D5F3D5B167D55F6009D2ADC /* AboutTableViewController.m in Sources */,
 				2D3E9D11167D95760053FA31 /* CardCell.m in Sources */,
 				2DC0621F167E779200F2EA07 /* AddViewController.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
@@ -1381,6 +1385,8 @@
 				2D09AF9F16A5424000B1C0C9 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D66BF6316A64C4500795CF9 /* UINavigationController+DismissKeyboard.m in Sources */,
 				2D66C22116A6C34D00795CF9 /* MySHKConfigurator.m in Sources */,
+				2DE77DF416A7B2B900E15884 /* DropboxHelp.m in Sources */,
+				2DE77E2416A93ED000E15884 /* MoreInfoTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

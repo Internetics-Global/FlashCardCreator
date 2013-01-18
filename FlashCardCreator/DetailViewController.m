@@ -7,7 +7,7 @@
 //
 
 #import "DetailViewController.h"
-#import "AboutTableViewController.h"
+#import "MoreInfoTableViewController.h"
 #import "QuestionView.h"
 #import "AnswerView.h"
 #import "FlashCardView.h"
@@ -15,6 +15,8 @@
 #import "Pack.h"
 #import "SHK.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "DropboxHelp.h"
+#import "SHKItem.h"
 
 #define kScrollViewObjectWidth_iPad 660.0
 #define kScrollViewObjectHeight_iPad 660.0
@@ -44,6 +46,7 @@
     if (self) {
         self.title = NSLocalizedString(@"Question & Answer", @"Question & Answer");
         _cardArray = [[NSMutableArray alloc] init];
+        _isShare = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
     }
@@ -61,7 +64,7 @@
 - (void)loadView {
     [super loadView];
     
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(aboutButtonClicked)];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
     
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
@@ -152,10 +155,19 @@
 #pragma mark -
 #pragma mark UIBarButtonItem action
 
-- (void)aboutButtonClicked
+- (void)moreButtonClicked:(id) sender
 {
-    AboutTableViewController *aboutTableViewController = [[AboutTableViewController alloc] init];
-    [self presentModalViewController:aboutTableViewController animated:YES];
+    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
+    
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
+    
+    if (_settingPopoverController == nil) {
+        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+    }
+    
+    _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
+    
+    [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
@@ -175,6 +187,8 @@
 
 - (void)shareButtonClicked
 {
+    _isShare = YES;
+    
     if (![[DBSession sharedSession] isLinked]) {
 		[[DBSession sharedSession] linkFromController:self.splitViewController];
     } else {
@@ -197,20 +211,107 @@
         [alert show];
     } else
     {
-        [self exectueShareAfterDropboxLinked];
+        if (_isShare) {
+            [self exectueShareAfterDropboxLinked];
+            _isShare = NO;
+        }
     }
 }
 
-- (void) exectueShareAfterDropboxLinked {
-    NSString *shareLink = [self createDropboxShareLinkForCurrentCard:nil];
-    [self shareCardViaShareLinkage:shareLink];
+- (DBRestClient *)restClient {
+    if (!_restClient) {
+        _restClient =
+        [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
+    return _restClient;
 }
 
-//warning, need to be finished
-- (NSString *) createDropboxShareLinkForCurrentCard:(id)notification {
-    NSString *shareLink;
-    return shareLink;
+- (void) exectueShareAfterDropboxLinked {
+    
+    if (_currentCard == nil)
+        return;
+    
+    //step1: create zip file
+    DropboxHelp *helper = [[DropboxHelp alloc] init];
+    NSString *generatedZipFilePath = [helper zipCardForUpload:_currentCard];
+    
+    //step2: upload to dropbox
+    NSString *saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];
+    if (!_restClient) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    }
+    _restClient.delegate = self;
+    //if folder not exist, create automatically
+    [_restClient uploadFile:saveName toPath:@"/FlashCardCreator"
+              withParentRev:nil fromPath:generatedZipFilePath];
+    if (_HUD == nil) {
+        _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_HUD];
+    }
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+	_HUD.labelText = @"Uploading...";
+    [_HUD show:YES];
+    
+    //step3: create dropbox linkage which locate in uploadedFile:
+
 }
+
+- (void) shareAction:(NSString *)shareLinkage {
+
+    NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://www." withString:@"fcc://"];
+    
+    SHKItem *item = [SHKItem URL:[NSURL URLWithString:urlSchemeLinkage] title:@"example" contentType:SHKURLContentTypeUndefined];
+    
+    //SHKItem *item = [SHKItem text:urlSchemeLinkage];
+     /*item.facebookURLSharePictureURI = @"http://www.state.gov/cms_images/india_tajmahal_2003_06_252.jpg";
+     item.facebookURLShareDescription = @"description text";
+     item.tags = [NSArray arrayWithObjects:@"apple inc.",@"computers",@"mac", nil];
+     item.mailToRecipients = [NSArray arrayWithObjects:@"frodo@middle-earth.me", @"gandalf@middle-earth.me", nil];
+     item.textMessageToRecipients = [NSArray arrayWithObjects: @"581347615", @"581344543", nil];*/
+     
+    
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+    [SHK setRootViewController:self];
+	[actionSheet showFromToolbar:self.navigationController.toolbar];
+}
+
+- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
+              from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+    
+    NSLog(@"File uploaded successfully to path: %@", metadata.path);
+    [_HUD show:FALSE];
+    [_HUD removeFromSuperview];
+    
+    //step3: create dropbox linkage
+    [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
+    
+    //step4: share via sharekit, which locate in loadedSharableLink:
+}
+
+- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
+    NSLog(@"File upload failed with error - %@", error);
+    [_HUD show:FALSE];
+    [_HUD removeFromSuperview];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                    message:@"Failure to upload"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
+    NSLog(@"Share linkage create successfully with linkage - %@", link);
+    [self shareAction:link];
+    
+}
+
+- (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
+    NSLog(@"Share linkage create failed with error - %@", error);    
+}
+
 
 //warning, need to be finished
 - (void) shareCardViaShareLinkage:(NSString *) shareLink {

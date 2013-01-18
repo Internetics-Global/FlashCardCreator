@@ -173,7 +173,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [_imagePickerPopover dismissPopoverAnimated:YES];
     NSData *imageData = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerOriginalImage]);
-    NSString *savedFullPath = [FileOperationHelper generateUniqueImageFilePath];
+    NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     if (_isLogoImageViewClicked) {
         _logoImageFullPath = savedFullPath;

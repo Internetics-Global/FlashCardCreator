@@ -108,7 +108,7 @@
 
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"Selected item at index %i", index);
+    NSLog(@"Selected item at index %d", index);
     [[NSNotificationCenter defaultCenter] postNotificationName:NEW_SELECTED_PACK_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
