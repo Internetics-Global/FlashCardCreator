@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Pack;
+@class PackListViewController;
 
 @interface CreatePackViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UITextField *_packNameText;
@@ -16,7 +17,15 @@
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
     
+    UITextField *_packHeaderText;
+    PackListViewController *_packListViewController;
+    UIImageView *_seperatorLineImage;
+    
+    BOOL _isIncludePackListView;
+    
     Pack *_newPack;
 }
+
+@property (assign, nonatomic) BOOL isIncludePackListView;
 
 @end

@@ -70,6 +70,10 @@
 		2D7A8CE516910F84002EDF77 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7A8CE016910F84002EDF77 /* ZipArchive.m */; };
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
+		2D8B303616AE441500C94485 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8B303516AE441500C94485 /* Common.m */; };
+		2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D90CCDF16AD5311007B404D /* UIImage+Scale.m */; };
+		2D90CCE316AD5E39007B404D /* create_pack_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE116AD5E39007B404D /* create_pack_background.png */; };
+		2D90CCE416AD5E39007B404D /* create_pack_seperator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE216AD5E39007B404D /* create_pack_seperator.png */; };
 		2DBD6DDA169BCF0600962A80 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DD9169BCF0600962A80 /* QuestionView.m */; };
 		2DBD6DDD169BCF1B00962A80 /* AnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DDC169BCF1B00962A80 /* AnswerView.m */; };
 		2DC0621F167E779200F2EA07 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0621D167E779200F2EA07 /* AddViewController.m */; };
@@ -97,7 +101,6 @@
 		2DE3E9141681A25900AB3AEC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9131681A25800AB3AEC /* Icon@2x.png */; };
 		2DE3E9161681A2E000AB3AEC /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9151681A2E000AB3AEC /* Icon-72.png */; };
 		2DE3E9181681A2ED00AB3AEC /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9171681A2ED00AB3AEC /* Icon-72@2x.png */; };
-		2DE77DF416A7B2B900E15884 /* DropboxHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE77DF316A7B2B800E15884 /* DropboxHelp.m */; };
 		2DE77E2416A93ED000E15884 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */; };
 		2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */; };
 		2DEDA1E81682E7CD0074AC9E /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E71682E7CD0074AC9E /* SDWebImage.framework */; };
@@ -475,6 +478,12 @@
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
+		2D8B303416AE441500C94485 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		2D8B303516AE441500C94485 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		2D90CCDE16AD5311007B404D /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
+		2D90CCDF16AD5311007B404D /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
+		2D90CCE116AD5E39007B404D /* create_pack_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_background.png; sourceTree = "<group>"; };
+		2D90CCE216AD5E39007B404D /* create_pack_seperator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_seperator.png; sourceTree = "<group>"; };
 		2DBD6DD8169BCF0600962A80 /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
 		2DBD6DD9169BCF0600962A80 /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
 		2DBD6DDB169BCF1B00962A80 /* AnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerView.h; sourceTree = "<group>"; };
@@ -515,8 +524,6 @@
 		2DE3E9131681A25800AB3AEC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		2DE3E9151681A2E000AB3AEC /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
 		2DE3E9171681A2ED00AB3AEC /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../Icon-72@2x.png"; sourceTree = "<group>"; };
-		2DE77DF216A7B2B800E15884 /* DropboxHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxHelp.h; sourceTree = "<group>"; };
-		2DE77DF316A7B2B800E15884 /* DropboxHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxHelp.m; sourceTree = "<group>"; };
 		2DE77E2216A93ED000E15884 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoTableViewController.h; sourceTree = "<group>"; };
 		2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoTableViewController.m; sourceTree = "<group>"; };
 		2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -615,6 +622,10 @@
 				2D66BF6216A64C4500795CF9 /* UINavigationController+DismissKeyboard.m */,
 				2D2A1B15169BA31000175D14 /* NSString+QueryString.h */,
 				2D2A1B16169BA31000175D14 /* NSString+QueryString.m */,
+				2D90CCDE16AD5311007B404D /* UIImage+Scale.h */,
+				2D90CCDF16AD5311007B404D /* UIImage+Scale.m */,
+				2D8B303416AE441500C94485 /* Common.h */,
+				2D8B303516AE441500C94485 /* Common.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -650,8 +661,6 @@
 				2D5F3CF81679D334009D2ADC /* FileOperationHelper.m */,
 				2D89234816806BF200B43BCD /* PublicPackRequest.h */,
 				2D89234916806BF200B43BCD /* PublicPackRequest.m */,
-				2DE77DF216A7B2B800E15884 /* DropboxHelp.h */,
-				2DE77DF316A7B2B800E15884 /* DropboxHelp.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -668,6 +677,8 @@
 				2D09AF9216A5283800B1C0C9 /* answer_placeholder_logo.png */,
 				2DC554E5169D426900251C1B /* public_pack.png */,
 				2D09AF8216A509BE00B1C0C9 /* default_pack_cover_image.png */,
+				2D90CCE116AD5E39007B404D /* create_pack_background.png */,
+				2D90CCE216AD5E39007B404D /* create_pack_seperator.png */,
 				2DC4ECC016A3AB6700205A4F /* red_plus_up.png */,
 				2D4E07F016A3FFFC0097E5CB /* SelectedCellBackground.png */,
 			);
@@ -1330,6 +1341,8 @@
 				2D09AF9616A5283800B1C0C9 /* answer_placeholder_logo.png in Resources */,
 				2D09AF9716A5283800B1C0C9 /* question_placeholder_logo.png in Resources */,
 				2D66C17816A6B2FE00795CF9 /* ShareKit.bundle in Resources */,
+				2D90CCE316AD5E39007B404D /* create_pack_background.png in Resources */,
+				2D90CCE416AD5E39007B404D /* create_pack_seperator.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,8 +1398,9 @@
 				2D09AF9F16A5424000B1C0C9 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D66BF6316A64C4500795CF9 /* UINavigationController+DismissKeyboard.m in Sources */,
 				2D66C22116A6C34D00795CF9 /* MySHKConfigurator.m in Sources */,
-				2DE77DF416A7B2B900E15884 /* DropboxHelp.m in Sources */,
 				2DE77E2416A93ED000E15884 /* MoreInfoTableViewController.m in Sources */,
+				2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */,
+				2D8B303616AE441500C94485 /* Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

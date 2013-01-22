@@ -94,10 +94,7 @@
 - (void) dropboxSwitchAction {
     if (!_dropboxSwitch.on) {
         [[DBSession sharedSession] unlinkAll];
-        [[[UIAlertView alloc]
-           initWithTitle:@"Account Unlinked!" message:@"Your dropbox account has been unlinked"
-           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]
-         show];
+        [Common alertViewCommon:@"Your dropbox account has been unlinked"];
     } else {
         [[DBSession sharedSession] linkFromController:self];
     }

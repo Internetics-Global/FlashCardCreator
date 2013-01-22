@@ -73,6 +73,8 @@
 		}
 	}
     
+    _question.cardID = _cardID; //build table linkage in database
+    _answer.cardID = _cardID; //build table linkage in database
     [_question save];
     [_answer save];
 }

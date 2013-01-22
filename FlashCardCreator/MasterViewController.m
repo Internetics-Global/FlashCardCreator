@@ -27,6 +27,7 @@
 #import "CreatePackViewController.h"
 #import "UINavigationController+DismissKeyboard.h"
 #import "DataManager.h"
+#import "FileOperationHelper.h"
 
 
 @implementation MasterViewController
@@ -38,6 +39,8 @@
 @synthesize isCurrentPackPublic = _isCurrentPackPublic;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 
+@synthesize dropboxShareLinkURL = _dropboxShareLinkURL;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,23 +49,27 @@
         //1. Setup notification
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newCardAddedNotification:) name:NEW_CARD_ADDED_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCardsInSelectedPackNotification:) name:NEW_SELECTED_PACK_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateDetailView:) name:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailView:) name:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterViewOnPublicStartup:) name:DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION object:nil];
         
         //2. Initialize
         _currentPack = [[Pack alloc] init];
+        _currentCard = [[Card alloc] init];
         _publicPack = [[Pack alloc] init];
         _indexCard = 0;
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
+        _dropboxShareLinkURL = nil;
+        
         
         //3. others
         self.title = NSLocalizedString(@"Master-card list", @"Master");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
         }
+     
     
-        
+
     }
     return self;
 }
@@ -82,18 +89,6 @@
         [self.tableView reloadData];
     } else {
         self.navigationItem.leftBarButtonItem.title = PUBLIC_PACK_NAME;
-    }
-    
-    //Do only once at startup for non-public pack
-    if (!_isCurrentPackPublic) {
-        //only check once during start up
-        static dispatch_once_t once_nonpublic;
-        dispatch_once(&once_nonpublic, ^{
-            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
-            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            [self updateDetailView:nil];
-            
-        });
     }
     
     UIButton *addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
@@ -156,12 +151,7 @@
 - (void)createNewCard:(id)sender
 {
     if (_isCurrentPackPublic) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:@"Can not add card under online public pack"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [Common alertViewCommon:@"Can not add card under online example pack"];
         return;
     }
     
@@ -191,17 +181,12 @@
 #pragma mark -
 #pragma mark Notfication related
 
--(void)newPackAddedNotification:(NSNotification *)notification{
-	[self.tableView reloadData];
-}
-
--(void)newCardAddedNotification:(NSNotification *)notification{
-	[self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:([[_currentPack cards] count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    [_backgroundOfCreateCardView removeFromSuperview];
-}
-
-- (void) showCardsInSelectedPackNotification:(NSNotification *) notification {
+/*
+ There are two sources:
+ 1. just select packs
+ 2. called from outside via URL scheme then have to deal with logic of download
+ */
+- (void) selectedPackNotification:(NSNotification *) notification {
     int index = [(NSString *)[notification object] intValue];
     if (index ==0) {
         _isCurrentPackPublic = TRUE;
@@ -211,23 +196,72 @@
         _isCurrentPackPublic = FALSE;
         self.currentPack = [[User defaultUser] packs][(index-1)];
         self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
+        [self downloadURLViaURLScheme];
     }
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
     }
     
-
+    
     [self.tableView reloadData];
     
 }
+
+/*
+ There are two sources:
+ 1. just select packs
+ 2. called from outside via URL scheme then have to deal with logic of download
+ */
+-(void)newPackAddedNotification:(NSNotification *)notification{
+    if (_dropboxShareLinkURL) { //we are planning to download online card
+        self.currentPack = (Pack *)[notification object];
+        [self downloadURLViaURLScheme];
+        
+    }
+    
+}
+
+-(void)newCardAddedNotification:(NSNotification *)notification{
+	[self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:([[_currentPack cards] count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [_backgroundOfCreateCardView removeFromSuperview];
+}
+
+
+- (void) downloadURLViaURLScheme{
+    if (!_dropboxShareLinkURL) {
+        NSLog(@"%s:need to set _dropboxShareLinkURL before use",__FUNCTION__);
+        return;
+    }
+    
+    if ([DataManager apiReachable] == NO) {
+        [Common alertViewCommon:@"Please check your network"];
+        return;
+    }
+    
+    [self showProgressIndicator];
+    
+    if ([_dropboxShareLinkURL rangeOfString:@".zip"].length == 0) {
+        [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
+        return;
+    }
+    
+    //The reson why to do it: https://www.dropbox.com/help/201/en
+    NSString *temp = [_dropboxShareLinkURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
+    NSString *downloadableFile = [temp stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
+    _dropboxShareLinkURL = nil; //we need to set this
+    [_zipFileDownloadHelp downloadZipFile:downloadableFile];
+    _zipFileDownloadHelp.delegate = self;
+}
+
 
 - (void) updateMasterViewOnPublicStartup:(NSNotification *) notification {
     [self.tableView reloadData];
     self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
 }
 
-- (void) updateDetailView:(NSNotification *) notification {
+- (void) updateMasterDetailView:(NSNotification *) notification {
     
     if (isUserInterfaceIdiomPhone) {
 	    if (!self.detailViewController) {
@@ -238,11 +272,18 @@
         
     }
     
+    //Step1: update master view
+    [self.tableView reloadData];
+    
+    //Step2: update detail view
     self.detailViewController.detailItem = _currentCard.cardName;
     self.detailViewController.currentCard = _currentCard;
     self.detailViewController.currentPack = _currentPack;
     self.detailViewController.indexCard = _indexCard;
-    [self.detailViewController showCurrentCardInScrollView];
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:([[_currentPack cards] count] -1) inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     
 }
 
@@ -316,29 +357,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isCurrentPackPublic){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"This is public pack"
-                                                        message:@"save to local? not sure, so have been implemented completedly"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
     self.currentCard = [_currentPack cards][indexPath.row];
-    
     _indexCard = indexPath.row;
-    
 
     if (_currentPack.packID == PUBLIC_PACK_ID) {
-        _progressivePercent = 0;
-        [self showProgressIndicator];
-        
-        //The reson why to do it: https://www.dropbox.com/help/201/en
-        NSString *downloadableFile = [_currentCard.onlineFileURLL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
-        _saveZipFilePath = nil;
-        _saveZipFilePath = [_zipFileDownloadHelp downloadZipFile:downloadableFile];
-        _zipFileDownloadHelp.delegate = self;
+        _dropboxShareLinkURL = _currentCard.onlineFileURLL;
+        CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
+        createPackController.isIncludePackListView = YES;
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentModalViewController:navController animated:YES];
         
     } else {
         self.detailViewController.currentCard = _currentCard;
@@ -379,7 +407,7 @@
 }
 
 - (void)didNotReceiveJSONResponse {
-    NSLog(@"%s:Error to receive public pack json response",__FUNCTION__);
+    NSLog(@"%s:Error to receive example pack json response",__FUNCTION__);
 }
 
 
@@ -408,33 +436,31 @@
 - (void) unzipFileThenAssembleCard {
     
     //step1: unzip file
-    if (_saveZipFilePath) {
-        ZipArchive* za = [[ZipArchive alloc] init];
-        if( [za UnzipOpenFile:_saveZipFilePath] )
-        {
-            NSString *unzipFolder = [[_saveZipFilePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:_currentPack.packName];
-            if (![[NSFileManager defaultManager] fileExistsAtPath:unzipFolder]) {
-                [[NSFileManager defaultManager] createDirectoryAtPath:unzipFolder withIntermediateDirectories:YES attributes:nil error:nil];
-            }
-            
-            BOOL ret = [za UnzipFileTo:unzipFolder overWrite:YES];
-            if( NO==ret ) {
-                // error handler here
-            } else {
-                NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
-            }
-            [za UnzipCloseFile];
-            
-            [[NSFileManager defaultManager] removeItemAtPath:_saveZipFilePath error:nil];
+    ZipArchive* za = [[ZipArchive alloc] init];
+    NSString *downloadedZipFilePath = [ZipFileDownloadHelper downloadedZipFilePath];
+    if( [za UnzipOpenFile:downloadedZipFilePath] )
+    {        
+        BOOL ret = [za UnzipFileTo:[downloadedZipFilePath stringByDeletingLastPathComponent] overWrite:YES];
+        if( NO==ret ) {
+            // error handler here
+        } else {
+            NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
         }
+        [za UnzipCloseFile];
         
+        [[NSFileManager defaultManager] removeItemAtPath:downloadedZipFilePath error:nil];
     }
     
-    //step2: assemable card
+    NSString *imagesDir = [[FileOperationHelper documentsDirectory] stringByAppendingPathComponent:@"Images"];
+    
+    //step2: Assemable question card
     NSError *error = nil;
-    NSString *questionDir = [_saveZipFilePath stringByDeletingLastPathComponent];
-    NSString *questionJsonPath = [questionDir stringByAppendingFormat:@"/%@/Question/questionTextContent.json",_currentPack.packName];
+    NSString *questionJsonPath = [imagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
     NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];
+    if (!questionData) {
+        [Common alertViewCommon:@"Error when parsing questionTextContent.json"];
+        return;
+    }
     id questionJsonObject = [NSJSONSerialization JSONObjectWithData:questionData options:NSJSONReadingMutableContainers error:&error];
     if (questionJsonObject != nil && error == nil) {
         
@@ -445,16 +471,23 @@
             [_currentCard question].title = questionDict[@"title"];
             [_currentCard question].content = questionDict[@"content"];
             [_currentCard question].type = questionDict[@"type"];
-            [_currentCard question].imageFullPath = questionDict[@"image"];
+            [_currentCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
+            [_currentCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
+            _currentCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
     }
+    [[NSFileManager defaultManager] removeItemAtPath:questionJsonPath error:nil];
     
+    //step3: Assemable answer card
     error = nil;
-    NSString *answerDir = [_saveZipFilePath stringByDeletingLastPathComponent];
-    NSString *answerJsonPath = [answerDir stringByAppendingFormat:@"/%@/Question/questionTextContent.json",_currentPack.packName];
+    NSString *answerJsonPath = [imagesDir stringByAppendingPathComponent:@"answerTextContent.json"];
     NSData *answerData = [NSData dataWithContentsOfFile:answerJsonPath];
+    if (!answerData) {
+        [Common alertViewCommon:@"Error when parsing answerTextContent.json"];
+        return;
+    }
     id answerJsonObject = [NSJSONSerialization JSONObjectWithData:answerData options:
         NSJSONReadingMutableContainers error:&error];
     if (answerJsonObject != nil && error == nil) {
@@ -464,13 +497,22 @@
             [_currentCard answer].cardID = [answerDict[@"card_id"] intValue];
             [_currentCard answer].title = answerDict[@"title"];
             [_currentCard answer].content = answerDict[@"content"];
-            [_currentCard answer].imageFullPath = answerDict[@"image"];
+            [_currentCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
+            [_currentCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
+            
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
     }
+    [[NSFileManager defaultManager] removeItemAtPath:answerJsonPath error:nil];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+    //Step4: save new downloaded card to current pack
+    [_currentPack addCard:_currentCard];
+    
+    _isCurrentPackPublic = FALSE;
+    
+    //Step5: notification to update UI
+    [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:_currentCard];
     
 }
 
@@ -479,14 +521,20 @@
 
 - (void)showProgressIndicator {
 	
-	_HUD = [[MBProgressHUD alloc] initWithView:self.view];
-	[self.view addSubview:_HUD];
+	if (_HUD == nil) {
+      _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    }
+
+    //make sure to be in front and disable user interaction
+    [self.splitViewController.view insertSubview:_HUD atIndex:0];
+    [self.splitViewController.view bringSubviewToFront:_HUD];
 	
 	// Set determinate mode
 	_HUD.mode = MBProgressHUDModeDeterminate;
 	
 	_HUD.delegate = self;
-	_HUD.labelText = @"Loading...";
+	_HUD.labelText = @"Download card...";
+    _progressivePercent = 0;
 	
 	// myProgressTask uses the HUD instance to update progress
 	[_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];

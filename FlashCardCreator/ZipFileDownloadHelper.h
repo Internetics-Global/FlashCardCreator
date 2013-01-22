@@ -27,4 +27,6 @@
 
 - (NSString *) downloadZipFile:(NSString *)URLStr;
 
++ (NSString *)downloadedZipFilePath;
+
 @end

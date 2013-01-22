@@ -19,6 +19,7 @@
 #import "FileOperationHelper.h"
 #import "AppDelegate.h"
 #import "MasterViewController.h"
+#import "UIImage+Scale.h"
 
 @interface CreateCardViewController ()
 
@@ -82,7 +83,8 @@
         return;
     }
     
-    NSData *imageData = UIImagePNGRepresentation([_cardView.questionView captureWholeViewAsImage]);
+    UIImage *origialmage = [_cardView.questionView captureWholeViewAsImage];
+    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
     NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     _newCard.coverImageURL = savedFullPath;

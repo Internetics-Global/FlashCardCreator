@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Card;
+
 @interface FileOperationHelper : NSObject
 
 + (NSString *)documentsDirectory;
@@ -17,5 +19,6 @@
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 
 + (NSString *) generateUniquePNGImageFilePath;
++ (NSString *) zipCardForUpload:(Card *) card;
 
 @end

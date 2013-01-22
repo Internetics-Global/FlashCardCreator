@@ -12,7 +12,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
+    #import "Common.h"
 #endif
+
 
 
 //Reachablity requirement
@@ -32,7 +34,7 @@
 #define GET_USER_COMPLETE_NOTIFICATION @"GET_USER_COMPLETE_NOTIFICATION"
 #define NEW_PACK_ADDED_NOTIFICATION @"NEW_PACK_ADDED_NOTIFICATION"
 #define NEW_CARD_ADDED_NOTIFICATION @"NEW_CARD_ADDED_NOTIFICATION"
-#define NEW_SELECTED_PACK_NOTIFICATION @"NEW_SELECTED_PACK_NOTIFICATION"
+#define CURRENT_PACK_SELECTED_NOTIFICATION @"CURRENT_PACK_SELECTED_NOTIFICATION"
 #define DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION @"DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION"
 #define DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION @"DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION"
 #define DROPBOX_LINKED_NOTIFICATION @"DROPBOX_LINKED_NOTIFICATION"
@@ -45,10 +47,10 @@
 #define DROPBOX_APP_SECRET @"sy3sdmu93rcxjt1"
 #define DROPBOX_APP_ROOT kDBRootDropbox 
 
-//Public Pack
+//Public Pack （or Example Pack）
 #define PUBLIC_PACK_ID 31415
 #define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"
-#define PUBLIC_PACK_NAME @"Public Pack"
+#define PUBLIC_PACK_NAME @"Example Pack"
 
 //Ipad and iPhone dimention
 #define IPHONE_UI_NAVIGATION_BAR_HEIGHT        44
@@ -68,6 +70,7 @@
 //launch up always landscape
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
 #define UI_SCREEN_WIDTH                ([[UIScreen mainScreen] bounds].size.width)
+
 
 
 

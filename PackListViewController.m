@@ -25,7 +25,6 @@
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
-        [self resetPackContent];
     }
     return self;
 }
@@ -44,6 +43,8 @@
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
     _pageControl.defersCurrentPageDisplay = YES;
+    
+    [self resetPackContent];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -109,7 +110,8 @@
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
     NSLog(@"Selected item at index %d", index);
-    [[NSNotificationCenter defaultCenter] postNotificationName:NEW_SELECTED_PACK_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
+    [self dismissModalViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
 - (IBAction)pageControlTapped
@@ -133,6 +135,7 @@
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
 	[self resetPackContent];
+    [self.swipeView reloadData];
 }
 
 

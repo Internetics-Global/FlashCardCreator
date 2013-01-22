@@ -20,6 +20,7 @@
         
         //setup default value;
         _content.text = @"Click and Edit";
+        _title.text = @"Question";
         _image.image = [UIImage imageNamed:@"question_placeholder_content.png"];
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.png"];
         _imageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_content.png", [[NSBundle mainBundle] resourcePath]];

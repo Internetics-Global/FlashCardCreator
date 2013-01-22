@@ -10,6 +10,7 @@
 #import "UIImagePickerController+NoRotate.h"
 #import "QuestionView.h"
 #import "FileOperationHelper.h"
+#import "UIImage+Scale.h"
 
 @implementation BaseView
 
@@ -172,7 +173,9 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [_imagePickerPopover dismissPopoverAnimated:YES];
-    NSData *imageData = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerOriginalImage]);
+    
+    UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
     NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     if (_isLogoImageViewClicked) {

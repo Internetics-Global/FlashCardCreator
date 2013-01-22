@@ -20,6 +20,7 @@
         
         //setup default value;
         _content.text = @"Click and Edit";
+        _title.text = @"Answer";
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.png"];
         _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.png"];
         _content.text = @"Click and Edit";

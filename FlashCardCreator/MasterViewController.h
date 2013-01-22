@@ -23,10 +23,9 @@
     
     UIPopoverController *_packListPickerPopover;
     
-    //public pack related
+    //example pack (online) related
     BOOL _isCurrentPackPublic;
     Pack *_publicPack;
-    NSString *_saveZipFilePath;
     ZipFileDownloadHelper *_zipFileDownloadHelp;
     
     //progress indicator related
@@ -34,6 +33,8 @@
     float _progressivePercent;
     
     UIButton *_backgroundOfCreateCardView;
+    
+    NSString *_dropboxShareLinkURL;
     
 }
 
@@ -44,7 +45,7 @@
 @property (nonatomic, strong) Pack *publicPack;
 @property (nonatomic, assign) int indexCard;
 @property (nonatomic, assign) BOOL isCurrentPackPublic;
-
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
+@property (nonatomic, copy) NSString *dropboxShareLinkURL;
 
 @end

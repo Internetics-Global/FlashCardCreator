@@ -15,8 +15,9 @@
 #import "Pack.h"
 #import "SHK.h"
 #import <DropboxSDK/DropboxSDK.h>
-#import "DropboxHelp.h"
 #import "SHKItem.h"
+#import "FileOperationHelper.h"
+#import "DataManager.h"
 
 #define kScrollViewObjectWidth_iPad 660.0
 #define kScrollViewObjectHeight_iPad 660.0
@@ -173,12 +174,7 @@
 
 - (void)playButtonClicked
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"example"
-                                                  message:@"this is an example"
-                                                  delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-    [alert show];
+    [Common alertViewCommon:@"this is an example"];
 }
 
 
@@ -203,12 +199,7 @@
     
     if(![linkedNum boolValue])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error."
-                                                        message:@"Failed to login to Dropbox."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [Common alertViewCommon:@"Failed to login to Dropbox."];
     } else
     {
         if (_isShare) {
@@ -232,9 +223,13 @@
     if (_currentCard == nil)
         return;
     
+    if ([DataManager apiReachable] == NO) {
+        [Common alertViewCommon:@"Please check your network"];
+        return;
+    }
+    
     //step1: create zip file
-    DropboxHelp *helper = [[DropboxHelp alloc] init];
-    NSString *generatedZipFilePath = [helper zipCardForUpload:_currentCard];
+    NSString *generatedZipFilePath = [FileOperationHelper zipCardForUpload:_currentCard];
     
     //step2: upload to dropbox
     NSString *saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];
@@ -247,10 +242,10 @@
               withParentRev:nil fromPath:generatedZipFilePath];
     if (_HUD == nil) {
         _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-        [self.view addSubview:_HUD];
     }
+    [self.view addSubview:_HUD];
     _HUD.mode = MBProgressHUDModeIndeterminate;
-	_HUD.labelText = @"Uploading...";
+	_HUD.labelText = @"Uploading to dropbox to create share link...";
     [_HUD show:YES];
     
     //step3: create dropbox linkage which locate in uploadedFile:
@@ -293,13 +288,7 @@
     NSLog(@"File upload failed with error - %@", error);
     [_HUD show:FALSE];
     [_HUD removeFromSuperview];
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:@"Failure to upload"
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    [Common alertViewCommon:@"Failure to upload"];
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {

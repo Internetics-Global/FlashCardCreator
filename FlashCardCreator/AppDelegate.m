@@ -22,6 +22,7 @@
 
 #import "MySHKConfigurator.h"
 #import "SHKConfiguration.h"
+#import "CreatePackViewController.h"
 
 @implementation AppDelegate
 
@@ -63,10 +64,12 @@
     
     //6. Get last created pack/card and set to master and detail view
     [self getLastCreatedCardPack];
-    self.masterViewController.currentCard = _lastCreatedCard;
-    self.masterViewController.currentPack = _lastCreatedPack;
+    if ((_lastCreatedCard) && (_lastCreatedPack)) {
+        self.masterViewController.currentCard = _lastCreatedCard;
+        self.masterViewController.currentPack = _lastCreatedPack;
+        self.masterViewController.indexCard = _indexCard;
+    }
     self.masterViewController.isCurrentPackPublic = (_lastCreatedCard == nil);
-    self.masterViewController.indexCard = _indexCard;
     
     if (isUserInterfaceIdiomPhone) {
         self.detailViewController.currentPack = _lastCreatedPack;
@@ -74,7 +77,7 @@
         self.detailViewController.indexCard = _indexCard;
     }
     
-    //6. Get public packs
+    //6. Get example packs (online)
     PublicPackRequest *publicPackRequest = [[PublicPackRequest alloc] init];
     [publicPackRequest requestPublicPack];
     publicPackRequest.delegate = self.masterViewController;
@@ -87,7 +90,7 @@
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
     DefaultSHKConfigurator *configurator = [[MySHKConfigurator alloc] init];
     [SHKConfiguration sharedInstanceWithConfigurator:configurator];
-    
+
     //9. Show UI
     [self.window makeKeyAndVisible];
     
@@ -105,18 +108,23 @@
 {
     if ([[url scheme] isEqualToString:@"fcc"]) {
         NSString *httpURL = [[url absoluteString] stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
-        NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
-        NSDictionary *params = [NSString queryParamsFromString:[url absoluteString]];
-        NSString *fromWho = params[@"from"];
-        NSString *packName = params[@"packname"];
-        NSString *cardName = params[@"cardname"];
+        //NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
+        //NSDictionary *params = [NSString queryParamsFromString:[url absoluteString]];
+        //NSString *fromWho = params[@"from"];
+        //NSString *packName = params[@"packname"];
+        //NSString *cardName = params[@"cardname"];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                        message:[NSString stringWithFormat:@"From:%@:\n download this card(%@) and save to pack(%@)",fromWho,cardName,packName]
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        //tell master that we will do download from online card
+        self.masterViewController.dropboxShareLinkURL = [url absoluteString];
+        CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
+        createPackController.isIncludePackListView = YES;
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self.window.rootViewController presentModalViewController:navController animated:YES];
+        
+        
+        
+        
     } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
         if ([[DBSession sharedSession] handleOpenURL:url])
         {

@@ -116,6 +116,9 @@
 	if (_cards == nil) {
 		NSLog(@"%s:could not enter an empty card",__FUNCTION__);
 	}
+    
+    card.packID = self.packID; //build table linkage in database
+    
 	[_cards addObject:card];
 	[card save];
     

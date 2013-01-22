@@ -83,6 +83,9 @@
 			break;
 		}
 	}
+    
+    pack.userID = self.userID; //build table linkage in database
+    
 	if (!exists) {
 		[_packs addObject:pack];
 		[pack save];
