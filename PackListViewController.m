@@ -70,28 +70,23 @@
     UIView *contentView = view;
     UIImageView *coverImageView ;
     UILabel *indexLabel;
-    
-    //create or reuse view
-    if (view == nil)
-    {
+     
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 250.0f, 200.0f)];
+    contentView.backgroundColor = [UIColor clearColor];
+    view = contentView;
         
-        contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 250.0f, 200.0f)];
-        contentView.backgroundColor = [UIColor clearColor];
-        view = contentView;
+    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 230.0f, 20.0f)];
+    indexLabel.textAlignment = UITextAlignmentCenter;
+    indexLabel.textColor = [UIColor whiteColor];
+    indexLabel.backgroundColor = [UIColor clearColor];
+    indexLabel.font = [UIFont systemFontOfSize:16];
+    [view addSubview:indexLabel];
         
-        indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 230.0f, 20.0f)];
-        indexLabel.textAlignment = UITextAlignmentCenter;
-        indexLabel.textColor = [UIColor whiteColor];
-        indexLabel.backgroundColor = [UIColor clearColor];
-        indexLabel.font = [UIFont systemFontOfSize:16];
-        [view addSubview:indexLabel];
-        
-        coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 210.0f, 180.0f)];
-        coverImageView.layer.cornerRadius = 10;
-        coverImageView.layer.masksToBounds = YES;
-        [view addSubview:coverImageView];
-    }
-    
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 210.0f, 180.0f)];
+    coverImageView.layer.cornerRadius = 10;
+    coverImageView.layer.masksToBounds = YES;
+    [view addSubview:coverImageView];
+
     //configure view
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
@@ -102,6 +97,8 @@
         
         indexLabel.text = currentPack.packName;
     }
+    
+    [view layoutSubviews];
     
     return view;
 }

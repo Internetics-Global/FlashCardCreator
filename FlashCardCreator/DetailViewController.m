@@ -65,13 +65,19 @@
 - (void)loadView {
     [super loadView];
     
+    //we don't setting button on iPhone
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                    target:self action:@selector(playButtonClicked)];
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the card" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
-    self.navigationItem.rightBarButtonItems =
-    @[settingButton, playButton, shareButton];
+    if (isUserInterfaceIdiomPhone) {
+        self.navigationItem.rightBarButtonItems =
+        @[playButton, shareButton];
+    } else {
+        self.navigationItem.rightBarButtonItems =
+                                @[settingButton, playButton, shareButton];
+    }
     
     //Don't need the back button when on iPad
     if (isUserInterfaceIdiomPhone) {
@@ -193,7 +199,7 @@
 }
 
 #pragma mark -
-#pragma mark UIBarButtonItem action
+#pragma mark UIBarButtonItem action  only for iPad
 
 - (void)moreButtonClicked:(id) sender
 {
@@ -201,17 +207,13 @@
     
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
     
-    if (isUserInterfaceIdiomPhone ) {
-        [self.navigationController pushViewController:moreInfoViewController animated:YES];
-    } else {
-        if (_settingPopoverController == nil) {
-            _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
-        }
-        
-        _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
-        
-        [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    if (_settingPopoverController == nil) {
+        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
     }
+    
+    _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
+    
+    [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 

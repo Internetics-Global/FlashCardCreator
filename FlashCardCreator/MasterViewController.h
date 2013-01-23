@@ -34,6 +34,8 @@
     
     UIButton *_backgroundOfCreateCardView;
     
+    UIButton *_addCardButton;
+    
     NSString *_dropboxShareLinkURL;
     
 }

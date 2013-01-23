@@ -28,6 +28,7 @@
 #import "UINavigationController+DismissKeyboard.h"
 #import "DataManager.h"
 #import "FileOperationHelper.h"
+#import "MoreInfoTableViewController.h"
 
 
 @implementation MasterViewController
@@ -89,6 +90,13 @@
     UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Pack" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
     self.navigationItem.leftBarButtonItems = @[selectPackButton,newPackButton];
     
+    if (isUserInterfaceIdiomPhone) {
+        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
+
+        self.navigationItem.rightBarButtonItems =
+            @[settingButton];
+    }
+    
     if (!_isCurrentPackPublic) {
         self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
         [self.tableView reloadData];
@@ -96,28 +104,37 @@
         self.navigationItem.leftBarButtonItem.title = PUBLIC_PACK_NAME;
     }
     
-    UIButton *addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    
-    if (isUserInterfaceIdiomPhone ) {
-        addCardButton.center = CGPointMake(100,320-40);
-    } else {
-        addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -50);
-    }
-    [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
-    [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
-    [addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController.view insertSubview:addCardButton atIndex:0];
-        [self.navigationController.view bringSubviewToFront:addCardButton];
-    } else {
-        [self.splitViewController.view insertSubview:addCardButton atIndex:0];
-        [self.splitViewController.view bringSubviewToFront:addCardButton];
-    }
-    
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.title = @"";
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    if (_addCardButton == nil) {
+        _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];    
+    }
+    
+    if (isUserInterfaceIdiomPhone ) {
+        _addCardButton.center = CGPointMake(100,320-40);
+    } else {
+        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -50);
+    }
+    [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
+    [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
+    [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController.view insertSubview:_addCardButton atIndex:0];
+        [self.navigationController.view bringSubviewToFront:_addCardButton];
+    } else {
+        [self.splitViewController.view insertSubview:_addCardButton atIndex:0];
+        [self.splitViewController.view bringSubviewToFront:_addCardButton];
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [_addCardButton removeFromSuperview];
 }
 
 - (void) createNewPack:(id)sender {
@@ -148,6 +165,15 @@
         }
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
+}
+
+#pragma mark -
+#pragma mark UIBarButtonItem action  only for iPhone
+
+- (void)moreButtonClicked:(id) sender
+{
+    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
+    [self.navigationController pushViewController:moreInfoViewController animated:YES];
 }
 
 #pragma mark -
