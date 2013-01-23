@@ -11,14 +11,21 @@
 #import "AnswerView.h"
 #import "Card.h"
 
-#define kSegmentLeftMargin 30.0
-#define kSegmentHeight 44.0
-#define kSegmentButtomMargin 20.0
+#define kSegmentLeftMarginForiPad 30.0
+#define kSegmentHeightForiPad 44.0
+#define kSegmentButtomMarginForiPad 20.0
+#define kQuestionViewLeftMarginForiPad 0.0
+#define kQuestionViewTopMarginForiPad 10.0
+#define kQuestionViewButtomMarginForiPad 80.0
+#define kQuestionViewCornerRadiusForiPad 30.0
 
-#define kQuestionViewLeftMargin 0.0
-#define kQuestionViewTopMargin 10.0
-#define kQuestionViewButtomMargin 80.0
-#define kQuestionViewCornerRadius 30.0
+#define kSegmentLeftMarginForiPhone 15.0
+#define kSegmentHeightForiPhone 22.0
+#define kSegmentButtomMarginForiPhone 10.0
+#define kQuestionViewLeftMarginForiPhone 0.0
+#define kQuestionViewTopMarginForiPhone 5.0
+#define kQuestionViewButtomMarginForiPhone 40.0
+#define kQuestionViewCornerRadiusForiPhone 15.0
 
 
 @implementation FlashCardView
@@ -34,23 +41,28 @@
         self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
         
         _isQuestionShowing = YES; //default to show question
-        [self loadView];
+        
+        if (isUserInterfaceIdiomPhone) {
+            [self loadViewForiPhone];
+        } else {
+            [self loadViewForiPad];
+        }
     }
     return self;
 }
 
-- (void) loadView {
+- (void) loadViewForiPad {
     
     if (_questionView == nil) {
-        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewTopMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
-        _questionView.layer.cornerRadius = kQuestionViewCornerRadius;
+        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
+        _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _questionView.currentCard = _currentCard;
         [self addSubview:_questionView];
     }
     
     if (_answerView == nil) {
-        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMargin, kQuestionViewTopMargin, self.frame.size.width-2*kQuestionViewLeftMargin, self.frame.size.height-kQuestionViewButtomMargin-kQuestionViewTopMargin)];
-        _answerView.layer.cornerRadius = kQuestionViewCornerRadius;
+        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
+        _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
     }
     
@@ -58,10 +70,40 @@
                          @[@"Question",
                          @"Answer"]];
     
-    CGRect frame = CGRectMake(kSegmentLeftMargin,
-                              self.bounds.size.height-kSegmentHeight-kSegmentButtomMargin,
-                              self.bounds.size.width-2*kSegmentLeftMargin,
-                              kSegmentHeight);
+    CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
+                              self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
+                              self.bounds.size.width-2*kSegmentLeftMarginForiPad,
+                              kSegmentHeightForiPad);
+    _segmentedControl.frame = frame;
+    [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+    _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    _segmentedControl.selectedSegmentIndex = 0;
+    [self addSubview:_segmentedControl];
+}
+
+- (void) loadViewForiPhone {
+    
+    if (_questionView == nil) {
+        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
+        _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
+        _questionView.currentCard = _currentCard;
+        [self addSubview:_questionView];
+    }
+    
+    if (_answerView == nil) {
+        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
+        _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
+        _answerView.currentCard = _currentCard;
+    }
+    
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                         @[@"Question",
+                         @"Answer"]];
+    
+    CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
+                              self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
+                              self.bounds.size.width-2*kSegmentLeftMarginForiPhone,
+                              kSegmentHeightForiPhone);
     _segmentedControl.frame = frame;
     [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;

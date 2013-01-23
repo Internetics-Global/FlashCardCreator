@@ -25,6 +25,12 @@
     {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
+        //Don't need the back button when on iPad 
+        if (isUserInterfaceIdiomPhone) {
+            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+            self.navigationItem.leftBarButtonItem = backButton;
+        }
+        
     }
     return self;
 }
@@ -44,6 +50,8 @@
     _pageControl.numberOfPages = [_packArray count];
     _pageControl.defersCurrentPageDisplay = YES;
     
+    self.title = @"Pack List";
+    
     [self resetPackContent];
 }
 
@@ -62,8 +70,6 @@
     UIView *contentView = view;
     UIImageView *coverImageView ;
     UILabel *indexLabel;
-    
-    NSLog(@"------%d", index);
     
     //create or reuse view
     if (view == nil)
@@ -97,7 +103,6 @@
         indexLabel.text = currentPack.packName;
     }
     
-    //return view
     return view;
 }
 
@@ -110,7 +115,11 @@
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
     NSLog(@"Selected item at index %d", index);
-    [self dismissModalViewControllerAnimated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissModalViewControllerAnimated:YES];    
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
@@ -136,6 +145,10 @@
 -(void)newPackAddedNotification:(NSNotification *)notification{
 	[self resetPackContent];
     [self.swipeView reloadData];
+}
+
+- (void) backButtonClicked {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

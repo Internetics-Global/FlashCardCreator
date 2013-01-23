@@ -47,10 +47,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         //1. Setup notification
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newCardAddedNotification:) name:NEW_CARD_ADDED_NOTIFICATION object:nil];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailView:) name:DOWNLOAD_PARSE_CARD__FINISH_NOTIFICATION object:nil];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterViewOnPublicStartup:) name:DOWNLOAD_PUBLIC_PACK_FINISH_NOTIFICATION object:nil];
         
         //2. Initialize
@@ -79,7 +84,7 @@
     [super viewDidLoad];
 
     
-    UIBarButtonItem *selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack list" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
+    UIBarButtonItem *selectPackButton = [[UIBarButtonItem alloc] initWithTitle:PUBLIC_PACK_NAME style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
     UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Pack" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
     self.navigationItem.leftBarButtonItems = @[selectPackButton,newPackButton];
@@ -94,15 +99,20 @@
     UIButton *addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     
     if (isUserInterfaceIdiomPhone ) {
-        addCardButton.center = CGPointMake(480,UI_SCREEN_WIDTH-80);
+        addCardButton.center = CGPointMake(100,320-40);
     } else {
         addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -50);
     }
     [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
     [addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
     [addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
-    [self.splitViewController.view insertSubview:addCardButton atIndex:0];
-    [self.splitViewController.view bringSubviewToFront:addCardButton];
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController.view insertSubview:addCardButton atIndex:0];
+        [self.navigationController.view bringSubviewToFront:addCardButton];
+    } else {
+        [self.splitViewController.view insertSubview:addCardButton atIndex:0];
+        [self.splitViewController.view bringSubviewToFront:addCardButton];
+    }
     
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -120,12 +130,13 @@
 
 - (void)selectAvailablePacks:(id)sender
 {
+    PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
+    
     if (isUserInterfaceIdiomPhone) {
-//        PackListTableViewController *packListTableViewController = [[PackListTableViewController alloc] initWithStyle:UITableViewStylePlain];
-//        [self.navigationController pushViewController:packListTableViewController animated:YES];
+        packListViewController.view.frame = CGRectMake(10, 10, 320, 131);
+        [self.navigationController pushViewController:packListViewController animated:YES];
         
     } else {
-        PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
         packListViewController.view.frame = CGRectMake(10, 10, 640, 262);
         packListViewController.view.clipsToBounds = YES;
         packListViewController.view.layer.cornerRadius = 0;
@@ -155,18 +166,27 @@
         return;
     }
     
-    if (_backgroundOfCreateCardView == nil) {
-        _backgroundOfCreateCardView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];    
+    //For iPhone, we don't need it
+    if (!isUserInterfaceIdiomPhone) {
+        if (_backgroundOfCreateCardView == nil) {
+            _backgroundOfCreateCardView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+        }
+        _backgroundOfCreateCardView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.8];
+        [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
+        [self.navigationController.view addSubview:_backgroundOfCreateCardView];
     }
-    _backgroundOfCreateCardView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.8];
-    [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
-    [self.navigationController.view addSubview:_backgroundOfCreateCardView];
     
     
     CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
     createCardViewController.currentPack = _currentPack;
-    createCardViewController.view.frame =CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
-    [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+    if (isUserInterfaceIdiomPhone){
+        createCardViewController.view.frame =CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
+        [self.navigationController pushViewController:createCardViewController animated:YES];
+    } else {
+        createCardViewController.view.frame =CGRectMake(0,0,480,320-44);
+        [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+    }
+
 }
 
 - (void) dismissCreateCardView:(id)sender {
@@ -196,7 +216,11 @@
         _isCurrentPackPublic = FALSE;
         self.currentPack = [[User defaultUser] packs][(index-1)];
         self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
-        [self downloadURLViaURLScheme];
+        
+        //Only when it's an online card
+        if (_dropboxShareLinkURL) {
+            [self downloadURLViaURLScheme];
+        }
     }
     
     if (!isUserInterfaceIdiomPhone) {
@@ -263,15 +287,6 @@
 
 - (void) updateMasterDetailView:(NSNotification *) notification {
     
-    if (isUserInterfaceIdiomPhone) {
-	    if (!self.detailViewController) {
-	        self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil];
-	    }
-        [self.navigationController pushViewController:self.detailViewController animated:YES];
-    } else {
-        
-    }
-    
     //Step1: update master view
     [self.tableView reloadData];
     
@@ -306,7 +321,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 200;
+    if (isUserInterfaceIdiomPhone) {
+        return 100;
+    } else {
+        return 200;    
+    }
 }
 
 // Customize the appearance of table view cells.
@@ -369,18 +388,19 @@
         [self presentModalViewController:navController animated:YES];
         
     } else {
-        self.detailViewController.currentCard = _currentCard;
-        self.detailViewController.currentPack = _currentPack;
-        self.detailViewController.indexCard = _indexCard;
-        if (isUserInterfaceIdiomPhone) {
-            //need to be implemented
+        if (isUserInterfaceIdiomPhone ) {
             if (!self.detailViewController) {
                 self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController_iPhone" bundle:nil];
             }
+            self.detailViewController.currentCard = _currentCard;
+            self.detailViewController.currentPack = _currentPack;
+            self.detailViewController.indexCard = _indexCard;
             [self.navigationController pushViewController:self.detailViewController animated:YES];
         } else {
+            self.detailViewController.currentCard = _currentCard;
+            self.detailViewController.currentPack = _currentPack;
+            self.detailViewController.indexCard = _indexCard;
             [self.detailViewController showCurrentCardInScrollView];
-            
         }
     }
 }
@@ -526,8 +546,11 @@
     }
 
     //make sure to be in front and disable user interaction
-    [self.splitViewController.view insertSubview:_HUD atIndex:0];
-    [self.splitViewController.view bringSubviewToFront:_HUD];
+    CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
+    [_HUD setTransform:at];
+    
+    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
 	
 	// Set determinate mode
 	_HUD.mode = MBProgressHUDModeDeterminate;

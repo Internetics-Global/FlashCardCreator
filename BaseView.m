@@ -32,7 +32,12 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
-        [self loadView];
+        if (isUserInterfaceIdiomPhone) {
+            [self loadViewForiPhone];
+        } else {
+            [self loadViewForiPad];
+        }
+        
         _keyboardShown = FALSE;
         [self setInputAccessoryViewDone];
         
@@ -41,14 +46,18 @@
         _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
         _picker.delegate = self;
         
-        if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+        if (isUserInterfaceIdiomPhone) {
+            
+        } else {
+            if (_imagePickerPopover == nil) {
+                _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            }
         }
     }
     return self;
 }
 
-- (void) loadView {
+- (void) loadViewForiPad {
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(0, 0, 600, 60);
     _title.text =@"Question";
@@ -88,6 +97,53 @@
     _content = [[UITextView alloc]init];
     _content.frame = CGRectMake(0, 100, 370, 500);
     _content.font =[UIFont systemFontOfSize:20];
+    _content.userInteractionEnabled = FALSE;
+    _content.backgroundColor = [UIColor clearColor];
+    _content.keyboardType = UIKeyboardAppearanceDefault;
+    _content.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_content];
+}
+
+- (void) loadViewForiPhone {
+    _title = [[UITextView alloc]init];
+    _title.frame = CGRectMake(0, 0, 480, 30);
+    _title.text =@"Question";
+    _title.font =[UIFont systemFontOfSize:20];
+    _title.textAlignment = NSTextAlignmentCenter;
+    _title.backgroundColor = [UIColor clearColor];
+    _title.userInteractionEnabled = FALSE;
+    [self addSubview:_title];
+    
+    _logoImage = [[UIImageView  alloc] init];
+    _logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    _logoImage.frame = CGRectMake(440, 10, 40, 40);
+    _logoImage.clipsToBounds = YES;
+    _logoImage.backgroundColor = [UIColor clearColor];
+    _logoImage.userInteractionEnabled = FALSE;
+    _logoImage.tag = 0;
+    _logoImage.layer.cornerRadius = 5;
+    _logoImage.layer.masksToBounds = YES;
+    [self addSubview:_logoImage];
+    
+    _image= [[UIImageView  alloc] init];
+    _image.userInteractionEnabled = FALSE;
+    _image.contentMode = UIViewContentModeScaleAspectFit;
+    _image.frame = CGRectMake(400, 120, 80, 80);
+    _image.clipsToBounds = YES;
+    _image.backgroundColor = [UIColor clearColor];
+    _image.tag = 1;
+    _image.layer.cornerRadius = 10;
+    _image.layer.masksToBounds = YES;
+    [self addSubview:_image];
+    
+    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+    [_image addGestureRecognizer:imageSingeTap];
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
+    
+    _content = [[UITextView alloc]init];
+    _content.frame = CGRectMake(0, 20, 370, 200);
+    _content.font =[UIFont systemFontOfSize:16];
     _content.userInteractionEnabled = FALSE;
     _content.backgroundColor = [UIColor clearColor];
     _content.keyboardType = UIKeyboardAppearanceDefault;
@@ -164,10 +220,14 @@
     
     _isLogoImageViewClicked = NO;
     
-    CGPoint point = [sender locationInView:self];
-    CGRect rect = CGRectMake(point.x, point.y, 50, 50);
-    
-    [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        //Need to be updated
+    } else {
+        CGPoint point = [sender locationInView:self];
+        CGRect rect = CGRectMake(point.x, point.y, 50, 50);
+        
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    }
     
 }
 

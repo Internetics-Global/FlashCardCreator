@@ -43,8 +43,6 @@
 @property (nonatomic, assign) int indexCard;
 
 
-- (void)layoutScrollObjects;
-
 - (void) showCurrentCardInScrollView;
 
 @end

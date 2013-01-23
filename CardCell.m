@@ -22,7 +22,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [UIColor clearColor];
-        [self setupView];
+        if (isUserInterfaceIdiomPhone) {
+            [self setupViewForiPhone];
+        } else {
+            [self setupViewForiPad];
+        }
     }
     return self;
 }
@@ -34,8 +38,26 @@
     // Configure the view for the selected state
 }
 
-- (void) setupView {
+- (void) setupViewForiPhone {
+    self.contentView.frame = CGRectMake(0, 0, 320, 100);
+    
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 40, 20)];
+    _indexLabel.text = @"N";
+    _indexLabel.textColor = [UIColor whiteColor];
+    _indexLabel.font = [UIFont systemFontOfSize:17];
+    _indexLabel.backgroundColor = [UIColor clearColor];
+    _indexLabel.textAlignment = UITextAlignmentCenter;
+    [self.contentView addSubview:_indexLabel];
+    
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(60, 10, 80, 80)];
+    _cellImageView.layer.cornerRadius = 10;
+    _cellImageView.layer.masksToBounds = YES;
+    [self.contentView addSubview:_cellImageView];
+}
+
+- (void) setupViewForiPad {
     self.contentView.frame = CGRectMake(0, 0, 320, 200);
+    
     _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 40, 40)];
     _indexLabel.text = @"N";
     _indexLabel.textColor = [UIColor whiteColor];
@@ -43,6 +65,7 @@
     _indexLabel.backgroundColor = [UIColor clearColor];
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
+    
     _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 10, 250, 180)];
     _cellImageView.layer.cornerRadius = 10;
     _cellImageView.layer.masksToBounds = YES;

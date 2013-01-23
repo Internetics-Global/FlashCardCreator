@@ -8,6 +8,7 @@
 
 #import "MoreInfoTableViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
+#import "SimpleWebBrowserController.h"
 
 @interface MoreInfoTableViewController ()
 
@@ -19,7 +20,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        self.title =@"Setting";
     }
     return self;
 }
@@ -144,13 +145,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    switch (indexPath.row) {
+        case 0:
+        {
+            break;    
+        }
+        case 1:
+        {
+            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+            controller.hidesToolbar = NO;
+            [self.navigationController pushViewController:controller animated:YES];
+            break;    
+        }
+        case 2:
+        {
+            break;
+        }
+        default:
+        {
+            break;    
+        }
+            
+    }
 }
 
 @end

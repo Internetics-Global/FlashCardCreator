@@ -23,8 +23,8 @@
 #define kScrollViewObjectHeight_iPad 660.0
 #define kScrollViewObjectMargin_iPad 50
 
-#define kScrollViewObjectWidth_iPhone 300.0
-#define kScrollViewObjectHeight_iPhone 300.0
+#define kScrollViewObjectWidth_iPhone 480.0
+#define kScrollViewObjectHeight_iPhone (320-44)
 #define kScrollViewObjectMargin_iPhone 20
 
 @interface DetailViewController ()
@@ -66,15 +66,19 @@
     [super loadView];
     
     UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
-    
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                    target:self action:@selector(playButtonClicked)];
-    
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the card" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
-    
     self.navigationItem.rightBarButtonItems =
     @[settingButton, playButton, shareButton];
+    
+    //Don't need the back button when on iPad
+    if (isUserInterfaceIdiomPhone) {
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+        self.navigationItem.leftBarButtonItem = backButton;
+    }
+    
     _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -86,7 +90,12 @@
     _scrollView.bounces = NO;
     _scrollView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:_scrollView];
-    [self layoutScrollObjects];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self layoutScrollObjectsForiPhone];
+    } else {
+        [self layoutScrollObjectsForiPad];
+    }
     
     //for start-up
     if (_indexCard > 0) {
@@ -96,15 +105,21 @@
 
 
 - (void) showCurrentCardInScrollView {
-    [self layoutScrollObjects];
+    if (isUserInterfaceIdiomPhone) {
+        [self layoutScrollObjectsForiPhone];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone),0) animated:NO];
+        
+    } else {
+        [self layoutScrollObjectsForiPad];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad),0) animated:NO];
+    }
     
-    [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad),0) animated:NO];
     
     [_cardArray[_indexCard] refreshQuestionAnserView];
 }
 
 
-- (void)layoutScrollObjects
+- (void)layoutScrollObjectsForiPad
 {
     [_cardArray removeAllObjects];
     CGFloat curXLoc = 0;
@@ -124,6 +139,30 @@
 	}
 	
 	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * (kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad)), kScrollViewObjectHeight_iPad)];
+    
+    
+}
+
+- (void)layoutScrollObjectsForiPhone
+{
+    [_cardArray removeAllObjects];
+    CGFloat curXLoc = 0;
+    for (int index = 0; index < [[_currentPack cards] count]; index++)
+	{
+		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,480,320-IPHONE_UI_NAVIGATION_BAR_HEIGHT)];
+        cardView.tag = index;	// tag our images for later use when we place them in serial fashion
+        cardView.currentCard = self.currentCard;
+		CGRect rect = cardView.frame;
+        rect.origin = CGPointMake(curXLoc, 0);
+        cardView.frame = rect;
+		[_scrollView addSubview:cardView];
+        curXLoc += (kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone);
+        [_cardArray addObject:cardView];
+        
+        
+	}
+	
+	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * (kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone)), kScrollViewObjectHeight_iPhone)];
     
     
 }
@@ -162,19 +201,29 @@
     
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
     
-    if (_settingPopoverController == nil) {
-        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+    if (isUserInterfaceIdiomPhone ) {
+        [self.navigationController pushViewController:moreInfoViewController animated:YES];
+    } else {
+        if (_settingPopoverController == nil) {
+            _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+        }
+        
+        _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
+        
+        [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
-    
-    _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
-    
-    [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
 - (void)playButtonClicked
 {
     [Common alertViewCommon:@"this is an example"];
+}
+
+- (void)backButtonClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 
@@ -186,7 +235,7 @@
     _isShare = YES;
     
     if (![[DBSession sharedSession] isLinked]) {
-		[[DBSession sharedSession] linkFromController:self.splitViewController];
+		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
     } else {
         [self exectueShareAfterDropboxLinked];
     }
