@@ -15,7 +15,6 @@
     NSString *_coverImageURL;
 	NSInteger _userID;
     NSString *_languageName;
-    BOOL _isPubilc;
     
     NSMutableArray *_cards;
 }

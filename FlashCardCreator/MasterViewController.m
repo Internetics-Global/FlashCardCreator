@@ -371,18 +371,18 @@
 
 - (void)downloadProgressivePercent:(long long)current totalLength:(long long)total {
     _progressivePercent = (float) current/total;
+    _HUD.progress = (float) current/total;
 }
 
 - (void)downloadSuccess:(BOOL)isSucess {
     if (isSucess == YES) {
-        _progressivePercent = 0;
-        [_HUD show:NO];
+        [_HUD hide:YES];
         [self unzipFileThenAssemblePack];
     }
 }
 
 - (void)downloadFail {
-    [_HUD removeFromSuperview];
+    [_HUD hide:YES];
 }
 
 #pragma mark -
@@ -464,6 +464,10 @@
         NSLog(@"Unexpected packInformation.json format");
     }
     
+    //Step3: Update user's pack and database
+    pack.userID = [User defaultUser].userID;
+    [[User defaultUser] addPack:pack];
+    
     [[NSFileManager defaultManager] removeItemAtPath:downloadedPackInfoFilePath error:nil];
     
     //Step3: build cards by parsing zipped card
@@ -487,9 +491,6 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //Step5: Update user's pack and database
-    pack.userID = [User defaultUser].userID;
-    [[User defaultUser] addPack:pack];
     
     //Step5: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
@@ -578,20 +579,17 @@
 
 - (void)showProgressIndicator {
 	
-	if (_HUD == nil) {
-        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
-        _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
-        //make sure to be in front and disable user interaction
-        CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
-        [_HUD setTransform:at];
-        
-        // Set determinate mode
-        _HUD.mode = MBProgressHUDModeDeterminate;
-        
-        _HUD.delegate = self;
-    	_HUD.labelText = @"Download pack...";
-        
-    }
+    _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //make sure to be in front and disable user interaction
+    CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
+    [_HUD setTransform:at];
+    
+    // Set determinate mode
+    _HUD.mode = MBProgressHUDModeDeterminate;
+    
+    _HUD.delegate = self;
+    _HUD.labelText = @"Download pack...";
     
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];

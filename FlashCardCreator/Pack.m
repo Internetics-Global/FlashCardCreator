@@ -19,7 +19,6 @@
 @synthesize coverImageURL = _coverImageURL;
 @synthesize userID = _userID;
 @synthesize languageName = _languageName;
-@synthesize isPublic = _isPubilc;
 
 @synthesize cards = _cards;
 
@@ -30,7 +29,6 @@
 	self = [super init];
     _packID = -1;
     _userID = -1;
-    _isPubilc = FALSE;
     _cards = [[NSMutableArray alloc] init];
 	return self;
 }
@@ -51,7 +49,6 @@
         _userID = -1;
     }
     _languageName = [dict valueForKey:@"language_name"];
-    _isPubilc= [[dict valueForKey:@"is_public"] intValue] == 1;
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
 		for (int i = 0; i < [cardsArray count]; i++) {
@@ -77,14 +74,14 @@
 		}
 	}
 	for (int i = 0; i < [_cards count]; i++) {
-		NSLog(@"%s:saving cards next...",__FUNCTION__);
+		NSLog(@"%s:saving cards...",__FUNCTION__);
 		[_cards[i] save];
 	}
 }
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\" WHERE id=%d", _packName, _languageName, (_isPubilc?1:0), _coverImageURL, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\" WHERE id=%d", _packName, _languageName,0, _coverImageURL, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -95,7 +92,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, (_isPubilc?1:0), _coverImageURL];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);

@@ -302,8 +302,8 @@
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
-    _progressivePercent = 0;
-    [_HUD removeFromSuperview];
+    [_HUD hide:YES];
+    
     
     //step3: create dropbox linkage
     [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
@@ -313,14 +313,14 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
     NSLog(@"File upload failed with error - %@", error);
-    _progressivePercent = 0;
-    [_HUD removeFromSuperview];
+    [_HUD hide:YES];
     [Common alertViewCommon:@"Failure to upload"];
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
            forFile:(NSString*)destPath from:(NSString*)srcPath {
     _progressivePercent = progress;
+    _HUD.progress = progress;
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
@@ -338,21 +338,18 @@
 
 - (void)showProgressIndicator {
 	
-	if (_HUD == nil) {
-        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
-        _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
-        //make sure to be in front and disable user interaction
-        CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
-        [_HUD setTransform:at];
-        
-        // Set determinate mode
-        _HUD.mode = MBProgressHUDModeDeterminate;
-        
-        _HUD.delegate = self;
-    	_HUD.labelText = @"Uploading first...";
-        _HUD.detailsLabelText = @"to Dropbox and create share linkage";
-        
-    }
+	_HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //make sure to be in front and disable user interaction
+    CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
+    [_HUD setTransform:at];
+    
+    // Set determinate mode
+    _HUD.mode = MBProgressHUDModeDeterminate;
+    
+    _HUD.delegate = self;
+    _HUD.labelText = @"Uploading first...";
+    _HUD.detailsLabelText = @"to Dropbox and create share linkage";
     
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
@@ -373,7 +370,7 @@
 	// Remove HUD from screen when the HUD was hidded
 	[_HUD removeFromSuperview];
 }
-							
+
 #pragma mark -
 #pragma mark Split view
 
