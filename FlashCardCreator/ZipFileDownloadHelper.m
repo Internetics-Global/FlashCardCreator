@@ -24,14 +24,18 @@
 }
 
 - (NSString *) downloadZipFile:(NSString *)URLStr {
+    //Every time before download, we need to clear it.
+    [[NSFileManager defaultManager] removeItemAtPath:[FileOperationHelper downloadedPackFileDirectory] error:nil];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLStr]];
-    NSString *path = [self.class downloadedZipFilePath];
+    NSString *path = [FileOperationHelper downloadedZipPackFileFixedPath];
     AFDownloadRequestOperation *operation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path);
         [_delegate downloadSuccess:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error download: %@", error);
+        [_delegate downloadFail];
         [Common alertViewCommon:[error description]];
     }];
     [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
@@ -48,24 +52,6 @@
     [_queue addOperation:operation];
     
     return path;
-    
-    
 }
-
-//we put downloaded zip file under Document/Images 
-+ (NSString *)downloadedZipFilePath {
-    NSString *completeDir = [[FileOperationHelper documentsDirectory] stringByAppendingPathComponent:@"Images"];
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:completeDir]) {
-            if(![[NSFileManager defaultManager] createDirectoryAtPath:completeDir withIntermediateDirectories:YES attributes:nil error:&error]) {
-                NSLog(@"Failed to create directory at %@", completeDir);
-            }
-        }
-
-    NSString *path = [completeDir stringByAppendingPathComponent:@"downloadedZipFilePath"];
-    
-    return path;
-}
-
 
 @end

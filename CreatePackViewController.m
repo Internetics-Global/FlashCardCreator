@@ -19,7 +19,6 @@
 
 @implementation CreatePackViewController
 
-@synthesize isIncludePackListView = _isIncludePackListView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,49 +60,12 @@
     _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.png"];
     [self.view addSubview:_coverImageView];
     
-    _packHeaderText = [[UITextField alloc] initWithFrame:CGRectMake(0, 300, 540, 30)];
-    _packHeaderText.textAlignment = UITextAlignmentCenter;
-    _packHeaderText.backgroundColor = [UIColor clearColor];
-    _packHeaderText.text = @"Select current packs";
-    _packHeaderText.font = [UIFont systemFontOfSize:16];
-    
-    _seperatorLineImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 320,540,25)];
-    _seperatorLineImage.contentMode = UIViewContentModeScaleAspectFit;
-    _seperatorLineImage.userInteractionEnabled = NO;
-    _seperatorLineImage.image =[UIImage imageNamed:@"create_pack_seperator.png"];
-    
-    _packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
-    _packListViewController.view.frame = CGRectMake(0, 330, 540, 262);
-    _packListViewController.view.clipsToBounds = YES;
-    _packListViewController.view.layer.cornerRadius = 0;
-    _packListViewController.view.backgroundColor =[UIColor clearColor];
-    
     _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.png", [[NSBundle mainBundle] resourcePath]];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
     [_coverImageView addGestureRecognizer:imageSingeTap];
     
 }
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    if (_isIncludePackListView) {
-        [self.view addSubview:_seperatorLineImage];
-        [self.view addSubview:_packHeaderText];
-    }
-	// Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    if (_isIncludePackListView ) {
-        [self addChildViewController:_packListViewController];
-        [self.view addSubview:_packListViewController.view];
-    }
-    
-}
-
 
 - (void) closeCreatePackView {
     [self dismissModalViewControllerAnimated:YES];

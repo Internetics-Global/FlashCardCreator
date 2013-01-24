@@ -77,8 +77,6 @@
 		2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DABAD1716AF32EE000F6261 /* SimpleWebBrowserController.m */; };
 		2DBD6DDA169BCF0600962A80 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DD9169BCF0600962A80 /* QuestionView.m */; };
 		2DBD6DDD169BCF1B00962A80 /* AnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DDC169BCF1B00962A80 /* AnswerView.m */; };
-		2DC0621F167E779200F2EA07 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0621D167E779200F2EA07 /* AddViewController.m */; };
-		2DC06220167E779200F2EA07 /* AddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC0621E167E779200F2EA07 /* AddViewController.xib */; };
 		2DC06259167EBECA00F2EA07 /* card_example.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC06258167EBECA00F2EA07 /* card_example.png */; };
 		2DC0628D167FFF3A00F2EA07 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628C167FFF3A00F2EA07 /* DropboxSDK.framework */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
@@ -495,9 +493,6 @@
 		2DBD6DD9169BCF0600962A80 /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
 		2DBD6DDB169BCF1B00962A80 /* AnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerView.h; sourceTree = "<group>"; };
 		2DBD6DDC169BCF1B00962A80 /* AnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerView.m; sourceTree = "<group>"; };
-		2DC0621C167E779200F2EA07 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddViewController.h; path = FlashCardCreator/AddViewController.h; sourceTree = "<group>"; };
-		2DC0621D167E779200F2EA07 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddViewController.m; path = FlashCardCreator/AddViewController.m; sourceTree = "<group>"; };
-		2DC0621E167E779200F2EA07 /* AddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddViewController.xib; path = FlashCardCreator/AddViewController.xib; sourceTree = "<group>"; };
 		2DC06258167EBECA00F2EA07 /* card_example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_example.png; sourceTree = "<group>"; };
 		2DC0628C167FFF3A00F2EA07 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DropboxSDK.framework; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -886,9 +881,6 @@
 		2DC06257167EA4D700F2EA07 /* CreateCard */ = {
 			isa = PBXGroup;
 			children = (
-				2DC0621C167E779200F2EA07 /* AddViewController.h */,
-				2DC0621D167E779200F2EA07 /* AddViewController.m */,
-				2DC0621E167E779200F2EA07 /* AddViewController.xib */,
 				2D09AF8416A51F3700B1C0C9 /* CreateCardViewController.h */,
 				2D09AF8516A51F3700B1C0C9 /* CreateCardViewController.m */,
 			);
@@ -1327,7 +1319,6 @@
 				2D5F3D031679EEC6009D2ADC /* Default-Landscape@2x~ipad.png in Resources */,
 				2D5F3D051679EF7A009D2ADC /* Default-Portrait~ipad.png in Resources */,
 				2D5F3D071679EF7D009D2ADC /* Default-Portrait@2x~ipad.png in Resources */,
-				2DC06220167E779200F2EA07 /* AddViewController.xib in Resources */,
 				2DC06259167EBECA00F2EA07 /* card_example.png in Resources */,
 				2DE3E9121681A25400AB3AEC /* icon.png in Resources */,
 				2DE3E9141681A25900AB3AEC /* Icon@2x.png in Resources */,
@@ -1388,7 +1379,6 @@
 				2D5F3D42167ACAAD009D2ADC /* Image.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D3E9D11167D95760053FA31 /* CardCell.m in Sources */,
-				2DC0621F167E779200F2EA07 /* AddViewController.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
 				2D7A8CE116910F84002EDF77 /* ioapi.c in Sources */,

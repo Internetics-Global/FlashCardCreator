@@ -33,6 +33,8 @@
     
     UIPopoverController *_settingPopoverController;
     
+    UIPopoverController *_masterPopoverController;
+    
     BOOL _isShare;
 }
 
@@ -42,6 +44,7 @@
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, assign) int indexCard;
 
+@property (nonatomic, strong) UIPopoverController *masterPopoverController;
 
 - (void) showCurrentCardInScrollView;
 

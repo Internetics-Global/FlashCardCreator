@@ -12,6 +12,7 @@
 #import "AnswerView.h"
 #import "FlashCardView.h"
 #import "Card.h"
+#import "User.h"
 #import "Pack.h"
 #import "SHK.h"
 #import <DropboxSDK/DropboxSDK.h>
@@ -27,19 +28,15 @@
 #define kScrollViewObjectHeight_iPhone (320-44)
 #define kScrollViewObjectMargin_iPhone 20
 
-@interface DetailViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
-- (void)configureView;
-@end
-
 @implementation DetailViewController
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
 @synthesize indexCard = _indexCard;
+@synthesize masterPopoverController = _masterPopoverController;
 
 #pragma mark -
-#pragma mark Initialization
+#pragma mark Life cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,6 +47,7 @@
         _isShare = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
     }
     return self;
 }
@@ -109,6 +107,8 @@
     }
 }
 
+#pragma mark -
+#pragma mark - Layout 
 
 - (void) showCurrentCardInScrollView {
     if (isUserInterfaceIdiomPhone) {
@@ -174,32 +174,7 @@
 }
 
 #pragma mark -
-#pragma mark Managing the detail item
-
-- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-    }
-    
-    // Update the view.
-    [self configureView];
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
-}
-
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-    if (self.detailItem) {
-        //self.detailDescriptionLabel.text = (NSString *)(self.detailItem) ;
-    }
-}
-
-#pragma mark -
-#pragma mark UIBarButtonItem action  only for iPad
+#pragma mark UIBarButtonItem action (only for iPad)
 
 - (void)moreButtonClicked:(id) sender
 {
@@ -271,18 +246,22 @@
 
 - (void) exectueShareAfterDropboxLinked {
     
-    if (_currentCard == nil)
+
+    NSString *generatedZipFilePath = nil;
+    //step1: create zip file
+    if ((_currentPack) && (_currentPack.packName != PUBLIC_PACK_NAME)) {
+        generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack];
+    } else {
+        NSLog(@"%s:Pack to share is nil or public pack",__FUNCTION__);
         return;
-    
+    }
+
+    //step2: upload to dropbox
     if ([DataManager apiReachable] == NO) {
         [Common alertViewCommon:@"Please check your network"];
         return;
     }
     
-    //step1: create zip file
-    NSString *generatedZipFilePath = [FileOperationHelper zipCardForUpload:_currentCard];
-    
-    //step2: upload to dropbox
     NSString *saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];
     if (!_restClient) {
         _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -293,10 +272,15 @@
               withParentRev:nil fromPath:generatedZipFilePath];
     if (_HUD == nil) {
         _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+        
+        //make sure to be in front and disable user interaction
+        //CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
+        //[_HUD setTransform:at];
     }
+    
     [self.view addSubview:_HUD];
     _HUD.mode = MBProgressHUDModeIndeterminate;
-	_HUD.labelText = @"Uploading to dropbox to create share link...";
+	_HUD.labelText = @"Uploading to Dropbox and create share link...";
     [_HUD show:YES];
     
     //step3: create dropbox linkage which locate in uploadedFile:
@@ -429,6 +413,13 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
+}
+
+- (void) selectedPackNotification:(NSNotification *) notification {
+    int index = [(NSString *)[notification object] intValue];
+    self.currentPack = [[User defaultUser] packs][index];
+
+    
 }
 
 

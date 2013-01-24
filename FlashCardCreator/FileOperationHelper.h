@@ -9,16 +9,23 @@
 #import <Foundation/Foundation.h>
 
 @class Card;
+@class Pack;
 
 @interface FileOperationHelper : NSObject
 
-+ (NSString *)documentsDirectory;
++ (NSString *) documentsDirectory;
++ (NSString *) imagesDirectory;
++ (NSString *) assembleFactoryDirectory;
+
 + (NSString *) documentsPathForFileNamed:(NSString *)fileName;
 + (BOOL) fileExistsAtDocumentsPathWithName:(NSString *)fileName;
 + (NSString *) temporaryDirectory;
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 
 + (NSString *) generateUniquePNGImageFilePath;
-+ (NSString *) zipCardForUpload:(Card *) card;
++ (NSString *) zipPackForUpload:(Pack *) pack;
+
++ (NSString *)downloadedPackFileDirectory;
++ (NSString *)downloadedZipPackFileFixedPath;
 
 @end

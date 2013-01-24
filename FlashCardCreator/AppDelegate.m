@@ -68,19 +68,17 @@
         self.masterViewController.currentCard = _lastCreatedCard;
         self.masterViewController.currentPack = _lastCreatedPack;
         self.masterViewController.indexCard = _indexCard;
+        self.detailViewController.currentCard = _lastCreatedCard;
+        self.detailViewController.currentPack = _lastCreatedPack;
+        self.detailViewController.indexCard = _indexCard;
     }
-    self.masterViewController.isCurrentPackPublic = (_lastCreatedCard == nil);
     
     if (isUserInterfaceIdiomPhone) {
         self.detailViewController.currentPack = _lastCreatedPack;
         self.detailViewController.currentCard = _lastCreatedCard;
         self.detailViewController.indexCard = _indexCard;
     }
-    
-    //6. Get example packs (online)
-    PublicPackRequest *publicPackRequest = [[PublicPackRequest alloc] init];
-    [publicPackRequest requestPublicPack];
-    publicPackRequest.delegate = self.masterViewController;
+
     
     //7.Golbal UI setting
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
@@ -90,12 +88,16 @@
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
     DefaultSHKConfigurator *configurator = [[MySHKConfigurator alloc] init];
     [SHKConfiguration sharedInstanceWithConfigurator:configurator];
+    
 
-    //9. Show UI
+    //10. Show UI
     [self.window makeKeyAndVisible];
     
-    
-    //Test code, only for test
+    //11. Get example packs (online) and save to local
+    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+    if (isExamplePackDownloadedSuccessful ==NO) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/25yo9n1a650zuzc/card1358989656.913788-1939678530.zip"];
+    }
     
     return YES;
 }
@@ -106,21 +108,22 @@
 //url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+    if (!isExamplePackDownloadedSuccessful) {
+        [Common alertViewCommon:@"You need to download example pack first"];
+        return NO;
+    }
+    
     if ([[url scheme] isEqualToString:@"fcc"]) {
-        NSString *httpURL = [[url absoluteString] stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
+        //NSString *httpURL = [[url absoluteString] stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
         //NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
         //NSDictionary *params = [NSString queryParamsFromString:[url absoluteString]];
         //NSString *fromWho = params[@"from"];
         //NSString *packName = params[@"packname"];
         //NSString *cardName = params[@"cardname"];
         
-        //tell master that we will do download from online card
-        self.masterViewController.dropboxShareLinkURL = [url absoluteString];
-        CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
-        createPackController.isIncludePackListView = YES;
-        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
-        navController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self.window.rootViewController presentModalViewController:navController animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
+        
         
         
         

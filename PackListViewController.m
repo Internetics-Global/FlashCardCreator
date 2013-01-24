@@ -83,6 +83,7 @@
     [view addSubview:indexLabel];
         
     coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 210.0f, 180.0f)];
+    coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
@@ -128,9 +129,6 @@
 
 - (void) resetPackContent {
     NSMutableArray *imageArray = [NSMutableArray array];
-    
-    NSString *publicPackImageFile = [NSString stringWithFormat:@"%@/public_pack.png", [[NSBundle mainBundle] resourcePath]];
-    [imageArray addObject:publicPackImageFile];
     
     for (Pack *pack in [[User defaultUser] packs]) {
         [imageArray addObject:pack.coverImageURL];

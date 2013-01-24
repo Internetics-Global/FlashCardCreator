@@ -12,6 +12,7 @@
 
 - (void) downloadProgressivePercent :(long long) current totalLength: (long long) total;
 - (void) downloadSuccess :(BOOL) isSucess;
+- (void) downloadFail;
 
 @end
 
@@ -26,7 +27,5 @@
 
 
 - (NSString *) downloadZipFile:(NSString *)URLStr;
-
-+ (NSString *)downloadedZipFilePath;
 
 @end
