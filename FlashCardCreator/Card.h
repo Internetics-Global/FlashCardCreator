@@ -16,9 +16,7 @@
     NSInteger _packID;
     NSString *_cardName;
     NSString *_coverImageURL;
-    NSString *_onlineFileURL; //this only applies to online cards
-    BOOL _isOnline;   // when true, indicate local card does not exist or imcomplete and need to download from remote
-    
+    NSString *_creator; //we use OpenUDID to generate
     Question *_question;
     Answer *_answer;
     
@@ -29,9 +27,7 @@
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, copy) NSString *cardName;
 @property (nonatomic, copy) NSString *coverImageURL;
-@property (nonatomic, copy) NSString *onlineFileURLL;
-@property (nonatomic, assign) BOOL isOnline;
-
+@property (nonatomic, copy) NSString *creator;
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) Answer *answer;
 

@@ -57,7 +57,6 @@
         card.cardID = [(publicCardRawArray[i])[@"card_id"] integerValue];
         card.cardName = (publicCardRawArray[i])[@"card_name"];
         card.coverImageURL = (publicCardRawArray[i])[@"thumb_pic"];
-        card.onlineFileURLL = (publicCardRawArray[i])[@"dropbox_zip_link"];
         [[pack cards] addObject:card];
     }
     

@@ -39,7 +39,7 @@
 }
 
 - (void) setupViewForiPhone {
-    self.contentView.frame = CGRectMake(0, 0, 320, 100);
+    self.contentView.frame = CGRectMake(0, 0, 480, 100);
     
     _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 40, 20)];
     _indexLabel.text = @"N";

@@ -52,7 +52,7 @@
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewNotification:) name:PARSE_PACK_FINISH_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPackNotification:) name:DOWNLOAD_PACK_NOTIFICATION object:nil];
         
@@ -92,12 +92,12 @@
     }
     
     self.navigationItem.leftBarButtonItem.title = @"Available Packs";
-    [self.tableView reloadData];
-
-    
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //[self.tableView setEditing:YES animated:YES];
     self.title = @"";
+    [self.tableView reloadData];
+
     
 }
 
@@ -110,7 +110,7 @@
     if (isUserInterfaceIdiomPhone ) {
         _addCardButton.center = CGPointMake(100,320-40);
     } else {
-        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -50);
+        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -100);
     }
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
@@ -243,11 +243,11 @@
 #pragma mark - Update UI
 
 - (void) updateMasterDetailViewNotification:(NSNotification *) notification {
-    
     //Step1: update master view
-    [self.tableView reloadData];
+    self.currentPack = (Pack *)[notification object];
+    self.indexCard = [[_currentPack cards] count] -1;
     _selectPackButton.title = _currentPack.packName;
-    
+    [self.tableView reloadData];
     
     //Step2: update detail view
     self.detailViewController.detailItem = _currentCard.cardName;
@@ -295,7 +295,8 @@
     CardCell *cell = (CardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
 		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SelectedCellBackground.png"]];
+        UIImageView *backgroundView = [[UIImageView alloc] init];
+        backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
         backgroundView.layer.cornerRadius =5;
         [backgroundView.layer setMasksToBounds:YES];
         cell.selectedBackgroundView = backgroundView;
@@ -318,13 +319,6 @@
 
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return NO;
-}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.currentCard = [_currentPack cards][indexPath.row];
@@ -341,7 +335,12 @@
             self.detailViewController.currentCard = _currentCard;
             self.detailViewController.currentPack = _currentPack;
             self.detailViewController.indexCard = _indexCard;
-            [self.navigationController pushViewController:self.detailViewController animated:YES];
+            
+            //We need to avoid do pushViewController twice.
+            NSArray *viewControllerArray =self.navigationController.viewControllers;
+            if (![[viewControllerArray objectAtIndex:[viewControllerArray count]-1] isKindOfClass:[self.detailViewController class]]) {
+                [self.navigationController pushViewController:self.detailViewController animated:YES];
+            }
         } else {
             self.detailViewController.currentCard = _currentCard;
             self.detailViewController.currentPack = _currentPack;
@@ -349,6 +348,22 @@
             [self.detailViewController showCurrentCardInScrollView];
         }
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Card *card =[_currentPack cards] [indexPath.row];
+        [_currentPack removeCard:card];
+		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
+                              withRowAnimation:UITableViewRowAnimationFade];
+	}
+    
 }
 
 #pragma mark -
@@ -360,6 +375,8 @@
 
 - (void)downloadSuccess:(BOOL)isSucess {
     if (isSucess == YES) {
+        _progressivePercent = 0;
+        [_HUD show:NO];
         [self unzipFileThenAssemblePack];
     }
 }
@@ -447,9 +464,6 @@
         NSLog(@"Unexpected packInformation.json format");
     }
     
-    pack.userID = [User defaultUser].userID;
-    [[User defaultUser] addPack:pack];
-    
     [[NSFileManager defaultManager] removeItemAtPath:downloadedPackInfoFilePath error:nil];
     
     //Step3: build cards by parsing zipped card
@@ -459,8 +473,8 @@
         NSLog(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
     }
     
-    Card *assembledCard = [[Card alloc] init];
     for (NSString *zippedCardFileName in fileListArray) {
+        Card *assembledCard = [[Card alloc] init];
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath];
@@ -469,16 +483,16 @@
         }
     }
     
-    //Step4: set Master view
-    self.currentPack = pack;
-    self.indexCard = [fileListArray count] -1;
-    self.currentCard = assembledCard;
+    //Step4: set successful flag
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //Step5: set successful flag
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
+    //Step5: Update user's pack and database
+    pack.userID = [User defaultUser].userID;
+    [[User defaultUser] addPack:pack];
     
-    //Step6: send notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_PACK_FINISH_NOTIFICATION object:_currentCard];
+    //Step5: send notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
     
     
 }
@@ -515,14 +529,14 @@
         
         if ([questionJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *questionDict = (NSDictionary *)questionJsonObject;
-            [assembledCard question].questionID = [questionDict[@"question_id"] intValue];
-            [assembledCard question].cardID = [questionDict[@"card_id"] intValue];
+            [assembledCard question].questionID = -1; // -1 means new
+            [assembledCard question].cardID = -1;
             [assembledCard question].title = questionDict[@"title"];
             [assembledCard question].content = questionDict[@"content"];
-            [assembledCard question].type = questionDict[@"type"];
             [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
+            assembledCard.creator = questionDict[@"creator"];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -542,8 +556,8 @@
     if (answerJsonObject != nil && error == nil) {
         if ([answerJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *answerDict = (NSDictionary *)answerJsonObject;
-            [assembledCard answer].answerID = [answerDict[@"answer_id"] intValue];
-            [assembledCard answer].cardID = [answerDict[@"card_id"] intValue];
+            [assembledCard answer].answerID = -1;
+            [assembledCard answer].cardID = -1;
             [assembledCard answer].title = answerDict[@"title"];
             [assembledCard answer].content = answerDict[@"content"];
             [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
@@ -565,8 +579,8 @@
 - (void)showProgressIndicator {
 	
 	if (_HUD == nil) {
-        _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-      
+        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+        _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
         //make sure to be in front and disable user interaction
         CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
         [_HUD setTransform:at];
@@ -575,11 +589,10 @@
         _HUD.mode = MBProgressHUDModeDeterminate;
         
         _HUD.delegate = self;
-    	_HUD.labelText = @"Download Pack";
+    	_HUD.labelText = @"Download pack...";
         
     }
     
-    [_HUD setProgress:0.0];  
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     

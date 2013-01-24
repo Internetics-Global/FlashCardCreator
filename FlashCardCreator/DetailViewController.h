@@ -15,7 +15,7 @@
 @class Card;
 @class Pack;
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate> {
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate,MBProgressHUDDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -28,6 +28,7 @@
     NSMutableArray *_cardArray;
     
     MBProgressHUD *_HUD;
+    float _progressivePercent;
     
     DBRestClient *_restClient;
     

@@ -39,7 +39,7 @@
     [super loadView];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"create_pack_background"]];
-    self.title = @"Save to new or existing pack?";
+    self.title = @"Add a new pack";
     
     _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];
     _packNameText.textAlignment = UITextAlignmentCenter;

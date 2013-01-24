@@ -28,6 +28,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;
+- (void)destroy;
 
 + (NSMutableDictionary *) questionForCardID:(NSInteger)cardID;
 

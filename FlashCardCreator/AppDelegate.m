@@ -96,7 +96,7 @@
     //11. Get example packs (online) and save to local
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/25yo9n1a650zuzc/card1358989656.913788-1939678530.zip"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/4c5daaoghmrp4cl/card1359007028.4419341292552715.zip"];
     }
     
     return YES;
@@ -110,7 +110,7 @@
 {
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (!isExamplePackDownloadedSuccessful) {
-        [Common alertViewCommon:@"You need to download example pack first"];
+        [Common alertViewCommon:@"Downloading example pack firstly"];
         return NO;
     }
     

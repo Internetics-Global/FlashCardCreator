@@ -64,12 +64,41 @@
 
 -(void)insert{
 	if (_answerID == -1) {
-		_answerID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
+		_answerID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Answer_Tables"] + 1;
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, content, image, logo) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\")", _answerID, _cardID, _title, _content, _imageFullPath, _logoFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
+}
+
+-(void)destroy{
+	//Step1: delete from database
+    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Answer_Tables WHERE card_id=%d", _cardID];
+	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+	sqlite3_step(queryStatement);
+	sqlite3_finalize(queryStatement);
+    
+    //Step2: delted image resources
+    NSError *error = nil;
+    //We never delete placeholder imae
+    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"answer_placeholder_logo.png"]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath]) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of answer logoFullPath"];
+            }
+        }
+    }
+    error = nil;
+    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"answer_placeholder_content"]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath]) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of answer imageFullPath"];
+            }
+        }
+    }
 }
 
 +(NSMutableDictionary *) answerForCardID:(NSInteger)cardID{

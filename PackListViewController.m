@@ -18,12 +18,18 @@
 @synthesize pageControl = _pageControl;
 @synthesize packArray = _packArray;
 
+#pragma mark -
+#pragma mark - Life cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        //From: click "add pack" button on navigation bar
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePackListNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        
+        //From: add downloaded pack
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePackListNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
         
         //Don't need the back button when on iPad 
         if (isUserInterfaceIdiomPhone) {
@@ -55,10 +61,16 @@
     [self resetPackContent];
 }
 
+#pragma mark -
+#pragma mark - Rotate control
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
 }
+
+#pragma mark -
+#pragma mark - SwipeViewDelegate and SwipeViewDataSource
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
@@ -91,13 +103,8 @@
     //configure view
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
-    if (index == 0) {
-        indexLabel.text = PUBLIC_PACK_NAME;
-    } else {
-        Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:(index-1)];
-        
-        indexLabel.text = currentPack.packName;
-    }
+    Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+    indexLabel.text = currentPack.packName;
     
     [view layoutSubviews];
     
@@ -121,11 +128,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
-- (IBAction)pageControlTapped
-{
-    //update swipe view page
-    [_swipeView scrollToPage:_pageControl.currentPage duration:0.4];
-}
+#pragma mark -
+#pragma mark - Reset DataSource
 
 - (void) resetPackContent {
     NSMutableArray *imageArray = [NSMutableArray array];
@@ -136,10 +140,21 @@
     self.packArray = imageArray;
 }
 
+#pragma mark -
+#pragma mark - Notification related
 
--(void)newPackAddedNotification:(NSNotification *)notification{
+-(void)updatePackListNotification:(NSNotification *)notification{
 	[self resetPackContent];
     [self.swipeView reloadData];
+}
+
+#pragma mark -
+#pragma mark - Control touch event
+
+- (IBAction)pageControlTapped
+{
+    //update swipe view page
+    [_swipeView scrollToPage:_pageControl.currentPage duration:0.4];
 }
 
 - (void) backButtonClicked {

@@ -42,6 +42,8 @@
         
         _isQuestionShowing = YES; //default to show question
         
+        _currentCard = [[Card alloc] init];
+        
         if (isUserInterfaceIdiomPhone) {
             [self loadViewForiPhone];
         } else {
@@ -79,6 +81,8 @@
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
+    
+    [self checkCardEditable];
 }
 
 - (void) loadViewForiPhone {
@@ -109,6 +113,32 @@
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
+    
+    [self checkCardEditable];
+}
+
+
+- (void)checkCardEditable {
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+        _questionView.logoImage.userInteractionEnabled = TRUE;
+        _questionView.title.userInteractionEnabled = TRUE;
+        _questionView.image.userInteractionEnabled = TRUE;
+        _questionView.content.userInteractionEnabled = TRUE;
+        _answerView.logoImage.userInteractionEnabled = TRUE;
+        _answerView.title.userInteractionEnabled = TRUE;
+        _answerView.image.userInteractionEnabled = TRUE;
+        _answerView.content.userInteractionEnabled = TRUE;
+        
+    } else {
+        _questionView.logoImage.userInteractionEnabled = FALSE;
+        _questionView.title.userInteractionEnabled = FALSE;
+        _questionView.image.userInteractionEnabled = FALSE;
+        _questionView.content.userInteractionEnabled = FALSE;
+        _answerView.logoImage.userInteractionEnabled = FALSE;
+        _answerView.title.userInteractionEnabled = FALSE;
+        _answerView.image.userInteractionEnabled = FALSE;
+        _answerView.content.userInteractionEnabled = FALSE;
+    }
 }
 
 - (void) refreshQuestionAnserView {

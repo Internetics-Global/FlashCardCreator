@@ -68,7 +68,7 @@
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                    target:self action:@selector(playButtonClicked)];
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the card" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the pack" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
         @[playButton, shareButton];
@@ -270,18 +270,7 @@
     //if folder not exist, create automatically
     [_restClient uploadFile:saveName toPath:@"/FlashCardCreator"
               withParentRev:nil fromPath:generatedZipFilePath];
-    if (_HUD == nil) {
-        _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-        
-        //make sure to be in front and disable user interaction
-        //CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
-        //[_HUD setTransform:at];
-    }
-    
-    [self.view addSubview:_HUD];
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-	_HUD.labelText = @"Uploading to Dropbox and create share link...";
-    [_HUD show:YES];
+    [self showProgressIndicator];
     
     //step3: create dropbox linkage which locate in uploadedFile:
 
@@ -306,11 +295,14 @@
 	[actionSheet showFromToolbar:self.navigationController.toolbar];
 }
 
+#pragma mark -
+#pragma mark - DBRestClientDelegate related
+
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
-    [_HUD show:FALSE];
+    _progressivePercent = 0;
     [_HUD removeFromSuperview];
     
     //step3: create dropbox linkage
@@ -321,9 +313,14 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
     NSLog(@"File upload failed with error - %@", error);
-    [_HUD show:FALSE];
+    _progressivePercent = 0;
     [_HUD removeFromSuperview];
     [Common alertViewCommon:@"Failure to upload"];
+}
+
+- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
+           forFile:(NSString*)destPath from:(NSString*)srcPath {
+    _progressivePercent = progress;
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
@@ -336,15 +333,45 @@
     NSLog(@"Share linkage create failed with error - %@", error);    
 }
 
+#pragma mark -
+#pragma mark - MBProgressHUDDelegate and related
 
-//warning, need to be finished
-- (void) shareCardViaShareLinkage:(NSString *) shareLink {
-    NSURL *url = [NSURL URLWithString:@"www.microsoft.com"];
-    SHKItem *item = [SHKItem URL:url title:@"Hi Friend, I get a incredible card for you" contentType:SHKURLContentTypeWebpage];
-    item.shareType = SHKShareTypeURL;
-    SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
-    [SHK setRootViewController:self];
-    [actionSheet showFromToolbar:self.navigationController.toolbar];
+- (void)showProgressIndicator {
+	
+	if (_HUD == nil) {
+        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+        _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+        //make sure to be in front and disable user interaction
+        CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
+        [_HUD setTransform:at];
+        
+        // Set determinate mode
+        _HUD.mode = MBProgressHUDModeDeterminate;
+        
+        _HUD.delegate = self;
+    	_HUD.labelText = @"Uploading first...";
+        _HUD.detailsLabelText = @"to Dropbox and create share linkage";
+        
+    }
+    
+    // myProgressTask uses the HUD instance to update progress
+    [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+    
+    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+    
+}
+
+- (void)myProgressTask {
+	while (_progressivePercent < 1.0f) {
+		_HUD.progress = _progressivePercent;
+		usleep(50000);
+	}
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[_HUD removeFromSuperview];
 }
 							
 #pragma mark -

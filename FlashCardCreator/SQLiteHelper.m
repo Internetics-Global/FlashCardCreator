@@ -83,7 +83,7 @@
 		sqlite3_finalize(createItems);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, is_online integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, creator text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}

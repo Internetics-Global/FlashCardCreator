@@ -36,7 +36,6 @@
 		2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D38167ACA7A009D2ADC /* Card.m */; };
 		2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D3B167ACA8C009D2ADC /* Question.m */; };
 		2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D3E167ACA9A009D2ADC /* Answer.m */; };
-		2D5F3D42167ACAAD009D2ADC /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D41167ACAAD009D2ADC /* Image.m */; };
 		2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3D49167B50F6009D2ADC /* DataManager.m */; };
 		2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5F3D50167B537C009D2ADC /* SystemConfiguration.framework */; };
 		2D66BF6316A64C4500795CF9 /* UINavigationController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D66BF6216A64C4500795CF9 /* UINavigationController+DismissKeyboard.m */; };
@@ -96,6 +95,7 @@
 		2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */; };
 		2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */; };
 		2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */; };
+		2DDF5A3616B0F74500191C43 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF5A3516B0F74500191C43 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2DE3E9121681A25400AB3AEC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9111681A25400AB3AEC /* icon.png */; };
 		2DE3E9141681A25900AB3AEC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9131681A25800AB3AEC /* Icon@2x.png */; };
 		2DE3E9161681A2E000AB3AEC /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE3E9151681A2E000AB3AEC /* Icon-72.png */; };
@@ -425,8 +425,6 @@
 		2D5F3D3B167ACA8C009D2ADC /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		2D5F3D3D167ACA9A009D2ADC /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
 		2D5F3D3E167ACA9A009D2ADC /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
-		2D5F3D40167ACAAC009D2ADC /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
-		2D5F3D41167ACAAD009D2ADC /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
 		2D5F3D48167B50F6009D2ADC /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		2D5F3D49167B50F6009D2ADC /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		2D5F3D50167B537C009D2ADC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -522,6 +520,8 @@
 		2DCE0B2D16798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B3316798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
+		2DDF5A3416B0F74500191C43 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		2DDF5A3516B0F74500191C43 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		2DE3E9111681A25400AB3AEC /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		2DE3E9131681A25800AB3AEC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		2DE3E9151681A2E000AB3AEC /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../Icon-72.png"; sourceTree = "<group>"; };
@@ -710,8 +710,6 @@
 				2D5F3D3B167ACA8C009D2ADC /* Question.m */,
 				2D5F3D3D167ACA9A009D2ADC /* Answer.h */,
 				2D5F3D3E167ACA9A009D2ADC /* Answer.m */,
-				2D5F3D40167ACAAC009D2ADC /* Image.h */,
-				2D5F3D41167ACAAD009D2ADC /* Image.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -728,6 +726,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2DDF5A3316B0F72700191C43 /* OpenUDID */,
 				2D09AF0916A4F4A200B1C0C9 /* SwipeView */,
 				2D75DF64169D05AB00337B10 /* AFNetworking */,
 				2DC151CC169A849200A61969 /* MBProgressHUD */,
@@ -1005,6 +1004,15 @@
 			);
 			name = "Supporting Files";
 			path = FlashCardCreator;
+			sourceTree = "<group>";
+		};
+		2DDF5A3316B0F72700191C43 /* OpenUDID */ = {
+			isa = PBXGroup;
+			children = (
+				2DDF5A3416B0F74500191C43 /* OpenUDID.h */,
+				2DDF5A3516B0F74500191C43 /* OpenUDID.m */,
+			);
+			name = OpenUDID;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1376,7 +1384,6 @@
 				2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */,
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
-				2D5F3D42167ACAAD009D2ADC /* Image.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D3E9D11167D95760053FA31 /* CardCell.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
@@ -1413,6 +1420,7 @@
 				2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */,
 				2D8B303616AE441500C94485 /* Common.m in Sources */,
 				2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */,
+				2DDF5A3616B0F74500191C43 /* OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

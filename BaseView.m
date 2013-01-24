@@ -74,7 +74,7 @@
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
     _logoImage.tag = 0;
-    _logoImage.layer.cornerRadius = 5;
+    _logoImage.layer.cornerRadius = 8;
     _logoImage.layer.masksToBounds = YES;
     [self addSubview:_logoImage];
     
@@ -85,7 +85,7 @@
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.tag = 1;
-    _image.layer.cornerRadius = 10;
+    _image.layer.cornerRadius = 15;
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
     
@@ -176,8 +176,8 @@
 }
 
 - (void) setInputAccessoryViewDone  {
-    UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [ UIScreen mainScreen ].bounds.size.height, 30)];
-    [topView setBarStyle:UIBarStyleBlack];
+    UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [ UIScreen mainScreen].bounds.size.height, 44)];
+    [topView setBarStyle:UIBarStyleBlackTranslucent];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     

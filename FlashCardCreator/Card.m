@@ -18,9 +18,7 @@
 @synthesize packID = _packID;
 @synthesize cardName = _cardName;
 @synthesize coverImageURL = _coverImageURL;
-@synthesize onlineFileURLL = _onlineFileURL;
-@synthesize isOnline = _isOnline;
-
+@synthesize creator = _creator;
 @synthesize answer = _answer;
 @synthesize question = _question;
 
@@ -32,7 +30,6 @@
     
     _cardID = -1;
     _packID = -1;
-    _isOnline = TRUE;
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     
@@ -45,7 +42,7 @@
 	_cardID = [[dataDict valueForKey:@"card_id"] intValue];    
     _cardName = [dataDict valueForKey:@"card_name"];    
     _coverImageURL = [dataDict valueForKey:@"thumb_pic"];
-    _isOnline= [[dataDict valueForKey:@"is_online"] intValue] == 1;
+    _creator = [dataDict valueForKey:@"creator"];
 
 	if ([[dataDict allKeys] containsObject:@"question"]) {
         NSDictionary *questionArray = (NSDictionary *)[dataDict valueForKey:@"question"];
@@ -80,7 +77,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", is_online=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, (_isOnline?1:0), _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", creator=\"%@\" WHERE card_id=%d", _packID, _cardName, _coverImageURL, _creator, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -90,18 +87,34 @@
 	if (_cardID == -1) {
 		_cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic,  is_online) VALUES (%d, %d, \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, (_isOnline?1:0)];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, creator) VALUES (%d, %d, \"%@\", \"%@\", \"%@\")", _cardID, _packID, _cardName, _coverImageURL, _creator];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
 }
 
 -(void)destroy{
-	NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Cards_Tables WHERE card_id=%d", _cardID];
+	//Step1: delete from database
+    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Cards_Tables WHERE card_id=%d", _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-	//[[DataManager defaultManager] deleteItem:self];
+	
+    //Step2: delted image resources
+    NSError *error = nil;
+    //We never delete placeholder imae
+    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"card_placeholder_cover_image.png"]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL]) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of card coverImageURL"];
+            }
+        }
+    }
+    
+    //Step3: We need to destroy all the data related in persistence
+    [self.question destroy];
+    [self.answer destroy];
 }
 
 +(NSMutableArray *) cardsForPackID:(NSInteger)packID{
@@ -117,7 +130,7 @@
 		[cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"pack_id"];
         [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"card_name"];
         [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"thumb_pic"];
-        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"is_online"];
+        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"creator"];
 		[cardDict setValue:[Question questionForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"question"];
         [cardDict setValue:[Answer answerForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"answer"];
 		[returnArray addObject:cardDict];

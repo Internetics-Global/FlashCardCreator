@@ -26,6 +26,7 @@
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;
+- (void)destroy;
 
 + (NSMutableDictionary *) answerForCardID:(NSInteger)cardID;
 
