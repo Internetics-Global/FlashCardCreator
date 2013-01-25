@@ -278,7 +278,7 @@
 
 - (void) shareAction:(NSString *)shareLinkage {
 
-    NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://www." withString:@"fcc://"];
+    NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
     SHKItem *item = [SHKItem URL:[NSURL URLWithString:urlSchemeLinkage] title:@"example" contentType:SHKURLContentTypeUndefined];
     

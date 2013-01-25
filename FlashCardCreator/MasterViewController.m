@@ -420,13 +420,15 @@
     {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
-            // error handler here
+            NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
         } else {
             NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
         }
         [za UnzipCloseFile];
         
         [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
+    } else {
+        [Common alertViewCommon:@"Format of downloaded zip file is not correct"];
     }
     
     //Step2: buid pack
@@ -506,7 +508,7 @@
     {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper imagesDirectory] overWrite:YES];
         if( NO==ret ) {
-            // error handler here
+            NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
         } else {
             NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
         }
