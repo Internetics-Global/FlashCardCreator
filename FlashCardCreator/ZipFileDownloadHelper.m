@@ -54,4 +54,14 @@
     return path;
 }
 
+//The reson why to do it: https://www.dropbox.com/help/201/en
++ (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr{
+    
+    NSString *temp = [urlStr stringByReplacingOccurrencesOfString:@"fcc://dropbox.com" withString:@"fcc://www.dropbox.com"];
+    NSString *downloadableURL = [temp stringByReplacingOccurrencesOfString:@"fcc://www" withString:@"https://dl"];
+    downloadableURL = [downloadableURL stringByReplacingOccurrencesOfString:@"https://www" withString:@"https://dl"];
+    downloadableURL = [downloadableURL stringByReplacingOccurrencesOfString:@"http://www" withString:@"https://dl"];
+    return downloadableURL;
+}
+
 @end

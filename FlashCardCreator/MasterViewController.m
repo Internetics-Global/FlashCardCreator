@@ -91,7 +91,7 @@
             @[settingButton];
     }
     
-    self.navigationItem.leftBarButtonItem.title = @"Available Packs";
+    self.navigationItem.leftBarButtonItem.title = @"Packs";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //[self.tableView setEditing:YES animated:YES];
@@ -236,7 +236,9 @@
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
-	//warning: need to be implemented.
+	self.currentPack = (Pack *)[notification object];
+    self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -402,10 +404,8 @@
         return;
     }
     
-    //The reson why to do it: https://www.dropbox.com/help/201/en
-    NSString *temp = [urlStr stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
-    NSString *downloadableFile = [temp stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
-    [_zipFileDownloadHelp downloadZipFile:downloadableFile];
+    NSString *downloadableDropboxURL = [ZipFileDownloadHelper convertToDropboxDownloadURL:urlStr];
+    [_zipFileDownloadHelp downloadZipFile:downloadableDropboxURL];
     _zipFileDownloadHelp.delegate = self;
 }
 
@@ -428,7 +428,7 @@
         
         [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
     } else {
-        [Common alertViewCommon:@"Format of downloaded zip file is not correct"];
+        [Common alertViewCommon:@"Downloaded zip file is broken or unzippable"];
     }
     
     //Step2: buid pack

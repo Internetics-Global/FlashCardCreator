@@ -26,5 +26,6 @@
 @property (nonatomic, strong) Card *currentCard;
 
 - (void) refreshQuestionAnserView;
+- (void)checkCardEditable;
 
 @end

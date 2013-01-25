@@ -81,8 +81,6 @@
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
-    
-    [self checkCardEditable];
 }
 
 - (void) loadViewForiPhone {
@@ -113,8 +111,6 @@
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
-    
-    [self checkCardEditable];
 }
 
 

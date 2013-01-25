@@ -134,6 +134,7 @@
 		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = self.currentCard;
+        [cardView checkCardEditable]; 
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, 0);
         cardView.frame = rect;
@@ -157,6 +158,7 @@
 	{
 		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,480,320-IPHONE_UI_NAVIGATION_BAR_HEIGHT)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
+        cardView.currentCard = self.currentCard;
         cardView.currentCard = self.currentCard;
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, 0);

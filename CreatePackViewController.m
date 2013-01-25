@@ -75,14 +75,12 @@
     if ([self isNewPack]) {
         _newPack.packName = _packNameText.text;
         [[User defaultUser] addPack:_newPack];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
+        [self dismissModalViewControllerAnimated:YES];
     } else {
         
         [Common alertViewCommon:@"Existing Pack name, please input a different one"];
     }
-
-    [self dismissModalViewControllerAnimated:YES];
     
 }
 

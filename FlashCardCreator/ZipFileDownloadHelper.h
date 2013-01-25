@@ -27,5 +27,6 @@
 
 
 - (NSString *) downloadZipFile:(NSString *)URLStr;
++ (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr;
 
 @end
