@@ -20,6 +20,8 @@
 #import "FileOperationHelper.h"
 #import "DataManager.h"
 
+#import "PlayView.h"
+
 #define kScrollViewObjectWidth_iPad 660.0
 #define kScrollViewObjectHeight_iPad 660.0
 #define kScrollViewObjectMargin_iPad 50
@@ -27,6 +29,12 @@
 #define kScrollViewObjectWidth_iPhone 480.0
 #define kScrollViewObjectHeight_iPhone (320-44)
 #define kScrollViewObjectMargin_iPhone 20
+
+#define kFlashCardViewWidth_iPad     680
+#define kFlashCardViewHeight_iPad    544     //NOT is the scroll view's height
+
+#define kFlashCardViewWidth_iPhone   ((IPHONE_UI_WIDTH) - 80)
+#define kFlashCardViewHeight_iPhone    260     //NOT is the scroll view's height
 
 @implementation DetailViewController
 
@@ -83,8 +91,7 @@
         self.navigationItem.leftBarButtonItem = backButton;
     }
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    
+    _scrollView = [[UIScrollView alloc] init];
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _scrollView.delegate = self;
     _scrollView.showsVerticalScrollIndicator = NO;
@@ -94,6 +101,16 @@
     _scrollView.bounces = NO;
     _scrollView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:_scrollView];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    if (isUserInterfaceIdiomPhone){
+        _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
+    } else {
+        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
+    }
     
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
@@ -113,39 +130,42 @@
 - (void) showCurrentCardInScrollView {
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
-        [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone),0) animated:NO];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
         
     } else {
         [self layoutScrollObjectsForiPad];
-        [_scrollView setContentOffset:CGPointMake(_indexCard*(kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad),0) animated:NO];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
     
     [_cardArray[_indexCard] refreshQuestionAnserView];
 }
 
-
 - (void)layoutScrollObjectsForiPad
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = 0;
+    CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_iPad)/2;
+    float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_iPad)/2; //Since it's horizontal movement, so this is a constant value
+    
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
-		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
+        //flash card height = scroll height; flash card width < scroll width
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_iPad,kFlashCardViewHeight_iPad)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
-        cardView.currentCard = self.currentCard;
-        [cardView checkCardEditable]; 
+        cardView.currentCard = _currentCard;
+        cardView.backgroundColor = [UIColor clearColor];
+        [cardView disableCardEdit];
 		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, 0);
+        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
 		[_scrollView addSubview:cardView];
-        curXLoc += (kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad);
+        curXLoc += IPAD_UI_DETAIL_WIDTH;
         [_cardArray addObject:cardView];
         
         
 	}
 	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * (kScrollViewObjectWidth_iPad+kScrollViewObjectMargin_iPad)), kScrollViewObjectHeight_iPad)];
+	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
     
 }
@@ -153,24 +173,27 @@
 - (void)layoutScrollObjectsForiPhone
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = 0;
+    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2;
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+    
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
-		FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake(0,0,480,320-IPHONE_UI_NAVIGATION_BAR_HEIGHT)];
+        //flash card height = scroll height; flash card width < scroll width
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_iPhone,kFlashCardViewHeight_iPhone)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
-        cardView.currentCard = self.currentCard;
-        cardView.currentCard = self.currentCard;
+        cardView.currentCard = _currentCard;
+        [cardView disableCardEdit];
 		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, 0);
+        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
 		[_scrollView addSubview:cardView];
-        curXLoc += (kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone);
+        curXLoc += IPHONE_UI_WIDTH;
         [_cardArray addObject:cardView];
         
         
 	}
 	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * (kScrollViewObjectWidth_iPhone+kScrollViewObjectMargin_iPhone)), kScrollViewObjectHeight_iPhone)];
+	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), _scrollView.frame.size.height)];
     
     
 }
@@ -196,7 +219,22 @@
 
 - (void)playButtonClicked
 {
-    [Common alertViewCommon:@"this is an example"];
+    PlayView *playView = [[PlayView alloc] init];
+    if (isUserInterfaceIdiomPhone) {
+        playView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
+    } else {
+        playView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);    
+    }
+    playView.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    if ((self.currentCard == nil) || (self.currentPack == nil)) {
+        [Common alertViewCommon:@"Current card or pack is nil"];
+        return;
+    }
+    playView.currentPack = self.currentPack;
+    playView.currentCard = self.currentCard;
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:playView];
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view bringSubviewToFront:playView];
+    
 }
 
 - (void)backButtonClicked

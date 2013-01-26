@@ -106,7 +106,7 @@
 
 - (void) loadViewForiPhone {
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(0, 0, 480, 30);
+    _title.frame = CGRectMake(0, 0, 380, 30);
     _title.text =@"Question";
     _title.font =[UIFont systemFontOfSize:20];
     _title.textAlignment = NSTextAlignmentCenter;
@@ -116,7 +116,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(440, 10, 40, 40);
+    _logoImage.frame = CGRectMake(340, 10, 40, 40);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
@@ -128,7 +128,7 @@
     _image= [[UIImageView  alloc] init];
     _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
-    _image.frame = CGRectMake(400, 120, 80, 80);
+    _image.frame = CGRectMake(300, 120, 80, 80);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.tag = 1;

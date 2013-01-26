@@ -24,8 +24,12 @@
 @property (strong, nonatomic) QuestionView *questionView;
 @property (strong, nonatomic) AnswerView *answerView;
 @property (nonatomic, strong) Card *currentCard;
+@property (strong, nonatomic) UISegmentedControl *segmentedControl;
 
 - (void) refreshQuestionAnserView;
 - (void)checkCardEditable;
+- (void) disableCardEdit;
+
+- (void)segmentAction:(id)sender;
 
 @end

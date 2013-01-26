@@ -51,7 +51,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,6 +68,11 @@
         _dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [_dropboxSwitch addTarget:self action:@selector(dropboxSwitchAction) forControlEvents:UIControlEventValueChanged];
     }
+    
+    if (_playModeSwitch == nil) {
+        _playModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [_playModeSwitch addTarget:self action:@selector(playModeSwitchAction) forControlEvents:UIControlEventValueChanged];
+    }
         
     switch (indexPath.row) {
         case 0:
@@ -75,13 +80,25 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
             [_dropboxSwitch setOn:[[DBSession sharedSession] isLinked]];
             cell.accessoryView = _dropboxSwitch;
-            
             break;
         case 1:
+            if (_playModeSwitch.on) {
+                cell.textLabel.text = @"Alphabetical play";    
+            } else {
+                cell.textLabel.text = @"Random play";
+            }
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.accessoryView = _playModeSwitch;
+            break;
+        case 2:
             cell.textLabel.text = @"Register";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
-        case 2:
+        case 3:
+            cell.textLabel.text = @"Help";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        case 4:
             cell.textLabel.text = @"About";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
@@ -99,7 +116,10 @@
     } else {
         [[DBSession sharedSession] linkFromController:self];
     }
-    
+}
+
+- (void) playModeSwitchAction {
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 /*
@@ -159,6 +179,14 @@
             break;    
         }
         case 2:
+        {
+            break;
+        }
+        case 3:
+        {
+            break;
+        }
+        case 4:
         {
             break;
         }

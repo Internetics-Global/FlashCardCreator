@@ -33,6 +33,7 @@
 @synthesize currentCard = _currentCard;
 @synthesize questionView = _questionView;
 @synthesize answerView = _answerView;
+@synthesize segmentedControl = _segmentedControl;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -135,6 +136,17 @@
         _answerView.image.userInteractionEnabled = FALSE;
         _answerView.content.userInteractionEnabled = FALSE;
     }
+}
+
+- (void) disableCardEdit {
+    _questionView.logoImage.userInteractionEnabled = FALSE;
+    _questionView.title.userInteractionEnabled = FALSE;
+    _questionView.image.userInteractionEnabled = FALSE;
+    _questionView.content.userInteractionEnabled = FALSE;
+    _answerView.logoImage.userInteractionEnabled = FALSE;
+    _answerView.title.userInteractionEnabled = FALSE;
+    _answerView.image.userInteractionEnabled = FALSE;
+    _answerView.content.userInteractionEnabled = FALSE;
 }
 
 - (void) refreshQuestionAnserView {

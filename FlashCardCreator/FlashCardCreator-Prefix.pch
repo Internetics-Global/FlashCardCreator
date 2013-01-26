@@ -54,13 +54,16 @@
 #define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"
 #define PUBLIC_PACK_NAME @"Example Pack"
 
-//Ipad and iPhone dimention
-#define IPHONE_UI_NAVIGATION_BAR_HEIGHT        44
+//in landscape
+#define IPHONE_UI_NAVIGATION_BAR_HEIGHT        32
 #define IPHONE_UI_TOOL_BAR_HEIGHT              44
 #define IPHONE_UI_TAB_BAR_HEIGHT               49
 #define IPHONE_UI_STATUS_BAR_HEIGHT            20
-#define IPHONE_UI_SCREEN_WIDTH                 320
+//we use landscape, so height is the width
+#define IPHONE_UI_WIDTH                        ([[UIScreen mainScreen] bounds].size.height)
+#define IPHONE_UI_HEIGHT                       320
 
+//in landscape
 #define IPAD_UI_NAVIGATION_BAR_HEIGHT        44
 #define IPAD_UI_TOOL_BAR_HEIGHT              44
 #define IPAD_UI_STATUS_BAR_HEIGHT            20
@@ -68,12 +71,6 @@
 #define IPAD_UI_DETAIL_WIDTH                 704
 #define IPAD_UI_WIDTH                        1024
 #define IPAD_UI_HEIGHT                       768
-
-//launch up always landscape
-#define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
-#define UI_SCREEN_WIDTH                ([[UIScreen mainScreen] bounds].size.width)
-
-
 
 
 

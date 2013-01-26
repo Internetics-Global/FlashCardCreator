@@ -21,6 +21,8 @@
 		2D2A1B17169BA31000175D14 /* NSString+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2A1B16169BA31000175D14 /* NSString+QueryString.m */; };
 		2D3E9D11167D95760053FA31 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E9D10167D95760053FA31 /* CardCell.m */; };
 		2D4E07F116A3FFFC0097E5CB /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D4E07F016A3FFFC0097E5CB /* SelectedCellBackground.png */; };
+		2D4E4EB916B2769C00E75257 /* PlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4E4EB816B2769C00E75257 /* PlayView.m */; };
+		2D4E4EF216B284F300E75257 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D4E4EF116B284F300E75257 /* close_button.png */; };
 		2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3CF31679D29C009D2ADC /* SQLiteHelper.m */; };
 		2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */; };
 		2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3CF81679D334009D2ADC /* FileOperationHelper.m */; };
@@ -403,6 +405,9 @@
 		2D3E9D0F167D95760053FA31 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCell.h; sourceTree = "<group>"; };
 		2D3E9D10167D95760053FA31 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCell.m; sourceTree = "<group>"; };
 		2D4E07F016A3FFFC0097E5CB /* SelectedCellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectedCellBackground.png; sourceTree = "<group>"; };
+		2D4E4EB716B2769C00E75257 /* PlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayView.h; sourceTree = "<group>"; };
+		2D4E4EB816B2769C00E75257 /* PlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayView.m; sourceTree = "<group>"; };
+		2D4E4EF116B284F300E75257 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
 		2D5F3CF21679D29C009D2ADC /* SQLiteHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteHelper.h; sourceTree = "<group>"; };
 		2D5F3CF31679D29C009D2ADC /* SQLiteHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteHelper.m; sourceTree = "<group>"; };
 		2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -647,6 +652,15 @@
 			name = "Custom UIs";
 			sourceTree = "<group>";
 		};
+		2D4E4EB616B2768100E75257 /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				2D4E4EB716B2769C00E75257 /* PlayView.h */,
+				2D4E4EB816B2769C00E75257 /* PlayView.m */,
+			);
+			name = Play;
+			sourceTree = "<group>";
+		};
 		2D5F3CEF1679D256009D2ADC /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +706,7 @@
 				2DF7F86516AF741D000BA08D /* leftArrow@2x.png */,
 				2DF7F86116AF7411000BA08D /* rightArrow.png */,
 				2DF7F86216AF7411000BA08D /* rightArrow@2x.png */,
+				2D4E4EF116B284F300E75257 /* close_button.png */,
 				2D4E07F016A3FFFC0097E5CB /* SelectedCellBackground.png */,
 			);
 			name = Resources;
@@ -739,6 +754,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D4E4EB616B2768100E75257 /* Play */,
 				2D2A1B13169BA2AF00175D14 /* Utilities */,
 				2DBD6DD7169BCE2900962A80 /* Card */,
 				2DC0629216802C6000F2EA07 /* PackList */,
@@ -1363,6 +1379,7 @@
 				2DF7F86316AF7411000BA08D /* rightArrow.png in Resources */,
 				2DF7F86416AF7411000BA08D /* rightArrow@2x.png in Resources */,
 				2DF7F86616AF741D000BA08D /* leftArrow@2x.png in Resources */,
+				2D4E4EF216B284F300E75257 /* close_button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1421,6 +1438,7 @@
 				2D8B303616AE441500C94485 /* Common.m in Sources */,
 				2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */,
 				2DDF5A3616B0F74500191C43 /* OpenUDID.m in Sources */,
+				2D4E4EB916B2769C00E75257 /* PlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

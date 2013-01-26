@@ -10,6 +10,7 @@
 
 @interface MoreInfoTableViewController : UITableViewController {
     UISwitch *_dropboxSwitch;
+    UISwitch *_playModeSwitch;
 }
 
 @end
