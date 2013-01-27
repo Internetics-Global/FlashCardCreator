@@ -108,9 +108,9 @@
     }
     
     if (isUserInterfaceIdiomPhone ) {
-        _addCardButton.center = CGPointMake(100,320-40);
+        _addCardButton.center = CGPointMake(100,IPHONE_UI_HEIGHT-100);
     } else {
-        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT -100);
+        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
     }
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];

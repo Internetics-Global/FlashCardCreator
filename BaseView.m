@@ -106,7 +106,7 @@
 
 - (void) loadViewForiPhone {
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(0, 0, 380, 30);
+    _title.frame = CGRectMake(0, 0, 200, 30);
     _title.text =@"Question";
     _title.font =[UIFont systemFontOfSize:20];
     _title.textAlignment = NSTextAlignmentCenter;
@@ -142,7 +142,7 @@
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     _content = [[UITextView alloc]init];
-    _content.frame = CGRectMake(0, 20, 370, 200);
+    _content.frame = CGRectMake(0, 20, 300, 200);
     _content.font =[UIFont systemFontOfSize:16];
     _content.userInteractionEnabled = FALSE;
     _content.backgroundColor = [UIColor clearColor];
@@ -176,7 +176,12 @@
 }
 
 - (void) setInputAccessoryViewDone  {
-    UIToolbar * topView = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [ UIScreen mainScreen].bounds.size.height, 44)];
+    UIToolbar * topView = [[UIToolbar alloc]init];
+    if (isUserInterfaceIdiomPhone) {
+        topView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
+    } else {
+        topView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
+    }
     [topView setBarStyle:UIBarStyleBlackTranslucent];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
@@ -206,13 +211,15 @@
 
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
     
-    
     _isLogoImageViewClicked = YES;
     
-    CGPoint point = [sender locationInView:self];
-    CGRect rect = CGRectMake(point.x, point.y, 50, 50);
-    
-    [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];    
+    } else {
+        CGPoint point = [sender locationInView:self];
+        CGRect rect = CGRectMake(point.x, point.y, 50, 50);
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];    
+    }
     
 }
 
@@ -221,7 +228,7 @@
     _isLogoImageViewClicked = NO;
     
     if (isUserInterfaceIdiomPhone) {
-        //Need to be updated
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
     } else {
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
@@ -232,7 +239,12 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [_imagePickerPopover dismissPopoverAnimated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        [_picker dismissModalViewControllerAnimated:YES];
+    } else {
+        [_imagePickerPopover dismissPopoverAnimated:YES];
+    }
+    
     
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);

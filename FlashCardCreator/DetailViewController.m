@@ -22,20 +22,6 @@
 
 #import "PlayView.h"
 
-#define kScrollViewObjectWidth_iPad 660.0
-#define kScrollViewObjectHeight_iPad 660.0
-#define kScrollViewObjectMargin_iPad 50
-
-#define kScrollViewObjectWidth_iPhone 480.0
-#define kScrollViewObjectHeight_iPhone (320-44)
-#define kScrollViewObjectMargin_iPhone 20
-
-#define kFlashCardViewWidth_iPad     680
-#define kFlashCardViewHeight_iPad    544     //NOT is the scroll view's height
-
-#define kFlashCardViewWidth_iPhone   ((IPHONE_UI_WIDTH) - 80)
-#define kFlashCardViewHeight_iPhone    260     //NOT is the scroll view's height
-
 @implementation DetailViewController
 
 @synthesize currentCard = _currentCard;
@@ -144,13 +130,13 @@
 - (void)layoutScrollObjectsForiPad
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_iPad)/2;
-    float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_iPad)/2; //Since it's horizontal movement, so this is a constant value
+    CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
+    float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
     
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
         //flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_iPad,kFlashCardViewHeight_iPad)];
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
         cardView.backgroundColor = [UIColor clearColor];
@@ -173,13 +159,13 @@
 - (void)layoutScrollObjectsForiPhone
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
     
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
         //flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_iPhone,kFlashCardViewHeight_iPhone)];
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
         [cardView disableCardEdit];

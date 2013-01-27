@@ -22,14 +22,14 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-// iPhone,iPad, iPhone5 diff
+//IPhone,iPad, iPhone5 diff
 #define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
-// release operation
+//Release operation
 #define FCC_RELEASE_SAFELY(var) { [var release]; var = nil; }
 
-// notification
+//Notification
 #define PACK_ADDED_TO_USER_NOTIFICATION @"PACK_ADDED_TO_USER_NOTIFICATION"
 #define UPDATE_USER_PACKS_LIST_NOTIFICATION @"UPDATE_USER_PACKS_LIST_NOTIFICATION"
 #define GET_USER_COMPLETE_NOTIFICATION @"GET_USER_COMPLETE_NOTIFICATION"
@@ -54,23 +54,33 @@
 #define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"
 #define PUBLIC_PACK_NAME @"Example Pack"
 
-//in landscape
+//Based on landscape
 #define IPHONE_UI_NAVIGATION_BAR_HEIGHT        32
-#define IPHONE_UI_TOOL_BAR_HEIGHT              44
+#define IPHONE_UI_TOOL_BAR_HEIGHT              32
 #define IPHONE_UI_TAB_BAR_HEIGHT               49
 #define IPHONE_UI_STATUS_BAR_HEIGHT            20
-//we use landscape, so height is the width
 #define IPHONE_UI_WIDTH                        ([[UIScreen mainScreen] bounds].size.height)
 #define IPHONE_UI_HEIGHT                       320
 
-//in landscape
-#define IPAD_UI_NAVIGATION_BAR_HEIGHT        44
-#define IPAD_UI_TOOL_BAR_HEIGHT              44
-#define IPAD_UI_STATUS_BAR_HEIGHT            20
-#define IPAD_UI_MASTER_WIDTH                 320
-#define IPAD_UI_DETAIL_WIDTH                 704
-#define IPAD_UI_WIDTH                        1024
-#define IPAD_UI_HEIGHT                       768
+//Based on landscape
+#define IPAD_UI_NAVIGATION_BAR_HEIGHT          44
+#define IPAD_UI_TOOL_BAR_HEIGHT                44
+#define IPAD_UI_STATUS_BAR_HEIGHT              20
+#define IPAD_UI_MASTER_WIDTH                   320
+#define IPAD_UI_DETAIL_WIDTH                   704
+#define IPAD_UI_WIDTH                          1024
+#define IPAD_UI_HEIGHT                         768
+
+//Flash Card size
+#define kFlashCardViewWidth_Detail_iPad        680
+#define kFlashCardViewHeight_Detail_iPad       544     //NOT is the scroll view's height
+#define kFlashCardViewWidth_Detail_iPhone      ((IPHONE_UI_WIDTH) - 80)
+#define kFlashCardViewHeight_Detail_iPhone     260     //NOT is the scroll view's height
+
+#define kFlashCardViewWidth_PlayMode_iPad      800
+#define kFlashCardViewHeight_PlayMode_iPad     640     //Also is the scroll view's height
+#define kFlashCardViewWidth_PlayMode_iPhone    ((IPHONE_UI_WIDTH) - 80)
+#define kFlashCardViewHeight_PlayMode_iPhone   280     //Also is the scroll view's height
 
 
 

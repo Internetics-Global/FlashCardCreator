@@ -11,12 +11,6 @@
 #import "Pack.h"
 #import "Card.h"
 
-#define kFlashCardViewWidth_iPad     800
-#define kFlashCardViewHeight_iPad    640     //Also is the scroll view's height
-
-#define kFlashCardViewWidth_iPhone   ((IPHONE_UI_WIDTH) - 80)
-#define kFlashCardViewHeight_iPhone    300     //Also is the scroll view's height
-
 @implementation PlayView
 
 @synthesize currentCard = _currentCard;
@@ -61,10 +55,10 @@
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 10, 20, 20);
-        _scrollView.frame = CGRectMake(0, 30, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-2*30);
+        _scrollView.frame = CGRectMake(0, 15, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-2*15);
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
-        _scrollView.frame = CGRectMake(0, (IPAD_UI_HEIGHT-kFlashCardViewHeight_iPad)/2, IPAD_UI_WIDTH, kFlashCardViewHeight_iPad);
+        _scrollView.frame = CGRectMake(0, (IPAD_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2, IPAD_UI_WIDTH, kFlashCardViewHeight_PlayMode_iPad);
     }
     
     [self addSubview:_closeButton];
@@ -84,11 +78,11 @@
 - (void)layoutScrollObjectsForiPad
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_iPad)/2;
+    CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2;
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width 
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_iPad)/2,0,kFlashCardViewWidth_iPad,kFlashCardViewHeight_iPad)];
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,0,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = [_currentPack cards][index];
 		CGRect rect = cardView.frame;
@@ -103,7 +97,7 @@
         
 	}
 	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_WIDTH), kFlashCardViewHeight_iPad)];
+	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPad)];
     
     
 }
@@ -111,15 +105,16 @@
 - (void)layoutScrollObjectsForiPhone
 {
     [_cardArray removeAllObjects];
-    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2;
+    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2; //Since it's horizontal movement, so this is a constant value
     for (int index = 0; index < [[_currentPack cards] count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_iPhone)/2,0,kFlashCardViewWidth_iPhone,kFlashCardViewHeight_iPhone)];
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
 		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, 0);
+        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
         [cardView disableCardEdit];
         [cardView refreshQuestionAnserView];
@@ -130,7 +125,7 @@
         
 	}
 	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), kFlashCardViewHeight_iPhone)];
+	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPhone)];
     
     
 }
