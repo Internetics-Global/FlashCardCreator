@@ -76,6 +76,8 @@
         _newPack.packName = _packNameText.text;
         [[User defaultUser] addPack:_newPack];
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
+        [[NSUserDefaults standardUserDefaults] setInteger:_newPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self dismissModalViewControllerAnimated:YES];
     } else {
         

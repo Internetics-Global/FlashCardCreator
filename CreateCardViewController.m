@@ -112,9 +112,7 @@
     
     [_currentPack addCard:_newCard];
     
-    [[NSUserDefaults standardUserDefaults] setInteger:([[_currentPack cards] count]-1) forKey:@"indexCard"];
     [[NSUserDefaults standardUserDefaults] setInteger:_currentPack.packID forKey:@"lastCreatedPackID"];
-    [[NSUserDefaults standardUserDefaults] setInteger:_newCard.cardID forKey:@"lastCreatedCardID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];

@@ -64,29 +64,31 @@
         
     }
     
-    //6. Get last created pack/card and set to master and detail view
-    [self getLastCreatedCardPack];
-    if ((_lastCreatedCard) && (_lastCreatedPack)) {
-        self.masterViewController.currentCard = _lastCreatedCard;
+    //6. Get last created pack/card(also include downloaded packs) and set to master and detail view
+    _lastCreatedPack = [self getLastCreatedCardPack];
+    if (_lastCreatedPack) {  // available pack
+        if ([[_lastCreatedPack cards] count] > 0) {  //available cards in the pack
+            self.masterViewController.currentCard = [_lastCreatedPack cards][0];
+            self.detailViewController.currentCard = [_lastCreatedPack cards][0];
+        }
+        
+        //We set default index of card as 0 in current pack
+        self.masterViewController.indexCard = 0;
+        self.detailViewController.indexCard = 0;
+        
         self.masterViewController.currentPack = _lastCreatedPack;
-        self.masterViewController.indexCard = _indexCard;
-        self.detailViewController.currentCard = _lastCreatedCard;
         self.detailViewController.currentPack = _lastCreatedPack;
-        self.detailViewController.indexCard = _indexCard;
-    }
-    
-    if (isUserInterfaceIdiomPhone) {
-        self.detailViewController.currentPack = _lastCreatedPack;
-        self.detailViewController.currentCard = _lastCreatedCard;
-        self.detailViewController.indexCard = _indexCard;
+        
+    } else {    
+       //do nothing, it will be empty
     }
 
     
-    //7.Golbal UI setting
+    //8.Golbal UI setting
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [UIApplication sharedApplication].statusBarHidden = YES;
     
-    //8.Sharekit configuration
+    //9.Sharekit configuration
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
     DefaultSHKConfigurator *configurator = [[MySHKConfigurator alloc] init];
     [SHKConfiguration sharedInstanceWithConfigurator:configurator];
@@ -148,32 +150,21 @@
 }
 
 
-- (void) getLastCreatedCardPack {
+- (Pack *) getLastCreatedCardPack {
     int lastCreatedPackID = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
 
-    if ((lastCreatedPackID == PUBLIC_PACK_ID) || (lastCreatedPackID == 0)) {
+    if (!lastCreatedPackID) {
+        // Means that we have NO record for last card or pack create
         _lastCreatedPack = nil;
-        _lastCreatedCard = nil;
-        _indexCard = -1;
     } else {
         for (Pack *pack in [[User defaultUser] packs]) {
             if (lastCreatedPackID == pack.packID) {
-                _lastCreatedPack = pack;
-                break;
+                return pack;
             }
         }
-        int lastCreatedCardID = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedCardID"];
-        int index = -1;
-        for (Card *card in [_lastCreatedPack cards]){
-            index ++;
-            if (lastCreatedCardID == card.cardID) {
-                _lastCreatedCard = card;
-                break;
-            }
-        }
-        
-        _indexCard = [[NSUserDefaults standardUserDefaults] integerForKey:@"indexCard"];
     }
+    
+    return nil;
 }
 
 #pragma mark -

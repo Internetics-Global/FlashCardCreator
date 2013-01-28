@@ -14,9 +14,7 @@
 @class Card;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
-    Card *_lastCreatedCard;
     Pack *_lastCreatedPack;
-    int _indexCard;
 }
 
 @property (strong, nonatomic) UIWindow *window;

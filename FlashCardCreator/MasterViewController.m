@@ -63,7 +63,6 @@
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
         
         //3. others
-        self.title = NSLocalizedString(@"Master-card list", @"Master");
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
         }
@@ -122,6 +121,9 @@
         [self.navigationController.view insertSubview:_addCardButton atIndex:0];
         [self.navigationController.view bringSubviewToFront:_addCardButton];
     }
+    
+    if (_currentPack.packID != -1)
+        self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -493,8 +495,11 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    //Step5:
+    [[NSUserDefaults standardUserDefaults] setInteger:pack.packID forKey:@"lastCreatedPackID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //Step5: send notification
+    //Step6: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
     
     
