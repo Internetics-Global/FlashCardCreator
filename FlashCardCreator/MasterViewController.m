@@ -90,7 +90,7 @@
             @[settingButton];
     }
     
-    self.navigationItem.leftBarButtonItem.title = @"Packs";
+    ((UIBarButtonItem *)[self.navigationItem.leftBarButtonItems objectAtIndex:0]).title = @"Packs";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //[self.tableView setEditing:YES animated:YES];
@@ -123,7 +123,7 @@
     }
     
     if (_currentPack.packID != -1)
-        self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
+        ((UIBarButtonItem *)[self.navigationItem.leftBarButtonItems objectAtIndex:0]).title = _currentPack.packName;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
