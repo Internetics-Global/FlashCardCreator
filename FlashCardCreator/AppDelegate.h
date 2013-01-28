@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
-@property (strong, nonatomic) UISplitViewController *splitViewController;
+@property (strong, nonatomic) MGSplitViewController *splitViewController;
 @property (strong, nonatomic) MasterViewController *masterViewController;
 @property (strong, nonatomic) DetailViewController *detailViewController;
 

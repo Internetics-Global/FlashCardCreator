@@ -119,8 +119,8 @@
         [self.navigationController.view insertSubview:_addCardButton atIndex:0];
         [self.navigationController.view bringSubviewToFront:_addCardButton];
     } else {
-        [self.splitViewController.view insertSubview:_addCardButton atIndex:0];
-        [self.splitViewController.view bringSubviewToFront:_addCardButton];
+        [self.navigationController.view insertSubview:_addCardButton atIndex:0];
+        [self.navigationController.view bringSubviewToFront:_addCardButton];
     }
 }
 
@@ -285,7 +285,7 @@
     if (isUserInterfaceIdiomPhone) {
         return 100;
     } else {
-        return 200;    
+        return kCellSizeHeight;
     }
 }
 

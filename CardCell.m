@@ -56,9 +56,9 @@
 }
 
 - (void) setupViewForiPad {
-    self.contentView.frame = CGRectMake(0, 0, 320, 200);
+    self.contentView.frame = CGRectMake(0, 0, kCellSizeWidth, kCellSizeHeight);
     
-    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 40, 40)];
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kCellSizeHeight/2-10, 30, 20)];
     _indexLabel.text = @"N";
     _indexLabel.textColor = [UIColor whiteColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
@@ -66,7 +66,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 10, 250, 180)];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 10, kCellSizeWidth-40-10, kCellSizeHeight-20)];
     _cellImageView.layer.cornerRadius = 10;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];

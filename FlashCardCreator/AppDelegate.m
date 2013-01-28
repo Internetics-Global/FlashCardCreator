@@ -49,13 +49,15 @@
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
         self.window.rootViewController = self.navigationController;
     } else {
+        self.splitViewController = [[MGSplitViewController alloc] init];
+        
         self.masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController_iPad" bundle:nil];
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
         
         self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController_iPad" bundle:nil];
         UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:_detailViewController];
     	self.masterViewController.detailViewController = _detailViewController;
-        self.splitViewController = [[UISplitViewController alloc] init];
+        
         self.splitViewController.delegate = _detailViewController;
         self.splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
         self.window.rootViewController = self.splitViewController;
@@ -173,7 +175,6 @@
         _indexCard = [[NSUserDefaults standardUserDefaults] integerForKey:@"indexCard"];
     }
 }
-
 
 #pragma mark -
 #pragma mark - Test code, only for test

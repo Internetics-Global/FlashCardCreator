@@ -15,7 +15,7 @@
 @class Card;
 @class Pack;
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate,MBProgressHUDDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate,MBProgressHUDDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;

@@ -75,6 +75,9 @@
 		2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D90CCDF16AD5311007B404D /* UIImage+Scale.m */; };
 		2D90CCE316AD5E39007B404D /* create_pack_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE116AD5E39007B404D /* create_pack_background.png */; };
 		2D90CCE416AD5E39007B404D /* create_pack_seperator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE216AD5E39007B404D /* create_pack_seperator.png */; };
+		2DA794D416B4C1D6009FBD71 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794CF16B4C1D5009FBD71 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2DA794D516B4C1D6009FBD71 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794D116B4C1D5009FBD71 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794D316B4C1D5009FBD71 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DABAD1716AF32EE000F6261 /* SimpleWebBrowserController.m */; };
 		2DBD6DDA169BCF0600962A80 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DD9169BCF0600962A80 /* QuestionView.m */; };
 		2DBD6DDD169BCF1B00962A80 /* AnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DDC169BCF1B00962A80 /* AnswerView.m */; };
@@ -490,6 +493,12 @@
 		2D90CCDF16AD5311007B404D /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 		2D90CCE116AD5E39007B404D /* create_pack_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_background.png; sourceTree = "<group>"; };
 		2D90CCE216AD5E39007B404D /* create_pack_seperator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_seperator.png; sourceTree = "<group>"; };
+		2DA794CE16B4C1D5009FBD71 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitCornersView.h; sourceTree = "<group>"; };
+		2DA794CF16B4C1D5009FBD71 /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitCornersView.m; sourceTree = "<group>"; };
+		2DA794D016B4C1D5009FBD71 /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitDividerView.h; sourceTree = "<group>"; };
+		2DA794D116B4C1D5009FBD71 /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitDividerView.m; sourceTree = "<group>"; };
+		2DA794D216B4C1D5009FBD71 /* MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitViewController.h; sourceTree = "<group>"; };
+		2DA794D316B4C1D5009FBD71 /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitViewController.m; sourceTree = "<group>"; };
 		2DABAD1616AF32EE000F6261 /* SimpleWebBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleWebBrowserController.h; sourceTree = "<group>"; };
 		2DABAD1716AF32EE000F6261 /* SimpleWebBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleWebBrowserController.m; sourceTree = "<group>"; };
 		2DBD6DD8169BCF0600962A80 /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
@@ -741,6 +750,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
 				2DDF5A3316B0F72700191C43 /* OpenUDID */,
 				2D09AF0916A4F4A200B1C0C9 /* SwipeView */,
 				2D75DF64169D05AB00337B10 /* AFNetworking */,
@@ -876,6 +886,19 @@
 				2D7A8CDE16910F84002EDF77 /* zip.h */,
 			);
 			path = minizip;
+			sourceTree = "<group>";
+		};
+		2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2DA794CE16B4C1D5009FBD71 /* MGSplitCornersView.h */,
+				2DA794CF16B4C1D5009FBD71 /* MGSplitCornersView.m */,
+				2DA794D016B4C1D5009FBD71 /* MGSplitDividerView.h */,
+				2DA794D116B4C1D5009FBD71 /* MGSplitDividerView.m */,
+				2DA794D216B4C1D5009FBD71 /* MGSplitViewController.h */,
+				2DA794D316B4C1D5009FBD71 /* MGSplitViewController.m */,
+			);
+			name = MGSplitViewController;
 			sourceTree = "<group>";
 		};
 		2DBD6DD7169BCE2900962A80 /* Card */ = {
@@ -1439,6 +1462,9 @@
 				2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */,
 				2DDF5A3616B0F74500191C43 /* OpenUDID.m in Sources */,
 				2D4E4EB916B2769C00E75257 /* PlayView.m in Sources */,
+				2DA794D416B4C1D6009FBD71 /* MGSplitCornersView.m in Sources */,
+				2DA794D516B4C1D6009FBD71 /* MGSplitDividerView.m in Sources */,
+				2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
