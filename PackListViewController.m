@@ -44,14 +44,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     //configure swipe view
     _swipeView.alignment = SwipeViewAlignmentCenter;
     _swipeView.pagingEnabled = YES;
     _swipeView.wrapEnabled = NO;
-    _swipeView.itemsPerPage = 3;
     _swipeView.truncateFinalPage = YES;
-    
+    int packSize = [[[User defaultUser] packs] count];
+    if (packSize == 1) {
+        _swipeView.itemsPerPage = 1;
+    } else if (packSize == 2)
+        _swipeView.itemsPerPage = 2;
+    else {
+        _swipeView.itemsPerPage = 3;
+    }
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
     _pageControl.defersCurrentPageDisplay = YES;
