@@ -54,15 +54,15 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 10, 20, 20);
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-40, 10, 30, 30);
         _scrollView.frame = CGRectMake(0, 15, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-2*15);
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
         _scrollView.frame = CGRectMake(0, (IPAD_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2, IPAD_UI_WIDTH, kFlashCardViewHeight_PlayMode_iPad);
     }
     
-    [self addSubview:_closeButton];
     [self addSubview:_scrollView];
+    [self addSubview:_closeButton];
     
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
@@ -131,7 +131,10 @@
 }
 
 - (void) closePlayView {
-    [self removeFromSuperview];
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [self removeFromSuperview];
+    } completion:nil];
 }
 
 #pragma mark -

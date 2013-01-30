@@ -11,7 +11,7 @@
 #import "MGSplitCornersView.h"
 
 #define MG_DEFAULT_SPLIT_POSITION		180	// default width of master view in UISplitViewController.
-#define MG_DEFAULT_SPLIT_WIDTH			1.0		// default width of split-gutter in UISplitViewController.
+#define MG_DEFAULT_SPLIT_WIDTH			0.0		// default width of split-gutter in UISplitViewController.
 #define MG_DEFAULT_CORNER_RADIUS		5.0		// default corner-radius of overlapping split-inner corners on the master and detail views.
 #define MG_DEFAULT_CORNER_COLOR			[UIColor blackColor]	// default color of intruding inner corners (and divider background).
 

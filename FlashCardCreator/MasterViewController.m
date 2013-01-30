@@ -77,8 +77,7 @@
 {
     [super viewDidLoad];
 
-    
-    _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:PUBLIC_PACK_NAME style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
+    _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack List" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
     UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Pack" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
     self.navigationItem.leftBarButtonItems = @[_selectPackButton,newPackButton];
@@ -103,16 +102,21 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     if (_addCardButton == nil) {
-        _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];    
+        if (isUserInterfaceIdiomPhone) {
+            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];     
+        } else {
+            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+        }
     }
     
     if (isUserInterfaceIdiomPhone ) {
-        _addCardButton.center = CGPointMake(100,IPHONE_UI_HEIGHT-100);
+        _addCardButton.center = CGPointMake(70,IPHONE_UI_HEIGHT-70);
     } else {
         _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
     }
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
+    _addCardButton.showsTouchWhenHighlighted = YES;
     [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController.view insertSubview:_addCardButton atIndex:0];
@@ -311,7 +315,13 @@
     Card *card = [_currentPack cards][indexPath.row];
     cell.indexLabel.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
     
-    cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    UIImage *coverImage = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    if (coverImage) {
+        cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];    
+    } else {
+        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
+    }
+    
     
     if (_indexCard == indexPath.row) {
         [cell setSelected:YES animated:YES];

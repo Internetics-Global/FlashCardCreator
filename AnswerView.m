@@ -31,8 +31,20 @@
 }
 
 - (void) refreshDisplay {
-    _image.image = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
-    _logoImage.image = [UIImage imageWithContentsOfFile:_currentCard.answer.logoFullPath];
+    UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
+    if (imageTemp) {
+        _image.image = imageTemp;
+    } else {
+        _image.image = [UIImage imageNamed:@"answer_placeholder_content.png"];
+    }
+    
+    imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.logoFullPath];
+    if (imageTemp) {
+        _logoImage.image = imageTemp;
+    } else {
+        _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.png"];
+    }
+    
     _content.text =_currentCard.answer.content;
     _title.text = _currentCard.answer.title;
 }

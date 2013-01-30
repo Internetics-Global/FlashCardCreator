@@ -82,11 +82,6 @@
         return;
     }
     
-    if ([_currentPack.packName isEqualToString:PUBLIC_PACK_NAME]) {
-        NSLog(@"Can not create card under public online pack");
-        return;
-    }
-    
     UIImage *origialmage = [_cardView.questionView captureWholeViewAsImage];
     NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
     NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];

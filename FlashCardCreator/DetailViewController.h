@@ -36,7 +36,6 @@
     
     UIPopoverController *_masterPopoverController;
     
-    BOOL _isShare;
 }
 
 @property (strong, nonatomic) id detailItem;

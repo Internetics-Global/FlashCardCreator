@@ -96,9 +96,6 @@
             return NO;
     }
     
-    if (_packNameText.text == PUBLIC_PACK_NAME)
-        return NO;
-    
     return YES;
     
     
@@ -110,6 +107,7 @@
     CGRect rect = CGRectMake(point.x, point.y, 50, 50);
     
     if (!_picker) {
+         //We can not make UIImagePickerController in landscape since it's illegal
         _picker = [[UIImagePickerController alloc] init];    
     }
     _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;

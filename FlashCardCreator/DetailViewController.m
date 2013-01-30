@@ -38,7 +38,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Question & Answer", @"Question & Answer");
         _cardArray = [[NSMutableArray alloc] init];
-        _isShare = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
@@ -97,16 +96,7 @@
         _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
     }
     
-    if (isUserInterfaceIdiomPhone) {
-        [self layoutScrollObjectsForiPhone];
-    } else {
-        [self layoutScrollObjectsForiPad];
-    }
-    
-    //for start-up
-    if (_indexCard > 0) {
-        [self showCurrentCardInScrollView];
-    }
+    [self showCurrentCardInScrollView];
 }
 
 #pragma mark -
@@ -217,8 +207,12 @@
     }
     playView.currentPack = self.currentPack;
     playView.currentCard = self.currentCard;
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:playView];
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view bringSubviewToFront:playView];
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        [keyWindow.rootViewController.view addSubview:playView];
+        [keyWindow.rootViewController.view bringSubviewToFront:playView];
+    } completion:nil];
     
 }
 
@@ -234,7 +228,6 @@
 
 - (void)shareButtonClicked
 {
-    _isShare = YES;
     
     if (![[DBSession sharedSession] isLinked]) {
 		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
@@ -253,10 +246,7 @@
         [Common alertViewCommon:@"Failed to login to Dropbox."];
     } else
     {
-        if (_isShare) {
-            [self exectueShareAfterDropboxLinked];
-            _isShare = NO;
-        }
+        [self exectueShareAfterDropboxLinked];
     }
 }
 
@@ -274,9 +264,10 @@
 
     NSString *generatedZipFilePath = nil;
     //step1: create zip file
-    if ((_currentPack) && (_currentPack.packName != PUBLIC_PACK_NAME)) {
+    if (_currentPack) {
         generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack];
     } else {
+        [Common alertViewCommon:@"You need to select a pack first"];
         NSLog(@"%s:Pack to share is nil or public pack",__FUNCTION__);
         return;
     }
@@ -327,7 +318,6 @@
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
-    [_HUD hide:YES];
     
     
     //step3: create dropbox linkage
@@ -350,6 +340,8 @@
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
     NSLog(@"Share linkage create successfully with linkage - %@", link);
+    [_HUD hide:YES];
+    
     [self shareAction:link];
     
 }
@@ -389,6 +381,8 @@
 		_HUD.progress = _progressivePercent;
 		usleep(50000);
 	}
+    _progressivePercent = 0;
+    
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {

@@ -85,8 +85,9 @@
 
     
     //8.Golbal UI setting
-    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navigationBarBackground.png"] forBarMetrics:UIBarMetricsDefault];
     [UIApplication sharedApplication].statusBarHidden = YES;
+
     
     //9.Sharekit configuration
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"

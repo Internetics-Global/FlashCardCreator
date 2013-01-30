@@ -41,6 +41,7 @@
         _keyboardShown = FALSE;
         [self setInputAccessoryViewDone];
         
+        //We can not make UIImagePickerController in landscape since it's illegal
         _picker = [[UIImagePickerController alloc] init];
         _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
