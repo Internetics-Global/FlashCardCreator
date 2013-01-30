@@ -279,11 +279,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if ([DataManager apiReachable] == FALSE) {
-        return 0;
-    }
-    
+{    
     return ([[_currentPack cards] count]); //test purpose
 }
 

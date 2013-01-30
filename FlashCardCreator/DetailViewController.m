@@ -112,8 +112,10 @@
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
+    if ([_cardArray count] != 0) {
+        [_cardArray[_indexCard] refreshQuestionAnserView];    
+    }
     
-    [_cardArray[_indexCard] refreshQuestionAnserView];
 }
 
 - (void)layoutScrollObjectsForiPad

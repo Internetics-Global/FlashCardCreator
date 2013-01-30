@@ -35,7 +35,8 @@
     [SQLiteHelper checkUserExist];
     
     //3. check reachability
-    [DataManager apiReachableAlert];
+    // Other codes will take care this.
+    //[DataManager apiReachableAlert];
     
     //4. Initialized Dropbox session
     DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
