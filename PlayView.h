@@ -18,7 +18,7 @@
     Pack *_currentPack;
     Card *_currentCard;
     FlashCardView *_currentFlashCardView;
-    NSMutableArray *_cardArray;
+    NSMutableArray *_flashCardViewArray;
 }
 
 @property (strong, nonatomic) Pack *currentPack;

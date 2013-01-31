@@ -81,14 +81,18 @@
             cell.accessoryView = _dropboxSwitch;
             break;
         case 1:
-            if (_playModeSwitch.on) {
-                cell.textLabel.text = @"Alphabetical play";    
+        {
+            BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
+            if (isRandomPlayMode) {
+                [_playModeSwitch setOn:YES];
             } else {
-                cell.textLabel.text = @"Random play";
+                [_playModeSwitch setOn:NO];
             }
+            cell.textLabel.text = @"Random play";
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView = _playModeSwitch;
             break;
+        }
         case 2:
             cell.textLabel.text = @"Register";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -118,47 +122,12 @@
 }
 
 - (void) playModeSwitchAction {
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:_playModeSwitch.on forKey:@"isRandomPlayMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

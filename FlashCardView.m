@@ -34,6 +34,8 @@
 @synthesize questionView = _questionView;
 @synthesize answerView = _answerView;
 @synthesize segmentedControl = _segmentedControl;
+@synthesize cardSNText = _cardSNText;
+@synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,6 +46,8 @@
         _isQuestionShowing = YES; //default to show question
         
         _currentCard = [[Card alloc] init];
+        
+        _maxAllowedCardIndex = -1;
         
         if (isUserInterfaceIdiomPhone) {
             [self loadViewForiPhone];
@@ -67,6 +71,20 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
+    }
+    
+    if (_cardSNText == nil) {
+        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, 60, 30)];
+        _cardSNText.text = @"";
+        _cardSNText.layer.cornerRadius =10;
+        _cardSNText.layer.masksToBounds = YES;
+        _cardSNText.backgroundColor = [UIColor yellowColor];
+        _cardSNText.textAlignment = UITextAlignmentCenter;
+        _cardSNText.userInteractionEnabled = TRUE;
+        _cardSNText.delegate = self;
+        _cardSNText.keyboardType = UIKeyboardTypeNumberPad;
+        [self addSubview:_cardSNText];
+        
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
@@ -97,6 +115,19 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _answerView.currentCard = _currentCard;
+    }
+    
+    if (_cardSNText == nil) {
+        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, 50, 30)];
+        _cardSNText.text = @"";
+        _cardSNText.layer.cornerRadius =5;
+        _cardSNText.layer.masksToBounds = YES;
+        _cardSNText.backgroundColor = [UIColor yellowColor];
+        _cardSNText.textAlignment = UITextAlignmentCenter;
+        _cardSNText.userInteractionEnabled = TRUE;
+        _cardSNText.delegate = self;
+        _cardSNText.keyboardType = UIKeyboardTypeNumberPad;
+        [self addSubview:_cardSNText];
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
@@ -150,6 +181,7 @@
 }
 
 - (void) refreshQuestionAnserView {
+    _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     _questionView.currentCard = _currentCard;
     [_questionView refreshDisplay];
     _answerView.currentCard = _currentCard;
@@ -187,5 +219,43 @@
 		}
 	}
 }
+
+#pragma mark -
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    if (!string.length) // allow backspace
+    {
+        return YES;
+    }
+    
+    if ([string rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound)
+    {
+        return NO;
+    }
+    
+    if (_maxAllowedCardIndex == -1) {
+        NSLog(@"%s:Need to set maxAllowedCardIndex beforehand",__FUNCTION__);
+    }
+    
+    // verify max length has not been exceeded
+    if ([string intValue] > _maxAllowedCardIndex)
+    {
+        return NO;
+    }
+    
+    return YES;
+    
+}
+
+
 
 @end

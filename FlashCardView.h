@@ -13,18 +13,24 @@
 @class Pack;
 @class Card;
 
-@interface FlashCardView : UIView {
+@interface FlashCardView : UIView <UITextFieldDelegate> {
     UISegmentedControl *_segmentedControl;
+    UITextField *_cardSNText;
     QuestionView *_questionView;
     AnswerView *_answerView;
     Card *_currentCard;
     BOOL _isQuestionShowing;
+    
+    NSUInteger _maxAllowedCardIndex;
 }
 
-@property (strong, nonatomic) QuestionView *questionView;
-@property (strong, nonatomic) AnswerView *answerView;
+@property (nonatomic, strong) QuestionView *questionView;
+@property (nonatomic, strong) AnswerView *answerView;
 @property (nonatomic, strong) Card *currentCard;
-@property (strong, nonatomic) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) UITextField *cardSNText;
+
+@property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
 
 - (void) refreshQuestionAnserView;
 - (void)checkCardEditable;

@@ -318,7 +318,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     Card *card = [_currentPack cards][indexPath.row];
-    cell.indexLabel.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+    cell.indexLabel.text = [NSString stringWithFormat:@"%d",card.cardSN];
     
     UIImage *coverImage = [UIImage imageWithContentsOfFile:card.coverImageURL];
     if (coverImage) {

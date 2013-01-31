@@ -60,7 +60,7 @@
 
 - (void) loadViewForiPad {
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(0, 0, 600, 60);
+    _title.frame = CGRectMake(100, 0, 500, 60);
     _title.text =@"Question";
     _title.font =[UIFont systemFontOfSize:30];
     _title.textAlignment = NSTextAlignmentCenter;
@@ -107,7 +107,7 @@
 
 - (void) loadViewForiPhone {
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(0, 0, 200, 30);
+    _title.frame = CGRectMake(40, 0, 300, 30);
     _title.text =@"Question";
     _title.font =[UIFont systemFontOfSize:20];
     _title.textAlignment = NSTextAlignmentCenter;

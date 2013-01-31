@@ -10,6 +10,7 @@
 #import "FlashCardView.h"
 #import "Pack.h"
 #import "Card.h"
+#import "NSArray+Randomised.h"
 
 @implementation PlayView
 
@@ -23,7 +24,7 @@
         self.backgroundColor = [UIColor blackColor];
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _scrollView = [[UIScrollView alloc] init];
-        _cardArray = [NSMutableArray array];
+        _flashCardViewArray = [NSMutableArray array];
         _currentFlashCardView = [[FlashCardView alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -64,27 +65,37 @@
     [self addSubview:_scrollView];
     [self addSubview:_closeButton];
     
-    if (isUserInterfaceIdiomPhone) {
-        [self layoutScrollObjectsForiPhone];
+    
+    NSArray *shuffledCardArray = nil;
+    BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
+    if (isRandomPlayMode == YES) {
+        shuffledCardArray = [[_currentPack cards] randomised];
     } else {
-        [self layoutScrollObjectsForiPad];
+        shuffledCardArray = [_currentPack cards];
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self layoutScrollObjectsForiPhone:shuffledCardArray];
+    } else {
+        [self layoutScrollObjectsForiPad:shuffledCardArray];
     }
     
     //Set  _currentFlashCardView
-    _currentFlashCardView = (FlashCardView *)_cardArray[0];
+    _currentFlashCardView = (FlashCardView *)_flashCardViewArray[0];
     
 }
 
-- (void)layoutScrollObjectsForiPad
+- (void)layoutScrollObjectsForiPad:(NSArray *)cardArray
 {
-    [_cardArray removeAllObjects];
+    
+    [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2;
-    for (int index = 0; index < [[_currentPack cards] count]; index++)
+    for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width 
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,0,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
-        cardView.currentCard = [_currentPack cards][index];
+        cardView.currentCard = cardArray[index];
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, 0);
         cardView.frame = rect;
@@ -92,7 +103,7 @@
         [cardView refreshQuestionAnserView];
 		[_scrollView addSubview:cardView];
         curXLoc += IPAD_UI_WIDTH;
-        [_cardArray addObject:cardView];
+        [_flashCardViewArray addObject:cardView];
         
         
 	}
@@ -102,12 +113,12 @@
     
 }
 
-- (void)layoutScrollObjectsForiPhone
+- (void)layoutScrollObjectsForiPhone:(NSArray *)cardArray
 {
-    [_cardArray removeAllObjects];
+    [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
     float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2; //Since it's horizontal movement, so this is a constant value
-    for (int index = 0; index < [[_currentPack cards] count]; index++)
+    for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];
@@ -120,7 +131,7 @@
         [cardView refreshQuestionAnserView];
 		[_scrollView addSubview:cardView];
         curXLoc += IPHONE_UI_WIDTH;
-        [_cardArray addObject:cardView];
+        [_flashCardViewArray addObject:cardView];
         
         
 	}
@@ -144,7 +155,7 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
-    _currentFlashCardView = (FlashCardView *)_cardArray[page];
+    _currentFlashCardView = (FlashCardView *)_flashCardViewArray[page];
 }
 
 

@@ -92,6 +92,7 @@
     _newCard.packID = _currentPack.packID;
     _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
     _newCard.creator = [OpenUDID value];
+    _newCard.cardSN = [[_currentPack cards] count];
     
     _newCard.question.title = _cardView.questionView.title.text;
     _newCard.question.cardID = _newCard.cardID;

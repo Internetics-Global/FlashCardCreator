@@ -130,6 +130,7 @@
 		2DF7F86316AF7411000BA08D /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF7F86116AF7411000BA08D /* rightArrow.png */; };
 		2DF7F86416AF7411000BA08D /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF7F86216AF7411000BA08D /* rightArrow@2x.png */; };
 		2DF7F86616AF741D000BA08D /* leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF7F86516AF741D000BA08D /* leftArrow@2x.png */; };
+		2DFC837416BA0A2300277562 /* NSArray+Randomised.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFC837316BA0A2300277562 /* NSArray+Randomised.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -569,6 +570,8 @@
 		2DF7F86116AF7411000BA08D /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightArrow.png; sourceTree = "<group>"; };
 		2DF7F86216AF7411000BA08D /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightArrow@2x.png"; sourceTree = "<group>"; };
 		2DF7F86516AF741D000BA08D /* leftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftArrow@2x.png"; sourceTree = "<group>"; };
+		2DFC837216BA0A2300277562 /* NSArray+Randomised.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Randomised.h"; sourceTree = "<group>"; };
+		2DFC837316BA0A2300277562 /* NSArray+Randomised.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Randomised.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -650,6 +653,8 @@
 				2D90CCDF16AD5311007B404D /* UIImage+Scale.m */,
 				2D8B303416AE441500C94485 /* Common.h */,
 				2D8B303516AE441500C94485 /* Common.m */,
+				2DFC837216BA0A2300277562 /* NSArray+Randomised.h */,
+				2DFC837316BA0A2300277562 /* NSArray+Randomised.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1477,6 +1482,7 @@
 				2DA794D416B4C1D6009FBD71 /* MGSplitCornersView.m in Sources */,
 				2DA794D516B4C1D6009FBD71 /* MGSplitDividerView.m in Sources */,
 				2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */,
+				2DFC837416BA0A2300277562 /* NSArray+Randomised.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
