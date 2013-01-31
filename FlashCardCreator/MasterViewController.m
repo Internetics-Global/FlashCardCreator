@@ -89,11 +89,12 @@
             @[settingButton];
     }
     
-    ((UIBarButtonItem *)[self.navigationItem.leftBarButtonItems objectAtIndex:0]).title = @"Packs";
+    _selectPackButton.title = @"Packs";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //[self.tableView setEditing:YES animated:YES];
-    self.title = @"";
+    if (isUserInterfaceIdiomPhone) {
+        self.title = _currentPack.packName;
+    }
     [self.tableView reloadData];
 
     
@@ -125,9 +126,7 @@
         [self.navigationController.view insertSubview:_addCardButton atIndex:0];
         [self.navigationController.view bringSubviewToFront:_addCardButton];
     }
-    
-    if (_currentPack.packID != -1)
-        ((UIBarButtonItem *)[self.navigationItem.leftBarButtonItems objectAtIndex:0]).title = _currentPack.packName;
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -224,10 +223,12 @@
 - (void) selectedPackNotification:(NSNotification *) notification {
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
-    self.navigationItem.leftBarButtonItem.title = _currentPack.packName;
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
+        self.detailViewController.title = _currentPack.packName;
+    } else {
+        self.title = _currentPack.packName;
     }
     
     [self.tableView reloadData];
@@ -243,8 +244,16 @@
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
 	self.currentPack = (Pack *)[notification object];
-    self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
+    //self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
     [self.tableView reloadData];
+    
+    if (isUserInterfaceIdiomPhone) {
+      self.title = _currentPack.packName;
+    } else {
+        self.detailViewController.title = _currentPack.packName;
+        self.detailViewController.currentPack = _currentPack;
+        [self.detailViewController showCurrentCardInScrollView];
+    }
 }
 
 #pragma mark -
@@ -254,7 +263,7 @@
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
     self.indexCard = [[_currentPack cards] count] -1;
-    _selectPackButton.title = _currentPack.packName;
+    //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
     
     //Step2: update detail view

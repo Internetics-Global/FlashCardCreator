@@ -36,7 +36,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Question & Answer", @"Question & Answer");
         _cardArray = [[NSMutableArray alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
@@ -116,11 +115,17 @@
         [_cardArray[_indexCard] refreshQuestionAnserView];    
     }
     
+    self.title = _currentPack.packName;
+    
 }
 
 - (void)layoutScrollObjectsForiPad
 {
     [_cardArray removeAllObjects];
+    for (FlashCardView *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
+    }
+    
     CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
     float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
     
@@ -131,7 +136,7 @@
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
         cardView.backgroundColor = [UIColor clearColor];
-        [cardView disableCardEdit];
+        [cardView checkCardEditable];
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
@@ -159,7 +164,7 @@
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
-        [cardView disableCardEdit];
+        [cardView checkCardEditable];
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
