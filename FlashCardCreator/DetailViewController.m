@@ -321,6 +321,7 @@
     
     NSLog(@"File uploaded successfully to path: %@", metadata.path);
     
+    _isCreatingShareLinkage = YES;
     
     //step3: create dropbox linkage
     [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
@@ -338,18 +339,25 @@
            forFile:(NSString*)destPath from:(NSString*)srcPath {
     _progressivePercent = progress;
     _HUD.progress = progress;
+    
+    if (progress == 1)
+        _isCreatingShareLinkage = YES;
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
     NSLog(@"Share linkage create successfully with linkage - %@", link);
     [_HUD hide:YES];
     
+    _isCreatingShareLinkage = NO;
     [self shareAction:link];
     
 }
 
 - (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
-    NSLog(@"Share linkage create failed with error - %@", error);    
+    
+    _HUD.labelText = @"Fail to create share linkage";
+    _isCreatingShareLinkage = NO;
+    NSLog(@"Share linkage create failed with error - %@", error);
 }
 
 #pragma mark -
@@ -370,6 +378,8 @@
     _HUD.labelText = @"Uploading first...";
     _HUD.detailsLabelText = @"to Dropbox and create share linkage";
     
+    _isCreatingShareLinkage = NO;
+    
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
@@ -384,6 +394,14 @@
 		usleep(50000);
 	}
     _progressivePercent = 0;
+    
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = @"Then create share link...";
+    
+    while (_isCreatingShareLinkage == YES) {
+        usleep(50000);    
+    }
+    
     
 }
 

@@ -29,6 +29,7 @@
     
     MBProgressHUD *_HUD;
     float _progressivePercent;
+    BOOL _isCreatingShareLinkage;
     
     DBRestClient *_restClient;
     
