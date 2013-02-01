@@ -11,6 +11,8 @@
 #import "QuestionView.h"
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
+#import "Question.h"
+#import "Answer.h"
 
 @implementation BaseView
 
@@ -21,6 +23,8 @@
 @synthesize title = _title;
 @synthesize image = _image;
 @synthesize imageFullPath = _imageFullPath;
+
+@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -200,6 +204,7 @@
 -(IBAction)dismissKeyBoard
 {
     [_content resignFirstResponder];
+    [_delegate save];
 }
 
 #pragma mark -
@@ -258,6 +263,8 @@
         _imageFullPath = savedFullPath;
         _image.image = [UIImage imageWithContentsOfFile:savedFullPath];
     }
+    
+    [_delegate save];
 }
 
 - (UIImage *)captureWholeViewAsImage {
@@ -271,6 +278,9 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+
+
 
 
 @end

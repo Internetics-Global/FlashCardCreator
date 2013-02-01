@@ -10,6 +10,11 @@
 #import "QuestionView.h"
 #import "AnswerView.h"
 #import "Card.h"
+#import "Pack.h"
+#import "Question.h"
+#import "Answer.h"
+#import "UIImage+Scale.h"
+#import "FileOperationHelper.h"
 
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
@@ -31,6 +36,7 @@
 @implementation FlashCardView
 
 @synthesize currentCard = _currentCard;
+@synthesize currentPack = _currentPack;
 @synthesize questionView = _questionView;
 @synthesize answerView = _answerView;
 @synthesize segmentedControl = _segmentedControl;
@@ -46,6 +52,7 @@
         _isQuestionShowing = YES; //default to show question
         
         _currentCard = [[Card alloc] init];
+        _currentPack = [[Pack alloc] init];
         
         _maxAllowedCardIndex = -1;
         
@@ -64,6 +71,7 @@
         _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _questionView.currentCard = _currentCard;
+        _questionView.delegate = self;
         [self addSubview:_questionView];
     }
     
@@ -71,6 +79,7 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
+        _questionView.delegate = self;
     }
     
     if (_cardSNText == nil) {
@@ -108,6 +117,7 @@
         _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _questionView.currentCard = _currentCard;
+        _questionView.delegate = self;
         [self addSubview:_questionView];
     }
     
@@ -115,6 +125,7 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _answerView.currentCard = _currentCard;
+        _answerView.delegate = self;
     }
     
     if (_cardSNText == nil) {
@@ -230,6 +241,22 @@
     return YES;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    for (Card *card in [_currentPack cards]) {
+        if ([textField.text intValue] == card.cardSN) {
+            [Common alertViewCommon:@"Existing number, Please rename it"];
+            return;
+        }
+            
+    }
+            
+    _currentCard.cardSN = [_cardSNText.text intValue];
+    _currentCard.packID = _currentPack.packID;
+    [_currentCard save];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (!string.length) // allow backspace
@@ -246,16 +273,43 @@
         NSLog(@"%s:Need to set maxAllowedCardIndex beforehand",__FUNCTION__);
     }
     
-    // verify max length has not been exceeded
-    if ([string intValue] > _maxAllowedCardIndex)
-    {
-        return NO;
-    }
-    
     return YES;
     
 }
 
+#pragma mark -
+#pragma mark - BaseViewDelegate
+
+- (void)save {
+    if (_currentPack == nil) {
+        NSLog(@"Error to create new card, since _currentPack is nil");
+        return;
+    }
+    
+    UIImage *origialmage = [self.questionView captureWholeViewAsImage];
+    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+    NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+    [imageData writeToFile:savedFullPath atomically:YES];
+    
+    _currentCard.coverImageURL = savedFullPath;
+    _currentCard.cardSN = [[_currentPack cards] count];
+    
+    _currentCard.question.title = self.questionView.title.text;
+    _currentCard.question.content = self.questionView.content.text;
+    _currentCard.question.imageFullPath = self.questionView.imageFullPath;
+    _currentCard.question.logoFullPath = self.questionView.logoImageFullPath;
+    
+    _currentCard.answer.title = self.answerView.title.text;
+    _currentCard.answer.content = self.answerView.content.text;
+    _currentCard.answer.imageFullPath = self.answerView.imageFullPath;
+    _currentCard.answer.logoFullPath = self.answerView.logoImageFullPath;
+    
+    _currentCard.packID = _currentPack.packID;
+    [_currentCard save];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+
+}
 
 
 @end

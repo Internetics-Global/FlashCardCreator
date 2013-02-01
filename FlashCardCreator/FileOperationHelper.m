@@ -183,7 +183,7 @@
     }
     
     //step : build questionTextContent.json
-    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.content,@"content",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",nil];
+    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.content,@"content",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",nil];
     
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {

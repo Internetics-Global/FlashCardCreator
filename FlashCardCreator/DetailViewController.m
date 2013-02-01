@@ -135,6 +135,7 @@
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentCard = _currentCard;
+        cardView.currentPack = _currentPack;
         cardView.backgroundColor = [UIColor clearColor];
         [cardView checkCardEditable];
 		CGRect rect = cardView.frame;

@@ -10,6 +10,11 @@
 
 @class Card;
 
+@protocol BaseViewDelegate
+
+- (void) save;
+
+@end
 
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UIImageView *_logoImage;
@@ -24,6 +29,8 @@
     UIImagePickerController *_picker;
     
     BOOL _isLogoImageViewClicked;
+    
+    id <BaseViewDelegate> __weak _delegate;
 }
 
 @property (strong, nonatomic) Card *currentCard;
@@ -33,6 +40,8 @@
 @property (strong, nonatomic) UITextView *title;
 @property (strong, nonatomic) UIImageView *image;
 @property (copy, nonatomic)  NSString *imageFullPath;
+
+@property (nonatomic,weak) id <BaseViewDelegate> delegate;
 
 - (UIImage *)captureWholeViewAsImage;
 

@@ -56,6 +56,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPackNotification:) name:DOWNLOAD_PACK_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterSaveCardNotification:) name:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+        
         //2. Initialize
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
@@ -254,6 +256,10 @@
         self.detailViewController.currentPack = _currentPack;
         [self.detailViewController showCurrentCardInScrollView];
     }
+}
+
+- (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -560,6 +566,7 @@
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
             assembledCard.creator = questionDict[@"creator"];
+            assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
