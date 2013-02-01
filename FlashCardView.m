@@ -292,7 +292,7 @@
     [imageData writeToFile:savedFullPath atomically:YES];
     
     _currentCard.coverImageURL = savedFullPath;
-    _currentCard.cardSN = [[_currentPack cards] count];
+    _currentCard.cardSN = _cardSNText.text;
     
     _currentCard.question.title = self.questionView.title.text;
     _currentCard.question.content = self.questionView.content.text;
