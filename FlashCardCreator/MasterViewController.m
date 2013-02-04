@@ -217,6 +217,8 @@
 #pragma mark Notfication related
 
 - (void) downloadPackNotification:(NSNotification *) notification {
+
+    
     NSString *url = (NSString *)[notification object];
     [self downloadURLViaURLScheme:url];
 }
@@ -607,12 +609,18 @@
 #pragma mark - MBProgressHUDDelegate and related
 
 - (void)showProgressIndicator {
+    
+    _progressivePercent = 0;
 	
     _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    
     _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
     //make sure to be in front and disable user interaction
     CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
     [_HUD setTransform:at];
+    
+    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
     
     // Set determinate mode
     _HUD.mode = MBProgressHUDModeDeterminate;
@@ -623,9 +631,6 @@
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
-    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
-    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
-    
 }
 
 
@@ -635,6 +640,8 @@
 		_HUD.progress = _progressivePercent;
 		usleep(50000);
 	}
+    
+    _progressivePercent = 0;
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
