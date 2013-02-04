@@ -51,7 +51,6 @@
 		2D66C18416A6B3E400795CF9 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18316A6B3E300795CF9 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2D66C18616A6B3F300795CF9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18516A6B3F300795CF9 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2D66C18B16A6B5D600795CF9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18A16A6B5D500795CF9 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		2D66C22116A6C34D00795CF9 /* MySHKConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D66C22016A6C34D00795CF9 /* MySHKConfigurator.m */; };
 		2D75DE85169BDB5100337B10 /* FlashCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D75DE84169BDB5100337B10 /* FlashCardView.m */; };
 		2D75DF78169D05AB00337B10 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D75DF66169D05AB00337B10 /* AFHTTPClient.m */; };
 		2D75DF79169D05AB00337B10 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D75DF68169D05AB00337B10 /* AFHTTPRequestOperation.m */; };
@@ -80,6 +79,7 @@
 		2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794D316B4C1D5009FBD71 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2DAAE1A116B8CE7600EA6D90 /* navigationBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DAAE1A016B8CE7600EA6D90 /* navigationBarBackground.png */; };
 		2DABAD1816AF32EE000F6261 /* SimpleWebBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DABAD1716AF32EE000F6261 /* SimpleWebBrowserController.m */; };
+		2DB3B57016BF49C200CF30AE /* MySHKConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3B56F16BF49C200CF30AE /* MySHKConfigurator.m */; };
 		2DBD6DDA169BCF0600962A80 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DD9169BCF0600962A80 /* QuestionView.m */; };
 		2DBD6DDD169BCF1B00962A80 /* AnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBD6DDC169BCF1B00962A80 /* AnswerView.m */; };
 		2DC06259167EBECA00F2EA07 /* card_example.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC06258167EBECA00F2EA07 /* card_example.png */; };
@@ -449,8 +449,6 @@
 		2D66C18316A6B3E300795CF9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		2D66C18516A6B3F300795CF9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		2D66C18A16A6B5D500795CF9 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		2D66C21F16A6C34D00795CF9 /* MySHKConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MySHKConfigurator.h; path = "../iFrockup-revised/iPhone/Classes/MySHKConfigurator.h"; sourceTree = "<group>"; };
-		2D66C22016A6C34D00795CF9 /* MySHKConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MySHKConfigurator.m; path = "../iFrockup-revised/iPhone/Classes/MySHKConfigurator.m"; sourceTree = "<group>"; };
 		2D75DE83169BDB5100337B10 /* FlashCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashCardView.h; sourceTree = "<group>"; };
 		2D75DE84169BDB5100337B10 /* FlashCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashCardView.m; sourceTree = "<group>"; };
 		2D75DF65169D05AB00337B10 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -504,6 +502,8 @@
 		2DAAE1A016B8CE7600EA6D90 /* navigationBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationBarBackground.png; sourceTree = "<group>"; };
 		2DABAD1616AF32EE000F6261 /* SimpleWebBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleWebBrowserController.h; sourceTree = "<group>"; };
 		2DABAD1716AF32EE000F6261 /* SimpleWebBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleWebBrowserController.m; sourceTree = "<group>"; };
+		2DB3B56E16BF49C200CF30AE /* MySHKConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySHKConfigurator.h; sourceTree = "<group>"; };
+		2DB3B56F16BF49C200CF30AE /* MySHKConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySHKConfigurator.m; sourceTree = "<group>"; };
 		2DBD6DD8169BCF0600962A80 /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
 		2DBD6DD9169BCF0600962A80 /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
 		2DBD6DDB169BCF1B00962A80 /* AnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerView.h; sourceTree = "<group>"; };
@@ -999,8 +999,8 @@
 				2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */,
 				2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */,
 				2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */,
-				2D66C21F16A6C34D00795CF9 /* MySHKConfigurator.h */,
-				2D66C22016A6C34D00795CF9 /* MySHKConfigurator.m */,
+				2DB3B56E16BF49C200CF30AE /* MySHKConfigurator.h */,
+				2DB3B56F16BF49C200CF30AE /* MySHKConfigurator.m */,
 				2DCE0B0A16798E04007A8CAD /* Frameworks */,
 				2DCE0B0816798E04007A8CAD /* Products */,
 			);
@@ -1472,7 +1472,6 @@
 				2D09AF8616A51F3700B1C0C9 /* CreateCardViewController.m in Sources */,
 				2D09AF9F16A5424000B1C0C9 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D66BF6316A64C4500795CF9 /* UINavigationController+DismissKeyboard.m in Sources */,
-				2D66C22116A6C34D00795CF9 /* MySHKConfigurator.m in Sources */,
 				2DE77E2416A93ED000E15884 /* MoreInfoTableViewController.m in Sources */,
 				2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */,
 				2D8B303616AE441500C94485 /* Common.m in Sources */,
@@ -1483,6 +1482,7 @@
 				2DA794D516B4C1D6009FBD71 /* MGSplitDividerView.m in Sources */,
 				2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */,
 				2DFC837416BA0A2300277562 /* NSArray+Randomised.m in Sources */,
+				2DB3B57016BF49C200CF30AE /* MySHKConfigurator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

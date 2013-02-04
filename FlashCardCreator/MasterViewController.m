@@ -642,25 +642,44 @@
 	[_HUD removeFromSuperview];
 }
 
-#pragma mark -
-#pragma mark Memory Management
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 #pragma mark -
 #pragma mark Rotate control
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+
+#pragma mark -
+#pragma mark - Memory Management
+
+// will not be called in iOS 6
+// will not be called when it's current view
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [self my_viewDidUnload];
+}
+
+// in iOS 6, view is no longer unloaded so do it manually
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    if ([self isViewLoaded] && [self.view window] == nil) {
+        self.view = nil;
+        [self my_viewDidUnload];
+    }
+}
+
+- (void)my_viewDidUnload
+{
+    _selectPackButton = nil;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

@@ -207,13 +207,6 @@
     [_delegate save];
 }
 
-#pragma mark -
-#pragma mark - Memory Management
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
     
@@ -279,7 +272,12 @@
     return newImage;
 }
 
+#pragma mark -
+#pragma mark - Memory Management
 
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 

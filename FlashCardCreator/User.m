@@ -24,6 +24,9 @@
 	self = [super init];
     _userID = -1;
     _packs = [[NSMutableArray alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserPacks:) name:UPDATE_USER_PACKS_LIST_NOTIFICATION object:nil];
+    
 	return self;
 }
 
@@ -46,7 +49,6 @@
 	} else {
        //NSLog(@"%s:no pack under current user",__FUNCTION__);
     }
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUserPacks:) name:UPDATE_USER_PACKS_LIST_NOTIFICATION object:nil];
 	
     return self;
 }
@@ -91,6 +93,10 @@
 		[pack save];
 	}
 	[[NSNotificationCenter defaultCenter] postNotificationName:PACK_ADDED_TO_USER_NOTIFICATION object:self];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
