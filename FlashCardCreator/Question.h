@@ -12,8 +12,9 @@
     NSInteger _questionID;
     NSInteger _cardID;
 	NSString *_title;
-    NSString *_content;
-    NSString *_type;  //????????
+    NSString *_type;
+    NSString *_summary;
+    NSString *_detail;
     NSString *_imageFullPath;
     NSString *_logoFullPath;
 }
@@ -21,8 +22,9 @@
 @property (nonatomic, assign) NSInteger questionID;
 @property (nonatomic, assign) NSInteger cardID;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *summary;
+@property (nonatomic, copy) NSString *detail;
 @property (nonatomic, copy) NSString *imageFullPath;
 @property (nonatomic, copy) NSString *logoFullPath;
 

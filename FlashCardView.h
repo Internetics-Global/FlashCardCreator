@@ -17,13 +17,18 @@
 @interface FlashCardView : UIView <UITextFieldDelegate, BaseViewDelegate> {
     UISegmentedControl *_segmentedControl;
     UITextField *_cardSNText;
+    UIButton *_changeTemplateButton;
     QuestionView *_questionView;
     AnswerView *_answerView;
     Card *_currentCard;
     Pack *_currentPack;
     BOOL _isQuestionShowing;
     
+    UIPopoverController *_popoverController;
+    
     NSUInteger _maxAllowedCardIndex;
+    
+    NSUInteger _templateID;
 }
 
 @property (nonatomic, strong) QuestionView *questionView;
@@ -34,6 +39,7 @@
 @property (nonatomic, strong) UITextField *cardSNText;
 
 @property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
+@property (assign, nonatomic) NSUInteger templateID;
 
 - (void) refreshQuestionAnserView;
 - (void)checkCardEditable;

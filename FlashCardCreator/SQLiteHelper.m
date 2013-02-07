@@ -83,27 +83,21 @@
 		sqlite3_finalize(createItems);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, creator text, card_sn integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, creator text, card_sn integer,template_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, content text, type text, image text, logo text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, summary text, detail text, type text, image text, logo text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, content text, image text, logo text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, summary text, detail text, image text, logo text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
     
-    //type could be "true/false" or "multiple choice", 1,2,3,4, something like that
-    if (![SQLiteHelper tableExists:@"Type_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Votes (type text, content text);"];
-		sqlite3_step(createNotes);
-		sqlite3_finalize(createNotes);
-	}
 }
 
 + (BOOL)booleanForInt:(NSInteger)integer{

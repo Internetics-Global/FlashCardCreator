@@ -14,5 +14,6 @@
 @interface QuestionView : BaseView
 
 - (void) refreshDisplay;
+- (void) updateQuestionViewTemplate:(int) index;
 
 @end

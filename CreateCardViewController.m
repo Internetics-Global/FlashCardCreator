@@ -54,14 +54,17 @@
         } else {
             _cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,(IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
-        _cardView.questionView.logoImage.userInteractionEnabled = TRUE;
-        _cardView.questionView.title.userInteractionEnabled = TRUE;
-        _cardView.questionView.image.userInteractionEnabled = TRUE;
-        _cardView.questionView.content.userInteractionEnabled = TRUE;
-        _cardView.answerView.logoImage.userInteractionEnabled = TRUE;
-        _cardView.answerView.title.userInteractionEnabled = TRUE;
-        _cardView.answerView.image.userInteractionEnabled = TRUE;
-        _cardView.answerView.content.userInteractionEnabled = TRUE;
+        _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
+        _cardView.questionView.title.userInteractionEnabled        = FALSE;
+        _cardView.questionView.image.userInteractionEnabled        = TRUE;
+        _cardView.questionView.type.userInteractionEnabled         = TRUE;
+        _cardView.questionView.summary.userInteractionEnabled      = TRUE;
+        _cardView.questionView.detail.userInteractionEnabled       = TRUE;
+        _cardView.answerView.logoImage.userInteractionEnabled      = TRUE;
+        _cardView.answerView.title.userInteractionEnabled          = FALSE;
+        _cardView.answerView.image.userInteractionEnabled          = TRUE;
+        _cardView.answerView.summary.userInteractionEnabled        = TRUE;
+        _cardView.answerView.detail.userInteractionEnabled         = TRUE;
         
         [self.view addSubview:_cardView];
     }
@@ -101,16 +104,19 @@
         
     }
     _newCard.cardSN = maxNo+1;
-    
+    _newCard.templateID = _cardView.templateID;
     _newCard.question.title = _cardView.questionView.title.text;
     _newCard.question.cardID = _newCard.cardID;
-    _newCard.question.content = _cardView.questionView.content.text;
+    _newCard.question.type = _cardView.questionView.type.text;
+    _newCard.question.summary = _cardView.questionView.summary.text;
+    _newCard.question.detail = _cardView.questionView.detail.text;
     _newCard.question.imageFullPath = _cardView.questionView.imageFullPath;
     _newCard.question.logoFullPath = _cardView.questionView.logoImageFullPath;
     
     _newCard.answer.title = _cardView.answerView.title.text;
     _newCard.answer.cardID = _newCard.cardID;
-    _newCard.answer.content = _cardView.answerView.content.text;
+    _newCard.answer.summary = _cardView.answerView.summary.text;
+    _newCard.answer.detail = _cardView.answerView.detail.text;
     _newCard.answer.imageFullPath = _cardView.answerView.imageFullPath;
     _newCard.answer.logoFullPath = _cardView.answerView.logoImageFullPath;
     

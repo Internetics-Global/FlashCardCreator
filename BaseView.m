@@ -19,11 +19,12 @@
 @synthesize currentCard = _currentCard;
 @synthesize logoImage = _logoImage;
 @synthesize logoImageFullPath = _logoImageFullPath;
-@synthesize content = _content;
+@synthesize summary = _summary;
+@synthesize detail = _detail;
 @synthesize title = _title;
 @synthesize image = _image;
 @synthesize imageFullPath = _imageFullPath;
-
+@synthesize type = _type;
 @synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -63,18 +64,19 @@
 }
 
 - (void) loadViewForiPad {
+    
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(100, 0, 500, 60);
+    _title.frame = CGRectMake(240, 0, 330, 60);
     _title.text =@"Question";
+    _title.backgroundColor = [UIColor cyanColor];
     _title.font =[UIFont systemFontOfSize:30];
     _title.textAlignment = NSTextAlignmentCenter;
-    _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
     [self addSubview:_title];
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(550, 10, 120, 120);
+    _logoImage.frame = CGRectMake(680, 10, 100, 100);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
@@ -86,7 +88,7 @@
     _image= [[UIImageView  alloc] init];
     _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
-    _image.frame = CGRectMake(370, 150, 300, 300);
+    _image.frame = CGRectMake(480, 150, 300, 300);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.tag = 1;
@@ -99,14 +101,33 @@
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    _content = [[UITextView alloc]init];
-    _content.frame = CGRectMake(0, 100, 370, 500);
-    _content.font =[UIFont systemFontOfSize:20];
-    _content.userInteractionEnabled = FALSE;
-    _content.backgroundColor = [UIColor clearColor];
-    _content.keyboardType = UIKeyboardAppearanceDefault;
-    _content.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_content];
+    _type = [[UITextView alloc]init];
+    _type.frame = CGRectMake(0, 50, 570, 50);
+    _type.font =[UIFont systemFontOfSize:20];
+    _type.userInteractionEnabled = FALSE;
+    _type.textAlignment = NSTextAlignmentLeft;
+    _type.backgroundColor = [UIColor yellowColor];
+    _type.keyboardType = UIKeyboardAppearanceDefault;
+     _type.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_type];
+    
+    _summary = [[UITextView alloc]init];
+    _summary.frame = CGRectMake(0, 100, 470, 200);
+    _summary.font =[UIFont systemFontOfSize:20];
+    _summary.userInteractionEnabled = FALSE;
+    _summary.backgroundColor = [UIColor orangeColor];
+    _summary.keyboardType = UIKeyboardAppearanceDefault;
+    _summary.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_summary];
+    
+    _detail = [[UITextView alloc]init];
+    _detail.frame = CGRectMake(0, 300, 470, 220);
+    _detail.font =[UIFont systemFontOfSize:20];
+    _detail.userInteractionEnabled = FALSE;
+    _detail.backgroundColor = [UIColor greenColor];
+    _detail.keyboardType = UIKeyboardAppearanceDefault;
+    _detail.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_detail];
 }
 
 - (void) loadViewForiPhone {
@@ -121,7 +142,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(340, 10, 40, 40);
+    _logoImage.frame = CGRectMake(350, 10, 30, 30);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
@@ -146,14 +167,23 @@
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    _content = [[UITextView alloc]init];
-    _content.frame = CGRectMake(0, 20, 300, 200);
-    _content.font =[UIFont systemFontOfSize:16];
-    _content.userInteractionEnabled = FALSE;
-    _content.backgroundColor = [UIColor clearColor];
-    _content.keyboardType = UIKeyboardAppearanceDefault;
-    _content.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_content];
+    _summary = [[UITextView alloc]init];
+    _summary.frame = CGRectMake(0, 20, 300, 100);
+    _summary.font =[UIFont systemFontOfSize:16];
+    _summary.userInteractionEnabled = FALSE;
+    _summary.backgroundColor = [UIColor clearColor];
+    _summary.keyboardType = UIKeyboardAppearanceDefault;
+    _summary.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_summary];
+    
+    _detail = [[UITextView alloc]init];
+    _detail.frame = CGRectMake(0, 120, 300, 100);
+    _detail.font =[UIFont systemFontOfSize:16];
+    _detail.userInteractionEnabled = FALSE;
+    _detail.backgroundColor = [UIColor clearColor];
+    _detail.keyboardType = UIKeyboardAppearanceDefault;
+    _detail.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_detail];
 }
 
 #pragma mark -
@@ -189,21 +219,33 @@
     }
     [topView setBarStyle:UIBarStyleBlackTranslucent];
     
+    UIBarButtonItem *bold = [[UIBarButtonItem alloc] initWithTitle:@"Bold" style:UIBarButtonItemStyleBordered target:self action:@selector(boldAction)];
+    
+    UIBarButtonItem *sizeUp = [[UIBarButtonItem alloc] initWithTitle:@"size up" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpAction)];
+    
+    UIBarButtonItem *sizeDown = [[UIBarButtonItem alloc] initWithTitle:@"size down" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeDownAction)];
+    
+    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:@"select color" style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
+    
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
-    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace,doneButton,nil];
+    NSArray * buttonsArray = [NSArray arrayWithObjects:bold,sizeUp,sizeDown,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
     
     [topView setItems:buttonsArray];
-    [_content setInputAccessoryView:topView];
+    [_type setInputAccessoryView:topView];
+    [_summary setInputAccessoryView:topView];
+    [_detail setInputAccessoryView:topView];
 }
 
 -(IBAction)dismissKeyBoard
 {
-    [_content resignFirstResponder];
+    [_type resignFirstResponder];
+    [_summary resignFirstResponder];
+    [_detail resignFirstResponder];
     [_delegate save];
 }
 
@@ -271,6 +313,33 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+
+#pragma mark -
+#pragma mark - Rich Text
+
+- (void) boldAction {
+    if (_type.isFirstResponder) {
+        _type.font = [UIFont boldSystemFontOfSize:_type.font.pointSize];
+    } else if (_summary.isFirstResponder) {
+        _summary.font = [UIFont boldSystemFontOfSize:_summary.font.pointSize];    
+    } else if (_detail.isFirstResponder) {
+        _detail.font = [UIFont boldSystemFontOfSize:_detail.font.pointSize];
+    }
+}
+
+- (void) sizeUpAction {
+    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];
+}
+
+- (void) sizeDownAction {
+    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];    
+}
+
+- (void) selectColorAction {
+    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];    
+}
+
 
 #pragma mark -
 #pragma mark - Memory Management

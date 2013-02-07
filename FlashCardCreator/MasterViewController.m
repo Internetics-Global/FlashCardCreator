@@ -248,7 +248,14 @@
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
 	self.currentPack = (Pack *)[notification object];
-    //self.navigationItem.leftBarButtonItem.title = self.currentPack.packName;
+    
+    //Add a new card template
+    Card *cardTemplate = [[Card alloc] init];
+    cardTemplate.cardName = @"Example";
+    cardTemplate.creator = [OpenUDID value];
+    cardTemplate.packID = self.currentPack.packID;
+    [self.currentPack addCard:cardTemplate];
+    
     [self.tableView reloadData];
     
     if (isUserInterfaceIdiomPhone) {
@@ -563,12 +570,14 @@
             [assembledCard question].questionID = -1; // -1 means new
             [assembledCard question].cardID = -1;
             [assembledCard question].title = questionDict[@"title"];
-            [assembledCard question].content = questionDict[@"content"];
+            [assembledCard question].summary = questionDict[@"summary"];
+            [assembledCard question].detail = questionDict[@"detail"];
             [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
             assembledCard.creator = questionDict[@"creator"];
             assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
+            assembledCard.templateID = [questionDict[@"template_id"] intValue];
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -591,7 +600,8 @@
             [assembledCard answer].answerID = -1;
             [assembledCard answer].cardID = -1;
             [assembledCard answer].title = answerDict[@"title"];
-            [assembledCard answer].content = answerDict[@"content"];
+            [assembledCard answer].summary = answerDict[@"summary"];
+            [assembledCard answer].detail = answerDict[@"detail"];
             [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
             

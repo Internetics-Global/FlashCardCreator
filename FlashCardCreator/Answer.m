@@ -14,7 +14,8 @@
 @synthesize answerID = _answerID;
 @synthesize cardID = _cardID;
 @synthesize title = _title;
-@synthesize content = _content;
+@synthesize summary = _summary;
+@synthesize detail = _detail;
 @synthesize imageFullPath = _imageFullPath;
 @synthesize logoFullPath = _logoFullPath;
 
@@ -34,7 +35,8 @@
 	_answerID = [[dataDict valueForKey:@"answer_id"] intValue];
     _cardID = [[dataDict valueForKey:@"card_id"] intValue];    
     _title = [dataDict valueForKey:@"title"];    
-    _content= [dataDict valueForKey:@"content"];    
+    _summary= [dataDict valueForKey:@"summary"];
+    _detail= [dataDict valueForKey:@"detail"];
     _imageFullPath= [dataDict valueForKey:@"image"];
     _logoFullPath= [dataDict valueForKey:@"logo"];
 	return self;
@@ -56,7 +58,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", content=\"%@\", image=\"%@\", logo=\"%@\" WHERE card_id=%d", _answerID, _title, _content, _imageFullPath, _logoFullPath, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", summary=\"%@\", detail=\"%@\", image=\"%@\", logo=\"%@\" WHERE card_id=%d", _answerID, _title, _summary, _detail, _imageFullPath, _logoFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -66,7 +68,7 @@
 	if (_answerID == -1) {
 		_answerID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Answer_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, content, image, logo) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\")", _answerID, _cardID, _title, _content, _imageFullPath, _logoFullPath];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, summary, detail, image, logo) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")", _answerID, _cardID, _title, _summary, _detail, _imageFullPath, _logoFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -109,9 +111,10 @@
 		[answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:0] forKey:@"answer_id"];
 		[answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"card_id"];
 		[answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"title"];
-        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"content"];
-        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"image"];
-        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"logo"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"summary"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"detail"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"image"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"logo"];
 	}
 	sqlite3_finalize(queryStatement);
 	return answerDict;

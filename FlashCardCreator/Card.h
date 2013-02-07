@@ -15,6 +15,7 @@
     NSInteger _cardID; //system allocate it
     NSInteger _packID;
     NSInteger _cardSN;  //user can change it
+    NSInteger _templateID;
     NSString *_cardName;
     NSString *_coverImageURL;
     NSString *_creator; //we use OpenUDID to generate
@@ -27,6 +28,7 @@
 @property (nonatomic, assign) NSInteger cardID;
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, assign) NSInteger cardSN;
+@property (nonatomic, assign) NSInteger templateID;
 @property (nonatomic, copy) NSString *cardName;
 @property (nonatomic, copy) NSString *coverImageURL;
 @property (nonatomic, copy) NSString *creator;

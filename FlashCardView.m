@@ -15,6 +15,7 @@
 #import "Answer.h"
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
+#import "SelectTemplateTableViewController.h"
 
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
@@ -42,6 +43,7 @@
 @synthesize segmentedControl = _segmentedControl;
 @synthesize cardSNText = _cardSNText;
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
+@synthesize templateID = _templateID;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -61,9 +63,12 @@
         } else {
             [self loadViewForiPad];
         }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
     }
     return self;
 }
+
 
 - (void) loadViewForiPad {
     
@@ -94,6 +99,16 @@
         _cardSNText.keyboardType = UIKeyboardTypeNumberPad;
         [self addSubview:_cardSNText];
         
+    }
+    
+    //Template button
+    if (_changeTemplateButton == nil) {
+        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _changeTemplateButton.frame = CGRectMake(kQuestionViewLeftMarginForiPad+80, kQuestionViewTopMarginForiPad, 150, 40);
+        [_changeTemplateButton setTitle:@"Change template" forState:UIControlStateNormal];
+        _changeTemplateButton.backgroundColor = [UIColor redColor];
+        [self addSubview:_changeTemplateButton];
+        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
@@ -159,44 +174,61 @@
 
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        _questionView.logoImage.userInteractionEnabled = TRUE;
-        _questionView.title.userInteractionEnabled = TRUE;
-        _questionView.image.userInteractionEnabled = TRUE;
-        _questionView.content.userInteractionEnabled = TRUE;
-        _answerView.logoImage.userInteractionEnabled = TRUE;
-        _answerView.title.userInteractionEnabled = TRUE;
-        _answerView.image.userInteractionEnabled = TRUE;
-        _answerView.content.userInteractionEnabled = TRUE;
+        _questionView.logoImage.userInteractionEnabled  = TRUE;
+        _questionView.type.userInteractionEnabled       = TRUE;
+        _questionView.title.userInteractionEnabled      = TRUE;
+        _questionView.image.userInteractionEnabled      = TRUE;
+        _questionView.summary.userInteractionEnabled    = TRUE;
+        _questionView.detail.userInteractionEnabled     = TRUE;
+        _questionView.type.userInteractionEnabled       = TRUE;
+        _answerView.logoImage.userInteractionEnabled    = TRUE;
+        _answerView.title.userInteractionEnabled        = TRUE;
+        _answerView.image.userInteractionEnabled        = TRUE;
+        _answerView.summary.userInteractionEnabled      = TRUE;
+        _answerView.detail.userInteractionEnabled       = TRUE;
         
     } else {
         _questionView.logoImage.userInteractionEnabled = FALSE;
-        _questionView.title.userInteractionEnabled = FALSE;
-        _questionView.image.userInteractionEnabled = FALSE;
-        _questionView.content.userInteractionEnabled = FALSE;
-        _answerView.logoImage.userInteractionEnabled = FALSE;
-        _answerView.title.userInteractionEnabled = FALSE;
-        _answerView.image.userInteractionEnabled = FALSE;
-        _answerView.content.userInteractionEnabled = FALSE;
+        _questionView.type.userInteractionEnabled      = FALSE;
+        _questionView.title.userInteractionEnabled     = FALSE;
+        _questionView.image.userInteractionEnabled     = FALSE;
+        _questionView.summary.userInteractionEnabled   = FALSE;
+        _questionView.detail.userInteractionEnabled    = FALSE;
+        _questionView.type.userInteractionEnabled      = FALSE;
+        _answerView.logoImage.userInteractionEnabled   = FALSE;
+        _answerView.title.userInteractionEnabled       = FALSE;
+        _answerView.image.userInteractionEnabled       = FALSE;
+        _answerView.summary.userInteractionEnabled     = FALSE;
+        _answerView.detail.userInteractionEnabled      = FALSE;
+        
     }
 }
 
 - (void) disableCardEdit {
     _questionView.logoImage.userInteractionEnabled = FALSE;
-    _questionView.title.userInteractionEnabled = FALSE;
-    _questionView.image.userInteractionEnabled = FALSE;
-    _questionView.content.userInteractionEnabled = FALSE;
-    _answerView.logoImage.userInteractionEnabled = FALSE;
-    _answerView.title.userInteractionEnabled = FALSE;
-    _answerView.image.userInteractionEnabled = FALSE;
-    _answerView.content.userInteractionEnabled = FALSE;
+    _questionView.type.userInteractionEnabled      = FALSE;
+    _questionView.title.userInteractionEnabled     = FALSE;
+    _questionView.image.userInteractionEnabled     = FALSE;
+    _questionView.summary.userInteractionEnabled   = FALSE;
+    _questionView.detail.userInteractionEnabled    = FALSE;
+    _questionView.type.userInteractionEnabled      = FALSE;
+    _answerView.logoImage.userInteractionEnabled   = FALSE;
+    _answerView.title.userInteractionEnabled       = FALSE;
+    _answerView.image.userInteractionEnabled       = FALSE;
+    _answerView.summary.userInteractionEnabled     = FALSE;
+    _answerView.detail.userInteractionEnabled      = FALSE;
 }
 
 - (void) refreshQuestionAnserView {
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
+    
     _questionView.currentCard = _currentCard;
     [_questionView refreshDisplay];
+    [_questionView updateQuestionViewTemplate:_currentCard.templateID];
+    
     _answerView.currentCard = _currentCard;
     [_answerView refreshDisplay];
+    [_answerView updateAnswerViewTemplate:_currentCard.templateID];
 }
 
 #pragma mark -
@@ -229,6 +261,10 @@
 			break;
 		}
 	}
+    
+    [self bringSubviewToFront:_cardSNText];
+    [self bringSubviewToFront:_changeTemplateButton];
+
 }
 
 #pragma mark -
@@ -293,14 +329,17 @@
     
     _currentCard.coverImageURL = savedFullPath;
     _currentCard.cardSN = _cardSNText.text;
-    
+    _currentCard.templateID = _templateID;
     _currentCard.question.title = self.questionView.title.text;
-    _currentCard.question.content = self.questionView.content.text;
+    _currentCard.question.type = self.questionView.type.text;
+    _currentCard.question.summary = self.questionView.summary.text;
+    _currentCard.question.detail = self.questionView.detail.text;
     _currentCard.question.imageFullPath = self.questionView.imageFullPath;
     _currentCard.question.logoFullPath = self.questionView.logoImageFullPath;
     
     _currentCard.answer.title = self.answerView.title.text;
-    _currentCard.answer.content = self.answerView.content.text;
+    _currentCard.answer.summary = self.answerView.summary.text;
+    _currentCard.answer.detail = self.answerView.detail.text;
     _currentCard.answer.imageFullPath = self.answerView.imageFullPath;
     _currentCard.answer.logoFullPath = self.answerView.logoImageFullPath;
     
@@ -309,6 +348,52 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 
+}
+
+
+- (void) changeTemplateButtonClick:(id)sender {
+    
+    SelectTemplateTableViewController *selectTemplateTableViewController = [[SelectTemplateTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:selectTemplateTableViewController animated:YES];
+    } else {
+        if (_popoverController == nil)
+            _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
+        _popoverController.popoverContentSize = CGSizeMake(480, 163*5);
+        [_popoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    }
+}
+
+- (void) templateSelectedNotification: (NSNotification *) notification {
+    [_popoverController dismissPopoverAnimated:YES];
+    NSString *templateIDString = (NSString *)[notification object];
+    if ([templateIDString integerValue] == _templateID) {
+        //do nothing
+    } else {
+        _templateID = [templateIDString integerValue];
+        
+        [_questionView updateQuestionViewTemplate:_templateID];
+        [_answerView updateAnswerViewTemplate:_templateID];
+        
+        _currentCard.templateID = _templateID;
+        
+        UIImage *origialmage = [self.questionView captureWholeViewAsImage];
+        NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+        NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        [imageData writeToFile:savedFullPath atomically:YES];
+        _currentCard.coverImageURL = savedFullPath;
+        
+        _currentCard.packID = _currentPack.packID;
+        [_currentCard save];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    }
+}
+
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
