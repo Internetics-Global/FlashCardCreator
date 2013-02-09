@@ -20,6 +20,7 @@
 #import "Answer.h"
 #import "Pack.h"
 #import "Card.h"
+#import "CSS.h"
 #import "PackListViewController.h"
 
 #import "UIImageView+AFNetworking.h"
@@ -273,6 +274,8 @@
     cardExample.cardSN = 1;  //Start from 1
     [self.currentPack addCard:cardExample];
     
+    _indexPack = [[[User defaultUser] packs] count] -1;
+    
     [self.tableView reloadData];
     
     if (isUserInterfaceIdiomPhone) {
@@ -280,6 +283,7 @@
     } else {
         self.detailViewController.title = _currentPack.packName;
         self.detailViewController.currentPack = _currentPack;
+        self.detailViewController.indexCard = 0; 
         [self.detailViewController showCurrentCardInScrollView];
     }
 }
@@ -577,6 +581,7 @@
     //Step3: Update user's pack and database
     pack.userID = [User defaultUser].userID;
     [[User defaultUser] addPack:pack];
+    _indexPack = [[[User defaultUser] packs] count] -1;
     
     [[NSFileManager defaultManager] removeItemAtPath:downloadedPackInfoFilePath error:nil];
     
@@ -655,6 +660,17 @@
             assembledCard.creator = questionDict[@"creator"];
             assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
             assembledCard.templateID = [questionDict[@"template_id"] intValue];
+            
+            [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
+            [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
+            [assembledCard question].css.subheadingColor = questionDict[@"subheading_color"];
+            [assembledCard question].css.mainAlign = questionDict[@"main_align"];
+            [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue];
+            [assembledCard question].css.mainColor = questionDict[@"main_color"];
+            [assembledCard question].css.subAlign = questionDict[@"sub_align"];
+            [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue];
+            [assembledCard question].css.subColor = questionDict[@"sub_color"];
+            
         }
     } else {
         NSLog(@"Unexpected questionTextContent.json format");
@@ -682,6 +698,16 @@
             [assembledCard answer].subheading = answerDict[@"subheading"];
             [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
+            
+            [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
+            [assembledCard answer].css.subheadingSize = answerDict[@"subheading_size"];
+            [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];
+            [assembledCard answer].css.mainAlign = answerDict[@"main_align"];
+            [assembledCard answer].css.mainSize = answerDict[@"main_size"];
+            [assembledCard answer].css.mainColor = answerDict[@"main_color"];
+            [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
+            [assembledCard answer].css.subSize = answerDict[@"sub_size"];
+            [assembledCard answer].css.subColor = answerDict[@"sub_color"];
             
         }
     } else {
