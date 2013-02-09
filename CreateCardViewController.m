@@ -33,7 +33,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.view.backgroundColor = [UIColor clearColor];
         UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAndCloseCreateCardView)];
         self.navigationItem.rightBarButtonItem = saveButton;
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
@@ -54,17 +53,25 @@
         } else {
             _cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,(IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
+        
+        
+        _cardView.cardSNText.text = [NSString stringWithFormat:@"%d",[[_currentPack cards] count]+1];
         _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
         _cardView.questionView.title.userInteractionEnabled        = FALSE;
         _cardView.questionView.image.userInteractionEnabled        = TRUE;
-        _cardView.questionView.type.userInteractionEnabled         = TRUE;
-        _cardView.questionView.summary.userInteractionEnabled      = TRUE;
-        _cardView.questionView.detail.userInteractionEnabled       = TRUE;
+        _cardView.questionView.subheading.userInteractionEnabled   = TRUE;
+        _cardView.questionView.main.userInteractionEnabled         = TRUE;
+        _cardView.questionView.sub.userInteractionEnabled          = TRUE;
         _cardView.answerView.logoImage.userInteractionEnabled      = TRUE;
         _cardView.answerView.title.userInteractionEnabled          = FALSE;
         _cardView.answerView.image.userInteractionEnabled          = TRUE;
-        _cardView.answerView.summary.userInteractionEnabled        = TRUE;
-        _cardView.answerView.detail.userInteractionEnabled         = TRUE;
+        _cardView.answerView.subheading.userInteractionEnabled     = TRUE;
+        _cardView.answerView.main.userInteractionEnabled           = TRUE;
+        _cardView.answerView.sub.userInteractionEnabled            = TRUE;
+        
+        //User template 0
+        [_cardView.questionView updateQuestionViewTemplate:0];
+        [_cardView.answerView updateAnswerViewTemplate:0];
         
         [self.view addSubview:_cardView];
     }
@@ -96,27 +103,21 @@
     _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
     _newCard.creator = [OpenUDID value];
     
-    int maxNo = 0;
-    for (Card *card in [_currentPack cards]) {
-        if (card.cardSN > maxNo) {
-            maxNo = card.cardSN;
-        }
-        
-    }
-    _newCard.cardSN = maxNo+1;
+    _newCard.cardSN = [[_currentPack cards] count]+1;
     _newCard.templateID = _cardView.templateID;
     _newCard.question.title = _cardView.questionView.title.text;
     _newCard.question.cardID = _newCard.cardID;
-    _newCard.question.type = _cardView.questionView.type.text;
-    _newCard.question.summary = _cardView.questionView.summary.text;
-    _newCard.question.detail = _cardView.questionView.detail.text;
+    _newCard.question.subheading = _cardView.questionView.subheading.text;
+    _newCard.question.main = _cardView.questionView.main.text;
+    _newCard.question.sub = _cardView.questionView.sub.text;
     _newCard.question.imageFullPath = _cardView.questionView.imageFullPath;
     _newCard.question.logoFullPath = _cardView.questionView.logoImageFullPath;
     
     _newCard.answer.title = _cardView.answerView.title.text;
     _newCard.answer.cardID = _newCard.cardID;
-    _newCard.answer.summary = _cardView.answerView.summary.text;
-    _newCard.answer.detail = _cardView.answerView.detail.text;
+    _newCard.answer.subheading = _cardView.answerView.subheading.text;
+    _newCard.answer.main = _cardView.answerView.main.text;
+    _newCard.answer.sub = _cardView.answerView.sub.text;
     _newCard.answer.imageFullPath = _cardView.answerView.imageFullPath;
     _newCard.answer.logoFullPath = _cardView.answerView.logoImageFullPath;
     

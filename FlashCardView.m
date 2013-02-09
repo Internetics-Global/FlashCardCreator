@@ -16,6 +16,7 @@
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
 #import "SelectTemplateTableViewController.h"
+#import "CSS.h"
 
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
@@ -45,6 +46,9 @@
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
 @synthesize templateID = _templateID;
 
+
+#pragma mark -
+#pragma mark - Life Cycle
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -57,6 +61,7 @@
         _currentPack = [[Pack alloc] init];
         
         _maxAllowedCardIndex = -1;
+        _templateID = 0;
         
         if (isUserInterfaceIdiomPhone) {
             [self loadViewForiPhone];
@@ -69,6 +74,8 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark - Layout view
 
 - (void) loadViewForiPad {
     
@@ -88,15 +95,16 @@
     }
     
     if (_cardSNText == nil) {
-        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, 60, 30)];
-        _cardSNText.text = @"";
-        _cardSNText.layer.cornerRadius =10;
-        _cardSNText.layer.masksToBounds = YES;
-        _cardSNText.backgroundColor = [UIColor yellowColor];
+        
+        UIImageView *numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
+        numberingBackroundImageView.frame = CGRectMake(10, 20, 40, 40);
+        [self addSubview:numberingBackroundImageView];
+        
+        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 40, 40)];
+        _cardSNText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _cardSNText.backgroundColor = [UIColor clearColor];
         _cardSNText.textAlignment = UITextAlignmentCenter;
-        _cardSNText.userInteractionEnabled = TRUE;
-        _cardSNText.delegate = self;
-        _cardSNText.keyboardType = UIKeyboardTypeNumberPad;
+        _cardSNText.userInteractionEnabled = FALSE;
         [self addSubview:_cardSNText];
         
     }
@@ -104,9 +112,8 @@
     //Template button
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kQuestionViewLeftMarginForiPad+80, kQuestionViewTopMarginForiPad, 150, 40);
-        [_changeTemplateButton setTitle:@"Change template" forState:UIControlStateNormal];
-        _changeTemplateButton.backgroundColor = [UIColor redColor];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-60, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 60, 60);
+        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
@@ -150,9 +157,7 @@
         _cardSNText.layer.masksToBounds = YES;
         _cardSNText.backgroundColor = [UIColor yellowColor];
         _cardSNText.textAlignment = UITextAlignmentCenter;
-        _cardSNText.userInteractionEnabled = TRUE;
-        _cardSNText.delegate = self;
-        _cardSNText.keyboardType = UIKeyboardTypeNumberPad;
+        _cardSNText.userInteractionEnabled = FALSE;
         [self addSubview:_cardSNText];
     }
     
@@ -171,64 +176,74 @@
     [self addSubview:_segmentedControl];
 }
 
+#pragma mark -
+#pragma mark - Editable related
 
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
         _questionView.logoImage.userInteractionEnabled  = TRUE;
-        _questionView.type.userInteractionEnabled       = TRUE;
+        _questionView.subheading.userInteractionEnabled = TRUE;
         _questionView.title.userInteractionEnabled      = TRUE;
         _questionView.image.userInteractionEnabled      = TRUE;
-        _questionView.summary.userInteractionEnabled    = TRUE;
-        _questionView.detail.userInteractionEnabled     = TRUE;
-        _questionView.type.userInteractionEnabled       = TRUE;
+        _questionView.main.userInteractionEnabled       = TRUE;
+        _questionView.sub.userInteractionEnabled        = TRUE;
+        _questionView.subheading.userInteractionEnabled = TRUE;
         _answerView.logoImage.userInteractionEnabled    = TRUE;
         _answerView.title.userInteractionEnabled        = TRUE;
         _answerView.image.userInteractionEnabled        = TRUE;
-        _answerView.summary.userInteractionEnabled      = TRUE;
-        _answerView.detail.userInteractionEnabled       = TRUE;
+        _answerView.subheading.userInteractionEnabled   = TRUE;
+        _answerView.main.userInteractionEnabled         = TRUE;
+        _answerView.sub.userInteractionEnabled          = TRUE;
         
     } else {
         _questionView.logoImage.userInteractionEnabled = FALSE;
-        _questionView.type.userInteractionEnabled      = FALSE;
+        _questionView.subheading.userInteractionEnabled      = FALSE;
         _questionView.title.userInteractionEnabled     = FALSE;
         _questionView.image.userInteractionEnabled     = FALSE;
-        _questionView.summary.userInteractionEnabled   = FALSE;
-        _questionView.detail.userInteractionEnabled    = FALSE;
-        _questionView.type.userInteractionEnabled      = FALSE;
+        _questionView.main.userInteractionEnabled   = FALSE;
+        _questionView.sub.userInteractionEnabled    = FALSE;
+        _questionView.subheading.userInteractionEnabled      = FALSE;
         _answerView.logoImage.userInteractionEnabled   = FALSE;
         _answerView.title.userInteractionEnabled       = FALSE;
         _answerView.image.userInteractionEnabled       = FALSE;
-        _answerView.summary.userInteractionEnabled     = FALSE;
-        _answerView.detail.userInteractionEnabled      = FALSE;
+        _answerView.subheading.userInteractionEnabled  = FALSE;
+        _answerView.main.userInteractionEnabled     = FALSE;
+        _answerView.sub.userInteractionEnabled      = FALSE;
         
     }
 }
 
 - (void) disableCardEdit {
     _questionView.logoImage.userInteractionEnabled = FALSE;
-    _questionView.type.userInteractionEnabled      = FALSE;
+    _questionView.subheading.userInteractionEnabled      = FALSE;
     _questionView.title.userInteractionEnabled     = FALSE;
     _questionView.image.userInteractionEnabled     = FALSE;
-    _questionView.summary.userInteractionEnabled   = FALSE;
-    _questionView.detail.userInteractionEnabled    = FALSE;
-    _questionView.type.userInteractionEnabled      = FALSE;
+    _questionView.main.userInteractionEnabled   = FALSE;
+    _questionView.sub.userInteractionEnabled    = FALSE;
+    _questionView.subheading.userInteractionEnabled      = FALSE;
     _answerView.logoImage.userInteractionEnabled   = FALSE;
     _answerView.title.userInteractionEnabled       = FALSE;
     _answerView.image.userInteractionEnabled       = FALSE;
-    _answerView.summary.userInteractionEnabled     = FALSE;
-    _answerView.detail.userInteractionEnabled      = FALSE;
+    _answerView.subheading.userInteractionEnabled      = FALSE;
+    _answerView.main.userInteractionEnabled     = FALSE;
+    _answerView.sub.userInteractionEnabled      = FALSE;
 }
 
+
+#pragma mark -
+#pragma mark - Refresh
 - (void) refreshQuestionAnserView {
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     
     _questionView.currentCard = _currentCard;
     [_questionView refreshDisplay];
     [_questionView updateQuestionViewTemplate:_currentCard.templateID];
+    [_questionView updateCSS];
     
     _answerView.currentCard = _currentCard;
     [_answerView refreshDisplay];
     [_answerView updateAnswerViewTemplate:_currentCard.templateID];
+    [_answerView updateCSS];
 }
 
 #pragma mark -
@@ -245,6 +260,7 @@
             if (_isQuestionShowing == NO) {
                 [_answerView removeFromSuperview];
                 [self addSubview:_questionView];
+                _questionView.delegate = self;
                 _isQuestionShowing = YES;
                 _segmentedControl.selectedSegmentIndex = 0;
             }
@@ -255,6 +271,7 @@
             if (_isQuestionShowing == YES) {
                 [_questionView removeFromSuperview];
                 [self addSubview:_answerView];
+                _answerView.delegate = self;
                 _isQuestionShowing = NO;
                 _segmentedControl.selectedSegmentIndex = 1;
             }
@@ -328,20 +345,41 @@
     [imageData writeToFile:savedFullPath atomically:YES];
     
     _currentCard.coverImageURL = savedFullPath;
-    _currentCard.cardSN = _cardSNText.text;
     _currentCard.templateID = _templateID;
+    
     _currentCard.question.title = self.questionView.title.text;
-    _currentCard.question.type = self.questionView.type.text;
-    _currentCard.question.summary = self.questionView.summary.text;
-    _currentCard.question.detail = self.questionView.detail.text;
+    _currentCard.question.subheading = self.questionView.subheading.text;
+    _currentCard.question.main = self.questionView.main.text;
+    _currentCard.question.sub = self.questionView.sub.text;
     _currentCard.question.imageFullPath = self.questionView.imageFullPath;
     _currentCard.question.logoFullPath = self.questionView.logoImageFullPath;
     
+    _currentCard.question.css.subheadingAlign = self.questionView.subheadingAlign;
+    _currentCard.question.css.subheadingColor = self.questionView.subheadingColor;
+    _currentCard.question.css.subheadingSize = self.questionView.subheadingSize;
+    _currentCard.question.css.mainAlign = self.questionView.mainAlign;
+    _currentCard.question.css.mainColor = self.questionView.mainColor;
+    _currentCard.question.css.mainSize = self.questionView.mainSize;
+    _currentCard.question.css.subAlign = self.questionView.subAlign;
+    _currentCard.question.css.subColor = self.questionView.subColor;
+    _currentCard.question.css.subSize = self.questionView.subSize;
+    
     _currentCard.answer.title = self.answerView.title.text;
-    _currentCard.answer.summary = self.answerView.summary.text;
-    _currentCard.answer.detail = self.answerView.detail.text;
+    _currentCard.answer.subheading = self.answerView.subheading.text;
+    _currentCard.answer.main = self.answerView.main.text;
+    _currentCard.answer.sub = self.answerView.sub.text;
     _currentCard.answer.imageFullPath = self.answerView.imageFullPath;
     _currentCard.answer.logoFullPath = self.answerView.logoImageFullPath;
+    
+    _currentCard.answer.css.subheadingAlign = self.answerView.subheadingAlign;
+    _currentCard.answer.css.subheadingColor = self.answerView.subheadingColor;
+    _currentCard.answer.css.subheadingSize = self.answerView.subheadingSize;
+    _currentCard.answer.css.mainAlign = self.answerView.mainAlign;
+    _currentCard.answer.css.mainColor = self.answerView.mainColor;
+    _currentCard.answer.css.mainSize = self.answerView.mainSize;
+    _currentCard.answer.css.subAlign = self.answerView.subAlign;
+    _currentCard.answer.css.subColor = self.answerView.subColor;
+    _currentCard.answer.css.subSize = self.answerView.subSize;
     
     _currentCard.packID = _currentPack.packID;
     [_currentCard save];
@@ -360,8 +398,8 @@
     } else {
         if (_popoverController == nil)
             _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
-        _popoverController.popoverContentSize = CGSizeMake(480, 163*5);
-        [_popoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        _popoverController.popoverContentSize = CGSizeMake(250, 95*5);
+        [_popoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     }
 }
 
@@ -391,6 +429,9 @@
     }
 }
 
+
+#pragma mark -
+#pragma mark - Memory management
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

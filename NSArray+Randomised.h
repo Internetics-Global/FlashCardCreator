@@ -12,4 +12,6 @@
 
 - (NSArray *)randomised;
 
+- (NSMutableArray *)cardSNOrdered;
+
 @end

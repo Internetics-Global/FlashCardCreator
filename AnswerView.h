@@ -16,4 +16,6 @@
 - (void) refreshDisplay;
 - (void) updateAnswerViewTemplate:(int) index;
 
+- (void) setCurrentCard:(Card *)currentCard;
+
 @end

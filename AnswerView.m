@@ -9,6 +9,7 @@
 #import "AnswerView.h"
 #import "Card.h"
 #import "Answer.h"
+#import "CSS.h"
 
 @implementation AnswerView
 
@@ -19,19 +20,23 @@
         self.backgroundColor = [UIColor whiteColor];
         
         //setup default value;
-        _summary.text = @"summary";
-        _detail.text = @"detail";
+        _main.text = @"main";
+        _sub.text = @"sub";
         _title.text = @"Answer";
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.png"];
         _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.png"];
         _imageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_content.png", [[NSBundle mainBundle] resourcePath]];
         _logoImageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_logo.png", [[NSBundle mainBundle] resourcePath]];
         
-        _type.hidden = TRUE; //we don't use _type in answer view;
     }
     return self;
 }
 
+
+#pragma mark -
+#pragma mark - Refresh content (only content)
+
+//content part which is included in three main parts: CSS, template(position) and content
 - (void) refreshDisplay {
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
     if (imageTemp) {
@@ -47,69 +52,130 @@
         _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.png"];
     }
     
-    _summary.text =_currentCard.answer.summary;
-    _detail.text =_currentCard.answer.detail;
-    _title.text = _currentCard.answer.title;
+    _subheading.text = _currentCard.answer.subheading;
+    _main.text =_currentCard.answer.main;
+    _sub.text =_currentCard.answer.sub;
 }
 
-//Only to change the positioning
+#pragma mark -
+#pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
+
+//postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateAnswerViewTemplate:(int) index {
     
     switch (index) {
         case 0: //Template 0
         {
-            _summary.frame = CGRectMake(0, 70, 470, 50);
-            _summary.hidden = FALSE;
+            _subheading.hidden = FALSE;
+            _subheading.frame = CGRectMake(80, 120, 360, 30);
+            _subheading.font = [UIFont systemFontOfSize:20];
+            _subheading.textColor = [UIColor blackColor];
+            _subheading.textAlignment = NSTextAlignmentCenter;
             
-            _detail.frame = CGRectMake(0, 120, 470, 400);
-            _detail.hidden = FALSE;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(80, 160, 360, 300);
+            _main.font = [UIFont systemFontOfSize:16];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
             
-            _image.frame = CGRectMake(480, 150, 300, 300);
+            _sub.hidden = TRUE;
+            
             _image.hidden = FALSE;
+            _image.frame = CGRectMake(440, 120, 350, 350);
+            
+            _logoImage.hidden = TRUE;
+            
             break;
         }
         case 1: //Template 1
         {
-            _summary.frame = CGRectMake(0, 70, 770, 50);
-            _summary.hidden = FALSE;
+            _subheading.hidden = TRUE;
             
-            _detail.frame = CGRectMake(0, 120, 470, 400);
-            _detail.hidden = FALSE;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(80, 120, 700, 40);
+            _main.font = [UIFont systemFontOfSize:16 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentLeft;
             
-            _image.frame = CGRectMake(480, 150, 300, 300);
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(80, 170, 360, 360);
+            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.textColor = [UIColor blackColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
+            
             _image.hidden = FALSE;
+            _image.frame = CGRectMake(440, 170, 350, 350);
+            
+            _logoImage.hidden = TRUE;
+            
             break;
         }
         case 2: //Template 2
         {
-            _summary.hidden = TRUE;
+            _subheading.hidden = TRUE;
             
-            _detail.frame = CGRectMake(0, 100, 470, 400);
-            _detail.hidden = FALSE;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(80, 120, 360, 360);
+            _main.font = [UIFont systemFontOfSize:16 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentLeft;
             
-            _image.frame = CGRectMake(480, 150, 300, 300);
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(600, 400, 100, 50);
+            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.textColor = [UIColor redColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
+            
             _image.hidden = FALSE;
+            _image.frame = CGRectMake(440, 120, 350, 350);
+            
+            _logoImage.hidden = TRUE;
+            
             break;
         }
         case 3: //Template 3
         {
-            _summary.hidden = YES;
+            _subheading.hidden = TRUE;
             
-            _detail.frame = CGRectMake(0, 100, 770, 400);
-            _detail.hidden = FALSE;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(600, 30, 180, 50);
+            _main.font = [UIFont systemFontOfSize:22 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
+            
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(80, 120, 700, 400);
+            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.textColor = [UIColor blackColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
             
             _image.hidden = TRUE;
+            
+            _logoImage.hidden = TRUE;
+            
             break;
         }
         case 4: //Template4
         {
-            _summary.hidden = TRUE;
+            _subheading.hidden = TRUE;
             
-            _detail.frame = CGRectMake(0, 100, 470, 400);
-            _detail.hidden = FALSE;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(80, 120, 360, 360);
+            _main.font = [UIFont systemFontOfSize:14 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
             
-            _image.frame = CGRectMake(480, 150, 300, 300);
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(80, 400, 360, 40);
+            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.textColor = [UIColor redColor];
+            _sub.textAlignment = NSTextAlignmentLeft;
+            
             _image.hidden = FALSE;
+            _image.frame = CGRectMake(440, 120, 350, 350);
+            
+            _logoImage.hidden = TRUE;
+            
             break;
         }
         default:
@@ -121,5 +187,22 @@
     }
 }
 
+
+#pragma mark -
+#pragma mark - Get/set currentCard
+- (void) setCurrentCard:(Card *)card {
+    _currentCard = card;
+    _subheadingColor = card.answer.css.subheadingColor;
+    _subheadingAlign = card.answer.css.subheadingAlign;
+    _subheadingSize = card.answer.css.subheadingSize;
+    
+    _mainColor = card.answer.css.mainColor;
+    _mainAlign = card.answer.css.mainAlign;
+    _mainSize = card.answer.css.mainSize;
+    
+    _subColor = card.answer.css.subColor;
+    _subAlign = card.answer.css.subAlign;
+    _subSize = card.answer.css.subSize;
+}
 
 @end

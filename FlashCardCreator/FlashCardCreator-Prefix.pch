@@ -67,7 +67,7 @@
 #define IPAD_UI_NAVIGATION_BAR_HEIGHT          44
 #define IPAD_UI_TOOL_BAR_HEIGHT                44
 #define IPAD_UI_STATUS_BAR_HEIGHT              20
-#define IPAD_UI_MASTER_WIDTH                   180     //180 is from "MGSplitViewController.h"
+#define IPAD_UI_MASTER_WIDTH                   200     //200 is from "MGSplitViewController.h"
 #define IPAD_UI_DETAIL_WIDTH                   (1024-IPAD_UI_MASTER_WIDTH)
 #define IPAD_UI_WIDTH                          1024
 #define IPAD_UI_HEIGHT                         768

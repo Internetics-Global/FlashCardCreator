@@ -72,21 +72,7 @@
         shuffledCardArray = [[_currentPack cards] randomised];
     } else {
         //Bubble sorting
-        Card *t = nil;
-        NSMutableArray *cardsArray = [_currentPack cards];
-        int n = [cardsArray count];
-        for(int i=n-2;i>=0;i--) {
-            for(int j=0;j<=i;j++) {
-                if(((Card *)cardsArray[j]).cardSN>((Card *)cardsArray[j+1]).cardSN) {
-                    t=cardsArray[j];
-                    cardsArray[j]=cardsArray[j+1];
-                    cardsArray[j+1]=t;
-                }
-            }
-        }
-        
-        shuffledCardArray = cardsArray;
-
+        shuffledCardArray = [[_currentPack cards] cardSNOrdered];
     }
     
     if (isUserInterfaceIdiomPhone) {

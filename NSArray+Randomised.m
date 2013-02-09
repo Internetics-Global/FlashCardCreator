@@ -7,6 +7,7 @@
 //
 
 #import "NSArray+Randomised.h"
+#import "Card.h"
 
 @implementation NSArray (Randomised)
 
@@ -24,6 +25,24 @@ static inline int randomInt(int low, int high)
         [randomised insertObject:object atIndex:index];
     }
     return randomised;
+}
+
+- (NSMutableArray *)cardSNOrdered;
+{
+    //Bubble sorting
+    Card *t = nil;
+    NSMutableArray *shuffledCardArray= [NSMutableArray arrayWithArray:self];
+    int n = [shuffledCardArray count];
+    for(int i=n-2;i>=0;i--) {
+        for(int j=0;j<=i;j++) {
+            if(((Card *)shuffledCardArray[j]).cardSN>((Card *)shuffledCardArray[j+1]).cardSN) {
+                t=shuffledCardArray[j];
+                shuffledCardArray[j]=shuffledCardArray[j+1];
+                shuffledCardArray[j+1]=t;
+            }
+        }
+    }
+    return shuffledCardArray;
 }
 
 

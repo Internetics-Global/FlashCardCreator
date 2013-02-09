@@ -68,8 +68,6 @@
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             self.clearsSelectionOnViewWillAppear = NO;
         }
-     
-    
 
     }
     return self;
@@ -79,16 +77,24 @@
 {
     [super viewDidLoad];
 
+    //Left UIBarButtonItem
     _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack List" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
-    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Pack" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
+    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
     self.navigationItem.leftBarButtonItems = @[_selectPackButton,newPackButton];
     
+    
+    //Right UIBarButtonItem
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonClicked:)];
+
     if (isUserInterfaceIdiomPhone) {
         UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
 
         self.navigationItem.rightBarButtonItems =
-            @[settingButton];
+            @[editButton,settingButton];
+    } else {
+        self.navigationItem.rightBarButtonItems =
+        @[editButton];
     }
     
     _selectPackButton.title = @"Packs";
@@ -113,12 +119,11 @@
     }
     
     if (isUserInterfaceIdiomPhone ) {
-        _addCardButton.center = CGPointMake(70,IPHONE_UI_HEIGHT-70);
+        _addCardButton.center = CGPointMake(60,IPHONE_UI_HEIGHT-60);
     } else {
         _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
     }
     [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
-    [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlEventTouchDown];
     _addCardButton.showsTouchWhenHighlighted = YES;
     [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     if (isUserInterfaceIdiomPhone) {
@@ -212,6 +217,18 @@
     [self.navigationController pushViewController:moreInfoViewController animated:YES];
 }
 
+- (void)editButtonClicked:(id) sender
+{
+    if ([((UIBarButtonItem *) sender).title isEqualToString:@"Edit"]) {
+        self.tableView.editing = TRUE;
+        ((UIBarButtonItem *) sender).title = @"Done";
+    } else {
+        self.tableView.editing = FALSE;
+        ((UIBarButtonItem *) sender).title = @"Edit";
+    }
+    
+}
+
 
 #pragma mark -
 #pragma mark Notfication related
@@ -225,8 +242,8 @@
 
 
 - (void) selectedPackNotification:(NSNotification *) notification {
-    int index = [(NSString *)[notification object] intValue];
-    self.currentPack = [[User defaultUser] packs][index];
+    _indexPack = [(NSString *)[notification object] intValue];
+    self.currentPack = [[User defaultUser] packs][_indexPack];
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
@@ -242,7 +259,6 @@
 
 -(void)newCardAddedNotification:(NSNotification *)notification{
 	[self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:([[_currentPack cards] count]-1) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [_backgroundOfCreateCardView removeFromSuperview];
 }
 
@@ -250,11 +266,12 @@
 	self.currentPack = (Pack *)[notification object];
     
     //Add a new card template
-    Card *cardTemplate = [[Card alloc] init];
-    cardTemplate.cardName = @"Example";
-    cardTemplate.creator = [OpenUDID value];
-    cardTemplate.packID = self.currentPack.packID;
-    [self.currentPack addCard:cardTemplate];
+    Card *cardExample = [[Card alloc] init];
+    cardExample.cardName = @"Example";
+    cardExample.creator = [OpenUDID value];
+    cardExample.packID = self.currentPack.packID;
+    cardExample.cardSN = 1;  //Start from 1
+    [self.currentPack addCard:cardExample];
     
     [self.tableView reloadData];
     
@@ -268,6 +285,9 @@
 }
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
+    //We need to refresh currentPack and currentCard since there will be possible change
+    self.currentPack = [[User defaultUser] packs] [_indexPack];
+    self.currentCard = [_currentPack cards][_indexCard];
     [self.tableView reloadData];
 }
 
@@ -333,6 +353,15 @@
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     Card *card = [_currentPack cards][indexPath.row];
+    
+    //Just to keep consistent: indexPath.row should be same as card.cardSN
+    if (card.cardSN != indexPath.row +1) {
+        NSLog(@"card.cardSN = %d, indexPath.row = %d", card.cardSN, indexPath.row);
+        [Common alertViewCommon:@"We have to reorder it since it's not consistent"];
+        card.cardSN = indexPath.row +1;
+        [card save];
+    }
+    
     cell.indexLabel.text = [NSString stringWithFormat:@"%d",card.cardSN];
     
     UIImage *coverImage = [UIImage imageWithContentsOfFile:card.coverImageURL];
@@ -392,12 +421,59 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Card *card =[_currentPack cards] [indexPath.row];
-        [_currentPack removeCard:card];
+        
+        NSArray *tempCards = [_currentPack cards];
+        
+        for (int i = indexPath.row +1; i < [tempCards count] ; i++) {
+            ((Card *)tempCards[i]).cardSN = i;
+            [((Card *)tempCards[i]) save];
+        }
+        [_currentPack removeCard:tempCards[indexPath.row]];
+        
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
                               withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
 	}
     
+}
+
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+    NSLog(@"move from:%d to:%d", fromIndexPath.row, toIndexPath.row);
+    
+    if (fromIndexPath.row == toIndexPath.row)
+        return;
+    
+    //Step1: recalculate cardSN
+    if (fromIndexPath.row <= toIndexPath.row) {
+        for (int i = fromIndexPath.row +1; i<= toIndexPath.row; i++) {
+            Card *temp = (Card *)([_currentPack cards][i]);
+            temp.cardSN = i;
+            [temp save];
+        }
+        
+    } else {
+        for (int i = toIndexPath.row; i< fromIndexPath.row; i++) {
+            Card *temp = (Card *)([_currentPack cards][i]);
+            temp.cardSN = i+2;
+            [temp save];
+        }
+    }
+    
+    //Step2: execute move. We just reset cardSN
+    Card *r = [_currentPack cards][fromIndexPath.row];
+    r.cardSN = toIndexPath.row +1;
+    [r save];
+
+    [self.tableView reloadData];
+    [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
+    
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
 }
 
 #pragma mark -
@@ -570,8 +646,9 @@
             [assembledCard question].questionID = -1; // -1 means new
             [assembledCard question].cardID = -1;
             [assembledCard question].title = questionDict[@"title"];
-            [assembledCard question].summary = questionDict[@"summary"];
-            [assembledCard question].detail = questionDict[@"detail"];
+            [assembledCard question].main = questionDict[@"main"];
+            [assembledCard question].sub = questionDict[@"sub"];
+            [assembledCard question].subheading = questionDict[@"subheading"];
             [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
@@ -600,8 +677,9 @@
             [assembledCard answer].answerID = -1;
             [assembledCard answer].cardID = -1;
             [assembledCard answer].title = answerDict[@"title"];
-            [assembledCard answer].summary = answerDict[@"summary"];
-            [assembledCard answer].detail = answerDict[@"detail"];
+            [assembledCard answer].main = answerDict[@"main"];
+            [assembledCard answer].sub = answerDict[@"sub"];
+            [assembledCard answer].subheading = answerDict[@"subheading"];
             [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
             

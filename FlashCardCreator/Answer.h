@@ -8,23 +8,33 @@
 
 #import <Foundation/Foundation.h>
 
+@class CSS;
+
 @interface Answer : NSObject {
     NSInteger _answerID;
     NSInteger _cardID;
+    NSInteger _cssID;
 	NSString *_title;
-    NSString *_summary;
-    NSString *_detail;
+    NSString *_subheading;
+    NSString *_main;
+    NSString *_sub;
     NSString *_imageFullPath;
     NSString *_logoFullPath;
+    
+    CSS *_css;
 }
 
 @property (nonatomic, assign) NSInteger answerID;
 @property (nonatomic, assign) NSInteger cardID;
+@property (nonatomic, assign) NSInteger cssID;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *summary;
-@property (nonatomic, copy) NSString *detail;
+@property (nonatomic, copy) NSString *subheading;
+@property (nonatomic, copy) NSString *main;
+@property (nonatomic, copy) NSString *sub;
 @property (nonatomic, copy) NSString *imageFullPath;
 @property (nonatomic, copy) NSString *logoFullPath;
+
+@property (strong, nonatomic) CSS *css;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;

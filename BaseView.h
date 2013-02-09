@@ -19,9 +19,9 @@
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UIImageView *_logoImage;
     NSString *_logoImageFullPath;
-    UITextView *_type; // only suitable for question
-    UITextView *_summary;
-    UITextView *_detail;
+    UITextView *_subheading; // means subheading. only suitable for question
+    UITextView *_main;
+    UITextView *_sub;
     UITextView *_title;
     UIImageView *_image;
     NSString *_imageFullPath;
@@ -33,20 +33,47 @@
     BOOL _isLogoImageViewClicked;
     
     id <BaseViewDelegate> __weak _delegate;
+    
+    NSArray *_buttonArray;
+    NSArray *_fontSizeArray;
+    NSArray *_colorArray;
+    NSArray *_alignArray;
+    UIToolbar *_keyboardTopView;
+    
+    NSInteger _subheadingSize;
+	NSString *_subheadingColor;
+    NSString *_subheadingAlign;
+    NSInteger _mainSize;
+	NSString *_mainColor;
+    NSString *_mainAlign;
+    NSInteger _subSize;
+	NSString *_subColor;
+    NSString *_subAlign;
 }
 
 @property (strong, nonatomic) Card *currentCard;
 @property (strong, nonatomic) UIImageView *logoImage;
 @property (copy, nonatomic)  NSString *logoImageFullPath;
-@property (strong, nonatomic) UITextView *type; 
-@property (strong, nonatomic) UITextView *summary;
-@property (strong, nonatomic) UITextView *detail;
+@property (strong, nonatomic) UITextView *subheading; 
+@property (strong, nonatomic) UITextView *main;
+@property (strong, nonatomic) UITextView *sub;
 @property (strong, nonatomic) UITextView *title;
 @property (strong, nonatomic) UIImageView *image;
 @property (copy, nonatomic)  NSString *imageFullPath;
 
+@property (nonatomic, assign) NSInteger subheadingSize;
+@property (nonatomic, copy) NSString *subheadingColor;
+@property (nonatomic, copy) NSString *subheadingAlign;
+@property (nonatomic, assign) NSInteger mainSize;
+@property (nonatomic, copy) NSString *mainColor;
+@property (nonatomic, copy) NSString *mainAlign;
+@property (nonatomic, assign) NSInteger subSize;
+@property (nonatomic, copy) NSString *subColor;
+@property (nonatomic, copy) NSString *subAlign;
+
 @property (nonatomic,weak) id <BaseViewDelegate> delegate;
 
 - (UIImage *)captureWholeViewAsImage;
+- (void) updateCSS;
 
 @end

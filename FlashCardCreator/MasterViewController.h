@@ -19,6 +19,7 @@
     Pack *_currentPack;
     Card *_currentCard;
     int _indexCard;  //selected card index
+    int _indexPack;  //selected pack index;
     
     UIPopoverController *_packListPickerPopover;
     ZipFileDownloadHelper *_zipFileDownloadHelp;

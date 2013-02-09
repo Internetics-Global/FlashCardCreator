@@ -10,7 +10,8 @@
 #import "SQLiteHelper.h"
 #import "Card.h"
 #import "User.h"
-#include "Card.h"
+#import "Card.h"
+#import "NSArray+Randomised.h"
 
 @implementation Pack
 
@@ -49,6 +50,7 @@
         _userID = -1;
     }
     _languageName = [dict valueForKey:@"language_name"];
+    
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
 		for (int i = 0; i < [cardsArray count]; i++) {
@@ -56,8 +58,14 @@
 			[_cards addObject:card];
 		}
 	}
+    
+    _cards = [_cards cardSNOrdered];
 
 	return self;
+}
+
+- (NSMutableArray *)cards {
+    return [_cards cardSNOrdered];
 }
 
 #pragma mark -

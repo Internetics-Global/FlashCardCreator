@@ -13,19 +13,34 @@
 #import "UIImage+Scale.h"
 #import "Question.h"
 #import "Answer.h"
+#import "Card.h"
+#import "CSS.h"
 
 @implementation BaseView
 
 @synthesize currentCard = _currentCard;
 @synthesize logoImage = _logoImage;
 @synthesize logoImageFullPath = _logoImageFullPath;
-@synthesize summary = _summary;
-@synthesize detail = _detail;
+@synthesize subheading = _subheading;
+@synthesize main = _main;
+@synthesize sub = _sub;
 @synthesize title = _title;
 @synthesize image = _image;
 @synthesize imageFullPath = _imageFullPath;
-@synthesize type = _type;
 @synthesize delegate = _delegate;
+
+@synthesize subheadingAlign = _subheadingAlign;
+@synthesize subheadingColor = _subheadingColor;
+@synthesize subheadingSize = _subheadingSize;
+@synthesize mainAlign = _mainAlign;
+@synthesize mainColor = _mainColor;
+@synthesize mainSize = _mainSize;
+@synthesize subAlign = _subAlign;
+@synthesize subSize = _subSize;
+@synthesize subColor = _subColor;
+
+#pragma mark -
+#pragma mark - Life cycle
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -37,6 +52,17 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
+        
+        _subheadingSize = 40;
+        _subheadingColor = @"Black";
+        _subheadingAlign = @"Right";
+        _mainSize = 16;
+        _mainColor = @"Black";;
+        _mainAlign = @"Center";;
+        _subSize = 16;
+        _subColor = @"Black";;
+        _subAlign = @"Center";;
+        
         if (isUserInterfaceIdiomPhone) {
             [self loadViewForiPhone];
         } else {
@@ -59,16 +85,35 @@
                 _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
             }
         }
+    
     }
     return self;
 }
 
+#pragma mark -
+#pragma mark - Layout view
+
 - (void) loadViewForiPad {
     
+    UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
+    titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
+    [self addSubview:titleBackgroundView];
+    
+    UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
+    sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
+    [self addSubview:sidebarImageView];
+    
+//    UILabel *packName = [[UILabel alloc] init];
+//    packName.frame = CGRectMake(0, 0, 550, 60);
+//    [packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+//    [packName setText:@"dfdfdfdfdsfdfsdfdfdsfffffffffffffffffffffffffffffffffffffffffffffffffff"];
+//    packName.backgroundColor = [UIColor redColor];
+//    packName.textColor = [UIColor whiteColor];
+//    [self addSubview:packName];
+    
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(240, 0, 330, 60);
-    _title.text =@"Question";
-    _title.backgroundColor = [UIColor cyanColor];
+    _title.frame = CGRectMake(300, 30, 200, 110);
+    _title.backgroundColor = [UIColor clearColor];
     _title.font =[UIFont systemFontOfSize:30];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.userInteractionEnabled = FALSE;
@@ -80,7 +125,6 @@
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = FALSE;
-    _logoImage.tag = 0;
     _logoImage.layer.cornerRadius = 8;
     _logoImage.layer.masksToBounds = YES;
     [self addSubview:_logoImage];
@@ -91,7 +135,6 @@
     _image.frame = CGRectMake(480, 150, 300, 300);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
-    _image.tag = 1;
     _image.layer.cornerRadius = 15;
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
@@ -101,33 +144,32 @@
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    _type = [[UITextView alloc]init];
-    _type.frame = CGRectMake(0, 50, 570, 50);
-    _type.font =[UIFont systemFontOfSize:20];
-    _type.userInteractionEnabled = FALSE;
-    _type.textAlignment = NSTextAlignmentLeft;
-    _type.backgroundColor = [UIColor yellowColor];
-    _type.keyboardType = UIKeyboardAppearanceDefault;
-     _type.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_type];
+    _subheading = [[UITextView alloc]init];
+    _subheading.tag = 100;
+    _subheading.frame = CGRectMake(0, 50, 570, 50);
+    _subheading.userInteractionEnabled = FALSE;
+    _subheading.backgroundColor = [UIColor yellowColor];
+    _subheading.keyboardType = UIKeyboardAppearanceDefault;
+     _subheading.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_subheading];
     
-    _summary = [[UITextView alloc]init];
-    _summary.frame = CGRectMake(0, 100, 470, 200);
-    _summary.font =[UIFont systemFontOfSize:20];
-    _summary.userInteractionEnabled = FALSE;
-    _summary.backgroundColor = [UIColor orangeColor];
-    _summary.keyboardType = UIKeyboardAppearanceDefault;
-    _summary.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_summary];
+    _main = [[UITextView alloc]init];
+    _main.tag = 101;
+    _main.frame = CGRectMake(0, 100, 470, 200);
+    _main.userInteractionEnabled = FALSE;
+    _main.backgroundColor = [UIColor orangeColor];
+    _main.keyboardType = UIKeyboardAppearanceDefault;
+    _main.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_main];
     
-    _detail = [[UITextView alloc]init];
-    _detail.frame = CGRectMake(0, 300, 470, 220);
-    _detail.font =[UIFont systemFontOfSize:20];
-    _detail.userInteractionEnabled = FALSE;
-    _detail.backgroundColor = [UIColor greenColor];
-    _detail.keyboardType = UIKeyboardAppearanceDefault;
-    _detail.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_detail];
+    _sub = [[UITextView alloc]init];
+    _sub.tag = 102;
+    _sub.frame = CGRectMake(0, 300, 470, 220);
+    _sub.userInteractionEnabled = FALSE;
+    _sub.backgroundColor = [UIColor greenColor];
+    _sub.keyboardType = UIKeyboardAppearanceDefault;
+    _sub.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_sub];
 }
 
 - (void) loadViewForiPhone {
@@ -167,32 +209,114 @@
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    _summary = [[UITextView alloc]init];
-    _summary.frame = CGRectMake(0, 20, 300, 100);
-    _summary.font =[UIFont systemFontOfSize:16];
-    _summary.userInteractionEnabled = FALSE;
-    _summary.backgroundColor = [UIColor clearColor];
-    _summary.keyboardType = UIKeyboardAppearanceDefault;
-    _summary.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_summary];
+    _main = [[UITextView alloc]init];
+    _main.frame = CGRectMake(0, 20, 300, 100);
+    _main.userInteractionEnabled = FALSE;
+    _main.backgroundColor = [UIColor clearColor];
+    _main.keyboardType = UIKeyboardAppearanceDefault;
+    _main.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_main];
     
-    _detail = [[UITextView alloc]init];
-    _detail.frame = CGRectMake(0, 120, 300, 100);
-    _detail.font =[UIFont systemFontOfSize:16];
-    _detail.userInteractionEnabled = FALSE;
-    _detail.backgroundColor = [UIColor clearColor];
-    _detail.keyboardType = UIKeyboardAppearanceDefault;
-    _detail.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_detail];
+    _sub = [[UITextView alloc]init];
+    _sub.frame = CGRectMake(0, 120, 300, 100);
+    _sub.userInteractionEnabled = FALSE;
+    _sub.backgroundColor = [UIColor clearColor];
+    _sub.keyboardType = UIKeyboardAppearanceDefault;
+    _sub.returnKeyType = UIReturnKeyDefault;
+    [self addSubview:_sub];
+}
+
+#pragma mark -
+#pragma mark - Update CSS (only CSS) 
+
+//CSS part which is included in three main parts: CSS, template(position) and content
+- (void) updateCSS {
+    
+    if (_currentCard == nil) {
+        [Common alertViewCommon:@"Need to set currentCard beforehand"];
+    }
+    
+    //1. subheading
+    _subheading.font = [UIFont systemFontOfSize:_subheadingSize];
+    
+    if ([_subheadingColor isEqualToString:@"Blue"]) {
+        _subheading.textColor = [UIColor blueColor];
+    } else if ([_subheadingColor isEqualToString:@"Red"]) {
+        _subheading.textColor = [UIColor redColor];
+    } else if ([_subheadingColor isEqualToString:@"Yellow"]) {
+        _subheading.textColor = [UIColor yellowColor];
+    } else if ([_subheadingColor isEqualToString:@"Black"]) {
+        _subheading.textColor = [UIColor blackColor];
+    } else if ([_subheadingColor isEqualToString:@"Green"]) {
+        _subheading.textColor = [UIColor greenColor];
+    }
+    
+    if ([_subheadingAlign isEqualToString:@"Left"]) {
+        _subheading.textAlignment = NSTextAlignmentLeft;
+    } else if ([_subheadingAlign isEqualToString:@"Center"]) {
+        _subheading.textAlignment = NSTextAlignmentCenter;
+    }else if ([_subheadingAlign isEqualToString:@"Right"]) {
+        _subheading.textAlignment = NSTextAlignmentRight;
+    }
+    
+    //2. main
+    _main.font = [UIFont systemFontOfSize:_mainSize];
+    
+    if ([_mainColor isEqualToString:@"Blue"]) {
+        _main.textColor = [UIColor blueColor];
+    } else if ([_mainColor isEqualToString:@"Red"]) {
+        _main.textColor = [UIColor redColor];
+    } else if ([_mainColor isEqualToString:@"Yellow"]) {
+        _main.textColor = [UIColor yellowColor];
+    } else if ([_mainColor isEqualToString:@"Black"]) {
+        _main.textColor = [UIColor blackColor];
+    } else if ([_mainColor isEqualToString:@"Green"]) {
+        _main.textColor = [UIColor greenColor];
+    }
+    
+    if ([_mainAlign isEqualToString:@"Left"]) {
+        _main.textAlignment = NSTextAlignmentLeft;
+    } else if ([_mainAlign isEqualToString:@"Center"]) {
+        _main.textAlignment = NSTextAlignmentCenter;
+    }else if ([_mainAlign isEqualToString:@"Right"]) {
+        _main.textAlignment = NSTextAlignmentRight;
+    }
+    
+    //3. sub
+    _sub.font = [UIFont systemFontOfSize:_subSize];
+    
+    if ([_subColor isEqualToString:@"Blue"]) {
+        _sub.textColor = [UIColor blueColor];
+    } else if ([_subColor isEqualToString:@"Red"]) {
+        _sub.textColor = [UIColor redColor];
+    } else if ([_subColor isEqualToString:@"Yellow"]) {
+        _sub.textColor = [UIColor yellowColor];
+    } else if ([_subColor isEqualToString:@"Black"]) {
+        _sub.textColor = [UIColor blackColor];
+    } else if ([_subColor isEqualToString:@"Green"]) {
+        _sub.textColor = [UIColor greenColor];
+    }
+    
+    if ([_subAlign isEqualToString:@"Left"]) {
+        _sub.textAlignment = NSTextAlignmentLeft;
+    } else if ([_subAlign isEqualToString:@"Center"]) {
+        _sub.textAlignment = NSTextAlignmentCenter;
+    }else if ([_subAlign isEqualToString:@"Right"]) {
+        _sub.textAlignment = NSTextAlignmentRight;
+    }
+    
+    
 }
 
 #pragma mark -
 #pragma mark - Keyboard Notification and related
 
+
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     if (_keyboardShown)
         return;
+    
     NSDictionary* info = [aNotification userInfo];
     
     // Get the size of the keyboard.
@@ -211,44 +335,96 @@
 }
 
 - (void) setInputAccessoryViewDone  {
-    UIToolbar * topView = [[UIToolbar alloc]init];
-    if (isUserInterfaceIdiomPhone) {
-        topView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
-    } else {
-        topView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
-    }
-    [topView setBarStyle:UIBarStyleBlackTranslucent];
     
-    UIBarButtonItem *bold = [[UIBarButtonItem alloc] initWithTitle:@"Bold" style:UIBarButtonItemStyleBordered target:self action:@selector(boldAction)];
+    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
     
-    UIBarButtonItem *sizeUp = [[UIBarButtonItem alloc] initWithTitle:@"size up" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpAction)];
+    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
     
-    UIBarButtonItem *sizeDown = [[UIBarButtonItem alloc] initWithTitle:@"size down" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeDownAction)];
-    
-    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:@"select color" style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
+    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:@"Align" style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
-    NSArray * buttonsArray = [NSArray arrayWithObjects:bold,sizeUp,sizeDown,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
     
-    [topView setItems:buttonsArray];
-    [_type setInputAccessoryView:topView];
-    [_summary setInputAccessoryView:topView];
-    [_detail setInputAccessoryView:topView];
+    
+    //Back Button
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
+    
+    
+    //Font Array
+    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:@"Size 12" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize16 = [[UIBarButtonItem alloc] initWithTitle:@"Size 16" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize20 = [[UIBarButtonItem alloc]initWithTitle:@"Size 20" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:@"Size 24" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:@"Size 28" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    if (_fontSizeArray == nil) {
+        _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];
+    }
+    
+    //Color Array
+    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:@"Red" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
+    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:@"Blue" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
+    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:@"Black" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
+    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:@"Yellow" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
+    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:@"Green" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
+    if (_colorArray == nil) {
+        _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,nil];
+    }
+    
+    //Align Array
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Left" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    
+    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:@"Center" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"Right" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    
+    if (_alignArray == nil) {
+        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];
+    }
+    
+    
+    //Keyboard top view
+    if (_keyboardTopView == nil) {
+        _keyboardTopView = [[UIToolbar alloc]init];
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+        _keyboardTopView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
+    } else {
+        _keyboardTopView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
+    }
+    [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
+    
+    [_keyboardTopView setItems:_buttonArray];
+    [_subheading setInputAccessoryView:_keyboardTopView];
+    [_main setInputAccessoryView:_keyboardTopView];
+    [_sub setInputAccessoryView:_keyboardTopView];
 }
 
 -(IBAction)dismissKeyBoard
 {
-    [_type resignFirstResponder];
-    [_summary resignFirstResponder];
-    [_detail resignFirstResponder];
+    [_subheading resignFirstResponder];
+    [_main resignFirstResponder];
+    [_sub resignFirstResponder];
     [_delegate save];
 }
 
+#pragma mark -
+#pragma mark - UIImagePickerController related
 
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
     
@@ -316,28 +492,133 @@
 
 
 #pragma mark -
-#pragma mark - Rich Text
+#pragma mark - Text edit function
 
-- (void) boldAction {
-    if (_type.isFirstResponder) {
-        _type.font = [UIFont boldSystemFontOfSize:_type.font.pointSize];
-    } else if (_summary.isFirstResponder) {
-        _summary.font = [UIFont boldSystemFontOfSize:_summary.font.pointSize];    
-    } else if (_detail.isFirstResponder) {
-        _detail.font = [UIFont boldSystemFontOfSize:_detail.font.pointSize];
+- (UITextView *) getFirstResponderUITextView {
+    for(UIView *view in [self subviews])
+    {
+        if([view isKindOfClass:[UITextView class]])
+        {
+            if (view.isFirstResponder)
+                return (UITextView *)view;
+        }
     }
+    return nil;
 }
 
-- (void) sizeUpAction {
-    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];
-}
-
-- (void) sizeDownAction {
-    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];    
+- (void) sizeUpDownAction {
+    [_keyboardTopView setItems:_fontSizeArray];
 }
 
 - (void) selectColorAction {
-    [Common alertViewCommon:@"Not implemented yet. You can only try bold function"];    
+    [_keyboardTopView setItems:_colorArray];
+}
+
+- (void) alignAction {
+    [_keyboardTopView setItems:_alignArray];
+}
+
+- (void) changeFontSize:(id) sender{
+    
+    NSUInteger selectFontSize;
+    
+    NSString *title = ((UIBarButtonItem *) sender).title;
+    
+    UITextView *responderTextView = [self getFirstResponderUITextView];
+    
+    if ([title isEqualToString:@"Size 12"]) {
+        responderTextView.font = [UIFont systemFontOfSize:12];
+        selectFontSize = 12;
+    } else if ([title isEqualToString:@"Size 16"]) {
+        responderTextView.font = [UIFont systemFontOfSize:16];
+        selectFontSize = 16;
+    } else if ([title isEqualToString:@"Size 20"]) {
+        responderTextView.font = [UIFont systemFontOfSize:20];
+        selectFontSize = 20;
+    } else if ([title isEqualToString:@"Size 24"]) {
+        responderTextView.font = [UIFont systemFontOfSize:24];
+        selectFontSize = 24;
+    } else if ([title isEqualToString:@"Size 28"]) {
+        responderTextView.font = [UIFont systemFontOfSize:28];
+        selectFontSize = 28;
+    }
+    
+    if (responderTextView.tag == 100){
+        _subheadingSize = selectFontSize;
+    } else if (responderTextView.tag == 101) {
+        _mainSize = selectFontSize;
+    } else if (responderTextView.tag == 102) {
+        _subSize = selectFontSize;
+    }
+    
+    [_delegate save];
+}
+
+- (void) alignPosition:(id) sender{
+    
+     NSString *selectAlignStr = nil;
+    
+    NSString *title = ((UIBarButtonItem *) sender).title;
+    UITextView *responderTextView = [self getFirstResponderUITextView];
+    if ([title isEqualToString:@"Left"]) {
+        responderTextView.textAlignment = NSTextAlignmentLeft;
+        selectAlignStr = @"Left";
+    } else if ([title isEqualToString:@"Center"]) {
+        responderTextView.textAlignment = NSTextAlignmentCenter;
+        selectAlignStr = @"Center";
+    } else if ([title isEqualToString:@"Right"]) {
+        responderTextView.textAlignment = NSTextAlignmentRight;
+        selectAlignStr = @"Right";
+    }
+    
+    if (responderTextView.tag == 100){
+        _subheadingAlign = selectAlignStr;
+    } else if (responderTextView.tag == 101) {
+        _mainAlign = selectAlignStr;
+    } else if (responderTextView.tag == 102) {
+        _subAlign = selectAlignStr;
+    }
+    
+    [_delegate save];
+}
+
+- (void) changeColor:(id) sender{
+
+    NSString *selectColorStr = nil;
+    
+    NSString *title = ((UIBarButtonItem *) sender).title;
+    UITextView *responderTextView = [self getFirstResponderUITextView];
+    if ([title isEqualToString:@"Black"]) {
+        responderTextView.textColor = [UIColor blackColor];
+        selectColorStr = @"Black";
+    } else if ([title isEqualToString:@"Yellow"]) {
+        responderTextView.textColor = [UIColor yellowColor];
+        selectColorStr = @"Yellow";
+    } else if ([title isEqualToString:@"Blue"]) {
+        responderTextView.textColor = [UIColor blueColor];
+        selectColorStr = @"Blue";
+    } else if ([title isEqualToString:@"Red"]) {
+        responderTextView.textColor = [UIColor redColor];
+        selectColorStr = @"Red";
+    } else if ([title isEqualToString:@"Green"]) {
+        responderTextView.textColor = [UIColor greenColor];
+        selectColorStr = @"Green";
+    }
+    
+    if (responderTextView.tag == 100){
+        _subheadingColor = selectColorStr;
+    } else if (responderTextView.tag == 101) {
+         _mainColor = selectColorStr;
+    } else if (responderTextView.tag == 102) {
+        _subColor = selectColorStr;
+    }
+    
+    [_delegate save];
+}
+
+
+- (void) backAction:(id) sender{
+    [_keyboardTopView setItems:_buttonArray];
 }
 
 

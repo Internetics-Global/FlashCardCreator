@@ -16,4 +16,6 @@
 - (void) refreshDisplay;
 - (void) updateQuestionViewTemplate:(int) index;
 
+- (void) setCurrentCard:(Card *)currentCard;
+
 @end

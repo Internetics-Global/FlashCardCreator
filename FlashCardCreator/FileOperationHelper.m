@@ -183,7 +183,7 @@
     }
     
     //step : build questionTextContent.json
-    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.summary,@"summary",card.question.detail,@"detail",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.templateID],@"template_id",nil];
+    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.templateID],@"template_id",nil];
     
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {
@@ -193,7 +193,7 @@
     }
     
     //step 3: build answerTextContent.json
-    NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.summary,@"summary",card.answer.detail,@"detail",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.logoFullPath lastPathComponent],@"logo",nil];
+    NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.logoFullPath lastPathComponent],@"logo",nil];
     NSData *jsonAnswerData = [NSJSONSerialization dataWithJSONObject:anserDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonAnswerData length] >0) && (error == nil)) {
         [jsonAnswerData writeToFile:[cardAssembleDir stringByAppendingPathComponent:@"answerTextContent.json"] atomically:YES];

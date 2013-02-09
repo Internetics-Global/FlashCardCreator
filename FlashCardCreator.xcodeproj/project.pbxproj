@@ -137,6 +137,11 @@
 		2DF7F86416AF7411000BA08D /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF7F86216AF7411000BA08D /* rightArrow@2x.png */; };
 		2DF7F86616AF741D000BA08D /* leftArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF7F86516AF741D000BA08D /* leftArrow@2x.png */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
+		2DF9817716C376E60092AAF6 /* card_title_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9817616C376E60092AAF6 /* card_title_background.png */; };
+		2DF9819A16C37D9A0092AAF6 /* card_sidebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9819916C37D9A0092AAF6 /* card_sidebar.png */; };
+		2DF9819E16C3A8940092AAF6 /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF9819D16C3A8940092AAF6 /* change_template_button.png */; };
+		2DF981C116C3B3E30092AAF6 /* numbering_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DF981C016C3B3E30092AAF6 /* numbering_background.png */; };
+		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
 		2DFC837416BA0A2300277562 /* NSArray+Randomised.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFC837316BA0A2300277562 /* NSArray+Randomised.m */; };
 /* End PBXBuildFile section */
 
@@ -585,6 +590,12 @@
 		2DF7F86216AF7411000BA08D /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightArrow@2x.png"; sourceTree = "<group>"; };
 		2DF7F86516AF741D000BA08D /* leftArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftArrow@2x.png"; sourceTree = "<group>"; };
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		2DF9817616C376E60092AAF6 /* card_title_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_title_background.png; sourceTree = "<group>"; };
+		2DF9819916C37D9A0092AAF6 /* card_sidebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_sidebar.png; sourceTree = "<group>"; };
+		2DF9819D16C3A8940092AAF6 /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = change_template_button.png; sourceTree = "<group>"; };
+		2DF981C016C3B3E30092AAF6 /* numbering_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = numbering_background.png; sourceTree = "<group>"; };
+		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
+		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
 		2DFC837216BA0A2300277562 /* NSArray+Randomised.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Randomised.h"; sourceTree = "<group>"; };
 		2DFC837316BA0A2300277562 /* NSArray+Randomised.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Randomised.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -748,6 +759,10 @@
 				2D09AF9816A52C5000B1C0C9 /* Splash */,
 				2DC554E4169D425A00251C1B /* Test Only */,
 				2DEDA1E91682E9770074AC9E /* card_cover_image_placeholder.png */,
+				2DF981C016C3B3E30092AAF6 /* numbering_background.png */,
+				2DF9819D16C3A8940092AAF6 /* change_template_button.png */,
+				2DF9819916C37D9A0092AAF6 /* card_sidebar.png */,
+				2DF9817616C376E60092AAF6 /* card_title_background.png */,
 				2D09AF9016A5283800B1C0C9 /* question_placeholder_content.png */,
 				2D09AF9316A5283800B1C0C9 /* question_placeholder_logo.png */,
 				2D09AF9116A5283800B1C0C9 /* answer_placeholder_content.png */,
@@ -780,6 +795,8 @@
 				2D5F3D3B167ACA8C009D2ADC /* Question.m */,
 				2D5F3D3D167ACA9A009D2ADC /* Answer.h */,
 				2D5F3D3E167ACA9A009D2ADC /* Answer.m */,
+				2DF981E716C4F2640092AAF6 /* CSS.h */,
+				2DF981E816C4F2650092AAF6 /* CSS.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -1465,6 +1482,10 @@
 				2D26346C16C20A49001A024D /* templateScreenshot2.png in Resources */,
 				2D26346D16C20A49001A024D /* templateScreenshot3.png in Resources */,
 				2D26346E16C20A49001A024D /* templateScreenshot4.png in Resources */,
+				2DF9817716C376E60092AAF6 /* card_title_background.png in Resources */,
+				2DF9819A16C37D9A0092AAF6 /* card_sidebar.png in Resources */,
+				2DF9819E16C3A8940092AAF6 /* change_template_button.png in Resources */,
+				2DF981C116C3B3E30092AAF6 /* numbering_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1550,7 @@
 				2DFC837416BA0A2300277562 /* NSArray+Randomised.m in Sources */,
 				2DB3B57016BF49C200CF30AE /* MySHKConfigurator.m in Sources */,
 				2D26346316C2068C001A024D /* SelectTemplateTableViewController.m in Sources */,
+				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
