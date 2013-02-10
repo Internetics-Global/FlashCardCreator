@@ -151,6 +151,7 @@
     _subheading.backgroundColor = [UIColor yellowColor];
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
      _subheading.returnKeyType = UIReturnKeyDefault;
+    _subheading.delegate = self;
     [self addSubview:_subheading];
     
     _main = [[UITextView alloc]init];
@@ -160,6 +161,7 @@
     _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
+    _main.delegate = self;
     [self addSubview:_main];
     
     _sub = [[UITextView alloc]init];
@@ -169,6 +171,7 @@
     _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
+    _sub.delegate = self;
     [self addSubview:_sub];
 }
 
@@ -619,6 +622,15 @@
 
 - (void) backAction:(id) sender{
     [_keyboardTopView setItems:_buttonArray];
+}
+
+
+#pragma mark -
+#pragma mark - UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView {
+    CGRect frame = textView.frame;
+    frame.size.height = textView.contentSize.height;
+    textView.frame = frame;
 }
 
 

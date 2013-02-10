@@ -16,7 +16,7 @@
 
 @end
 
-@interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate> {
     UIImageView *_logoImage;
     NSString *_logoImageFullPath;
     UITextView *_subheading; // means subheading. only suitable for question

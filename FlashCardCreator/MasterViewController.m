@@ -63,6 +63,7 @@
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
+        _indexPack = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastPackIndex"];
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
         
         //3. others
@@ -261,6 +262,10 @@
 -(void)newCardAddedNotification:(NSNotification *)notification{
 	[self.tableView reloadData];
     [_backgroundOfCreateCardView removeFromSuperview];
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:([[_currentPack cards] count] -1) inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
@@ -277,6 +282,8 @@
     _indexPack = [[[User defaultUser] packs] count] -1;
     
     [self.tableView reloadData];
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
       self.title = _currentPack.packName;
