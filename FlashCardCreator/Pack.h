@@ -33,6 +33,8 @@
 - (void)removeCard:(Card *)card;
 - (void)save;
 
+- (NSMutableArray *)snOrderedCards;
+
 + (NSMutableArray *) packsForUserID:(NSInteger)userID;
 
 @end

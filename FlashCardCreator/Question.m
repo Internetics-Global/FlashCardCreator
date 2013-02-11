@@ -112,15 +112,17 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
+                NSLog(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
     error = nil;
-    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"question_placeholder_content"]) {
+    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"question_placeholder_content.png"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question imageFullPath"];
+                NSLog(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }

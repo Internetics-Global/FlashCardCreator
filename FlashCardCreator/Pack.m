@@ -64,7 +64,7 @@
 	return self;
 }
 
-- (NSMutableArray *)cards {
+- (NSMutableArray *)snOrderedCards {
     return [_cards cardSNOrdered];
 }
 

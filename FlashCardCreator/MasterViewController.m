@@ -441,6 +441,8 @@
         }
         [_currentPack removeCard:tempCards[indexPath.row]];
         
+        _currentPack.cards = [_currentPack snOrderedCards]; //We need to re-order
+        
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
                               withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
@@ -476,6 +478,9 @@
     Card *r = [_currentPack cards][fromIndexPath.row];
     r.cardSN = toIndexPath.row +1;
     [r save];
+    
+    _currentPack.cards = [_currentPack snOrderedCards]; //We need to reorder
+    
 
     [self.tableView reloadData];
     [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
