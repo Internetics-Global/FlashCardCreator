@@ -80,14 +80,18 @@
                                                                       target:self
                                                                       action:@selector(refreshButtonClicked:)];
         
+        closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                    target:self
+                                                                    action:@selector(closeButtonClicked:)];
+        
         bar.items = [NSArray arrayWithObjects:
-                     flexSpace,
                      backButton,
                      flexSpace,
                      forwardButton,
                      flexSpace,
                      refreshButton,
                      flexSpace,
+                     closeButton,
                      nil];
         [self.view addSubview:bar];
     }
@@ -185,6 +189,10 @@
 
 - (void)refreshButtonClicked:(id)sender {
     [self.webView reload];
+}
+
+- (void)closeButtonClicked:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -

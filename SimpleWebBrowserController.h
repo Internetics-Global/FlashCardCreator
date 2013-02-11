@@ -15,6 +15,7 @@
     UIBarItem               *backButton;
     UIBarItem               *forwardButton;
     UIBarItem               *refreshButton;
+    UIBarItem               *closeButton;
     
     UIWebView               *_webView;
     NSURL                   *_initialURL;

@@ -55,7 +55,6 @@
         }
         
         
-        _cardView.cardSNText.text = [NSString stringWithFormat:@"%d",[[_currentPack cards] count]+1];
         _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
         _cardView.questionView.title.userInteractionEnabled        = FALSE;
         _cardView.questionView.image.userInteractionEnabled        = TRUE;
@@ -73,6 +72,12 @@
         [_cardView.questionView updateQuestionViewTemplate:0];
         [_cardView.answerView updateAnswerViewTemplate:0];
         
+        _cardView.cardSNText.text = [NSString stringWithFormat:@"%d",[[_currentPack cards] count]+1];
+        
+        if ([[_currentPack cards] count] >0) {
+            _cardView.questionView.logoImageFullPath = ((Card *)[_currentPack cards][0]).question.logoFullPath;
+            _cardView.questionView.logoLinkURL = ((Card *)[_currentPack cards][0]).question.logoURLLinkage;
+        }
         [self.view addSubview:_cardView];
     }
     
@@ -112,6 +117,7 @@
     _newCard.question.sub = _cardView.questionView.sub.text;
     _newCard.question.imageFullPath = _cardView.questionView.imageFullPath;
     _newCard.question.logoFullPath = _cardView.questionView.logoImageFullPath;
+    _newCard.question.logoURLLinkage = _cardView.questionView.logoLinkURL;
     
     _newCard.answer.title = _cardView.answerView.title.text;
     _newCard.answer.cardID = _newCard.cardID;

@@ -21,6 +21,7 @@
 @synthesize subheading = _subheading;
 @synthesize imageFullPath = _imageFullPath;
 @synthesize logoFullPath = _logoFullPath;
+@synthesize logoURLLinkage = _logoURLLinkage;
 @synthesize css = _css;
 
 #pragma mark -
@@ -48,6 +49,7 @@
     _subheading= [dataDict valueForKey:@"subheading"];
     _imageFullPath= [dataDict valueForKey:@"image"];
     _logoFullPath= [dataDict valueForKey:@"logo"];
+    _logoURLLinkage = [dataDict valueForKey:@"logo_url"];
     
     if ([[dataDict allKeys] containsObject:@"css"]) {
         NSDictionary *cssArray = (NSDictionary *)[dataDict valueForKey:@"css"];
@@ -81,7 +83,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=\"%@\", sub=\"%@\", subheading=\"%@\", image=\"%@\", logo=\"%@\", css_id=%d WHERE card_id=%d", _questionID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _cssID, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=\"%@\", sub=\"%@\", subheading=\"%@\", image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d WHERE card_id=%d", _questionID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -91,7 +93,7 @@
 	if (_questionID == -1) {
 		_questionID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo,css_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d)", _questionID, _cardID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _cssID];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d)", _questionID, _cardID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -142,7 +144,8 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"subheading"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"image"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"logo"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"css_id"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"logo_url"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"css_id"];
         [questionDict setValue:[CSS cssForCSSID:[[questionDict valueForKey:@"css_id"] intValue]] forKey:@"css"];
 	}
 	sqlite3_finalize(queryStatement);

@@ -54,6 +54,7 @@
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.png"];    
     }
 
+    _logoLinkURL = _currentCard.question.logoURLLinkage;
     _subheading.text = _currentCard.question.subheading;
     _main.text =_currentCard.question.main;
     _sub.text =_currentCard.question.sub;

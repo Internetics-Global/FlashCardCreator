@@ -9,16 +9,21 @@
 #import <UIKit/UIKit.h>
 
 @class Card;
+@class Pack;
 
 @protocol BaseViewDelegate
 
-- (void) save;
+- (void) save;  //save all except logo URL and Image
+- (void) updatelogoURLForAllCards:(NSString *) urlString;
+- (void) updatelogoImageForAllCards:(NSString *) imagePath;
 
 @end
 
-@interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate> {
+@interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,UIAlertViewDelegate> {
     UIImageView *_logoImage;
     NSString *_logoImageFullPath;
+    NSString *_logoLinkURL;
+    UIButton *_logoLinkageButton;
     UILabel *_packName;
     UITextView *_subheading; // means subheading. only suitable for question
     UITextView *_main;
@@ -27,6 +32,7 @@
     UIImageView *_image;
     NSString *_imageFullPath;
     Card *_currentCard;
+    Pack *_currentPack;
     BOOL _keyboardShown;
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
@@ -53,8 +59,11 @@
 }
 
 @property (strong, nonatomic) Card *currentCard;
+@property (strong, nonatomic) Pack *currentPack;;
 @property (strong, nonatomic) UIImageView *logoImage;
 @property (copy, nonatomic)  NSString *logoImageFullPath;
+@property (copy, nonatomic)  NSString *logoLinkURL;
+@property (strong, nonatomic) UILabel *packName;
 @property (strong, nonatomic) UITextView *subheading; 
 @property (strong, nonatomic) UITextView *main;
 @property (strong, nonatomic) UITextView *sub;
@@ -76,5 +85,6 @@
 
 - (UIImage *)captureWholeViewAsImage;
 - (void) updateCSS;
+- (void) updateLogoStatus;
 
 @end

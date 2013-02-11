@@ -19,7 +19,7 @@
     NSString *_main;
     NSString *_sub;
     NSString *_imageFullPath;
-    NSString *_logoFullPath;
+    NSString *_logoFullPath;  //we don't use this field
     
     CSS *_css;
 }

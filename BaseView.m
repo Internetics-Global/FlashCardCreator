@@ -14,13 +14,20 @@
 #import "Question.h"
 #import "Answer.h"
 #import "Card.h"
+#import "Pack.h"
 #import "CSS.h"
+#import "SimpleWebBrowserController.h"
+
+@class QuestionView;
 
 @implementation BaseView
 
 @synthesize currentCard = _currentCard;
+@synthesize currentPack = _currentPack;
 @synthesize logoImage = _logoImage;
+@synthesize logoLinkURL = _logoLinkURL;
 @synthesize logoImageFullPath = _logoImageFullPath;
+@synthesize packName = _packName;
 @synthesize subheading = _subheading;
 @synthesize main = _main;
 @synthesize sub = _sub;
@@ -99,15 +106,25 @@
     titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
     [self addSubview:titleBackgroundView];
     
+    _logoImage = [[UIImageView  alloc] init];
+    _logoImage.contentMode = UIViewContentModeScaleAspectFit;
+    _logoImage.frame = CGRectMake(680, 0, 100, 100);
+    _logoImage.clipsToBounds = YES;
+    _logoImage.backgroundColor = [UIColor clearColor];
+    _logoImage.userInteractionEnabled = TRUE; //alway true
+    _logoImage.layer.cornerRadius = 8;
+    _logoImage.layer.masksToBounds = YES;
+    [self addSubview:_logoImage];
+    
     UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
     [self addSubview:sidebarImageView];
     
     _packName = [[UILabel alloc] init];
-    _packName.frame = CGRectMake(0, 0, 550, 60);
+    _packName.frame = CGRectMake(0, 0, 400, 60);
     [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     _packName.center = CGPointMake(30, 275);
-    _packName.text = @"Will be implemented today";
+    _packName.text = @"This is the pack name";
     _packName.textAlignment = NSTextAlignmentCenter;
     _packName.backgroundColor = [UIColor redColor];
     _packName.font = [UIFont systemFontOfSize:16];
@@ -122,16 +139,6 @@
     _title.userInteractionEnabled = FALSE;
     [self addSubview:_title];
     
-    _logoImage = [[UIImageView  alloc] init];
-    _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(680, 10, 100, 100);
-    _logoImage.clipsToBounds = YES;
-    _logoImage.backgroundColor = [UIColor clearColor];
-    _logoImage.userInteractionEnabled = FALSE;
-    _logoImage.layer.cornerRadius = 8;
-    _logoImage.layer.masksToBounds = YES;
-    [self addSubview:_logoImage];
-    
     _image= [[UIImageView  alloc] init];
     _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
@@ -144,8 +151,6 @@
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
     [_image addGestureRecognizer:imageSingeTap];
-    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
-    [_logoImage addGestureRecognizer:logoSingeTap];
     
     _subheading = [[UITextView alloc]init];
     _subheading.text = @"Example";
@@ -179,6 +184,13 @@
     _sub.returnKeyType = UIReturnKeyDefault;
     _sub.delegate = self;
     [self addSubview:_sub];
+    
+    _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _logoLinkageButton.frame = CGRectMake(680, 95, 100, 30);
+    [_logoLinkageButton setTitle:@"Edit linkage" forState:UIControlStateNormal];
+    _logoLinkageButton.backgroundColor = [UIColor clearColor];
+    [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:_logoLinkageButton];
 }
 
 - (void) loadViewForiPhone {
@@ -196,7 +208,7 @@
     _logoImage.frame = CGRectMake(350, 10, 30, 30);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
-    _logoImage.userInteractionEnabled = FALSE;
+    _logoImage.userInteractionEnabled = TRUE;
     _logoImage.tag = 0;
     _logoImage.layer.cornerRadius = 5;
     _logoImage.layer.masksToBounds = YES;
@@ -212,11 +224,6 @@
     _image.layer.cornerRadius = 10;
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
-    
-    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
-    [_image addGestureRecognizer:imageSingeTap];
-    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
-    [_logoImage addGestureRecognizer:logoSingeTap];
     
     _main = [[UITextView alloc]init];
     _main.frame = CGRectMake(0, 20, 300, 100);
@@ -236,7 +243,21 @@
 }
 
 #pragma mark -
-#pragma mark - Update CSS (only CSS) 
+#pragma mark - Update CSS (only CSS) and Logo
+
+- (void) updateLogoStatus {
+    
+    if (([_currentCard.creator isEqualToString:[OpenUDID value]]) && ([self isMemberOfClass:[QuestionView class]])) {
+        //We don't need to show logoLinkageButton in AnswerView
+        _logoLinkageButton.hidden = FALSE;
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+        [_logoImage addGestureRecognizer:logoSingeTap];
+    } else {
+        _logoLinkageButton.hidden = TRUE;
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
+        [_logoImage addGestureRecognizer:logoSingeTap];
+    }
+}
 
 //CSS part which is included in three main parts: CSS, template(position) and content
 - (void) updateCSS {
@@ -479,12 +500,12 @@
     if (_isLogoImageViewClicked) {
         _logoImageFullPath = savedFullPath;
         _logoImage.image = [UIImage imageWithContentsOfFile:savedFullPath];
+        [_delegate updatelogoImageForAllCards:savedFullPath];
     } else {
         _imageFullPath = savedFullPath;
         _image.image = [UIImage imageWithContentsOfFile:savedFullPath];
+        [_delegate save];
     }
-    
-    [_delegate save];
 }
 
 - (UIImage *)captureWholeViewAsImage {
@@ -639,6 +660,52 @@
     textView.frame = frame;
 }
 
+#pragma mark -
+#pragma mark - Add logo linkage relate
+
+- (void) editLogoLinkageURL:(id) sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set URL"
+                                                    message:[NSString stringWithFormat:@"Enter the URL"]
+                                                   delegate:self cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Ok", nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    if ([[_currentPack cards] count]  >0) {
+        _logoLinkURL = ((Card *)[_currentPack cards][0]).question.logoURLLinkage;
+    }
+    [alert textFieldAtIndex:0].text = _logoLinkURL;
+    alert.delegate = self;
+    [alert show];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex ==1) {
+        NSString *temp = [alertView textFieldAtIndex:0].text;
+        if (![temp isEqualToString:_logoLinkURL]) {
+            _logoLinkURL = temp;
+            _currentCard.question.logoURLLinkage = temp;
+            
+            [_delegate updatelogoURLForAllCards:temp];
+        } 
+    }
+}
+
+- (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
+
+    NSURL *url = [NSURL URLWithString:_logoLinkURL];
+    
+    if (url) {
+        SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+        controller.hidesToolbar = NO;
+        
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
+
+    } else {
+        [Common alertViewCommon:@"Incorrect URL format or empty "];
+    }
+}
 
 #pragma mark -
 #pragma mark - Memory Management

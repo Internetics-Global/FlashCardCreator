@@ -20,6 +20,7 @@
     NSString *_sub;
     NSString *_imageFullPath;
     NSString *_logoFullPath;
+    NSString *_logoURLLinkage;
     
     CSS *_css;
 }
@@ -33,6 +34,7 @@
 @property (nonatomic, copy) NSString *sub;
 @property (nonatomic, copy) NSString *imageFullPath;
 @property (nonatomic, copy) NSString *logoFullPath;
+@property (nonatomic, copy) NSString *logoURLLinkage;
 
 @property (strong, nonatomic) CSS *css;
 

@@ -88,7 +88,7 @@
 		sqlite3_finalize(createNotes);
 	}
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}

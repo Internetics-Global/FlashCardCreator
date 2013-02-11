@@ -288,7 +288,7 @@
     cardExample.creator = [OpenUDID value];
     cardExample.packID = self.currentPack.packID;
     cardExample.cardSN = 1;  //Start from 1
-    [self.currentPack addCard:cardExample];
+//    [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
     
@@ -309,8 +309,11 @@
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
     //We need to refresh currentPack and currentCard since there will be possible change
     self.currentPack = [[User defaultUser] packs] [_indexPack];
-    self.currentCard = [_currentPack cards][_indexCard];
-    [self.tableView reloadData];
+    if ([[_currentPack cards] count] > 0) {
+        self.currentCard = [_currentPack cards][_indexCard];
+        [self.tableView reloadData];
+    }
+    
 }
 
 #pragma mark -
@@ -677,6 +680,7 @@
             [assembledCard question].main = questionDict[@"main"];
             [assembledCard question].sub = questionDict[@"sub"];
             [assembledCard question].subheading = questionDict[@"subheading"];
+            [assembledCard question].logoURLLinkage = questionDict[@"logo_url"];
             [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
@@ -793,7 +797,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
-
 
 #pragma mark -
 #pragma mark - Memory Management

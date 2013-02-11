@@ -83,6 +83,7 @@
         _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _questionView.currentCard = _currentCard;
+        _questionView.currentPack = _currentPack;
         _questionView.delegate = self;
         [self addSubview:_questionView];
     }
@@ -91,6 +92,7 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
+        _answerView.currentPack = _currentPack;
         _questionView.delegate = self;
     }
     
@@ -139,6 +141,7 @@
         _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _questionView.currentCard = _currentCard;
+        _questionView.currentPack = _currentPack;
         _questionView.delegate = self;
         [self addSubview:_questionView];
     }
@@ -147,6 +150,7 @@
         _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _answerView.currentCard = _currentCard;
+        _answerView.currentPack = _currentPack;
         _answerView.delegate = self;
     }
     
@@ -181,14 +185,12 @@
 
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        _questionView.logoImage.userInteractionEnabled  = TRUE;
         _questionView.subheading.userInteractionEnabled = TRUE;
         _questionView.title.userInteractionEnabled      = TRUE;
         _questionView.image.userInteractionEnabled      = TRUE;
         _questionView.main.userInteractionEnabled       = TRUE;
         _questionView.sub.userInteractionEnabled        = TRUE;
         _questionView.subheading.userInteractionEnabled = TRUE;
-        _answerView.logoImage.userInteractionEnabled    = TRUE;
         _answerView.title.userInteractionEnabled        = TRUE;
         _answerView.image.userInteractionEnabled        = TRUE;
         _answerView.subheading.userInteractionEnabled   = TRUE;
@@ -196,14 +198,12 @@
         _answerView.sub.userInteractionEnabled          = TRUE;
         
     } else {
-        _questionView.logoImage.userInteractionEnabled = FALSE;
         _questionView.subheading.userInteractionEnabled      = FALSE;
         _questionView.title.userInteractionEnabled     = FALSE;
         _questionView.image.userInteractionEnabled     = FALSE;
         _questionView.main.userInteractionEnabled   = FALSE;
         _questionView.sub.userInteractionEnabled    = FALSE;
         _questionView.subheading.userInteractionEnabled      = FALSE;
-        _answerView.logoImage.userInteractionEnabled   = FALSE;
         _answerView.title.userInteractionEnabled       = FALSE;
         _answerView.image.userInteractionEnabled       = FALSE;
         _answerView.subheading.userInteractionEnabled  = FALSE;
@@ -214,14 +214,12 @@
 }
 
 - (void) disableCardEdit {
-    _questionView.logoImage.userInteractionEnabled = FALSE;
     _questionView.subheading.userInteractionEnabled      = FALSE;
     _questionView.title.userInteractionEnabled     = FALSE;
     _questionView.image.userInteractionEnabled     = FALSE;
     _questionView.main.userInteractionEnabled   = FALSE;
     _questionView.sub.userInteractionEnabled    = FALSE;
     _questionView.subheading.userInteractionEnabled      = FALSE;
-    _answerView.logoImage.userInteractionEnabled   = FALSE;
     _answerView.title.userInteractionEnabled       = FALSE;
     _answerView.image.userInteractionEnabled       = FALSE;
     _answerView.subheading.userInteractionEnabled      = FALSE;
@@ -236,13 +234,17 @@
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     
     _questionView.currentCard = _currentCard;
+    _questionView.packName.text = _currentPack.packName;
     [_questionView refreshDisplay];
     [_questionView updateQuestionViewTemplate:_currentCard.templateID];
+    [_questionView updateLogoStatus];
     [_questionView updateCSS];
     
     _answerView.currentCard = _currentCard;
+    _answerView.packName.text = _currentPack.packName;
     [_answerView refreshDisplay];
     [_answerView updateAnswerViewTemplate:_currentCard.templateID];
+    [_answerView updateLogoStatus];
     [_answerView updateCSS];
 }
 
@@ -333,6 +335,24 @@
 #pragma mark -
 #pragma mark - BaseViewDelegate
 
+- (void) updatelogoURLForAllCards:(NSString *)urlString {
+    for (Card *card in [_currentPack cards]) {
+        card.question.logoURLLinkage =urlString;
+        [card save];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+}
+
+- (void) updatelogoImageForAllCards:(NSString *) imagePath {
+    for (Card *card in [_currentPack cards]) {
+        card.question.logoFullPath =imagePath;
+        [card save];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+}
+
 - (void)save {
     if (_currentPack == nil) {
         NSLog(@"Error to create new card, since _currentPack is nil");
@@ -352,8 +372,7 @@
     _currentCard.question.main = self.questionView.main.text;
     _currentCard.question.sub = self.questionView.sub.text;
     _currentCard.question.imageFullPath = self.questionView.imageFullPath;
-    _currentCard.question.logoFullPath = self.questionView.logoImageFullPath;
-    
+
     _currentCard.question.css.subheadingAlign = self.questionView.subheadingAlign;
     _currentCard.question.css.subheadingColor = self.questionView.subheadingColor;
     _currentCard.question.css.subheadingSize = self.questionView.subheadingSize;
@@ -369,7 +388,6 @@
     _currentCard.answer.main = self.answerView.main.text;
     _currentCard.answer.sub = self.answerView.sub.text;
     _currentCard.answer.imageFullPath = self.answerView.imageFullPath;
-    _currentCard.answer.logoFullPath = self.answerView.logoImageFullPath;
     
     _currentCard.answer.css.subheadingAlign = self.answerView.subheadingAlign;
     _currentCard.answer.css.subheadingColor = self.answerView.subheadingColor;

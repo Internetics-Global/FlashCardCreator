@@ -28,6 +28,8 @@
         _imageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_content.png", [[NSBundle mainBundle] resourcePath]];
         _logoImageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_logo.png", [[NSBundle mainBundle] resourcePath]];
         
+        _logoLinkageButton.hidden = YES;
+        
     }
     return self;
 }
@@ -55,6 +57,7 @@
     _subheading.text = _currentCard.answer.subheading;
     _main.text =_currentCard.answer.main;
     _sub.text =_currentCard.answer.sub;
+    
 }
 
 #pragma mark -
