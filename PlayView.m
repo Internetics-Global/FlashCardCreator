@@ -52,6 +52,7 @@
     _scrollView.pagingEnabled = YES;
     _scrollView.bounces = NO;
     _scrollView.delegate = self;
+    _scrollView.bounces = YES;
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){

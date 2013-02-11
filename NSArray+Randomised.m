@@ -29,7 +29,7 @@ static inline int randomInt(int low, int high)
 
 - (NSMutableArray *)cardSNOrdered;
 {
-    //Bubble sorting
+    /*Bubble  Low effiency
     Card *t = nil;
     NSMutableArray *shuffledCardArray= [NSMutableArray arrayWithArray:self];
     int n = [shuffledCardArray count];
@@ -41,9 +41,17 @@ static inline int randomInt(int low, int high)
                 shuffledCardArray[j+1]=t;
             }
         }
-    }
-    return shuffledCardArray;
+    } */
+    
+    NSArray *shuffledCardArray= [NSArray arrayWithArray:self];
+    shuffledCardArray = [self sortedArrayUsingComparator:^(Card *a, Card *b) {
+        return [[NSString stringWithFormat:@"%d",[a cardSN]] compare:[NSString stringWithFormat:@"%d",[b cardSN]] options:NSNumericSearch];
+    }];
+    
+    return [NSMutableArray arrayWithArray:shuffledCardArray];
 }
+
+
 
 
 @end

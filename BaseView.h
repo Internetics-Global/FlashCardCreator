@@ -19,6 +19,7 @@
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate> {
     UIImageView *_logoImage;
     NSString *_logoImageFullPath;
+    UILabel *_packName;
     UITextView *_subheading; // means subheading. only suitable for question
     UITextView *_main;
     UITextView *_sub;

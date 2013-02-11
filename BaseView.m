@@ -103,13 +103,16 @@
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
     [self addSubview:sidebarImageView];
     
-//    UILabel *packName = [[UILabel alloc] init];
-//    packName.frame = CGRectMake(0, 0, 550, 60);
-//    [packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-//    [packName setText:@"dfdfdfdfdsfdfsdfdfdsfffffffffffffffffffffffffffffffffffffffffffffffffff"];
-//    packName.backgroundColor = [UIColor redColor];
-//    packName.textColor = [UIColor whiteColor];
-//    [self addSubview:packName];
+    _packName = [[UILabel alloc] init];
+    _packName.frame = CGRectMake(0, 0, 550, 60);
+    [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    _packName.center = CGPointMake(30, 275);
+    _packName.text = @"Will be implemented today";
+    _packName.textAlignment = NSTextAlignmentCenter;
+    _packName.backgroundColor = [UIColor redColor];
+    _packName.font = [UIFont systemFontOfSize:16];
+    _packName.textColor = [UIColor whiteColor];
+    [self addSubview:_packName];
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(300, 30, 200, 110);
@@ -145,6 +148,7 @@
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     _subheading = [[UITextView alloc]init];
+    _subheading.text = @"Example";
     _subheading.tag = 100;
     _subheading.frame = CGRectMake(0, 50, 570, 50);
     _subheading.userInteractionEnabled = FALSE;
@@ -155,6 +159,7 @@
     [self addSubview:_subheading];
     
     _main = [[UITextView alloc]init];
+    _subheading.text = @"Main";
     _main.tag = 101;
     _main.frame = CGRectMake(0, 100, 470, 200);
     _main.userInteractionEnabled = FALSE;
@@ -165,6 +170,7 @@
     [self addSubview:_main];
     
     _sub = [[UITextView alloc]init];
+    _sub.text = @"Sub";
     _sub.tag = 102;
     _sub.frame = CGRectMake(0, 300, 470, 220);
     _sub.userInteractionEnabled = FALSE;

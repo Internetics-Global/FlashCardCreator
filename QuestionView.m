@@ -59,6 +59,7 @@
     _sub.text =_currentCard.question.sub;
     
     
+    
 }
 
 #pragma mark -
