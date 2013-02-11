@@ -237,14 +237,14 @@
     _questionView.packName.text = _currentPack.packName;
     [_questionView refreshDisplay];
     [_questionView updateQuestionViewTemplate:_currentCard.templateID];
-    [_questionView updateLogoStatus];
+    [_questionView switchLogoStatus];
     [_questionView updateCSS];
     
     _answerView.currentCard = _currentCard;
     _answerView.packName.text = _currentPack.packName;
     [_answerView refreshDisplay];
     [_answerView updateAnswerViewTemplate:_currentCard.templateID];
-    [_answerView updateLogoStatus];
+    [_answerView switchLogoStatus];
     [_answerView updateCSS];
 }
 

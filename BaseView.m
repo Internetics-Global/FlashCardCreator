@@ -245,7 +245,7 @@
 #pragma mark -
 #pragma mark - Update CSS (only CSS) and Logo
 
-- (void) updateLogoStatus {
+- (void) switchLogoStatus {
     
     if (([_currentCard.creator isEqualToString:[OpenUDID value]]) && ([self isMemberOfClass:[QuestionView class]])) {
         //We don't need to show logoLinkageButton in AnswerView
@@ -581,7 +581,12 @@
         _subSize = selectFontSize;
     }
     
+    CGRect frame = responderTextView.frame;
+    frame.size.height = responderTextView.contentSize.height;
+    responderTextView.frame = frame;
+    
     [_delegate save];
+    [_keyboardTopView setItems:_buttonArray];
 }
 
 - (void) alignPosition:(id) sender{
@@ -610,6 +615,7 @@
     }
     
     [_delegate save];
+    [_keyboardTopView setItems:_buttonArray];
 }
 
 - (void) changeColor:(id) sender{
@@ -644,6 +650,7 @@
     }
     
     [_delegate save];
+    [_keyboardTopView setItems:_buttonArray];
 }
 
 

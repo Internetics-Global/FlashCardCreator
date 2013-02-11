@@ -228,15 +228,17 @@
         self.tableView.editing = FALSE;
         ((UIBarButtonItem *) sender).title = @"Edit";
         
-        if ([[_currentPack cards]count] >0) {
-            NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-        } else {
-            self.detailViewController.title = @"";
-            self.detailViewController.currentPack = nil;
-            self.detailViewController.indexCard = 0;
-            [self.detailViewController showCurrentCardInScrollView];
+        if (!isUserInterfaceIdiomPhone) {
+            if ([[_currentPack cards]count] >0) {
+                NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+            } else {
+                self.detailViewController.title = @"";
+                self.detailViewController.currentPack = nil;
+                self.detailViewController.indexCard = 0;
+                [self.detailViewController showCurrentCardInScrollView];
+            }
         }
     }
     
@@ -288,7 +290,7 @@
     cardExample.creator = [OpenUDID value];
     cardExample.packID = self.currentPack.packID;
     cardExample.cardSN = 1;  //Start from 1
-//    [self.currentPack addCard:cardExample];
+    [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
     

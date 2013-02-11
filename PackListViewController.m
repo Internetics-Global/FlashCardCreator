@@ -56,6 +56,7 @@
         _swipeView.itemsPerPage = 2;
     else {
         _swipeView.itemsPerPage = 3;
+        _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     //configure page control
     _pageControl.numberOfPages = [_packArray count];

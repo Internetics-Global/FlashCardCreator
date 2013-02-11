@@ -85,6 +85,6 @@
 
 - (UIImage *)captureWholeViewAsImage;
 - (void) updateCSS;
-- (void) updateLogoStatus;
+- (void) switchLogoStatus;
 
 @end
