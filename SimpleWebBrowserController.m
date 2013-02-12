@@ -136,6 +136,17 @@
 }
 
 
+-(void)zoomToFit
+{
+    if ([self.webView respondsToSelector:@selector(scrollView)])
+    {
+        UIScrollView *scroll=[self.webView scrollView];
+        float zoom=self.webView.bounds.size.width/scroll.contentSize.width;
+        [scroll setZoomScale:zoom animated:NO];
+    }
+}
+
+
 #pragma mark -
 #pragma mark Webview delegate
 
@@ -151,6 +162,7 @@
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webview {
+    [self zoomToFit];
     _haveLoadURLFinished = YES;
     [_loadingView removeFromSuperview];
     
