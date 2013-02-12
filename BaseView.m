@@ -18,6 +18,8 @@
 #import "CSS.h"
 #import "SimpleWebBrowserController.h"
 
+#import "UINavigationController+DismissKeyboard.h"  //used to restrict to be landscaped.
+
 @class QuestionView;
 
 @implementation BaseView
@@ -59,7 +61,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
-        
+        _logoLinkURL = @"http://www.";
         _subheadingSize = 40;
         _subheadingColor = @"Black";
         _subheadingAlign = @"Right";
@@ -114,7 +116,12 @@
     _logoImage.userInteractionEnabled = TRUE; //alway true
     _logoImage.layer.cornerRadius = 8;
     _logoImage.layer.masksToBounds = YES;
+    //Default logic
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
     [self addSubview:_logoImage];
+    
+    
     
     UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
@@ -212,6 +219,9 @@
     _logoImage.tag = 0;
     _logoImage.layer.cornerRadius = 5;
     _logoImage.layer.masksToBounds = YES;
+    //Default logic
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
     [self addSubview:_logoImage];
     
     _image= [[UIImageView  alloc] init];
@@ -688,6 +698,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex ==1) {
         NSString *temp = [alertView textFieldAtIndex:0].text;
+        
         if (![temp isEqualToString:_logoLinkURL]) {
             _logoLinkURL = temp;
             _currentCard.question.logoURLLinkage = temp;

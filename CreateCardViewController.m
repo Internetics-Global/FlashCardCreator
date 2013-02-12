@@ -54,7 +54,8 @@
             _cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,(IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
         
-        
+        _cardView.questionView.currentPack = _currentPack;
+        _cardView.answerView.currentPack = _currentPack;
         _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
         _cardView.questionView.title.userInteractionEnabled        = FALSE;
         _cardView.questionView.image.userInteractionEnabled        = TRUE;

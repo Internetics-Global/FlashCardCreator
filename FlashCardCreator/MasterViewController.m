@@ -304,9 +304,7 @@
       self.title = _currentPack.packName;
     } else {
         self.detailViewController.title = _currentPack.packName;
-        self.detailViewController.currentPack = _currentPack;
-        self.detailViewController.indexCard = 0; 
-        [self.detailViewController showCurrentCardInScrollView];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
 }
 

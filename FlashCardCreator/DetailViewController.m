@@ -81,7 +81,7 @@
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.clipsToBounds = YES;
     _scrollView.pagingEnabled = YES;
-    _scrollView.bounces = NO;
+    _scrollView.bounces = YES;
     _scrollView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:_scrollView];
     

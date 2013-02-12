@@ -33,6 +33,7 @@
     _cardID = -1;
     _cssID = -1;
     _css = [[CSS alloc] init];
+    _logoURLLinkage = @"http://www.";
     
 	return self;
 }
