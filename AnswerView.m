@@ -9,6 +9,7 @@
 #import "AnswerView.h"
 #import "Card.h"
 #import "Answer.h"
+#import "Pack.h"
 #import "CSS.h"
 
 @implementation AnswerView

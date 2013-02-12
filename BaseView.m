@@ -120,17 +120,6 @@
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
     [self addSubview:sidebarImageView];
     
-    _packName = [[UILabel alloc] init];
-    _packName.frame = CGRectMake(0, 0, 400, 60);
-    [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-    _packName.center = CGPointMake(30, 275);
-    _packName.text = @"This is the pack name";
-    _packName.textAlignment = NSTextAlignmentCenter;
-    _packName.backgroundColor = [UIColor redColor];
-    _packName.font = [UIFont systemFontOfSize:16];
-    _packName.textColor = [UIColor whiteColor];
-    [self addSubview:_packName];
-    
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(300, 30, 200, 110);
     _title.backgroundColor = [UIColor clearColor];
@@ -191,6 +180,17 @@
     _logoLinkageButton.backgroundColor = [UIColor clearColor];
     [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_logoLinkageButton];
+    
+    _packName = [[UILabel alloc] init];
+    _packName.frame = CGRectMake(0, 0, 400, 60);
+    [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    _packName.center = CGPointMake(30, 275);
+    _packName.text = @"This is the pack name";
+    _packName.textAlignment = NSTextAlignmentCenter;
+    _packName.backgroundColor = [UIColor clearColor];
+    _packName.font = [UIFont systemFontOfSize:16];
+    _packName.textColor = [UIColor whiteColor];
+    [self addSubview:_packName];
 }
 
 - (void) loadViewForiPhone {

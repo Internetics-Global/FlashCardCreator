@@ -59,6 +59,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterSaveCardNotification:) name:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterDetailScrollNotification:) name:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:nil];
+        
         //2. Initialize
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
@@ -315,6 +317,13 @@
         self.currentCard = [_currentPack cards][_indexCard];
         [self.tableView reloadData];
     }
+    
+}
+
+- (void) updateMasterAfterDetailScrollNotification:(NSNotification *) notification {
+    _indexCard = [(NSString *)[notification object] integerValue];
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
 }
 

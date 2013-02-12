@@ -96,6 +96,7 @@
         _questionView.delegate = self;
     }
     
+    
     if (_cardSNText == nil) {
         
         UIImageView *numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
@@ -235,10 +236,10 @@
     
     _questionView.currentCard = _currentCard;
     _questionView.packName.text = _currentPack.packName;
-    [_questionView refreshDisplay];
-    [_questionView updateQuestionViewTemplate:_currentCard.templateID];
-    [_questionView switchLogoStatus];
-    [_questionView updateCSS];
+    [_questionView refreshDisplay]; //content
+    [_questionView updateQuestionViewTemplate:_currentCard.templateID]; //template
+    [_questionView switchLogoStatus]; //logo
+    [_questionView updateCSS]; //css
     
     _answerView.currentCard = _currentCard;
     _answerView.packName.text = _currentPack.packName;

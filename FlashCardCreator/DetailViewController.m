@@ -470,6 +470,15 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
+
+    FlashCardView *currentCardView = _cardArray[page];
+    currentCardView.currentCard = [_currentPack cards][page];
+    currentCardView.currentPack = _currentPack;
+    [currentCardView refreshQuestionAnserView];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
+    
+    
 }
 
 - (void) selectedPackNotification:(NSNotification *) notification {
