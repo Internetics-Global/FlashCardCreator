@@ -187,12 +187,10 @@
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
         _questionView.subheading.userInteractionEnabled = TRUE;
-        _questionView.title.userInteractionEnabled      = TRUE;
         _questionView.image.userInteractionEnabled      = TRUE;
         _questionView.main.userInteractionEnabled       = TRUE;
         _questionView.sub.userInteractionEnabled        = TRUE;
         _questionView.subheading.userInteractionEnabled = TRUE;
-        _answerView.title.userInteractionEnabled        = TRUE;
         _answerView.image.userInteractionEnabled        = TRUE;
         _answerView.subheading.userInteractionEnabled   = TRUE;
         _answerView.main.userInteractionEnabled         = TRUE;
@@ -200,12 +198,10 @@
         
     } else {
         _questionView.subheading.userInteractionEnabled      = FALSE;
-        _questionView.title.userInteractionEnabled     = FALSE;
         _questionView.image.userInteractionEnabled     = FALSE;
         _questionView.main.userInteractionEnabled   = FALSE;
         _questionView.sub.userInteractionEnabled    = FALSE;
         _questionView.subheading.userInteractionEnabled      = FALSE;
-        _answerView.title.userInteractionEnabled       = FALSE;
         _answerView.image.userInteractionEnabled       = FALSE;
         _answerView.subheading.userInteractionEnabled  = FALSE;
         _answerView.main.userInteractionEnabled     = FALSE;
@@ -216,12 +212,10 @@
 
 - (void) disableCardEdit {
     _questionView.subheading.userInteractionEnabled      = FALSE;
-    _questionView.title.userInteractionEnabled     = FALSE;
     _questionView.image.userInteractionEnabled     = FALSE;
     _questionView.main.userInteractionEnabled   = FALSE;
     _questionView.sub.userInteractionEnabled    = FALSE;
     _questionView.subheading.userInteractionEnabled      = FALSE;
-    _answerView.title.userInteractionEnabled       = FALSE;
     _answerView.image.userInteractionEnabled       = FALSE;
     _answerView.subheading.userInteractionEnabled      = FALSE;
     _answerView.main.userInteractionEnabled     = FALSE;

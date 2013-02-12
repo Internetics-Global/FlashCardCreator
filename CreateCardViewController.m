@@ -57,13 +57,11 @@
         _cardView.questionView.currentPack = _currentPack;
         _cardView.answerView.currentPack = _currentPack;
         _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
-        _cardView.questionView.title.userInteractionEnabled        = FALSE;
         _cardView.questionView.image.userInteractionEnabled        = TRUE;
         _cardView.questionView.subheading.userInteractionEnabled   = TRUE;
         _cardView.questionView.main.userInteractionEnabled         = TRUE;
         _cardView.questionView.sub.userInteractionEnabled          = TRUE;
         _cardView.answerView.logoImage.userInteractionEnabled      = TRUE;
-        _cardView.answerView.title.userInteractionEnabled          = FALSE;
         _cardView.answerView.image.userInteractionEnabled          = TRUE;
         _cardView.answerView.subheading.userInteractionEnabled     = TRUE;
         _cardView.answerView.main.userInteractionEnabled           = TRUE;

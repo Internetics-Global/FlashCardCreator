@@ -106,6 +106,7 @@
     
     UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
     titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
+    titleBackgroundView.userInteractionEnabled = FALSE;
     [self addSubview:titleBackgroundView];
     
     _logoImage = [[UIImageView  alloc] init];
@@ -125,6 +126,7 @@
     
     UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
+    sidebarImageView.userInteractionEnabled = FALSE;
     [self addSubview:sidebarImageView];
     
     _title = [[UITextView alloc]init];
