@@ -37,7 +37,7 @@
         self.navigationItem.rightBarButtonItem = saveButton;
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
         self.navigationItem.leftBarButtonItem = backButton;
-        self.title = @"Create a new card";
+        self.title = NSLocalizedString(@"Title_Create_A_New_Card", nil);
         _newCard = [[Card alloc] init];
     }
     return self;

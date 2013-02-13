@@ -1,0 +1,60 @@
+/*
+ Localizable.strings
+ FlashCardCreator
+ 
+ Created by Wang Bourne on 13/02/13.
+ Copyright (c) 2013 Internetics. All rights reserved.
+ */
+
+"DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "请检查你的网络";
+"DIALOG_DOWNLOAD_PACK"              = "下载中...";
+
+"NavigationBarItem_Packs"   = "组";
+"NavigationBarItem_Create"  = "创建";
+"NavigationBarItem_Edit"    = "编辑";
+"NavigationBarItem_Done"    = "完成";
+"NavigationBarItem_Share"   = "分享本组";
+"NavigationBarItem_More"    = "更多";
+"NavigationBarItem_Back"    = "返回";
+
+"NavigationBarItem_More_Dropbox"    = "网络存储箱";
+"NavigationBarItem_More_RandomPlay" = "随机播放";
+"NavigationBarItem_More_Register"   = "注册";
+"NavigationBarItem_More_Help"       = "帮助";
+"NavigationBarItem_More_About"      = "关于";
+
+"ToolbarItem_Answer"        = "答案";
+"ToolbarItem_Question"      = "问题";
+
+"Keyboard_Done"             = "完成";
+
+"ToolbarItem_Align"        = "对齐";
+"ToolbarItem_Size"         = "尺寸";
+"ToolbarItem_Color"        = "颜色";
+"ToolbarItem_Back"        = "返回";
+
+"ToolbarItem_Align_Left"        = "左对齐";
+"ToolbarItem_Align_Center"        = "居中";
+"ToolbarItem_Align_Right"        = "右对齐";
+
+"ToolbarItem_Align_Size12"        = "12号";
+"ToolbarItem_Align_Size16"        = "16号";
+"ToolbarItem_Align_Size20"        = "20号";
+"ToolbarItem_Align_Size24"        = "24号";
+"ToolbarItem_Align_Size28"        = "28号";
+
+"ToolbarItem_Color_Red"        = "红色";
+"ToolbarItem_Color_Green"        = "绿色";
+"ToolbarItem_Color_Blue"        = "蓝色";
+"ToolbarItem_Color_Black"        = "黑色";
+"ToolbarItem_Color_Yellow"        = "黄色";
+
+"Label_Question"      = "问题";
+"Label_Answer"        = "答案";
+"Label_New_Pack_Name" = "新组";
+
+"Title_Add_A_New_Pack" = "添加新组";
+"Title_Create_A_New_Card" = "创建一个新卡片";
+
+"UIButton_Save_Card"  = "保存";
+

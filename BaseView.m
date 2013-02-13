@@ -134,6 +134,7 @@
     _title.backgroundColor = [UIColor clearColor];
     _title.font =[UIFont systemFontOfSize:30];
     _title.textAlignment = NSTextAlignmentCenter;
+    _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
     _title.userInteractionEnabled = FALSE;
     [self addSubview:_title];
     
@@ -218,7 +219,7 @@
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(40, 0, 300, 30);
-    _title.text =@"Question";
+    _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
     _title.font =[UIFont systemFontOfSize:20];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
@@ -417,15 +418,15 @@
 
 - (void) setInputAccessoryViewDone  {
     
-    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
+    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
     
-    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
+    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
     
-    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:@"Align" style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
+    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
+    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
     _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
@@ -433,45 +434,45 @@
     
     
     //Back Button
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
     
     
     //Font Array
-    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:@"Size 12" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
-    UIBarButtonItem *fontSize16 = [[UIBarButtonItem alloc] initWithTitle:@"Size 16" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize16 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size16",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
-    UIBarButtonItem *fontSize20 = [[UIBarButtonItem alloc]initWithTitle:@"Size 20" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize20 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size20",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
-    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:@"Size 24" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size24",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
-    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:@"Size 28" style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size28",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
     if (_fontSizeArray == nil) {
         _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];
     }
     
     //Color Array
-    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:@"Red" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Red",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
-    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:@"Blue" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Blue",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
-    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:@"Black" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Black",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
-    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:@"Yellow" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
-    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:@"Green" style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Green",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
     if (_colorArray == nil) {
         _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,nil];
     }
     
     //Align Array
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Left" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Left",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
     
-    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:@"Center" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Center",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"Right" style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Right",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
     
     if (_alignArray == nil) {
         _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];

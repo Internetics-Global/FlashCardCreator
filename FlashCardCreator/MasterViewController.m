@@ -82,17 +82,17 @@
     [super viewDidLoad];
 
     //Left UIBarButtonItem
-    _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Pack List" style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
+    _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Packs",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
-    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
+    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
     self.navigationItem.leftBarButtonItems = @[_selectPackButton,newPackButton];
     
     
     //Right UIBarButtonItem
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonClicked:)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit",@"") style:UIBarButtonItemStylePlain target:self action:@selector(editButtonClicked:)];
 
     if (isUserInterfaceIdiomPhone) {
-        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
+        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_More",@"") style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
 
         self.navigationItem.rightBarButtonItems =
             @[editButton,settingButton];
@@ -101,7 +101,6 @@
         @[editButton];
     }
     
-    _selectPackButton.title = @"Packs";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (isUserInterfaceIdiomPhone) {
@@ -225,10 +224,10 @@
 {
     if ([((UIBarButtonItem *) sender).title isEqualToString:@"Edit"]) {
         self.tableView.editing = TRUE;
-        ((UIBarButtonItem *) sender).title = @"Done";
+        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Done", @"");;
     } else {
         self.tableView.editing = FALSE;
-        ((UIBarButtonItem *) sender).title = @"Edit";
+        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Edit", @"");;
         
         if (!isUserInterfaceIdiomPhone) {
             if ([[_currentPack cards]count] >0) {
@@ -546,7 +545,7 @@
 - (void) downloadURLViaURLScheme:(NSString *)urlStr{
     
     if ([DataManager apiReachable] == NO) {
-        [Common alertViewCommon:@"Please check your network"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")];
         return;
     }
     
@@ -782,7 +781,7 @@
     _HUD.mode = MBProgressHUDModeDeterminate;
     
     _HUD.delegate = self;
-    _HUD.labelText = @"Download pack...";
+    _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");
     
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];

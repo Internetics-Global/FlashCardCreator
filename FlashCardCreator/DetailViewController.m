@@ -56,11 +56,11 @@
     [super loadView];
     
     //we don't setting button on iPhone
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_More", nil) style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                    target:self action:@selector(playButtonClicked)];
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share the pack" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Share", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
         @[playButton, shareButton];
@@ -71,7 +71,7 @@
     
     //Don't need the back button when on iPad
     if (isUserInterfaceIdiomPhone) {
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
         self.navigationItem.leftBarButtonItem = backButton;
     }
     

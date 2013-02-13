@@ -123,8 +123,8 @@
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                         @[@"Question",
-                         @"Answer"]];
+                         @[NSLocalizedString(@"ToolbarItem_Question",nil),
+                         NSLocalizedString(@"ToolbarItem_Answer",nil)]];
     
     CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                               self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
@@ -173,8 +173,8 @@
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                         @[@"Question",
-                         @"Answer"]];
+                         @[NSLocalizedString(@"ToolbarItem_Question",nil),
+                         NSLocalizedString(@"ToolbarItem_Answer",nil)]];
     
     CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
                               self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,

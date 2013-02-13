@@ -33,7 +33,7 @@
         
         //Don't need the back button when on iPad 
         if (isUserInterfaceIdiomPhone) {
-            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
             self.navigationItem.leftBarButtonItem = backButton;
         }
         

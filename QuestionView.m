@@ -26,7 +26,7 @@
         //setup default value;
         _main.text = @"main";
         _sub.text = @"sub";
-        _title.text = @"Question";
+        _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Question",nil);;
         _image.image = [UIImage imageNamed:@"question_placeholder_content.png"];
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.png"];
         _imageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_content.png", [[NSBundle mainBundle] resourcePath]];

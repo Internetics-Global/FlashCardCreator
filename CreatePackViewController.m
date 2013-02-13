@@ -39,12 +39,12 @@
     [super loadView];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"create_pack_background"]];
-    self.title = @"Add a new pack";
+    self.title = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
     
     _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];
     _packNameText.textAlignment = UITextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor clearColor];
-    _packNameText.text = @"New Pack Name";
+    _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:20];
     _packNameText.delegate = self;
     _packNameText.borderStyle = UITextBorderStyleRoundedRect;

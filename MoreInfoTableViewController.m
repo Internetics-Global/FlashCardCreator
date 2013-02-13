@@ -31,7 +31,7 @@
     [super viewDidLoad];
 
     if (isUserInterfaceIdiomPhone) {
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
         self.navigationItem.leftBarButtonItem = closeButton;
     }
 }
@@ -70,7 +70,7 @@
         
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"Dropbox";
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Dropbox",nil);
             cell.accessoryType = UITableViewCellAccessoryNone;
             [_dropboxSwitch setOn:[[DBSession sharedSession] isLinked]];
             cell.accessoryView = _dropboxSwitch;
@@ -83,21 +83,21 @@
             } else {
                 [_playModeSwitch setOn:NO];
             }
-            cell.textLabel.text = @"Random play";
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_RandomPlay",nil);
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView = _playModeSwitch;
             break;
         }
         case 2:
-            cell.textLabel.text = @"Register";
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Register",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 3:
-            cell.textLabel.text = @"Help";
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 4:
-            cell.textLabel.text = @"About";
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         default:
