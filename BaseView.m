@@ -374,6 +374,8 @@
 {
     _keyboardShown = NO;
     
+    [_delegate save];
+    
 }
 
 - (void) setInputAccessoryViewDone  {

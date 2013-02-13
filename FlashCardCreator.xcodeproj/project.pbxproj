@@ -80,6 +80,8 @@
 		2D90CCE016AD5311007B404D /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D90CCDF16AD5311007B404D /* UIImage+Scale.m */; };
 		2D90CCE316AD5E39007B404D /* create_pack_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE116AD5E39007B404D /* create_pack_background.png */; };
 		2D90CCE416AD5E39007B404D /* create_pack_seperator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D90CCE216AD5E39007B404D /* create_pack_seperator.png */; };
+		2D9A78AB16CB252E00F6A608 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9A78AA16CB252E00F6A608 /* AboutViewController.m */; };
+		2D9A78CF16CB256800F6A608 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9A78CE16CB256800F6A608 /* AboutView.m */; };
 		2DA794D416B4C1D6009FBD71 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794CF16B4C1D5009FBD71 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2DA794D516B4C1D6009FBD71 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794D116B4C1D5009FBD71 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2DA794D616B4C1D6009FBD71 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA794D316B4C1D5009FBD71 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -512,6 +514,10 @@
 		2D90CCDF16AD5311007B404D /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 		2D90CCE116AD5E39007B404D /* create_pack_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_background.png; sourceTree = "<group>"; };
 		2D90CCE216AD5E39007B404D /* create_pack_seperator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = create_pack_seperator.png; sourceTree = "<group>"; };
+		2D9A78A916CB252E00F6A608 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		2D9A78AA16CB252E00F6A608 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		2D9A78CD16CB256800F6A608 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		2D9A78CE16CB256800F6A608 /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
 		2DA794CE16B4C1D5009FBD71 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitCornersView.h; sourceTree = "<group>"; };
 		2DA794CF16B4C1D5009FBD71 /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitCornersView.m; sourceTree = "<group>"; };
 		2DA794D016B4C1D5009FBD71 /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitDividerView.h; sourceTree = "<group>"; };
@@ -846,6 +852,10 @@
 			children = (
 				2DE77E2216A93ED000E15884 /* MoreInfoTableViewController.h */,
 				2DE77E2316A93ED000E15884 /* MoreInfoTableViewController.m */,
+				2D9A78A916CB252E00F6A608 /* AboutViewController.h */,
+				2D9A78AA16CB252E00F6A608 /* AboutViewController.m */,
+				2D9A78CD16CB256800F6A608 /* AboutView.h */,
+				2D9A78CE16CB256800F6A608 /* AboutView.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1551,6 +1561,8 @@
 				2DB3B57016BF49C200CF30AE /* MySHKConfigurator.m in Sources */,
 				2D26346316C2068C001A024D /* SelectTemplateTableViewController.m in Sources */,
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
+				2D9A78AB16CB252E00F6A608 /* AboutViewController.m in Sources */,
+				2D9A78CF16CB256800F6A608 /* AboutView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

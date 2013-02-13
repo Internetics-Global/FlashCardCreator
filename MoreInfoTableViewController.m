@@ -9,6 +9,7 @@
 #import "MoreInfoTableViewController.h"
 #import <DropboxSDK/DropboxSDK.h>
 #import "SimpleWebBrowserController.h"
+#import "AboutViewController.h"
 
 @interface MoreInfoTableViewController ()
 
@@ -20,7 +21,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title =@"Setting";
+        self.title =@"More";
     }
     return self;
 }
@@ -134,22 +135,39 @@
         }
         case 1:
         {
-            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
-            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-            controller.hidesToolbar = NO;
-            [self.navigationController pushViewController:controller animated:YES];
             break;    
         }
         case 2:
         {
+            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+            controller.hidesToolbar = NO;
+            if (isUserInterfaceIdiomPhone) {
+                [self.navigationController pushViewController:controller animated:YES];    
+            } else {
+                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentModalViewController:controller animated:YES];
+            }
+            
             break;
         }
         case 3:
         {
+            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+            controller.hidesToolbar = NO;
+            if (isUserInterfaceIdiomPhone) {
+                [self.navigationController pushViewController:controller animated:YES];
+            } else {
+                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentModalViewController:controller animated:YES];
+            }
             break;
         }
         case 4:
         {
+            AboutViewController *about = [[AboutViewController alloc] init];
+            [self.navigationController pushViewController:about animated:YES];
             break;
         }
         default:
