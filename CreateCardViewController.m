@@ -68,8 +68,13 @@
         _cardView.answerView.sub.userInteractionEnabled            = TRUE;
         
         //User template 0
-        [_cardView.questionView updateQuestionViewTemplate:0];
-        [_cardView.answerView updateAnswerViewTemplate:0];
+        if (isUserInterfaceIdiomPhone) {
+            [_cardView.questionView updateQuestionViewTemplateForiPhone:0];
+            [_cardView.answerView updateAnswerViewTemplateForiPhone:0];
+        } else {
+            [_cardView.questionView updateQuestionViewTemplateForiPad:0];
+            [_cardView.answerView updateAnswerViewTemplateForiPad:0];
+        }
         
         _cardView.cardSNText.text = [NSString stringWithFormat:@"%d",[[_currentPack cards] count]+1];
         

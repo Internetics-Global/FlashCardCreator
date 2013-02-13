@@ -14,7 +14,8 @@
 @interface QuestionView : BaseView
 
 - (void) refreshDisplay;
-- (void) updateQuestionViewTemplate:(int) index;
+- (void) updateQuestionViewTemplateForiPhone:(int) index;
+- (void) updateQuestionViewTemplateForiPad:(int) index;
 
 - (void) setCurrentCard:(Card *)currentCard;
 

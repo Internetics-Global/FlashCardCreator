@@ -14,7 +14,8 @@
 @interface AnswerView : BaseView
 
 - (void) refreshDisplay;
-- (void) updateAnswerViewTemplate:(int) index;
+- (void) updateAnswerViewTemplateForiPhone:(int) index;
+- (void) updateAnswerViewTemplateForiPad:(int) index;
 
 - (void) setCurrentCard:(Card *)currentCard;
 

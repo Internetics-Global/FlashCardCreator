@@ -17,6 +17,7 @@
 #import "FileOperationHelper.h"
 #import "SelectTemplateTableViewController.h"
 #import "CSS.h"
+#import "UINavigationController+DismissKeyboard.h"
 
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
@@ -156,14 +157,19 @@
     }
     
     if (_cardSNText == nil) {
-        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, 50, 30)];
-        _cardSNText.text = @"";
-        _cardSNText.layer.cornerRadius =5;
-        _cardSNText.layer.masksToBounds = YES;
-        _cardSNText.backgroundColor = [UIColor yellowColor];
+        
+        UIImageView *numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
+        numberingBackroundImageView.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 25);
+        [self addSubview:numberingBackroundImageView];
+        
+        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 20)];
+        _cardSNText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _cardSNText.backgroundColor = [UIColor clearColor];
+        _cardSNText.font = [UIFont systemFontOfSize:12];
         _cardSNText.textAlignment = UITextAlignmentCenter;
         _cardSNText.userInteractionEnabled = FALSE;
         [self addSubview:_cardSNText];
+        
     }
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:
@@ -179,6 +185,15 @@
     _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
     _segmentedControl.selectedSegmentIndex = 0;
     [self addSubview:_segmentedControl];
+    
+    //Template button
+    if (_changeTemplateButton == nil) {
+        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-20, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-20, 20, 20);
+        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
+        [self addSubview:_changeTemplateButton];
+        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+    }
 }
 
 #pragma mark -
@@ -231,14 +246,22 @@
     _questionView.currentCard = _currentCard;
     _questionView.packName.text = _currentPack.packName;
     [_questionView refreshDisplay]; //content
-    [_questionView updateQuestionViewTemplate:_currentCard.templateID]; //template
+    if (isUserInterfaceIdiomPhone) {
+        [_questionView updateQuestionViewTemplateForiPhone:_currentCard.templateID]; //template
+    } else {
+        [_questionView updateQuestionViewTemplateForiPad:_currentCard.templateID]; //template
+    }
     [_questionView switchLogoStatus]; //logo
     [_questionView updateCSS]; //css
     
     _answerView.currentCard = _currentCard;
     _answerView.packName.text = _currentPack.packName;
     [_answerView refreshDisplay];
-    [_answerView updateAnswerViewTemplate:_currentCard.templateID];
+    if (isUserInterfaceIdiomPhone) {
+        [_answerView updateAnswerViewTemplateForiPhone:_currentCard.templateID];
+    } else {
+        [_answerView updateAnswerViewTemplateForiPad:_currentCard.templateID];
+    }
     [_answerView switchLogoStatus];
     [_answerView updateCSS];
 }
@@ -407,7 +430,8 @@
     SelectTemplateTableViewController *selectTemplateTableViewController = [[SelectTemplateTableViewController alloc] initWithStyle:UITableViewStylePlain];
     
     if (isUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:selectTemplateTableViewController animated:YES];
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:selectTemplateTableViewController];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     } else {
         if (_popoverController == nil)
             _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
@@ -424,8 +448,14 @@
     } else {
         _templateID = [templateIDString integerValue];
         
-        [_questionView updateQuestionViewTemplate:_templateID];
-        [_answerView updateAnswerViewTemplate:_templateID];
+        if (isUserInterfaceIdiomPhone ) {
+            [_questionView updateQuestionViewTemplateForiPhone:_templateID];
+            [_answerView updateAnswerViewTemplateForiPhone:_templateID];
+        } else {
+            [_questionView updateQuestionViewTemplateForiPad:_templateID];
+            [_answerView updateAnswerViewTemplateForiPad:_templateID];
+        }
+        
         
         _currentCard.templateID = _templateID;
         

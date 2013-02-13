@@ -13,15 +13,15 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
+	[super loadView];
 	
-	self.title = @"About Us";
-	
-	UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, self.navigationController.view.frame.size.height - self.navigationController.navigationBar.frame.size.height)];
-	self.view = contentView;
+    self.title = @"About Us";
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	scroller = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    scroller.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	AboutView *about = [[AboutView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    about.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	scroller.contentSize = CGSizeMake(about.frame.size.width, about.frame.size.height);
 	[about.linkButton addTarget:self action:@selector(web) forControlEvents:UIControlEventTouchUpInside];
 	[scroller addSubview:about];
@@ -40,5 +40,16 @@
     }
 }
 
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return ((toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight));
+}
 
 @end

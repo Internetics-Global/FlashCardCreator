@@ -162,7 +162,7 @@
     [self addSubview:_subheading];
     
     _main = [[UITextView alloc]init];
-    _subheading.text = @"Main";
+    _main.text = @"Type";
     _main.tag = 101;
     _main.frame = CGRectMake(0, 100, 470, 200);
     _main.userInteractionEnabled = FALSE;
@@ -203,6 +203,19 @@
 }
 
 - (void) loadViewForiPhone {
+    
+    UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
+    titleBackgroundView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone,40);
+    titleBackgroundView.contentMode = UIViewContentModeScaleToFill;
+    titleBackgroundView.userInteractionEnabled = FALSE;
+    [self addSubview:titleBackgroundView];
+    
+    UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
+    sidebarImageView.frame = CGRectMake(0, 0, 30, kFlashCardViewHeight_Detail_iPhone-45);
+    sidebarImageView.userInteractionEnabled = FALSE;
+    [self addSubview:sidebarImageView];
+    
+    
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(40, 0, 300, 30);
     _title.text =@"Question";
@@ -237,10 +250,23 @@
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
     
+    
+    _subheading = [[UITextView alloc]init];
+    _subheading.text = @"Example";
+    _subheading.tag = 100;
+    _subheading.frame = CGRectMake(0, 50, 300, 50);
+    _subheading.userInteractionEnabled = FALSE;
+    _subheading.backgroundColor = [UIColor yellowColor];
+    _subheading.keyboardType = UIKeyboardAppearanceDefault;
+    _subheading.returnKeyType = UIReturnKeyDefault;
+    _subheading.delegate = self;
+    [self addSubview:_subheading];
+    
+    
     _main = [[UITextView alloc]init];
     _main.frame = CGRectMake(0, 20, 300, 100);
     _main.userInteractionEnabled = FALSE;
-    _main.backgroundColor = [UIColor clearColor];
+    _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
     [self addSubview:_main];
@@ -248,10 +274,21 @@
     _sub = [[UITextView alloc]init];
     _sub.frame = CGRectMake(0, 120, 300, 100);
     _sub.userInteractionEnabled = FALSE;
-    _sub.backgroundColor = [UIColor clearColor];
+    _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
     [self addSubview:_sub];
+    
+    _packName = [[UILabel alloc] init];
+    _packName.frame = CGRectMake(0, 0, 200, 30);
+    [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+    _packName.center = CGPointMake(15, 112);
+    _packName.text = @"This is the pack name";
+    _packName.textAlignment = NSTextAlignmentCenter;
+    _packName.backgroundColor = [UIColor clearColor];
+    _packName.font = [UIFont systemFontOfSize:12];
+    _packName.textColor = [UIColor whiteColor];
+    [self addSubview:_packName];
 }
 
 #pragma mark -

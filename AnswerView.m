@@ -65,7 +65,133 @@
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
 
 //postion part which is included in three main parts: CSS, template(position) and content
-- (void) updateAnswerViewTemplate:(int) index {
+- (void) updateAnswerViewTemplateForiPhone:(int) index {
+    
+    switch (index) {
+        case 0: //Template 0
+        {
+            _subheading.hidden = FALSE;
+            _subheading.frame = CGRectMake(30, 40, 140, 30);
+            _subheading.font = [UIFont systemFontOfSize:15];
+            _subheading.textColor = [UIColor blackColor];
+            _subheading.textAlignment = NSTextAlignmentCenter;
+            
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(30, 80, 360, 100);
+            _main.font = [UIFont systemFontOfSize:16];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
+            
+            _sub.hidden = TRUE;
+            
+            _image.hidden = FALSE;
+            _image.frame = CGRectMake(30, 1900, 360, 100);
+            
+            _logoImage.hidden = TRUE;
+            
+            break;
+        }
+        case 1: //Template 1
+        {
+            _subheading.hidden = TRUE;
+            
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(30, 40, 140, 30);
+            _main.font = [UIFont systemFontOfSize:16 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentLeft;
+            
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.textColor = [UIColor blackColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
+            
+            _image.hidden = FALSE;
+            _image.frame = CGRectMake(30, 1900, 360, 100);
+            
+            _logoImage.hidden = TRUE;
+            
+            break;
+        }
+        case 2: //Template 2
+        {
+            _subheading.hidden = TRUE;
+            
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(30, 40, 140, 30);
+            _main.font = [UIFont systemFontOfSize:16 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentLeft;
+            
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.textColor = [UIColor redColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
+            
+            _image.hidden = FALSE;
+            _image.frame = CGRectMake(30, 1900, 360, 100);
+            
+            _logoImage.hidden = TRUE;
+            
+            break;
+        }
+        case 3: //Template 3
+        {
+            _subheading.hidden = TRUE;
+            
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(30, 40, 140, 30);
+            _main.font = [UIFont systemFontOfSize:22 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
+            
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.textColor = [UIColor blackColor];
+            _sub.textAlignment = NSTextAlignmentCenter;
+            
+            _image.hidden = TRUE;
+            
+            _logoImage.hidden = TRUE;
+            
+            break;
+        }
+        case 4: //Template4
+        {
+            _subheading.hidden = TRUE;
+            
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(30, 40, 140, 30);
+            _main.font = [UIFont systemFontOfSize:14 ];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentCenter;
+            
+            _sub.hidden = FALSE;
+            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.textColor = [UIColor redColor];
+            _sub.textAlignment = NSTextAlignmentLeft;
+            
+            _image.hidden = FALSE;
+            _image.frame = CGRectMake(30, 1900, 360, 100);
+            
+            _logoImage.hidden = TRUE;
+            
+            break;
+        }
+        default:
+        {
+            NSLog(@"%s:No template is selected",__FUNCTION__);
+            break;
+        }
+            
+    }
+}
+
+- (void) updateAnswerViewTemplateForiPad:(int) index {
     
     switch (index) {
         case 0: //Template 0
@@ -190,7 +316,6 @@
             
     }
 }
-
 
 #pragma mark -
 #pragma mark - Get/set currentCard
