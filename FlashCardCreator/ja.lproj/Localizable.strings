@@ -1,0 +1,59 @@
+/*
+ Localizable.strings
+ FlashCardCreator
+ 
+ Created by Wang Bourne on 13/02/13.
+ Copyright (c) 2013 Internetics. All rights reserved.
+ */
+
+"DIALOG_PLEASE_CHECK_YOUR_NETWORK" = "あなたのネットワークを確認してください";
+"DIALOG_DOWNLOAD_PACK" ="ダウンロードパック...";
+
+"NavigationBarItem_Packs" = "パック";
+"NavigationBarItem_Create" = "作成";
+"NavigationBarItem_Edit"= "編集";
+"NavigationBarItem_Done" ="完了";
+"NavigationBarItem_Share" = "シェアパック";
+"NavigationBarItem_More" = "詳細";
+"NavigationBarItem_Back"= "戻る";
+
+"NavigationBarItem_More_Dropbox" = "Dropboxが";
+"NavigationBarItem_More_RandomPlay" = "ランダム再生";
+"NavigationBarItem_More_Register" = "登録";
+"NavigationBarItem_More_Help"= "ヘルプ";
+"NavigationBarItem_More_About" = "について";
+
+"ToolbarItem_Answer" = "回答";
+"ToolbarItem_Question" ="質問";
+
+"Keyboard_Done" = "完了";
+
+"ToolbarItem_Align" = "整列";
+"ToolbarItem_Size"= "サイズ";
+"ToolbarItem_Color" ="色";
+"ToolbarItem_Back"= "戻る";
+
+"ToolbarItem_Align_Left" = "左";
+"ToolbarItem_Align_Center" = "センター";
+"ToolbarItem_Align_Right" ="右";
+
+"ToolbarItem_Align_Size12" = "サイズ12";
+"ToolbarItem_Align_Size16" = "サイズ16";
+"ToolbarItem_Align_Size20" = "サイズ20";
+"ToolbarItem_Align_Size24" = "サイズ24";
+"ToolbarItem_Align_Size28" = "サイズ28";
+
+"ToolbarItem_Color_Red" = "赤";
+"ToolbarItem_Color_Green" = "グリーン";
+"ToolbarItem_Color_Blue" = "青";
+"ToolbarItem_Color_Black" = "ブラック";
+"ToolbarItem_Color_Yellow" = "イエロー";
+
+"Label_Question" ="質問";
+"Label_Answer" = "回答";
+"Label_New_Pack_Name" = "新パック名";
+
+"Title_Add_A_New_Pack" = "新パックを追加";
+"Title_Create_A_New_Card" = "新しいカードを作成";
+
+"UIButton_Save_Card" ="保存";

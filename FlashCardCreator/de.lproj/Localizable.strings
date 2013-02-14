@@ -1,0 +1,60 @@
+/*
+ Localizable.strings
+ FlashCardCreator
+ 
+ Created by Wang Bourne on 13/02/13.
+ Copyright (c) 2013 Internetics. All rights reserved.
+ */
+
+"DIALOG_PLEASE_CHECK_YOUR_NETWORK" = "Bitte überprüfen Sie Ihre Netzwerk";
+"DIALOG_DOWNLOAD_PACK" = "Downloading pack ...";
+
+"NavigationBarItem_Packs" = "Packs";
+"NavigationBarItem_Create" = "Erstellen";
+"NavigationBarItem_Edit" = "Bearbeiten";
+"NavigationBarItem_Done" = "Fertig";
+"NavigationBarItem_Share" = "Teilen Sie die Packung";
+"NavigationBarItem_More" = "Mehr";
+"NavigationBarItem_Back" = "Zurück";
+
+"NavigationBarItem_More_Dropbox" = "Dropbox";
+"NavigationBarItem_More_RandomPlay" = "Random Play";
+"NavigationBarItem_More_Register" = "Registrieren";
+"NavigationBarItem_More_Help" = "Hilfe";
+"NavigationBarItem_More_About" = "Über uns";
+
+"ToolbarItem_Answer" = "Antwort";
+"ToolbarItem_Question" = "Frage";
+
+"Keyboard_Done" = "Fertig";
+
+"ToolbarItem_Align" = "Align";
+"ToolbarItem_Size" = "Größe";
+"ToolbarItem_Color" = "Farbe";
+"ToolbarItem_Back" = "Zurück";
+
+"ToolbarItem_Align_Left" = "Left";
+"ToolbarItem_Align_Center" = "Center";
+"ToolbarItem_Align_Right" = "rechts";
+
+"ToolbarItem_Align_Size12" = "Größe 12";
+"ToolbarItem_Align_Size16" = "Größe 16";
+"ToolbarItem_Align_Size20" = "Größe 20";
+"ToolbarItem_Align_Size24" = "Größe 24";
+"ToolbarItem_Align_Size28" = "Größe 28";
+
+"ToolbarItem_Color_Red" = "Red";
+"ToolbarItem_Color_Green" = "Grün";
+"ToolbarItem_Color_Blue" = "Blue";
+"ToolbarItem_Color_Black" = "Black";
+"ToolbarItem_Color_Yellow" = "Yellow";
+
+"Label_Question" = "Frage";
+"Label_Answer" = "Antwort";
+"Label_New_Pack_Name" = "Neuer Pack name";
+
+"Title_Add_A_New_Pack" = "Add a new pack";
+"Title_Create_A_New_Card" = "Erstellen Sie eine neue Karte";
+
+"UIButton_Save_Card" = "Speichern";
+
