@@ -100,9 +100,9 @@
     
     if (_cardSNText == nil) {
         
-        UIImageView *numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
-        numberingBackroundImageView.frame = CGRectMake(10, 20, 40, 40);
-        [self addSubview:numberingBackroundImageView];
+        _numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
+        _numberingBackroundImageView.frame = CGRectMake(10, 20, 40, 40);
+        [self addSubview:_numberingBackroundImageView];
         
         _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 40, 40)];
         _cardSNText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -299,6 +299,7 @@
 		}
 	}
     
+    [self bringSubviewToFront:_numberingBackroundImageView];
     [self bringSubviewToFront:_cardSNText];
     [self bringSubviewToFront:_changeTemplateButton];
 

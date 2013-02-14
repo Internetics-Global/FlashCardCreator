@@ -16,6 +16,7 @@
 
 @interface FlashCardView : UIView <UITextFieldDelegate, BaseViewDelegate> {
     UISegmentedControl *_segmentedControl;
+    UIImageView *_numberingBackroundImageView;
     UITextField *_cardSNText;
     UIButton *_changeTemplateButton;
     QuestionView *_questionView;
