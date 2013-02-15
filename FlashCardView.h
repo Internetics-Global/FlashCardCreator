@@ -13,11 +13,11 @@
 @class AnswerView;
 @class Pack;
 @class Card;
+@class BadgeLabel;
 
 @interface FlashCardView : UIView <UITextFieldDelegate, BaseViewDelegate> {
     UISegmentedControl *_segmentedControl;
-    UIImageView *_numberingBackroundImageView;
-    UITextField *_cardSNText;
+    BadgeLabel *_cardSNText;
     UIButton *_changeTemplateButton;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -37,7 +37,7 @@
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
-@property (nonatomic, strong) UITextField *cardSNText;
+@property (nonatomic, strong) BadgeLabel *cardSNText;
 
 @property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
 @property (assign, nonatomic) NSUInteger templateID;

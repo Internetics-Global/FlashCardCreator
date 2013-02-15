@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "MasterViewController.h"
 #import "UIImage+Scale.h"
+#import "BadgeLabel.h"
 
 @interface CreateCardViewController ()
 

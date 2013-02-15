@@ -18,6 +18,7 @@
 #import "SelectTemplateTableViewController.h"
 #import "CSS.h"
 #import "UINavigationController+DismissKeyboard.h"
+#import "BadgeLabel.h"
 
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
@@ -100,15 +101,10 @@
     
     if (_cardSNText == nil) {
         
-        _numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
-        _numberingBackroundImageView.frame = CGRectMake(10, 20, 40, 40);
-        [self addSubview:_numberingBackroundImageView];
-        
-        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 40, 40)];
-        _cardSNText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        _cardSNText.backgroundColor = [UIColor clearColor];
-        _cardSNText.textAlignment = UITextAlignmentCenter;
-        _cardSNText.userInteractionEnabled = FALSE;
+        _cardSNText = [[BadgeLabel alloc] init];
+        _cardSNText.frame = CGRectMake(20, 20, 40, 40);
+        [_cardSNText setStyle:BadgeLabelStyleAppIcon];
+        _cardSNText.backgroundColor = [UIColor redColor];
         [self addSubview:_cardSNText];
         
     }
@@ -155,19 +151,13 @@
         _answerView.currentPack = _currentPack;
         _answerView.delegate = self;
     }
-    
+        
     if (_cardSNText == nil) {
         
-        UIImageView *numberingBackroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"numbering_background.png"]];
-        numberingBackroundImageView.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 25);
-        [self addSubview:numberingBackroundImageView];
-        
-        _cardSNText = [[UITextField alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 20)];
-        _cardSNText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        _cardSNText.backgroundColor = [UIColor clearColor];
-        _cardSNText.font = [UIFont systemFontOfSize:12];
-        _cardSNText.textAlignment = UITextAlignmentCenter;
-        _cardSNText.userInteractionEnabled = FALSE;
+        _cardSNText = [[BadgeLabel alloc] init];
+        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 25);
+        [_cardSNText setStyle:BadgeLabelStyleAppIcon];
+        _cardSNText.backgroundColor = [UIColor redColor];
         [self addSubview:_cardSNText];
         
     }
@@ -299,7 +289,6 @@
 		}
 	}
     
-    [self bringSubviewToFront:_numberingBackroundImageView];
     [self bringSubviewToFront:_cardSNText];
     [self bringSubviewToFront:_changeTemplateButton];
 
