@@ -397,11 +397,11 @@
     if (_keyboardShown)
         return;
     
-    NSDictionary* info = [aNotification userInfo];
+    //NSDictionary* info = [aNotification userInfo];
     
     // Get the size of the keyboard.
-    NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-    CGSize keyboardSize = [aValue CGRectValue].size;
+    //NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
+    //CGSize keyboardSize = [aValue CGRectValue].size;
     
     _keyboardShown = YES;
     

@@ -105,9 +105,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"h/Users/WangBourne/Documents/Project/FlashCardCreator/FlashCardCreator.xcodeprojttps://www.dropbox.com/s/7lsksokkgwgcfvw/card1360638649.038602-26691953.zip"];
     }
     
-    NSString *langID = [[NSLocale preferredLanguages] objectAtIndex:0];
-    NSString *lang = [[NSLocale currentLocale] displayNameForKey:NSLocaleLanguageCode value:langID];
-    
     return YES;
 }
 
