@@ -428,6 +428,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     self.currentCard = [_currentPack cards][indexPath.row];
     _indexCard = indexPath.row;
 
@@ -455,6 +456,15 @@
             [self.detailViewController showCurrentCardInScrollView];
         }
     }
+    
+    if (isUserInterfaceIdiomPhone) {
+        /*
+         To conform to the Human Interface Guidelines, selections should not be persistent --
+         deselect the row after it has been selected.
+         */
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

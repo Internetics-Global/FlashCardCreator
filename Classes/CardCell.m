@@ -7,6 +7,7 @@
 //
 
 #import "CardCell.h"
+#import "Common.h"
 
 @implementation CardCell
 
@@ -39,7 +40,12 @@
 }
 
 - (void) setupViewForiPhone {
-    self.contentView.frame = CGRectMake(0, 0, 480, 100);
+    
+    UIView *contentView =
+    [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
+    contentView.backgroundColor = [UIColor blackColor];
+    contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.contentView addSubview:contentView];
     
     _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 40, 20)];
     _indexLabel.text = @"N";
@@ -56,7 +62,12 @@
 }
 
 - (void) setupViewForiPad {
-    self.contentView.frame = CGRectMake(0, 0, kCellSizeWidth, kCellSizeHeight);
+    
+    UIView *contentView =
+    [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
+    contentView.backgroundColor = [UIColor blackColor];
+    contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.contentView addSubview:contentView];
     
     _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kCellSizeHeight/2-10, 30, 20)];
     _indexLabel.text = @"N";
