@@ -19,19 +19,18 @@
 #pragma mark -
 #pragma mark - Basic utilies
 
-+ (NSString *)documentsDirectory{
-	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentFolderPath = searchPaths[0];
-	return documentFolderPath;
++ (NSString *)cachesDirectory{
+	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *cacheFolderPath = searchPaths[0];
+	return cacheFolderPath;
 }
 
 + (NSString *)documentsPathForFileNamed:(NSString *)fileName{
-	return [[FileOperationHelper documentsDirectory] stringByAppendingPathComponent:fileName];
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentFolderPath = searchPaths[0];
+	return [documentFolderPath stringByAppendingPathComponent:fileName];
 }
 
-+ (BOOL)fileExistsAtDocumentsPathWithName:(NSString *)fileName{
-	return [[NSFileManager defaultManager] fileExistsAtPath:[FileOperationHelper documentsPathForFileNamed:fileName]];
-}
 
 + (NSString *)temporaryDirectory{
 	NSString *temporaryDirectory = NSTemporaryDirectory();
@@ -46,9 +45,7 @@
 #pragma mark - FlashCardCreator's directory structure
 
 + (NSString *)imagesDirectory{
-	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentFolderPath = searchPaths[0];
-    NSString *returnPath = [documentFolderPath stringByAppendingPathComponent:@"Images"];
+    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -86,7 +83,7 @@
 }
 
 + (NSString *)downloadedPackFileDirectory {
-    NSString *dir = [[FileOperationHelper documentsDirectory] stringByAppendingPathComponent:@"Downloaded Pack"];
+    NSString *dir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Downloaded Pack"];
     NSError *error = nil;
     if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
         NSLog(@"Failed to create directory at %@", dir);
@@ -99,9 +96,7 @@
 #pragma mark - Generate unique file name
 
 + (NSString *) generateUniquePNGImageFilePath {
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory,    NSUserDomainMask ,YES );
-    NSString *path = [paths[0] stringByAppendingPathComponent:@"Images"];
+    NSString *path = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {

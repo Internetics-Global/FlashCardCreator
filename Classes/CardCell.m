@@ -47,7 +47,7 @@
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:contentView];
     
-    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 40, 20)];
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 30, 20)];
     _indexLabel.text = @"N";
     _indexLabel.textColor = [UIColor whiteColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
@@ -55,7 +55,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(60, 10, 80, 80)];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 80, 80)];
     _cellImageView.layer.cornerRadius = 10;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];

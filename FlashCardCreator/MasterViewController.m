@@ -709,7 +709,7 @@
     
     //step2: Assemable question card
     Card *assembledCard = [[Card alloc] init];
-    NSString *imagesDir = [[FileOperationHelper documentsDirectory] stringByAppendingPathComponent:@"Images"];
+    NSString *imagesDir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     NSString *questionJsonPath = [imagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
     NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];

@@ -13,12 +13,12 @@
 
 @interface FileOperationHelper : NSObject
 
-+ (NSString *) documentsDirectory;
++ (NSString *) cachesDirectory;
 + (NSString *) imagesDirectory;
 + (NSString *) assembleFactoryDirectory;
 
 + (NSString *) documentsPathForFileNamed:(NSString *)fileName;
-+ (BOOL) fileExistsAtDocumentsPathWithName:(NSString *)fileName;
+
 + (NSString *) temporaryDirectory;
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 

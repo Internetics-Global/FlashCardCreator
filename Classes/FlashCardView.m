@@ -455,9 +455,16 @@
         
         UIImage *origialmage = [self.questionView captureWholeViewAsImage];
         NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-        NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
-        [imageData writeToFile:savedFullPath atomically:YES];
-        _currentCard.coverImageURL = savedFullPath;
+        if ([_currentCard.coverImageURL rangeOfString:@".png"].length == NSNotFound) {
+            NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+            [imageData writeToFile:savedFullPath atomically:YES];
+            _currentCard.coverImageURL = savedFullPath;
+        } else {
+            [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
+        }
+        
+        
+        
         
         _currentCard.packID = _currentPack.packID;
         [_currentCard save];

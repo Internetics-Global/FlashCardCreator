@@ -77,7 +77,7 @@
             _subheading.textAlignment = NSTextAlignmentCenter;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(30, 80, 360, 100);
+            _main.frame = CGRectMake(30, 80, 140, 110);
             _main.font = [UIFont systemFontOfSize:16];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -85,7 +85,7 @@
             _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(30, 1900, 360, 100);
+            _image.frame = CGRectMake(200, 40, 150, 150);
             
             _logoImage.hidden = TRUE;
             
@@ -102,13 +102,13 @@
             _main.textAlignment = NSTextAlignmentLeft;
             
             _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.frame = CGRectMake(30, 80, 140, 100);
             _sub.font = [UIFont systemFontOfSize:16];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(30, 1900, 360, 100);
+            _image.frame = CGRectMake(200, 40, 150, 150);
             
             _logoImage.hidden = TRUE;
             
@@ -125,13 +125,13 @@
             _main.textAlignment = NSTextAlignmentLeft;
             
             _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.frame = CGRectMake(30, 80, 140, 100);
             _sub.font = [UIFont systemFontOfSize:16];
             _sub.textColor = [UIColor redColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(30, 1900, 360, 100);
+            _image.frame = CGRectMake(200, 40, 150, 150);
             
             _logoImage.hidden = TRUE;
             
@@ -170,13 +170,13 @@
             _main.textAlignment = NSTextAlignmentCenter;
             
             _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(30, 80, 360, 100);
+            _sub.frame = CGRectMake(30, 80, 140, 100);
             _sub.font = [UIFont systemFontOfSize:14];
             _sub.textColor = [UIColor redColor];
             _sub.textAlignment = NSTextAlignmentLeft;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(30, 1900, 360, 100);
+            _image.frame = CGRectMake(200, 40, 150, 150);
             
             _logoImage.hidden = TRUE;
             

@@ -251,6 +251,8 @@
     _image.layer.masksToBounds = YES;
     [self addSubview:_image];
     
+    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+    [_image addGestureRecognizer:imageSingeTap];
     
     _subheading = [[UITextView alloc]init];
     _subheading.text = @"Example";
@@ -544,18 +546,24 @@
         [_imagePickerPopover dismissPopoverAnimated:YES];
     }
     
-    
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-    NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
-    [imageData writeToFile:savedFullPath atomically:YES];
+
     if (_isLogoImageViewClicked) {
-        _logoImageFullPath = savedFullPath;
-        _logoImage.image = [UIImage imageWithContentsOfFile:savedFullPath];
-        [_delegate updatelogoImageForAllCards:savedFullPath];
+        if ([_logoImageFullPath rangeOfString:@".png"].length == NSNotFound) {
+            _logoImageFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        }
+        
+        [imageData writeToFile:_logoImageFullPath atomically:YES];
+        _logoImage.image = [UIImage imageWithData:imageData];
+        [_delegate updatelogoImageForAllCards:_logoImageFullPath];
+        
     } else {
-        _imageFullPath = savedFullPath;
-        _image.image = [UIImage imageWithContentsOfFile:savedFullPath];
+        if ([_imageFullPath rangeOfString:@".png"].length == NSNotFound) {
+            _imageFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        }
+        [imageData writeToFile:_imageFullPath atomically:YES];
+        _image.image = [UIImage imageWithData:imageData];
         [_delegate save];
     }
 }
