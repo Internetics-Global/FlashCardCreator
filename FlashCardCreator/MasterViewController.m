@@ -489,6 +489,25 @@
 		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
                               withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
+        
+        if (!isUserInterfaceIdiomPhone) {
+            if ([[_currentPack cards] count] >0) {
+                NSIndexPath *selectedIndexPath;
+                if (indexPath.row != 0) {
+                    selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:0];
+                } else {
+                    selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];    
+                }
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+            } else {
+                self.detailViewController.title = @"";
+                self.detailViewController.currentPack = nil;
+                self.detailViewController.indexCard = 0;
+                [self.detailViewController showCurrentCardInScrollView];
+            }
+        }
+        
 	}
     
 }

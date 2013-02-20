@@ -412,7 +412,7 @@
 {
     _keyboardShown = NO;
     
-    [_delegate save];
+//    [_delegate save];
     
 }
 
