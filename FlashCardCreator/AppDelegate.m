@@ -102,7 +102,7 @@
     //11. Get example packs (online) and save to local
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"h/Users/WangBourne/Documents/Project/FlashCardCreator/FlashCardCreator.xcodeprojttps://www.dropbox.com/s/7lsksokkgwgcfvw/card1360638649.038602-26691953.zip"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/7lsksokkgwgcfvw/card1360638649.038602-26691953.zip"];
     }
     
     return YES;

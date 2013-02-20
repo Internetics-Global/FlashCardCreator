@@ -142,8 +142,11 @@
 
 - (void) backAndPopCreateCardView {
     [self.navigationController popViewControllerAnimated:YES];
-    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [appDelegate.masterViewController.backgroundOfCreateCardView removeFromSuperview];
+    if (!isUserInterfaceIdiomPhone) {
+        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.masterViewController.backgroundOfCreateCardView removeFromSuperview];
+    }
+    
 }
 
 

@@ -275,11 +275,16 @@
 
 -(void)newCardAddedNotification:(NSNotification *)notification{
 	[self.tableView reloadData];
-    [_backgroundOfCreateCardView removeFromSuperview];
     
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:([[_currentPack cards] count] -1) inSection:0];
-    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    [self.tableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
+    if (!isUserInterfaceIdiomPhone) {
+        [_backgroundOfCreateCardView removeFromSuperview];
+        
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
