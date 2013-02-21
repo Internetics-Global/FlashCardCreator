@@ -47,6 +47,7 @@
 @synthesize subAlign = _subAlign;
 @synthesize subSize = _subSize;
 @synthesize subColor = _subColor;
+@synthesize verticalScrollView = _verticalScrollView;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -55,12 +56,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasHidden:)
-                                                     name:UIKeyboardDidHideNotification object:nil];
         _logoLinkURL = @"http://www.";
         _subheadingSize = 40;
         _subheadingColor = @"Black";
@@ -104,6 +99,7 @@
 
 - (void) loadViewForiPad {
     
+    //Section 1
     UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
     titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
     titleBackgroundView.userInteractionEnabled = FALSE;
@@ -138,15 +134,20 @@
     _title.userInteractionEnabled = FALSE;
     [self addSubview:_title];
     
+    //Section 2
+    
+    _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 110, 740, 440)];
+    _verticalScrollView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_verticalScrollView];
+    
     _image= [[UIImageView  alloc] init];
     _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
-    _image.frame = CGRectMake(480, 150, 300, 300);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.layer.cornerRadius = 15;
     _image.layer.masksToBounds = YES;
-    [self addSubview:_image];
+    [_verticalScrollView addSubview:_image];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
     [_image addGestureRecognizer:imageSingeTap];
@@ -154,35 +155,34 @@
     _subheading = [[UITextView alloc]init];
     _subheading.text = @"Example";
     _subheading.tag = 100;
-    _subheading.frame = CGRectMake(0, 50, 570, 50);
     _subheading.userInteractionEnabled = FALSE;
     _subheading.backgroundColor = [UIColor yellowColor];
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
      _subheading.returnKeyType = UIReturnKeyDefault;
     _subheading.delegate = self;
-    [self addSubview:_subheading];
+    [_verticalScrollView addSubview:_subheading];
     
     _main = [[UITextView alloc]init];
     _main.text = @"Type";
     _main.tag = 101;
-    _main.frame = CGRectMake(0, 100, 470, 200);
     _main.userInteractionEnabled = FALSE;
     _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
     _main.delegate = self;
-    [self addSubview:_main];
+    [_verticalScrollView addSubview:_main];
     
     _sub = [[UITextView alloc]init];
     _sub.text = @"Sub";
     _sub.tag = 102;
-    _sub.frame = CGRectMake(0, 300, 470, 220);
     _sub.userInteractionEnabled = FALSE;
     _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
     _sub.delegate = self;
-    [self addSubview:_sub];
+    [_verticalScrollView addSubview:_sub];
+    
+    //Section 3
     
     _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     _logoLinkageButton.frame = CGRectMake(680, 95, 100, 30);
@@ -204,6 +204,8 @@
 }
 
 - (void) loadViewForiPhone {
+    
+    //Section 1
     
     UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
     titleBackgroundView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone,40);
@@ -240,16 +242,21 @@
     [_logoImage addGestureRecognizer:logoSingeTap];
     [self addSubview:_logoImage];
     
+    //Section 2
+    
+    _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 175)];
+    _verticalScrollView.backgroundColor = [UIColor clearColor];
+    [self addSubview:_verticalScrollView];
+    
     _image= [[UIImageView  alloc] init];
     _image.userInteractionEnabled = FALSE;
     _image.contentMode = UIViewContentModeScaleAspectFit;
-    _image.frame = CGRectMake(300, 120, 80, 80);
     _image.clipsToBounds = YES;
     _image.backgroundColor = [UIColor clearColor];
     _image.tag = 1;
     _image.layer.cornerRadius = 10;
     _image.layer.masksToBounds = YES;
-    [self addSubview:_image];
+    [_verticalScrollView addSubview:_image];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
     [_image addGestureRecognizer:imageSingeTap];
@@ -257,30 +264,31 @@
     _subheading = [[UITextView alloc]init];
     _subheading.text = @"Example";
     _subheading.tag = 100;
-    _subheading.frame = CGRectMake(0, 50, 300, 50);
     _subheading.userInteractionEnabled = FALSE;
     _subheading.backgroundColor = [UIColor yellowColor];
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
     _subheading.returnKeyType = UIReturnKeyDefault;
     _subheading.delegate = self;
-    [self addSubview:_subheading];
+    [_verticalScrollView addSubview:_subheading];
     
     
     _main = [[UITextView alloc]init];
-    _main.frame = CGRectMake(0, 20, 300, 100);
     _main.userInteractionEnabled = FALSE;
     _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_main];
+    _main.delegate = self;
+    [_verticalScrollView addSubview:_main];
     
     _sub = [[UITextView alloc]init];
-    _sub.frame = CGRectMake(0, 120, 300, 100);
     _sub.userInteractionEnabled = FALSE;
     _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
-    [self addSubview:_sub];
+    _sub.delegate = self;
+    [_verticalScrollView addSubview:_sub];
+    
+    //Section 3
     
     _packName = [[UILabel alloc] init];
     _packName.frame = CGRectMake(0, 0, 200, 30);
@@ -393,28 +401,51 @@
 #pragma mark -
 #pragma mark - Keyboard Notification and related
 
-
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    NSDictionary* info = [aNotification userInfo];
+    NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
+    _keyboardHeight = [aValue CGRectValue].size.height;
+    NSLog(@"Keyboard height is %f",_keyboardHeight);
+    
+    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
+    NSLog(@"Y position for current cursorY is %f",cursorY);
+    
+    CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+    
+    CGPoint offset = _verticalScrollView.contentOffset;
+    CGFloat gap;
+    if (isUserInterfaceIdiomPhone) {
+        gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
+    } else {
+        gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
+    }
+    
+    if (gap >5) {
+        offset.y = gap+20;
+    }
+    [_verticalScrollView setContentOffset:offset animated:YES];
+    
+    
+    
     if (_keyboardShown)
         return;
-    
-    //NSDictionary* info = [aNotification userInfo];
-    
-    // Get the size of the keyboard.
-    //NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-    //CGSize keyboardSize = [aValue CGRectValue].size;
     
     _keyboardShown = YES;
     
     
 }
 
+
+
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
     _keyboardShown = NO;
     
-//    [_delegate save];
+    CGPoint offset = _verticalScrollView.contentOffset;
+    offset.y = 0;
+    [_verticalScrollView setContentOffset:offset animated:YES];
     
 }
 
@@ -584,8 +615,9 @@
 #pragma mark -
 #pragma mark - Text edit function
 
-- (UITextView *) getFirstResponderUITextView {
-    for(UIView *view in [self subviews])
+- (UITextView *) getFirstResponderUITextViewUnderVerticalScrollView {
+    //we put all the editable UITextView as subview of verticalScrollView
+    for(UIView *view in [self.verticalScrollView subviews])
     {
         if([view isKindOfClass:[UITextView class]])
         {
@@ -614,7 +646,7 @@
     
     NSString *title = ((UIBarButtonItem *) sender).title;
     
-    UITextView *responderTextView = [self getFirstResponderUITextView];
+    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     
     if ([title isEqualToString:@"Size 12"]) {
         responderTextView.font = [UIFont systemFontOfSize:12];
@@ -654,7 +686,7 @@
      NSString *selectAlignStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
-    UITextView *responderTextView = [self getFirstResponderUITextView];
+    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     if ([title isEqualToString:@"Left"]) {
         responderTextView.textAlignment = NSTextAlignmentLeft;
         selectAlignStr = @"Left";
@@ -683,7 +715,7 @@
     NSString *selectColorStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
-    UITextView *responderTextView = [self getFirstResponderUITextView];
+    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     if ([title isEqualToString:@"Black"]) {
         responderTextView.textColor = [UIColor blackColor];
         selectColorStr = @"Black";
@@ -725,6 +757,32 @@
     CGRect frame = textView.frame;
     frame.size.height = textView.contentSize.height;
     textView.frame = frame;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+{
+    if ( [text isEqualToString:@"\n"] ) {
+        UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+        CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
+        NSLog(@"Y position for current cursorY is %f",cursorY);
+        
+        CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+        
+        CGPoint offset = _verticalScrollView.contentOffset;
+        CGFloat gap;
+        if (isUserInterfaceIdiomPhone) {
+            gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
+        } else {
+            gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
+        }
+        
+        if (gap >0) {
+            offset.y = offset.y + responderTextView.font.lineHeight;
+        }
+        [_verticalScrollView setContentOffset:offset animated:YES];
+
+    }
+    return YES;
 }
 
 #pragma mark -
@@ -774,14 +832,5 @@
         [Common alertViewCommon:@"Incorrect URL format or empty "];
     }
 }
-
-#pragma mark -
-#pragma mark - Memory Management
-
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
 
 @end

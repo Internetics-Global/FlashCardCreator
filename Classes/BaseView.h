@@ -56,6 +56,11 @@
     NSInteger _subSize;
 	NSString *_subColor;
     NSString *_subAlign;
+    
+    CGFloat _keyboardHeight;
+    UIScrollView *_verticalScrollView;
+    
+    
 }
 
 @property (strong, nonatomic) Card *currentCard;
@@ -70,6 +75,7 @@
 @property (strong, nonatomic) UITextView *title;
 @property (strong, nonatomic) UIImageView *image;
 @property (copy, nonatomic)  NSString *imageFullPath;
+@property (strong, nonatomic) UIScrollView *verticalScrollView;
 
 @property (nonatomic, assign) NSInteger subheadingSize;
 @property (nonatomic, copy) NSString *subheadingColor;
