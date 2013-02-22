@@ -309,7 +309,7 @@
             _sub.textAlignment = NSTextAlignmentLeft;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(440, 120, 350, 350);
+            _image.frame = CGRectMake(380, 10, 350, 350);
             
             _logoImage.hidden = TRUE;
             

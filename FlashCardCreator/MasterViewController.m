@@ -194,12 +194,14 @@
     
     CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
     createCardViewController.currentPack = _currentPack;
-    if (isUserInterfaceIdiomPhone){
+    if (!isUserInterfaceIdiomPhone){
         createCardViewController.view.frame =CGRectMake(0,0,IPAD_UI_DETAIL_WIDTH,IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
-        [self.navigationController pushViewController:createCardViewController animated:YES];
+        [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+        
     } else {
         createCardViewController.view.frame =CGRectMake(0,0,480,320-44);
-        [self.detailViewController.navigationController pushViewController:createCardViewController animated:YES];
+        [self.navigationController pushViewController:createCardViewController animated:YES];
+        
     }
     
 }

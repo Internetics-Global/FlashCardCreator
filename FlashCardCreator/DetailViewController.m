@@ -36,10 +36,26 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _cardArray = [[NSMutableArray alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
+        
+        
+        float flashCardYPositionInScrollView;
+        
+        if (isUserInterfaceIdiomPhone) {
+            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+            _previousCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+            _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+            _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+            
+        } else {
+            flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
+            _previousCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
+            _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
+            _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
+        }
+
     }
     return self;
 }
@@ -111,72 +127,132 @@
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
-    if ([_cardArray count] != 0) {
-        [_cardArray[_indexCard] refreshQuestionAnserView];    
-    }
-    
     self.title = _currentPack.packName;
     
 }
 
 - (void)layoutScrollObjectsForiPad
 {
-    [_cardArray removeAllObjects];
+    CGRect rect;
+    
+    //1. Content size
+    [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
+    
+    //2. Remove last data
     for (FlashCardView *cardView in [_scrollView subviews]) {
         [cardView removeFromSuperview];
     }
     
-    CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
-    float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
+    //3. Set current
+    _currentCardView.tag = _indexCard;
+    _currentCardView.currentPack = _currentPack;
+    _currentCardView.currentCard = _currentCard;
+    _currentCardView.backgroundColor = [UIColor clearColor];
+    [_currentCardView checkCardEditable];
     
-    for (int index = 0; index < [[_currentPack cards] count]; index++)
-	{
-        //flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-        cardView.tag = index;	// tag our images for later use when we place them in serial fashion
-        cardView.currentCard = _currentCard;
-        cardView.currentPack = _currentPack;
-        cardView.backgroundColor = [UIColor clearColor];
-        [cardView checkCardEditable];
-		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
-        cardView.frame = rect;
-		[_scrollView addSubview:cardView];
-        curXLoc += IPAD_UI_DETAIL_WIDTH;
-        [_cardArray addObject:cardView];
+    rect = _currentCardView.frame;
+    CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
+    curXLoc += IPAD_UI_DETAIL_WIDTH *_indexCard;
+    rect.origin.x = curXLoc;
+    _currentCardView.frame = rect;
+    [_scrollView addSubview:_currentCardView];
+    
+    [_currentCardView refreshQuestionAnserView];
+    
+    //4. Set previous
+    if (_indexCard == 0) {
+        //_previousCardView = nil;
+    } else {
+        _previousCardView.currentPack = _currentPack;
+        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+        _previousCardView.tag = _indexCard -1;
         
+        rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
+        _previousCardView.frame = rect;
+        [_scrollView addSubview:_previousCardView];
         
-	}
-	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
+        [_previousCardView refreshQuestionAnserView];
+    }
+    
+    //5. Set next
+    if (([[_currentPack cards] count]-1) == _indexCard) {
+        //_nextCardView = nil;
+    } else {
+        _nextCardView.tag = _indexCard +1;
+        _nextCardView.currentPack = _currentPack;
+        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        
+        rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
+        _nextCardView.frame = rect;
+        [_scrollView addSubview:_nextCardView];
+        
+        [_nextCardView refreshQuestionAnserView];
+    }
+    
+    
     
     
 }
 
 - (void)layoutScrollObjectsForiPhone
 {
-    [_cardArray removeAllObjects];
-    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+    CGRect rect;
     
-    for (int index = 0; index < [[_currentPack cards] count]; index++)
-	{
-        //flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-        cardView.tag = index;	// tag our images for later use when we place them in serial fashion
-        cardView.currentCard = _currentCard;
-        [cardView checkCardEditable];
-		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
-        cardView.frame = rect;
-		[_scrollView addSubview:cardView];
-        curXLoc += IPHONE_UI_WIDTH;
-        [_cardArray addObject:cardView];
+    //1. Content size
+    [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
+    
+    //2. Remove last data
+    for (FlashCardView *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
+    }
+    
+    //3. Set current
+    _currentCardView.tag = _indexCard;
+    _currentCardView.currentPack = _currentPack;
+    _currentCardView.currentCard = _currentCard;
+    _currentCardView.backgroundColor = [UIColor clearColor];
+    [_currentCardView checkCardEditable];
+    
+    rect = _currentCardView.frame;
+    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
+    curXLoc += IPHONE_UI_WIDTH *_indexCard;
+    rect.origin.x = curXLoc;
+    _currentCardView.frame = rect;
+    [_scrollView addSubview:_currentCardView];
+    
+    [_currentCardView refreshQuestionAnserView];
+    
+    //4. Set previous
+    if (_indexCard == 0) {
+        //_previousCardView = nil;
+    } else {
+        _previousCardView.currentPack = _currentPack;
+        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+        _previousCardView.tag = _indexCard -1;
         
+        rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
+        _previousCardView.frame = rect;
+        [_scrollView addSubview:_previousCardView];
         
-	}
-	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
+        [_previousCardView refreshQuestionAnserView];
+    }
+    
+    //5. Set next
+    if (([[_currentPack cards] count]-1) == _indexCard) {
+        //_nextCardView = nil;
+    } else {
+        _nextCardView.tag = _indexCard +1;
+        _nextCardView.currentPack = _currentPack;
+        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        
+        rect.origin.x = curXLoc + IPHONE_UI_WIDTH;
+        _nextCardView.frame = rect;
+        [_scrollView addSubview:_nextCardView];
+        
+        [_nextCardView refreshQuestionAnserView];
+    }
+    
+    
     
     
 }
@@ -467,17 +543,19 @@
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
-
-    FlashCardView *currentCardView = _cardArray[page];
-    currentCardView.currentCard = [_currentPack cards][page];
-    currentCardView.currentPack = _currentPack;
-    [currentCardView refreshQuestionAnserView];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
-    
+    if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        _indexCard = page;
+        _currentCard = [_currentPack cards][page];
+        [self showCurrentCardInScrollView];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
+    }
     
 }
 

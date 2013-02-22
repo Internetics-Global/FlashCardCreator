@@ -10,6 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "MBProgressHUD.h"
 
+@class FlashCardView;
 @class QuestionView;
 @class AnswerView;
 @class Card;
@@ -25,8 +26,6 @@
     Card *_currentCard;
     int _indexCard;  //selected card index in master view
     
-    NSMutableArray *_cardArray;
-    
     MBProgressHUD *_HUD;
     float _progressivePercent;
     BOOL _isCreatingShareLinkage;
@@ -34,8 +33,11 @@
     DBRestClient *_restClient;
     
     UIPopoverController *_settingPopoverController;
-    
     UIPopoverController *_masterPopoverController;
+    
+    FlashCardView *_previousCardView;
+    FlashCardView *_currentCardView;
+    FlashCardView *_nextCardView;
     
 }
 
