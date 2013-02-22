@@ -111,7 +111,15 @@
         _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
     }
     
-    [self showCurrentCardInScrollView];
+    //Load card view when not:1. downloading;2. not every time
+    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+    if (isExamplePackDownloadedSuccessful == TRUE) {
+        static dispatch_once_t oncetoken;
+        dispatch_once(&oncetoken, ^{
+            [self showCurrentCardInScrollView]; 
+        }); 
+    }
+        
 }
 
 #pragma mark -
@@ -138,12 +146,7 @@
     //1. Content size
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
-    //2. Remove last data
-    for (FlashCardView *cardView in [_scrollView subviews]) {
-        [cardView removeFromSuperview];
-    }
-    
-    //3. Set current
+    //2. Set current
     _currentCardView.tag = _indexCard;
     _currentCardView.currentPack = _currentPack;
     _currentCardView.currentCard = _currentCard;
@@ -155,11 +158,14 @@
     curXLoc += IPAD_UI_DETAIL_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
-    [_scrollView addSubview:_currentCardView];
+    if (!_currentCardView.superview) {
+        [_scrollView addSubview:_currentCardView];    
+    }
+    
     
     [_currentCardView refreshQuestionAnserView];
     
-    //4. Set previous
+    //3. Set previous
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
@@ -169,7 +175,10 @@
         
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
-        [_scrollView addSubview:_previousCardView];
+        if (!_previousCardView.superview) {
+            [_scrollView addSubview:_previousCardView];    
+        }
+        
         
         [_previousCardView refreshQuestionAnserView];
     }
@@ -184,7 +193,9 @@
         
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;
-        [_scrollView addSubview:_nextCardView];
+        if (!_nextCardView.superview) {
+            [_scrollView addSubview:_nextCardView];    
+        }
         
         [_nextCardView refreshQuestionAnserView];
     }
@@ -201,12 +212,7 @@
     //1. Content size
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
     
-    //2. Remove last data
-    for (FlashCardView *cardView in [_scrollView subviews]) {
-        [cardView removeFromSuperview];
-    }
-    
-    //3. Set current
+    //2. Set current
     _currentCardView.tag = _indexCard;
     _currentCardView.currentPack = _currentPack;
     _currentCardView.currentCard = _currentCard;
@@ -218,11 +224,13 @@
     curXLoc += IPHONE_UI_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
-    [_scrollView addSubview:_currentCardView];
+    if (!_currentCardView.superview) {
+        [_scrollView addSubview:_currentCardView];    
+    }
     
     [_currentCardView refreshQuestionAnserView];
     
-    //4. Set previous
+    //3. Set previous
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
@@ -232,12 +240,14 @@
         
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
-        [_scrollView addSubview:_previousCardView];
+        if (!_previousCardView.superview) {
+            [_scrollView addSubview:_previousCardView];    
+        }
         
         [_previousCardView refreshQuestionAnserView];
     }
     
-    //5. Set next
+    //4. Set next
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
@@ -247,8 +257,9 @@
         
         rect.origin.x = curXLoc + IPHONE_UI_WIDTH;
         _nextCardView.frame = rect;
-        [_scrollView addSubview:_nextCardView];
-        
+        if (!_nextCardView.superview) {
+            [_scrollView addSubview:_nextCardView];    
+        }
         [_nextCardView refreshQuestionAnserView];
     }
     

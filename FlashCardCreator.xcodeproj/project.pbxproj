@@ -12,7 +12,6 @@
 		2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BD16D1A53600E1E785 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C216D1A54200E1E785 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C616D1A54F00E1E785 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C516D1A54F00E1E785 /* SwipeView.m */; };
-		2D5C17DB16D1A56A00E1E785 /* .DS_Store in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C17C716D1A56A00E1E785 /* .DS_Store */; };
 		2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C916D1A56A00E1E785 /* AFHTTPClient.m */; };
 		2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17CB16D1A56A00E1E785 /* AFHTTPRequestOperation.m */; };
 		2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17CD16D1A56A00E1E785 /* AFImageRequestOperation.m */; };
@@ -397,7 +396,6 @@
 		2D5C17C216D1A54200E1E785 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenUDID.m; path = Libraries/OpenUDID/OpenUDID.m; sourceTree = "<group>"; };
 		2D5C17C416D1A54F00E1E785 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwipeView.h; path = Libraries/SwipeView/SwipeView.h; sourceTree = "<group>"; };
 		2D5C17C516D1A54F00E1E785 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwipeView.m; path = Libraries/SwipeView/SwipeView.m; sourceTree = "<group>"; };
-		2D5C17C716D1A56A00E1E785 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; name = .DS_Store; path = Libraries/AFNetworking/.DS_Store; sourceTree = SOURCE_ROOT; };
 		2D5C17C816D1A56A00E1E785 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPClient.h; path = Libraries/AFNetworking/AFHTTPClient.h; sourceTree = SOURCE_ROOT; };
 		2D5C17C916D1A56A00E1E785 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPClient.m; path = Libraries/AFNetworking/AFHTTPClient.m; sourceTree = SOURCE_ROOT; };
 		2D5C17CA16D1A56A00E1E785 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = Libraries/AFNetworking/AFHTTPRequestOperation.h; sourceTree = SOURCE_ROOT; };
@@ -881,7 +879,6 @@
 		2D75DF64169D05AB00337B10 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C17C716D1A56A00E1E785 /* .DS_Store */,
 				2D5C17C816D1A56A00E1E785 /* AFHTTPClient.h */,
 				2D5C17C916D1A56A00E1E785 /* AFHTTPClient.m */,
 				2D5C17CA16D1A56A00E1E785 /* AFHTTPRequestOperation.h */,
@@ -1408,7 +1405,6 @@
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
 				2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
-				2D5C17DB16D1A56A00E1E785 /* .DS_Store in Resources */,
 				2D5C180016D1A5E200E1E785 /* Icon-72.png in Resources */,
 				2D5C180116D1A5E200E1E785 /* Icon-72@2x.png in Resources */,
 				2D5C180216D1A5E200E1E785 /* icon.png in Resources */,
