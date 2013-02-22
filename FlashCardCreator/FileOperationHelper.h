@@ -28,4 +28,7 @@
 + (NSString *)downloadedPackFileDirectory;
 + (NSString *)downloadedZipPackFileFixedPath;
 
++ (NSString *)getTodayString;
+
++ (NSDate *)convertStringToNSDate:(NSString *) str;
 @end

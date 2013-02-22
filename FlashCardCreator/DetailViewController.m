@@ -19,7 +19,7 @@
 #import "SHKItem.h"
 #import "FileOperationHelper.h"
 #import "DataManager.h"
-
+#import "Reachability.h"
 #import "PlayView.h"
 
 @implementation DetailViewController
@@ -323,7 +323,27 @@
 
 - (void)shareButtonClicked
 {
+    //Step1: check whether need to upload pack again
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    if (!dict) {
+        //do nothing
+    } else {
+        NSString *updateDate = [dict objectForKey:@"update_date"];
+        NSString *shareDate = [dict objectForKey:@"share_date"];
+        NSString *shareLink = [dict objectForKey:@"share_link"];
+        if ((updateDate != nil) && (shareDate != nil) & (shareLink != nil)) {
+            if ([[FileOperationHelper convertStringToNSDate:updateDate]
+                     compare:
+                 [FileOperationHelper convertStringToNSDate:shareDate]]
+                         == NSOrderedAscending) {
+                NSLog(@"updateDate is earlier than shareDate");
+                [self shareAction:shareLink];
+                return;
+            }
+        }
+    }
     
+    //Step2: do upload and share if not meet
     if (![[DBSession sharedSession] isLinked]) {
 		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
     } else {
@@ -442,6 +462,17 @@
     [_HUD hide:YES];
     
     _isCreatingShareLinkage = NO;
+    
+    //share_date info
+    NSString *sharedate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:sharedate forKey:@"share_date"];
+    [dict setObject:link forKey:@"share_link"];
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
     [self shareAction:link];
     
 }

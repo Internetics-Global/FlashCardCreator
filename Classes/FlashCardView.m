@@ -414,6 +414,16 @@
     _currentCard.packID = _currentPack.packID;
     [_currentCard save];
     
+    //update_date info
+    NSString *updateDate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:updateDate forKey:@"update_date"];
+
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //Send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 
 }

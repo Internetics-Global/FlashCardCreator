@@ -76,9 +76,19 @@
         _newPack.packName = _packNameText.text;
         [[User defaultUser] addPack:_newPack];
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
+        
         [[NSUserDefaults standardUserDefaults] setInteger:_newPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
         [[NSUserDefaults standardUserDefaults] setInteger:([[[User defaultUser] packs] count] -1) forKey:@"lastPackIndex"];
+        
+        //Update_date info
+        NSString *updateDate = [FileOperationHelper getTodayString];
+        NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_newPack.packName];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+        [dict setObject:updateDate forKey:@"update_date"];
+        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_newPack.packName];
+        
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [self dismissModalViewControllerAnimated:YES];
     } else {
         

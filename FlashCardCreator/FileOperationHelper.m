@@ -56,9 +56,7 @@
 }
 
 + (NSString *)assembleFactoryDirectory{
-    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentFolderPath = searchPaths[0];
-    NSString *returnPath = [documentFolderPath stringByAppendingPathComponent:@"Card Assemble Factory"];
+    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Card Assemble Factory"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -225,6 +223,20 @@
     return generateCardZipFilePath;
 }
 
++ (NSString *)getTodayString {
+    NSDateFormatter*formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSString *locationString=[formatter stringFromDate: [NSDate date]];
+    return locationString;
+}
+
++ (NSDate *)convertStringToNSDate:(NSString *) str {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSDate *dateFromString = [[NSDate alloc] init];
+    dateFromString = [dateFormatter dateFromString:str];
+    return dateFromString;
+}
 
 
 @end

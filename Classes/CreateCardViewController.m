@@ -137,6 +137,15 @@
     [[NSUserDefaults standardUserDefaults] setInteger:_currentPack.packID forKey:@"lastCreatedPackID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    //Update_date info
+    NSString *updateDate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:updateDate forKey:@"update_date"];
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //Send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];
 }
 
