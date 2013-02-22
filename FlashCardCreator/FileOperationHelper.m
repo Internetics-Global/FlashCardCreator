@@ -93,7 +93,7 @@
 #pragma mark -
 #pragma mark - Generate unique file name
 
-+ (NSString *) generateUniquePNGImageFilePath {
++ (NSString *) generateUniqueJPEGImageFilePath {
     NSString *path = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -103,7 +103,7 @@
     }
     
     
-    NSString *uid = [NSString stringWithFormat:@"%f%d.png", [[NSDate date] timeIntervalSince1970], arc4random()];
+    NSString *uid = [NSString stringWithFormat:@"%f%d.jpg", [[NSDate date] timeIntervalSince1970], arc4random()];
     return ([path stringByAppendingPathComponent:uid]);
 }
 

@@ -88,4 +88,7 @@
 #define kCellSizeWidth                         IPAD_UI_MASTER_WIDTH     //180 is from "MGSplitViewController.h"
 #define kCellSizeHeight                        130
 
+//UIImageJPEGRepresentation quality factor
+#define kJPEGQualityFactor                     0.7
+
 

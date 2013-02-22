@@ -22,7 +22,7 @@
 + (NSString *) temporaryDirectory;
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 
-+ (NSString *) generateUniquePNGImageFilePath;
++ (NSString *) generateUniqueJPEGImageFilePath;
 + (NSString *) zipPackForUpload:(Pack *) pack;
 
 + (NSString *)downloadedPackFileDirectory;

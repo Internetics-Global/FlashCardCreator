@@ -103,8 +103,8 @@
     }
     
     UIImage *origialmage = [_cardView.questionView captureWholeViewAsImage];
-    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-    NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     _newCard.coverImageURL = savedFullPath;
     

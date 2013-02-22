@@ -578,11 +578,11 @@
     }
     
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
 
     if (_isLogoImageViewClicked) {
-        if ([_logoImageFullPath rangeOfString:@".png"].length == NSNotFound) {
-            _logoImageFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.png"])) {
+            _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         
         [imageData writeToFile:_logoImageFullPath atomically:YES];
@@ -590,8 +590,8 @@
         [_delegate updatelogoImageForAllCards:_logoImageFullPath];
         
     } else {
-        if ([_imageFullPath rangeOfString:@".png"].length == NSNotFound) {
-            _imageFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        if ([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) {
+            _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         [imageData writeToFile:_imageFullPath atomically:YES];
         _image.image = [UIImage imageWithData:imageData];

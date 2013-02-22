@@ -191,26 +191,30 @@
 
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+        _questionView.logoImage.userInteractionEnabled  = TRUE;
         _questionView.subheading.userInteractionEnabled = TRUE;
         _questionView.image.userInteractionEnabled      = TRUE;
         _questionView.main.userInteractionEnabled       = TRUE;
         _questionView.sub.userInteractionEnabled        = TRUE;
         _questionView.subheading.userInteractionEnabled = TRUE;
+        _answerView.logoImage.userInteractionEnabled    = TRUE;
         _answerView.image.userInteractionEnabled        = TRUE;
         _answerView.subheading.userInteractionEnabled   = TRUE;
         _answerView.main.userInteractionEnabled         = TRUE;
         _answerView.sub.userInteractionEnabled          = TRUE;
         
     } else {
-        _questionView.subheading.userInteractionEnabled      = FALSE;
-        _questionView.image.userInteractionEnabled     = FALSE;
-        _questionView.main.userInteractionEnabled   = FALSE;
-        _questionView.sub.userInteractionEnabled    = FALSE;
-        _questionView.subheading.userInteractionEnabled      = FALSE;
-        _answerView.image.userInteractionEnabled       = FALSE;
-        _answerView.subheading.userInteractionEnabled  = FALSE;
-        _answerView.main.userInteractionEnabled     = FALSE;
-        _answerView.sub.userInteractionEnabled      = FALSE;
+        _questionView.logoImage.userInteractionEnabled  = FALSE;
+        _questionView.subheading.userInteractionEnabled = FALSE;
+        _questionView.image.userInteractionEnabled      = FALSE;
+        _questionView.main.userInteractionEnabled       = FALSE;
+        _questionView.sub.userInteractionEnabled        = FALSE;
+        _questionView.subheading.userInteractionEnabled = FALSE;
+        _answerView.logoImage.userInteractionEnabled    = FALSE;
+        _answerView.image.userInteractionEnabled        = FALSE;
+        _answerView.subheading.userInteractionEnabled   = FALSE;
+        _answerView.main.userInteractionEnabled         = FALSE;
+        _answerView.sub.userInteractionEnabled          = FALSE;
         
     }
 }
@@ -368,9 +372,9 @@
     }
     
     UIImage *origialmage = [self.questionView captureWholeViewAsImage];
-    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-    if ([_currentCard.coverImageURL rangeOfString:@".png"].length == NSNotFound) {
-        NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    if ([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) {
+        NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         [imageData writeToFile:savedFullPath atomically:YES];
         _currentCard.coverImageURL = savedFullPath;
     } else {
@@ -464,9 +468,9 @@
         _currentCard.templateID = _templateID;
         
         UIImage *origialmage = [self.questionView captureWholeViewAsImage];
-        NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-        if ([_currentCard.coverImageURL rangeOfString:@".png"].length == NSNotFound) {
-            NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+        if ([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) {
+            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
             [imageData writeToFile:savedFullPath atomically:YES];
             _currentCard.coverImageURL = savedFullPath;
         } else {

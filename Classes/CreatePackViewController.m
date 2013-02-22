@@ -136,8 +136,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [_imagePickerPopover dismissPopoverAnimated:YES];
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-    NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePath];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     _coverImageView.image = [UIImage imageWithContentsOfFile:savedFullPath];
     _newPack.coverImageURL = savedFullPath;

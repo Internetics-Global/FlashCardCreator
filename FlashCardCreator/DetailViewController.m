@@ -111,13 +111,16 @@
         _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
     }
     
-    //Load card view when not:1. downloading;2. not every time
-    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-    if (isExamplePackDownloadedSuccessful == TRUE) {
-        static dispatch_once_t oncetoken;
-        dispatch_once(&oncetoken, ^{
-            [self showCurrentCardInScrollView]; 
-        }); 
+    if ([_currentPack cards].count !=0) {
+        //Load card view when not:1. downloading;2. not every time
+        BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+        if (isExamplePackDownloadedSuccessful == TRUE) {
+            static dispatch_once_t oncetoken;
+            dispatch_once(&oncetoken, ^{
+                [self showCurrentCardInScrollView];
+            }); 
+        }
+        
     }
         
 }
@@ -161,8 +164,7 @@
     if (!_currentCardView.superview) {
         [_scrollView addSubview:_currentCardView];    
     }
-    
-    
+
     [_currentCardView refreshQuestionAnserView];
     
     //3. Set previous
@@ -393,11 +395,20 @@
         return;
     }
     
-    NSString *saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];
     if (!_restClient) {
         _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     }
     _restClient.delegate = self;
+    
+    //Create or replace current
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSString *saveName;
+    if ([dict objectForKey:@"share_filename"]) {
+        saveName = [dict objectForKey:@"share_filename"];
+    } else {
+        saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];    
+    }
+    
     //if folder not exist, create automatically
     [_restClient uploadFile:saveName toPath:@"/FlashCardCreator"
               withParentRev:nil fromPath:generatedZipFilePath];
@@ -469,6 +480,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
     [dict setObject:sharedate forKey:@"share_date"];
     [dict setObject:link forKey:@"share_link"];
+    [dict setObject:[[path componentsSeparatedByString:@"/"]lastObject] forKey:@"share_filename"];  // similiar like like card1361507800.569792-1108896928.zip
     [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
