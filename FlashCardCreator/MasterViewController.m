@@ -504,7 +504,7 @@
                 [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
             } else {
                 self.detailViewController.title = @"";
-                self.detailViewController.currentPack = nil;
+                self.detailViewController.currentCard = nil;
                 self.detailViewController.indexCard = 0;
                 [self.detailViewController showCurrentCardInScrollView];
             }
@@ -777,13 +777,13 @@
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
             
             [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
-            [assembledCard answer].css.subheadingSize = answerDict[@"subheading_size"];
+            [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] intValue];
             [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];
             [assembledCard answer].css.mainAlign = answerDict[@"main_align"];
-            [assembledCard answer].css.mainSize = answerDict[@"main_size"];
+            [assembledCard answer].css.mainSize = [answerDict[@"main_size"] intValue];
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
-            [assembledCard answer].css.subSize = answerDict[@"sub_size"];
+            [assembledCard answer].css.subSize = [answerDict[@"sub_size"] intValue];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
             
         }

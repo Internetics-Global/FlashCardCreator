@@ -30,6 +30,8 @@
     NSUInteger _maxAllowedCardIndex;
     
     NSUInteger _templateID;
+    
+    BOOL _enableSaveNotification;
 }
 
 @property (nonatomic, strong) QuestionView *questionView;
@@ -41,10 +43,13 @@
 
 @property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
 @property (assign, nonatomic) NSUInteger templateID;
+@property (assign, nonatomic) BOOL enableSaveNotification;
 
 - (void) refreshQuestionAnserView;
 - (void)checkCardEditable;
 - (void) disableCardEdit;
+
+- (void) reset;
 
 - (void)segmentAction:(id)sender;
 

@@ -100,7 +100,7 @@
         case 1: //Template 1
         {
             _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(80, 10, 700, 50);
+            _subheading.frame = CGRectMake(20, 10, 700, 50);
             _subheading.font = [UIFont systemFontOfSize:20];
             _subheading.textColor = [UIColor blackColor];
             _subheading.textAlignment = NSTextAlignmentLeft;

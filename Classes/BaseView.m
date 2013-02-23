@@ -57,7 +57,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _logoLinkURL = @"http://www.";
-        _subheadingSize = 40;
+        _subheadingSize = 20;
         _subheadingColor = @"Black";
         _subheadingAlign = @"Right";
         _mainSize = 16;
@@ -535,7 +535,7 @@
     [_subheading resignFirstResponder];
     [_main resignFirstResponder];
     [_sub resignFirstResponder];
-    [_delegate save];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
 }
 
 #pragma mark -
@@ -590,12 +590,13 @@
         [_delegate updatelogoImageForAllCards:_logoImageFullPath];
         
     } else {
-        if ([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) {
+        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"])) {
             _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         [imageData writeToFile:_imageFullPath atomically:YES];
         _image.image = [UIImage imageWithData:imageData];
-        [_delegate save];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     }
 }
 
@@ -677,7 +678,8 @@
     frame.size.height = responderTextView.contentSize.height;
     responderTextView.frame = frame;
     
-    [_delegate save];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    
     [_keyboardTopView setItems:_buttonArray];
 }
 
@@ -706,7 +708,8 @@
         _subAlign = selectAlignStr;
     }
     
-    [_delegate save];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    
     [_keyboardTopView setItems:_buttonArray];
 }
 
@@ -741,7 +744,8 @@
         _subColor = selectColorStr;
     }
     
-    [_delegate save];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    
     [_keyboardTopView setItems:_buttonArray];
 }
 

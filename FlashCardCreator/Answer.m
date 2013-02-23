@@ -88,7 +88,7 @@
 
 -(void)insert{
 	if (_answerID == -1) {
-		_answerID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Answer_Tables"] + 1;
+		_answerID = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d)", _answerID, _cardID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
@@ -106,7 +106,7 @@
     //Step2: delted image resources
     NSError *error = nil;
     //We never delete placeholder imae
-    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"answer_placeholder_logo.png"]) {
+    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"answer_placeholder_logo.jpg"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {
@@ -116,7 +116,7 @@
         }
     }
     error = nil;
-    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"answer_placeholder_content.png"]) {
+    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"answer_placeholder_content.jpg"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {

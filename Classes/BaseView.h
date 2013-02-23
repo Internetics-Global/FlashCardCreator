@@ -12,8 +12,6 @@
 @class Pack;
 
 @protocol BaseViewDelegate
-
-- (void) save;  //save all except logo URL and Image
 - (void) updatelogoURLForAllCards:(NSString *) urlString;
 - (void) updatelogoImageForAllCards:(NSString *) imagePath;
 

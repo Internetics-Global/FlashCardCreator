@@ -96,7 +96,6 @@
 	{
 		//flash card height = scroll height; flash card width < scroll width 
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,0,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)];
-        cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentPack = _currentPack;
         cardView.currentCard = cardArray[index];
 		CGRect rect = cardView.frame;
@@ -125,7 +124,6 @@
 	{
 		//flash card height = scroll height; flash card width < scroll width
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];
-        cardView.tag = index;	// tag our images for later use when we place them in serial fashion
         cardView.currentPack = _currentPack;
         cardView.currentCard = _currentCard;
 		CGRect rect = cardView.frame;

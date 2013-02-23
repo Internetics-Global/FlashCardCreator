@@ -55,6 +55,11 @@
             _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
             _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
+        
+        //Just for debug use
+        _previousCardView.tag = 110;
+        _currentCardView.tag = 111;
+        _nextCardView.tag = 112;
 
     }
     return self;
@@ -146,26 +151,38 @@
 {
     CGRect rect;
     
+    for (FlashCardView *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
+    }
+    
+    if ([_currentPack cards].count == 0) {
+        return;
+    }
+    
     //1. Content size
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
     //2. Set current
-    _currentCardView.tag = _indexCard;
+    [_currentCardView reset];
     _currentCardView.currentPack = _currentPack;
     _currentCardView.currentCard = _currentCard;
+    _currentCardView.questionView.currentCard = _currentCard;
+    _currentCardView.questionView.currentPack = _currentPack;
+    _currentCardView.answerView.currentCard = _currentCard;
+    _currentCardView.answerView.currentPack = _currentPack;
+    
     _currentCardView.backgroundColor = [UIColor clearColor];
-    [_currentCardView checkCardEditable];
+    _currentCardView.enableSaveNotification = YES;
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
     curXLoc += IPAD_UI_DETAIL_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
-    if (!_currentCardView.superview) {
-        [_scrollView addSubview:_currentCardView];    
-    }
+    [_scrollView addSubview:_currentCardView];
 
     [_currentCardView refreshQuestionAnserView];
+    [_currentCardView checkCardEditable];
     
     //3. Set previous
     if (_indexCard == 0) {
@@ -173,64 +190,68 @@
     } else {
         _previousCardView.currentPack = _currentPack;
         _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
-        _previousCardView.tag = _indexCard -1;
         
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
-        if (!_previousCardView.superview) {
-            [_scrollView addSubview:_previousCardView];    
-        }
-        
+        [_scrollView addSubview:_previousCardView]; 
         
         [_previousCardView refreshQuestionAnserView];
+        [_previousCardView checkCardEditable];
     }
     
     //5. Set next
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
-        _nextCardView.tag = _indexCard +1;
         _nextCardView.currentPack = _currentPack;
         _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
         
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;
-        if (!_nextCardView.superview) {
-            [_scrollView addSubview:_nextCardView];    
-        }
+        [_scrollView addSubview:_nextCardView]; 
         
         [_nextCardView refreshQuestionAnserView];
+        [_nextCardView checkCardEditable];
     }
-    
-    
-    
-    
+
 }
 
 - (void)layoutScrollObjectsForiPhone
 {
     CGRect rect;
     
+    for (FlashCardView *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
+    }
+    
+    if ([_currentPack cards].count == 0) {
+        return;
+    }
+    
+    
     //1. Content size
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
     
     //2. Set current
-    _currentCardView.tag = _indexCard;
+    [_currentCardView reset];
     _currentCardView.currentPack = _currentPack;
     _currentCardView.currentCard = _currentCard;
+    _currentCardView.questionView.currentCard = _currentCard;
+    _currentCardView.questionView.currentPack = _currentPack;
+    _currentCardView.answerView.currentCard = _currentCard;
+    _currentCardView.answerView.currentPack = _currentPack;
     _currentCardView.backgroundColor = [UIColor clearColor];
-    [_currentCardView checkCardEditable];
+    _currentCardView.enableSaveNotification = YES;
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
     curXLoc += IPHONE_UI_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
-    if (!_currentCardView.superview) {
-        [_scrollView addSubview:_currentCardView];    
-    }
+    [_scrollView addSubview:_currentCardView]; 
     
     [_currentCardView refreshQuestionAnserView];
+    [_currentCardView checkCardEditable];
     
     //3. Set previous
     if (_indexCard == 0) {
@@ -238,13 +259,10 @@
     } else {
         _previousCardView.currentPack = _currentPack;
         _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
-        _previousCardView.tag = _indexCard -1;
         
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
-        if (!_previousCardView.superview) {
-            [_scrollView addSubview:_previousCardView];    
-        }
+        [_scrollView addSubview:_previousCardView];
         
         [_previousCardView refreshQuestionAnserView];
     }
@@ -253,20 +271,14 @@
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
-        _nextCardView.tag = _indexCard +1;
         _nextCardView.currentPack = _currentPack;
         _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
         
         rect.origin.x = curXLoc + IPHONE_UI_WIDTH;
         _nextCardView.frame = rect;
-        if (!_nextCardView.superview) {
-            [_scrollView addSubview:_nextCardView];    
-        }
+        [_scrollView addSubview:_nextCardView];  
         [_nextCardView refreshQuestionAnserView];
     }
-    
-    
-    
     
 }
 
@@ -616,8 +628,6 @@
 - (void) selectedPackNotification:(NSNotification *) notification {
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
-
-    
 }
 
 #pragma mark -

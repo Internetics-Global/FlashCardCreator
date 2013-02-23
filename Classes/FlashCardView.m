@@ -47,6 +47,7 @@
 @synthesize cardSNText = _cardSNText;
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
 @synthesize templateID = _templateID;
+@synthesize enableSaveNotification = _enableSaveNotification;
 
 
 #pragma mark -
@@ -55,26 +56,41 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
-        
-        _isQuestionShowing = YES; //default to show question
-        
-        _currentCard = [[Card alloc] init];
-        _currentPack = [[Pack alloc] init];
-        
-        _maxAllowedCardIndex = -1;
-        _templateID = 0;
-        
-        if (isUserInterfaceIdiomPhone) {
-            [self loadViewForiPhone];
-        } else {
-            [self loadViewForiPad];
-        }
+        [self reset];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveEdittedCard:) name:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     }
     return self;
 }
+
+- (void) reset {
+    
+    _questionView = nil;
+    _answerView = nil;
+    _cardSNText = nil;
+    _changeTemplateButton = nil;
+    _segmentedControl = nil;
+    
+    self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
+    
+    _isQuestionShowing = YES; //default to show question
+    
+    _currentCard = [[Card alloc] init];
+    _currentPack = [[Pack alloc] init];
+    
+    _maxAllowedCardIndex = -1;
+    _templateID = 0;
+    _enableSaveNotification = FALSE;
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self loadViewForiPhone];
+    } else {
+        [self loadViewForiPad];
+    }
+}
+
+
 
 #pragma mark -
 #pragma mark - Layout view
@@ -109,7 +125,6 @@
         
     }
     
-    //Template button
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-60, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 60, 60);
@@ -118,19 +133,22 @@
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
     
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                         @[NSLocalizedString(@"ToolbarItem_Question",nil),
-                         NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+    if (_segmentedControl == nil) {
+        _segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                             @[NSLocalizedString(@"ToolbarItem_Question",nil),
+                             NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+        
+        CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
+                                  self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
+                                  self.bounds.size.width-2*kSegmentLeftMarginForiPad,
+                                  kSegmentHeightForiPad);
+        _segmentedControl.frame = frame;
+        [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+        _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        _segmentedControl.selectedSegmentIndex = 0;
+        [self addSubview:_segmentedControl];
+    }
     
-    CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
-                              self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
-                              self.bounds.size.width-2*kSegmentLeftMarginForiPad,
-                              kSegmentHeightForiPad);
-    _segmentedControl.frame = frame;
-    [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-    _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    _segmentedControl.selectedSegmentIndex = 0;
-    [self addSubview:_segmentedControl];
 }
 
 - (void) loadViewForiPhone {
@@ -162,21 +180,22 @@
         
     }
     
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:
-                         @[NSLocalizedString(@"ToolbarItem_Question",nil),
-                         NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+    if (_segmentedControl == nil) {
+        _segmentedControl = [[UISegmentedControl alloc] initWithItems:
+                             @[NSLocalizedString(@"ToolbarItem_Question",nil),
+                             NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+        
+        CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
+                                  self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
+                                  self.bounds.size.width-2*kSegmentLeftMarginForiPhone,
+                                  kSegmentHeightForiPhone);
+        _segmentedControl.frame = frame;
+        [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+        _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        _segmentedControl.selectedSegmentIndex = 0;
+        [self addSubview:_segmentedControl];
+    }
     
-    CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
-                              self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
-                              self.bounds.size.width-2*kSegmentLeftMarginForiPhone,
-                              kSegmentHeightForiPhone);
-    _segmentedControl.frame = frame;
-    [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-    _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    _segmentedControl.selectedSegmentIndex = 0;
-    [self addSubview:_segmentedControl];
-    
-    //Template button
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-20, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-20, 20, 20);
@@ -365,9 +384,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
-- (void)save {
+- (void) saveEdittedCard: (NSNotification *) notification {
     if (_currentPack == nil) {
         NSLog(@"Error to create new card, since _currentPack is nil");
+        return;
+    }
+    
+    NSLog(@"Tag = %d (110 for previous, 111 for current, 112 for next",self.tag);
+    
+    if (!_enableSaveNotification) {
         return;
     }
     
@@ -450,6 +475,11 @@
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
     [_popoverController dismissPopoverAnimated:YES];
+    
+    if (!_enableSaveNotification ) {
+        return;
+    }
+    
     NSString *templateIDString = (NSString *)[notification object];
     if ([templateIDString integerValue] == _templateID) {
         //do nothing
@@ -477,9 +507,6 @@
             [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
         }
         
-        
-        
-        
         _currentCard.packID = _currentPack.packID;
         [_currentCard save];
         
@@ -494,6 +521,5 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 @end
