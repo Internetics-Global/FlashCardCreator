@@ -108,8 +108,6 @@
     }
     
     return YES;
-    
-    
 }
 
 - (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender {
@@ -141,7 +139,6 @@
     [imageData writeToFile:savedFullPath atomically:YES];
     _coverImageView.image = [UIImage imageWithContentsOfFile:savedFullPath];
     _newPack.coverImageURL = savedFullPath;
-
 }
 
 
@@ -180,7 +177,5 @@
 {
     
 }
-
-
 
 @end

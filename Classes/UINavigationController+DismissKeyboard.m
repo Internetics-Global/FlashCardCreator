@@ -19,7 +19,6 @@
 }
 
 
-
 //Restrict all the Navigation controller to landscape
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||

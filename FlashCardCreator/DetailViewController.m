@@ -40,9 +40,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
-        
         float flashCardYPositionInScrollView;
-        
         if (isUserInterfaceIdiomPhone) {
             flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
             _previousCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
@@ -69,7 +67,6 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
-    
 }
 
 
@@ -112,22 +109,22 @@
     
     if (isUserInterfaceIdiomPhone){
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
+        [self showCurrentCardInScrollView];
     } else {
         _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
-    }
-    
-    if ([_currentPack cards].count !=0) {
-        //Load card view when not:1. downloading;2. not every time
-        BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-        if (isExamplePackDownloadedSuccessful == TRUE) {
-            static dispatch_once_t oncetoken;
-            dispatch_once(&oncetoken, ^{
-                [self showCurrentCardInScrollView];
-            }); 
+        
+        if ([_currentPack cards].count !=0) {
+            //Load card view when not:1. downloading;2. not every time
+            BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+            if (isExamplePackDownloadedSuccessful == TRUE) {
+                static dispatch_once_t oncetoken;
+                dispatch_once(&oncetoken, ^{
+                    [self showCurrentCardInScrollView];
+                });
+            }
         }
-        
     }
-        
+
 }
 
 #pragma mark -
@@ -137,14 +134,12 @@
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
-        
     } else {
         [self layoutScrollObjectsForiPad];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
     self.title = _currentPack.packName;
-    
 }
 
 - (void)layoutScrollObjectsForiPad
@@ -170,7 +165,6 @@
     _currentCardView.questionView.currentPack = _currentPack;
     _currentCardView.answerView.currentCard = _currentCard;
     _currentCardView.answerView.currentPack = _currentPack;
-    
     _currentCardView.backgroundColor = [UIColor clearColor];
     _currentCardView.enableSaveNotification = YES;
     
@@ -228,7 +222,6 @@
         return;
     }
     
-    
     //1. Content size
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
     
@@ -279,7 +272,6 @@
         [_scrollView addSubview:_nextCardView];  
         [_nextCardView refreshQuestionAnserView];
     }
-    
 }
 
 #pragma mark -
@@ -288,15 +280,11 @@
 - (void)moreButtonClicked:(id) sender
 {
     MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
-    
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
-    
     if (_settingPopoverController == nil) {
         _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
     }
-    
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
-    
     [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
@@ -328,7 +316,6 @@
 - (void)backButtonClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 
@@ -390,7 +377,6 @@
 
 - (void) exectueShareAfterDropboxLinked {
     
-
     NSString *generatedZipFilePath = nil;
     //step1: create zip file
     if (_currentPack) {
@@ -435,15 +421,6 @@
     NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
     SHKItem *item = [SHKItem URL:[NSURL URLWithString:urlSchemeLinkage] title:@"example" contentType:SHKURLContentTypeUndefined];
-    
-    //SHKItem *item = [SHKItem text:urlSchemeLinkage];
-     /*item.facebookURLSharePictureURI = @"http://www.state.gov/cms_images/india_tajmahal_2003_06_252.jpg";
-     item.facebookURLShareDescription = @"description text";
-     item.tags = [NSArray arrayWithObjects:@"apple inc.",@"computers",@"mac", nil];
-     item.mailToRecipients = [NSArray arrayWithObjects:@"frodo@middle-earth.me", @"gandalf@middle-earth.me", nil];
-     item.textMessageToRecipients = [NSArray arrayWithObjects: @"581347615", @"581344543", nil];*/
-     
-    
 	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
     [SHK setRootViewController:self];
 	[actionSheet showFromToolbar:self.navigationController.toolbar];
@@ -495,8 +472,7 @@
     [dict setObject:[[path componentsSeparatedByString:@"/"]lastObject] forKey:@"share_filename"];  // similiar like like card1361507800.569792-1108896928.zip
     [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    
+
     [self shareAction:link];
     
 }
@@ -515,20 +491,13 @@
 	
 	_HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
     _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
-    //make sure to be in front and disable user interaction
     CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
     [_HUD setTransform:at];
-    
-    // Set determinate mode
     _HUD.mode = MBProgressHUDModeDeterminate;
-    
     _HUD.delegate = self;
     _HUD.labelText = @"Uploading first...";
     _HUD.detailsLabelText = @"to Dropbox and create share linkage";
-    
     _isCreatingShareLinkage = NO;
-    
-    // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
     [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
@@ -549,12 +518,9 @@
     while (_isCreatingShareLinkage == YES) {
         usleep(50000);    
     }
-    
-    
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
-	// Remove HUD from screen when the HUD was hidded
 	[_HUD removeFromSuperview];
 }
 
@@ -581,27 +547,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
-
-#pragma mark -
-#pragma mark Segment callback
-
-- (void)segmentAction:(id)sender
-{
-	UISegmentedControl *segControl = sender;
-    
-    switch (segControl.selectedSegmentIndex)
-	{
-		case 0:	//show question
-		{
-			break;
-		}
-		case 1: //show answer
-		{
-			break;
-		}
-	}
 }
 
 

@@ -66,7 +66,6 @@
     [self addSubview:_scrollView];
     [self addSubview:_closeButton];
     
-    
     NSArray *shuffledCardArray = nil;
     BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
     if (isRandomPlayMode == YES) {
@@ -84,12 +83,10 @@
     
     //Set  _currentFlashCardView
     _currentFlashCardView = (FlashCardView *)_flashCardViewArray[0];
-    
 }
 
 - (void)layoutScrollObjectsForiPad:(NSArray *)cardArray
 {
-    
     [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2;
     for (int index = 0; index < [cardArray count]; index++)
@@ -106,13 +103,9 @@
 		[_scrollView addSubview:cardView];
         curXLoc += IPAD_UI_WIDTH;
         [_flashCardViewArray addObject:cardView];
-        
-        
 	}
 	
 	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPad)];
-    
-    
 }
 
 - (void)layoutScrollObjectsForiPhone:(NSArray *)cardArray
@@ -134,12 +127,9 @@
 		[_scrollView addSubview:cardView];
         curXLoc += IPHONE_UI_WIDTH;
         [_flashCardViewArray addObject:cardView];
-        
-        
 	}
 	
 	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPhone)];
-    
     
 }
 

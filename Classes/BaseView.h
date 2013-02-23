@@ -57,8 +57,6 @@
     
     CGFloat _keyboardHeight;
     UIScrollView *_verticalScrollView;
-    
-    
 }
 
 @property (strong, nonatomic) Card *currentCard;

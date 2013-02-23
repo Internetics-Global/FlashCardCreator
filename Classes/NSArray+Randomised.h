@@ -11,7 +11,6 @@
 @interface NSArray (Randomised)
 
 - (NSArray *)randomised;
-
 - (NSMutableArray *)cardSNOrdered;
 
 @end

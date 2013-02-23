@@ -93,7 +93,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void) saveAndCloseCreateCardView {
@@ -157,7 +156,6 @@
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate.masterViewController.backgroundOfCreateCardView removeFromSuperview];
     }
-    
 }
 
 

@@ -18,7 +18,6 @@
     [self drawInRect:CGRectMake(0, 0, realSize.width, realSize.height)];
 
     UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-
     UIGraphicsEndImageContext();
 
     return scaledImage;

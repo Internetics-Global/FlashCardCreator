@@ -16,7 +16,6 @@
 - (void) refreshDisplay;
 - (void) updateAnswerViewTemplateForiPhone:(int) index;
 - (void) updateAnswerViewTemplateForiPad:(int) index;
-
 - (void) setCurrentCard:(Card *)currentCard;
 
 @end

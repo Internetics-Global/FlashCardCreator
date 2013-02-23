@@ -66,9 +66,6 @@
     _subheading.text = _currentCard.question.subheading;
     _main.text =_currentCard.question.main;
     _sub.text =_currentCard.question.sub;
-    
-    
-    
 }
 
 #pragma mark -
@@ -292,9 +289,6 @@
             
     }
 }
-
-
-
 
 #pragma mark -
 #pragma mark - Get/set currentCard

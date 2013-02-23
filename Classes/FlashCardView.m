@@ -64,6 +64,14 @@
     return self;
 }
 
+
+/**
+ * The purpose of reset: 
+ * 1. Don't wan to re-initialize ( so we don't call  initWithFrame)
+ * 2. Re-initialized all view related like _questionView, etc
+ * 3. Set default value
+ * 4. After reset, we need to set property properly 
+ */
 - (void) reset {
     
     _questionView = nil;
@@ -71,8 +79,6 @@
     _cardSNText = nil;
     _changeTemplateButton = nil;
     _segmentedControl = nil;
-    
-    self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1];
     
     _isQuestionShowing = YES; //default to show question
     
@@ -89,8 +95,6 @@
         [self loadViewForiPad];
     }
 }
-
-
 
 #pragma mark -
 #pragma mark - Layout view
@@ -113,7 +117,6 @@
         _answerView.currentPack = _currentPack;
         _questionView.delegate = self;
     }
-    
     
     if (_cardSNText == nil) {
         

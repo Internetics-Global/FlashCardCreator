@@ -661,7 +661,7 @@
     
     [[NSFileManager defaultManager] removeItemAtPath:downloadedPackInfoFilePath error:nil];
     
-    //Step3: build cards by parsing zipped card
+    //Step4: build cards by parsing zipped card
     error = nil;
     NSArray *fileListArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[FileOperationHelper downloadedPackFileDirectory] error:&error];
     if (error) {
@@ -678,17 +678,20 @@
         }
     }
     
-    //Step4: set successful flag
+    //Step5: set  flag
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    //Step5:
     [[NSUserDefaults standardUserDefaults] setInteger:pack.packID forKey:@"lastCreatedPackID"];
+    
+    NSString *updateDate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:pack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:updateDate forKey:@"update_date"];
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:pack.packName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //Step6: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
-    
     
 }
 

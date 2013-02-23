@@ -100,6 +100,7 @@
 - (void) loadViewForiPad {
     
     //Section 1
+    
     UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
     titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
     titleBackgroundView.userInteractionEnabled = FALSE;
@@ -117,8 +118,6 @@
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     [self addSubview:_logoImage];
-    
-    
     
     UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
@@ -271,7 +270,6 @@
     _subheading.delegate = self;
     [_verticalScrollView addSubview:_subheading];
     
-    
     _main = [[UITextView alloc]init];
     _main.userInteractionEnabled = FALSE;
     _main.backgroundColor = [UIColor orangeColor];
@@ -394,8 +392,6 @@
     }else if ([_subAlign isEqualToString:@"Right"]) {
         _sub.textAlignment = NSTextAlignmentRight;
     }
-    
-    
 }
 
 #pragma mark -
@@ -427,16 +423,11 @@
     }
     [_verticalScrollView setContentOffset:offset animated:YES];
     
-    
-    
     if (_keyboardShown)
         return;
     
     _keyboardShown = YES;
-    
-    
 }
-
 
 
 - (void)keyboardWasHidden:(NSNotification*)aNotification
@@ -464,11 +455,8 @@
     
     _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
-    
-    
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
-    
     
     //Font Array
     UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
@@ -510,7 +498,6 @@
     if (_alignArray == nil) {
         _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];
     }
-    
     
     //Keyboard top view
     if (_keyboardTopView == nil) {
