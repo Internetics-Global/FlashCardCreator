@@ -407,9 +407,9 @@
         saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];    
     }
     
-    //if folder not exist, create automatically
+    //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
     [_restClient uploadFile:saveName toPath:@"/FlashCardCreator"
-              withParentRev:nil fromPath:generatedZipFilePath];
+              fromPath:generatedZipFilePath];
     [self showProgressIndicator];
     
     //step3: create dropbox linkage which locate in uploadedFile:
