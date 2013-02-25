@@ -56,7 +56,6 @@
         }
         
         _cardView.currentPack = _currentPack;
-        
         _cardView.questionView.currentPack = _currentPack;
         _cardView.answerView.currentPack = _currentPack;
         _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;

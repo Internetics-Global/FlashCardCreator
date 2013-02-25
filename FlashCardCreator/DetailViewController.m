@@ -111,7 +111,7 @@
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
         [self showCurrentCardInScrollView];
     } else {
-        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT+200);
+        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
         
         if ([_currentPack cards].count !=0) {
             //Load card view when not:1. downloading;2. not every time
@@ -158,14 +158,7 @@
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
     //2. Set current
-    [_currentCardView reset];
-    _currentCardView.currentPack = _currentPack;
-    _currentCardView.currentCard = _currentCard;
-    _currentCardView.questionView.currentCard = _currentCard;
-    _currentCardView.questionView.currentPack = _currentPack;
-    _currentCardView.answerView.currentCard = _currentCard;
-    _currentCardView.answerView.currentPack = _currentPack;
-    _currentCardView.backgroundColor = [UIColor clearColor];
+    [_currentCardView reset:_currentCard curPack:_currentPack];
     _currentCardView.enableSaveNotification = YES;
     
     rect = _currentCardView.frame;
@@ -226,14 +219,7 @@
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
     
     //2. Set current
-    [_currentCardView reset];
-    _currentCardView.currentPack = _currentPack;
-    _currentCardView.currentCard = _currentCard;
-    _currentCardView.questionView.currentCard = _currentCard;
-    _currentCardView.questionView.currentPack = _currentPack;
-    _currentCardView.answerView.currentCard = _currentCard;
-    _currentCardView.answerView.currentPack = _currentPack;
-    _currentCardView.backgroundColor = [UIColor clearColor];
+    [_currentCardView reset:_currentCard curPack:_currentPack];
     _currentCardView.enableSaveNotification = YES;
     
     rect = _currentCardView.frame;

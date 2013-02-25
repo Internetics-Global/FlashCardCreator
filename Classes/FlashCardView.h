@@ -46,7 +46,7 @@
 - (void) refreshQuestionAnserView;
 - (void)checkCardEditable;
 - (void) disableCardEdit;
-- (void) reset;
+- (void) reset:(Card *) card curPack: (Pack *) pack;
 - (void)segmentAction:(id)sender;
 
 @end

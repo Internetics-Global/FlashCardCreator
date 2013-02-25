@@ -114,10 +114,17 @@
     _logoImage.userInteractionEnabled = TRUE; //alway true
     _logoImage.layer.cornerRadius = 8;
     _logoImage.layer.masksToBounds = YES;
+    [self addSubview:_logoImage];
     //Default logic
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
-    [self addSubview:_logoImage];
+    
+    _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _logoLinkageButton.frame = CGRectMake(680, 95, 100, 30);
+    [_logoLinkageButton setTitle:@"Edit linkage" forState:UIControlStateNormal];
+    _logoLinkageButton.backgroundColor = [UIColor clearColor];
+    [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:_logoLinkageButton];
     
     UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
     sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
@@ -183,13 +190,6 @@
     
     //Section 3
     
-    _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _logoLinkageButton.frame = CGRectMake(680, 95, 100, 30);
-    [_logoLinkageButton setTitle:@"Edit linkage" forState:UIControlStateNormal];
-    _logoLinkageButton.backgroundColor = [UIColor clearColor];
-    [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:_logoLinkageButton];
-    
     _packName = [[UILabel alloc] init];
     _packName.frame = CGRectMake(0, 0, 400, 60);
     [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
@@ -229,17 +229,26 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(350, 10, 30, 30);
+    _logoImage.frame = CGRectMake(350, 5, 30, 30);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE;
     _logoImage.tag = 0;
     _logoImage.layer.cornerRadius = 5;
     _logoImage.layer.masksToBounds = YES;
+    [self addSubview:_logoImage];
+    
     //Default logic
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
-    [self addSubview:_logoImage];
+    
+    _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _logoLinkageButton.frame = CGRectMake(350, 30, 30, 10);
+    [_logoLinkageButton setTitle:@"edit" forState:UIControlStateNormal];
+    _logoLinkageButton.titleLabel.font = [UIFont systemFontOfSize:10];
+    _logoLinkageButton.backgroundColor = [UIColor clearColor];
+    [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
+    [self addSubview:_logoLinkageButton];
     
     //Section 2
     

@@ -45,7 +45,6 @@
     [_closeButton addTarget:self action:@selector(closePlayView) forControlEvents:UIControlEventTouchDown];
     
     _scrollView = [[UIScrollView alloc] init];
-    _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.clipsToBounds = YES;
@@ -57,10 +56,10 @@
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 10, 20, 20);
-        _scrollView.frame = CGRectMake(0, 15, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-2*15);
+        _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
-        _scrollView.frame = CGRectMake(0, (IPAD_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2, IPAD_UI_WIDTH, kFlashCardViewHeight_PlayMode_iPad);
+        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
     }
     
     [self addSubview:_scrollView];
@@ -91,12 +90,13 @@
     CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2;
     for (int index = 0; index < [cardArray count]; index++)
 	{
-		//flash card height = scroll height; flash card width < scroll width 
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,0,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)];
+		//flash card height = scroll height; flash card width < scroll width
+        CGFloat flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT; //Since it's horizontal movement, so this
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)];
         cardView.currentPack = _currentPack;
         cardView.currentCard = cardArray[index];
 		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, 0);
+        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
         [cardView disableCardEdit];
         [cardView refreshQuestionAnserView];
@@ -116,7 +116,7 @@
     for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
-        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];
+        FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];;
         cardView.currentPack = _currentPack;
         cardView.currentCard = _currentCard;
 		CGRect rect = cardView.frame;

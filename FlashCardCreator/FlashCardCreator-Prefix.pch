@@ -81,9 +81,9 @@
 #define kFlashCardViewHeight_Detail_iPhone     260     //NOT is the scroll view's height
 
 #define kFlashCardViewWidth_PlayMode_iPad      800
-#define kFlashCardViewHeight_PlayMode_iPad     640     //Also is the scroll view's height
+#define kFlashCardViewHeight_PlayMode_iPad     640     //NOT is the scroll view's height
 #define kFlashCardViewWidth_PlayMode_iPhone    ((IPHONE_UI_WIDTH) - 80)
-#define kFlashCardViewHeight_PlayMode_iPhone   280     //Also is the scroll view's height
+#define kFlashCardViewHeight_PlayMode_iPhone   260     //NOT is the scroll view's height
 
 //Master view cell size
 #define kCellSizeWidth                         IPAD_UI_MASTER_WIDTH     //180 is from "MGSplitViewController.h"

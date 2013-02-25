@@ -56,7 +56,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self reset];
+        [self reset:nil curPack:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveEdittedCard:) name:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
@@ -72,7 +72,7 @@
  * 3. Set default value
  * 4. After reset, we need to set property properly 
  */
-- (void) reset {
+- (void) reset:(Card *) card curPack: (Pack *) pack {
     
     _questionView = nil;
     _answerView = nil;
@@ -82,8 +82,8 @@
     
     _isQuestionShowing = YES; //default to show question
     
-    _currentCard = [[Card alloc] init];
-    _currentPack = [[Pack alloc] init];
+    self.currentCard = card;
+    self.currentPack = pack;
     
     _maxAllowedCardIndex = -1;
     _templateID = 0;
