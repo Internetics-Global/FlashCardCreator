@@ -636,19 +636,19 @@
     
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     
-    if ([title isEqualToString:@"Size 12"]) {
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size12",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:12];
         selectFontSize = 12;
-    } else if ([title isEqualToString:@"Size 16"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size16",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:16];
         selectFontSize = 16;
-    } else if ([title isEqualToString:@"Size 20"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size20",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:20];
         selectFontSize = 20;
-    } else if ([title isEqualToString:@"Size 24"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size24",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:24];
         selectFontSize = 24;
-    } else if ([title isEqualToString:@"Size 28"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size28",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:28];
         selectFontSize = 28;
     }
@@ -676,13 +676,13 @@
     
     NSString *title = ((UIBarButtonItem *) sender).title;
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
-    if ([title isEqualToString:@"Left"]) {
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Left",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentLeft;
         selectAlignStr = @"Left";
-    } else if ([title isEqualToString:@"Center"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Center",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentCenter;
         selectAlignStr = @"Center";
-    } else if ([title isEqualToString:@"Right"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Right",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentRight;
         selectAlignStr = @"Right";
     }
@@ -706,19 +706,19 @@
     
     NSString *title = ((UIBarButtonItem *) sender).title;
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
-    if ([title isEqualToString:@"Black"]) {
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Black",nil)]) {
         responderTextView.textColor = [UIColor blackColor];
         selectColorStr = @"Black";
-    } else if ([title isEqualToString:@"Yellow"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil)]) {
         responderTextView.textColor = [UIColor yellowColor];
         selectColorStr = @"Yellow";
-    } else if ([title isEqualToString:@"Blue"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Blue",nil)]) {
         responderTextView.textColor = [UIColor blueColor];
         selectColorStr = @"Blue";
-    } else if ([title isEqualToString:@"Red"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Red",nil)]) {
         responderTextView.textColor = [UIColor redColor];
         selectColorStr = @"Red";
-    } else if ([title isEqualToString:@"Green"]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Green",nil)]) {
         responderTextView.textColor = [UIColor greenColor];
         selectColorStr = @"Green";
     }
@@ -781,7 +781,7 @@
 
 - (void) editLogoLinkageURL:(id) sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set URL"
-                                                    message:[NSString stringWithFormat:@"Enter the URL"]
+                                                    message:[NSString stringWithFormat:@"Enter a valid URL"]
                                                    delegate:self cancelButtonTitle:@"Cancel"
                                           otherButtonTitles:@"Ok", nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];

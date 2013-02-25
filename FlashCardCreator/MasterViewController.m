@@ -187,8 +187,12 @@
             _backgroundOfCreateCardView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
         }
         _backgroundOfCreateCardView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.8];
+        _backgroundOfCreateCardView.layer.opacity = 0;
+        [UIView animateWithDuration:0.3 animations:^{
+            _backgroundOfCreateCardView.layer.opacity = 1;
+            [self.navigationController.view addSubview:_backgroundOfCreateCardView];
+        }];
         [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
-        [self.navigationController.view addSubview:_backgroundOfCreateCardView];
     }
     
     

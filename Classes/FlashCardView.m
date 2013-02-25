@@ -26,7 +26,7 @@
 #define kQuestionViewLeftMarginForiPad 0.0
 #define kQuestionViewTopMarginForiPad 10.0
 #define kQuestionViewButtomMarginForiPad 80.0
-#define kQuestionViewCornerRadiusForiPad 30.0
+#define kQuestionViewCornerRadiusForiPad 20.0
 
 #define kSegmentLeftMarginForiPhone 15.0
 #define kSegmentHeightForiPhone 22.0
@@ -34,7 +34,7 @@
 #define kQuestionViewLeftMarginForiPhone 0.0
 #define kQuestionViewTopMarginForiPhone 5.0
 #define kQuestionViewButtomMarginForiPhone 40.0
-#define kQuestionViewCornerRadiusForiPhone 15.0
+#define kQuestionViewCornerRadiusForiPhone 10.0
 
 
 @implementation FlashCardView
@@ -121,7 +121,7 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(20, 20, 40, 40);
+        _cardSNText.frame = CGRectMake(20, 20, 0, 0);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
         [self addSubview:_cardSNText];
@@ -295,7 +295,11 @@
 		{
             if (_isQuestionShowing == NO) {
                 [_answerView removeFromSuperview];
-                [self addSubview:_questionView];
+                _questionView.layer.opacity = 0.5;
+                [UIView animateWithDuration:0.4 animations:^{
+                    _questionView.layer.opacity = 1;
+                    [self addSubview:_questionView];
+                }];
                 _questionView.delegate = self;
                 _isQuestionShowing = YES;
                 _segmentedControl.selectedSegmentIndex = 0;
@@ -306,7 +310,11 @@
 		{
             if (_isQuestionShowing == YES) {
                 [_questionView removeFromSuperview];
-                [self addSubview:_answerView];
+                _answerView.layer.opacity = 0.5;
+                [UIView animateWithDuration:0.4 animations:^{
+                    _answerView.layer.opacity = 1;
+                    [self addSubview:_answerView];
+                }];
                 _answerView.delegate = self;
                 _isQuestionShowing = NO;
                 _segmentedControl.selectedSegmentIndex = 1;
