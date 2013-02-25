@@ -276,6 +276,12 @@
     
     [self.tableView reloadData];
     
+    if (!isUserInterfaceIdiomPhone) {
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
+    
 }
 
 

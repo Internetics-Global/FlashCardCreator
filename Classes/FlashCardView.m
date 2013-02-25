@@ -396,12 +396,11 @@
 }
 
 - (void) saveEdittedCard: (NSNotification *) notification {
+    NSLog(@"Tag = %d (110 for previous, 111 for current, 112 for next",self.tag);
     if (_currentPack == nil) {
         NSLog(@"Error to create new card, since _currentPack is nil");
         return;
     }
-    
-    NSLog(@"Tag = %d (110 for previous, 111 for current, 112 for next",self.tag);
     
     if (!_enableSaveNotification) {
         return;

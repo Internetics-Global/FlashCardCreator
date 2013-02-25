@@ -175,8 +175,8 @@
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
-        _previousCardView.currentPack = _currentPack;
-        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+
+        [_previousCardView reset:[_currentPack cards][_indexCard-1] curPack:_currentPack];
         
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
@@ -190,8 +190,7 @@
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
-        _nextCardView.currentPack = _currentPack;
-        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        [_nextCardView reset:[_currentPack cards][_indexCard+1] curPack:_currentPack];
         
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;

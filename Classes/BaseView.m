@@ -408,17 +408,31 @@
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    //Step1: Get keyboard height
     NSDictionary* info = [aNotification userInfo];
     NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
     _keyboardHeight = [aValue CGRectValue].size.height;
     NSLog(@"Keyboard height is %f",_keyboardHeight);
     
+    //Step2: Get cursor Y value relative to view
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     NSLog(@"Y position for current cursorY is %f",cursorY);
     
-    CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+    //Step3: Get view's Y value relative to screen
+    CGFloat yInScrren;
+    if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
+        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;    
+    } else {
+        //Since we convert to point based on UIWindow
+        if (isUserInterfaceIdiomPhone) {
+            yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].x;
+        } else {
+            yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].x;
+        }
+    }
     
+    //Step4: calculate the offset and gap value
     CGPoint offset = _verticalScrollView.contentOffset;
     CGFloat gap;
     if (isUserInterfaceIdiomPhone) {
@@ -430,6 +444,8 @@
     if (gap >5) {
         offset.y = gap+20;
     }
+    
+    //Step5: move scrollview
     [_verticalScrollView setContentOffset:offset animated:YES];
     
     if (_keyboardShown)
