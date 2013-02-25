@@ -38,12 +38,16 @@
 - (void)loadView {
     [super loadView];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"create_pack_background"]];
+    self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     self.title = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
     
-    _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];
+    if (isUserInterfaceIdiomPhone) {
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 20, 200, 30)];
+    } else {
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];    
+    }
     _packNameText.textAlignment = UITextAlignmentCenter;
-    _packNameText.backgroundColor = [UIColor clearColor];
+    _packNameText.backgroundColor = [UIColor whiteColor];
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:20];
     _packNameText.delegate = self;
@@ -52,7 +56,11 @@
     _packNameText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_packNameText];
     
-    _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 100,200,200)];
+    if (isUserInterfaceIdiomPhone){
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 60,200,200)];
+    } else {
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 100,200,200)];    
+    }
     _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.layer.masksToBounds = YES;

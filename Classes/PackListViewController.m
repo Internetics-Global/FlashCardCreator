@@ -44,6 +44,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+    
     //configure swipe view
     _swipeView.alignment = SwipeViewAlignmentCenter;
     _swipeView.pagingEnabled = YES;
