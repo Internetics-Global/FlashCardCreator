@@ -226,7 +226,7 @@
         _answerView.sub.userInteractionEnabled          = TRUE;
         
     } else {
-        _questionView.logoImage.userInteractionEnabled  = FALSE;
+        _questionView.logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
         _questionView.subheading.userInteractionEnabled = FALSE;
         _questionView.image.userInteractionEnabled      = FALSE;
         _questionView.main.userInteractionEnabled       = FALSE;

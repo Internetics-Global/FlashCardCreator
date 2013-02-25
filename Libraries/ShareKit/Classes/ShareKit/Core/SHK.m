@@ -327,7 +327,8 @@ BOOL SHKinit;
 
 + (NSArray *)favoriteSharersForType:(SHKShareType)type
 {	
-	NSArray *favoriteSharers = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@%i", SHKCONFIG(favsPrefixKey), type]];
+	//Wang Bourne: I don't want to change sharekit subproject, but i have to d
+    NSArray *favoriteSharers = [NSArray arrayWithObjects:@"SHKFacebook", @"SHKTwitter", @"SHKMail", nil];;
 		
 	// set defaults
 	if (favoriteSharers == nil)
