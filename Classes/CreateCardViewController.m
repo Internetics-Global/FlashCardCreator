@@ -38,7 +38,22 @@
         self.navigationItem.rightBarButtonItem = saveButton;
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
         self.navigationItem.leftBarButtonItem = backButton;
-        self.title = NSLocalizedString(@"Title_Create_A_New_Card", nil);
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.backgroundColor = [UIColor clearColor];
+        if (isUserInterfaceIdiomPhone) {
+            label.font = [UIFont boldSystemFontOfSize:16.0];
+        }else {
+            label.font = [UIFont boldSystemFontOfSize:20.0];
+        }
+        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor]; // change this color
+        label.text =NSLocalizedString(@"Title_Create_A_New_Card", nil);
+        [label sizeToFit];
+        [self.navigationItem setTitleView:label];
+
+        
         _newCard = [[Card alloc] init];
     }
     return self;

@@ -21,6 +21,7 @@
 #import "DataManager.h"
 #import "Reachability.h"
 #import "PlayView.h"
+#import "FCCBarButton.h"
 
 @implementation DetailViewController
 
@@ -66,7 +67,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];
 }
 
 
@@ -74,11 +75,12 @@
     [super loadView];
     
     //we don't setting button on iPhone
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_More", nil) style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
+                                      initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
-                                   initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
-                                   target:self action:@selector(playButtonClicked)];
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Share", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonClicked)];
+                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
         @[playButton, shareButton];
@@ -89,7 +91,7 @@
     
     //Don't need the back button when on iPad
     if (isUserInterfaceIdiomPhone) {
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)];
         self.navigationItem.leftBarButtonItem = backButton;
     }
     
@@ -139,7 +141,19 @@
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
-    self.title = _currentPack.packName;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    if (isUserInterfaceIdiomPhone) {
+        label.font = [UIFont boldSystemFontOfSize:16.0];
+    }else {
+        label.font = [UIFont boldSystemFontOfSize:20.0];    
+    }
+    label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor]; // change this color
+    label.text = _currentPack.packName;
+    [label sizeToFit];
+    [self.navigationItem setTitleView:label];
 }
 
 - (void)layoutScrollObjectsForiPad
@@ -274,7 +288,7 @@
     
 }
 
-- (void)playButtonClicked
+- (void)playButtonClicked:(id) sender
 {
     PlayView *playView = [[PlayView alloc] init];
     if (isUserInterfaceIdiomPhone) {
@@ -298,7 +312,7 @@
     
 }
 
-- (void)backButtonClicked
+- (void)backButtonClicked:(id) sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -307,7 +321,7 @@
 #pragma mark -
 #pragma mark - Dropbox and Share related
 
-- (void)shareButtonClicked
+- (void)shareButtonClicked:(id) sender
 {
     //Step1: check whether need to upload pack again
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];

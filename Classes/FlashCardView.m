@@ -34,7 +34,7 @@
 #define kQuestionViewLeftMarginForiPhone 0.0
 #define kQuestionViewTopMarginForiPhone 5.0
 #define kQuestionViewButtomMarginForiPhone 40.0
-#define kQuestionViewCornerRadiusForiPhone 10.0
+#define kQuestionViewCornerRadiusForiPhone 9.0
 
 
 @implementation FlashCardView
@@ -60,6 +60,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveEdittedCard:) name:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+                                
     }
     return self;
 }
@@ -121,9 +122,12 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(20, 20, 0, 0);
+        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad+10, 25, 25);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
+        CGPoint point = _cardSNText.center;
+        point.x = 30+kQuestionViewLeftMarginForiPad;
+        _cardSNText.center = point;
         [self addSubview:_cardSNText];
         
     }
@@ -176,9 +180,13 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+3, kQuestionViewTopMarginForiPhone+5, 25, 25);
+        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+5, kQuestionViewTopMarginForiPhone+5, 25, 25);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
+        _cardSNText.font = [UIFont systemFontOfSize:12];
+        CGPoint point = _cardSNText.center;
+        point.x = 15+kQuestionViewLeftMarginForiPhone;
+        _cardSNText.center = point;
         [self addSubview:_cardSNText];
         
     }

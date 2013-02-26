@@ -29,6 +29,7 @@
 #import "DataManager.h"
 #import "FileOperationHelper.h"
 #import "MoreInfoTableViewController.h"
+#import "FCCBarButton.h"
 
 
 @implementation MasterViewController
@@ -81,24 +82,19 @@
 {
     [super viewDidLoad];
 
-    //Left UIBarButtonItem
     _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Packs",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
-    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(createNewPack:)];
-    self.navigationItem.leftBarButtonItems = @[_selectPackButton,newPackButton];
+    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc]
+                                      initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)]];
     
-    
-    //Right UIBarButtonItem
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit",@"") style:UIBarButtonItemStylePlain target:self action:@selector(editButtonClicked:)];
-
+    
+    self.navigationItem.leftBarButtonItems = @[_selectPackButton,editButton, newPackButton];
     if (isUserInterfaceIdiomPhone) {
-        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_More",@"") style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
-
+        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
+                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
         self.navigationItem.rightBarButtonItems =
-            @[editButton,settingButton];
-    } else {
-        self.navigationItem.rightBarButtonItems =
-        @[editButton];
+            @[settingButton];
     }
     
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -122,20 +118,16 @@
     }
     
     if (isUserInterfaceIdiomPhone ) {
-        _addCardButton.center = CGPointMake(60,IPHONE_UI_HEIGHT-60);
+        _addCardButton.center = CGPointMake(80,IPHONE_UI_HEIGHT-50);
     } else {
         _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
     }
-    [_addCardButton setImage:[UIImage imageNamed:@"red_plus_up.png"] forState:UIControlStateNormal];
+    [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
     _addCardButton.showsTouchWhenHighlighted = YES;
     [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController.view insertSubview:_addCardButton atIndex:0];
-        [self.navigationController.view bringSubviewToFront:_addCardButton];
-    } else {
-        [self.navigationController.view insertSubview:_addCardButton atIndex:0];
-        [self.navigationController.view bringSubviewToFront:_addCardButton];
-    }
+    
+    [self.navigationController.view insertSubview:_addCardButton atIndex:0];
+    [self.navigationController.view bringSubviewToFront:_addCardButton];
 
 }
 

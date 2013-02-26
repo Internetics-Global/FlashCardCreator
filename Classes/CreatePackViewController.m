@@ -29,6 +29,22 @@
         self.navigationItem.leftBarButtonItem = closeButton;
         self.navigationItem.rightBarButtonItem = saveButton;
         
+        self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.backgroundColor = [UIColor clearColor];
+        if (isUserInterfaceIdiomPhone) {
+            label.font = [UIFont boldSystemFontOfSize:16.0];
+        }else {
+            label.font = [UIFont boldSystemFontOfSize:20.0];
+        }
+        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor]; // change this color
+        label.text = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
+        [label sizeToFit];
+        [self.navigationItem setTitleView:label];
+        
         _newPack = [[Pack alloc] init];
         
     }
@@ -37,10 +53,7 @@
 
 - (void)loadView {
     [super loadView];
-    
-    self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-    self.title = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
-    
+
     if (isUserInterfaceIdiomPhone) {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 20, 200, 30)];
     } else {

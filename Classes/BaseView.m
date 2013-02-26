@@ -197,7 +197,7 @@
     _packName.text = @"This is the pack name";
     _packName.textAlignment = NSTextAlignmentCenter;
     _packName.backgroundColor = [UIColor clearColor];
-    _packName.font = [UIFont systemFontOfSize:16];
+    _packName.font = [UIFont systemFontOfSize:20];
     _packName.textColor = [UIColor whiteColor];
     [self addSubview:_packName];
 }
