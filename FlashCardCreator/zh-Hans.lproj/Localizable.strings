@@ -7,7 +7,7 @@
  */
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "请检查你的网络";
-"DIALOG_DOWNLOAD_PACK"              = "下载中...";
+"DIALOG_DOWNLOAD_PACK"              = "下载例子中";
 
 "NavigationBarItem_Packs"   = "组";
 "NavigationBarItem_Create"  = "创建";

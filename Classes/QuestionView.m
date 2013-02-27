@@ -28,9 +28,9 @@
         _sub.text = @"sub";
         _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Question",nil);;
         _image.image = [UIImage imageNamed:@"question_placeholder_content.png"];
-        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.png"];
-        _imageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_content.png", [[NSBundle mainBundle] resourcePath]];
-        _logoImageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_logo.png", [[NSBundle mainBundle] resourcePath]];
+        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
+        _imageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_content.jpg", [[NSBundle mainBundle] resourcePath]];
+        _logoImageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_logo.jpg", [[NSBundle mainBundle] resourcePath]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
@@ -59,7 +59,7 @@
     if (imageTemp) {
         _logoImage.image = imageTemp;
     } else {
-        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.png"];    
+        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
 
     _logoLinkURL = _currentCard.question.logoURLLinkage;

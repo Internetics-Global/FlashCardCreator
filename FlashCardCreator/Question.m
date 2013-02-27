@@ -110,7 +110,7 @@
     //Step2: delted image resources
     NSError *error = nil;
     //We never delete placeholder imae
-    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.png"]) {
+    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.jpg"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {

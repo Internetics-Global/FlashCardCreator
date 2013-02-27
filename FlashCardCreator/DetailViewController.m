@@ -75,7 +75,7 @@
     [super loadView];
     
     //we don't setting button on iPhone
-    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
+    _settingButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
@@ -86,7 +86,7 @@
         @[playButton, shareButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[settingButton, playButton, shareButton];
+                                @[_settingButton, playButton, shareButton];
     }
     
     //Don't need the back button when on iPad
@@ -284,7 +284,7 @@
         _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
     }
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
-    [_settingPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    [_settingPopoverController presentPopoverFromBarButtonItem:_settingButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
@@ -489,7 +489,7 @@
 - (void)showProgressIndicator {
 	
 	_HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
-    _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //_HUD.color = [UIColor blackColor];
     CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
     [_HUD setTransform:at];
     _HUD.mode = MBProgressHUDModeDeterminate;

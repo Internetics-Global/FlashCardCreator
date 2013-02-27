@@ -39,6 +39,8 @@
     FlashCardView *_currentCardView;
     FlashCardView *_nextCardView;
     
+    UIBarButtonItem *_settingButton;
+    
 }
 
 @property (strong, nonatomic) id detailItem;

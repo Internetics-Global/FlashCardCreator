@@ -7,7 +7,7 @@
  */
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your network";
-"DIALOG_DOWNLOAD_PACK"              = "Downloading pack...";
+"DIALOG_DOWNLOAD_PACK"              = "Downloading sample pack";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

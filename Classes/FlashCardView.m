@@ -23,7 +23,6 @@
 #define kSegmentLeftMarginForiPad 30.0
 #define kSegmentHeightForiPad 44.0
 #define kSegmentButtomMarginForiPad 20.0
-#define kQuestionViewLeftMarginForiPad 0.0
 #define kQuestionViewTopMarginForiPad 10.0
 #define kQuestionViewButtomMarginForiPad 80.0
 #define kQuestionViewCornerRadiusForiPad 20.0
@@ -31,7 +30,6 @@
 #define kSegmentLeftMarginForiPhone 15.0
 #define kSegmentHeightForiPhone 22.0
 #define kSegmentButtomMarginForiPhone 10.0
-#define kQuestionViewLeftMarginForiPhone 0.0
 #define kQuestionViewTopMarginForiPhone 5.0
 #define kQuestionViewButtomMarginForiPhone 40.0
 #define kQuestionViewCornerRadiusForiPhone 9.0
@@ -103,7 +101,7 @@
 - (void) loadViewForiPad {
     
     if (_questionView == nil) {
-        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
+        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(0, kQuestionViewTopMarginForiPad, self.frame.size.width, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _questionView.currentCard = _currentCard;
         _questionView.currentPack = _currentPack;
@@ -112,7 +110,7 @@
     }
     
     if (_answerView == nil) {
-        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad, self.frame.size.width-2*kQuestionViewLeftMarginForiPad, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
+        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(0, kQuestionViewTopMarginForiPad, self.frame.size.width, self.frame.size.height-kQuestionViewButtomMarginForiPad-kQuestionViewTopMarginForiPad)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
         _answerView.currentPack = _currentPack;
@@ -122,11 +120,11 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPad, kQuestionViewTopMarginForiPad+10, 25, 25);
+        _cardSNText.frame = CGRectMake(0, kQuestionViewTopMarginForiPad+10, 25, 25);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
         CGPoint point = _cardSNText.center;
-        point.x = 30+kQuestionViewLeftMarginForiPad;
+        point.x = 30;
         _cardSNText.center = point;
         [self addSubview:_cardSNText];
         
@@ -161,7 +159,7 @@
 - (void) loadViewForiPhone {
     
     if (_questionView == nil) {
-        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
+        _questionView = [[QuestionView alloc] initWithFrame:CGRectMake(0, kQuestionViewTopMarginForiPhone, self.frame.size.width, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _questionView.currentCard = _currentCard;
         _questionView.currentPack = _currentPack;
@@ -170,7 +168,7 @@
     }
     
     if (_answerView == nil) {
-        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(kQuestionViewLeftMarginForiPhone, kQuestionViewTopMarginForiPhone, self.frame.size.width-2*kQuestionViewLeftMarginForiPhone, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
+        _answerView = [[AnswerView alloc] initWithFrame:CGRectMake(0, kQuestionViewTopMarginForiPhone, self.frame.size.width, self.frame.size.height-kQuestionViewButtomMarginForiPhone-kQuestionViewTopMarginForiPhone)];
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _answerView.currentCard = _currentCard;
         _answerView.currentPack = _currentPack;
@@ -180,12 +178,12 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(kQuestionViewLeftMarginForiPhone+5, kQuestionViewTopMarginForiPhone+5, 25, 25);
+        _cardSNText.frame = CGRectMake(5, kQuestionViewTopMarginForiPhone+5, 25, 25);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
         _cardSNText.font = [UIFont systemFontOfSize:12];
         CGPoint point = _cardSNText.center;
-        point.x = 15+kQuestionViewLeftMarginForiPhone;
+        point.x = 15;
         _cardSNText.center = point;
         [self addSubview:_cardSNText];
         

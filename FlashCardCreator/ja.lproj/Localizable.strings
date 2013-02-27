@@ -7,7 +7,7 @@
  */
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK" = "あなたのネットワークを確認してください";
-"DIALOG_DOWNLOAD_PACK" ="ダウンロードパック...";
+"DIALOG_DOWNLOAD_PACK" ="サンプルパックのダウンロード";
 
 "NavigationBarItem_Packs" = "パック";
 "NavigationBarItem_Create" = "作成";

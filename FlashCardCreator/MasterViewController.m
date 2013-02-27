@@ -810,7 +810,7 @@
 	
     _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
     
-    _HUD.color = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //_HUD.color = [UIColor blackColor];
     //make sure to be in front and disable user interaction
     CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
     [_HUD setTransform:at];

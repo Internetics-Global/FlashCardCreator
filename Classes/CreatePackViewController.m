@@ -29,8 +29,6 @@
         self.navigationItem.leftBarButtonItem = closeButton;
         self.navigationItem.rightBarButtonItem = saveButton;
         
-        self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.backgroundColor = [UIColor clearColor];
         if (isUserInterfaceIdiomPhone) {
@@ -85,6 +83,8 @@
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
     [_coverImageView addGestureRecognizer:imageSingeTap];
+    
+    self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
 }
 
@@ -144,16 +144,23 @@
     _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
     _picker.delegate = self;
     
-    if (!_imagePickerPopover) {
-        _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+    if (isUserInterfaceIdiomPhone) {
+        [self presentModalViewController:_picker animated:YES];
+    } else {
+        if (!_imagePickerPopover) {
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+        }
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
-    
-    [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [_imagePickerPopover dismissPopoverAnimated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        [self dismissModalViewControllerAnimated:YES];
+    } else {
+        [_imagePickerPopover dismissPopoverAnimated:YES];    
+    }
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
     NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
