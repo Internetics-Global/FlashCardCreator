@@ -11,6 +11,7 @@
 @class Pack;
 @class Card;
 @class FlashCardView;
+@class CMMotionManager;
 
 @interface PlayView : UIView <UIScrollViewDelegate> {
     UIScrollView *_scrollView;
@@ -19,6 +20,7 @@
     Card *_currentCard;
     FlashCardView *_currentFlashCardView;
     NSMutableArray *_flashCardViewArray;
+    CMMotionManager *_motionManager;
 }
 
 @property (strong, nonatomic) Pack *currentPack;

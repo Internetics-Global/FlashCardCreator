@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */; };
+		2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D37280D16DDCBA00068DE31 /* CoreMotion.framework */; };
 		2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BB16D1A53600E1E785 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BD16D1A53600E1E785 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -410,6 +411,7 @@
 
 /* Begin PBXFileReference section */
 		2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
+		2D37280D16DDCBA00068DE31 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Libraries/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
 		2D5C17B816D1A53600E1E785 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = Libraries/MGSplitViewController/MGSplitCornersView.h; sourceTree = "<group>"; };
 		2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitCornersView.m; path = Libraries/MGSplitViewController/MGSplitCornersView.m; sourceTree = "<group>"; };
@@ -634,6 +636,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */,
+				2D66C17E16A6B39200795CF9 /* CoreLocation.framework in Frameworks */,
 				2D5C189716D1A94F00E1E785 /* libShareKit.a in Frameworks */,
 				2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */,
 				2D66C18B16A6B5D600795CF9 /* Accounts.framework in Frameworks */,
@@ -641,7 +645,6 @@
 				2D66C18416A6B3E400795CF9 /* AdSupport.framework in Frameworks */,
 				2D66C18216A6B3AA00795CF9 /* CoreFoundation.framework in Frameworks */,
 				2D66C18016A6B39A00795CF9 /* Twitter.framework in Frameworks */,
-				2D66C17E16A6B39200795CF9 /* CoreLocation.framework in Frameworks */,
 				2D66C17C16A6B38A00795CF9 /* CFNetwork.framework in Frameworks */,
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
@@ -1117,6 +1120,7 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D37280D16DDCBA00068DE31 /* CoreMotion.framework */,
 				2DF980E416C26CC60092AAF6 /* CoreText.framework */,
 				2D66C18A16A6B5D500795CF9 /* Accounts.framework */,
 				2D66C18516A6B3F300795CF9 /* Social.framework */,
