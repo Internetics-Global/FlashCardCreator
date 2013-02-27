@@ -138,6 +138,7 @@
         
         UIImageView *rightPackImage = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:_currentPack.coverImageURL]];
         rightPackImage.frame = CGRectMake(0, 0, 200, 160);
+        rightPackImage.contentMode = UIViewContentModeScaleAspectFill;
         rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
         rightPackImage.layer.cornerRadius = 5;
         rightPackImage.layer.masksToBounds = TRUE;
