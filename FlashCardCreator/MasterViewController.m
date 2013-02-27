@@ -108,9 +108,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+
     if (_addCardButton == nil) {
         if (isUserInterfaceIdiomPhone) {
+            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 140, 60)];
+            _addCardButtonBackground.backgroundColor = [UIColor blackColor];
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];     
         } else {
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
@@ -118,7 +120,8 @@
     }
     
     if (isUserInterfaceIdiomPhone ) {
-        _addCardButton.center = CGPointMake(80,IPHONE_UI_HEIGHT-50);
+        _addCardButtonBackground.center = CGPointMake(70,IPHONE_UI_HEIGHT-30);
+        _addCardButton.center = CGPointMake(70,IPHONE_UI_HEIGHT-30);
     } else {
         _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
     }
@@ -126,12 +129,18 @@
     _addCardButton.showsTouchWhenHighlighted = YES;
     [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController.view addSubview:_addCardButtonBackground];
+    }
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
 
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
+    if (isUserInterfaceIdiomPhone) {
+        [_addCardButtonBackground removeFromSuperview];
+    }
     [_addCardButton removeFromSuperview];
 }
 
