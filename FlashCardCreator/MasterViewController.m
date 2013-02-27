@@ -107,39 +107,73 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 
     if (_addCardButton == nil) {
         if (isUserInterfaceIdiomPhone) {
-            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 140, 60)];
+            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 160, 60)];
             _addCardButtonBackground.backgroundColor = [UIColor blackColor];
-            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];     
+            _addCardButtonBackground.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
+            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+            _addCardButton.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
+            
+            
+            
         } else {
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+            _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2+10,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
         }
     }
     
-    if (isUserInterfaceIdiomPhone ) {
-        _addCardButtonBackground.center = CGPointMake(70,IPHONE_UI_HEIGHT-30);
-        _addCardButton.center = CGPointMake(70,IPHONE_UI_HEIGHT-30);
-    } else {
-        _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
-    }
     [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
     _addCardButton.showsTouchWhenHighlighted = YES;
     [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController.view addSubview:_addCardButtonBackground];
+    //Update right pack information (only appliable for iPhone）
+    if ((isUserInterfaceIdiomPhone) && (_currentPack.packID != -1)) {   //must be a valid pack
+        
+        _rightPackView = nil;
+        _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH-150, IPHONE_UI_HEIGHT)];
+        _rightPackView.backgroundColor = [UIColor blackColor];
+        
+        UIImageView *rightPackImage = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:_currentPack.coverImageURL]];
+        rightPackImage.frame = CGRectMake(0, 0, 200, 160);
+        rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
+        rightPackImage.layer.cornerRadius = 5;
+        rightPackImage.layer.masksToBounds = TRUE;
+        [_rightPackView addSubview:rightPackImage];
+        
+        UILabel *cardNo = [[UILabel alloc] init];
+        cardNo.textColor = [UIColor whiteColor];
+        cardNo.backgroundColor = [UIColor clearColor];
+        cardNo.textAlignment = UITextAlignmentCenter;
+        cardNo.font = [UIFont systemFontOfSize: 14];
+        [cardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+        CGRect rect = rightPackImage. frame;
+        rect.origin.y = rect.origin.y +rect.size.height+16;
+        rect.size.height = 15;
+        cardNo.frame = rect;
+        [_rightPackView addSubview:cardNo];
+        
+        [self.navigationController.view insertSubview:_rightPackView atIndex:0];
+        [self.navigationController.view bringSubviewToFront:_rightPackView];
+        
     }
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController.view addSubview:_addCardButtonBackground];    
+    }
+    
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
-
+    
 }
+
 
 - (void) viewWillDisappear:(BOOL)animated {
     if (isUserInterfaceIdiomPhone) {
         [_addCardButtonBackground removeFromSuperview];
+        [_rightPackView removeFromSuperview];
     }
     [_addCardButton removeFromSuperview];
 }
@@ -324,7 +358,7 @@
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
-      self.title = _currentPack.packName;
+        self.title = _currentPack.packName;
     } else {
         self.detailViewController.title = _currentPack.packName;
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
@@ -401,9 +435,14 @@
 	if (cell == nil) {
 		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] init];
-        backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
-        backgroundView.layer.cornerRadius =5;
-        [backgroundView.layer setMasksToBounds:YES];
+        if (isUserInterfaceIdiomPhone) {  //we made some tricks on iPhones
+            backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selected_table_cell~iPhone.png"]];
+            backgroundView.layer.opacity = 0.8;
+        } else {
+            backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];
+            backgroundView.layer.cornerRadius = 10;
+            backgroundView.layer.masksToBounds = YES;
+        }
         cell.selectedBackgroundView = backgroundView;
 	}
     
@@ -428,12 +467,9 @@
         cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
     }
     
-    
     if (_indexCard == indexPath.row) {
         [cell setSelected:YES animated:YES];
     }
-
-    
 
     return cell;
 
@@ -441,7 +477,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     self.currentCard = [_currentPack cards][indexPath.row];
     _indexCard = indexPath.row;
 

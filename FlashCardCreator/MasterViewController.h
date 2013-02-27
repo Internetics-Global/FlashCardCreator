@@ -32,6 +32,7 @@
     
     UIButton *_addCardButton;
     UIView *_addCardButtonBackground;
+    UIView *_rightPackView;
     UIBarButtonItem *_selectPackButton;
 }
 
