@@ -552,7 +552,7 @@
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
