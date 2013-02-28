@@ -15,6 +15,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     Pack *_lastCreatedPack;
+    int _indexLastCreatedPack;
 }
 
 @property (strong, nonatomic) UIWindow *window;

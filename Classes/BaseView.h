@@ -12,6 +12,7 @@
 @class Pack;
 
 @protocol BaseViewDelegate
+- (void) saveEdittedCard;
 - (void) updatelogoURLForAllCards:(NSString *) urlString;
 - (void) updatelogoImageForAllCards:(NSString *) imagePath;
 

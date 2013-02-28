@@ -37,6 +37,7 @@
 @synthesize currentPack = _currentPack;
 @synthesize currentCard = _currentCard;
 @synthesize indexCard = _indexCard;
+@synthesize indexPack = _indexPack;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 
 #pragma mark -
@@ -66,7 +67,7 @@
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
-        _indexPack = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastPackIndex"];
+        _currentPack = [[User defaultUser] packs][_indexPack];
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
         
         //3. others
@@ -137,29 +138,36 @@
     //Update right pack information (only appliable for iPhone）
     if ((isUserInterfaceIdiomPhone) && (_currentPack.packID != -1)) {   //must be a valid pack
         
-        _rightPackView = nil;
-        _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH-150, IPHONE_UI_HEIGHT)];
-        _rightPackView.backgroundColor = [UIColor blackColor];
+        if (_rightPackView == nil) {
+            _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH-150-100, IPHONE_UI_HEIGHT)];
+            _rightPackView.backgroundColor = [UIColor blackColor];
+        }
         
-        UIImageView *rightPackImage = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:_currentPack.coverImageURL]];
-        rightPackImage.frame = CGRectMake(0, 0, 200, 160);
-        rightPackImage.contentMode = UIViewContentModeScaleAspectFill;
-        rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
-        rightPackImage.layer.cornerRadius = 5;
-        rightPackImage.layer.masksToBounds = TRUE;
-        [_rightPackView addSubview:rightPackImage];
+        if (_rightPackImage == nil) {
+            _rightPackImage = [[UIImageView alloc] init];
+            _rightPackImage.frame = CGRectMake(0, 0, 180, 144);
+            _rightPackImage.contentMode = UIViewContentModeScaleAspectFill;
+            _rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
+            _rightPackImage.layer.cornerRadius = 5;
+            _rightPackImage.layer.masksToBounds = TRUE;
+            [_rightPackView addSubview:_rightPackImage];
+        }
+        _rightPackImage.image = [UIImage imageWithContentsOfFile:_currentPack.coverImageURL];
         
-        UILabel *cardNo = [[UILabel alloc] init];
-        cardNo.textColor = [UIColor whiteColor];
-        cardNo.backgroundColor = [UIColor clearColor];
-        cardNo.textAlignment = UITextAlignmentCenter;
-        cardNo.font = [UIFont systemFontOfSize: 14];
-        [cardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
-        CGRect rect = rightPackImage. frame;
-        rect.origin.y = rect.origin.y +rect.size.height+16;
-        rect.size.height = 15;
-        cardNo.frame = rect;
-        [_rightPackView addSubview:cardNo];
+        
+        if (_rightPackCardNo == nil) {
+            _rightPackCardNo = [[UILabel alloc] init];
+            _rightPackCardNo.textColor = [UIColor whiteColor];
+            _rightPackCardNo.backgroundColor = [UIColor clearColor];
+            _rightPackCardNo.textAlignment = UITextAlignmentCenter;
+            _rightPackCardNo.font = [UIFont systemFontOfSize: 14];
+            CGRect rect = _rightPackImage. frame;
+            rect.origin.y = rect.origin.y +rect.size.height+16;
+            rect.size.height = 15;
+            _rightPackCardNo.frame = rect;
+            [_rightPackView addSubview:_rightPackCardNo];
+        }
+        [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
         
         [self.navigationController.view insertSubview:_rightPackView atIndex:0];
         [self.navigationController.view bringSubviewToFront:_rightPackView];
@@ -559,6 +567,9 @@
                 self.detailViewController.indexCard = 0;
                 [self.detailViewController showCurrentCardInScrollView];
             }
+        } else {
+            //Update right pack info
+            [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
         }
         
 	}

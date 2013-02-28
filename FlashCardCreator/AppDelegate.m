@@ -77,6 +77,8 @@
         self.masterViewController.indexCard = 0;
         self.detailViewController.indexCard = 0;
         
+        self.masterViewController.indexPack = _indexLastCreatedPack;
+        
         self.masterViewController.currentPack = _lastCreatedPack;
         self.detailViewController.currentPack = _lastCreatedPack;
         
@@ -160,6 +162,7 @@
 - (Pack *) getLastCreatedCardPack {
     int lastCreatedPackID = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
 
+    _indexLastCreatedPack =0;
     if (!lastCreatedPackID) {
         // Means that we have NO record for last card or pack create
         _lastCreatedPack = nil;
@@ -168,6 +171,7 @@
             if (lastCreatedPackID == pack.packID) {
                 return pack;
             }
+            _indexLastCreatedPack ++;
         }
     }
     

@@ -464,7 +464,9 @@
     offset.y = 0;
     [_verticalScrollView setContentOffset:offset animated:YES];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    if (_delegate) {
+        [_delegate saveEdittedCard];
+    }
     
 }
 
@@ -550,8 +552,6 @@
     [_subheading resignFirstResponder];
     [_main resignFirstResponder];
     [_sub resignFirstResponder];
-    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
-    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
 }
 
 #pragma mark -
@@ -603,7 +603,11 @@
         
         [imageData writeToFile:_logoImageFullPath atomically:YES];
         _logoImage.image = [UIImage imageWithData:imageData];
-        [_delegate updatelogoImageForAllCards:_logoImageFullPath];
+        if (_delegate == nil) {
+            [Common alertViewCommon:@"You havn't set delegate for it"];
+        } else {
+            [_delegate updatelogoImageForAllCards:_logoImageFullPath];    
+        }
         
     } else {
         if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"]) || ((_logoImageFullPath == nil))) {
@@ -612,7 +616,7 @@
         [imageData writeToFile:_imageFullPath atomically:YES];
         _image.image = [UIImage imageWithData:imageData];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+        [_delegate saveEdittedCard];
     }
 }
 
@@ -694,9 +698,6 @@
     frame.size.height = responderTextView.contentSize.height;
     responderTextView.frame = frame;
     
-    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
-    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
-    
     [_keyboardTopView setItems:_buttonArray];
 }
 
@@ -724,9 +725,6 @@
     } else if (responderTextView.tag == 102) {
         _subAlign = selectAlignStr;
     }
-    
-    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
-    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -761,9 +759,6 @@
     } else if (responderTextView.tag == 102) {
         _subColor = selectColorStr;
     }
-    
-    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
-    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -834,7 +829,12 @@
             _logoLinkURL = temp;
             _currentCard.question.logoURLLinkage = temp;
             
-            [_delegate updatelogoURLForAllCards:temp];
+            if (_delegate == nil) {
+                [Common alertViewCommon:@"You havn't set delegate for it"];
+            } else {
+                [_delegate updatelogoURLForAllCards:temp];    
+            }
+            
         } 
     }
 }

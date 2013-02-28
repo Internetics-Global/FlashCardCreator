@@ -45,7 +45,6 @@
 @synthesize cardSNText = _cardSNText;
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
 @synthesize templateID = _templateID;
-@synthesize enableSaveNotification = _enableSaveNotification;
 
 
 #pragma mark -
@@ -57,9 +56,6 @@
         [self reset:nil curPack:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveEdittedCard:) name:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
-        
-        
                                 
     }
     return self;
@@ -88,7 +84,7 @@
     
     _maxAllowedCardIndex = -1;
     _templateID = 0;
-    _enableSaveNotification = FALSE;
+    [self removeQuestionAnswerViewDelegate];
     
     if (isUserInterfaceIdiomPhone) {
         [self loadViewForiPhone];
@@ -107,7 +103,6 @@
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _questionView.currentCard = _currentCard;
         _questionView.currentPack = _currentPack;
-        _questionView.delegate = self;
         [self addSubview:_questionView];
     }
     
@@ -116,7 +111,6 @@
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPad;
         _answerView.currentCard = _currentCard;
         _answerView.currentPack = _currentPack;
-        _questionView.delegate = self;
     }
     
     if (_cardSNText == nil) {
@@ -165,7 +159,6 @@
         _questionView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _questionView.currentCard = _currentCard;
         _questionView.currentPack = _currentPack;
-        _questionView.delegate = self;
         [self addSubview:_questionView];
     }
     
@@ -174,7 +167,6 @@
         _answerView.layer.cornerRadius = kQuestionViewCornerRadiusForiPhone;
         _answerView.currentCard = _currentCard;
         _answerView.currentPack = _currentPack;
-        _answerView.delegate = self;
     }
         
     if (_cardSNText == nil) {
@@ -311,7 +303,6 @@
                     _questionView.layer.opacity = 1;
                     [self addSubview:_questionView];
                 }];
-                _questionView.delegate = self;
                 _isQuestionShowing = YES;
                 _segmentedControl.selectedSegmentIndex = 0;
             }
@@ -326,7 +317,6 @@
                     _answerView.layer.opacity = 1;
                     [self addSubview:_answerView];
                 }];
-                _answerView.delegate = self;
                 _isQuestionShowing = NO;
                 _segmentedControl.selectedSegmentIndex = 1;
             }
@@ -406,16 +396,17 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
-- (void) saveEdittedCard: (NSNotification *) notification {
-    NSLog(@"Tag = %d (110 for previous, 111 for current, 112 for next",self.tag);
+- (void) saveEdittedCard {
     if (_currentPack == nil) {
         NSLog(@"Error to create new card, since _currentPack is nil");
         return;
     }
     
-    if (!_enableSaveNotification) {
+    if (![self checkDelegateStatus]) {
         return;
     }
+    
+    NSLog(@"%s:Check point",__FUNCTION__);
     
     UIImage *origialmage = [self.questionView captureWholeViewAsImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
@@ -498,10 +489,6 @@
 - (void) templateSelectedNotification: (NSNotification *) notification {
     [_popoverController dismissPopoverAnimated:YES];
     
-    if (!_enableSaveNotification ) {
-        return;
-    }
-    
     NSString *templateIDString = (NSString *)[notification object];
     if ([templateIDString integerValue] == _templateID) {
         //do nothing
@@ -533,6 +520,26 @@
         [_currentCard save];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    }
+}
+
+#pragma mark -
+#pragma mark - Set/Remove Delegate
+- (void) setQuestionAnswerViewDelegate {
+    _questionView.delegate = self;
+    _answerView.delegate = self;
+    
+}
+- (void) removeQuestionAnswerViewDelegate {
+    _questionView.delegate = nil;
+    _answerView.delegate = nil;
+}
+
+- (BOOL) checkDelegateStatus {
+    if ((_questionView.delegate == nil) || (_answerView.delegate == nil)) {
+        return FALSE;
+    } else {
+        return TRUE;
     }
 }
 

@@ -28,8 +28,6 @@
     UIPopoverController *_popoverController;
     NSUInteger _maxAllowedCardIndex;
     NSUInteger _templateID;
-    
-    BOOL _enableSaveNotification;//we don't broadcast to every FlashCardView, so we set this. The flag is used in "_previousCardView,_currentCardView,_nextCardView"
 }
 
 @property (nonatomic, strong) QuestionView *questionView;
@@ -41,12 +39,12 @@
 @property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
 @property (assign, nonatomic) NSUInteger templateID;
 
-@property (assign, nonatomic) BOOL enableSaveNotification;
-
 - (void) refreshQuestionAnserView;
-- (void)checkCardEditable;
+- (void) checkCardEditable;
 - (void) disableCardEdit;
 - (void) reset:(Card *) card curPack: (Pack *) pack;
-- (void)segmentAction:(id)sender;
+- (void) segmentAction:(id)sender;
+- (void) setQuestionAnswerViewDelegate;
+- (void) removeQuestionAnswerViewDelegate;
 
 @end

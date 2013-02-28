@@ -54,11 +54,6 @@
             _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
             _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
-        
-        //Just for debug use
-        _previousCardView.tag = 110;
-        _currentCardView.tag = 111;
-        _nextCardView.tag = 112;
 
     }
     return self;
@@ -161,6 +156,7 @@
     CGRect rect;
     
     for (FlashCardView *cardView in [_scrollView subviews]) {
+        [cardView removeQuestionAnswerViewDelegate];
         [cardView removeFromSuperview];
     }
     
@@ -173,7 +169,7 @@
     
     //2. Set current
     [_currentCardView reset:_currentCard curPack:_currentPack];
-    _currentCardView.enableSaveNotification = YES;
+    [_currentCardView setQuestionAnswerViewDelegate];
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
@@ -221,7 +217,7 @@
     CGRect rect;
     
     for (FlashCardView *cardView in [_scrollView subviews]) {
-        [cardView removeFromSuperview];
+        [cardView removeQuestionAnswerViewDelegate];    
     }
     
     if ([_currentPack cards].count == 0) {
@@ -233,7 +229,7 @@
     
     //2. Set current
     [_currentCardView reset:_currentCard curPack:_currentPack];
-    _currentCardView.enableSaveNotification = YES;
+    [_currentCardView setQuestionAnswerViewDelegate];
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;

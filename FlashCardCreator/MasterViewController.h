@@ -33,6 +33,8 @@
     UIButton *_addCardButton;
     UIView *_addCardButtonBackground;
     UIView *_rightPackView;
+    UIImageView *_rightPackImage;
+    UILabel *_rightPackCardNo;
     UIBarButtonItem *_selectPackButton;
 }
 
@@ -40,6 +42,7 @@
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, assign) int indexCard;
+@property (nonatomic, assign) int indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 
 @end
