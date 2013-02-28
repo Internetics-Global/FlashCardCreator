@@ -67,7 +67,6 @@
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
-        _currentPack = [[User defaultUser] packs][_indexPack];
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
         
         //3. others
@@ -129,11 +128,11 @@
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
             _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2+10,IPAD_UI_HEIGHT-40);
         }
+        
+        [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
+        _addCardButton.showsTouchWhenHighlighted = YES;
+        [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
-    _addCardButton.showsTouchWhenHighlighted = YES;
-    [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     
     //Update right pack information (only appliable for iPhone）
     if ((isUserInterfaceIdiomPhone) && (_currentPack.packID != -1)) {   //must be a valid pack
@@ -175,7 +174,6 @@
     }
     
     [self.navigationController.view addSubview:_addCardButtonBackground];    
-    
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
     
@@ -365,6 +363,7 @@
     [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
+    _indexCard = 0;
     
     [self.tableView reloadData];
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
