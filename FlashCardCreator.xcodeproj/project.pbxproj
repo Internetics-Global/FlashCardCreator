@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */; };
 		2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D37280D16DDCBA00068DE31 /* CoreMotion.framework */; };
-		2D51971516DE1C7B003C514E /* selected_table_cell~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D51971416DE1C7B003C514E /* selected_table_cell~iPhone.png */; };
 		2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BB16D1A53600E1E785 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BD16D1A53600E1E785 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -149,6 +148,8 @@
 		2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */; };
 		2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */; };
 		2DE809A316DEF79D00B7959A /* card_cover_image_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */; };
+		2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C516DF679200B7959A /* selected_table_cell.png */; };
+		2DE809C816DF679300B7959A /* selected_table_cell@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C616DF679300B7959A /* selected_table_cell@2x~iPhone.png */; };
 		2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */; };
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
@@ -413,7 +414,6 @@
 /* Begin PBXFileReference section */
 		2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
 		2D37280D16DDCBA00068DE31 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		2D51971416DE1C7B003C514E /* selected_table_cell~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected_table_cell~iPhone.png"; path = "Resources/selected_table_cell~iPhone.png"; sourceTree = "<group>"; };
 		2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Libraries/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
 		2D5C17B816D1A53600E1E785 /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSplitCornersView.h; path = Libraries/MGSplitViewController/MGSplitCornersView.h; sourceTree = "<group>"; };
 		2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitCornersView.m; path = Libraries/MGSplitViewController/MGSplitCornersView.m; sourceTree = "<group>"; };
@@ -625,6 +625,8 @@
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B3316798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
 		2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = card_cover_image_placeholder.jpg; path = Resources/card_cover_image_placeholder.jpg; sourceTree = "<group>"; };
+		2DE809C516DF679200B7959A /* selected_table_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected_table_cell.png; path = Resources/selected_table_cell.png; sourceTree = "<group>"; };
+		2DE809C616DF679300B7959A /* selected_table_cell@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected_table_cell@2x~iPhone.png"; path = "Resources/selected_table_cell@2x~iPhone.png"; sourceTree = "<group>"; };
 		2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2DEDA1F91683100D0074AC9E /* ZipFileDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFileDownloadHelper.h; sourceTree = "<group>"; };
 		2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFileDownloadHelper.m; sourceTree = "<group>"; };
@@ -1067,7 +1069,8 @@
 		2DC554E4169D425A00251C1B /* Others */ = {
 			isa = PBXGroup;
 			children = (
-				2D51971416DE1C7B003C514E /* selected_table_cell~iPhone.png */,
+				2DE809C516DF679200B7959A /* selected_table_cell.png */,
+				2DE809C616DF679300B7959A /* selected_table_cell@2x~iPhone.png */,
 				2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */,
 				2D6A55C216D813E6002D1489 /* answer_placeholder_content.jpg */,
 				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
@@ -1542,8 +1545,9 @@
 				2D5FCBE616DD927800DB8628 /* share_button@2x~iPhone.png in Resources */,
 				2D5FCBE716DD927800DB8628 /* share_button~iPad.png in Resources */,
 				2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */,
-				2D51971516DE1C7B003C514E /* selected_table_cell~iPhone.png in Resources */,
 				2DE809A316DEF79D00B7959A /* card_cover_image_placeholder.jpg in Resources */,
+				2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */,
+				2DE809C816DF679300B7959A /* selected_table_cell@2x~iPhone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -149,6 +149,7 @@
             _rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
             _rightPackImage.layer.cornerRadius = 5;
             _rightPackImage.layer.masksToBounds = TRUE;
+            _rightPackImage.layer.opacity = 0.85;
             [_rightPackView addSubview:_rightPackImage];
         }
         _rightPackImage.image = [UIImage imageWithContentsOfFile:_currentPack.coverImageURL];
@@ -448,7 +449,7 @@
 		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] init];
         if (isUserInterfaceIdiomPhone) {  //we made some tricks on iPhones
-            backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selected_table_cell~iPhone.png"]];
+            backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selected_table_cell.png"]];
             backgroundView.layer.opacity = 0.8;
         } else {
             backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];

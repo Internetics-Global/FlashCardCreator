@@ -45,24 +45,32 @@
         
         _newPack = [[Pack alloc] init];
         
+        
     }
     return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
 }
 
 - (void)loadView {
     [super loadView];
 
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 20, 200, 30)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 20, 200, 24)];
     } else {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 30)];    
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
     _packNameText.textAlignment = UITextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
-    _packNameText.font = [UIFont systemFontOfSize:20];
+    _packNameText.font = [UIFont systemFontOfSize:16];
     _packNameText.delegate = self;
-    _packNameText.borderStyle = UITextBorderStyleRoundedRect;
+    _packNameText.borderStyle = UITextBorderStyleNone;
+    _packNameText.layer.cornerRadius = 5;
+    _packNameText.layer.masksToBounds = YES;
     [_packNameText setClearsOnBeginEditing:YES];
     _packNameText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_packNameText];

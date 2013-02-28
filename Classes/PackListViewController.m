@@ -44,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+    self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     
     //configure swipe view
     _swipeView.alignment = SwipeViewAlignmentCenter;
@@ -91,18 +91,18 @@
     UIImageView *coverImageView ;
     UILabel *indexLabel;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 250.0f, 200.0f)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 160)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
         
-    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 230.0f, 20.0f)];
+    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 160.0f, 200, 20.0f)];
     indexLabel.textAlignment = UITextAlignmentCenter;
     indexLabel.textColor = [UIColor whiteColor];
     indexLabel.backgroundColor = [UIColor clearColor];
     indexLabel.font = [UIFont systemFontOfSize:16];
     [view addSubview:indexLabel];
         
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 210.0f, 180.0f)];
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 0, 180.0f, 150.0f)];
     coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;

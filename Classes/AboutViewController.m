@@ -26,6 +26,8 @@
 	[about.linkButton addTarget:self action:@selector(web) forControlEvents:UIControlEventTouchUpInside];
 	[scroller addSubview:about];
 	[self.view addSubview:scroller];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
 }
 
 -(void)web{

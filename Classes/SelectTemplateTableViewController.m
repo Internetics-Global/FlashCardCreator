@@ -19,14 +19,16 @@
     self = [super initWithStyle:style];
     if (self) {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
-        
     }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Select a template";
+    self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
 }
 
 - (void)didReceiveMemoryWarning

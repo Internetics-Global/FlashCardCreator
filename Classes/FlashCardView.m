@@ -145,7 +145,7 @@
                                   kSegmentHeightForiPad);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-        _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        _segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
         _segmentedControl.selectedSegmentIndex = 0;
         [self addSubview:_segmentedControl];
     }
@@ -172,7 +172,7 @@
     if (_cardSNText == nil) {
         
         _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(5, kQuestionViewTopMarginForiPhone+5, 25, 25);
+        _cardSNText.frame = CGRectMake(5, kQuestionViewTopMarginForiPhone+5, 20, 20);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
         _cardSNText.backgroundColor = [UIColor redColor];
         _cardSNText.font = [UIFont systemFontOfSize:12];
