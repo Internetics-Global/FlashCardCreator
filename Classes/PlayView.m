@@ -151,7 +151,7 @@
 		//flash card height = scroll height; flash card width < scroll width
         FlashCardView *cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)];;
         cardView.currentPack = _currentPack;
-        cardView.currentCard = _currentCard;
+        cardView.currentCard = cardArray[index];
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
