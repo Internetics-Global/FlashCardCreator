@@ -120,8 +120,13 @@
             
             
         } else {
+            
+            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, IPAD_UI_MASTER_WIDTH, 80)];
+            _addCardButtonBackground.backgroundColor = [UIColor blackColor];
+            _addCardButtonBackground.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-40);
+            
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-            _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2+10,IPAD_UI_HEIGHT-IPAD_UI_MASTER_WIDTH/2);
+            _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2+10,IPAD_UI_HEIGHT-40);
         }
     }
     
@@ -161,9 +166,7 @@
         
     }
     
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController.view addSubview:_addCardButtonBackground];    
-    }
+    [self.navigationController.view addSubview:_addCardButtonBackground];    
     
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
@@ -173,9 +176,10 @@
 
 - (void) viewWillDisappear:(BOOL)animated {
     if (isUserInterfaceIdiomPhone) {
-        [_addCardButtonBackground removeFromSuperview];
         [_rightPackView removeFromSuperview];
     }
+    
+    [_addCardButtonBackground removeFromSuperview];
     [_addCardButton removeFromSuperview];
 }
 
