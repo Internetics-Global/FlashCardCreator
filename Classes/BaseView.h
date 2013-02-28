@@ -64,6 +64,7 @@
 @property (strong, nonatomic) UIImageView *logoImage;
 @property (copy, nonatomic)  NSString *logoImageFullPath;
 @property (copy, nonatomic)  NSString *logoLinkURL;
+@property (strong, nonatomic) UIButton *logoLinkageButton;
 @property (strong, nonatomic) UILabel *packName;
 @property (strong, nonatomic) UITextView *subheading; 
 @property (strong, nonatomic) UITextView *main;

@@ -28,10 +28,10 @@
         _flashCardViewArray = [NSMutableArray array];
         _currentFlashCardView = [[FlashCardView alloc] init];
         
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(landscapeLeftRightOrientationChanged:)
-//                                                     name:UIDeviceOrientationDidChangeNotification
-//                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(landscapeLeftRightOrientationChanged:)
+                                                     name:UIDeviceOrientationDidChangeNotification
+                                                   object:nil];
         
     }
     return self;
@@ -88,14 +88,24 @@
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];    
     }
+    
+    static BOOL enableSwitch = YES;
+    
     _motionManager.deviceMotionUpdateInterval =1.0/60;
     if (_motionManager.isDeviceMotionAvailable) {
         [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
             //NSLog(@"The roll of gyro sensor is:%f",motion.attitude.roll);
-            if (motion.attitude.roll < -0.15) {
-                [self switchToAnswerView];
+            if (motion.attitude.roll < -0.30) {
+                if (enableSwitch == YES) {
+                    [self switchQuestionAnswerView];
+                    enableSwitch = NO;
+                }
+                
             } else if (motion.attitude.roll > 0) {
-                [self switchToQuestionView];
+                if (enableSwitch == NO) {
+                    enableSwitch = YES;
+                }
+                
             } else {
                 //do nothing
             }
@@ -120,8 +130,9 @@
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
-        [cardView disableCardEdit];
         [cardView refreshQuestionAnserView];
+        [cardView disableCardEdit];
+        [cardView.segmentedControl setHidden:YES];
 		[_scrollView addSubview:cardView];
         curXLoc += IPAD_UI_WIDTH;
         [_flashCardViewArray addObject:cardView];
@@ -144,8 +155,9 @@
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
-        [cardView disableCardEdit];
         [cardView refreshQuestionAnserView];
+        [cardView disableCardEdit];
+        [cardView.segmentedControl setHidden:YES];
 		[_scrollView addSubview:cardView];
         curXLoc += IPHONE_UI_WIDTH;
         [_flashCardViewArray addObject:cardView];
@@ -174,62 +186,28 @@
 
 
 - (void) landscapeLeftRightOrientationChanged:(NSNotification *)notification{
-    
-    if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft) {
-        if (_currentFlashCardView) {
-            if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 0) {
-                [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
-                [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
-            }
-        } else {
-            NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
-        }
-    }
-    
-    if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
-        if (_currentFlashCardView) {
-            if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
-                [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
-                [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
-            }
-        } else {
-            NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
-        }
-    }
-    
-    [self.superview bringSubviewToFront:self];  // We have to add this since MGSplitCornersView does some other logic which will hide current view 
-    
+        
+    [self.superview bringSubviewToFront:self];
 }
 
-- (void) switchToQuestionView {
+- (void) switchQuestionAnswerView {
     if (_currentFlashCardView) {
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
             [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
-        }
-    } else {
-        NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
-    }
-    
-    [self.superview bringSubviewToFront:self];  // We have to add this since MGSplitCornersView does some other logic which will hide current view 
-}
-
-- (void) switchToAnswerView {
-    if (_currentFlashCardView) {
-        if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 0) {
+        } else {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
             [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
         }
     } else {
         NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
     }
-    
-    [self.superview bringSubviewToFront:self];  // We have to add this since MGSplitCornersView does some other logic which will hide current view 
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
                             
 
 @end

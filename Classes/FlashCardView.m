@@ -250,6 +250,9 @@
 }
 
 - (void) disableCardEdit {
+    _questionView.logoImage.userInteractionEnabled  = FALSE;
+    _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
+    [_questionView.logoLinkageButton setHidden:YES];
     _questionView.subheading.userInteractionEnabled      = FALSE;
     _questionView.image.userInteractionEnabled     = FALSE;
     _questionView.main.userInteractionEnabled   = FALSE;

@@ -29,6 +29,7 @@
 @synthesize logoImage = _logoImage;
 @synthesize logoLinkURL = _logoLinkURL;
 @synthesize logoImageFullPath = _logoImageFullPath;
+@synthesize logoLinkageButton = _logoLinkageButton;
 @synthesize packName = _packName;
 @synthesize subheading = _subheading;
 @synthesize main = _main;
