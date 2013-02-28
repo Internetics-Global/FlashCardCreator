@@ -68,7 +68,6 @@
 		2D5C185D16D1A6E500E1E785 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C185616D1A6E500E1E785 /* Default-Portrait~ipad.png */; };
 		2D5C185E16D1A6E500E1E785 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C185716D1A6E500E1E785 /* Default.png */; };
 		2D5C185F16D1A6E500E1E785 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C185816D1A6E500E1E785 /* Default@2x.png */; };
-		2D5C187616D1A74800E1E785 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C186216D1A74800E1E785 /* card_cover_image_placeholder.png */; };
 		2D5C187716D1A74800E1E785 /* card_sidebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C186316D1A74800E1E785 /* card_sidebar.png */; };
 		2D5C187816D1A74800E1E785 /* card_title_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C186416D1A74800E1E785 /* card_title_background.png */; };
 		2D5C187916D1A74800E1E785 /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C186516D1A74800E1E785 /* change_template_button.png */; };
@@ -149,6 +148,7 @@
 		2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */; };
 		2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */; };
 		2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */; };
+		2DE809A316DEF79D00B7959A /* card_cover_image_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */; };
 		2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */; };
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
@@ -517,7 +517,6 @@
 		2D5C185616D1A6E500E1E785 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		2D5C185716D1A6E500E1E785 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
 		2D5C185816D1A6E500E1E785 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
-		2D5C186216D1A74800E1E785 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		2D5C186316D1A74800E1E785 /* card_sidebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_sidebar.png; path = Resources/card_sidebar.png; sourceTree = "<group>"; };
 		2D5C186416D1A74800E1E785 /* card_title_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_title_background.png; path = Resources/card_title_background.png; sourceTree = "<group>"; };
 		2D5C186516D1A74800E1E785 /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_button.png; path = Resources/change_template_button.png; sourceTree = "<group>"; };
@@ -625,6 +624,7 @@
 		2DCE0B2D16798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B3316798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
+		2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = card_cover_image_placeholder.jpg; path = Resources/card_cover_image_placeholder.jpg; sourceTree = "<group>"; };
 		2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2DEDA1F91683100D0074AC9E /* ZipFileDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFileDownloadHelper.h; sourceTree = "<group>"; };
 		2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFileDownloadHelper.m; sourceTree = "<group>"; };
@@ -1071,7 +1071,7 @@
 				2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */,
 				2D6A55C216D813E6002D1489 /* answer_placeholder_content.jpg */,
 				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
-				2D5C186216D1A74800E1E785 /* card_cover_image_placeholder.png */,
+				2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */,
 				2D5C186316D1A74800E1E785 /* card_sidebar.png */,
 				2D5C186416D1A74800E1E785 /* card_title_background.png */,
 				2D5C186516D1A74800E1E785 /* change_template_button.png */,
@@ -1503,7 +1503,6 @@
 				2D5C185D16D1A6E500E1E785 /* Default-Portrait~ipad.png in Resources */,
 				2D5C185E16D1A6E500E1E785 /* Default.png in Resources */,
 				2D5C185F16D1A6E500E1E785 /* Default@2x.png in Resources */,
-				2D5C187616D1A74800E1E785 /* card_cover_image_placeholder.png in Resources */,
 				2D5C187716D1A74800E1E785 /* card_sidebar.png in Resources */,
 				2D5C187816D1A74800E1E785 /* card_title_background.png in Resources */,
 				2D5C187916D1A74800E1E785 /* change_template_button.png in Resources */,
@@ -1544,6 +1543,7 @@
 				2D5FCBE716DD927800DB8628 /* share_button~iPad.png in Resources */,
 				2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */,
 				2D51971516DE1C7B003C514E /* selected_table_cell~iPhone.png in Resources */,
+				2DE809A316DEF79D00B7959A /* card_cover_image_placeholder.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
