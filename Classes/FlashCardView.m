@@ -58,6 +58,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateSelectedNotification:) name:TEMPLATE_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveEdittedCard:) name:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+        
+        
                                 
     }
     return self;
@@ -414,7 +416,8 @@
     
     UIImage *origialmage = [self.questionView captureWholeViewAsImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    if ([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) {
+            
+    if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
         NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         [imageData writeToFile:savedFullPath atomically:YES];
         _currentCard.coverImageURL = savedFullPath;
@@ -515,7 +518,7 @@
         
         UIImage *origialmage = [self.questionView captureWholeViewAsImage];
         NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-        if ([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) {
+        if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || (_currentCard.coverImageURL == nil)) {
             NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
             [imageData writeToFile:savedFullPath atomically:YES];
             _currentCard.coverImageURL = savedFullPath;

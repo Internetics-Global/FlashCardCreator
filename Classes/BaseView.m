@@ -412,12 +412,12 @@
     NSDictionary* info = [aNotification userInfo];
     NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
     _keyboardHeight = [aValue CGRectValue].size.height;
-    NSLog(@"Keyboard height is %f",_keyboardHeight);
+    //NSLog(@"Keyboard height is %f",_keyboardHeight);
     
     //Step2: Get cursor Y value relative to view
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
-    NSLog(@"Y position for current cursorY is %f",cursorY);
+    //NSLog(@"Y position for current cursorY is %f",cursorY);
     
     //Step3: Get view's Y value relative to screen
     CGFloat yInScrren;
@@ -462,6 +462,8 @@
     CGPoint offset = _verticalScrollView.contentOffset;
     offset.y = 0;
     [_verticalScrollView setContentOffset:offset animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
 }
 
@@ -547,7 +549,8 @@
     [_subheading resignFirstResponder];
     [_main resignFirstResponder];
     [_sub resignFirstResponder];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
+    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
 }
 
 #pragma mark -
@@ -593,7 +596,7 @@
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
 
     if (_isLogoImageViewClicked) {
-        if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])) {
+        if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath == nil))) {
             _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         
@@ -602,7 +605,7 @@
         [_delegate updatelogoImageForAllCards:_logoImageFullPath];
         
     } else {
-        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"])) {
+        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"]) || ((_logoImageFullPath == nil))) {
             _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         [imageData writeToFile:_imageFullPath atomically:YES];
@@ -690,7 +693,8 @@
     frame.size.height = responderTextView.contentSize.height;
     responderTextView.frame = frame;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
+    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -720,7 +724,8 @@
         _subAlign = selectAlignStr;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
+    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -756,7 +761,8 @@
         _subColor = selectColorStr;
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
+    // we comment it and hope to execute scrrenshot capture only after keyboard disappear, othervise, the captured image is not right
+    //[[NSNotificationCenter defaultCenter] postNotificationName:SAVE_AFTER_CARD_EDIT_NOTIFICATION object:nil];
     
     [_keyboardTopView setItems:_buttonArray];
 }
