@@ -254,6 +254,8 @@
     _answerView.subheading.userInteractionEnabled      = FALSE;
     _answerView.main.userInteractionEnabled     = FALSE;
     _answerView.sub.userInteractionEnabled      = FALSE;
+    
+    _changeTemplateButton.hidden = TRUE;
 }
 
 

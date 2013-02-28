@@ -30,7 +30,7 @@
 
     [button sizeToFit];
     CGRect rect = button.frame;
-    rect.size.width = rect.size.width +16;
+    rect.size.width = rect.size.width +20;
     rect.size.height = rect.size.height + 11;
     button.frame = rect;
     

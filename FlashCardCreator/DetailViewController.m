@@ -548,19 +548,20 @@
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    NSLog (@"current page is :%d", page);
     
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        NSLog (@"current page is :%d", page);
         _indexCard = page;
         _currentCard = [_currentPack cards][page];
         [self showCurrentCardInScrollView];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
+        
     }
     
 }
