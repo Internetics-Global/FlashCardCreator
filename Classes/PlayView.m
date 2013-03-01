@@ -44,6 +44,7 @@
     _closeButton.backgroundColor = [UIColor clearColor];
     [_closeButton setImage:[UIImage imageNamed:@"close_button.png"] forState:UIControlStateNormal];
     _closeButton.titleLabel.text = nil;
+    _closeButton.showsTouchWhenHighlighted = YES;
     [_closeButton addTarget:self action:@selector(closePlayView) forControlEvents:UIControlEventTouchDown];
     
     _scrollView = [[UIScrollView alloc] init];
@@ -57,7 +58,7 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 10, 20, 20);
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-40, 10, 30, 30);
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
@@ -145,7 +146,7 @@
 {
     [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+20; //Since it's horizontal movement, so this is a constant value
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2; //Since it's horizontal movement, so this is a constant value
     for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
