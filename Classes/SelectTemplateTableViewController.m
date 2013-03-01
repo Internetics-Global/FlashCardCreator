@@ -19,6 +19,9 @@
     self = [super initWithStyle:style];
     if (self) {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+        
+        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeSelectTemplateView)];
+        self.navigationItem.rightBarButtonItem = closeButton;
     }
     
     return self;
@@ -62,7 +65,13 @@
         cell.backgroundColor = [UIColor whiteColor];
     }
     
-    NSString *imageName = [NSString stringWithFormat:@"templateScreenshot%d.png",indexPath.row];
+    NSString *imageName;
+    if (isUserInterfaceIdiomPhone) {
+         imageName= [NSString stringWithFormat:@"templateScreenshot%d.png",indexPath.row];    
+    } else {
+        imageName = [NSString stringWithFormat:@"templateScreenshot%d_iPad.jpg",indexPath.row];    
+    }
+    
     cell.imageView.image = [UIImage imageNamed:imageName];
     
     return cell;
@@ -79,6 +88,13 @@
     if (isUserInterfaceIdiomPhone) {
         [self dismissModalViewControllerAnimated:YES];    
     }
+}
+
+#pragma mark -
+#pragma mark - Action
+
+- (void) closeSelectTemplateView {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

@@ -609,8 +609,10 @@
     
 
     [self.tableView reloadData];
-    [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
+    if (!isUserInterfaceIdiomPhone) {
+        [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
+    }
     
 }
 
