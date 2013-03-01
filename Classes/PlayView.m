@@ -33,6 +33,38 @@
                                                      name:UIDeviceOrientationDidChangeNotification
                                                    object:nil];
         
+        if (_motionManager == nil) {
+            _motionManager = [[CMMotionManager alloc]init];
+        }
+        
+        static BOOL enableSwitch = YES;
+        
+        _motionManager.deviceMotionUpdateInterval =10/60;
+        if (_motionManager.isDeviceMotionAvailable) {
+            [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
+                //NSLog(@"The roll of gyro sensor is:%f",motion.attitude.roll);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (motion.attitude.roll < -0.35) {
+                        if (enableSwitch == YES) {
+                            [self switchQuestionAnswerView];
+                            enableSwitch = NO;
+                        }
+                        
+                    } else if (motion.attitude.roll > 0) {
+                        if (enableSwitch == NO) {
+                            enableSwitch = YES;
+                        }
+                        
+                    } else {
+                        //do nothing
+                    }
+                });
+                
+            }];
+        } else {
+            [Common alertViewCommon:@"the gyro sensor is not available"];
+        }
+        
     }
     return self;
 }
@@ -85,36 +117,6 @@
     
     //Set  _currentFlashCardView
     _currentFlashCardView = (FlashCardView *)_flashCardViewArray[0];
-    
-    if (_motionManager == nil) {
-        _motionManager = [[CMMotionManager alloc]init];    
-    }
-    
-    static BOOL enableSwitch = YES;
-    
-    _motionManager.deviceMotionUpdateInterval =1.0/60;
-    if (_motionManager.isDeviceMotionAvailable) {
-        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            //NSLog(@"The roll of gyro sensor is:%f",motion.attitude.roll);
-            if (motion.attitude.roll < -0.30) {
-                if (enableSwitch == YES) {
-                    [self switchQuestionAnswerView];
-                    enableSwitch = NO;
-                }
-                
-            } else if (motion.attitude.roll > 0) {
-                if (enableSwitch == NO) {
-                    enableSwitch = YES;
-                }
-                
-            } else {
-                //do nothing
-            }
-            
-        }];
-    } else {
-        NSLog(@"%s:the gyro sensor is not available",__FUNCTION__);
-    }
 }
 
 - (void)layoutScrollObjectsForiPad:(NSArray *)cardArray
@@ -173,6 +175,8 @@
     [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [self removeFromSuperview];
     } completion:nil];
+    [_motionManager stopDeviceMotionUpdates];
+    _motionManager = nil;
 }
 
 #pragma mark -
@@ -195,11 +199,17 @@
     if (_currentFlashCardView) {
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
+            NSLog(@"%d", 0);
             [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
         } else {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
             [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
+            NSLog(@"%d", 1);
         }
+        
+        [_currentFlashCardView setNeedsDisplay];
+    
+    
     } else {
         NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
     }
