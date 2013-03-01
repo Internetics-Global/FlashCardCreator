@@ -42,8 +42,8 @@
         _motionManager.deviceMotionUpdateInterval =10/60;
         if (_motionManager.isDeviceMotionAvailable) {
             [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-                //NSLog(@"The roll of gyro sensor is:%f",motion.attitude.roll);
-                dispatch_async(dispatch_get_main_queue(), ^{
+                //NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+                dispatch_sync(dispatch_get_main_queue(), ^{
                     if (motion.attitude.roll < -0.35) {
                         if (enableSwitch == YES) {
                             [self switchQuestionAnswerView];
@@ -62,7 +62,7 @@
                 
             }];
         } else {
-            [Common alertViewCommon:@"the gyro sensor is not available"];
+            NSLog(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
         }
         
     }
@@ -218,7 +218,5 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-                            
 
 @end

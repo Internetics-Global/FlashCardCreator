@@ -30,6 +30,8 @@
 #import "FileOperationHelper.h"
 #import "MoreInfoTableViewController.h"
 #import "FCCBarButton.h"
+#import "DropboxShareKitHelper.h"
+#import "PlayView.h"
 
 
 @implementation MasterViewController
@@ -91,10 +93,16 @@
     
     self.navigationItem.leftBarButtonItems = @[_selectPackButton,editButton, newPackButton];
     if (isUserInterfaceIdiomPhone) {
+        
+        UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
+        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked)]];
+        
         UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
         self.navigationItem.rightBarButtonItems =
-            @[settingButton];
+            @[settingButton,playButton, shareButton];
     }
     
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -266,6 +274,39 @@
 
 #pragma mark -
 #pragma mark UIBarButtonItem action
+
+- (void)playButtonClicked:(id) sender
+{
+    PlayView *playView = [[PlayView alloc] init];
+    if (isUserInterfaceIdiomPhone) {
+        playView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
+    } else {
+        playView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
+    }
+    playView.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    if ((self.currentCard == nil) || (self.currentPack == nil)) {
+        [Common alertViewCommon:@"Current card or pack is nil"];
+        return;
+    }
+    playView.currentPack = self.currentPack;
+    playView.currentCard = self.currentCard;
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        [keyWindow.rootViewController.view addSubview:playView];
+        [keyWindow.rootViewController.view bringSubviewToFront:playView];
+    } completion:nil];
+    
+}
+
+- (void)shareButtonClicked {
+    if ((_currentPack) && (_currentCard)) {
+        DropboxSharekitHelper *shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [shareHelper shareAction];
+    } else {
+        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+    }
+}
 
 - (void)moreButtonClicked:(id) sender
 {

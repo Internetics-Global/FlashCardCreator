@@ -16,7 +16,7 @@
 @class Card;
 @class Pack;
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate,DBRestClientDelegate,MBProgressHUDDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -25,12 +25,6 @@
     Pack *_currentPack;
     Card *_currentCard;
     int _indexCard;  //selected card index in master view
-    
-    MBProgressHUD *_HUD;
-    float _progressivePercent;
-    BOOL _isCreatingShareLinkage;
-    
-    DBRestClient *_restClient;
     
     UIPopoverController *_settingPopoverController;
     UIPopoverController *_masterPopoverController;
