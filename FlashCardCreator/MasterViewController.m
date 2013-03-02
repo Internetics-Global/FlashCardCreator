@@ -31,7 +31,7 @@
 #import "MoreInfoTableViewController.h"
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
-#import "PlayView.h"
+#import "PlayViewController.h"
 
 
 @implementation MasterViewController
@@ -277,24 +277,25 @@
 
 - (void)playButtonClicked:(id) sender
 {
-    PlayView *playView = [[PlayView alloc] init];
+    PlayViewController *playViewController = [[PlayViewController alloc] init];
+    playViewController.currentPack = self.currentPack;
+    playViewController.currentCard = self.currentCard;
     if (isUserInterfaceIdiomPhone) {
-        playView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
+        playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
     } else {
-        playView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
+        playViewController.view.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
     }
-    playView.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"Current card or pack is nil"];
         return;
     }
-    playView.currentPack = self.currentPack;
-    playView.currentCard = self.currentCard;
+    
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    
     [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-        [keyWindow.rootViewController.view addSubview:playView];
-        [keyWindow.rootViewController.view bringSubviewToFront:playView];
+        [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
     } completion:nil];
     
 }

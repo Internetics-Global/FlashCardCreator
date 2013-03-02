@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayViewController : UIViewController
+@class Pack;
+@class Card;
+@class FlashCardView;
+@class CMMotionManager;
+
+@interface PlayViewController : UIViewController <UIScrollViewDelegate>{
+    UIScrollView *_scrollView;
+    UIButton *_closeButton;
+    Pack *_currentPack;
+    Card *_currentCard;
+    FlashCardView *_currentFlashCardView;
+    NSMutableArray *_flashCardViewArray;
+    CMMotionManager *_motionManager;
+}
+
+@property (strong, nonatomic) Pack *currentPack;
+@property (strong, nonatomic) Card *currentCard;
 
 @end

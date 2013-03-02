@@ -35,7 +35,6 @@
 		2D5C180216D1A5E200E1E785 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C17FE16D1A5E200E1E785 /* icon.png */; };
 		2D5C180316D1A5E200E1E785 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C17FF16D1A5E200E1E785 /* Icon@2x.png */; };
 		2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180516D1A5F700E1E785 /* SelectTemplateTableViewController.m */; };
-		2D5C180916D1A60200E1E785 /* PlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180816D1A60200E1E785 /* PlayView.m */; };
 		2D5C181C16D1A62800E1E785 /* BadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180B16D1A62700E1E785 /* BadgeLabel.m */; };
 		2D5C181D16D1A62800E1E785 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180D16D1A62700E1E785 /* Common.m */; };
 		2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180F16D1A62700E1E785 /* NSArray+Randomised.m */; };
@@ -126,6 +125,7 @@
 		2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D75DF87169D07CB00337B10 /* MobileCoreServices.framework */; };
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
+		2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A993216E1D277006E80BD /* PlayViewController.m */; };
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
@@ -470,8 +470,6 @@
 		2D5C17FF16D1A5E200E1E785 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		2D5C180416D1A5F700E1E785 /* SelectTemplateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectTemplateTableViewController.h; path = Classes/SelectTemplateTableViewController.h; sourceTree = "<group>"; };
 		2D5C180516D1A5F700E1E785 /* SelectTemplateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectTemplateTableViewController.m; path = Classes/SelectTemplateTableViewController.m; sourceTree = "<group>"; };
-		2D5C180716D1A60200E1E785 /* PlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayView.h; path = Classes/PlayView.h; sourceTree = "<group>"; };
-		2D5C180816D1A60200E1E785 /* PlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayView.m; path = Classes/PlayView.m; sourceTree = "<group>"; };
 		2D5C180A16D1A62700E1E785 /* BadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BadgeLabel.h; path = Classes/BadgeLabel.h; sourceTree = "<group>"; };
 		2D5C180B16D1A62700E1E785 /* BadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BadgeLabel.m; path = Classes/BadgeLabel.m; sourceTree = "<group>"; };
 		2D5C180C16D1A62700E1E785 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = Classes/Common.h; sourceTree = "<group>"; };
@@ -593,6 +591,8 @@
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
+		2D8A993116E1D277006E80BD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
+		2D8A993216E1D277006E80BD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		2DA97ED616CB7DF9004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2DA97ED816CB7E04004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2DA97EDA16CB7E09004E7FAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -778,8 +778,8 @@
 		2D4E4EB616B2768100E75257 /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C180716D1A60200E1E785 /* PlayView.h */,
-				2D5C180816D1A60200E1E785 /* PlayView.m */,
+				2D8A993116E1D277006E80BD /* PlayViewController.h */,
+				2D8A993216E1D277006E80BD /* PlayViewController.m */,
 			);
 			name = Play;
 			sourceTree = "<group>";
@@ -1618,7 +1618,6 @@
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
 				2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */,
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
-				2D5C180916D1A60200E1E785 /* PlayView.m in Sources */,
 				2D5C181C16D1A62800E1E785 /* BadgeLabel.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
@@ -1641,6 +1640,7 @@
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
+				2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
