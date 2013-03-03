@@ -80,14 +80,12 @@
 }
 
 - (void)layoutView {
-    _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _closeButton.backgroundColor = [UIColor clearColor];
     [_closeButton setImage:[UIImage imageNamed:@"close_button.png"] forState:UIControlStateNormal];
     _closeButton.titleLabel.text = nil;
     _closeButton.showsTouchWhenHighlighted = YES;
     [_closeButton addTarget:self action:@selector(closePlayView) forControlEvents:UIControlEventTouchDown];
     
-    _scrollView = [[UIScrollView alloc] init];
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.clipsToBounds = YES;

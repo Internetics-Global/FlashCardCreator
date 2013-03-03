@@ -307,10 +307,7 @@
     
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    
-    [UIView transitionWithView:keyWindow duration:0.5 options: UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-        [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
-    } completion:nil];
+    [keyWindow.rootViewController presentViewController:playViewController animated:YES completion:nil];
     
 }
 
