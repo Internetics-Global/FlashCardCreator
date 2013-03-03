@@ -42,10 +42,10 @@
         
         static BOOL enableSwitch = YES;
         
-        _motionManager.deviceMotionUpdateInterval =10/60;
+        _motionManager.deviceMotionUpdateInterval =0.01;
         if (_motionManager.isDeviceMotionAvailable) {
             [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-                //NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+                NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     if (motion.attitude.roll < -0.3) {
                         if (enableSwitch == YES) {
