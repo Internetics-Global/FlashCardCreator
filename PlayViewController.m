@@ -36,40 +36,48 @@
                                                      name:UIDeviceOrientationDidChangeNotification
                                                    object:nil];
         
-        if (_motionManager == nil) {
-            _motionManager = [[CMMotionManager alloc]init];
-        }
-        
-        static BOOL enableSwitch = YES;
-        
-        _motionManager.deviceMotionUpdateInterval =0.01;
-        if (_motionManager.isDeviceMotionAvailable) {
-            [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-                NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    if (motion.attitude.roll < -0.3) {
-                        if (enableSwitch == YES) {
-                            [self switchQuestionAnswerView];
-                            enableSwitch = NO;
-                        }
-                        
-                    } else if (motion.attitude.roll > 0) {
-                        if (enableSwitch == NO) {
-                            enableSwitch = YES;
-                        }
-                        
-                    } else {
-                        //do nothing
-                    }
-                });
-                
-            }];
-        } else {
-            NSLog(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
-        }
-        
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (_motionManager == nil) {
+        _motionManager = [[CMMotionManager alloc]init];
+    }
+    
+    static BOOL enableSwitch = YES;
+    
+    _motionManager.deviceMotionUpdateInterval =0.01;
+    if (_motionManager.isDeviceMotionAvailable) {
+        [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
+            NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (motion.attitude.roll < -0.3) {
+                    if (enableSwitch == YES) {
+                        [self switchQuestionAnswerView];
+                        enableSwitch = NO;
+                    }
+                    
+                } else if (motion.attitude.roll > 0) {
+                    if (enableSwitch == NO) {
+                        enableSwitch = YES;
+                    }
+                    
+                } else {
+                    //do nothing
+                }
+            });
+            
+        }];
+    } else {
+        NSLog(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
+    }
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [_motionManager stopDeviceMotionUpdates];
+    _motionManager = nil;
 }
 
 - (void)viewDidLoad
@@ -261,8 +269,6 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_motionManager stopDeviceMotionUpdates];
-    _motionManager = nil;
     
 }
 
