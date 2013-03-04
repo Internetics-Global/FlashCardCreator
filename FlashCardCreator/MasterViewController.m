@@ -211,6 +211,7 @@
 
 - (void)selectAvailablePacks:(id)sender
 {
+    
     PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
     
     if (isUserInterfaceIdiomPhone) {
@@ -218,14 +219,17 @@
         [self.navigationController pushViewController:packListViewController animated:YES];
         
     } else {
-        packListViewController.view.frame = CGRectMake(10, 10, 640, 262);
+        
+        packListViewController.view.frame = CGRectMake(10, 10, 640, 320);
         packListViewController.view.clipsToBounds = YES;
         packListViewController.view.layer.cornerRadius = 0;
         packListViewController.view.backgroundColor =[UIColor clearColor];
-        packListViewController.contentSizeForViewInPopover = CGSizeMake(660, 262);
+        packListViewController.contentSizeForViewInPopover = CGSizeMake(660, 300);
+        
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         
         if (_packListPickerPopover == nil) {
-            _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:packListViewController];
+            _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
         }
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }

@@ -37,10 +37,8 @@
             self.navigationItem.leftBarButtonItem = backButton;
         }
         
-        if (isUserInterfaceIdiomPhone) {
-            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
-            self.navigationItem.rightBarButtonItem = _editBtnItem;
-        }
+        _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
+        self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _hideDeleteButton = TRUE;
         
