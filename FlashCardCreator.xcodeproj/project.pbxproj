@@ -126,6 +126,7 @@
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
 		2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A993216E1D277006E80BD /* PlayViewController.m */; };
+		2D8A995B16E43FFD006E80BD /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8A995A16E43FFD006E80BD /* redButton.png */; };
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
@@ -593,6 +594,7 @@
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
 		2D8A993116E1D277006E80BD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		2D8A993216E1D277006E80BD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
+		2D8A995A16E43FFD006E80BD /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		2DA97ED616CB7DF9004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2DA97ED816CB7E04004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2DA97EDA16CB7E09004E7FAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1014,6 +1016,7 @@
 		2DAAE19F16B8CE2300EA6D90 /* Customize */ = {
 			isa = PBXGroup;
 			children = (
+				2D8A995A16E43FFD006E80BD /* redButton.png */,
 				2D5FCBB816DD927800DB8628 /* add_pack_button.png */,
 				2D5FCBB916DD927800DB8628 /* add_pack_button@2x~iPad.png */,
 				2D5FCBBA16DD927800DB8628 /* add_pack_button@2x~iPhone.png */,
@@ -1571,6 +1574,7 @@
 				2DE809E416E03F7200B7959A /* templateScreenshot2.png in Resources */,
 				2DE809E516E03F7200B7959A /* templateScreenshot3.png in Resources */,
 				2DE809E616E03F7200B7959A /* templateScreenshot4.png in Resources */,
+				2D8A995B16E43FFD006E80BD /* redButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

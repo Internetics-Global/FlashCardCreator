@@ -14,6 +14,10 @@
     SwipeView *_swipeView;
     UIPageControl *_pageControl;
     NSMutableArray *_packArray;
+    
+    BOOL _hideDeleteButton;
+    
+    UIBarButtonItem *_editBtnItem;
 }
 
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;

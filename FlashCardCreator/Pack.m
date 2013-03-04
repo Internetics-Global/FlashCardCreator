@@ -115,6 +115,10 @@
 	sqlite3_stmt *statement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(statement);
 	sqlite3_finalize(statement);
+    
+    for (Card *card in _cards) {
+        [card destroy];
+    }
 }
 
 - (void)addCard:(Card *)card{

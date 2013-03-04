@@ -112,8 +112,8 @@
 - (void) saveAndCloseCreateCardView {
     [self.navigationController popViewControllerAnimated:YES];
     
-    if (_currentPack == nil) {
-        NSLog(@"Error to create new card, since _currentPack is nil");
+    if (_currentPack.packID == -1) {
+        [Common alertViewCommon:@"You need to create a pack first"];
         return;
     }
     

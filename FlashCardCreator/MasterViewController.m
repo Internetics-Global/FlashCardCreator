@@ -314,12 +314,12 @@
 
 - (void)editButtonClicked:(id) sender
 {
-    if ([((UIBarButtonItem *) sender).title isEqualToString:@"Edit"]) {
+    if ([((UIBarButtonItem *) sender).title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         self.tableView.editing = TRUE;
-        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Done", @"");;
+        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Done", @"");
     } else {
         self.tableView.editing = FALSE;
-        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Edit", @"");;
+        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
         
         if (!isUserInterfaceIdiomPhone) {
             if ([[_currentPack cards]count] >0) {

@@ -24,5 +24,6 @@
 + (User *)defaultUser;
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addPack:(Pack *)pack;
+-(void)removePack:(Pack *)pack;
 
 @end

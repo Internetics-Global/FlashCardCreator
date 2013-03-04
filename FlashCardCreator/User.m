@@ -95,6 +95,13 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PACK_ADDED_TO_USER_NOTIFICATION object:self];
 }
 
+
+-(void)removePack:(Pack *)pack{
+	[_packs removeObject:pack];
+	[pack destroy];
+}
+
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

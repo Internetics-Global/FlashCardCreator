@@ -12,6 +12,7 @@
 "NavigationBarItem_Packs" = "Packs";
 "NavigationBarItem_Create" = "Erstellen";
 "NavigationBarItem_Edit" = "Bearbeiten";
+"NavigationBarItem_Delete"    = "löschen";
 "NavigationBarItem_Done" = "Fertig";
 "NavigationBarItem_Share" = "Teilen Sie die Packung";
 "NavigationBarItem_More" = "Mehr";

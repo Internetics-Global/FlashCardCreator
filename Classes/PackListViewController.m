@@ -37,6 +37,13 @@
             self.navigationItem.leftBarButtonItem = backButton;
         }
         
+        if (isUserInterfaceIdiomPhone) {
+            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
+            self.navigationItem.rightBarButtonItem = _editBtnItem;
+        }
+        
+        _hideDeleteButton = TRUE;
+        
     }
     return self;
 }
@@ -90,29 +97,43 @@
     UIView *contentView = view;
     UIImageView *coverImageView ;
     UILabel *indexLabel;
+    UIButton *deleteButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 160)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 220)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
         
+
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 0, 180.0f, 150.0f)];
+    coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+    coverImageView.layer.cornerRadius = 10;
+    coverImageView.layer.masksToBounds = YES;
+    [view addSubview:coverImageView];
+    coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
+    
     indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 160.0f, 200, 20.0f)];
     indexLabel.textAlignment = UITextAlignmentCenter;
     indexLabel.textColor = [UIColor whiteColor];
     indexLabel.backgroundColor = [UIColor clearColor];
     indexLabel.font = [UIFont systemFontOfSize:16];
     [view addSubview:indexLabel];
-        
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 0, 180.0f, 150.0f)];
-    coverImageView.contentMode = UIViewContentModeScaleAspectFill;
-    coverImageView.layer.cornerRadius = 10;
-    coverImageView.layer.masksToBounds = YES;
-    [view addSubview:coverImageView];
-
-    //configure view
-    coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
-    
     Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     indexLabel.text = currentPack.packName;
+    
+    
+    deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
+    [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+    deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    deleteButton.tintColor = [UIColor whiteColor];
+    [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
+    deleteButton.tag = index;
+    deleteButton.userInteractionEnabled = TRUE;
+    deleteButton.frame = CGRectMake(50.0f, 185.0f, 100.0, 30);
+    if (!_hideDeleteButton) {
+        [view addSubview:deleteButton];
+    }
+    
     
     [view layoutSubviews];
     
@@ -164,11 +185,33 @@
     //update swipe view page
     [_swipeView scrollToPage:_pageControl.currentPage duration:0.4];
 }
+                                           
+- (void) editBtnItemClicked:(id)sender {
+    if ([((UIBarButtonItem *) sender).title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
+        _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
+        _hideDeleteButton = FALSE;
+        [_swipeView reloadData];
+    } else {
+        _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
+        _hideDeleteButton = YES;
+        [_swipeView reloadData];
+    }
+    
+}
 
 - (void) backButtonClicked {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) deleteCurrentPack:(id) sender {
+    NSInteger index = ((UIButton *)sender).tag;
+    Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:index];
+    [[User defaultUser] removePack:currentPack];
+    [self resetPackContent];
+    [_swipeView reloadData];
+}
+                                           
+                                        
 #pragma mark -
 #pragma mark - Memory Management
 

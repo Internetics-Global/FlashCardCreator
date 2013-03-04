@@ -32,6 +32,7 @@
 - (void)addCard:(Card *)card;
 - (void)removeCard:(Card *)card;
 - (void)save;
+- (void)destroy;
 
 - (NSMutableArray *)snOrderedCards;
 
