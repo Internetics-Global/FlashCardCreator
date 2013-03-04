@@ -74,6 +74,10 @@
     self.title = @"Pack List";
     
     [self resetPackContent];
+    
+    if ([[User defaultUser] packs].count <= 1) {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 #pragma mark -
@@ -194,6 +198,9 @@
     } else {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
         _hideDeleteButton = YES;
+        if ([[User defaultUser] packs].count <= 1) {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
         [_swipeView reloadData];
         
     }
