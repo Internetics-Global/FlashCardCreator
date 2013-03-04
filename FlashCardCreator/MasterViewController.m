@@ -458,7 +458,7 @@
 - (void) updateMasterDetailViewNotification:(NSNotification *) notification {
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
-    self.indexCard = [[_currentPack cards] count] -1;
+    self.indexCard = 0;
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
     
@@ -468,7 +468,7 @@
     self.detailViewController.currentPack = _currentPack;
     self.detailViewController.indexCard = _indexCard;
     
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:([[_currentPack cards] count] -1) inSection:0];
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     

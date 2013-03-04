@@ -15,16 +15,15 @@
 #pragma mark UIView boilerplate
 - (void)viewDidLoad 
 {
-	[self setupPage];
     [super viewDidLoad];
     
     self.title = @"Help";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self setupPage];    
+    [super viewWillAppear:animated];
+    [self setupPage];
 }
-
 
 #pragma mark -
 #pragma mark The Guts
@@ -88,18 +87,12 @@
 #pragma mark PageControl stuff
 - (IBAction)changePage:(id)sender 
 {
-	/*
-	 *	Change the scroll view
-	 */
     CGRect frame = _scrollView.frame;
     frame.origin.x = frame.size.width * _pageControl.currentPage;
     frame.origin.y = 0;
 	
     [_scrollView scrollRectToVisible:frame animated:YES];
 
-	/*
-	 *	When the animated scrolling finishings, scrollViewDidEndDecelerating will turn this off
-	 */
     pageControlIsChangingPage = YES;
 }
 

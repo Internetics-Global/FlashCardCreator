@@ -41,6 +41,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];
     }
