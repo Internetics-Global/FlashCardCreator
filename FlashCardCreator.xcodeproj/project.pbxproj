@@ -130,6 +130,17 @@
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
+		2DC1777D16E4641300939E61 /* help_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1777916E4641200939E61 /* help_button.png */; };
+		2DC1777E16E4641300939E61 /* help_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1777A16E4641200939E61 /* help_button@2x.png */; };
+		2DC1777F16E4641300939E61 /* help_button@2x~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1777B16E4641300939E61 /* help_button@2x~iPad.png */; };
+		2DC1778016E4641300939E61 /* help_button~iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1777C16E4641300939E61 /* help_button~iPad.png */; };
+		2DC177A716E4680500939E61 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC177A616E4680500939E61 /* HelpViewController.m */; };
+		2DC177AE16E46AA800939E61 /* help1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177A916E46AA800939E61 /* help1.jpg */; };
+		2DC177AF16E46AA800939E61 /* help2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AA16E46AA800939E61 /* help2.jpg */; };
+		2DC177B016E46AA800939E61 /* help3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AB16E46AA800939E61 /* help3.jpg */; };
+		2DC177B116E46AA800939E61 /* help4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AC16E46AA800939E61 /* help4.jpg */; };
+		2DC177B216E46AA800939E61 /* help5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AD16E46AA800939E61 /* help5.jpg */; };
+		2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177B316E46B1B00939E61 /* HelpViewController.xib */; };
 		2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0B16798E04007A8CAD /* UIKit.framework */; };
 		2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0D16798E04007A8CAD /* Foundation.framework */; };
 		2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */; };
@@ -608,6 +619,18 @@
 		2DA97F1116CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2DC1777916E4641200939E61 /* help_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help_button.png; path = Resources/help_button.png; sourceTree = "<group>"; };
+		2DC1777A16E4641200939E61 /* help_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "help_button@2x.png"; path = "Resources/help_button@2x.png"; sourceTree = "<group>"; };
+		2DC1777B16E4641300939E61 /* help_button@2x~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "help_button@2x~iPad.png"; path = "Resources/help_button@2x~iPad.png"; sourceTree = "<group>"; };
+		2DC1777C16E4641300939E61 /* help_button~iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "help_button~iPad.png"; path = "Resources/help_button~iPad.png"; sourceTree = "<group>"; };
+		2DC177A516E4680500939E61 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Classes/HelpViewController.h; sourceTree = "<group>"; };
+		2DC177A616E4680500939E61 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpViewController.m; path = Classes/HelpViewController.m; sourceTree = "<group>"; };
+		2DC177A916E46AA800939E61 /* help1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help1.jpg; path = Resources/help1.jpg; sourceTree = "<group>"; };
+		2DC177AA16E46AA800939E61 /* help2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help2.jpg; path = Resources/help2.jpg; sourceTree = "<group>"; };
+		2DC177AB16E46AA800939E61 /* help3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help3.jpg; path = Resources/help3.jpg; sourceTree = "<group>"; };
+		2DC177AC16E46AA800939E61 /* help4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help4.jpg; path = Resources/help4.jpg; sourceTree = "<group>"; };
+		2DC177AD16E46AA800939E61 /* help5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help5.jpg; path = Resources/help5.jpg; sourceTree = "<group>"; };
+		2DC177B316E46B1B00939E61 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Classes/HelpViewController.xib; sourceTree = "<group>"; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DCE0B0B16798E04007A8CAD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2DCE0B0D16798E04007A8CAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -875,6 +898,7 @@
 		2D5F3D081679EFA8009D2ADC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2DC177A816E46A6500939E61 /* help */,
 				2D26346416C2080D001A024D /* Template Screenshot */,
 				2DAAE19F16B8CE2300EA6D90 /* Customize */,
 				2D09AF9816A52C5000B1C0C9 /* Splash */,
@@ -945,6 +969,9 @@
 		2D5F3D58167D5590009D2ADC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				2DC177A516E4680500939E61 /* HelpViewController.h */,
+				2DC177A616E4680500939E61 /* HelpViewController.m */,
+				2DC177B316E46B1B00939E61 /* HelpViewController.xib */,
 				2D5C183C16D1A69200E1E785 /* AboutView.h */,
 				2D5C183D16D1A69200E1E785 /* AboutView.m */,
 				2D5C183E16D1A69200E1E785 /* AboutViewController.h */,
@@ -1016,6 +1043,10 @@
 		2DAAE19F16B8CE2300EA6D90 /* Customize */ = {
 			isa = PBXGroup;
 			children = (
+				2DC1777916E4641200939E61 /* help_button.png */,
+				2DC1777A16E4641200939E61 /* help_button@2x.png */,
+				2DC1777B16E4641300939E61 /* help_button@2x~iPad.png */,
+				2DC1777C16E4641300939E61 /* help_button~iPad.png */,
 				2D8A995A16E43FFD006E80BD /* redButton.png */,
 				2D5FCBB816DD927800DB8628 /* add_pack_button.png */,
 				2D5FCBB916DD927800DB8628 /* add_pack_button@2x~iPad.png */,
@@ -1086,6 +1117,18 @@
 				2D5C17E616D1A57800E1E785 /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		2DC177A816E46A6500939E61 /* help */ = {
+			isa = PBXGroup;
+			children = (
+				2DC177A916E46AA800939E61 /* help1.jpg */,
+				2DC177AA16E46AA800939E61 /* help2.jpg */,
+				2DC177AB16E46AA800939E61 /* help3.jpg */,
+				2DC177AC16E46AA800939E61 /* help4.jpg */,
+				2DC177AD16E46AA800939E61 /* help5.jpg */,
+			);
+			name = help;
 			sourceTree = "<group>";
 		};
 		2DC554E4169D425A00251C1B /* Others */ = {
@@ -1575,6 +1618,16 @@
 				2DE809E516E03F7200B7959A /* templateScreenshot3.png in Resources */,
 				2DE809E616E03F7200B7959A /* templateScreenshot4.png in Resources */,
 				2D8A995B16E43FFD006E80BD /* redButton.png in Resources */,
+				2DC1777D16E4641300939E61 /* help_button.png in Resources */,
+				2DC1777E16E4641300939E61 /* help_button@2x.png in Resources */,
+				2DC1777F16E4641300939E61 /* help_button@2x~iPad.png in Resources */,
+				2DC1778016E4641300939E61 /* help_button~iPad.png in Resources */,
+				2DC177AE16E46AA800939E61 /* help1.jpg in Resources */,
+				2DC177AF16E46AA800939E61 /* help2.jpg in Resources */,
+				2DC177B016E46AA800939E61 /* help3.jpg in Resources */,
+				2DC177B116E46AA800939E61 /* help4.jpg in Resources */,
+				2DC177B216E46AA800939E61 /* help5.jpg in Resources */,
+				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1645,6 +1698,7 @@
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
 				2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */,
+				2DC177A716E4680500939E61 /* HelpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

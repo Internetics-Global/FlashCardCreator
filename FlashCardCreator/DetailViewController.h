@@ -27,6 +27,7 @@
     int _indexCard;  //selected card index in master view
     
     UIPopoverController *_settingPopoverController;
+    UIPopoverController *_helpPopoverController;
     UIPopoverController *_masterPopoverController;
     
     FlashCardView *_previousCardView;
@@ -34,6 +35,7 @@
     FlashCardView *_nextCardView;
     
     UIBarButtonItem *_settingButton;
+    UIBarButtonItem *_helpButton;
     
 }
 

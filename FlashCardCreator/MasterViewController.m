@@ -32,6 +32,7 @@
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
 #import "PlayViewController.h"
+#import "HelpViewController.h"
 
 
 @implementation MasterViewController
@@ -101,8 +102,12 @@
         
         UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
+        
+        UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]
+                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"help_button.png"] target:self action:@selector(helpButtonClicked:)]];
+        
         self.navigationItem.rightBarButtonItems =
-            @[settingButton,playButton, shareButton];
+            @[helpButton,settingButton,playButton, shareButton];
     }
     
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -316,6 +321,14 @@
     MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
     [self.navigationController pushViewController:moreInfoViewController animated:YES];
 }
+
+
+- (void)helpButtonClicked:(id) sender
+{
+    HelpViewController *helpViewController = [[HelpViewController alloc] init];
+    [self.navigationController pushViewController:helpViewController animated:YES];
+}
+
 
 - (void)editButtonClicked:(id) sender
 {

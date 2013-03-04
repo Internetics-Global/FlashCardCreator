@@ -18,6 +18,7 @@
 #import "PlayViewController.h"
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
+#import "HelpViewController.h"
 
 @implementation DetailViewController
 
@@ -72,12 +73,15 @@
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked)]];
+    _helpButton = [[UIBarButtonItem alloc]
+                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"help_button.png"] target:self action:@selector(helpButtonClicked:)]];
+    
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
         @[playButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[_settingButton, playButton, shareButton];
+                                @[_helpButton,_settingButton, playButton, shareButton];
     }
     
     //Don't need the back button when on iPad
@@ -275,6 +279,17 @@
     } else {
         NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
     }
+}
+
+- (void)helpButtonClicked:(id) sender
+{
+    HelpViewController *helpViewController = [[HelpViewController alloc] init];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
+    if (_helpPopoverController == nil) {
+        _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+    }
+    _helpPopoverController.popoverContentSize = CGSizeMake(480, 320);
+    [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 - (void)moreButtonClicked:(id) sender
