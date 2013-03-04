@@ -151,6 +151,20 @@
 #pragma mark Webview delegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSLog(@"Alipay URL: %@", [[request URL] absoluteString]);
+    NSString *curUrl = [NSString stringWithFormat:@"%@%@", [[self.webView.request URL] host], [[self.webView.request URL] path]];
+    NSString *newUrl = [NSString stringWithFormat:@"%@%@", [[request URL] host], [[request URL] path]];
+    
+    if (navigationType == UIWebViewNavigationTypeLinkClicked && ![newUrl isEqualToString:curUrl]) {
+        [Common alertViewCommon:@"Link is clicked "];
+        
+        return NO;
+    }
+    
+    if (navigationType == UIWebViewNavigationTypeFormSubmitted || navigationType == UIWebViewNavigationTypeFormResubmitted) {
+        [Common alertViewCommon:@"Form is submitted(Creat account)"];
+    }
 
     return YES;
 }

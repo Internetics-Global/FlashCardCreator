@@ -139,7 +139,7 @@
         }
         case 2:
         {
-            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {

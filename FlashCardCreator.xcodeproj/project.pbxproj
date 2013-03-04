@@ -125,8 +125,6 @@
 		2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D75DF87169D07CB00337B10 /* MobileCoreServices.framework */; };
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
-		2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8A993216E1D277006E80BD /* PlayViewController.m */; };
-		2D8A995B16E43FFD006E80BD /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8A995A16E43FFD006E80BD /* redButton.png */; };
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
@@ -141,6 +139,7 @@
 		2DC177B116E46AA800939E61 /* help4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AC16E46AA800939E61 /* help4.jpg */; };
 		2DC177B216E46AA800939E61 /* help5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177AD16E46AA800939E61 /* help5.jpg */; };
 		2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177B316E46B1B00939E61 /* HelpViewController.xib */; };
+		2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC177B616E49B8600939E61 /* PlayViewController.m */; };
 		2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0B16798E04007A8CAD /* UIKit.framework */; };
 		2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0D16798E04007A8CAD /* Foundation.framework */; };
 		2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */; };
@@ -490,8 +489,6 @@
 		2D5C180F16D1A62700E1E785 /* NSArray+Randomised.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Randomised.m"; path = "Classes/NSArray+Randomised.m"; sourceTree = "<group>"; };
 		2D5C181016D1A62700E1E785 /* NSString+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+QueryString.h"; path = "Classes/NSString+QueryString.h"; sourceTree = "<group>"; };
 		2D5C181116D1A62700E1E785 /* NSString+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+QueryString.m"; path = "Classes/NSString+QueryString.m"; sourceTree = "<group>"; };
-		2D5C181216D1A62700E1E785 /* PlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayView.h; path = Classes/PlayView.h; sourceTree = "<group>"; };
-		2D5C181316D1A62700E1E785 /* PlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayView.m; path = Classes/PlayView.m; sourceTree = "<group>"; };
 		2D5C181416D1A62700E1E785 /* SimpleWebBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleWebBrowserController.h; path = Classes/SimpleWebBrowserController.h; sourceTree = "<group>"; };
 		2D5C181516D1A62700E1E785 /* SimpleWebBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleWebBrowserController.m; path = Classes/SimpleWebBrowserController.m; sourceTree = "<group>"; };
 		2D5C181616D1A62700E1E785 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Scale.h"; path = "Classes/UIImage+Scale.h"; sourceTree = "<group>"; };
@@ -603,8 +600,6 @@
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
-		2D8A993116E1D277006E80BD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
-		2D8A993216E1D277006E80BD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		2D8A995A16E43FFD006E80BD /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		2DA97ED616CB7DF9004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2DA97ED816CB7E04004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -631,6 +626,8 @@
 		2DC177AC16E46AA800939E61 /* help4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help4.jpg; path = Resources/help4.jpg; sourceTree = "<group>"; };
 		2DC177AD16E46AA800939E61 /* help5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help5.jpg; path = Resources/help5.jpg; sourceTree = "<group>"; };
 		2DC177B316E46B1B00939E61 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Classes/HelpViewController.xib; sourceTree = "<group>"; };
+		2DC177B516E49B8600939E61 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = Classes/PlayViewController.h; sourceTree = "<group>"; };
+		2DC177B616E49B8600939E61 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = Classes/PlayViewController.m; sourceTree = "<group>"; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DCE0B0B16798E04007A8CAD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2DCE0B0D16798E04007A8CAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -775,8 +772,6 @@
 				2D5C180F16D1A62700E1E785 /* NSArray+Randomised.m */,
 				2D5C181016D1A62700E1E785 /* NSString+QueryString.h */,
 				2D5C181116D1A62700E1E785 /* NSString+QueryString.m */,
-				2D5C181216D1A62700E1E785 /* PlayView.h */,
-				2D5C181316D1A62700E1E785 /* PlayView.m */,
 				2D5C181416D1A62700E1E785 /* SimpleWebBrowserController.h */,
 				2D5C181516D1A62700E1E785 /* SimpleWebBrowserController.m */,
 				2D5C181616D1A62700E1E785 /* UIImage+Scale.h */,
@@ -803,8 +798,8 @@
 		2D4E4EB616B2768100E75257 /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				2D8A993116E1D277006E80BD /* PlayViewController.h */,
-				2D8A993216E1D277006E80BD /* PlayViewController.m */,
+				2DC177B516E49B8600939E61 /* PlayViewController.h */,
+				2DC177B616E49B8600939E61 /* PlayViewController.m */,
 			);
 			name = Play;
 			sourceTree = "<group>";
@@ -1617,7 +1612,6 @@
 				2DE809E416E03F7200B7959A /* templateScreenshot2.png in Resources */,
 				2DE809E516E03F7200B7959A /* templateScreenshot3.png in Resources */,
 				2DE809E616E03F7200B7959A /* templateScreenshot4.png in Resources */,
-				2D8A995B16E43FFD006E80BD /* redButton.png in Resources */,
 				2DC1777D16E4641300939E61 /* help_button.png in Resources */,
 				2DC1777E16E4641300939E61 /* help_button@2x.png in Resources */,
 				2DC1777F16E4641300939E61 /* help_button@2x~iPad.png in Resources */,
@@ -1697,8 +1691,8 @@
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
-				2D8A993316E1D277006E80BD /* PlayViewController.m in Sources */,
 				2DC177A716E4680500939E61 /* HelpViewController.m in Sources */,
+				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
