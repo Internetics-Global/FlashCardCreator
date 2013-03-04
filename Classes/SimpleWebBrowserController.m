@@ -218,7 +218,11 @@
 }
 
 - (void)closeButtonClicked:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissModalViewControllerAnimated:YES];    
+    }
 }
 
 #pragma mark -

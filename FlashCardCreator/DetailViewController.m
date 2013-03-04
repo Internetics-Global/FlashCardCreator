@@ -288,7 +288,7 @@
     if (_helpPopoverController == nil) {
         _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
     }
-    _helpPopoverController.popoverContentSize = CGSizeMake(480, 320);
+    _helpPopoverController.popoverContentSize = CGSizeMake(480, 450);
     [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
