@@ -74,7 +74,7 @@
                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked)]];
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
-        @[playButton, shareButton];
+        @[playButton];
     } else {
         self.navigationItem.rightBarButtonItems =
                                 @[_settingButton, playButton, shareButton];
