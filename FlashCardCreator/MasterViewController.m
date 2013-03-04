@@ -246,6 +246,11 @@
 
 - (void)createNewCard:(id)sender
 {
+    if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        [Common alertViewCommon:@"Not allow to create card whose pack is not created by yourself"];
+        return;
+    }
+    
     //For iPhone, we don't need it
     if (!isUserInterfaceIdiomPhone) {
         if (_backgroundOfCreateCardView == nil) {
@@ -756,6 +761,7 @@
             
             NSDictionary *packDict = (NSDictionary *)packJsonObject;
             pack.packName = packDict[@"pack_name"];
+            pack.creator = packDict[@"creator"];
             
             //We need to move cover image to imagesDirectory
             error = nil;

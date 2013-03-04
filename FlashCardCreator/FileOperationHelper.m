@@ -122,7 +122,7 @@
     
     //step 3: build packInformation.json
     NSError *error = nil;
-    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",[pack.coverImageURL lastPathComponent],@"cover_image",nil];
+    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator",nil];
     NSData *jsonPackData = [NSJSONSerialization dataWithJSONObject:packDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *packInfoJsonFilePath = [cardAssembleDir stringByAppendingPathComponent:@"packInformation.json"];
     if (([jsonPackData length] >0) && (error == nil)) {
