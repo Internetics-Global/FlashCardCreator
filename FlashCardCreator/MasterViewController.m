@@ -213,6 +213,7 @@
 {
     
     PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
+    packListViewController.currentPackIndex = _indexPack;
     
     if (isUserInterfaceIdiomPhone) {
         packListViewController.view.frame = CGRectMake(10, 10, 320, 131);

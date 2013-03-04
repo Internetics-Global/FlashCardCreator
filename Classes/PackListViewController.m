@@ -17,6 +17,7 @@
 @synthesize swipeView = _swipeView;
 @synthesize pageControl = _pageControl;
 @synthesize packArray = _packArray;
+@synthesize currentPackIndex = _currentPackIndex;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -41,6 +42,7 @@
         self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _hideDeleteButton = TRUE;
+        _currentPackIndex = 0;
         
     }
     return self;
@@ -128,7 +130,7 @@
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
     deleteButton.frame = CGRectMake(50.0f, 185.0f, 100.0, 30);
-    if (!_hideDeleteButton) {
+    if ((!_hideDeleteButton) && (_currentPackIndex != index)) {
         [view addSubview:deleteButton];
     }
     
@@ -193,6 +195,7 @@
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
         _hideDeleteButton = YES;
         [_swipeView reloadData];
+        
     }
     
 }
