@@ -21,6 +21,7 @@
 "NavigationBarItem_More_Dropbox"    = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "Random Play";
 "NavigationBarItem_More_Register"   = "Register";
+"NavigationBarItem_More_Logo_In"   = "Login";
 "NavigationBarItem_More_Help"       = "Help";
 "NavigationBarItem_More_About"      = "About";
 

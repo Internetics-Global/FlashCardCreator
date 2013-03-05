@@ -93,10 +93,14 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 3:
-            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Logo_In",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case 4:
+            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        case 5:
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
@@ -153,7 +157,7 @@
         }
         case 3:
         {
-            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {
@@ -165,6 +169,19 @@
             break;
         }
         case 4:
+        {
+            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+            controller.hidesToolbar = NO;
+            if (isUserInterfaceIdiomPhone) {
+                [self.navigationController pushViewController:controller animated:YES];
+            } else {
+                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentModalViewController:controller animated:YES];
+            }
+            break;
+        }
+        case 5:
         {
             AboutViewController *about = [[AboutViewController alloc] init];
             [self.navigationController pushViewController:about animated:YES];
