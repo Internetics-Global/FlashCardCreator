@@ -37,6 +37,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
         
         float flashCardYPositionInScrollView;
         if (isUserInterfaceIdiomPhone) {
@@ -381,6 +383,14 @@
 - (void) selectedPackNotification:(NSNotification *) notification {
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
+}
+
+- (void) hideNavigationBarNotification:(NSNotification *) notification {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void) showNavigationBarNotification:(NSNotification *) notification {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark -

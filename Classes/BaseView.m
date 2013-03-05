@@ -407,6 +407,20 @@
 #pragma mark -
 #pragma mark - Keyboard Notification and related
 
+- (void)keyboardWillHide:(NSNotification*)aNotification {
+    if (isUserInterfaceIdiomPhone) {
+        //we don't need to hide navigation bar on ipAD
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];    
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification*)aNotification {
+    if (isUserInterfaceIdiomPhone) {
+        //we don't need to hide navigation bar on ipAD
+        [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];    
+    }
+}
+
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     //Step1: Get keyboard height
