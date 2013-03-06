@@ -24,6 +24,8 @@ BOOL isLoggingDropboxInSettingView = NO;
     self = [super initWithStyle:style];
     if (self) {
         self.title =@"More";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableViewNotification:) name:REFRESH_SETTING_TABLEVIEW_NOTIFICATION
+ object:nil];
     }
     return self;
 }
@@ -39,6 +41,11 @@ BOOL isLoggingDropboxInSettingView = NO;
     
     self.tableView.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -60,7 +67,7 @@ BOOL isLoggingDropboxInSettingView = NO;
     } else if (section == 1) {
         return 1;
     } else if (section == 2) {
-        return 2;
+        return (([self isUserHasLoginInternectics] == YES)?1:2);
     } else {
         return 2;
     }
@@ -104,12 +111,17 @@ BOOL isLoggingDropboxInSettingView = NO;
         cell.accessoryView = _playModeSwitch;
         
     } else if (indexPath.section ==2) {
-        if (indexPath.row ==0) {
-            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Register",nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else {
+        if ([self isUserHasLoginInternectics] == YES) {
             cell.textLabel.text = @"Submit new listing";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else {
+            if (indexPath.row ==0) {
+                cell.textLabel.text = @"Register";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else if (indexPath.row ==1) {
+                cell.textLabel.text = @"Submit new listing";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
         }
         
     } else if (indexPath.section ==3) {
@@ -153,9 +165,17 @@ BOOL isLoggingDropboxInSettingView = NO;
         
     }else if (indexPath.section ==2) {
         if (indexPath.row == 0) {
-            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
+            NSURL *url;
+            if ([self isUserHasLoginInternectics] == YES) {
+                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
+                
+            } else {
+                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
+            }
+            
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
+            
             if (isUserInterfaceIdiomPhone) {
                 [self.navigationController pushViewController:controller animated:YES];
             } else {
@@ -163,6 +183,7 @@ BOOL isLoggingDropboxInSettingView = NO;
                 navController.modalPresentationStyle = UIModalPresentationFormSheet;
                 [self presentModalViewController:navController animated:YES];
             }
+            
         } else {
             NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
@@ -194,9 +215,30 @@ BOOL isLoggingDropboxInSettingView = NO;
 }
 
 #pragma mark -
-#pragma mark - Close current view
+#pragma mark - Others
+//Indicate that user has log in http://internetics.net.au (judged by cookie)
+- (BOOL) isUserHasLoginInternectics {
+    NSArray *cookiesArray = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://internetics.net.au/fcc/add-new"]];
+    for (NSHTTPCookie *cookie in cookiesArray) {
+        NSDate *expiresDate = [cookie expiresDate];
+        if ([expiresDate compare:[NSDate date]] == NSOrderedDescending) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#pragma mark -
+#pragma mark - UICtonrol Action
 - (void) backButtonClicked {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -
+#pragma mark - Notification
+
+- (void) refreshTableViewNotification:(NSNotification *) notification {
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -223,6 +265,10 @@ BOOL isLoggingDropboxInSettingView = NO;
 - (void)my_viewDidUnload
 {
     
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

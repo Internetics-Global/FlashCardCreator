@@ -600,7 +600,6 @@
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
-		2D8A995A16E43FFD006E80BD /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
 		2DA97ED616CB7DF9004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		2DA97ED816CB7E04004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2DA97EDA16CB7E09004E7FAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1042,7 +1041,6 @@
 				2DC1777A16E4641200939E61 /* help_button@2x.png */,
 				2DC1777B16E4641300939E61 /* help_button@2x~iPad.png */,
 				2DC1777C16E4641300939E61 /* help_button~iPad.png */,
-				2D8A995A16E43FFD006E80BD /* redButton.png */,
 				2D5FCBB816DD927800DB8628 /* add_pack_button.png */,
 				2D5FCBB916DD927800DB8628 /* add_pack_button@2x~iPad.png */,
 				2D5FCBBA16DD927800DB8628 /* add_pack_button@2x~iPhone.png */,

@@ -191,6 +191,12 @@
     
     backButton.enabled = [webview canGoBack];
     forwardButton.enabled = [webview canGoForward];
+
+    //The following code is just for test
+    [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[0].value='Clive';"];
+    [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[1].value='clive@internetics.net.au';"];
+
+    
 }
 
 
@@ -227,6 +233,8 @@
     } else {
         [self dismissModalViewControllerAnimated:YES];    
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SETTING_TABLEVIEW_NOTIFICATION object:nil];
 }
 
 #pragma mark -
