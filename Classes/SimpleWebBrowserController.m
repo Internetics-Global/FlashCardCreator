@@ -161,7 +161,14 @@
     }
     
     if (navigationType == UIWebViewNavigationTypeFormSubmitted || navigationType == UIWebViewNavigationTypeFormResubmitted) {
-        [Common alertViewCommon:@"Form is submitted(Creat account)"];
+        //[Common alertViewCommon:@"Form is submitted(Creat account)"];
+        
+        if (1) { //we have to update this logic later when requirement is freezed (liang wang)
+            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
+            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+            controller.hidesToolbar = NO;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     }
 
     return YES;

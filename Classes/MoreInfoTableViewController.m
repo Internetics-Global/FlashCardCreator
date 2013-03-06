@@ -106,7 +106,7 @@
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Register",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else {
-            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Logo_In",nil);
+            cell.textLabel.text = @"Submit new listing";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
@@ -156,8 +156,9 @@
             if (isUserInterfaceIdiomPhone) {
                 [self.navigationController pushViewController:controller animated:YES];
             } else {
+                UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
                 controller.modalPresentationStyle = UIModalPresentationFormSheet;
-                [self presentModalViewController:controller animated:YES];
+                [self presentModalViewController:navController animated:YES];
             }
         } else {
             NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
