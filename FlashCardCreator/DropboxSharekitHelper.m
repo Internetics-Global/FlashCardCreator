@@ -59,8 +59,7 @@
     
     //Step2: do upload and share if not meet
     if (![[DBSession sharedSession] isLinked]) {
-		//[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
-        [Common alertViewCommon:@"Please Log in Dropbox first in setting view beforehand"];
+		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
     } else {
         [self exectueShareAfterDropboxLinked];
     }

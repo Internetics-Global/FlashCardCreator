@@ -24,6 +24,8 @@
 #import "SHKConfiguration.h"
 #import "CreatePackViewController.h"
 
+extern BOOL isLoggingDropboxInSettingView;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -189,8 +191,14 @@
         [Common alertViewCommon:@"Failed to login to Dropbox."];
     } else
     {
-        [Common alertViewCommon:@"Dropbox is linked now"];
+        //[Common alertViewCommon:@"Dropbox is linked now"];
+        
+        if (isLoggingDropboxInSettingView == NO) {  //which means it's not just a single dropbox log in action
+            [self.masterViewController shareButtonClicked];    
+        }
     }
+    
+    isLoggingDropboxInSettingView = NO;
 }
 
 

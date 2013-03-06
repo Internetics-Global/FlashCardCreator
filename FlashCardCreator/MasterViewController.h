@@ -45,4 +45,6 @@
 @property (nonatomic, assign) int indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 
+- (void)shareButtonClicked;
+
 @end

@@ -11,6 +11,8 @@
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
 
+BOOL isLoggingDropboxInSettingView = NO;
+
 @interface MoreInfoTableViewController ()
 
 @end
@@ -129,6 +131,7 @@
         [Common alertViewCommon:@"Your dropbox account has been unlinked"];
     } else {
         [[DBSession sharedSession] linkFromController:self];
+        isLoggingDropboxInSettingView = YES;
     }
 }
 

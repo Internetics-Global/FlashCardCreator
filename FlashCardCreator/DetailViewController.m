@@ -273,6 +273,12 @@
 #pragma mark UIBarButtonItem action (only for iPad)
 
 - (void)shareButtonClicked {
+    
+    if (!isUserInterfaceIdiomPhone) {
+        [_settingPopoverController dismissPopoverAnimated:YES];
+        [_helpPopoverController dismissPopoverAnimated:YES];
+    }
+    
     if ((_currentPack) && (_currentCard)) {
         DropboxSharekitHelper *shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
         [shareHelper shareAction];
@@ -283,6 +289,10 @@
 
 - (void)helpButtonClicked:(id) sender
 {
+    if (!isUserInterfaceIdiomPhone) {
+        [_settingPopoverController dismissPopoverAnimated:YES];
+    }
+    
     HelpViewController *helpViewController = [[HelpViewController alloc] init];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
     if (_helpPopoverController == nil) {
@@ -294,6 +304,10 @@
 
 - (void)moreButtonClicked:(id) sender
 {
+    if (!isUserInterfaceIdiomPhone) {
+        [_helpPopoverController dismissPopoverAnimated:YES];
+    }
+    
     MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
     if (_settingPopoverController == nil) {
