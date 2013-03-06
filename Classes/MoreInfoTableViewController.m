@@ -150,7 +150,7 @@
         
     }else if (indexPath.section ==2) {
         if (indexPath.row == 0) {
-            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
+            NSURL *url = [NSURL URLWithString:@"https://instagram.com/accounts/login/"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {

@@ -295,9 +295,11 @@
 - (void)moreButtonClicked:(id) sender
 {
     MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
     if (_settingPopoverController == nil) {
-        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:moreInfoViewController];
+        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
     }
+    
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 480);
     [_settingPopoverController presentPopoverFromBarButtonItem:_settingButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
@@ -317,6 +319,11 @@
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"Current card or pack is nil"];
         return;
+    }
+    
+    if (!isUserInterfaceIdiomPhone) {
+        [_settingPopoverController dismissPopoverAnimated:YES];
+        [_helpPopoverController dismissPopoverAnimated:YES];
     }
     
     

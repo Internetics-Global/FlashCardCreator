@@ -160,7 +160,7 @@
         [Common alertViewCommon:@"Link is clicked "];
     }
     
-    if (navigationType == UIWebViewNavigationTypeFormSubmitted || navigationType == UIWebViewNavigationTypeFormResubmitted) {
+    if ((navigationType == UIWebViewNavigationTypeFormSubmitted || navigationType == UIWebViewNavigationTypeFormResubmitted) && (![newUrl isEqualToString:curUrl]) )  {
         //[Common alertViewCommon:@"Form is submitted(Creat account)"];
         
         if (1) { //we have to update this logic later when requirement is freezed (liang wang)
