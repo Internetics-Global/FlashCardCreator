@@ -323,7 +323,7 @@
 
 - (void)moreButtonClicked:(id) sender
 {
-    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
+    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:moreInfoViewController animated:YES];
 }
 
@@ -370,7 +370,6 @@
     NSString *url = (NSString *)[notification object];
     [self downloadURLViaURLScheme:url];
 }
-
 
 - (void) selectedPackNotification:(NSNotification *) notification {
     _indexPack = [(NSString *)[notification object] intValue];

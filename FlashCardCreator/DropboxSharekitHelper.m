@@ -59,24 +59,12 @@
     
     //Step2: do upload and share if not meet
     if (![[DBSession sharedSession] isLinked]) {
-		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
+		//[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
+        [Common alertViewCommon:@"Please Log in Dropbox first in setting view beforehand"];
     } else {
         [self exectueShareAfterDropboxLinked];
     }
     
-}
-
-- (void) dropboxLinked:(id)notification
-{
-    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
-    
-    if(![linkedNum boolValue])
-    {
-        [Common alertViewCommon:@"Failed to login to Dropbox."];
-    } else
-    {
-        [self exectueShareAfterDropboxLinked];
-    }
 }
 
 - (DBRestClient *)restClient {

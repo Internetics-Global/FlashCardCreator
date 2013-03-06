@@ -34,8 +34,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinked:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
@@ -296,12 +294,11 @@
 
 - (void)moreButtonClicked:(id) sender
 {
-    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] init];
-    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
+    MoreInfoTableViewController *moreInfoViewController = [[MoreInfoTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     if (_settingPopoverController == nil) {
-        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+        _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:moreInfoViewController];
     }
-    _settingPopoverController.popoverContentSize = CGSizeMake(320, 300);
+    _settingPopoverController.popoverContentSize = CGSizeMake(320, 480);
     [_settingPopoverController presentPopoverFromBarButtonItem:_settingButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }

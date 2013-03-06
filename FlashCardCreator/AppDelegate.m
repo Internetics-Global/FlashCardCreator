@@ -34,9 +34,8 @@
     //2. check user has opened app (once open, a default user will be setup)
     [SQLiteHelper checkUserExist];
     
-    //3. check reachability
-    // Other codes will take care this.
-    //[DataManager apiReachableAlert];
+    //3. set notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
     
     //4. Initialized Dropbox session
     DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
@@ -179,6 +178,20 @@
 }
 
 #pragma mark -
-#pragma mark - Test code, only for test
+#pragma mark - Notification
+
+- (void) dropboxLinkedNotification:(id)notification
+{
+    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
+    
+    if(![linkedNum boolValue])
+    {
+        [Common alertViewCommon:@"Failed to login to Dropbox."];
+    } else
+    {
+        [Common alertViewCommon:@"Dropbox is linked now"];
+    }
+}
+
 
 @end
