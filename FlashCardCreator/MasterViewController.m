@@ -110,7 +110,7 @@
             @[helpButton,settingButton,playButton, shareButton];
     }
     
-    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if (isUserInterfaceIdiomPhone) {
         self.title = _currentPack.packName;
