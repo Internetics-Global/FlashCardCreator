@@ -179,9 +179,8 @@
     [self.view addSubview:_loadingView];
 }
 
-
 - (void)webViewDidFinishLoad:(UIWebView *)webview {
-    [self zoomToFit];
+    //[self zoomToFit];
     _haveLoadURLFinished = YES;
     [_loadingView removeFromSuperview];
     

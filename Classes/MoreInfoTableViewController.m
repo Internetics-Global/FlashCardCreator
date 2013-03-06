@@ -150,14 +150,14 @@
         
     }else if (indexPath.section ==2) {
         if (indexPath.row == 0) {
-            NSURL *url = [NSURL URLWithString:@"https://instagram.com/accounts/login/"];
+            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {
                 [self.navigationController pushViewController:controller animated:YES];
             } else {
                 UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
-                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+                navController.modalPresentationStyle = UIModalPresentationFormSheet;
                 [self presentModalViewController:navController animated:YES];
             }
         } else {
@@ -174,7 +174,7 @@
         
     }else if (indexPath.section ==3) {
         if (indexPath.row ==0) {
-            NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+            NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {
