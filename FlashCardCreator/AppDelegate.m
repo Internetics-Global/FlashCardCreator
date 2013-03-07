@@ -97,6 +97,43 @@ extern BOOL isLoggingDropboxInSettingView;
     
     [UIApplication sharedApplication].statusBarHidden = YES;
     
+    UIImage *segmentSelected =
+    [UIImage imageNamed:@"segment_selected.png"];
+    UIImage *segmentUnselected =
+    [UIImage imageNamed:@"segment_unselected.png"];
+    UIImage *segmentSelectedUnselected =
+    [UIImage imageNamed:@"segment_seperator.png"];
+    UIImage *segUnselectedSelected =
+    [UIImage imageNamed:@"segment_seperator.png"];
+    UIImage *segmentUnselectedUnselected =
+    [UIImage imageNamed:@"segment_seperator.png"];
+    
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:UITextAttributeTextColor];
+    [[UISegmentedControl appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:segmentUnselected
+                                              forState: UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:segmentSelected
+                                              forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segmentUnselectedUnselected
+                                forLeftSegmentState:UIControlStateNormal
+                                  rightSegmentState:UIControlStateNormal
+                                         barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segmentSelectedUnselected
+                                forLeftSegmentState:UIControlStateSelected
+                                  rightSegmentState:UIControlStateNormal
+                                         barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segUnselectedSelected
+                                forLeftSegmentState:UIControlStateNormal
+                                  rightSegmentState:UIControlStateSelected
+                                         barMetrics:UIBarMetricsDefault];
+
+    
     
     //9.Sharekit configuration
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"

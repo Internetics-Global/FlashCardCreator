@@ -20,16 +20,16 @@
 #import "UINavigationController+DismissKeyboard.h"
 #import "BadgeLabel.h"
 
-#define kSegmentLeftMarginForiPad 30.0
+#define kSegmentLeftMarginForiPad 150.0
 #define kSegmentHeightForiPad 44.0
-#define kSegmentButtomMarginForiPad 20.0
+#define kSegmentButtomMarginForiPad 10.0
 #define kQuestionViewTopMarginForiPad 10.0
 #define kQuestionViewButtomMarginForiPad 80.0
 #define kQuestionViewCornerRadiusForiPad 20.0
 
-#define kSegmentLeftMarginForiPhone 15.0
+#define kSegmentLeftMarginForiPhone 60.0
 #define kSegmentHeightForiPhone 22.0
-#define kSegmentButtomMarginForiPhone 10.0
+#define kSegmentButtomMarginForiPhone 0.0
 #define kQuestionViewTopMarginForiPhone 5.0
 #define kQuestionViewButtomMarginForiPhone 40.0
 #define kQuestionViewCornerRadiusForiPhone 9.0
@@ -128,8 +128,10 @@
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-60, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 60, 60);
-        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-90-10, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-40, 90, 25);
+        [_changeTemplateButton setTitle:@"   Select Template" forState:UIControlStateNormal];
+        _changeTemplateButton.titleLabel.font = [UIFont systemFontOfSize:9];
+        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"select_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
@@ -201,8 +203,10 @@
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-20, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-20, 20, 20);
-        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-72-10, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-30, 72, 20);
+        [_changeTemplateButton setTitle:@"   Select Template" forState:UIControlStateNormal];
+        _changeTemplateButton.titleLabel.font = [UIFont systemFontOfSize:7];
+        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"select_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
