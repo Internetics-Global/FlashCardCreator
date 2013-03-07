@@ -163,7 +163,6 @@
     _subheading.text = @"Example";
     _subheading.tag = 100;
     _subheading.userInteractionEnabled = FALSE;
-    _subheading.backgroundColor = [UIColor yellowColor];
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
      _subheading.returnKeyType = UIReturnKeyDefault;
     _subheading.delegate = self;
@@ -173,7 +172,6 @@
     _main.text = @"Type";
     _main.tag = 101;
     _main.userInteractionEnabled = FALSE;
-    _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
     _main.delegate = self;
@@ -183,7 +181,6 @@
     _sub.text = @"Sub";
     _sub.tag = 102;
     _sub.userInteractionEnabled = FALSE;
-    _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
     _sub.delegate = self;
@@ -274,7 +271,6 @@
     _subheading.text = @"Example";
     _subheading.tag = 100;
     _subheading.userInteractionEnabled = FALSE;
-    _subheading.backgroundColor = [UIColor yellowColor];
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
     _subheading.returnKeyType = UIReturnKeyDefault;
     _subheading.delegate = self;
@@ -282,7 +278,6 @@
     
     _main = [[UITextView alloc]init];
     _main.userInteractionEnabled = FALSE;
-    _main.backgroundColor = [UIColor orangeColor];
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
     _main.delegate = self;
@@ -290,7 +285,6 @@
     
     _sub = [[UITextView alloc]init];
     _sub.userInteractionEnabled = FALSE;
-    _sub.backgroundColor = [UIColor greenColor];
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
     _sub.delegate = self;
