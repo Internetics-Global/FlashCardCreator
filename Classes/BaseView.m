@@ -192,7 +192,7 @@
     _packName.frame = CGRectMake(0, 0, 400, 60);
     [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     _packName.center = CGPointMake(30, 275);
-    _packName.text = @"This is the pack name";
+    //_packName.text = @"This is the pack name";
     _packName.textAlignment = NSTextAlignmentCenter;
     _packName.backgroundColor = [UIColor clearColor];
     _packName.font = [UIFont systemFontOfSize:20];
@@ -296,7 +296,7 @@
     _packName.frame = CGRectMake(0, 0, 200, 30);
     [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
     _packName.center = CGPointMake(15, 112);
-    _packName.text = @"This is the pack name";
+    //_packName.text = @"This is the pack name";
     _packName.textAlignment = NSTextAlignmentCenter;
     _packName.backgroundColor = [UIColor clearColor];
     _packName.font = [UIFont systemFontOfSize:12];

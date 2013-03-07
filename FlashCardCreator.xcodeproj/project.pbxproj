@@ -153,6 +153,7 @@
 		2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */; };
 		2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */; };
 		2DD058D616E837DE00F779BD /* dotted_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058D516E837DD00F779BD /* dotted_line.png */; };
+		2DD058F916E83FBD00F779BD /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058F816E83FBD00F779BD /* redButton.png */; };
 		2DE809A316DEF79D00B7959A /* card_cover_image_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */; };
 		2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C516DF679200B7959A /* selected_table_cell.png */; };
 		2DE809C816DF679300B7959A /* selected_table_cell@2x~iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C616DF679300B7959A /* selected_table_cell@2x~iPhone.png */; };
@@ -647,6 +648,7 @@
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B3316798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
 		2DD058D516E837DD00F779BD /* dotted_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotted_line.png; path = Resources/dotted_line.png; sourceTree = "<group>"; };
+		2DD058F816E83FBD00F779BD /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Resources/redButton.png; sourceTree = "<group>"; };
 		2DE809A216DEF79D00B7959A /* card_cover_image_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = card_cover_image_placeholder.jpg; path = Resources/card_cover_image_placeholder.jpg; sourceTree = "<group>"; };
 		2DE809C516DF679200B7959A /* selected_table_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected_table_cell.png; path = Resources/selected_table_cell.png; sourceTree = "<group>"; };
 		2DE809C616DF679300B7959A /* selected_table_cell@2x~iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected_table_cell@2x~iPhone.png"; path = "Resources/selected_table_cell@2x~iPhone.png"; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 		2DAAE19F16B8CE2300EA6D90 /* Customize */ = {
 			isa = PBXGroup;
 			children = (
+				2DD058F816E83FBD00F779BD /* redButton.png */,
 				2DD058D516E837DD00F779BD /* dotted_line.png */,
 				2DC1777916E4641200939E61 /* help_button.png */,
 				2DC1777A16E4641200939E61 /* help_button@2x.png */,
@@ -1624,6 +1627,7 @@
 				2DC177B216E46AA800939E61 /* help5.jpg in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 				2DD058D616E837DE00F779BD /* dotted_line.png in Resources */,
+				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
