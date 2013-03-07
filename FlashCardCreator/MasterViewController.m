@@ -422,12 +422,6 @@
     cardExample.creator = [OpenUDID value];
     cardExample.packID = self.currentPack.packID;
     cardExample.cardSN = 1;  //Start from 1
-    cardExample.question.subheading = @"Type";
-    cardExample.question.main = @"Main";
-    cardExample.question.sub = @"Sub";
-    cardExample.answer.subheading = @"Type";
-    cardExample.answer.main = @"Main";
-    cardExample.answer.sub = @"Sub";
     [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
