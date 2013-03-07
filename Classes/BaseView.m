@@ -58,13 +58,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         _logoLinkURL = @"http://www.";
-        _subheadingSize = 20;
+        _subheadingSize = 40;
         _subheadingColor = @"Black";
         _subheadingAlign = @"Right";
-        _mainSize = 16;
+        _mainSize = 36;
         _mainColor = @"Black";;
         _mainAlign = @"Center";;
-        _subSize = 16;
+        _subSize = 36;
         _subColor = @"Black";;
         _subAlign = @"Center";;
         
@@ -159,7 +159,6 @@
     [_image addGestureRecognizer:imageSingeTap];
     
     _subheading = [[UITextView alloc]init];
-    _subheading.text = @"Example";
     _subheading.tag = 100;
     _subheading.font =[UIFont systemFontOfSize:28];
     _subheading.userInteractionEnabled = FALSE;
@@ -169,7 +168,6 @@
     [_verticalScrollView addSubview:_subheading];
     
     _main = [[UITextView alloc]init];
-    _main.text = @"Type";
     _main.tag = 101;
     _main.font =[UIFont systemFontOfSize:28];
     _main.userInteractionEnabled = FALSE;
@@ -179,7 +177,6 @@
     [_verticalScrollView addSubview:_main];
     
     _sub = [[UITextView alloc]init];
-    _sub.text = @"Sub";
     _sub.tag = 102;
     _sub.font =[UIFont systemFontOfSize:28];
     _sub.userInteractionEnabled = FALSE;
@@ -268,7 +265,6 @@
     [_image addGestureRecognizer:imageSingeTap];
     
     _subheading = [[UITextView alloc]init];
-    _subheading.text = @"Example";
     _subheading.tag = 100;
     _subheading.userInteractionEnabled = FALSE;
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
@@ -720,11 +716,7 @@
     } else if (responderTextView.tag == 102) {
         _subSize = selectFontSize;
     }
-    
-    CGRect frame = responderTextView.frame;
-    frame.size.height = responderTextView.contentSize.height;
-    responderTextView.frame = frame;
-    
+        
     [_keyboardTopView setItems:_buttonArray];
 }
 
@@ -808,7 +800,9 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
-    if ( [text isEqualToString:@"\n"] ) {
+    static CGFloat height = 0;
+    
+    if (([text isEqualToString:@"\n"]) || (textView.contentSize.height > height)) {
         UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
         CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
         NSLog(@"Y position for current cursorY is %f",cursorY);
@@ -829,6 +823,9 @@
         [_verticalScrollView setContentOffset:offset animated:YES];
 
     }
+    
+     height= textView.contentSize.height;
+    
     return YES;
 }
 

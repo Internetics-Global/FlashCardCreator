@@ -511,37 +511,33 @@
     [_popoverController dismissPopoverAnimated:YES];
     
     NSString *templateIDString = (NSString *)[notification object];
-    if ([templateIDString integerValue] == _templateID) {
-        //do nothing
+    _templateID = [templateIDString integerValue];
+    
+    if (isUserInterfaceIdiomPhone ) {
+        [_questionView updateQuestionViewTemplateForiPhone:_templateID];
+        [_answerView updateAnswerViewTemplateForiPhone:_templateID];
     } else {
-        _templateID = [templateIDString integerValue];
-        
-        if (isUserInterfaceIdiomPhone ) {
-            [_questionView updateQuestionViewTemplateForiPhone:_templateID];
-            [_answerView updateAnswerViewTemplateForiPhone:_templateID];
-        } else {
-            [_questionView updateQuestionViewTemplateForiPad:_templateID];
-            [_answerView updateAnswerViewTemplateForiPad:_templateID];
-        }
-        
-        
-        _currentCard.templateID = _templateID;
-        
-        UIImage *origialmage = [self.questionView captureWholeViewAsImage];
-        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-        if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || (_currentCard.coverImageURL == nil)) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [imageData writeToFile:savedFullPath atomically:YES];
-            _currentCard.coverImageURL = savedFullPath;
-        } else {
-            [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
-        }
-        
-        _currentCard.packID = _currentPack.packID;
-        [_currentCard save];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+        [_questionView updateQuestionViewTemplateForiPad:_templateID];
+        [_answerView updateAnswerViewTemplateForiPad:_templateID];
     }
+    
+    
+    _currentCard.templateID = _templateID;
+    
+    UIImage *origialmage = [self.questionView captureWholeViewAsImage];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || (_currentCard.coverImageURL == nil)) {
+        NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+        [imageData writeToFile:savedFullPath atomically:YES];
+        _currentCard.coverImageURL = savedFullPath;
+    } else {
+        [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
+    }
+    
+    _currentCard.packID = _currentPack.packID;
+    [_currentCard save];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 }
 
 #pragma mark -

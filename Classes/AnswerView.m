@@ -19,17 +19,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        
-        //setup default value;
-        _main.text = @"main";
-        _sub.text = @"sub";
+
         _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
-        _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.jpg"];
         _imageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_content.jpg", [[NSBundle mainBundle] resourcePath]];
+        _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.jpg"];
         _logoImageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_logo.jpg", [[NSBundle mainBundle] resourcePath]];
-        
-        _logoLinkageButton.hidden = YES;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
@@ -60,14 +55,7 @@
     } else {
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
-    
-    imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.logoFullPath];
-    if (imageTemp) {
-        _logoImage.image = imageTemp;
-    } else {
-        _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.jpg"];
-    }
-    
+
     _subheading.text = _currentCard.answer.subheading;
     _main.text =_currentCard.answer.main;
     _sub.text =_currentCard.answer.sub;
@@ -118,7 +106,7 @@
             _sub.frame = CGRectMake(0, 40, 140, 100);
             _sub.font = [UIFont systemFontOfSize:12];
             _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
+            _sub.textAlignment = NSTextAlignmentLeft;
             
             _image.hidden = FALSE;
             _image.frame = CGRectMake(170, 0, 150, 150);
@@ -211,12 +199,12 @@
         {
             _subheading.hidden = FALSE;
             _subheading.frame = CGRectMake(20, 10, 360, 80);
-            _subheading.font = [UIFont systemFontOfSize:28];
+            _subheading.font = [UIFont systemFontOfSize:32];
             _subheading.textColor = [UIColor blackColor];
             _subheading.textAlignment = NSTextAlignmentCenter;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 100, 360, 300);
+            _main.frame = CGRectMake(20, 100, 360, 320);
             _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -236,7 +224,7 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 700, 60);
-            _main.font = [UIFont systemFontOfSize:28];
+            _main.font = [UIFont systemFontOfSize:32];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             
@@ -244,7 +232,7 @@
             _sub.frame = CGRectMake(20, 80, 360, 340);
             _sub.font = [UIFont systemFontOfSize:28];
             _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
+            _sub.textAlignment = NSTextAlignmentLeft;
             
             _image.hidden = FALSE;
             _image.frame = CGRectMake(380, 80, 330, 330);

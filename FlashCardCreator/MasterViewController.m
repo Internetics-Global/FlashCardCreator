@@ -384,10 +384,16 @@
     
     [self.tableView reloadData];
     
-    if (!isUserInterfaceIdiomPhone) {
+    if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    } else if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count == 0)) {
+        self.detailViewController.title = @"";
+        self.detailViewController.currentCard = nil;
+        self.detailViewController.currentPack = _currentPack;
+        self.detailViewController.indexCard = 0;
+        [self.detailViewController showCurrentCardInScrollView];
     }
     
 }

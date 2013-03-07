@@ -88,6 +88,7 @@
         
         if ([[_currentPack cards] count] >0) {
             _cardView.questionView.logoImageFullPath = ((Card *)[_currentPack cards][0]).question.logoFullPath;
+            _cardView.questionView.logoImage.image = [UIImage imageWithContentsOfFile:_cardView.questionView.logoImageFullPath];
             _cardView.questionView.logoLinkURL = ((Card *)[_currentPack cards][0]).question.logoURLLinkage;
         }
         [self.view addSubview:_cardView];
