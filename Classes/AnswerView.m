@@ -211,13 +211,13 @@
         {
             _subheading.hidden = FALSE;
             _subheading.frame = CGRectMake(20, 10, 360, 80);
-            _subheading.font = [UIFont systemFontOfSize:20];
+            _subheading.font = [UIFont systemFontOfSize:28];
             _subheading.textColor = [UIColor blackColor];
             _subheading.textAlignment = NSTextAlignmentCenter;
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 100, 360, 300);
-            _main.font = [UIFont systemFontOfSize:16];
+            _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
             
@@ -236,13 +236,13 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 700, 60);
-            _main.font = [UIFont systemFontOfSize:16];
+            _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             
             _sub.hidden = FALSE;
             _sub.frame = CGRectMake(20, 80, 360, 340);
-            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.font = [UIFont systemFontOfSize:28];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
@@ -259,13 +259,13 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont systemFontOfSize:16];
+            _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             
             _sub.hidden = FALSE;
             _sub.frame = CGRectMake(540, 290, 100, 50);
-            _sub.font = [UIFont systemFontOfSize:16];
+            _sub.font = [UIFont systemFontOfSize:28];
             _sub.textColor = [UIColor redColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
@@ -282,13 +282,13 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(540, -80, 180, 50);
-            _main.font = [UIFont systemFontOfSize:22];
+            _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
             
             _sub.hidden = FALSE;
             _sub.frame = CGRectMake(20, 10, 700, 400);
-            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.font = [UIFont systemFontOfSize:28];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
@@ -304,13 +304,13 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont systemFontOfSize:14];
+            _main.font = [UIFont systemFontOfSize:28];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
             
             _sub.hidden = FALSE;
             _sub.frame = CGRectMake(20, 290, 360, 40);
-            _sub.font = [UIFont systemFontOfSize:14];
+            _sub.font = [UIFont systemFontOfSize:28];
             _sub.textColor = [UIColor redColor];
             _sub.textAlignment = NSTextAlignmentLeft;
             

@@ -161,6 +161,7 @@
     _subheading = [[UITextView alloc]init];
     _subheading.text = @"Example";
     _subheading.tag = 100;
+    _subheading.font =[UIFont systemFontOfSize:28];
     _subheading.userInteractionEnabled = FALSE;
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
      _subheading.returnKeyType = UIReturnKeyDefault;
@@ -170,6 +171,7 @@
     _main = [[UITextView alloc]init];
     _main.text = @"Type";
     _main.tag = 101;
+    _main.font =[UIFont systemFontOfSize:28];
     _main.userInteractionEnabled = FALSE;
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
@@ -179,6 +181,7 @@
     _sub = [[UITextView alloc]init];
     _sub.text = @"Sub";
     _sub.tag = 102;
+    _sub.font =[UIFont systemFontOfSize:28];
     _sub.userInteractionEnabled = FALSE;
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
