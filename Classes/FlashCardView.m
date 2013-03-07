@@ -128,7 +128,7 @@
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-90-10, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-40, 90, 25);
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-90-5, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-35, 90, 25);
         [_changeTemplateButton setTitle:@"   Select Template" forState:UIControlStateNormal];
         _changeTemplateButton.titleLabel.font = [UIFont systemFontOfSize:9];
         [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"select_template_button.png"] forState:UIControlStateNormal];
@@ -217,74 +217,64 @@
 
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        _questionView.logoImage.userInteractionEnabled  = TRUE;
-        _questionView.image.userInteractionEnabled      = TRUE;
-        _questionView.main.userInteractionEnabled       = TRUE;
-        _questionView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _questionView.main.layer.borderWidth = 4;
-        _questionView.sub.userInteractionEnabled        = TRUE;
-        _questionView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _questionView.sub.layer.borderWidth = 4;
-        _questionView.subheading.userInteractionEnabled = TRUE;
-        _questionView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _questionView.subheading.layer.borderWidth = 4;
-        
-        _answerView.logoImage.userInteractionEnabled    = TRUE;
-        _answerView.image.userInteractionEnabled        = TRUE;
-        _answerView.main.userInteractionEnabled         = TRUE;
-        _answerView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _answerView.main.layer.borderWidth = 4;
-        _answerView.sub.userInteractionEnabled          = TRUE;
-        _answerView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _answerView.sub.layer.borderWidth = 4;
-        _answerView.subheading.userInteractionEnabled   = TRUE;
-        _answerView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-        _answerView.subheading.layer.borderWidth = 4;
+        [self enableCardEdit];
         
     } else {
-        _questionView.logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
-        _questionView.subheading.userInteractionEnabled = FALSE;
-        _questionView.image.userInteractionEnabled      = FALSE;
-        _questionView.main.userInteractionEnabled       = FALSE;
-        _questionView.main.layer.borderWidth = 0;
-        _questionView.sub.userInteractionEnabled        = FALSE;
-        _questionView.sub.layer.borderWidth = 0;
-        _questionView.subheading.userInteractionEnabled = FALSE;
-        _questionView.subheading.layer.borderWidth = 0;
-        
-        _answerView.logoImage.userInteractionEnabled    = FALSE;
-        _answerView.image.userInteractionEnabled        = FALSE;
-        _answerView.main.userInteractionEnabled         = FALSE;
-        _answerView.main.layer.borderWidth = 0;
-        _answerView.sub.userInteractionEnabled          = FALSE;
-        _answerView.sub.layer.borderWidth = 0;
-        _answerView.subheading.userInteractionEnabled   = FALSE;
-        _answerView.subheading.layer.borderWidth = 0;
-        
+        [self disableCardEdit];
     }
 }
 
 - (void) disableCardEdit {
-    _questionView.logoImage.userInteractionEnabled          = FALSE;
+    _questionView.logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
     _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
     [_questionView.logoLinkageButton setHidden:YES];
-    _questionView.image.userInteractionEnabled              = FALSE;
-    _questionView.main.userInteractionEnabled               = FALSE;
+    _questionView.subheading.userInteractionEnabled = FALSE;
+    _questionView.image.userInteractionEnabled      = FALSE;
+    _questionView.main.userInteractionEnabled       = FALSE;
     _questionView.main.layer.borderWidth = 0;
-    _questionView.sub.userInteractionEnabled                = FALSE;
+    _questionView.sub.userInteractionEnabled        = FALSE;
     _questionView.sub.layer.borderWidth = 0;
-    _questionView.subheading.userInteractionEnabled         = FALSE;
+    _questionView.subheading.userInteractionEnabled = FALSE;
     _questionView.subheading.layer.borderWidth = 0;
     
-    _answerView.image.userInteractionEnabled                = FALSE;
-    _answerView.main.userInteractionEnabled                 = FALSE;
+    _answerView.logoImage.userInteractionEnabled    = FALSE;
+    _answerView.image.userInteractionEnabled        = FALSE;
+    _answerView.main.userInteractionEnabled         = FALSE;
     _answerView.main.layer.borderWidth = 0;
-    _answerView.sub.userInteractionEnabled                  = FALSE;
+    _answerView.sub.userInteractionEnabled          = FALSE;
     _answerView.sub.layer.borderWidth = 0;
-    _answerView.subheading.userInteractionEnabled           = FALSE;
+    _answerView.subheading.userInteractionEnabled   = FALSE;
     _answerView.subheading.layer.borderWidth = 0;
     
     _changeTemplateButton.hidden = TRUE;
+}
+
+- (void) enableCardEdit {
+    _questionView.logoImage.userInteractionEnabled  = TRUE;
+    _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
+    [_questionView.logoLinkageButton setHidden:NO];
+    _questionView.image.userInteractionEnabled      = TRUE;
+    _questionView.main.userInteractionEnabled       = TRUE;
+    _questionView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _questionView.main.layer.borderWidth = 4;
+    _questionView.sub.userInteractionEnabled        = TRUE;
+    _questionView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _questionView.sub.layer.borderWidth = 4;
+    _questionView.subheading.userInteractionEnabled = TRUE;
+    _questionView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _questionView.subheading.layer.borderWidth = 4;
+    
+    _answerView.logoImage.userInteractionEnabled    = TRUE;
+    _answerView.image.userInteractionEnabled        = TRUE;
+    _answerView.main.userInteractionEnabled         = TRUE;
+    _answerView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _answerView.main.layer.borderWidth = 4;
+    _answerView.sub.userInteractionEnabled          = TRUE;
+    _answerView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _answerView.sub.layer.borderWidth = 4;
+    _answerView.subheading.userInteractionEnabled   = TRUE;
+    _answerView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _answerView.subheading.layer.borderWidth = 4;
 }
 
 

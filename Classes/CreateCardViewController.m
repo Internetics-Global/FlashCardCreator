@@ -73,16 +73,7 @@
         _cardView.currentPack = _currentPack;
         _cardView.questionView.currentPack = _currentPack;
         _cardView.answerView.currentPack = _currentPack;
-        _cardView.questionView.logoImage.userInteractionEnabled    = TRUE;
-        _cardView.questionView.image.userInteractionEnabled        = TRUE;
-        _cardView.questionView.subheading.userInteractionEnabled   = TRUE;
-        _cardView.questionView.main.userInteractionEnabled         = TRUE;
-        _cardView.questionView.sub.userInteractionEnabled          = TRUE;
-        _cardView.answerView.logoImage.userInteractionEnabled      = TRUE;
-        _cardView.answerView.image.userInteractionEnabled          = TRUE;
-        _cardView.answerView.subheading.userInteractionEnabled     = TRUE;
-        _cardView.answerView.main.userInteractionEnabled           = TRUE;
-        _cardView.answerView.sub.userInteractionEnabled            = TRUE;
+        [_cardView enableCardEdit];
         
         //User template 0
         if (isUserInterfaceIdiomPhone) {
@@ -123,7 +114,6 @@
     [imageData writeToFile:savedFullPath atomically:YES];
     _newCard.coverImageURL = savedFullPath;
     
-    //card.cardName = _cardView.questionView.title.text;   //warning, need to be confirmed
     _newCard.packID = _currentPack.packID;
     _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
     _newCard.creator = [OpenUDID value];

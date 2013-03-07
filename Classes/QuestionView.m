@@ -89,7 +89,7 @@
             _subheading.textAlignment = NSTextAlignmentLeft;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 70, 700, 300);
+            _main.frame = CGRectMake(20, 70, 700, 350);
             _main.font = [UIFont systemFontOfSize:22];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -115,7 +115,7 @@
             _main.textAlignment = NSTextAlignmentCenter;
             
             _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 150, 700, 200);
+            _sub.frame = CGRectMake(20, 150, 700, 250);
             _sub.font = [UIFont systemFontOfSize:16];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentLeft;

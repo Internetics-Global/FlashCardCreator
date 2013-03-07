@@ -210,13 +210,13 @@
         case 0: //Template 0
         {
             _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(20, 10, 360, 30);
+            _subheading.frame = CGRectMake(20, 10, 360, 80);
             _subheading.font = [UIFont systemFontOfSize:20];
             _subheading.textColor = [UIColor blackColor];
             _subheading.textAlignment = NSTextAlignmentCenter;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 50, 360, 300);
+            _main.frame = CGRectMake(20, 100, 360, 300);
             _main.font = [UIFont systemFontOfSize:16];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -235,19 +235,19 @@
             _subheading.hidden = TRUE;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 10, 700, 40);
+            _main.frame = CGRectMake(20, 10, 700, 60);
             _main.font = [UIFont systemFontOfSize:16];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             
             _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 60, 360, 360);
+            _sub.frame = CGRectMake(20, 80, 360, 340);
             _sub.font = [UIFont systemFontOfSize:16];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentCenter;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(380, 60, 350, 350);
+            _image.frame = CGRectMake(380, 80, 330, 330);
             
             _logoImage.hidden = TRUE;
             

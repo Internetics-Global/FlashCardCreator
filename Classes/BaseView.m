@@ -109,7 +109,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(680, 0, 100, 100);
+    _logoImage.frame = CGRectMake(680, 20, 100, 100);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -121,9 +121,8 @@
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _logoLinkageButton.frame = CGRectMake(680, 95, 100, 30);
-    [_logoLinkageButton setTitle:@"Edit linkage" forState:UIControlStateNormal];
-    _logoLinkageButton.backgroundColor = [UIColor clearColor];
+    _logoLinkageButton.frame = CGRectMake(710, 90, 50, 20);
+    [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
     [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_logoLinkageButton];
     
@@ -241,10 +240,8 @@
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _logoLinkageButton.frame = CGRectMake(350, 30, 30, 10);
-    [_logoLinkageButton setTitle:@"edit" forState:UIControlStateNormal];
-    _logoLinkageButton.titleLabel.font = [UIFont systemFontOfSize:10];
-    _logoLinkageButton.backgroundColor = [UIColor clearColor];
+    _logoLinkageButton.frame = CGRectMake(357, 32, 20, 8);
+    [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
     [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_logoLinkageButton];
     
@@ -507,8 +504,17 @@
     
     UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size28",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
+    UIBarButtonItem *fontSize32 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size32",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize36 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size36",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
     if (_fontSizeArray == nil) {
-        _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];
+        if (isUserInterfaceIdiomPhone) {
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];    
+        } else {
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize20,fontSize24,fontSize28,fontSize32,fontSize36,nil];
+        }
+        
     }
     
     //Color Array
@@ -558,8 +564,12 @@
 -(IBAction)dismissKeyBoard
 {
     [_subheading resignFirstResponder];
+    [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
     [_main resignFirstResponder];
+    [_main setContentOffset:CGPointMake(0, 0) animated:YES];
     [_sub resignFirstResponder];
+    [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
+    
 }
 
 #pragma mark -
@@ -692,6 +702,12 @@
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size28",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:28];
         selectFontSize = 28;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size32",nil)]) {
+        responderTextView.font = [UIFont systemFontOfSize:32];
+        selectFontSize = 32;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size36",nil)]) {
+        responderTextView.font = [UIFont systemFontOfSize:36];
+        selectFontSize = 36;
     }
     
     if (responderTextView.tag == 100){
@@ -711,10 +727,11 @@
 
 - (void) alignPosition:(id) sender{
     
-     NSString *selectAlignStr = nil;
+    NSString *selectAlignStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    NSRange range = responderTextView.selectedRange;
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Left",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentLeft;
         selectAlignStr = @"Left";
@@ -725,6 +742,7 @@
         responderTextView.textAlignment = NSTextAlignmentRight;
         selectAlignStr = @"Right";
     }
+    responderTextView.selectedRange = range;  // to restore cursor position
     
     if (responderTextView.tag == 100){
         _subheadingAlign = selectAlignStr;
@@ -780,9 +798,9 @@
 #pragma mark -
 #pragma mark - UITextViewDelegate
 - (void)textViewDidChange:(UITextView *)textView {
-    CGRect frame = textView.frame;
-    frame.size.height = textView.contentSize.height;
-    textView.frame = frame;
+//    CGRect frame = textView.frame;
+//    frame.size.height = textView.contentSize.height;
+//    textView.frame = frame;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
