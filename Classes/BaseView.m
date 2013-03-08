@@ -110,7 +110,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(680, 20, 100, 100);
+    _logoImage.frame = CGRectMake(630, 20, 150, 100);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -133,9 +133,9 @@
     [self addSubview:sidebarImageView];
     
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(300, 30, 200, 110);
+    _title.frame = CGRectMake(60, 30, 200, 110);
     _title.backgroundColor = [UIColor clearColor];
-    _title.font =[UIFont systemFontOfSize:30];
+    _title.font =[UIFont systemFontOfSize:40];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
     _title.userInteractionEnabled = FALSE;
@@ -217,9 +217,9 @@
     
     
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(40, 0, 300, 30);
+    _title.frame = CGRectMake(20, 0, 300, 30);
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-    _title.font =[UIFont systemFontOfSize:20];
+    _title.font =[UIFont boldSystemFontOfSize:24];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
@@ -227,7 +227,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(350, 5, 30, 30);
+    _logoImage.frame = CGRectMake(330, 5, 50, 30);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE;
@@ -538,11 +538,13 @@
     
     UIBarButtonItem *fontSize36 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size36",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
+    UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
     if (_fontSizeArray == nil) {
         if (isUserInterfaceIdiomPhone) {
             _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];    
         } else {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize20,fontSize24,fontSize28,fontSize32,fontSize36,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize24,fontSize28,fontSize32,fontSize36,fontSize40,nil];
         }
         
     }
@@ -742,6 +744,9 @@
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size36",nil)]) {
         responderTextView.font = [UIFont systemFontOfSize:36];
         selectFontSize = 36;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size40",nil)]) {
+        responderTextView.font = [UIFont systemFontOfSize:40];
+        selectFontSize = 40;
     }
     
     if (responderTextView.tag == 100){

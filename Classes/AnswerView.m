@@ -21,6 +21,7 @@
         self.backgroundColor = [UIColor whiteColor];
 
         _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
+        _title.textColor = [UIColor redColor];
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
         _imageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_content.jpg", [[NSBundle mainBundle] resourcePath]];
         _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.jpg"];
@@ -260,21 +261,21 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 700, 60);
-            _main.font = [UIFont systemFontOfSize:32];
+            _main.font = [UIFont systemFontOfSize:40];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             _mainAlign = @"Left";
             _mainColor = @"Black";
-            _mainSize = 32;
+            _mainSize = 40;
             
             _sub.hidden = FALSE;
             _sub.frame = CGRectMake(20, 80, 360, 340);
-            _sub.font = [UIFont systemFontOfSize:28];
+            _sub.font = [UIFont systemFontOfSize:36];
             _sub.textColor = [UIColor blackColor];
             _sub.textAlignment = NSTextAlignmentLeft;
             _subAlign = @"Left";
             _subColor = @"Black";
-            _subSize = 28;
+            _subSize = 36;
             
             _image.hidden = FALSE;
             _image.frame = CGRectMake(380, 80, 330, 330);
@@ -289,12 +290,12 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont systemFontOfSize:28];
+            _main.font = [UIFont systemFontOfSize:32];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             _mainAlign = @"Left";
             _mainColor = @"Black";
-            _mainSize = 28;
+            _mainSize = 32;
             
             _sub.hidden = YES;
             
@@ -309,23 +310,16 @@
         {
             _subheading.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(540, -80, 180, 50);
-            _main.font = [UIFont systemFontOfSize:28];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 28;
+            _main.hidden = TRUE;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 10, 700, 400);
-            _sub.font = [UIFont systemFontOfSize:28];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Left";
-            _subColor = @"Black";
-            _subSize = 28;
+            _main.hidden = FALSE;
+            _main.frame = CGRectMake(20, 10, 700, 400);
+            _main.font = [UIFont systemFontOfSize:32];
+            _main.textColor = [UIColor blackColor];
+            _main.textAlignment = NSTextAlignmentLeft;
+            _mainAlign = @"Left";
+            _mainColor = @"Black";
+            _mainSize = 32;
             
             _image.hidden = TRUE;
             
@@ -339,12 +333,12 @@
             
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont systemFontOfSize:28];
+            _main.font = [UIFont systemFontOfSize:32];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
             _mainAlign = @"Left";
             _mainColor = @"Black";
-            _mainSize = 28;
+            _mainSize = 32;
             
             _sub.hidden = YES;
             
