@@ -9,6 +9,7 @@
 #import "BaseView.h"
 #import "UIImagePickerController+NoRotate.h"
 #import "QuestionView.h"
+#import "AnswerView.h"
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
 #import "Question.h"
@@ -320,77 +321,111 @@
 //CSS part which is included in three main parts: CSS, template(position) and content
 - (void) updateCSS {
     
+    CSS *css;
+    if ([self isKindOfClass:[QuestionView class]]) {
+        css = _currentCard.question.css;
+    } else if ([self isKindOfClass:[AnswerView class]]) {
+        css = _currentCard.answer.css;
+    }
+    
     if (_currentCard == nil) {
         [Common alertViewCommon:@"Need to set currentCard beforehand"];
     }
     
     //1. subheading
-    _subheading.font = [UIFont systemFontOfSize:_subheadingSize];
+    _subheading.font = [UIFont systemFontOfSize:css.subSize];
+    _subheadingSize = css.subSize;
     
-    if ([_subheadingColor isEqualToString:@"Blue"]) {
+    if ([css.subheadingColor isEqualToString:@"Blue"]) {
         _subheading.textColor = [UIColor blueColor];
-    } else if ([_subheadingColor isEqualToString:@"Red"]) {
+        _subheadingColor = @"Blue";
+    } else if ([css.subheadingColor isEqualToString:@"Red"]) {
         _subheading.textColor = [UIColor redColor];
-    } else if ([_subheadingColor isEqualToString:@"Yellow"]) {
+        _subheadingColor = @"Red";
+    } else if ([css.subheadingColor isEqualToString:@"Yellow"]) {
         _subheading.textColor = [UIColor yellowColor];
-    } else if ([_subheadingColor isEqualToString:@"Black"]) {
+        _subheadingColor = @"Yellow";
+    } else if ([css.subheadingColor isEqualToString:@"Black"]) {
         _subheading.textColor = [UIColor blackColor];
-    } else if ([_subheadingColor isEqualToString:@"Green"]) {
+        _subheadingColor = @"Black";
+    } else if ([css.subheadingColor isEqualToString:@"Green"]) {
         _subheading.textColor = [UIColor greenColor];
+        _subheadingColor = @"Green";
     }
     
-    if ([_subheadingAlign isEqualToString:@"Left"]) {
+    if ([css.subheadingAlign isEqualToString:@"Left"]) {
         _subheading.textAlignment = NSTextAlignmentLeft;
-    } else if ([_subheadingAlign isEqualToString:@"Center"]) {
+        _subheadingAlign = @"Left";
+    } else if ([css.subheadingAlign isEqualToString:@"Center"]) {
         _subheading.textAlignment = NSTextAlignmentCenter;
-    }else if ([_subheadingAlign isEqualToString:@"Right"]) {
+        _subheadingAlign = @"Center";
+    }else if ([css.subheadingAlign isEqualToString:@"Right"]) {
         _subheading.textAlignment = NSTextAlignmentRight;
+        _subheadingAlign = @"Right";
     }
     
     //2. main
-    _main.font = [UIFont systemFontOfSize:_mainSize];
+    _main.font = [UIFont systemFontOfSize:css.mainSize];
+    _mainSize = css.mainSize;
     
-    if ([_mainColor isEqualToString:@"Blue"]) {
+    if ([css.mainColor isEqualToString:@"Blue"]) {
         _main.textColor = [UIColor blueColor];
-    } else if ([_mainColor isEqualToString:@"Red"]) {
+        _mainColor = @"Blue";
+    } else if ([css.mainColor isEqualToString:@"Red"]) {
         _main.textColor = [UIColor redColor];
-    } else if ([_mainColor isEqualToString:@"Yellow"]) {
+        _mainColor = @"Red";
+    } else if ([css.mainColor isEqualToString:@"Yellow"]) {
         _main.textColor = [UIColor yellowColor];
-    } else if ([_mainColor isEqualToString:@"Black"]) {
+        _mainColor = @"Yellow";
+    } else if ([css.mainColor isEqualToString:@"Black"]) {
         _main.textColor = [UIColor blackColor];
-    } else if ([_mainColor isEqualToString:@"Green"]) {
+        _mainColor = @"Black";
+    } else if ([css.mainColor isEqualToString:@"Green"]) {
         _main.textColor = [UIColor greenColor];
+        _mainColor = @"Green";
     }
     
-    if ([_mainAlign isEqualToString:@"Left"]) {
+    if ([css.mainAlign isEqualToString:@"Left"]) {
         _main.textAlignment = NSTextAlignmentLeft;
-    } else if ([_mainAlign isEqualToString:@"Center"]) {
+        _mainAlign = @"Left";
+    } else if ([css.mainAlign isEqualToString:@"Center"]) {
         _main.textAlignment = NSTextAlignmentCenter;
-    }else if ([_mainAlign isEqualToString:@"Right"]) {
+        _mainAlign = @"Center";
+    }else if ([css.mainAlign isEqualToString:@"Right"]) {
         _main.textAlignment = NSTextAlignmentRight;
+        _mainAlign = @"Right";
     }
     
     //3. sub
-    _sub.font = [UIFont systemFontOfSize:_subSize];
+    _sub.font = [UIFont systemFontOfSize:css.subSize];
+    _subSize = css.subSize;
     
-    if ([_subColor isEqualToString:@"Blue"]) {
+    if ([css.subColor isEqualToString:@"Blue"]) {
         _sub.textColor = [UIColor blueColor];
-    } else if ([_subColor isEqualToString:@"Red"]) {
+        _subColor = @"Blue";
+    } else if ([css.subColor isEqualToString:@"Red"]) {
         _sub.textColor = [UIColor redColor];
-    } else if ([_subColor isEqualToString:@"Yellow"]) {
+        _subColor = @"Red";
+    } else if ([css.subColor isEqualToString:@"Yellow"]) {
         _sub.textColor = [UIColor yellowColor];
-    } else if ([_subColor isEqualToString:@"Black"]) {
+        _subColor = @"Yellow";
+    } else if ([css.subColor isEqualToString:@"Black"]) {
         _sub.textColor = [UIColor blackColor];
-    } else if ([_subColor isEqualToString:@"Green"]) {
+        _subColor = @"Black";
+    } else if ([css.subColor isEqualToString:@"Green"]) {
         _sub.textColor = [UIColor greenColor];
+        _subColor = @"Green";
     }
     
-    if ([_subAlign isEqualToString:@"Left"]) {
+    if ([css.subAlign isEqualToString:@"Left"]) {
         _sub.textAlignment = NSTextAlignmentLeft;
-    } else if ([_subAlign isEqualToString:@"Center"]) {
+        _subAlign = @"Left";
+    } else if ([css.subAlign isEqualToString:@"Center"]) {
         _sub.textAlignment = NSTextAlignmentCenter;
-    }else if ([_subAlign isEqualToString:@"Right"]) {
+        _subAlign = @"Center";
+    }else if ([css.subAlign isEqualToString:@"Right"]) {
         _sub.textAlignment = NSTextAlignmentRight;
+        _subAlign = @"Right";
     }
 }
 

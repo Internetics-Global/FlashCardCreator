@@ -44,7 +44,6 @@
 @synthesize segmentedControl = _segmentedControl;
 @synthesize cardSNText = _cardSNText;
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
-@synthesize templateID = _templateID;
 @synthesize changeTemplateButton = _changeTemplateButton;
 
 
@@ -84,7 +83,6 @@
     self.currentPack = pack;
     
     _maxAllowedCardIndex = -1;
-    _templateID = 0;
     [self removeQuestionAnswerViewDelegate];
     
     if (isUserInterfaceIdiomPhone) {
@@ -294,7 +292,7 @@
         [_questionView updateQuestionViewTemplateForiPad:_currentCard.templateID]; //template
     }
     [_questionView switchLogoStatus]; //logo
-    [_questionView updateCSS]; //css
+    [_questionView updateCSS]; //css, which is user-defined, and could overwrite template
     
     _answerView.currentCard = _currentCard;
     _answerView.packName.text = _currentPack.packName;
@@ -446,8 +444,6 @@
         [imageData writeToFile:_currentCard.coverImageURL atomically:YES];    
     }
     
-    _currentCard.templateID = _templateID;
-    
     _currentCard.question.title = self.questionView.title.text;
     _currentCard.question.subheading = self.questionView.subheading.text;
     _currentCard.question.main = self.questionView.main.text;
@@ -523,14 +519,14 @@
     [_popoverController dismissPopoverAnimated:YES];
     
     NSString *templateIDString = (NSString *)[notification object];
-    _templateID = [templateIDString integerValue];
+    _currentCard.templateID = [templateIDString integerValue];
     
     if (isUserInterfaceIdiomPhone ) {
-        [_questionView updateQuestionViewTemplateForiPhone:_templateID];
-        [_answerView updateAnswerViewTemplateForiPhone:_templateID];
+        [_questionView updateQuestionViewTemplateForiPhone:_currentCard.templateID];
+        [_answerView updateAnswerViewTemplateForiPhone:_currentCard.templateID];
     } else {
-        [_questionView updateQuestionViewTemplateForiPad:_templateID];
-        [_answerView updateAnswerViewTemplateForiPad:_templateID];
+        [_questionView updateQuestionViewTemplateForiPad:_currentCard.templateID];
+        [_answerView updateAnswerViewTemplateForiPad:_currentCard.templateID];
     }
     
     [self saveEdittedCard];

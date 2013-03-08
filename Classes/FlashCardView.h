@@ -27,7 +27,6 @@
     
     UIPopoverController *_popoverController;
     NSUInteger _maxAllowedCardIndex;
-    NSUInteger _templateID;
 }
 
 @property (nonatomic, strong) QuestionView *questionView;
@@ -37,7 +36,6 @@
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) BadgeLabel *cardSNText;
 @property (assign, nonatomic) NSUInteger maxAllowedCardIndex;
-@property (assign, nonatomic) NSUInteger templateID;
 @property (nonatomic, strong) UIButton *changeTemplateButton;
 
 - (void) refreshQuestionAnserView;

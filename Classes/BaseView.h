@@ -19,20 +19,20 @@
 @end
 
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,UIAlertViewDelegate> {
-    UIImageView *_logoImage;
-    NSString *_logoImageFullPath;
-    NSString *_logoLinkURL;
-    UIButton *_logoLinkageButton;
-    UILabel *_packName;
-    UITextView *_subheading; // means subheading. only suitable for question
-    UITextView *_main;
-    UITextView *_sub;
-    UITextView *_title;
-    UIImageView *_image;
-    NSString *_imageFullPath;
-    Card *_currentCard;
-    Pack *_currentPack;
-    BOOL _keyboardShown;
+    UIImageView  *_logoImage;
+    NSString     *_logoImageFullPath;
+    NSString     *_logoLinkURL;
+    UIButton     *_logoLinkageButton;
+    UILabel      *_packName;
+    UITextView   *_subheading; // means subheading. only suitable for question
+    UITextView   *_main;
+    UITextView   *_sub;
+    UITextView   *_title;
+    UIImageView  *_image;
+    NSString     *_imageFullPath;
+    Card         *_currentCard;
+    Pack         *_currentPack;
+    BOOL         _keyboardShown;
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
     
@@ -63,27 +63,28 @@
 @property (strong, nonatomic) Card *currentCard;
 @property (strong, nonatomic) Pack *currentPack;;
 @property (strong, nonatomic) UIImageView *logoImage;
-@property (copy, nonatomic)  NSString *logoImageFullPath;
-@property (copy, nonatomic)  NSString *logoLinkURL;
+@property (copy, nonatomic)   NSString *logoImageFullPath;
+@property (copy, nonatomic)   NSString *logoLinkURL;
 @property (strong, nonatomic) UIButton *logoLinkageButton;
 @property (strong, nonatomic) UILabel *packName;
-@property (strong, nonatomic) UITextView *subheading; 
-@property (strong, nonatomic) UITextView *main;
-@property (strong, nonatomic) UITextView *sub;
 @property (strong, nonatomic) UITextView *title;
 @property (strong, nonatomic) UIImageView *image;
-@property (copy, nonatomic)  NSString *imageFullPath;
+@property (copy, nonatomic)   NSString *imageFullPath;
 @property (strong, nonatomic) UIScrollView *verticalScrollView;
 
+@property (strong, nonatomic) UITextView *subheading;
+@property (strong, nonatomic) UITextView *main;
+@property (strong, nonatomic) UITextView *sub;
+//Since we can not easily get size/align/color from UITextView, so we design this
 @property (nonatomic, assign) NSInteger subheadingSize;
-@property (nonatomic, copy) NSString *subheadingColor;
-@property (nonatomic, copy) NSString *subheadingAlign;
+@property (nonatomic, copy)   NSString *subheadingColor;
+@property (nonatomic, copy)   NSString *subheadingAlign;
 @property (nonatomic, assign) NSInteger mainSize;
-@property (nonatomic, copy) NSString *mainColor;
-@property (nonatomic, copy) NSString *mainAlign;
+@property (nonatomic, copy)   NSString *mainColor;
+@property (nonatomic, copy)   NSString *mainAlign;
 @property (nonatomic, assign) NSInteger subSize;
-@property (nonatomic, copy) NSString *subColor;
-@property (nonatomic, copy) NSString *subAlign;
+@property (nonatomic, copy)   NSString *subColor;
+@property (nonatomic, copy)   NSString *subAlign;
 
 @property (nonatomic,weak) id <BaseViewDelegate> delegate;
 

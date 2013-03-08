@@ -121,7 +121,7 @@
     _newCard.creator = [OpenUDID value];
     
     _newCard.cardSN = [[_currentPack cards] count]+1;
-    _newCard.templateID = _cardView.templateID;
+    _newCard.templateID = 0; //we set default value for it.
     _newCard.question.title = _cardView.questionView.title.text;
     _newCard.question.cardID = _newCard.cardID;
     _newCard.question.subheading = _cardView.questionView.subheading.text;
