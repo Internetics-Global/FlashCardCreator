@@ -45,6 +45,7 @@
 @synthesize cardSNText = _cardSNText;
 @synthesize maxAllowedCardIndex = _maxAllowedCardIndex;
 @synthesize templateID = _templateID;
+@synthesize changeTemplateButton = _changeTemplateButton;
 
 
 #pragma mark -
@@ -281,6 +282,7 @@
 #pragma mark -
 #pragma mark - Refresh
 - (void) refreshQuestionAnserView {
+    
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     
     _questionView.currentCard = _currentCard;
@@ -319,11 +321,7 @@
 		{
             if (_isQuestionShowing == NO) {
                 [_answerView removeFromSuperview];
-                _questionView.layer.opacity = 0.5;
-                [UIView animateWithDuration:0.4 animations:^{
-                    _questionView.layer.opacity = 1;
-                    [self addSubview:_questionView];
-                }];
+                [self addSubview:_questionView];
                 _isQuestionShowing = YES;
                 _segmentedControl.selectedSegmentIndex = 0;
             }
@@ -333,11 +331,7 @@
 		{
             if (_isQuestionShowing == YES) {
                 [_questionView removeFromSuperview];
-                _answerView.layer.opacity = 0.5;
-                [UIView animateWithDuration:0.4 animations:^{
-                    _answerView.layer.opacity = 1;
-                    [self addSubview:_answerView];
-                }];
+                [self addSubview:_answerView];
                 _isQuestionShowing = NO;
                 _segmentedControl.selectedSegmentIndex = 1;
             }
@@ -409,6 +403,12 @@
 }
 
 - (void) updatelogoImageForAllCards:(NSString *) imagePath {
+    
+    //we only deal with current flashcardview
+    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
+        return;
+    }
+    
     for (Card *card in [_currentPack cards]) {
         card.question.logoFullPath =imagePath;
         [card save];
@@ -418,6 +418,12 @@
 }
 
 - (void) saveEdittedCard {
+    
+    //we only deal with current flashcardview
+    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
+        return;
+    }
+    
     if (_currentPack == nil) {
         NSLog(@"Error to create new card, since _currentPack is nil");
         return;
@@ -508,6 +514,12 @@
 }
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
+    
+    //we only deal with current flashcardview
+    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
+        return;
+    }
+    
     [_popoverController dismissPopoverAnimated:YES];
     
     NSString *templateIDString = (NSString *)[notification object];
@@ -521,23 +533,9 @@
         [_answerView updateAnswerViewTemplateForiPad:_templateID];
     }
     
+    [self saveEdittedCard];
     
-    _currentCard.templateID = _templateID;
-    
-    UIImage *origialmage = [self.questionView captureWholeViewAsImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || (_currentCard.coverImageURL == nil)) {
-        NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-        [imageData writeToFile:savedFullPath atomically:YES];
-        _currentCard.coverImageURL = savedFullPath;
-    } else {
-        [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
-    }
-    
-    _currentCard.packID = _currentPack.packID;
-    [_currentCard save];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard]; 
 }
 
 #pragma mark -

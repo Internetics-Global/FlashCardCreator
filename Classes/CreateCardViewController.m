@@ -74,6 +74,7 @@
         _cardView.questionView.currentPack = _currentPack;
         _cardView.answerView.currentPack = _currentPack;
         [_cardView enableCardEdit];
+        _cardView.changeTemplateButton.hidden = TRUE;
         
         //User template 0
         if (isUserInterfaceIdiomPhone) {

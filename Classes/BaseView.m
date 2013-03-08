@@ -61,10 +61,10 @@
         _subheadingSize = 40;
         _subheadingColor = @"Black";
         _subheadingAlign = @"Right";
-        _mainSize = 36;
+        _mainSize = 40;
         _mainColor = @"Black";;
         _mainAlign = @"Center";;
-        _subSize = 36;
+        _subSize = 40;
         _subColor = @"Black";;
         _subAlign = @"Center";;
         
@@ -468,10 +468,6 @@
     offset.y = 0;
     [_verticalScrollView setContentOffset:offset animated:YES];
     
-    if (_delegate) {
-        [_delegate saveEdittedCard];
-    }
-    
 }
 
 - (void) setInputAccessoryViewDone  {
@@ -568,6 +564,10 @@
     [_main setContentOffset:CGPointMake(0, 0) animated:YES];
     [_sub resignFirstResponder];
     [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
+    
+    if (_delegate) {
+        [_delegate saveEdittedCard];
+    }
     
 }
 

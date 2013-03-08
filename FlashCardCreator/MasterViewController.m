@@ -422,6 +422,12 @@
     cardExample.creator = [OpenUDID value];
     cardExample.packID = self.currentPack.packID;
     cardExample.cardSN = 1;  //Start from 1
+    cardExample.question.subheading = @"";
+    cardExample.question.main = @"";
+    cardExample.question.sub = @"";
+    cardExample.answer.subheading = @"";
+    cardExample.answer.main = @"";
+    cardExample.answer.sub = @"";
     [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
@@ -446,6 +452,9 @@
         self.currentCard = [_currentPack cards][_indexCard];
         [self.tableView reloadData];
     }
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
 }
 

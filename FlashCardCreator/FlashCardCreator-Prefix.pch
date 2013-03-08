@@ -96,4 +96,9 @@
 //UIImageJPEGRepresentation quality factor
 #define kJPEGQualityFactor                     0.7
 
+//Tag
+#define CURRENT_FLASHCARDVIEW_TAG              111
+#define PREVIOUS_FLASHCARDVIEW_TAG             110
+#define NEXT_FLASHCARDVIEW_TAG                 112
+
 

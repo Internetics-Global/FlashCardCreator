@@ -35,15 +35,15 @@
     
     _subheadingAlign = @"Center";
     _subheadingColor = @"Black";
-    _subheadingSize = 16;
+    _subheadingSize = 40;
     
     _mainAlign = @"Center";
     _mainColor = @"Black";
-    _mainSize = 16;
+    _mainSize = 40;
     
     _subAlign = @"Center";
     _subColor = @"Black";
-    _subSize = 16;
+    _subSize = 40;
     
     
 	return self;
@@ -122,9 +122,9 @@
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"main_size"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"main_align"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"main_color"];
-        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"sub_size"];
-        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"sub_align"];
-        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"sub_color"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"sub_size"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"sub_align"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"sub_color"];
 	}
 	sqlite3_finalize(queryStatement);
 	return cssDict;

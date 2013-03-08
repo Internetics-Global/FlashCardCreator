@@ -168,6 +168,7 @@
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_DETAIL_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
     //2. Set current
+    _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     [_currentCardView reset:_currentCard curPack:_currentPack];
     [_currentCardView setQuestionAnswerViewDelegate];
     
@@ -182,6 +183,7 @@
     [_currentCardView checkCardEditable];
     
     //3. Set previous
+    _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
@@ -197,6 +199,7 @@
     }
     
     //5. Set next
+    _nextCardView.tag = NEXT_FLASHCARDVIEW_TAG;
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
