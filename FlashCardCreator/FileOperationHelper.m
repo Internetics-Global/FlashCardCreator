@@ -103,7 +103,7 @@
     }
     
     
-    NSString *uid = [NSString stringWithFormat:@"%f%d.jpg", [[NSDate date] timeIntervalSince1970], arc4random()];
+    NSString *uid = [NSString stringWithFormat:@"%d%d.jpg", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
     return ([path stringByAppendingPathComponent:uid]);
 }
 
@@ -122,7 +122,13 @@
     
     //step 3: build packInformation.json
     NSError *error = nil;
-    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator",nil];
+    NSString *platformStr;
+    if (isUserInterfaceIdiomPhone) {
+        platformStr = @"iPhone";
+    } else {
+        platformStr = @"iPad";
+    }
+    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", platformStr,@"platform",nil];
     NSData *jsonPackData = [NSJSONSerialization dataWithJSONObject:packDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *packInfoJsonFilePath = [cardAssembleDir stringByAppendingPathComponent:@"packInformation.json"];
     if (([jsonPackData length] >0) && (error == nil)) {
@@ -134,7 +140,7 @@
     //Step3: zip them
     ZipArchive* zipFile = [[ZipArchive alloc] init];
     NSString *generatePackZipFilePath = [cardAssembleDir stringByAppendingPathComponent:
-                                     [NSString stringWithFormat:@"pack%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()]];
+                                     [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()]];
     [zipFile CreateZipFile2:generatePackZipFilePath];
 
     NSString *generateCardZipFilePath = nil;
@@ -198,7 +204,7 @@
     //step 4: zip them
     ZipArchive* zipFile = [[ZipArchive alloc] init];
     NSString *generateCardZipFilePath = [cardAssembleDir stringByAppendingPathComponent:
-                                       [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()]];
+                                       [NSString stringWithFormat:@"card%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()]];
     [zipFile CreateZipFile2:generateCardZipFilePath];
     
     [zipFile addFileToZip:card.answer.logoFullPath newname:[card.answer.logoFullPath lastPathComponent]];

@@ -101,4 +101,6 @@
 #define PREVIOUS_FLASHCARDVIEW_TAG             110
 #define NEXT_FLASHCARDVIEW_TAG                 112
 
+#define FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE     16
+
 

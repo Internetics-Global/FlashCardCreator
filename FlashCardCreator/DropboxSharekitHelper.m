@@ -104,7 +104,8 @@
     if ([dict objectForKey:@"share_filename"]) {
         saveName = [dict objectForKey:@"share_filename"];
     } else {
-        saveName = [NSString stringWithFormat:@"card%f%d.zip", [[NSDate date] timeIntervalSince1970], arc4random()];
+        saveName = [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+        
     }
     
     //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios

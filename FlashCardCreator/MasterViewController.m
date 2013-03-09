@@ -735,6 +735,9 @@
 #pragma mark - Unzip and assemble pack/card
 
 - (void) unzipFileThenAssemblePack {
+    
+    NSString *packPlatformStr;
+    
     //Step1: unzip file
     ZipArchive* za = [[ZipArchive alloc] init];
     NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
@@ -770,6 +773,8 @@
             NSDictionary *packDict = (NSDictionary *)packJsonObject;
             pack.packName = packDict[@"pack_name"];
             pack.creator = packDict[@"creator"];
+            
+            packPlatformStr = packDict[@"platform"];
             
             //We need to move cover image to imagesDirectory
             error = nil;
@@ -807,7 +812,7 @@
         Card *assembledCard = [[Card alloc] init];
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
-            assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath];
+            assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:packPlatformStr];
             if (assembledCard)
                 [pack addCard:assembledCard];
         }
@@ -830,7 +835,7 @@
     
 }
 
-- (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath {
+- (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath platform:(NSString *)packPlatformStr {
     
     //step1: unzip file
     ZipArchive* za = [[ZipArchive alloc] init];
@@ -877,14 +882,27 @@
             assembledCard.templateID = [questionDict[@"template_id"] intValue];
             
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
-            [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
             [assembledCard question].css.subheadingColor = questionDict[@"subheading_color"];
             [assembledCard question].css.mainAlign = questionDict[@"main_align"];
-            [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue];
             [assembledCard question].css.mainColor = questionDict[@"main_color"];
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
-            [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
+            
+            //Deal with font size difference between iPhone and iPad
+            if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
+                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+            } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
+                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                
+            } else {
+                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
+                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue];
+                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue];
+            }
             
         }
     } else {
@@ -915,14 +933,27 @@
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
             
             [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
-            [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] intValue];
             [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];
             [assembledCard answer].css.mainAlign = answerDict[@"main_align"];
-            [assembledCard answer].css.mainSize = [answerDict[@"main_size"] intValue];
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
-            [assembledCard answer].css.subSize = [answerDict[@"sub_size"] intValue];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
+            
+            //Deal with font size difference between iPhone and iPad
+            if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
+                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+            } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
+                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                
+            } else {
+                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue];
+                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue];
+                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue];
+            }
             
         }
     } else {
