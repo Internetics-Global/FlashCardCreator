@@ -80,8 +80,11 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=\"%@\", sub=\"%@\", subheading=\"%@\", image=\"%@\", logo=\"%@\", css_id=%d WHERE card_id=%d", _answerID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _cssID, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", css_id=%d WHERE card_id=%d", _answerID, _title, _imageFullPath, _logoFullPath, _cssID, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(queryStatement, 3, [_subheading UTF8String], -1, SQLITE_TRANSIENT);
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
 }
@@ -90,8 +93,12 @@
 	if (_answerID == -1) {
 		_answerID = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d)", _answerID, _cardID, _title, _main, _sub, _subheading, _imageFullPath, _logoFullPath, _cssID];
+
+    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d)", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(queryStatement, 3, [_subheading UTF8String], -1, SQLITE_TRANSIENT);
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
 }
