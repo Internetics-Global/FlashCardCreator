@@ -52,6 +52,7 @@
 //content part which is included in three main parts: CSS, template(position) and content
 - (void) refreshDisplay {
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath];
+    _imageFullPath = _currentCard.question.imageFullPath;
     if (imageTemp) {
         _image.image = imageTemp;
     } else {
