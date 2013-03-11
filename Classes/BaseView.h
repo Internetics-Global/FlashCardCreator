@@ -13,7 +13,6 @@
 
 @protocol BaseViewDelegate
 - (void) saveEdittedCard;
-- (void) uploadTemplateBackgroundForAllCard:(NSString *) templateBackgroundName;
 - (void) updatelogoURLForAllCards:(NSString *) urlString;
 - (void) updatelogoImageForAllCards:(NSString *) imagePath;
 

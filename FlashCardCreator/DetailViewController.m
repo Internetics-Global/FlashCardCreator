@@ -20,12 +20,24 @@
 #import "DropboxShareKitHelper.h"
 #import "HelpViewController.h"
 
+enum template_color_enum {
+    template_color_enum_blue = 1,
+    template_color_enum_coffee = 2,
+    template_color_enum_gray = 3,
+    template_color_enum_purple = 4,
+    template_color_enum_red = 5
+    };
+
+
+
 @implementation DetailViewController
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
 @synthesize indexCard = _indexCard;
 @synthesize masterPopoverController = _masterPopoverController;
+
+@synthesize templateBackgroundSelectPopup  = _templateBackgroundSelectPopup;
 
 #pragma mark -
 #pragma mark Life cycle
@@ -66,6 +78,9 @@
 - (void)loadView {
     [super loadView];
     
+    _templateBackgroundSelectButton = [[UIBarButtonItem alloc]
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"change_template_background_button~ipad"] target:self action:@selector(selectCardBackgroundTemplate:)]];;
+    
     //we don't setting button on iPhone
     _settingButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
@@ -78,10 +93,10 @@
     
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
-        @[playButton];
+        @[playButton,_templateBackgroundSelectButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[_helpButton,_settingButton, playButton, shareButton];
+                                @[_helpButton,_settingButton, playButton, shareButton,_templateBackgroundSelectButton];
     }
     
     //Don't need the back button when on iPad
@@ -305,6 +320,37 @@
     [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
+- (void) selectCardBackgroundTemplate:(id) sender {
+    if (self.templateBackgroundSelectPopup) {
+        [self.templateBackgroundSelectPopup hide];
+    }
+    
+    PopupListComponent *popupList = [[PopupListComponent alloc] init];
+    NSArray* listItems = nil;
+    listItems = [NSArray arrayWithObjects:
+                 [[PopupListComponentItem alloc] initWithCaption:@"Blue" image:[UIImage imageNamed:@"template_color_blue.png"]
+                                                          itemId:template_color_enum_blue showCaption:YES],
+                 [[PopupListComponentItem alloc] initWithCaption:@"Coffee"  image:[UIImage imageNamed:@"template_color_coffee.png"]
+                                                          itemId:template_color_enum_coffee showCaption:YES],
+                 [[PopupListComponentItem alloc] initWithCaption:@"Gray"  image:[UIImage imageNamed:@"template_color_gray.png"]
+                                                          itemId:template_color_enum_gray showCaption:YES],
+                 [[PopupListComponentItem alloc] initWithCaption:@"Purple"  image:[UIImage imageNamed:@"template_color_purple.png"]
+                                                          itemId:template_color_enum_purple showCaption:YES],
+                 [[PopupListComponentItem alloc] initWithCaption:@"Red"  image:[UIImage imageNamed:@"template_color_red.png"]
+                                                          itemId:template_color_enum_red showCaption:YES],
+                 nil];
+    
+    
+    popupList.imagePaddingHorizontal = 5;
+    popupList.imagePaddingVertical = 2;
+    popupList.textPaddingHorizontal = 5;
+    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
+    [popupList useSystemDefaultFontNonBold];
+    [popupList showAnchoredTo:sender inView:self.view withItems:listItems withDelegate:self];
+    
+    self.templateBackgroundSelectPopup = popupList;
+}
+
 - (void)moreButtonClicked:(id) sender
 {
     if (!isUserInterfaceIdiomPhone) {
@@ -412,6 +458,56 @@
 
 - (void) showNavigationBarNotification:(NSNotification *) notification {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+#pragma mark -
+#pragma mark - PopupListComponentDelegate delegate
+- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
+{
+    if ([_currentPack cards].count == 0) {
+        return;
+    }
+    
+    NSLog(@"User chose item with id = %d", itemId);
+    
+    NSString *templateBackgroundName;
+    
+    switch (itemId) {
+        case template_color_enum_coffee:
+            templateBackgroundName = @"card_background_coffee.png";
+            break;
+        case template_color_enum_blue:
+            templateBackgroundName = @"card_background_blue.png";
+            break;
+        case template_color_enum_red:
+            templateBackgroundName = @"card_background_red.png";
+            break;
+        case template_color_enum_gray:
+            templateBackgroundName = @"card_background_gray.png";
+            break;
+        case template_color_enum_purple:
+            templateBackgroundName = @"card_background_purple.png";
+            break;
+        default:
+            break;
+    }
+    
+    for (Card *card in [_currentPack cards]) {
+        card.templateBackgroundName =templateBackgroundName;
+        [card save];
+    }
+    [_currentCardView.answerView refreshDisplay];
+    [_currentCardView.questionView refreshDisplay];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    
+    self.templateBackgroundSelectPopup = nil;
+}
+
+- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
+{
+    NSLog(@"Popup cancelled");
+    self.templateBackgroundSelectPopup = nil;
 }
 
 #pragma mark -

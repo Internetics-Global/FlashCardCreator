@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
 #import "MBProgressHUD.h"
+#import "PopupListComponent.h"
 
 @class FlashCardView;
 @class QuestionView;
@@ -16,7 +17,7 @@
 @class Card;
 @class Pack;
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -34,8 +35,11 @@
     FlashCardView *_currentCardView;
     FlashCardView *_nextCardView;
     
+    UIBarButtonItem *_templateBackgroundSelectButton;
     UIBarButtonItem *_settingButton;
     UIBarButtonItem *_helpButton;
+    
+    PopupListComponent *_templateBackgroundSelectPopup;
     
 }
 
@@ -46,6 +50,8 @@
 @property (nonatomic, assign) int indexCard;
 
 @property (nonatomic, strong) UIPopoverController *masterPopoverController;
+
+@property (nonatomic, strong) PopupListComponent *templateBackgroundSelectPopup;
 
 - (void) showCurrentCardInScrollView;
 

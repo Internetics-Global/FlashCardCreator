@@ -396,16 +396,6 @@
 
 #pragma mark -
 #pragma mark - BaseViewDelegate
-- (void) uploadTemplateBackgroundForAllCard:(NSString *) templateBackgroundName {
-    for (Card *card in [_currentPack cards]) {
-        card.templateBackgroundName =templateBackgroundName;
-        [card save];
-        [self.answerView refreshDisplay];
-        [self.questionView refreshDisplay];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-}
 
 - (void) updatelogoURLForAllCards:(NSString *)urlString {
     for (Card *card in [_currentPack cards]) {

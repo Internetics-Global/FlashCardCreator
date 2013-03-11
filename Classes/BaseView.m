@@ -18,8 +18,6 @@
 #import "Pack.h"
 #import "CSS.h"
 #import "SimpleWebBrowserController.h"
-#import "SelectTemplateBackgroundTableViewController.h"
-
 #import "UINavigationController+DismissKeyboard.h"  //used to restrict to be landscaped.
 
 @class QuestionView;
@@ -95,8 +93,6 @@
                 _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
             }
         }
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateBackgroundSelectedNotification:) name:TEMPLATE_BACKGROUND_SELECTED_NOTIFICATION object:nil];
     
     }
     return self;
@@ -113,16 +109,14 @@
     _backgroundImageView.contentMode = UIViewContentModeScaleToFill;
     _backgroundImageView.frame = CGRectMake(0, 0, 800, 550);
     _backgroundImageView.backgroundColor = [UIColor whiteColor];
-    _backgroundImageView.userInteractionEnabled = YES;
+    _backgroundImageView.userInteractionEnabled = NO;
     _backgroundImageView.layer.masksToBounds = YES;
     _backgroundImageView.layer.cornerRadius = 15;
     [self addSubview:_backgroundImageView];
-    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
-    [_backgroundImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(630, 20, 150, 100);
+    _logoImage.frame = CGRectMake(650, 10, 150, 100);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -144,7 +138,7 @@
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(60, 30, 200, 110);
     _title.backgroundColor = [UIColor clearColor];
-    _title.font =[UIFont boldSystemFontOfSize:40];
+    _title.font =[UIFont systemFontOfSize:40];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
     _title.userInteractionEnabled = FALSE;
@@ -217,19 +211,16 @@
     _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     _backgroundImageView.backgroundColor = [UIColor whiteColor];
     _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone-45);
-    _backgroundImageView.userInteractionEnabled = YES;
+    _backgroundImageView.userInteractionEnabled = NO;
     _backgroundImageView.layer.masksToBounds = YES;
     _backgroundImageView.layer.cornerRadius = 6;
     [self addSubview:_backgroundImageView];
-    
-    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
-    [_backgroundImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(20, 0, 300, 30);
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-    _title.font =[UIFont boldSystemFontOfSize:22];
+    _title.font =[UIFont systemFontOfSize:22];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
@@ -635,16 +626,6 @@
     
 }
 
-- (void)selectTemplateBackGround:(UITapGestureRecognizer *)sender {
-    SelectTemplateBackgroundTableViewController *templateBackgroundViewController = [[SelectTemplateBackgroundTableViewController alloc] initWithNibName:nil bundle:nil];
-    templateBackgroundViewController.contentSizeForViewInPopover = CGSizeMake(130, 30*5);
-    if (_templateBackgroundPopover == nil) {
-        _templateBackgroundPopover = [[UIPopoverController alloc] initWithContentViewController:templateBackgroundViewController];
-    }
-    [_templateBackgroundPopover presentPopoverFromRect:CGRectMake(0, 300, 50, 50) inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    
-}
-
 - (void)selectFromImageLibraryByImage:(UITapGestureRecognizer *)sender {
     
     _isLogoImageViewClicked = NO;
@@ -940,56 +921,6 @@
     } else {
         [Common alertViewCommon:@"Incorrect URL format or empty "];
     }
-}
-
-#pragma mark -
-#pragma mark - Notification
-- (void) templateBackgroundSelectedNotification: (NSNotification *) notification {
-    
-    [_templateBackgroundPopover dismissPopoverAnimated:YES];
-    
-    NSString *templateColorIndexString = (NSString *)[notification object];
-    int index = [templateColorIndexString integerValue];
-    
-    if (self.superview.tag == CURRENT_FLASHCARDVIEW_TAG) {
-        switch (index) {
-            case 0:
-                //green
-                _backgroundImageView.image = [UIImage imageNamed:@"card_background_coffee.png"];
-                _backgroundImageName = @"card_background_coffee.png";
-                break;
-            case 1:
-                //blue
-                _backgroundImageView.image = [UIImage imageNamed:@"card_background_blue.png"];
-                _backgroundImageName = @"card_background_blue.png";
-                break;
-            case 2:
-                //red
-                _backgroundImageView.image = [UIImage imageNamed:@"card_background_red.png"];
-                _backgroundImageName = @"card_background_red.png";
-                break;
-            case 3:
-                //yellow
-                _backgroundImageView.image = [UIImage imageNamed:@"card_background_gray.png"];
-                _backgroundImageName = @"card_background_gray.png";
-                break;
-            case 4:
-                //purple
-                _backgroundImageView.image = [UIImage imageNamed:@"card_background_purple.png"];
-                _backgroundImageName = @"card_background_purple.png";
-                break;
-            default:
-                break;
-        }
-        
-        if (_delegate) {
-            [_delegate uploadTemplateBackgroundForAllCard:_backgroundImageName];
-        }
-    }
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

@@ -7,13 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D1A04DD16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A04DC16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.m */; };
 		2D1A051816EDDF1D00527311 /* card_background_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051316EDDF1D00527311 /* card_background_red.png */; };
 		2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051416EDDF1D00527311 /* card_background_purple.png */; };
 		2D1A051A16EDDF1D00527311 /* card_background_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051516EDDF1D00527311 /* card_background_gray.png */; };
 		2D1A051B16EDDF1D00527311 /* card_background_coffee.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051616EDDF1D00527311 /* card_background_coffee.png */; };
 		2D1A051C16EDDF1D00527311 /* card_background_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051716EDDF1D00527311 /* card_background_blue.png */; };
 		2D1A051E16EDE38200527311 /* card_sidebar_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051D16EDE38200527311 /* card_sidebar_blue.png */; };
+		2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A052116EDEAE600527311 /* PopupListComponent.m */; };
+		2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A052516EDEB0100527311 /* WEPopoverContainerView.m */; };
+		2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A052716EDEB0100527311 /* WEPopoverController.m */; };
+		2D1A053616EDEB2100527311 /* popoverArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A052C16EDEB2100527311 /* popoverArrowDown.png */; };
+		2D1A053716EDEB2100527311 /* popoverArrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A052D16EDEB2100527311 /* popoverArrowDown@2x.png */; };
+		2D1A053816EDEB2100527311 /* popoverArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A052E16EDEB2100527311 /* popoverArrowLeft.png */; };
+		2D1A053916EDEB2100527311 /* popoverArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A052F16EDEB2100527311 /* popoverArrowLeft@2x.png */; };
+		2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053016EDEB2100527311 /* popoverArrowRight.png */; };
+		2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053116EDEB2100527311 /* popoverArrowRight@2x.png */; };
+		2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053216EDEB2100527311 /* popoverArrowUp.png */; };
+		2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053316EDEB2100527311 /* popoverArrowUp@2x.png */; };
+		2D1A053E16EDEB2100527311 /* popoverBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053416EDEB2100527311 /* popoverBg.png */; };
+		2D1A053F16EDEB2100527311 /* popoverBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A053516EDEB2100527311 /* popoverBg@2x.png */; };
+		2D1A054616EDED8800527311 /* template_color_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054116EDED8800527311 /* template_color_blue.png */; };
+		2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054216EDED8800527311 /* template_color_coffee.png */; };
+		2D1A054816EDED8800527311 /* template_color_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054316EDED8800527311 /* template_color_gray.png */; };
+		2D1A054916EDED8800527311 /* template_color_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054416EDED8800527311 /* template_color_purple.png */; };
+		2D1A054A16EDED8800527311 /* template_color_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054516EDED8800527311 /* template_color_red.png */; };
+		2D1A055116EE894800527311 /* change_template_background_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054D16EE894600527311 /* change_template_background_button.png */; };
+		2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054E16EE894700527311 /* change_template_background_button@2x.png */; };
+		2D1A055316EE894800527311 /* change_template_background_button@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054F16EE894700527311 /* change_template_background_button@2x~ipad.png */; };
+		2D1A055416EE894800527311 /* change_template_background_button~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A055016EE894700527311 /* change_template_background_button~ipad.png */; };
 		2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */; };
 		2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D37280D16DDCBA00068DE31 /* CoreMotion.framework */; };
 		2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -439,14 +460,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2D1A04DB16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTemplateBackgroundTableViewController.h; sourceTree = "<group>"; };
-		2D1A04DC16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTemplateBackgroundTableViewController.m; sourceTree = "<group>"; };
 		2D1A051316EDDF1D00527311 /* card_background_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_red.png; path = Resources/card_background_red.png; sourceTree = "<group>"; };
 		2D1A051416EDDF1D00527311 /* card_background_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_purple.png; path = Resources/card_background_purple.png; sourceTree = "<group>"; };
 		2D1A051516EDDF1D00527311 /* card_background_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_gray.png; path = Resources/card_background_gray.png; sourceTree = "<group>"; };
 		2D1A051616EDDF1D00527311 /* card_background_coffee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_coffee.png; path = Resources/card_background_coffee.png; sourceTree = "<group>"; };
 		2D1A051716EDDF1D00527311 /* card_background_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_blue.png; path = Resources/card_background_blue.png; sourceTree = "<group>"; };
 		2D1A051D16EDE38200527311 /* card_sidebar_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_sidebar_blue.png; path = Resources/card_sidebar_blue.png; sourceTree = "<group>"; };
+		2D1A052016EDEAE600527311 /* PopupListComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupListComponent.h; path = Libraries/PopupListComponent/PopupListComponent.h; sourceTree = "<group>"; };
+		2D1A052116EDEAE600527311 /* PopupListComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopupListComponent.m; path = Libraries/PopupListComponent/PopupListComponent.m; sourceTree = "<group>"; };
+		2D1A052416EDEB0100527311 /* WEPopoverContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEPopoverContainerView.h; path = Libraries/PopupListComponent/WEPopoverLib/WEPopoverContainerView.h; sourceTree = "<group>"; };
+		2D1A052516EDEB0100527311 /* WEPopoverContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEPopoverContainerView.m; path = Libraries/PopupListComponent/WEPopoverLib/WEPopoverContainerView.m; sourceTree = "<group>"; };
+		2D1A052616EDEB0100527311 /* WEPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEPopoverController.h; path = Libraries/PopupListComponent/WEPopoverLib/WEPopoverController.h; sourceTree = "<group>"; };
+		2D1A052716EDEB0100527311 /* WEPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEPopoverController.m; path = Libraries/PopupListComponent/WEPopoverLib/WEPopoverController.m; sourceTree = "<group>"; };
+		2D1A052816EDEB0100527311 /* WEPopoverParentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEPopoverParentView.h; path = Libraries/PopupListComponent/WEPopoverLib/WEPopoverParentView.h; sourceTree = "<group>"; };
+		2D1A052C16EDEB2100527311 /* popoverArrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popoverArrowDown.png; path = Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowDown.png; sourceTree = "<group>"; };
+		2D1A052D16EDEB2100527311 /* popoverArrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popoverArrowDown@2x.png"; path = "Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowDown@2x.png"; sourceTree = "<group>"; };
+		2D1A052E16EDEB2100527311 /* popoverArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popoverArrowLeft.png; path = Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowLeft.png; sourceTree = "<group>"; };
+		2D1A052F16EDEB2100527311 /* popoverArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popoverArrowLeft@2x.png"; path = "Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowLeft@2x.png"; sourceTree = "<group>"; };
+		2D1A053016EDEB2100527311 /* popoverArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popoverArrowRight.png; path = Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowRight.png; sourceTree = "<group>"; };
+		2D1A053116EDEB2100527311 /* popoverArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popoverArrowRight@2x.png"; path = "Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowRight@2x.png"; sourceTree = "<group>"; };
+		2D1A053216EDEB2100527311 /* popoverArrowUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popoverArrowUp.png; path = Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowUp.png; sourceTree = "<group>"; };
+		2D1A053316EDEB2100527311 /* popoverArrowUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popoverArrowUp@2x.png"; path = "Libraries/PopupListComponent/WEPopoverLib/Resources/popoverArrowUp@2x.png"; sourceTree = "<group>"; };
+		2D1A053416EDEB2100527311 /* popoverBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popoverBg.png; path = Libraries/PopupListComponent/WEPopoverLib/Resources/popoverBg.png; sourceTree = "<group>"; };
+		2D1A053516EDEB2100527311 /* popoverBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popoverBg@2x.png"; path = "Libraries/PopupListComponent/WEPopoverLib/Resources/popoverBg@2x.png"; sourceTree = "<group>"; };
+		2D1A054116EDED8800527311 /* template_color_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_blue.png; path = Resources/template_color_blue.png; sourceTree = "<group>"; };
+		2D1A054216EDED8800527311 /* template_color_coffee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_coffee.png; path = Resources/template_color_coffee.png; sourceTree = "<group>"; };
+		2D1A054316EDED8800527311 /* template_color_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_gray.png; path = Resources/template_color_gray.png; sourceTree = "<group>"; };
+		2D1A054416EDED8800527311 /* template_color_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_purple.png; path = Resources/template_color_purple.png; sourceTree = "<group>"; };
+		2D1A054516EDED8800527311 /* template_color_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_red.png; path = Resources/template_color_red.png; sourceTree = "<group>"; };
+		2D1A054D16EE894600527311 /* change_template_background_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_background_button.png; path = Resources/change_template_background_button.png; sourceTree = "<group>"; };
+		2D1A054E16EE894700527311 /* change_template_background_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button@2x.png"; path = "Resources/change_template_background_button@2x.png"; sourceTree = "<group>"; };
+		2D1A054F16EE894700527311 /* change_template_background_button@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button@2x~ipad.png"; path = "Resources/change_template_background_button@2x~ipad.png"; sourceTree = "<group>"; };
+		2D1A055016EE894700527311 /* change_template_background_button~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button~ipad.png"; path = "Resources/change_template_background_button~ipad.png"; sourceTree = "<group>"; };
 		2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
 		2D37280D16DDCBA00068DE31 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Libraries/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
@@ -756,13 +801,63 @@
 			name = Splash;
 			sourceTree = "<group>";
 		};
+		2D1A051F16EDEAD300527311 /* PopupListComponent */ = {
+			isa = PBXGroup;
+			children = (
+				2D1A052316EDEAED00527311 /* WEPopoverLib */,
+				2D1A052016EDEAE600527311 /* PopupListComponent.h */,
+				2D1A052116EDEAE600527311 /* PopupListComponent.m */,
+			);
+			name = PopupListComponent;
+			sourceTree = "<group>";
+		};
+		2D1A052316EDEAED00527311 /* WEPopoverLib */ = {
+			isa = PBXGroup;
+			children = (
+				2D1A052B16EDEB1900527311 /* Resources */,
+				2D1A052416EDEB0100527311 /* WEPopoverContainerView.h */,
+				2D1A052516EDEB0100527311 /* WEPopoverContainerView.m */,
+				2D1A052616EDEB0100527311 /* WEPopoverController.h */,
+				2D1A052716EDEB0100527311 /* WEPopoverController.m */,
+				2D1A052816EDEB0100527311 /* WEPopoverParentView.h */,
+			);
+			name = WEPopoverLib;
+			sourceTree = "<group>";
+		};
+		2D1A052B16EDEB1900527311 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2D1A052C16EDEB2100527311 /* popoverArrowDown.png */,
+				2D1A052D16EDEB2100527311 /* popoverArrowDown@2x.png */,
+				2D1A052E16EDEB2100527311 /* popoverArrowLeft.png */,
+				2D1A052F16EDEB2100527311 /* popoverArrowLeft@2x.png */,
+				2D1A053016EDEB2100527311 /* popoverArrowRight.png */,
+				2D1A053116EDEB2100527311 /* popoverArrowRight@2x.png */,
+				2D1A053216EDEB2100527311 /* popoverArrowUp.png */,
+				2D1A053316EDEB2100527311 /* popoverArrowUp@2x.png */,
+				2D1A053416EDEB2100527311 /* popoverBg.png */,
+				2D1A053516EDEB2100527311 /* popoverBg@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		2D1A054016EDEB8600527311 /* Template Colors */ = {
+			isa = PBXGroup;
+			children = (
+				2D1A054116EDED8800527311 /* template_color_blue.png */,
+				2D1A054216EDED8800527311 /* template_color_coffee.png */,
+				2D1A054316EDED8800527311 /* template_color_gray.png */,
+				2D1A054416EDED8800527311 /* template_color_purple.png */,
+				2D1A054516EDED8800527311 /* template_color_red.png */,
+			);
+			name = "Template Colors";
+			sourceTree = "<group>";
+		};
 		2D26343F16C2066D001A024D /* SelectTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				2D5C180416D1A5F700E1E785 /* SelectTemplateTableViewController.h */,
 				2D5C180516D1A5F700E1E785 /* SelectTemplateTableViewController.m */,
-				2D1A04DB16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.h */,
-				2D1A04DC16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.m */,
 			);
 			name = SelectTemplate;
 			sourceTree = "<group>";
@@ -916,6 +1011,7 @@
 		2D5F3D081679EFA8009D2ADC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2D1A054016EDEB8600527311 /* Template Colors */,
 				2DC177A816E46A6500939E61 /* help */,
 				2D26346416C2080D001A024D /* Template Screenshot */,
 				2DAAE19F16B8CE2300EA6D90 /* Customize */,
@@ -956,6 +1052,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2D1A051F16EDEAD300527311 /* PopupListComponent */,
 				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
 				2DDF5A3316B0F72700191C43 /* OpenUDID */,
 				2D09AF0916A4F4A200B1C0C9 /* SwipeView */,
@@ -1075,6 +1172,10 @@
 				2D5FCBBD16DD927800DB8628 /* background_navigationbar@2x~iPad.png */,
 				2D5FCBBE16DD927800DB8628 /* background_navigationbar@2x~iPhone.png */,
 				2D5FCBBF16DD927800DB8628 /* background_navigationbar~iPad.png */,
+				2D1A054D16EE894600527311 /* change_template_background_button.png */,
+				2D1A054E16EE894700527311 /* change_template_background_button@2x.png */,
+				2D1A054F16EE894700527311 /* change_template_background_button@2x~ipad.png */,
+				2D1A055016EE894700527311 /* change_template_background_button~ipad.png */,
 				2D5FCBC016DD927800DB8628 /* play_button.png */,
 				2D5FCBC116DD927800DB8628 /* play_button@2x~iPad.png */,
 				2D5FCBC216DD927800DB8628 /* play_button@2x~iPhone.png */,
@@ -1191,8 +1292,8 @@
 				2D5F3D081679EFA8009D2ADC /* Resources */,
 				2DCE0B1A16798E04007A8CAD /* AppDelegate.h */,
 				2DCE0B1B16798E04007A8CAD /* AppDelegate.m */,
-				2DCE0B2316798E04007A8CAD /* MasterViewController.h */,
 				2DCE0B2416798E04007A8CAD /* MasterViewController.m */,
+				2DCE0B2316798E04007A8CAD /* MasterViewController.h */,
 				2DCE0B2616798E04007A8CAD /* DetailViewController.h */,
 				2DCE0B2716798E04007A8CAD /* DetailViewController.m */,
 				2DCE0B2916798E04007A8CAD /* MasterViewController_iPhone.xib */,
@@ -1663,6 +1764,25 @@
 				2D1A051B16EDDF1D00527311 /* card_background_coffee.png in Resources */,
 				2D1A051C16EDDF1D00527311 /* card_background_blue.png in Resources */,
 				2D1A051E16EDE38200527311 /* card_sidebar_blue.png in Resources */,
+				2D1A053616EDEB2100527311 /* popoverArrowDown.png in Resources */,
+				2D1A053716EDEB2100527311 /* popoverArrowDown@2x.png in Resources */,
+				2D1A053816EDEB2100527311 /* popoverArrowLeft.png in Resources */,
+				2D1A053916EDEB2100527311 /* popoverArrowLeft@2x.png in Resources */,
+				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
+				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
+				2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */,
+				2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */,
+				2D1A053E16EDEB2100527311 /* popoverBg.png in Resources */,
+				2D1A053F16EDEB2100527311 /* popoverBg@2x.png in Resources */,
+				2D1A054616EDED8800527311 /* template_color_blue.png in Resources */,
+				2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */,
+				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
+				2D1A054916EDED8800527311 /* template_color_purple.png in Resources */,
+				2D1A054A16EDED8800527311 /* template_color_red.png in Resources */,
+				2D1A055116EE894800527311 /* change_template_background_button.png in Resources */,
+				2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */,
+				2D1A055316EE894800527311 /* change_template_background_button@2x~ipad.png in Resources */,
+				2D1A055416EE894800527311 /* change_template_background_button~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1734,7 +1854,9 @@
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
 				2DC177A716E4680500939E61 /* HelpViewController.m in Sources */,
 				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
-				2D1A04DD16ED6E3D00527311 /* SelectTemplateBackgroundTableViewController.m in Sources */,
+				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
+				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
+				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

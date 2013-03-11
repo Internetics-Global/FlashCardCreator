@@ -46,6 +46,7 @@
 	if (!(self = [self init])) return nil;
     
 	_cardID = [[dataDict valueForKey:@"card_id"] intValue];
+    _packID = [[dataDict valueForKey:@"pack_id"] intValue];
     _cardSN = [[dataDict valueForKey:@"card_sn"] intValue];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
     _cardName = [dataDict valueForKey:@"card_name"];    
