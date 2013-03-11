@@ -35,6 +35,7 @@
     _packID = -1;
     _cardSN = -1;
     _templateID = 0; //begin from 0
+    _templateBackgroundName = @"card_background_blue.png";
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     

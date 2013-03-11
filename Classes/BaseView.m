@@ -28,8 +28,8 @@
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
-@synthesize sidebarImageView = _sidebarImageView;
-@synthesize sidebarImageName = _sidebarImageName;
+@synthesize backgroundImageView = _backgroundImageView;
+@synthesize backgroundImageName = _backgroundImageName;
 @synthesize logoImage = _logoImage;
 @synthesize logoLinkURL = _logoLinkURL;
 @synthesize logoImageFullPath = _logoImageFullPath;
@@ -61,7 +61,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _sidebarImageName = @"card_sidebar_blue.png";
+        _backgroundImageName = @"card_background_blue.png";
         _logoLinkURL = @"http://www.";
         _subheadingSize = 40;
         _subheadingColor = @"Black";
@@ -109,10 +109,16 @@
     
     //Section 1
     
-    UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
-    titleBackgroundView.frame = CGRectMake(0, 0, 800, 110);
-    titleBackgroundView.userInteractionEnabled = FALSE;
-    [self addSubview:titleBackgroundView];
+    _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
+    _backgroundImageView.contentMode = UIViewContentModeScaleToFill;
+    _backgroundImageView.frame = CGRectMake(0, 0, 800, 550);
+    _backgroundImageView.backgroundColor = [UIColor whiteColor];
+    _backgroundImageView.userInteractionEnabled = YES;
+    _backgroundImageView.layer.masksToBounds = YES;
+    _backgroundImageView.layer.cornerRadius = 15;
+    [self addSubview:_backgroundImageView];
+    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
+    [_backgroundImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -133,12 +139,7 @@
     [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_logoLinkageButton];
     
-    _sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_sidebarImageName]];
-    _sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
-    _sidebarImageView.userInteractionEnabled = YES;
-    [self addSubview:_sidebarImageView];
-    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
-    [_sidebarImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
+    
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(60, 30, 200, 110);
@@ -212,18 +213,17 @@
     
     //Section 1
     
-    UIImageView *titleBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_title_background.png"]];
-    titleBackgroundView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone,40);
-    titleBackgroundView.contentMode = UIViewContentModeScaleToFill;
-    titleBackgroundView.userInteractionEnabled = FALSE;
-    [self addSubview:titleBackgroundView];
+    _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
+    _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _backgroundImageView.backgroundColor = [UIColor whiteColor];
+    _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone-45);
+    _backgroundImageView.userInteractionEnabled = YES;
+    _backgroundImageView.layer.masksToBounds = YES;
+    _backgroundImageView.layer.cornerRadius = 6;
+    [self addSubview:_backgroundImageView];
     
-    _sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_sidebarImageName]];
-    _sidebarImageView.frame = CGRectMake(0, 0, 30, kFlashCardViewHeight_Detail_iPhone-45);
-    _sidebarImageView.userInteractionEnabled = YES;
-    [self addSubview:_sidebarImageView];
     UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
-    [_sidebarImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
+    [_backgroundImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     
     _title = [[UITextView alloc]init];
@@ -955,35 +955,35 @@
         switch (index) {
             case 0:
                 //green
-                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_coffee.png"];
-                _sidebarImageName = @"card_sidebar_coffee.png";
+                _backgroundImageView.image = [UIImage imageNamed:@"card_background_coffee.png"];
+                _backgroundImageName = @"card_background_coffee.png";
                 break;
             case 1:
                 //blue
-                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_blue.png"];
-                _sidebarImageName = @"card_sidebar_blue.png";
+                _backgroundImageView.image = [UIImage imageNamed:@"card_background_blue.png"];
+                _backgroundImageName = @"card_background_blue.png";
                 break;
             case 2:
                 //red
-                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_red.png"];
-                _sidebarImageName = @"card_sidebar_red.png";
+                _backgroundImageView.image = [UIImage imageNamed:@"card_background_red.png"];
+                _backgroundImageName = @"card_background_red.png";
                 break;
             case 3:
                 //yellow
-                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_gray.png"];
-                _sidebarImageName = @"card_sidebar_gray.png";
+                _backgroundImageView.image = [UIImage imageNamed:@"card_background_gray.png"];
+                _backgroundImageName = @"card_background_gray.png";
                 break;
             case 4:
                 //purple
-                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_purple.png"];
-                _sidebarImageName = @"card_sidebar_purple.png";
+                _backgroundImageView.image = [UIImage imageNamed:@"card_background_purple.png"];
+                _backgroundImageName = @"card_background_purple.png";
                 break;
             default:
                 break;
         }
         
         if (_delegate) {
-            [_delegate saveEdittedCard];
+            [_delegate uploadTemplateBackgroundForAllCard:_backgroundImageName];
         }
     }
 }

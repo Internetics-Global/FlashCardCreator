@@ -22,6 +22,8 @@
 
         _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
         _title.textColor = [UIColor redColor];
+        _backgroundImageName = @"card_background_blue.png";
+        _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
         _imageFullPath = [NSString stringWithFormat:@"%@/answer_placeholder_content.jpg", [[NSBundle mainBundle] resourcePath]];
         _logoImage.image = [UIImage imageNamed:@"answer_placeholder_logo.jpg"];
@@ -58,8 +60,8 @@
         _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
     
-    _sidebarImageName = _currentCard.templateBackgroundName; //currently, sidebar is same as templatebackground
-    _sidebarImageView.image = [UIImage imageNamed:_sidebarImageName];
+    _backgroundImageName = _currentCard.templateBackgroundName; 
+    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
 
     _subheading.text = _currentCard.answer.subheading;
     _main.text =_currentCard.answer.main;

@@ -24,6 +24,8 @@
         self.backgroundColor = [UIColor whiteColor];
         _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Question",nil);
         _title.textColor = [UIColor blueColor];
+        _backgroundImageView.image = [UIImage imageNamed:@"card_background_blue.png"];
+        _backgroundImageName = @"card_background_blue.png";
         _image.image = [UIImage imageNamed:@"question_placeholder_content.png"];
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
         _imageFullPath = [NSString stringWithFormat:@"%@/question_placeholder_content.jpg", [[NSBundle mainBundle] resourcePath]];
@@ -66,8 +68,8 @@
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
-    _sidebarImageName = _currentCard.templateBackgroundName; //currently, sidebar is same as templatebackground
-    _sidebarImageView.image = [UIImage imageNamed:_sidebarImageName];
+    _backgroundImageName = _currentCard.templateBackgroundName; 
+    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
 
     _logoLinkURL = _currentCard.question.logoURLLinkage;
     _subheading.text = _currentCard.question.subheading;

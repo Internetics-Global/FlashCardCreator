@@ -13,14 +13,15 @@
 
 @protocol BaseViewDelegate
 - (void) saveEdittedCard;
+- (void) uploadTemplateBackgroundForAllCard:(NSString *) templateBackgroundName;
 - (void) updatelogoURLForAllCards:(NSString *) urlString;
 - (void) updatelogoImageForAllCards:(NSString *) imagePath;
 
 @end
 
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,UIAlertViewDelegate> {
-    UIImageView  *_sidebarImageView;
-    NSString     *_sidebarImageName;
+    UIImageView  *_backgroundImageView;
+    NSString     *_backgroundImageName;
     UIImageView  *_logoImage;
     NSString     *_logoImageFullPath;
     NSString     *_logoLinkURL;
@@ -67,8 +68,8 @@
 
 @property (strong, nonatomic) Card *currentCard;
 @property (strong, nonatomic) Pack *currentPack;
-@property (strong, nonatomic) UIImageView *sidebarImageView;
-@property (copy, nonatomic)   NSString *sidebarImageName;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
+@property (copy, nonatomic)   NSString *backgroundImageName;
 @property (strong, nonatomic) UIImageView *logoImage;
 @property (copy, nonatomic)   NSString *logoImageFullPath;
 @property (copy, nonatomic)   NSString *logoLinkURL;

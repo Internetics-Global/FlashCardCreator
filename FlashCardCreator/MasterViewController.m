@@ -888,7 +888,7 @@
             assembledCard.templateBackgroundName = questionDict[@"template_background"];
             if (assembledCard.templateBackgroundName.length ==0) {
                 //compatibility with previous version
-                assembledCard.templateBackgroundName = @"card_sidebar_blue.png";
+                assembledCard.templateBackgroundName = @"card_background_blue.png";
             }
             assembledCard.creator = questionDict[@"creator"];
             assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
