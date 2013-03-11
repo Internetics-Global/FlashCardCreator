@@ -20,6 +20,7 @@
 @synthesize templateID = _templateID;
 @synthesize cardName = _cardName;
 @synthesize coverImageURL = _coverImageURL;
+@synthesize templateBackgroundName = _templateBackgroundName;
 @synthesize creator = _creator;
 @synthesize answer = _answer;
 @synthesize question = _question;
@@ -48,6 +49,7 @@
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
     _cardName = [dataDict valueForKey:@"card_name"];    
     _coverImageURL = [dataDict valueForKey:@"thumb_pic"];
+    _templateBackgroundName = [dataDict valueForKey:@"template_background"];
     _creator = [dataDict valueForKey:@"creator"];
 
 	if ([[dataDict allKeys] containsObject:@"question"]) {
@@ -83,7 +85,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", creator=\"%@\", card_sn=%d, template_id=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _creator, _cardSN, _templateID, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d, template_id=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _templateID, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -93,7 +95,7 @@
 	if (_cardID == -1) {
 		_cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, creator, card_sn, template_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", %d, %d)", _cardID, _packID, _cardName, _coverImageURL, _creator, _cardSN, _templateID];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn, template_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _templateID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -136,9 +138,10 @@
 		[cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"pack_id"];
         [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"card_name"];
         [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"thumb_pic"];
-        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"creator"];
-        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"card_sn"];
-        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"template_id"];
+        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"template_background"];
+        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"creator"];
+        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"card_sn"];
+        [cardDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"template_id"];
 		[cardDict setValue:[Question questionForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"question"];
         [cardDict setValue:[Answer answerForCardID:[[cardDict valueForKey:@"card_id"] intValue]] forKey:@"answer"];
 		[returnArray addObject:cardDict];

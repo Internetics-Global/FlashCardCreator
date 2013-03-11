@@ -18,6 +18,7 @@
     NSInteger _templateID;
     NSString *_cardName;
     NSString *_coverImageURL;
+    NSString *_templateBackgroundName;
     NSString *_creator; //we use OpenUDID to generate
     Question *_question;
     Answer *_answer;
@@ -31,6 +32,7 @@
 @property (nonatomic, assign) NSInteger templateID;
 @property (nonatomic, copy) NSString *cardName;
 @property (nonatomic, copy) NSString *coverImageURL;
+@property (nonatomic, copy) NSString *templateBackgroundName;
 @property (nonatomic, copy) NSString *creator;
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) Answer *answer;

@@ -18,6 +18,7 @@
 #import "Pack.h"
 #import "CSS.h"
 #import "SimpleWebBrowserController.h"
+#import "SelectTemplateBackgroundTableViewController.h"
 
 #import "UINavigationController+DismissKeyboard.h"  //used to restrict to be landscaped.
 
@@ -27,6 +28,8 @@
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
+@synthesize sidebarImageView = _sidebarImageView;
+@synthesize sidebarImageName = _sidebarImageName;
 @synthesize logoImage = _logoImage;
 @synthesize logoLinkURL = _logoLinkURL;
 @synthesize logoImageFullPath = _logoImageFullPath;
@@ -58,6 +61,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _sidebarImageName = @"card_sidebar_blue.png";
         _logoLinkURL = @"http://www.";
         _subheadingSize = 40;
         _subheadingColor = @"Black";
@@ -91,6 +95,8 @@
                 _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
             }
         }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateBackgroundSelectedNotification:) name:TEMPLATE_BACKGROUND_SELECTED_NOTIFICATION object:nil];
     
     }
     return self;
@@ -127,15 +133,17 @@
     [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
     [self addSubview:_logoLinkageButton];
     
-    UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
-    sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
-    sidebarImageView.userInteractionEnabled = FALSE;
-    [self addSubview:sidebarImageView];
+    _sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_sidebarImageName]];
+    _sidebarImageView.frame = CGRectMake(0, 0, 60, 550);
+    _sidebarImageView.userInteractionEnabled = YES;
+    [self addSubview:_sidebarImageView];
+    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
+    [_sidebarImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(60, 30, 200, 110);
     _title.backgroundColor = [UIColor clearColor];
-    _title.font =[UIFont systemFontOfSize:40];
+    _title.font =[UIFont boldSystemFontOfSize:40];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
     _title.userInteractionEnabled = FALSE;
@@ -161,7 +169,7 @@
     
     _subheading = [[UITextView alloc]init];
     _subheading.tag = 100;
-    _subheading.font =[UIFont systemFontOfSize:28];
+    _subheading.font =[UIFont boldSystemFontOfSize:28];
     _subheading.userInteractionEnabled = FALSE;
     _subheading.keyboardType = UIKeyboardAppearanceDefault;
      _subheading.returnKeyType = UIReturnKeyDefault;
@@ -170,7 +178,7 @@
     
     _main = [[UITextView alloc]init];
     _main.tag = 101;
-    _main.font =[UIFont systemFontOfSize:28];
+    _main.font =[UIFont boldSystemFontOfSize:28];
     _main.userInteractionEnabled = FALSE;
     _main.keyboardType = UIKeyboardAppearanceDefault;
     _main.returnKeyType = UIReturnKeyDefault;
@@ -179,7 +187,7 @@
     
     _sub = [[UITextView alloc]init];
     _sub.tag = 102;
-    _sub.font =[UIFont systemFontOfSize:28];
+    _sub.font =[UIFont boldSystemFontOfSize:28];
     _sub.userInteractionEnabled = FALSE;
     _sub.keyboardType = UIKeyboardAppearanceDefault;
     _sub.returnKeyType = UIReturnKeyDefault;
@@ -210,16 +218,18 @@
     titleBackgroundView.userInteractionEnabled = FALSE;
     [self addSubview:titleBackgroundView];
     
-    UIImageView *sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_sidebar.png"]];
-    sidebarImageView.frame = CGRectMake(0, 0, 30, kFlashCardViewHeight_Detail_iPhone-45);
-    sidebarImageView.userInteractionEnabled = FALSE;
-    [self addSubview:sidebarImageView];
+    _sidebarImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_sidebarImageName]];
+    _sidebarImageView.frame = CGRectMake(0, 0, 30, kFlashCardViewHeight_Detail_iPhone-45);
+    _sidebarImageView.userInteractionEnabled = YES;
+    [self addSubview:_sidebarImageView];
+    UITapGestureRecognizer *selectTemplateBackgroundSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectTemplateBackGround:)];
+    [_sidebarImageView addGestureRecognizer:selectTemplateBackgroundSingeTap];
     
     
     _title = [[UITextView alloc]init];
     _title.frame = CGRectMake(20, 0, 300, 30);
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-    _title.font =[UIFont boldSystemFontOfSize:24];
+    _title.font =[UIFont boldSystemFontOfSize:22];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
@@ -333,7 +343,7 @@
     }
     
     //1. subheading
-    _subheading.font = [UIFont systemFontOfSize:css.subSize];
+    _subheading.font = [UIFont boldSystemFontOfSize:css.subSize];
     _subheadingSize = css.subSize;
     
     if ([css.subheadingColor isEqualToString:@"Blue"]) {
@@ -365,7 +375,7 @@
     }
     
     //2. main
-    _main.font = [UIFont systemFontOfSize:css.mainSize];
+    _main.font = [UIFont boldSystemFontOfSize:css.mainSize];
     _mainSize = css.mainSize;
     
     if ([css.mainColor isEqualToString:@"Blue"]) {
@@ -397,7 +407,7 @@
     }
     
     //3. sub
-    _sub.font = [UIFont systemFontOfSize:css.subSize];
+    _sub.font = [UIFont boldSystemFontOfSize:css.subSize];
     _subSize = css.subSize;
     
     if ([css.subColor isEqualToString:@"Blue"]) {
@@ -622,6 +632,16 @@
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];    
     }
+    
+}
+
+- (void)selectTemplateBackGround:(UITapGestureRecognizer *)sender {
+    SelectTemplateBackgroundTableViewController *templateBackgroundViewController = [[SelectTemplateBackgroundTableViewController alloc] initWithNibName:nil bundle:nil];
+    templateBackgroundViewController.contentSizeForViewInPopover = CGSizeMake(130, 30*5);
+    if (_templateBackgroundPopover == nil) {
+        _templateBackgroundPopover = [[UIPopoverController alloc] initWithContentViewController:templateBackgroundViewController];
+    }
+    [_templateBackgroundPopover presentPopoverFromRect:CGRectMake(0, 300, 50, 50) inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
@@ -920,6 +940,56 @@
     } else {
         [Common alertViewCommon:@"Incorrect URL format or empty "];
     }
+}
+
+#pragma mark -
+#pragma mark - Notification
+- (void) templateBackgroundSelectedNotification: (NSNotification *) notification {
+    
+    [_templateBackgroundPopover dismissPopoverAnimated:YES];
+    
+    NSString *templateColorIndexString = (NSString *)[notification object];
+    int index = [templateColorIndexString integerValue];
+    
+    if (self.superview.tag == CURRENT_FLASHCARDVIEW_TAG) {
+        switch (index) {
+            case 0:
+                //green
+                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_coffee.png"];
+                _sidebarImageName = @"card_sidebar_coffee.png";
+                break;
+            case 1:
+                //blue
+                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_blue.png"];
+                _sidebarImageName = @"card_sidebar_blue.png";
+                break;
+            case 2:
+                //red
+                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_red.png"];
+                _sidebarImageName = @"card_sidebar_red.png";
+                break;
+            case 3:
+                //yellow
+                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_gray.png"];
+                _sidebarImageName = @"card_sidebar_gray.png";
+                break;
+            case 4:
+                //purple
+                _sidebarImageView.image = [UIImage imageNamed:@"card_sidebar_purple.png"];
+                _sidebarImageName = @"card_sidebar_purple.png";
+                break;
+            default:
+                break;
+        }
+        
+        if (_delegate) {
+            [_delegate saveEdittedCard];
+        }
+    }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

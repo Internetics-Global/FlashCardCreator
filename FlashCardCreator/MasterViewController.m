@@ -33,6 +33,7 @@
 #import "DropboxShareKitHelper.h"
 #import "PlayViewController.h"
 #import "HelpViewController.h"
+#import "NSArray+Randomised.h"
 
 
 @implementation MasterViewController
@@ -808,15 +809,22 @@
         NSLog(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
     }
     
+    NSMutableArray *array = [NSMutableArray array];
     for (NSString *zippedCardFileName in fileListArray) {
         Card *assembledCard = [[Card alloc] init];
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:packPlatformStr];
             if (assembledCard)
-                [pack addCard:assembledCard];
+                [array addObject:assembledCard];
         }
     }
+    
+    NSArray *shuffledCardArray = [array cardSNOrdered];
+     for (Card *card in shuffledCardArray) {
+         [pack addCard:card];
+     }
+
     
     //Step5: set  flag
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
@@ -877,6 +885,11 @@
             [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
             [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
             assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
+            assembledCard.templateBackgroundName = questionDict[@"template_background"];
+            if (assembledCard.templateBackgroundName.length ==0) {
+                //compatibility with previous version
+                assembledCard.templateBackgroundName = @"card_sidebar_blue.png";
+            }
             assembledCard.creator = questionDict[@"creator"];
             assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
             assembledCard.templateID = [questionDict[@"template_id"] intValue];

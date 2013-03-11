@@ -117,7 +117,8 @@
         _cardSNText = [[BadgeLabel alloc] init];
         _cardSNText.frame = CGRectMake(0, kQuestionViewTopMarginForiPad+10, 25, 25);
         [_cardSNText setStyle:BadgeLabelStyleAppIcon];
-        _cardSNText.backgroundColor = [UIColor redColor];
+        _cardSNText.backgroundColor = [UIColor colorWithRed:143.0/255 green:204.0/255 blue:1 alpha:1];
+        _cardSNText.textColor = [UIColor blackColor];
         CGPoint point = _cardSNText.center;
         point.x = 30;
         _cardSNText.center = point;
@@ -227,6 +228,7 @@
     _questionView.logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
     _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
     [_questionView.logoLinkageButton setHidden:YES];
+    _questionView.sidebarImageView.userInteractionEnabled = FALSE;
     _questionView.subheading.userInteractionEnabled = FALSE;
     _questionView.image.userInteractionEnabled      = FALSE;
     _questionView.main.userInteractionEnabled       = FALSE;
@@ -237,6 +239,7 @@
     _questionView.subheading.layer.borderWidth = 0;
     
     _answerView.logoImage.userInteractionEnabled    = FALSE;
+    _answerView.sidebarImageView.userInteractionEnabled = FALSE;
     _answerView.image.userInteractionEnabled        = FALSE;
     _answerView.main.userInteractionEnabled         = FALSE;
     _answerView.main.layer.borderWidth = 0;
@@ -252,6 +255,7 @@
     _questionView.logoImage.userInteractionEnabled  = TRUE;
     _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
     [_questionView.logoLinkageButton setHidden:NO];
+    _answerView.sidebarImageView.userInteractionEnabled = TRUE;
     _questionView.image.userInteractionEnabled      = TRUE;
     _questionView.main.userInteractionEnabled       = TRUE;
     _questionView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
@@ -263,7 +267,9 @@
     _questionView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     _questionView.subheading.layer.borderWidth = 3;
     
+    
     _answerView.logoImage.userInteractionEnabled    = TRUE;
+    _answerView.sidebarImageView.userInteractionEnabled = TRUE;
     _answerView.image.userInteractionEnabled        = TRUE;
     _answerView.main.userInteractionEnabled         = TRUE;
     _answerView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
@@ -443,6 +449,7 @@
     } else {
         [imageData writeToFile:_currentCard.coverImageURL atomically:YES];    
     }
+    _currentCard.templateBackgroundName = self.questionView.sidebarImageName; //to be noticed, currently, templateBackground means sidebarImageName;
     
     _currentCard.question.title = self.questionView.title.text;
     _currentCard.question.subheading = self.questionView.subheading.text;
@@ -490,6 +497,9 @@
     
     //Send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    
+    [self.questionView refreshDisplay];
+    [self.answerView refreshDisplay];
 
 }
 

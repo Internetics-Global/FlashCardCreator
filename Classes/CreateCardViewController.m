@@ -115,6 +115,7 @@
     NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
     [imageData writeToFile:savedFullPath atomically:YES];
     _newCard.coverImageURL = savedFullPath;
+    _newCard.templateBackgroundName = _cardView.questionView.sidebarImageName;
     
     _newCard.packID = _currentPack.packID;
     _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;

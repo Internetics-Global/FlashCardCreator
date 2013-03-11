@@ -19,6 +19,8 @@
 @end
 
 @interface BaseView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate,UIAlertViewDelegate> {
+    UIImageView  *_sidebarImageView;
+    NSString     *_sidebarImageName;
     UIImageView  *_logoImage;
     NSString     *_logoImageFullPath;
     NSString     *_logoLinkURL;
@@ -33,7 +35,10 @@
     Card         *_currentCard;
     Pack         *_currentPack;
     BOOL         _keyboardShown;
+    
     UIPopoverController *_imagePickerPopover;
+    UIPopoverController *_templateBackgroundPopover;
+    
     UIImagePickerController *_picker;
     
     BOOL _isLogoImageViewClicked;
@@ -61,7 +66,9 @@
 }
 
 @property (strong, nonatomic) Card *currentCard;
-@property (strong, nonatomic) Pack *currentPack;;
+@property (strong, nonatomic) Pack *currentPack;
+@property (strong, nonatomic) UIImageView *sidebarImageView;
+@property (copy, nonatomic)   NSString *sidebarImageName;
 @property (strong, nonatomic) UIImageView *logoImage;
 @property (copy, nonatomic)   NSString *logoImageFullPath;
 @property (copy, nonatomic)   NSString *logoLinkURL;
