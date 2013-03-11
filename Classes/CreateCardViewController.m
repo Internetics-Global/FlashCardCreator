@@ -73,7 +73,7 @@
         _cardView.currentPack = _currentPack;
         _cardView.questionView.currentPack = _currentPack;
         _cardView.answerView.currentPack = _currentPack;
-        [_cardView enableCardEdit];
+        [_cardView disableCardEdit];
         _cardView.changeTemplateButton.hidden = TRUE;
         
         //User template 0

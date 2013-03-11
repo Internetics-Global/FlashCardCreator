@@ -97,6 +97,7 @@
             _image.frame = CGRectMake(170, 0, 150, 150);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -126,6 +127,7 @@
             _image.frame = CGRectMake(170, 0, 150, 150);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -155,6 +157,7 @@
             _image.frame = CGRectMake(170, 0, 150, 150);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -183,6 +186,7 @@
             _image.hidden = TRUE;
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -212,6 +216,7 @@
             _image.frame = CGRectMake(170, 0, 150, 150);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -253,6 +258,7 @@
             _image.frame = CGRectMake(380, 10, 350, 350);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -282,6 +288,7 @@
             _image.frame = CGRectMake(380, 80, 330, 330);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -304,6 +311,7 @@
             _image.frame = CGRectMake(380, 10, 350, 350);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -325,6 +333,7 @@
             _image.hidden = TRUE;
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -347,6 +356,7 @@
             _image.frame = CGRectMake(380, 10, 350, 350);
             
             _logoImage.hidden = TRUE;
+            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
