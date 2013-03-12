@@ -464,7 +464,14 @@ enum template_color_enum {
 #pragma mark - PopupListComponentDelegate delegate
 - (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
 {
+    self.templateBackgroundSelectPopup = nil;
+    
     if ([_currentPack cards].count == 0) {
+        return;
+    }
+    
+    if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        [Common alertViewCommon:@"You can not make changes, which is not created by yourself"];
         return;
     }
     
@@ -501,7 +508,6 @@ enum template_color_enum {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     
-    self.templateBackgroundSelectPopup = nil;
 }
 
 - (void) popupListcompoentDidCancel:(PopupListComponent *)sender
