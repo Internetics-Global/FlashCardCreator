@@ -603,8 +603,12 @@
     [_sub resignFirstResponder];
     [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
     
-    if (_delegate) {
-        [_delegate saveEdittedCard];
+    if (self.superview.tag == NEW_FLASHCARDVIEW_TAG) {
+        //we will save until after we press the save button
+    } else {
+        if (_delegate) {
+            [_delegate saveEdittedCard];
+        }
     }
     
 }
@@ -674,7 +678,9 @@
         if (self.superview.tag == NEW_FLASHCARDVIEW_TAG) {
            //we will save until after we press the save button
         } else {
-           [_delegate saveEdittedCard];    
+            if (_delegate) {
+                [_delegate saveEdittedCard];
+            }
         }
     }
 }
