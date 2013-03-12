@@ -443,19 +443,24 @@
 }
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
+    
+    //Step1: update cell
     //We need to refresh currentPack and currentCard since there will be possible change
     self.currentPack = [[User defaultUser] packs] [_indexPack];
-    
-    self.currentCard = (Card *)[notification object];
-    _indexCard = self.currentCard.cardSN-1;
-    
     [self.tableView reloadData];
     
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:(_indexCard) inSection:0];
-    
+    //Step2: update after a new create card operation. iPad only
+    Card *tempCard = (Card *)[notification object];
     if (!isUserInterfaceIdiomPhone) {
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        if ([_currentPack cards].count == tempCard.cardSN) {  //this means we just created a new card
+            self.currentCard = tempCard;
+            _indexCard = tempCard.cardSN-1;  //point to new created card
+            
+            [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:(_indexCard) inSection:0]];
+        }
+        
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:(_indexCard) inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(_indexCard) inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
 
