@@ -19,6 +19,8 @@
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
 #import "HelpViewController.h"
+#import "UIImage+Scale.h"
+#import "FileOperationHelper.h"
 
 enum template_color_enum {
     template_color_enum_blue = 1,
@@ -464,8 +466,11 @@ enum template_color_enum {
 #pragma mark - PopupListComponentDelegate delegate
 - (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
 {
+    //Step1: close popover window
     self.templateBackgroundSelectPopup = nil;
     
+    
+    //Step2: Check exception
     if ([_currentPack cards].count == 0) {
         return;
     }
@@ -475,10 +480,9 @@ enum template_color_enum {
         return;
     }
     
-    NSLog(@"User chose item with id = %d", itemId);
     
+    //Step3: Get the selected info
     NSString *templateBackgroundName;
-    
     switch (itemId) {
         case template_color_enum_coffee:
             templateBackgroundName = @"card_background_coffee.png";
@@ -499,13 +503,41 @@ enum template_color_enum {
             break;
     }
     
+    //Step4: Change all cards card template background, screenshot them, and save them
+    float flashCardYPositionInScrollView;
+    FlashCardView *tempCardView;
+    if (isUserInterfaceIdiomPhone) {
+        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+        tempCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+        
+    } else {
+        flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
+        tempCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
+        
+    }
+    
     for (Card *card in [_currentPack cards]) {
+        
         card.templateBackgroundName =templateBackgroundName;
+        [tempCardView reset:card curPack:_currentPack];
+        [tempCardView refreshQuestionAnserView];
+        
+        UIImage *origialmage = [tempCardView.questionView captureWholeViewAsImage];
+        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+        if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
+            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [imageData writeToFile:savedFullPath atomically:YES];
+            card.coverImageURL = savedFullPath;
+        } else {
+            [imageData writeToFile:card.coverImageURL atomically:YES];
+        }
+
         [card save];
     }
     [_currentCardView.answerView refreshDisplay];
     [_currentCardView.questionView refreshDisplay];
     
+    //Step5: tell the master view to update cell
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     
 }
