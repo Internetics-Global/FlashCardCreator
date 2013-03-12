@@ -538,7 +538,7 @@ enum template_color_enum {
     [_currentCardView.questionView refreshDisplay];
     
     //Step5: tell the master view to update cell
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
     
 }
 

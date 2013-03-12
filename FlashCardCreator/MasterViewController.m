@@ -34,6 +34,7 @@
 #import "PlayViewController.h"
 #import "HelpViewController.h"
 #import "NSArray+Randomised.h"
+#import "FlashCardView.h"
 
 
 @implementation MasterViewController
@@ -55,7 +56,7 @@
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newCardAddedNotification:) name:NEW_CARD_ADDED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundAfterCardCreatedNotification:) name:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
@@ -400,17 +401,12 @@
 }
 
 
--(void)newCardAddedNotification:(NSNotification *)notification{
-	[self.tableView reloadData];
-    
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:([[_currentPack cards] count] -1) inSection:0];
-    [self.tableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+-(void)removeBackgroundAfterCardCreatedNotification:(NSNotification *)notification{
+	
+    //we do refresh tableview cell in updateMasterAfterSaveCardNotification
     
     if (!isUserInterfaceIdiomPhone) {
         [_backgroundOfCreateCardView removeFromSuperview];
-        
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
 }
 
@@ -449,14 +445,18 @@
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
     //We need to refresh currentPack and currentCard since there will be possible change
     self.currentPack = [[User defaultUser] packs] [_indexPack];
-    if ([[_currentPack cards] count] > 0) {
-        self.currentCard = [_currentPack cards][_indexCard];
-        [self.tableView reloadData];
+    
+    self.currentCard = (Card *)[notification object];
+    _indexCard = self.currentCard.cardSN-1;
+    
+    [self.tableView reloadData];
+    
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:(_indexCard) inSection:0];
+    
+    if (!isUserInterfaceIdiomPhone) {
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
-    
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
-    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    
 }
 
 - (void) updateMasterAfterDetailScrollNotification:(NSNotification *) notification {

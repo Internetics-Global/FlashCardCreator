@@ -13,7 +13,7 @@
 @class Card;
 
 @interface CreateCardViewController : UIViewController {
-    FlashCardView *_cardView;
+    FlashCardView *_newCardView;
     Card *_newCard;
     Pack *_currentPack;
 }

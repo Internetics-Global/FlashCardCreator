@@ -22,6 +22,8 @@
 #import "UIImage+Scale.h"
 #import "BadgeLabel.h"
 
+BOOL isFromNewCreatedCard = NO;
+
 @interface CreateCardViewController ()
 
 @end
@@ -62,43 +64,49 @@
 - (void)loadView {
     [super loadView];
 
-    if (_cardView == nil) {
-        
+    if (_newCardView == nil) {
+                
+        //Step1: Init card
+        float flashCardYPositionInScrollView;
         if (isUserInterfaceIdiomPhone) {
-            _cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,(IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2;
+            _newCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
+            
         } else {
-            _cardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,(IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
+            flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2;
+            _newCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
         }
         
-        _cardView.currentPack = _currentPack;
-        _cardView.questionView.currentPack = _currentPack;
-        _cardView.answerView.currentPack = _currentPack;
-
-        [_cardView disableCardEdit];
-        _cardView.changeTemplateButton.hidden = TRUE;
         
-        
-        //User template 0
-        if (isUserInterfaceIdiomPhone) {
-            [_cardView.questionView updateQuestionViewTemplateForiPhone:0];
-            [_cardView.answerView updateAnswerViewTemplateForiPhone:0];
-        } else {
-            [_cardView.questionView updateQuestionViewTemplateForiPad:0];
-            [_cardView.answerView updateAnswerViewTemplateForiPad:0];
-        }
-        
-        _cardView.cardSNText.text = [NSString stringWithFormat:@"%d",[[_currentPack cards] count]+1];
-        
+        //Step2: Apply default value from first card
         if ([[_currentPack cards] count] >0) {
-            
-            Card *currentCard = ((Card *)[_currentPack cards][0]);
-            _cardView.questionView.backgroundImageView.image = [UIImage imageNamed:currentCard.templateBackgroundName];
-            
-            _cardView.questionView.logoImageFullPath = currentCard.question.logoFullPath;
-            _cardView.questionView.logoImage.image = [UIImage imageWithContentsOfFile:_cardView.questionView.logoImageFullPath];
-            _cardView.questionView.logoLinkURL = currentCard.question.logoURLLinkage;
+            Card *firstCard = ((Card *)[_currentPack cards][0]); //inherit first card
+            _newCard.question.logoFullPath = firstCard.question.logoFullPath;
+            _newCard.question.logoURLLinkage = firstCard.question.logoURLLinkage;
+            _newCard.templateBackgroundName = firstCard.templateBackgroundName;
+        } else {
+            // we take default value
         }
-        [self.view addSubview:_cardView];
+        _newCard.cardSN = [[_currentPack cards] count] + 1;
+        _newCard.templateID = 0;
+        _newCard.packID = _currentPack.packID;
+        _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
+        _newCard.creator = [OpenUDID value];
+        [_newCardView reset:_newCard curPack:_currentPack];
+        
+        //Step3: Response (这个非常重要)
+        _newCardView.tag = NEW_FLASHCARDVIEW_TAG; //to diff _current/previous/next FlashCardView
+        [_newCardView setQuestionAnswerViewDelegate];//to repsonse to BaseView delegate
+        
+        //Step4: Refresh content
+        [_newCardView refreshQuestionAnserView];
+        [_newCardView enableCardEdit];
+        
+        //Step5: Show 
+        [self.view addSubview:_newCardView];
+        
+        //Step6: set flag
+        isFromNewCreatedCard = YES;
     }
     
 }
@@ -109,62 +117,24 @@
 }
 
 - (void) saveAndCloseCreateCardView {
+    
+    //Step1: dismiss window
     [self.navigationController popViewControllerAnimated:YES];
     
+    //Step2: exception dealing
     if (_currentPack.packID == -1) {
         [Common alertViewCommon:@"You need to create a pack first"];
         return;
     }
     
-    UIImage *origialmage = [_cardView.questionView captureWholeViewAsImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-    [imageData writeToFile:savedFullPath atomically:YES];
-    _newCard.coverImageURL = savedFullPath;
-    _newCard.templateBackgroundName = _cardView.questionView.backgroundImageName;
+    //Step3: save
+    [_newCardView saveEdittedCard];
     
-    _newCard.packID = _currentPack.packID;
-    _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
-    _newCard.creator = [OpenUDID value];
+    //Step4: Send notification to remove the background in master view
+    [[NSNotificationCenter defaultCenter] postNotificationName:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
     
-    _newCard.cardSN = [[_currentPack cards] count]+1;
-    _newCard.templateID = 0; //we set default value for it.
-    _newCard.question.title = _cardView.questionView.title.text;
-    _newCard.question.cardID = _newCard.cardID;
-    _newCard.question.subheading = _cardView.questionView.subheading.text;
-    _newCard.question.main = _cardView.questionView.main.text;
-    _newCard.question.sub = _cardView.questionView.sub.text;
-    _newCard.question.imageFullPath = _cardView.questionView.imageFullPath;
-    _newCard.question.logoFullPath = _cardView.questionView.logoImageFullPath;
-    _newCard.question.logoURLLinkage = _cardView.questionView.logoLinkURL;
-    
-    _newCard.answer.title = _cardView.answerView.title.text;
-    _newCard.answer.cardID = _newCard.cardID;
-    _newCard.answer.subheading = _cardView.answerView.subheading.text;
-    _newCard.answer.main = _cardView.answerView.main.text;
-    _newCard.answer.sub = _cardView.answerView.sub.text;
-    _newCard.answer.imageFullPath = _cardView.answerView.imageFullPath;
-    _newCard.answer.logoFullPath = _cardView.answerView.logoImageFullPath;
-    
-    if ([_currentPack cards].count >0) {
-        _newCard.templateBackgroundName = ((Card *)[_currentPack cards][0]).templateBackgroundName;
-    }
-    
-    [_currentPack addCard:_newCard];
-    
-    [[NSUserDefaults standardUserDefaults] setInteger:_currentPack.packID forKey:@"lastCreatedPackID"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //Update_date info
-    NSString *updateDate = [FileOperationHelper getTodayString];
-    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-    [dict setObject:updateDate forKey:@"update_date"];
-    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //Send notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:NEW_CARD_ADDED_NOTIFICATION object:nil];
+    //Step5: set flag
+    isFromNewCreatedCard = NO;
 }
 
 - (void) backAndPopCreateCardView {
@@ -173,6 +143,9 @@
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate.masterViewController.backgroundOfCreateCardView removeFromSuperview];
     }
+    
+    //Set flag
+    isFromNewCreatedCard = NO;
 }
 
 
@@ -200,6 +173,12 @@
 - (void)my_viewDidUnload
 {
     
+}
+
+- (void)dealloc {
+    _currentPack = nil;
+    _newCard = nil;
+    _newCardView = nil;
 }
 
 @end

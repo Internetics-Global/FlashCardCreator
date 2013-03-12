@@ -34,6 +34,7 @@
 #define kQuestionViewButtomMarginForiPhone 40.0
 #define kQuestionViewCornerRadiusForiPhone 9.0
 
+extern BOOL isFromNewCreatedCard;
 
 @implementation FlashCardView
 
@@ -64,10 +65,10 @@
 
 /**
  * The purpose of reset: 
- * 1. Don't wan to re-initialize ( so we don't call  initWithFrame)
+ * 1. Don't want to re-initialize ( so we don't call  initWithFrame)
  * 2. Re-initialized all view related like _questionView, etc
  * 3. Set default value
- * 4. After reset, we need to set property properly 
+ * 4. After reset, we set property properly 
  */
 - (void) reset:(Card *) card curPack: (Pack *) pack {
     
@@ -228,7 +229,6 @@
     _questionView.logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
     _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
     [_questionView.logoLinkageButton setHidden:YES];
-    _questionView.backgroundImageView.userInteractionEnabled = FALSE;
     _questionView.subheading.userInteractionEnabled = FALSE;
     _questionView.image.userInteractionEnabled      = FALSE;
     _questionView.main.userInteractionEnabled       = FALSE;
@@ -239,7 +239,6 @@
     _questionView.subheading.layer.borderWidth = 0;
     
     _answerView.logoImage.userInteractionEnabled    = FALSE;
-    _answerView.backgroundImageView.userInteractionEnabled = FALSE;
     _answerView.image.userInteractionEnabled        = FALSE;
     _answerView.main.userInteractionEnabled         = FALSE;
     _answerView.main.layer.borderWidth = 0;
@@ -255,7 +254,7 @@
     _questionView.logoImage.userInteractionEnabled  = TRUE;
     _questionView.logoLinkageButton.userInteractionEnabled  = FALSE;
     [_questionView.logoLinkageButton setHidden:NO];
-    _answerView.backgroundImageView.userInteractionEnabled = TRUE;
+    _questionView.logoLinkageButton.userInteractionEnabled = YES;
     _questionView.image.userInteractionEnabled      = TRUE;
     _questionView.main.userInteractionEnabled       = TRUE;
     _questionView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
@@ -269,7 +268,6 @@
     
     
     _answerView.logoImage.userInteractionEnabled    = TRUE;
-    _answerView.backgroundImageView.userInteractionEnabled = TRUE;
     _answerView.image.userInteractionEnabled        = TRUE;
     _answerView.main.userInteractionEnabled         = TRUE;
     _answerView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
@@ -403,7 +401,7 @@
         [card save];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 }
 
 - (void) updatelogoImageForAllCards:(NSString *) imagePath {
@@ -418,26 +416,27 @@
         [card save];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 }
 
 - (void) saveEdittedCard {
     
-    //we only deal with current flashcardview
-    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
+    if (_currentPack == nil) {
+        [Common alertViewCommon:@"Error to create new card, since _currentPack is nil"];
         return;
     }
     
-    if (_currentPack == nil) {
-        NSLog(@"Error to create new card, since _currentPack is nil");
+    //we only deal with current card and new created card
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
+    
+    
     
     if (![self checkDelegateStatus]) {
+        [Common alertViewCommon:@"Debug code, i will remove them soon"];
         return;
-    }
-    
-    NSLog(@"%s:Check point",__FUNCTION__);
+    }  //liang wang, test code here
     
     UIImage *origialmage = [self.questionView captureWholeViewAsImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
@@ -484,7 +483,11 @@
     _currentCard.answer.css.subSize = self.answerView.subSize;
     
     _currentCard.packID = _currentPack.packID;
-    [_currentCard save];
+    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        [_currentPack addCard:_currentCard];
+    } else {
+        [_currentCard save];    
+    }
     
     //update_date info
     NSString *updateDate = [FileOperationHelper getTodayString];
@@ -521,12 +524,15 @@
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
     
-    //we only deal with current flashcardview
-    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
-        return;
-    }
     
     [_popoverController dismissPopoverAnimated:YES];
+    
+    //  We don't want to accept when there's create card action now
+    if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
+        ||
+        ((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (self.tag != NEW_FLASHCARDVIEW_TAG))){
+        return;
+    }
     
     NSString *templateIDString = (NSString *)[notification object];
     _currentCard.templateID = [templateIDString integerValue];

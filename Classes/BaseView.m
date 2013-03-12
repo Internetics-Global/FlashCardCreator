@@ -652,7 +652,7 @@
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
 
     if (_isLogoImageViewClicked) {
-        if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath == nil))) {
+        if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
             _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         
@@ -665,13 +665,17 @@
         }
         
     } else {
-        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"]) || ((_logoImageFullPath == nil))) {
+        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"]) || ((_imageFullPath.length == 0))) {
             _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         [imageData writeToFile:_imageFullPath atomically:YES];
         _image.image = [UIImage imageWithData:imageData];
         
-        [_delegate saveEdittedCard];
+        if (self.superview.tag == NEW_FLASHCARDVIEW_TAG) {
+           //we will save until after we press the save button
+        } else {
+           [_delegate saveEdittedCard];    
+        }
     }
 }
 
