@@ -82,12 +82,12 @@
 #define kFlashCardViewWidth_Detail_iPad        800
 #define kFlashCardViewHeight_Detail_iPad       640     //NOT is the scroll view's height
 #define kFlashCardViewWidth_Detail_iPhone      ((480) - 80)
-#define kFlashCardViewHeight_Detail_iPhone     260     //NOT is the scroll view's height
+#define kFlashCardViewHeight_Detail_iPhone     280     //NOT is the scroll view's height
 
 #define kFlashCardViewWidth_PlayMode_iPad      800
 #define kFlashCardViewHeight_PlayMode_iPad     640     //NOT is the scroll view's height
 #define kFlashCardViewWidth_PlayMode_iPhone    ((480) - 80)
-#define kFlashCardViewHeight_PlayMode_iPhone   260     //NOT is the scroll view's height
+#define kFlashCardViewHeight_PlayMode_iPhone   280     //NOT is the scroll view's height
 
 //Master view cell size
 #define kCellSizeWidth                         IPAD_UI_MASTER_WIDTH
@@ -102,6 +102,7 @@
 #define NEXT_FLASHCARDVIEW_TAG                 112
 #define NEW_FLASHCARDVIEW_TAG                  113
 
-#define FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE     16
+#define FONT_FACTOR_BETWEEN_IPAD_IPHONE     0.5
+#define FONT_OFFSET_BETWEEN_IPAD_IPHONE     2
 
 

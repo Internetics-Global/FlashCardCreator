@@ -258,26 +258,49 @@ extern BOOL isFromNewCreatedCard;
     _questionView.image.userInteractionEnabled      = TRUE;
     _questionView.main.userInteractionEnabled       = TRUE;
     _questionView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _questionView.main.layer.borderWidth = 3;
+    if (isUserInterfaceIdiomPhone) {
+        _questionView.main.layer.borderWidth = 2;
+    } else {
+        _questionView.main.layer.borderWidth = 3;    
+    }
+    
     _questionView.sub.userInteractionEnabled        = TRUE;
     _questionView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _questionView.sub.layer.borderWidth = 3;
+    if (isUserInterfaceIdiomPhone) {
+        _questionView.sub.layer.borderWidth = 2;
+    } else {
+        _questionView.sub.layer.borderWidth = 3;
+    }
     _questionView.subheading.userInteractionEnabled = TRUE;
     _questionView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _questionView.subheading.layer.borderWidth = 3;
-    
-    
+    if (isUserInterfaceIdiomPhone) {
+        _questionView.subheading.layer.borderWidth = 2;
+    } else {
+        _questionView.subheading.layer.borderWidth = 3;
+    }
     _answerView.logoImage.userInteractionEnabled    = TRUE;
     _answerView.image.userInteractionEnabled        = TRUE;
     _answerView.main.userInteractionEnabled         = TRUE;
     _answerView.main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _answerView.main.layer.borderWidth = 3;
+    if (isUserInterfaceIdiomPhone) {
+        _answerView.main.layer.borderWidth = 2;
+    } else {
+        _answerView.main.layer.borderWidth = 3;
+    }
     _answerView.sub.userInteractionEnabled          = TRUE;
     _answerView.sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _answerView.sub.layer.borderWidth = 3;
+    if (isUserInterfaceIdiomPhone) {
+        _answerView.sub.layer.borderWidth = 2;
+    } else {
+        _answerView.sub.layer.borderWidth = 3;
+    }
     _answerView.subheading.userInteractionEnabled   = TRUE;
     _answerView.subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    _answerView.subheading.layer.borderWidth = 3;
+    if (isUserInterfaceIdiomPhone) {
+        _answerView.subheading.layer.borderWidth = 2;
+    } else {
+        _answerView.subheading.layer.borderWidth = 3;
+    }
 }
 
 

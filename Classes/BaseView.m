@@ -218,9 +218,9 @@
     
     
     _title = [[UITextView alloc]init];
-    _title.frame = CGRectMake(20, 0, 300, 30);
+    _title.frame = CGRectMake(30, 0, 100, 40);
     _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-    _title.font =[UIFont systemFontOfSize:22];
+    _title.font =[UIFont systemFontOfSize:18];
     _title.textAlignment = NSTextAlignmentCenter;
     _title.backgroundColor = [UIColor clearColor];
     _title.userInteractionEnabled = FALSE;
@@ -228,7 +228,7 @@
     
     _logoImage = [[UIImageView  alloc] init];
     _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-    _logoImage.frame = CGRectMake(330, 5, 50, 30);
+    _logoImage.frame = CGRectMake(340, 5, 50, 30);
     _logoImage.clipsToBounds = YES;
     _logoImage.backgroundColor = [UIColor clearColor];
     _logoImage.userInteractionEnabled = TRUE;

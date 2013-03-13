@@ -248,6 +248,7 @@ enum template_color_enum {
     [_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), _scrollView.frame.size.height)];
     
     //2. Set current
+    _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     [_currentCardView reset:_currentCard curPack:_currentPack];
     [_currentCardView setQuestionAnswerViewDelegate];
     
@@ -262,31 +263,36 @@ enum template_color_enum {
     [_currentCardView checkCardEditable];
     
     //3. Set previous
+    _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
-        _previousCardView.currentPack = _currentPack;
-        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+        
+        [_previousCardView reset:[_currentPack cards][_indexCard-1] curPack:_currentPack];
         
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
         [_scrollView addSubview:_previousCardView];
         
         [_previousCardView refreshQuestionAnserView];
+        [_previousCardView checkCardEditable];
     }
     
-    //4. Set next
+    //5. Set next
+    _nextCardView.tag = NEXT_FLASHCARDVIEW_TAG;
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
-        _nextCardView.currentPack = _currentPack;
-        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        [_nextCardView reset:[_currentPack cards][_indexCard+1] curPack:_currentPack];
         
-        rect.origin.x = curXLoc + IPHONE_UI_WIDTH;
+        rect.origin.x = curXLoc +IPHONE_UI_WIDTH;
         _nextCardView.frame = rect;
-        [_scrollView addSubview:_nextCardView];  
+        [_scrollView addSubview:_nextCardView];
+        
         [_nextCardView refreshQuestionAnserView];
+        [_nextCardView checkCardEditable];
     }
+
 }
 
 #pragma mark -
@@ -344,6 +350,7 @@ enum template_color_enum {
     
     
     popupList.imagePaddingHorizontal = 5;
+    popupList.font = [UIFont systemFontOfSize:14];
     popupList.imagePaddingVertical = 2;
     popupList.textPaddingHorizontal = 5;
     popupList.alignment = UIControlContentHorizontalAlignmentLeft;

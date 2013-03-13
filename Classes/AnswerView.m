@@ -79,7 +79,7 @@
         case 0: //Template 0
         {
             _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(0, 0, 140, 30);
+            _subheading.frame = CGRectMake(0, 0, 210, 30);
             _subheading.font = [UIFont boldSystemFontOfSize:14];
             _subheading.textColor = [UIColor blackColor];
             _subheading.textAlignment = NSTextAlignmentCenter;
@@ -88,7 +88,7 @@
             _subheadingSize = 14;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 40, 140, 110);
+            _main.frame = CGRectMake(0, 40, 210, 150);
             _main.font = [UIFont boldSystemFontOfSize:12];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -99,7 +99,7 @@
             _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(170, 0, 150, 150);
+            _image.frame = CGRectMake(210, 0, 140, 140);
             
             _logoImage.hidden = TRUE;
             _logoLinkageButton.hidden = TRUE;
@@ -108,10 +108,18 @@
         }
         case 1: //Template 1
         {
-            _subheading.hidden = TRUE;
+            
+            _subheading.hidden = FALSE;
+            _subheading.frame = CGRectMake(0, 0, 210, 30);
+            _subheading.font = [UIFont boldSystemFontOfSize:12];
+            _subheading.textColor = [UIColor blackColor];
+            _subheading.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlign = @"Left";
+            _subheadingColor = @"Black";
+            _subheadingSize = 12;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 140, 30);
+            _main.frame = CGRectMake(0, 30, 210, 190);
             _main.font = [UIFont boldSystemFontOfSize:12];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
@@ -119,17 +127,10 @@
             _mainColor = @"Black";
             _mainSize = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 40, 140, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Left";
-            _subColor = @"Black";
-            _subSize = 12;
+            _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(170, 0, 150, 150);
+            _image.frame = CGRectMake(210, 0, 140, 140);
             
             _logoImage.hidden = TRUE;
             _logoLinkageButton.hidden = TRUE;
@@ -141,7 +142,7 @@
             _subheading.hidden = TRUE;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 140, 30);
+            _main.frame = CGRectMake(0, 0, 210, 190);
             _main.font = [UIFont boldSystemFontOfSize:12];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentLeft;
@@ -149,17 +150,10 @@
             _mainColor = @"Black";
             _mainSize = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 40, 140, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor redColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Red";
-            _subSize = 12;
+            _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(170, 0, 150, 150);
+            _image.frame = CGRectMake(210, 0, 140, 140);
             
             _logoImage.hidden = TRUE;
             _logoLinkageButton.hidden = TRUE;
@@ -171,7 +165,7 @@
             _subheading.hidden = TRUE;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 140, 30);
+            _main.frame = CGRectMake(0, 0, 360, 190);
             _main.font = [UIFont boldSystemFontOfSize:12];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -179,14 +173,7 @@
             _mainColor = @"Black";
             _mainSize = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 40, 360, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Black";
-            _subSize = 12;
+            _sub.hidden = YES;
             
             _image.hidden = TRUE;
             
@@ -200,7 +187,7 @@
             _subheading.hidden = TRUE;
             
             _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 140, 30);
+            _main.frame = CGRectMake(0, 0, 210, 190);
             _main.font = [UIFont boldSystemFontOfSize:12];
             _main.textColor = [UIColor blackColor];
             _main.textAlignment = NSTextAlignmentCenter;
@@ -208,17 +195,10 @@
             _mainColor = @"Black";
             _mainSize = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 40, 140, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor redColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Left";
-            _subColor = @"Red";
-            _subSize = 12;
+            _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
-            _image.frame = CGRectMake(170, 0, 150, 150);
+            _image.frame = CGRectMake(210, 0, 140, 140);
             
             _logoImage.hidden = TRUE;
             _logoLinkageButton.hidden = TRUE;
@@ -317,7 +297,7 @@
             _mainColor = @"Black";
             _mainSize = 34;
             
-            _sub.hidden = YES;
+            _sub.hidden = TRUE;
             
             _image.hidden = FALSE;
             _image.frame = CGRectMake(380, 10, 350, 350);
@@ -331,8 +311,6 @@
         {
             _subheading.hidden = TRUE;
             
-            _main.hidden = TRUE;
-            
             _main.hidden = FALSE;
             _main.frame = CGRectMake(20, 10, 700, 400);
             _main.font = [UIFont boldSystemFontOfSize:34];
@@ -341,6 +319,8 @@
             _mainAlign = @"Left";
             _mainColor = @"Black";
             _mainSize = 34;
+            
+            _sub.hidden = TRUE;
             
             _image.hidden = TRUE;
             

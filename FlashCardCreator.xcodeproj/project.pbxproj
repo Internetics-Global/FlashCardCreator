@@ -151,6 +151,7 @@
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
+		2DB4494E16F02D5A00A33F85 /* dotted_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB4494D16F02D5A00A33F85 /* dotted_line.png */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
 		2DC1777D16E4641300939E61 /* help_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1777916E4641200939E61 /* help_button.png */; };
@@ -177,7 +178,6 @@
 		2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */; };
 		2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */; };
 		2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */; };
-		2DD058D616E837DE00F779BD /* dotted_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058D516E837DD00F779BD /* dotted_line.png */; };
 		2DD058F916E83FBD00F779BD /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058F816E83FBD00F779BD /* redButton.png */; };
 		2DD0590116E8453E00F779BD /* segment_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058FE16E8453E00F779BD /* segment_selected.png */; };
 		2DD0590216E8453E00F779BD /* segment_seperator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD058FF16E8453E00F779BD /* segment_seperator.png */; };
@@ -671,6 +671,7 @@
 		2DA97F0E16CC74B6004E7FAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DA97F1016CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DA97F1116CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2DB4494D16F02D5A00A33F85 /* dotted_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotted_line.png; path = Resources/dotted_line.png; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2DC1777916E4641200939E61 /* help_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = help_button.png; path = Resources/help_button.png; sourceTree = "<group>"; };
@@ -705,7 +706,6 @@
 		2DCE0B2D16798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B3316798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
-		2DD058D516E837DD00F779BD /* dotted_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotted_line.png; path = Resources/dotted_line.png; sourceTree = "<group>"; };
 		2DD058F816E83FBD00F779BD /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redButton.png; path = Resources/redButton.png; sourceTree = "<group>"; };
 		2DD058FE16E8453E00F779BD /* segment_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = segment_selected.png; path = Resources/segment_selected.png; sourceTree = "<group>"; };
 		2DD058FF16E8453E00F779BD /* segment_seperator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = segment_seperator.png; path = Resources/segment_seperator.png; sourceTree = "<group>"; };
@@ -1159,7 +1159,7 @@
 			isa = PBXGroup;
 			children = (
 				2DD058F816E83FBD00F779BD /* redButton.png */,
-				2DD058D516E837DD00F779BD /* dotted_line.png */,
+				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
 				2DC1777916E4641200939E61 /* help_button.png */,
 				2DC1777A16E4641200939E61 /* help_button@2x.png */,
 				2DC1777B16E4641300939E61 /* help_button@2x~iPad.png */,
@@ -1751,7 +1751,6 @@
 				2DC177B116E46AA800939E61 /* help4.jpg in Resources */,
 				2DC177B216E46AA800939E61 /* help5.jpg in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
-				2DD058D616E837DE00F779BD /* dotted_line.png in Resources */,
 				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
 				2DD0590116E8453E00F779BD /* segment_selected.png in Resources */,
 				2DD0590216E8453E00F779BD /* segment_seperator.png in Resources */,
@@ -1783,6 +1782,7 @@
 				2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */,
 				2D1A055316EE894800527311 /* change_template_background_button@2x~ipad.png in Resources */,
 				2D1A055416EE894800527311 /* change_template_background_button~ipad.png in Resources */,
+				2DB4494E16F02D5A00A33F85 /* dotted_line.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

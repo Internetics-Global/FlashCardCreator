@@ -891,13 +891,13 @@
             
             //Deal with font size difference between iPhone and iPad
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
-                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else {
                 [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
@@ -942,13 +942,13 @@
             
             //Deal with font size difference between iPhone and iPad
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
-                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] + FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] - FONT_SIZE_DIFF_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else {
                 [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue];

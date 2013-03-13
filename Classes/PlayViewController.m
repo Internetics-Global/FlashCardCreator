@@ -163,7 +163,7 @@
 {
     [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+20; //Since it's horizontal movement, so this is a constant value
     for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
