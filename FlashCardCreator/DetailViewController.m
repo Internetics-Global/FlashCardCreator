@@ -439,20 +439,28 @@ enum template_color_enum {
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        
+        _scrollView.userInteractionEnabled = FALSE; // avoid blank pages.
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
-        NSLog (@"current page is :%d", page);
+        //NSLog (@"current page is :%d", page);
         _indexCard = page;
         _currentCard = [_currentPack cards][page];
         [self showCurrentCardInScrollView];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
-        
     }
+    _scrollView.userInteractionEnabled = YES;
     
 }
 
