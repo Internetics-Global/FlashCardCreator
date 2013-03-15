@@ -10,10 +10,11 @@
 
 @class Pack;
 @class FlashCardView;
+@class FlashCard;
 @class Card;
 
 @interface CreateCardViewController : UIViewController {
-    FlashCardView *_newCardView;
+    FlashCard *_newCardView;
     Card *_newCard;
     Pack *_currentPack;
 }

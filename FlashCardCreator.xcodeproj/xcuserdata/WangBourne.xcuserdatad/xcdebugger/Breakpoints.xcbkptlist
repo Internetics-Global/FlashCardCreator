@@ -51,9 +51,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "570"
-         endingLineNumber = "570"
-         landmarkName = "-didReceiveMemoryWarning"
-         landmarkType = "5">
+         endingLineNumber = "570">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -64,9 +62,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "565"
-         endingLineNumber = "565"
-         landmarkName = "-viewDidUnload"
-         landmarkType = "5">
+         endingLineNumber = "565">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

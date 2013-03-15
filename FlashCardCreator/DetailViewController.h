@@ -16,6 +16,7 @@
 @class AnswerView;
 @class Card;
 @class Pack;
+@class FlashCard;
 
 @interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate> {
     UISegmentedControl *_segmentedControl;
@@ -31,9 +32,9 @@
     UIPopoverController *_helpPopoverController;
     UIPopoverController *_masterPopoverController;
     
-    FlashCardView *_previousCardView;
-    FlashCardView *_currentCardView;
-    FlashCardView *_nextCardView;
+    FlashCard *_previousCardView;
+    FlashCard *_currentCardView;
+    FlashCard *_nextCardView;
     
     UIBarButtonItem *_templateBackgroundSelectButton;
     UIBarButtonItem *_settingButton;

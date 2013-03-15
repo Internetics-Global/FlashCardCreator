@@ -35,15 +35,22 @@
     
     _subheadingAlign = @"Center";
     _subheadingColor = @"Black";
-    _subheadingSize = 40;
     
     _mainAlign = @"Center";
     _mainColor = @"Black";
-    _mainSize = 40;
     
     _subAlign = @"Center";
     _subColor = @"Black";
-    _subSize = 40;
+    
+    if (isUserInterfaceIdiomPhone) {
+        _subheadingSize = 14;
+        _mainSize = 12;
+        _subSize = 12;
+    } else {
+        _subheadingSize = 34;
+        _mainSize = 30;
+        _subSize = 30;
+    }
     
     
 	return self;

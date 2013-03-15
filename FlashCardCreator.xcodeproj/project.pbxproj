@@ -35,6 +35,7 @@
 		2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054E16EE894700527311 /* change_template_background_button@2x.png */; };
 		2D1A055316EE894800527311 /* change_template_background_button@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054F16EE894700527311 /* change_template_background_button@2x~ipad.png */; };
 		2D1A055416EE894800527311 /* change_template_background_button~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A055016EE894700527311 /* change_template_background_button~ipad.png */; };
+		2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E33A616F2C6F600489286 /* FlashCard.m */; };
 		2D3727C216DDA8E60068DE31 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */; };
 		2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D37280D16DDCBA00068DE31 /* CoreMotion.framework */; };
 		2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -71,10 +72,6 @@
 		2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181716D1A62700E1E785 /* UIImage+Scale.m */; };
 		2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */; };
 		2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */; };
-		2D5C182D16D1A64700E1E785 /* AnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C182616D1A64700E1E785 /* AnswerView.m */; };
-		2D5C182E16D1A64700E1E785 /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C182816D1A64700E1E785 /* BaseView.m */; };
-		2D5C182F16D1A64700E1E785 /* FlashCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C182A16D1A64700E1E785 /* FlashCardView.m */; };
-		2D5C183016D1A64700E1E785 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C182C16D1A64700E1E785 /* QuestionView.m */; };
 		2D5C183416D1A65100E1E785 /* PackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183216D1A65100E1E785 /* PackListViewController.m */; };
 		2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C183316D1A65100E1E785 /* PackListViewController.xib */; };
 		2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */; };
@@ -492,6 +489,8 @@
 		2D1A054E16EE894700527311 /* change_template_background_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button@2x.png"; path = "Resources/change_template_background_button@2x.png"; sourceTree = "<group>"; };
 		2D1A054F16EE894700527311 /* change_template_background_button@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button@2x~ipad.png"; path = "Resources/change_template_background_button@2x~ipad.png"; sourceTree = "<group>"; };
 		2D1A055016EE894700527311 /* change_template_background_button~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button~ipad.png"; path = "Resources/change_template_background_button~ipad.png"; sourceTree = "<group>"; };
+		2D2E33A516F2C6F600489286 /* FlashCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashCard.h; path = Classes/FlashCard.h; sourceTree = "<group>"; };
+		2D2E33A616F2C6F600489286 /* FlashCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashCard.m; path = Classes/FlashCard.m; sourceTree = "<group>"; };
 		2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
 		2D37280D16DDCBA00068DE31 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Libraries/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
@@ -561,14 +560,6 @@
 		2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImagePickerController+NoRotate.m"; path = "Classes/UIImagePickerController+NoRotate.m"; sourceTree = "<group>"; };
 		2D5C181A16D1A62700E1E785 /* UINavigationController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+DismissKeyboard.h"; path = "Classes/UINavigationController+DismissKeyboard.h"; sourceTree = "<group>"; };
 		2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+DismissKeyboard.m"; path = "Classes/UINavigationController+DismissKeyboard.m"; sourceTree = "<group>"; };
-		2D5C182516D1A64700E1E785 /* AnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerView.h; path = Classes/AnswerView.h; sourceTree = "<group>"; };
-		2D5C182616D1A64700E1E785 /* AnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnswerView.m; path = Classes/AnswerView.m; sourceTree = "<group>"; };
-		2D5C182716D1A64700E1E785 /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseView.h; path = Classes/BaseView.h; sourceTree = "<group>"; };
-		2D5C182816D1A64700E1E785 /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseView.m; path = Classes/BaseView.m; sourceTree = "<group>"; };
-		2D5C182916D1A64700E1E785 /* FlashCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashCardView.h; path = Classes/FlashCardView.h; sourceTree = "<group>"; };
-		2D5C182A16D1A64700E1E785 /* FlashCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashCardView.m; path = Classes/FlashCardView.m; sourceTree = "<group>"; };
-		2D5C182B16D1A64700E1E785 /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionView.h; path = Classes/QuestionView.h; sourceTree = "<group>"; };
-		2D5C182C16D1A64700E1E785 /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionView.m; path = Classes/QuestionView.m; sourceTree = "<group>"; };
 		2D5C183116D1A65100E1E785 /* PackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackListViewController.h; path = Classes/PackListViewController.h; sourceTree = "<group>"; };
 		2D5C183216D1A65100E1E785 /* PackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackListViewController.m; path = Classes/PackListViewController.m; sourceTree = "<group>"; };
 		2D5C183316D1A65100E1E785 /* PackListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PackListViewController.xib; path = Classes/PackListViewController.xib; sourceTree = "<group>"; };
@@ -1204,14 +1195,8 @@
 		2DBD6DD7169BCE2900962A80 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C182516D1A64700E1E785 /* AnswerView.h */,
-				2D5C182616D1A64700E1E785 /* AnswerView.m */,
-				2D5C182716D1A64700E1E785 /* BaseView.h */,
-				2D5C182816D1A64700E1E785 /* BaseView.m */,
-				2D5C182916D1A64700E1E785 /* FlashCardView.h */,
-				2D5C182A16D1A64700E1E785 /* FlashCardView.m */,
-				2D5C182B16D1A64700E1E785 /* QuestionView.h */,
-				2D5C182C16D1A64700E1E785 /* QuestionView.m */,
+				2D2E33A516F2C6F600489286 /* FlashCard.h */,
+				2D2E33A616F2C6F600489286 /* FlashCard.m */,
 			);
 			name = Card;
 			sourceTree = "<group>";
@@ -1838,10 +1823,6 @@
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
-				2D5C182D16D1A64700E1E785 /* AnswerView.m in Sources */,
-				2D5C182E16D1A64700E1E785 /* BaseView.m in Sources */,
-				2D5C182F16D1A64700E1E785 /* FlashCardView.m in Sources */,
-				2D5C183016D1A64700E1E785 /* QuestionView.m in Sources */,
 				2D5C183416D1A65100E1E785 /* PackListViewController.m in Sources */,
 				2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */,
 				2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */,
@@ -1857,6 +1838,7 @@
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
+				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

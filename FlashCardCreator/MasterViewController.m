@@ -34,7 +34,6 @@
 #import "PlayViewController.h"
 #import "HelpViewController.h"
 #import "NSArray+Randomised.h"
-#import "FlashCardView.h"
 
 
 @implementation MasterViewController
@@ -220,7 +219,7 @@
 {
     
     PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
-    packListViewController.currentPackIndex = _indexPack;
+    packListViewController.indexCurrentPack = _indexPack;
     
     if (isUserInterfaceIdiomPhone) {
         packListViewController.view.frame = CGRectMake(10, 10, 320, 131);
@@ -425,6 +424,7 @@
     cardExample.answer.subheading = @"";
     cardExample.answer.main = @"";
     cardExample.answer.sub = @"";
+    cardExample.templateID = 0;
     [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;

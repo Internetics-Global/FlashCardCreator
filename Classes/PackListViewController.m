@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PackListViewController.H"
+#import "PackListViewController.h"
 
 #import "Pack.h"
 #import "User.h"
@@ -17,7 +17,7 @@
 @synthesize swipeView = _swipeView;
 @synthesize pageControl = _pageControl;
 @synthesize packArray = _packArray;
-@synthesize currentPackIndex = _currentPackIndex;
+@synthesize indexCurrentPack = _indexCurrentPack;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -42,10 +42,15 @@
         self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _hideDeleteButton = TRUE;
-        _currentPackIndex = 0;
+        _indexCurrentPack = 0;
         
     }
     return self;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.swipeView reloadData];    
 }
 
 - (void)viewDidLoad
@@ -77,6 +82,8 @@
     
     if ([[User defaultUser] packs].count <= 1) {
         self.navigationItem.rightBarButtonItem = nil;
+    } else {
+        self.navigationItem.rightBarButtonItem = _editBtnItem;
     }
 }
 
@@ -134,7 +141,7 @@
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
     deleteButton.frame = CGRectMake(50.0f, 185.0f, 100.0, 30);
-    if ((!_hideDeleteButton) && (_currentPackIndex != index)) {
+    if ((!_hideDeleteButton) && (_indexCurrentPack != index) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
     }
     
@@ -200,6 +207,8 @@
         _hideDeleteButton = YES;
         if ([[User defaultUser] packs].count <= 1) {
             self.navigationItem.rightBarButtonItem = nil;
+        } else {
+            self.navigationItem.rightBarButtonItem = _editBtnItem;
         }
         [_swipeView reloadData];
         
@@ -212,6 +221,7 @@
 }
 
 - (void) deleteCurrentPack:(id) sender {
+    
     NSInteger index = ((UIButton *)sender).tag;
     Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:index];
     [[User defaultUser] removePack:currentPack];

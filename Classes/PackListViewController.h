@@ -15,7 +15,7 @@
     UIPageControl *_pageControl;
     NSMutableArray *_packArray;
     
-    NSUInteger _currentPackIndex;
+    NSInteger _indexCurrentPack;
     BOOL _hideDeleteButton;
     
     UIBarButtonItem *_editBtnItem;
@@ -24,7 +24,7 @@
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) NSMutableArray *packArray;
-@property (nonatomic, assign) NSUInteger currentPackIndex;
+@property (nonatomic, assign) NSInteger indexCurrentPack;
 
 - (IBAction)pageControlTapped;
 

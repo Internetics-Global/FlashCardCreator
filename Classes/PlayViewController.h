@@ -10,7 +10,7 @@
 
 @class Pack;
 @class Card;
-@class FlashCardView;
+@class FlashCard;
 @class CMMotionManager;
 
 @interface PlayViewController : UIViewController <UIScrollViewDelegate>{
@@ -18,7 +18,7 @@
     UIButton *_closeButton;
     Pack *_currentPack;
     Card *_currentCard;
-    FlashCardView *_currentFlashCardView;
+    FlashCard *_currentFlashCardView;
     NSMutableArray *_flashCardViewArray;
     CMMotionManager *_motionManager;
 }

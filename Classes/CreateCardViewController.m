@@ -6,13 +6,16 @@
 //  Copyright (c) 2013 Internetics. All rights reserved.
 //
 
+/* 一些重要的说明 （区别于已存在card的情况）
+ * 1. 我们只有在用户点击了"save" button后，才进行保存操作，所以要避免所有的其它的save操作
+ * 2. 由于我们的question和answer字段共享，而在切换segment后会丢失数据，所以需要在切换时，进行数据的暂存（保存到_currentCard中，由FlashView对象负责）
+*/
+
 #import "CreateCardViewController.h"
-#import "FlashCardView.h"
+#import "FlashCard.h"
 #import "Card.h"
 #import "User.h"
 #import "Pack.h"
-#import "QuestionView.h"
-#import "AnswerView.h"
 #import "SQLiteHelper.h"
 #import "Question.h"
 #import "Answer.h"
@@ -55,8 +58,6 @@ BOOL isFromNewCreatedCard = NO;
         [label sizeToFit];
         [self.navigationItem setTitleView:label];
 
-        
-        _newCard = [[Card alloc] init];
     }
     return self;
 }
@@ -65,20 +66,9 @@ BOOL isFromNewCreatedCard = NO;
     [super loadView];
 
     if (_newCardView == nil) {
-                
-        //Step1: Init card
-        float flashCardYPositionInScrollView;
-        if (isUserInterfaceIdiomPhone) {
-            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2;
-            _newCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-            
-        } else {
-            flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2;
-            _newCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-        }
         
-        
-        //Step2: Apply default value from first card
+        //Step1: Apply default value from first card
+        _newCard = [[Card alloc] init];
         if ([[_currentPack cards] count] >0) {
             Card *firstCard = ((Card *)[_currentPack cards][0]); //inherit first card
             _newCard.question.logoFullPath = firstCard.question.logoFullPath;
@@ -92,20 +82,29 @@ BOOL isFromNewCreatedCard = NO;
         _newCard.packID = _currentPack.packID;
         _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
         _newCard.creator = [OpenUDID value];
-        [_newCardView reset:_newCard curPack:_currentPack];
+                
+        //Step2: Init card
+        float flashCardYPositionInScrollView;
+        if (isUserInterfaceIdiomPhone) {
+            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2;
+            _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone) defaultPack:_currentPack defaultCard:_newCard];
+            _newCardView.isQuestionShowing = YES;
+            
+        } else {
+            flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2;
+            _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad) defaultPack:_currentPack defaultCard:_newCard];
+            _newCardView.isQuestionShowing = YES;
+        }
         
         //Step3: Response (这个非常重要)
-        _newCardView.tag = NEW_FLASHCARDVIEW_TAG; //to diff _current/previous/next FlashCardView
-        [_newCardView setQuestionAnswerViewDelegate];//to repsonse to BaseView delegate
+        _newCardView.tag = NEW_FLASHCARDVIEW_TAG;  
         
-        //Step4: Refresh content
-        [_newCardView refreshQuestionAnserView];
+        //Step4: Show
+        [self.view addSubview:_newCardView];
+        [_newCardView refreshAll];
         [_newCardView enableCardEdit];
         
-        //Step5: Show 
-        [self.view addSubview:_newCardView];
-        
-        //Step6: set flag
+        //Step5: set flag
         isFromNewCreatedCard = YES;
     }
     
@@ -127,7 +126,12 @@ BOOL isFromNewCreatedCard = NO;
         return;
     }
     
-    //Step3: save
+    //Step3: Save. since we share same variable for both answer and question, we have this idea to keep both question and answer data when creating card. You can find another keep logic at segmentAction
+    if (_newCardView.segmentedControl.selectedSegmentIndex == 0) {
+        [_newCardView doQuestionData];
+    } else {
+        [_newCardView doAnswerData];
+    }
     [_newCardView saveEdittedCard];
     
     //Step4: Send notification to remove the background in master view

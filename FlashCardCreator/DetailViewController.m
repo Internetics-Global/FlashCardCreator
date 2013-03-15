@@ -8,9 +8,7 @@
 
 #import "DetailViewController.h"
 #import "MoreInfoTableViewController.h"
-#import "QuestionView.h"
-#import "AnswerView.h"
-#import "FlashCardView.h"
+#import "FlashCard.h"
 #import "Card.h"
 #import "User.h"
 #import "Pack.h"
@@ -51,21 +49,6 @@ enum template_color_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
-        
-        float flashCardYPositionInScrollView;
-        if (isUserInterfaceIdiomPhone) {
-            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
-            _previousCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-            _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-            _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-            
-        } else {
-            flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
-            _previousCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-            _currentCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-            _nextCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-        }
-
     }
     return self;
 }
@@ -74,6 +57,26 @@ enum template_color_enum {
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];
+    
+    float flashCardYPositionInScrollView;
+    if (isUserInterfaceIdiomPhone) {
+        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+        _previousCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
+        _currentCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)
+                                                defaultPack:_currentPack defaultCard:_currentCard];
+        _nextCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)
+                                             defaultPack:_currentPack defaultCard:_currentCard];
+        
+    } else {
+        flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
+        _previousCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)
+                                                 defaultPack:_currentPack defaultCard:_currentCard];
+        _currentCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)
+                                                defaultPack:_currentPack defaultCard:_currentCard];
+        _nextCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)
+                                             defaultPack:_currentPack defaultCard:_currentCard];
+    }
+
 }
 
 
@@ -172,8 +175,7 @@ enum template_color_enum {
 {
     CGRect rect;
     
-    for (FlashCardView *cardView in [_scrollView subviews]) {
-        [cardView removeQuestionAnswerViewDelegate];
+    for (FlashCard *cardView in [_scrollView subviews]) {
         [cardView removeFromSuperview];
     }
     
@@ -186,8 +188,8 @@ enum template_color_enum {
     
     //2. Set current
     _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
-    [_currentCardView reset:_currentCard curPack:_currentPack];
-    [_currentCardView setQuestionAnswerViewDelegate];
+    _currentCardView.currentCard = _currentCard;
+    _currentCardView.currentPack = _currentPack;
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
@@ -196,23 +198,19 @@ enum template_color_enum {
     _currentCardView.frame = rect;
     [_scrollView addSubview:_currentCardView];
 
-    [_currentCardView refreshQuestionAnserView];
-    [_currentCardView checkCardEditable];
+    [_currentCardView refreshAll];
     
     //3. Set previous
     _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
     if (_indexCard == 0) {
         //_previousCardView = nil;
     } else {
-
-        [_previousCardView reset:[_currentPack cards][_indexCard-1] curPack:_currentPack];
-        
+        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+        _previousCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
         [_scrollView addSubview:_previousCardView]; 
-        
-        [_previousCardView refreshQuestionAnserView];
-        [_previousCardView checkCardEditable];
+        [_previousCardView refreshAll];
     }
     
     //5. Set next
@@ -220,14 +218,13 @@ enum template_color_enum {
     if (([[_currentPack cards] count]-1) == _indexCard) {
         //_nextCardView = nil;
     } else {
-        [_nextCardView reset:[_currentPack cards][_indexCard+1] curPack:_currentPack];
-        
+        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        _nextCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;
         [_scrollView addSubview:_nextCardView]; 
         
-        [_nextCardView refreshQuestionAnserView];
-        [_nextCardView checkCardEditable];
+        [_nextCardView refreshAll];
     }
 
 }
@@ -236,12 +233,12 @@ enum template_color_enum {
 {
     CGRect rect;
     
-    for (FlashCardView *cardView in [_scrollView subviews]) {
-        [cardView removeQuestionAnswerViewDelegate];    
-    }
-    
     if ([_currentPack cards].count == 0) {
         return;
+    }
+    
+    for (FlashCard *card in [_scrollView subviews]) {
+        [card removeFromSuperview];
     }
     
     //1. Content size
@@ -249,48 +246,46 @@ enum template_color_enum {
     
     //2. Set current
     _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
-    [_currentCardView reset:_currentCard curPack:_currentPack];
-    [_currentCardView setQuestionAnswerViewDelegate];
+    _currentCardView.currentCard = _currentCard;
+    _currentCardView.currentPack = _currentPack;
     
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
     curXLoc += IPHONE_UI_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
-    [_scrollView addSubview:_currentCardView]; 
-    
-    [_currentCardView refreshQuestionAnserView];
-    [_currentCardView checkCardEditable];
+    if (_currentCardView.superview == nil) {
+        [_scrollView addSubview:_currentCardView];    
+    }
+    [_currentCardView refreshAll];
+
     
     //3. Set previous
     _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
     if (_indexCard == 0) {
-        //_previousCardView = nil;
     } else {
-        
-        [_previousCardView reset:[_currentPack cards][_indexCard-1] curPack:_currentPack];
-        
+        _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
+        _previousCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
-        [_scrollView addSubview:_previousCardView];
-        
-        [_previousCardView refreshQuestionAnserView];
-        [_previousCardView checkCardEditable];
+        if (_previousCardView.superview == nil) {
+            [_scrollView addSubview:_previousCardView];    
+        }
+        [_previousCardView refreshAll];
     }
     
     //5. Set next
     _nextCardView.tag = NEXT_FLASHCARDVIEW_TAG;
     if (([[_currentPack cards] count]-1) == _indexCard) {
-        //_nextCardView = nil;
     } else {
-        [_nextCardView reset:[_currentPack cards][_indexCard+1] curPack:_currentPack];
-        
+        _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
+        _nextCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc +IPHONE_UI_WIDTH;
         _nextCardView.frame = rect;
-        [_scrollView addSubview:_nextCardView];
-        
-        [_nextCardView refreshQuestionAnserView];
-        [_nextCardView checkCardEditable];
+        if (_nextCardView.superview == nil) {
+            [_scrollView addSubview:_nextCardView];
+        }
+        [_nextCardView refreshAll];
     }
 
 }
@@ -453,7 +448,6 @@ enum template_color_enum {
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
-        //NSLog (@"current page is :%d", page);
         _indexCard = page;
         _currentCard = [_currentPack cards][page];
         [self showCurrentCardInScrollView];
@@ -519,38 +513,8 @@ enum template_color_enum {
     }
     
     //Step4: Change all cards card template background, screenshot them, and save them
-    float flashCardYPositionInScrollView;
-    FlashCardView *tempCardView;
-    if (isUserInterfaceIdiomPhone) {
-        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
-        tempCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)];
-        
-    } else {
-        flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
-        tempCardView = [[FlashCardView alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)];
-        
-    }
-    
-    for (Card *card in [_currentPack cards]) {
-        
-        card.templateBackgroundName =templateBackgroundName;
-        [tempCardView reset:card curPack:_currentPack];
-        [tempCardView refreshQuestionAnserView];
-        
-        UIImage *origialmage = [tempCardView.questionView captureWholeViewAsImage];
-        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-        if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [imageData writeToFile:savedFullPath atomically:YES];
-            card.coverImageURL = savedFullPath;
-        } else {
-            [imageData writeToFile:card.coverImageURL atomically:YES];
-        }
-
-        [card save];
-    }
-    [_currentCardView.answerView refreshDisplay];
-    [_currentCardView.questionView refreshDisplay];
+    [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum stringVal:templateBackgroundName];
+    [_currentCardView refreshAll];
     
     //Step5: tell the master view to update cell
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];

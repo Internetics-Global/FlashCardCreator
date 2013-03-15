@@ -18,8 +18,8 @@
     
     Pack *_currentPack;
     Card *_currentCard;
-    int _indexCard;  //selected card index
-    int _indexPack;  //selected pack index;
+    NSUInteger _indexCard;  //selected card index
+    NSUInteger _indexPack;  //selected pack index;
     
     UIPopoverController *_packListPickerPopover;
     ZipFileDownloadHelper *_zipFileDownloadHelp;
@@ -41,8 +41,8 @@
 @property (nonatomic, strong) DetailViewController *detailViewController;
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, strong) Card *currentCard;
-@property (nonatomic, assign) int indexCard;
-@property (nonatomic, assign) int indexPack;
+@property (nonatomic, assign) NSUInteger indexCard;
+@property (nonatomic, assign) NSUInteger indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 
 - (void)shareButtonClicked;
