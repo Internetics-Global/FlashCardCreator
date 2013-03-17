@@ -219,7 +219,7 @@
 {
     
     PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
-    packListViewController.indexCurrentPack = _indexPack;
+    packListViewController.currentPackName = _currentPack.packName;
     
     if (isUserInterfaceIdiomPhone) {
         packListViewController.view.frame = CGRectMake(10, 10, 320, 131);
@@ -235,9 +235,7 @@
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         
-        if (_packListPickerPopover == nil) {
-            _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
-        }
+        _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }
