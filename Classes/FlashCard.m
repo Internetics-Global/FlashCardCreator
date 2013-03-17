@@ -261,11 +261,12 @@ extern BOOL isFromNewCreatedCard;
         _imageAnswer.layer.cornerRadius = 15;
         _imageAnswer.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageAnswer];
-        _imageAnswer.hidden = YES;
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
-        [_imageQuestion addGestureRecognizer:imageSingeTap];
+        [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
+    
+    _imageAnswer.hidden = YES;
     
     if (_subheadingAnswer == nil) {
         _subheadingAnswer = [[UITextView alloc]init];
@@ -941,7 +942,7 @@ extern BOOL isFromNewCreatedCard;
     
     
     //PartB: Answer
-    css= _currentCard.question.css;
+    css= _currentCard.answer.css;
     //1. subheading
     //during creating a new card, we used default value
     _subheadingAnswer.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
@@ -1629,6 +1630,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    if ([self getFirstResponderUITextViewUnderVerticalScrollView] == nil) {
+        return;
+    }
+    
     //Step1: Get keyboard height
     NSDictionary* info = [aNotification userInfo];
     NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
@@ -1678,6 +1683,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
+    
     _keyboardShown = NO;
     
     CGPoint offset = _verticalScrollView.contentOffset;
