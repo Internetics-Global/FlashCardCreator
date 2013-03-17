@@ -1095,7 +1095,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
+            _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
             
             break;
         }
@@ -1123,7 +1123,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
+            _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
             
             break;
         }
@@ -1143,7 +1143,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
+            _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
             
             break;
         }
@@ -1182,7 +1182,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
+            _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
 
             
             break;
@@ -1889,6 +1889,7 @@ extern BOOL isFromNewCreatedCard;
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
+            _currentCard.answer.imageFullPath = _imageFullPath;
         } else {
             [self saveEdittedCard];
         }
@@ -2274,21 +2275,11 @@ extern BOOL isFromNewCreatedCard;
     
     [self updateQuestionAndAnswerTemplate];
     
-    if (_segmentedControl.selectedSegmentIndex == 0) {
-        _imageAnswer.hidden = YES;
-        _subheadingAnswer.hidden = YES;
-        _mainAnswer.hidden = YES;
-        _subAnswer.hidden = YES;
-    } else {
-        _imageQuestion.hidden = YES;
-        _subheadingQuestion.hidden = YES;
-        _mainQuestion.hidden = YES;
-        _subQuestion.hidden = YES;
-    }
-    
     // we put all the save operations only when click the "save button"
     if (!isFromNewCreatedCard) {
         [self saveEdittedCard];
+    } else {
+        [self doQuestionAndAnswerData];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
