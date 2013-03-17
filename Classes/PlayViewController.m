@@ -147,7 +147,7 @@
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
         [cardView refreshAll];
-        [cardView disableCardEdit];
+        [cardView disableCardEdit:YES];
         [cardView.segmentedControl setHidden:YES];
 		[_scrollView addSubview:cardView];
         curXLoc += IPAD_UI_WIDTH;
@@ -172,7 +172,7 @@
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
         [cardView refreshAll];
-        [cardView disableCardEdit];
+        [cardView disableCardEdit:YES];
         [cardView.segmentedControl setHidden:YES];
         //cardView.backgroundColor = [UIColor greenColor];
 		[_scrollView addSubview:cardView];
@@ -210,15 +210,12 @@
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
             [_currentFlashCardView refreshAll];
-            [_currentFlashCardView disableCardEdit];
+            [_currentFlashCardView disableCardEdit:YES];
         } else {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
             [_currentFlashCardView refreshAll];
-            [_currentFlashCardView disableCardEdit];
-        }
-        
-        [_currentFlashCardView setNeedsDisplay];
-        
+            [_currentFlashCardView disableCardEdit:NO];
+        }        
         
     } else {
         NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);

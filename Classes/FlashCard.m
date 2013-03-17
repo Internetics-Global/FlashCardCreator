@@ -583,14 +583,28 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Editable related
 - (void)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        [self enableCardEdit];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [self enableCardEdit];
+        } else {
+            [self disableCardEdit:YES];
+        }
         
     } else {
-        [self disableCardEdit];
+        [self disableCardEdit:NO];
     }
 }
 
-- (void) disableCardEdit {
+- (void) disableCardEdit:(BOOL) isQuestionShowing {
+    
+    _logoLinkageButton.hidden = TRUE;
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
+    
+    if (isQuestionShowing) {
+        _logoImage.hidden = NO;
+    } else {
+        _logoImage.hidden = TRUE;
+    }
     
     _imageQuestion.userInteractionEnabled        = FALSE;
     _mainQuestion.userInteractionEnabled         = FALSE;
@@ -612,6 +626,12 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) enableCardEdit {
+    
+    //We don't need to show logoLinkageButton in AnswerView
+    _logoLinkageButton.hidden = FALSE;
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
+    [_logoImage addGestureRecognizer:logoSingeTap];
+    _logoImage.hidden = FALSE;
 
     _imageQuestion.userInteractionEnabled        = TRUE;
     _mainQuestion.userInteractionEnabled         = TRUE;
@@ -674,11 +694,11 @@ extern BOOL isFromNewCreatedCard;
 //        return;
 //    }
     
-    [self checkCardEditable];
+    
     [self updateQuestionAndAnswerTemplate];
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
-    [self switchLogoStatus];
+    [self checkCardEditable];
     [self showQuestionOrAnswer]; //put this at last
 }
 
@@ -767,7 +787,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)segmentAction:(id)sender
 {
-	[self switchLogoStatus];
+	[self checkCardEditable];
     [self showQuestionOrAnswer];
 
 }
@@ -809,28 +829,7 @@ extern BOOL isFromNewCreatedCard;
 
 
 #pragma mark -
-#pragma mark - Update CSS (only CSS) and Logo
-
-- (void) switchLogoStatus {
-    
-    if (([_currentCard.creator isEqualToString:[OpenUDID value]]) && (_segmentedControl.selectedSegmentIndex == 0)) {
-        //We don't need to show logoLinkageButton in AnswerView
-        _logoLinkageButton.hidden = FALSE;
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
-        [_logoImage addGestureRecognizer:logoSingeTap];
-        _logoImage.hidden = NO;
-    } else if ((![_currentCard.creator isEqualToString:[OpenUDID value]]) && (_segmentedControl.selectedSegmentIndex == 0)) {
-        _logoLinkageButton.hidden = TRUE;
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
-        [_logoImage addGestureRecognizer:logoSingeTap];
-        _logoImage.hidden = NO;
-    } else {
-        _logoLinkageButton.hidden = TRUE;
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
-        [_logoImage addGestureRecognizer:logoSingeTap];
-        _logoImage.hidden = YES;
-    }
-}
+#pragma mark - Update CSS (only CSS)
 
 //CSS part which is included in three main parts: CSS, template(position) and content
 - (void) updateQuestionAndAnswerCSS {

@@ -89,7 +89,7 @@ typedef enum RescreenshotReason {
 
 
 - (void) checkCardEditable;
-- (void) disableCardEdit;
+- (void) disableCardEdit:(BOOL) isQuestionShowing;
 - (void) enableCardEdit;
 
 - (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card;
