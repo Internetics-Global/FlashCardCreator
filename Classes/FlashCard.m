@@ -687,13 +687,15 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark - Refresh
+
 - (void) refreshAll {
-    [self updateQuestionAndAnswerTemplate];
+    [self showQuestionOrAnswer];
+    [self updateQuestionOrAnswerTemplate];
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
     [self checkCardEditable];
-    [self showQuestionOrAnswer]; //put this at last
 }
+
 
 - (void) refreshQuestionAndAnswerContent {
     [self refreshQuestionContent];
@@ -780,9 +782,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)segmentAction:(id)sender
 {
-	[self checkCardEditable];
-    [self showQuestionOrAnswer];
-
+	[self refreshAll];
 }
 
 - (void) doQuestionAndAnswerData {
@@ -1037,6 +1037,23 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
+
+- (void) updateQuestionOrAnswerTemplate {
+    if (isUserInterfaceIdiomPhone) {
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [self updateQuestionViewTemplateForiPhone];    
+        } else {
+            [self updateAnswerViewTemplateForiPhone];    
+        }
+    }
+    else {
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            [self updateQuestionViewTemplateForiPad];    
+        }else {
+            [self updateAnswerViewTemplateForiPad];
+        }
+    }
+}
 
 - (void) updateQuestionAndAnswerTemplate {
     if (isUserInterfaceIdiomPhone) {
@@ -1792,6 +1809,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         //we will save until after we press the save button
+        [self doQuestionAndAnswerData];
     } else {
         [self saveEdittedCard];
     }
