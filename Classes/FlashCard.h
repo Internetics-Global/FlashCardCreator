@@ -85,14 +85,14 @@ typedef enum RescreenshotReason {
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, assign) BOOL isQuestionShowing;
-@property (nonatomic, strong)  UISegmentedControl *segmentedControl;;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;;
 
 
 - (void) checkCardEditable;
-- (void) disableCardEdit:(BOOL) isQuestionShowing;
+- (void) disableCardEdit;
 - (void) enableCardEdit;
 
-- (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card;
+- (id) initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card;
 
 - (void) refreshAll;
 

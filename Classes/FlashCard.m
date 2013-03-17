@@ -7,9 +7,8 @@
 //
 
 /* 一些重要的说明 （区别于已存在card的情况）
- * 1. 我们的question和answer字段共享，而在切换segment后会丢失数据，所以需要在切换时，进行数据的暂存（保存到_currentCard中，由FlashView对象负责）
- * 2. 保存操作是写入到数据库，即[_currentCard save]
- * 3. 我们数据的参考对象是_currentCard，而不是界面上的view，所有要确保他们之间一致（a, 初始化时保持一致;b,view内容变化时，要及时更新_currentCard）
+ * 1. 保存操作是写入到数据库，即[_currentCard save]
+ * 2. 我们数据的参考对象是_currentCard，而不是界面上的view，所有要确保他们之间一致（a, 初始化时保持一致;b,view内容变化时，要及时更新_currentCard）
  */
 
 
@@ -81,8 +80,6 @@ extern BOOL isFromNewCreatedCard;
         
         self.currentPack = pack;
         self.currentCard = card;
-        
-        
         
         if (isUserInterfaceIdiomPhone) {
             [self loadQuestionAnswerViewForiPhone];
@@ -576,9 +573,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-
-
-
 #pragma mark -
 #pragma mark - Editable related
 - (void)checkCardEditable {
@@ -586,21 +580,22 @@ extern BOOL isFromNewCreatedCard;
         if (_segmentedControl.selectedSegmentIndex == 0) {
             [self enableCardEdit];
         } else {
-            [self disableCardEdit:YES];
+            [self enableCardEdit];
         }
         
     } else {
-        [self disableCardEdit:NO];
+        [self disableCardEdit];
     }
 }
 
-- (void) disableCardEdit:(BOOL) isQuestionShowing {
+
+- (void) disableCardEdit{
     
     _logoLinkageButton.hidden = TRUE;
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if (isQuestionShowing) {
+    if (_segmentedControl.selectedSegmentIndex == 0) {
         _logoImage.hidden = NO;
     } else {
         _logoImage.hidden = TRUE;
@@ -625,13 +620,18 @@ extern BOOL isFromNewCreatedCard;
     _changeTemplateButton.hidden = TRUE;
 }
 
-- (void) enableCardEdit {
+- (void) enableCardEdit{
     
-    //We don't need to show logoLinkageButton in AnswerView
-    _logoLinkageButton.hidden = FALSE;
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
-    _logoImage.hidden = FALSE;
+    
+    if (_segmentedControl.selectedSegmentIndex == 0 ) {
+        _logoLinkageButton.hidden = FALSE;
+        _logoImage.hidden = FALSE;
+    } else {
+        _logoLinkageButton.hidden = TRUE;
+        _logoImage.hidden = TRUE;
+    }
 
     _imageQuestion.userInteractionEnabled        = TRUE;
     _mainQuestion.userInteractionEnabled         = TRUE;
@@ -688,13 +688,6 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Refresh
 - (void) refreshAll {
-//    if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
-//        ||
-//        ((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (self.tag != NEW_FLASHCARDVIEW_TAG))){
-//        return;
-//    }
-    
-    
     [self updateQuestionAndAnswerTemplate];
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
@@ -825,7 +818,6 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
 }
-
 
 
 #pragma mark -
@@ -1043,7 +1035,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-
 #pragma mark -
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
 
@@ -1196,7 +1187,7 @@ extern BOOL isFromNewCreatedCard;
         case 0: //Template 0
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(20, 10, 360, 80);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 80);
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:34];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1205,7 +1196,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeAnswer = 34;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(20, 100, 360, 320);
+            _mainAnswer.frame = CGRectMake(10, 100, 360, 320);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:30];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1224,7 +1215,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(20, 10, 700, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 700, 60);
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:42];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1233,7 +1224,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(20, 80, 360, 300);
+            _mainAnswer.frame = CGRectMake(10, 80, 360, 300);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:38];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1242,7 +1233,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeAnswer = 38;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(20, 380, 500, 50);
+            _subAnswer.frame = CGRectMake(10, 380, 500, 50);
             _subAnswer.font = [UIFont boldSystemFontOfSize:38];
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1260,7 +1251,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(20, 10, 360, 360);
+            _mainAnswer.frame = CGRectMake(10, 10, 360, 400);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1280,7 +1271,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(20, 10, 700, 400);
+            _mainAnswer.frame = CGRectMake(10, 10, 700, 400);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1299,7 +1290,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(20, 10, 360, 360);
+            _mainAnswer.frame = CGRectMake(10, 10, 360, 400);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1334,7 +1325,7 @@ extern BOOL isFromNewCreatedCard;
         case 0: //Template 0
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(20, 10, 700, 50);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 700, 50);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:30];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1343,7 +1334,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeQuestion = 30;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(20, 70, 700, 350);
+            _mainQuestion.frame = CGRectMake(10, 70, 700, 350);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1360,7 +1351,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(20, 10, 700, 50);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 700, 50);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:34];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1369,7 +1360,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeQuestion = 34;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(20, 70, 700, 140);
+            _mainQuestion.frame = CGRectMake(10, 70, 700, 140);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1378,7 +1369,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 38;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(20, 220, 700, 180);
+            _subQuestion.frame = CGRectMake(10, 220, 700, 180);
             _subQuestion.font = [UIFont boldSystemFontOfSize:30];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1394,7 +1385,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(20, 70, 700, 200);
+            _mainQuestion.frame = CGRectMake(10, 70, 700, 200);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1403,7 +1394,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(20, 290, 700, 100);
+            _subQuestion.frame = CGRectMake(10, 290, 700, 100);
             _subQuestion.font = [UIFont boldSystemFontOfSize:34];
             _subQuestion.textColor = [UIColor redColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1420,7 +1411,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(20, 10, 700, 200);
+            _mainQuestion.frame = CGRectMake(10, 10, 700, 200);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1429,7 +1420,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(20, 220, 700, 200);
+            _subQuestion.frame = CGRectMake(10, 220, 700, 200);
             _subQuestion.font = [UIFont boldSystemFontOfSize:34];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1443,10 +1434,10 @@ extern BOOL isFromNewCreatedCard;
         }
         case 4: //Template 4
         {
-            _subheadingQuestion.hidden = YES;
+            _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(20, 40, 700, 350);
+            _mainQuestion.frame = CGRectMake(10, 40, 700, 350);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2265,6 +2256,18 @@ extern BOOL isFromNewCreatedCard;
     
     [self updateQuestionAndAnswerTemplate];
     
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        _imageAnswer.hidden = YES;
+        _subheadingAnswer.hidden = YES;
+        _mainAnswer.hidden = YES;
+        _subAnswer.hidden = YES;
+    } else {
+        _imageQuestion.hidden = YES;
+        _subheadingQuestion.hidden = YES;
+        _mainQuestion.hidden = YES;
+        _subQuestion.hidden = YES;
+    }
+    
     // we put all the save operations only when click the "save button"
     if (!isFromNewCreatedCard) {
         [self saveEdittedCard];
@@ -2316,15 +2319,12 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-
 #pragma mark -
 #pragma mark - Memory management
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
 
 
 @end
