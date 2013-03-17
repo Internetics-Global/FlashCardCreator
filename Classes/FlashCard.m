@@ -42,9 +42,12 @@ extern BOOL isFromNewCreatedCard;
 #define kQuestionViewCornerRadiusForiPhone 9.0
 
 
-#define kTagSubheading    100
-#define kTagMain          101
-#define kTagSub           102
+#define kTagSubheadingQuestion    100
+#define kTagMainQuestion          101
+#define kTagSubQuestion           102
+#define kTagSubheadingAnswer      200
+#define kTagMainAnswer            201
+#define kTagSubAnswer             202
 
 @interface FlashCard ()
 
@@ -79,6 +82,8 @@ extern BOOL isFromNewCreatedCard;
         self.currentPack = pack;
         self.currentCard = card;
         
+        
+        
         if (isUserInterfaceIdiomPhone) {
             [self loadQuestionAnswerViewForiPhone];
         } else {
@@ -95,20 +100,30 @@ extern BOOL isFromNewCreatedCard;
 
 
 - (void) initDefaultValue {
-    _isQuestionShowing = YES;
     _isAllCardsLogoNeedToBeUpdate = NO;
     
     _backgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
-    _subheadingSize = 40;
-    _subheadingColor = @"Black";
-    _subheadingAlign = @"Right";
-    _mainSize = 40;
-    _mainColor = @"Black";;
-    _mainAlign = @"Center";;
-    _subSize = 40;
-    _subColor = @"Black";;
-    _subAlign = @"Center";;
+    
+    _subheadingSizeQuestion = 40;
+    _subheadingColorQuestion = @"Black";
+    _subheadingAlignQuestion = @"Right";
+    _mainSizeQuestion = 40;
+    _mainColorQuestion = @"Black";
+    _mainAlignQuestion = @"Center";
+    _subSizeQuestion = 40;
+    _subColorQuestion = @"Black";
+    _subAlignQuestion = @"Center";
+    
+    _subheadingSizeAnswer = 40;
+    _subheadingColorAnswer = @"Black";
+    _subheadingAlignAnswer = @"Right";
+    _mainSizeAnswer = 40;
+    _mainColorAnswer = @"Black";
+    _mainAlignAnswer = @"Center";
+    _subSizeAnswer = 40;
+    _subColorAnswer = @"Black";
+    _subAlignAnswer = @"Center";
     
     _keyboardShown = FALSE;
     [self setInputAccessoryViewDone];
@@ -189,53 +204,105 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    if (_image == nil) {
-        _image= [[UIImageView  alloc] init];
-        _image.userInteractionEnabled = FALSE;
-        _image.contentMode = UIViewContentModeScaleAspectFit;
-        _image.clipsToBounds = YES;
-        _image.backgroundColor = [UIColor clearColor];
-        _image.layer.cornerRadius = 15;
-        _image.layer.masksToBounds = YES;
-        [_verticalScrollView addSubview:_image];
+    if (_imageQuestion == nil) {
+        _imageQuestion= [[UIImageView  alloc] init];
+        _imageQuestion.userInteractionEnabled = FALSE;
+        _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
+        _imageQuestion.clipsToBounds = YES;
+        _imageQuestion.backgroundColor = [UIColor clearColor];
+        _imageQuestion.layer.cornerRadius = 15;
+        _imageQuestion.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageQuestion];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
-        [_image addGestureRecognizer:imageSingeTap];
+        [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
-    if (_subheading == nil) {
-        _subheading = [[UITextView alloc]init];
-        _subheading.tag = kTagSubheading;
-        _subheading.font =[UIFont boldSystemFontOfSize:28];
-        _subheading.userInteractionEnabled = FALSE;
-        _subheading.keyboardType = UIKeyboardAppearanceDefault;
-        _subheading.returnKeyType = UIReturnKeyDefault;
-        _subheading.delegate = self;
-        [_verticalScrollView addSubview:_subheading];
+    if (_subheadingQuestion == nil) {
+        _subheadingQuestion = [[UITextView alloc]init];
+        _subheadingQuestion.tag = kTagSubheadingQuestion;
+        _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
+        _subheadingQuestion.userInteractionEnabled = FALSE;
+        _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
+        _subheadingQuestion.delegate = self;
+        [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
-    if (_main == nil) {
-        _main = [[UITextView alloc]init];
-        _main.tag = kTagMain;
-        _main.font =[UIFont boldSystemFontOfSize:28];
-        _main.userInteractionEnabled = FALSE;
-        _main.keyboardType = UIKeyboardAppearanceDefault;
-        _main.returnKeyType = UIReturnKeyDefault;
-        _main.delegate = self;
-        [_verticalScrollView addSubview:_main];
+    if (_mainQuestion == nil) {
+        _mainQuestion = [[UITextView alloc]init];
+        _mainQuestion.tag = kTagMainQuestion;
+        _mainQuestion.font =[UIFont boldSystemFontOfSize:28];
+        _mainQuestion.userInteractionEnabled = FALSE;
+        _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _mainQuestion.returnKeyType = UIReturnKeyDefault;
+        _mainQuestion.delegate = self;
+        [_verticalScrollView addSubview:_mainQuestion];
     }
     
     
-    if (_sub == nil) {
-        _sub = [[UITextView alloc]init];
-        _sub.tag = kTagSub;
-        _sub.font =[UIFont boldSystemFontOfSize:28];
-        _sub.userInteractionEnabled = FALSE;
-        _sub.keyboardType = UIKeyboardAppearanceDefault;
-        _sub.returnKeyType = UIReturnKeyDefault;
-        _sub.delegate = self;
-        [_verticalScrollView addSubview:_sub];
+    if (_subQuestion == nil) {
+        _subQuestion = [[UITextView alloc]init];
+        _subQuestion.tag = kTagSubQuestion;
+        _subQuestion.font =[UIFont boldSystemFontOfSize:28];
+        _subQuestion.userInteractionEnabled = FALSE;
+        _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _subQuestion.returnKeyType = UIReturnKeyDefault;
+        _subQuestion.delegate = self;
+        [_verticalScrollView addSubview:_subQuestion];
     }
+    
+    if (_imageAnswer == nil) {
+        _imageAnswer= [[UIImageView  alloc] init];
+        _imageAnswer.userInteractionEnabled = FALSE;
+        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer.clipsToBounds = YES;
+        _imageAnswer.backgroundColor = [UIColor clearColor];
+        _imageAnswer.layer.cornerRadius = 15;
+        _imageAnswer.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageAnswer];
+        _imageAnswer.hidden = YES;
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        [_imageQuestion addGestureRecognizer:imageSingeTap];
+    }
+    
+    if (_subheadingAnswer == nil) {
+        _subheadingAnswer = [[UITextView alloc]init];
+        _subheadingAnswer.tag = kTagSubheadingAnswer;
+        _subheadingAnswer.font =[UIFont boldSystemFontOfSize:28];
+        _subheadingAnswer.userInteractionEnabled = FALSE;
+        _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
+        _subheadingAnswer.delegate = self;
+        [_verticalScrollView addSubview:_subheadingAnswer];
+    }
+    _subheadingAnswer.hidden = TRUE;
+    
+    if (_mainAnswer == nil) {
+        _mainAnswer = [[UITextView alloc]init];
+        _mainAnswer.tag = kTagMainAnswer;
+        _mainAnswer.font =[UIFont boldSystemFontOfSize:28];
+        _mainAnswer.userInteractionEnabled = FALSE;
+        _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _mainAnswer.returnKeyType = UIReturnKeyDefault;
+        _mainAnswer.delegate = self;
+        [_verticalScrollView addSubview:_mainAnswer];
+    }
+    _mainAnswer.hidden = TRUE;
+    
+    
+    if (_subAnswer == nil) {
+        _subAnswer = [[UITextView alloc]init];
+        _subAnswer.tag = kTagSubAnswer;
+        _subAnswer.font =[UIFont boldSystemFontOfSize:28];
+        _subAnswer.userInteractionEnabled = FALSE;
+        _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _subAnswer.returnKeyType = UIReturnKeyDefault;
+        _subAnswer.delegate = self;
+        [_verticalScrollView addSubview:_subAnswer];
+    }
+    _subAnswer.hidden = TRUE;
     
     if (_packName == nil) {
         _packName = [[UILabel alloc] init];
@@ -383,52 +450,102 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    if (_image ==  nil) {
-        _image= [[UIImageView  alloc] init];
-        _image.userInteractionEnabled = FALSE;
-        _image.contentMode = UIViewContentModeScaleAspectFit;
-        _image.clipsToBounds = YES;
-        _image.backgroundColor = [UIColor clearColor];
-        _image.tag = 1;
-        _image.layer.cornerRadius = 10;
-        _image.layer.masksToBounds = YES;
-        [_verticalScrollView addSubview:_image];
+    if (_imageQuestion ==  nil) {
+        _imageQuestion= [[UIImageView  alloc] init];
+        _imageQuestion.userInteractionEnabled = FALSE;
+        _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
+        _imageQuestion.clipsToBounds = YES;
+        _imageQuestion.backgroundColor = [UIColor clearColor];
+        _imageQuestion.tag = 1;
+        _imageQuestion.layer.cornerRadius = 10;
+        _imageQuestion.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageQuestion];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
-        [_image addGestureRecognizer:imageSingeTap];
+        [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
-    if (_subheading ==  nil) {
-        _subheading = [[UITextView alloc]init];
-        _subheading.tag = kTagSubheading;
-        _subheading.userInteractionEnabled = FALSE;
-        _subheading.keyboardType = UIKeyboardAppearanceDefault;
-        _subheading.returnKeyType = UIReturnKeyDefault;
-        _subheading.delegate = self;
-        [_verticalScrollView addSubview:_subheading];
+    if (_subheadingQuestion ==  nil) {
+        _subheadingQuestion = [[UITextView alloc]init];
+        _subheadingQuestion.tag = kTagSubheadingQuestion;
+        _subheadingQuestion.userInteractionEnabled = FALSE;
+        _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
+        _subheadingQuestion.delegate = self;
+        [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
-    if (_main ==  nil) {
-        _main = [[UITextView alloc]init];
-        _main.tag = kTagMain;
-        _main.userInteractionEnabled = FALSE;
-        _main.keyboardType = UIKeyboardAppearanceDefault;
-        _main.returnKeyType = UIReturnKeyDefault;
+    if (_mainQuestion ==  nil) {
+        _mainQuestion = [[UITextView alloc]init];
+        _mainQuestion.tag = kTagMainQuestion;
+        _mainQuestion.userInteractionEnabled = FALSE;
+        _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _mainQuestion.returnKeyType = UIReturnKeyDefault;
         //_main.backgroundColor = [UIColor greenColor];
-        _main.delegate = self;
-        [_verticalScrollView addSubview:_main];
+        _mainQuestion.delegate = self;
+        [_verticalScrollView addSubview:_mainQuestion];
     }
     
     
-    if (_sub ==  nil) {
-        _sub = [[UITextView alloc]init];
-        _sub.tag = kTagSub;
-        _sub.userInteractionEnabled = FALSE;
-        _sub.keyboardType = UIKeyboardAppearanceDefault;
-        _sub.returnKeyType = UIReturnKeyDefault;
-        _sub.delegate = self;
-        [_verticalScrollView addSubview:_sub];
+    if (_subQuestion ==  nil) {
+        _subQuestion = [[UITextView alloc]init];
+        _subQuestion.tag = kTagSubQuestion;
+        _subQuestion.userInteractionEnabled = FALSE;
+        _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
+        _subQuestion.returnKeyType = UIReturnKeyDefault;
+        _subQuestion.delegate = self;
+        [_verticalScrollView addSubview:_subQuestion];
     }
+    
+    if (_imageAnswer ==  nil) {
+        _imageAnswer= [[UIImageView  alloc] init];
+        _imageAnswer.userInteractionEnabled = FALSE;
+        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer.clipsToBounds = YES;
+        _imageAnswer.backgroundColor = [UIColor clearColor];
+        _imageAnswer.tag = 1;
+        _imageAnswer.layer.cornerRadius = 10;
+        _imageAnswer.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageAnswer];
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        [_imageAnswer addGestureRecognizer:imageSingeTap];
+    }
+    _imageAnswer.hidden = YES;
+    
+    if (_subheadingAnswer ==  nil) {
+        _subheadingAnswer = [[UITextView alloc]init];
+        _subheadingAnswer.tag = kTagSubheadingAnswer;
+        _subheadingAnswer.userInteractionEnabled = FALSE;
+        _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
+        _subheadingAnswer.delegate = self;
+        [_verticalScrollView addSubview:_subheadingAnswer];
+    }
+    _subheadingAnswer.hidden = YES;
+    
+    if (_mainAnswer ==  nil) {
+        _mainAnswer = [[UITextView alloc]init];
+        _mainAnswer.tag = kTagMainAnswer;
+        _mainAnswer.userInteractionEnabled = FALSE;
+        _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _mainAnswer.returnKeyType = UIReturnKeyDefault;
+        //_main.backgroundColor = [UIColor greenColor];
+        _mainAnswer.delegate = self;
+        [_verticalScrollView addSubview:_mainAnswer];
+    }
+    _mainAnswer.hidden = YES;
+    
+    if (_subAnswer ==  nil) {
+        _subAnswer = [[UITextView alloc]init];
+        _subAnswer.tag = kTagSubAnswer;
+        _subAnswer.userInteractionEnabled = FALSE;
+        _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
+        _subAnswer.returnKeyType = UIReturnKeyDefault;
+        _subAnswer.delegate = self;
+        [_verticalScrollView addSubview:_subAnswer];
+    }
+    _subAnswer.hidden = YES;
     
     if (_segmentedControl == nil) {
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:
@@ -473,81 +590,72 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) disableCardEdit {
-    _logoImage.userInteractionEnabled  = TRUE;  //we always enable it.
-    _logoLinkageButton.userInteractionEnabled  = FALSE;
-    [_logoLinkageButton setHidden:YES];
-    _subheading.userInteractionEnabled = FALSE;
-    _image.userInteractionEnabled      = FALSE;
-    _main.userInteractionEnabled       = FALSE;
-    _main.layer.borderWidth = 0;
-    _sub.userInteractionEnabled        = FALSE;
-    _sub.layer.borderWidth = 0;
-    _subheading.userInteractionEnabled = FALSE;
-    _subheading.layer.borderWidth = 0;
     
-    _logoImage.userInteractionEnabled    = FALSE;
-    _image.userInteractionEnabled        = FALSE;
-    _main.userInteractionEnabled         = FALSE;
-    _main.layer.borderWidth = 0;
-    _sub.userInteractionEnabled          = FALSE;
-    _sub.layer.borderWidth = 0;
-    _subheading.userInteractionEnabled   = FALSE;
-    _subheading.layer.borderWidth = 0;
+    _imageQuestion.userInteractionEnabled        = FALSE;
+    _mainQuestion.userInteractionEnabled         = FALSE;
+    _mainQuestion.layer.borderWidth = 0;
+    _subQuestion.userInteractionEnabled          = FALSE;
+    _subQuestion.layer.borderWidth = 0;
+    _subheadingQuestion.userInteractionEnabled   = FALSE;
+    _subheadingQuestion.layer.borderWidth = 0;
+    
+    _imageAnswer.userInteractionEnabled        = FALSE;
+    _mainAnswer.userInteractionEnabled         = FALSE;
+    _mainAnswer.layer.borderWidth = 0;
+    _subAnswer.userInteractionEnabled          = FALSE;
+    _subAnswer.layer.borderWidth = 0;
+    _subheadingAnswer.userInteractionEnabled   = FALSE;
+    _subheadingAnswer.layer.borderWidth = 0;
     
     _changeTemplateButton.hidden = TRUE;
 }
 
 - (void) enableCardEdit {
-    _logoImage.userInteractionEnabled  = TRUE;
-    _logoLinkageButton.userInteractionEnabled  = FALSE;
-    [_logoLinkageButton setHidden:NO];
-    _logoLinkageButton.userInteractionEnabled = YES;
-    _image.userInteractionEnabled      = TRUE;
-    _main.userInteractionEnabled       = TRUE;
-    _main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+
+    _imageQuestion.userInteractionEnabled        = TRUE;
+    _mainQuestion.userInteractionEnabled         = TRUE;
+    _mainQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _main.layer.borderWidth = 2;
+        _mainQuestion.layer.borderWidth = 2;
     } else {
-        _main.layer.borderWidth = 3;
+        _mainQuestion.layer.borderWidth = 3;
+    }
+    _subQuestion.userInteractionEnabled          = TRUE;
+    _subQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _subQuestion.layer.borderWidth = 2;
+    } else {
+        _subQuestion.layer.borderWidth = 3;
+    }
+    _subheadingQuestion.userInteractionEnabled   = TRUE;
+    _subheadingQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _subheadingQuestion.layer.borderWidth = 2;
+    } else {
+        _subheadingQuestion.layer.borderWidth = 3;
     }
     
-    _sub.userInteractionEnabled        = TRUE;
-    _sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _imageAnswer.userInteractionEnabled        = TRUE;
+    _mainAnswer.userInteractionEnabled         = TRUE;
+    _mainAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _sub.layer.borderWidth = 2;
+        _mainAnswer.layer.borderWidth = 2;
     } else {
-        _sub.layer.borderWidth = 3;
+        _mainAnswer.layer.borderWidth = 3;
     }
-    _subheading.userInteractionEnabled = TRUE;
-    _subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _subAnswer.userInteractionEnabled          = TRUE;
+    _subAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _subheading.layer.borderWidth = 2;
+        _subAnswer.layer.borderWidth = 2;
     } else {
-        _subheading.layer.borderWidth = 3;
+        _subAnswer.layer.borderWidth = 3;
     }
-    _logoImage.userInteractionEnabled    = TRUE;
-    _logoImage.hidden = FALSE;
-    _image.userInteractionEnabled        = TRUE;
-    _main.userInteractionEnabled         = TRUE;
-    _main.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    _subheadingAnswer.userInteractionEnabled   = TRUE;
+    _subheadingAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _main.layer.borderWidth = 2;
+        _subheadingAnswer.layer.borderWidth = 2;
     } else {
-        _main.layer.borderWidth = 3;
-    }
-    _sub.userInteractionEnabled          = TRUE;
-    _sub.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    if (isUserInterfaceIdiomPhone) {
-        _sub.layer.borderWidth = 2;
-    } else {
-        _sub.layer.borderWidth = 3;
-    }
-    _subheading.userInteractionEnabled   = TRUE;
-    _subheading.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
-    if (isUserInterfaceIdiomPhone) {
-        _subheading.layer.borderWidth = 2;
-    } else {
-        _subheading.layer.borderWidth = 3;
+        _subheadingAnswer.layer.borderWidth = 3;
     }
     
     _changeTemplateButton.hidden = FALSE;
@@ -565,54 +673,47 @@ extern BOOL isFromNewCreatedCard;
 //        return;
 //    }
     
-    [self switchLogoStatus];
     [self checkCardEditable];
-    [self updateQuestionOrAnswerTemplate];
-    [self updateQuestionOrAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionOrAnswerTemplate
-    [self refreshQuestionOrAnswerContent];
+    [self updateQuestionAndAnswerTemplate];
+    [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
+    [self refreshQuestionAndAnswerContent];
+    [self switchLogoStatus];
+    [self showQuestionOrAnswer]; //put this at last
 }
 
-- (void) refreshQuestionOrAnswerContent {
-    if (_isQuestionShowing) {
-        [self refreshQuestionContent];
-    } else {
-        [self refreshAnswerContent];
-    }
+- (void) refreshQuestionAndAnswerContent {
+    [self refreshQuestionContent];
+    [self refreshAnswerContent];
     
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
+    _backgroundImageName = _currentCard.templateBackgroundName;
+    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
 }
 
 - (void) refreshAnswerContent {
     
-    _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
-    _title.textColor = [UIColor redColor];
-    
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
     _imageFullPath = _currentCard.answer.imageFullPath;
     if (imageTemp) {
-        _image.image = imageTemp;
+        _imageAnswer.image = imageTemp;
     } else {
-        _image.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+        _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
-    
-    _backgroundImageName = _currentCard.templateBackgroundName;
-    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
-    
-    _title.text = @"Answer";
-    _title.textColor = [UIColor redColor];
-    _subheading.text = _currentCard.answer.subheading;
-    _main.text =_currentCard.answer.main;
-    _sub.text =_currentCard.answer.sub;
+
+    _subheadingAnswer.text = _currentCard.answer.subheading;
+    _mainAnswer.text =_currentCard.answer.main;
+    _subAnswer.text =_currentCard.answer.sub;
     
 }
 
 - (void) refreshQuestionContent {
+    
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath];
     _imageFullPath = _currentCard.question.imageFullPath;
     if (imageTemp) {
-        _image.image = imageTemp;
+        _imageQuestion.image = imageTemp;
     } else {
-        _image.image = [UIImage imageNamed:@"question_placeholder_content.png"];
+        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.png"];
     }
     
     imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.logoFullPath];
@@ -622,94 +723,88 @@ extern BOOL isFromNewCreatedCard;
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
-    _backgroundImageName = _currentCard.templateBackgroundName;
-    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
-    
-    _title.text = @"Question";
-    _title.textColor = [UIColor blueColor];
-    _logoLinkURL = _currentCard.question.logoURLLinkage;
-    _subheading.text = _currentCard.question.subheading;
-    _main.text =_currentCard.question.main;
-    _sub.text =_currentCard.question.sub;
+    _subheadingQuestion.text = _currentCard.question.subheading;
+    _mainQuestion.text =_currentCard.question.main;
+    _subQuestion.text =_currentCard.question.sub;
 }
 
 
 #pragma mark -
 #pragma mark Segment callback
 
+- (void) showQuestionOrAnswer {
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        _imageQuestion.hidden = NO;
+        _subheadingQuestion.hidden = NO;
+        _mainQuestion.hidden = NO;
+        _subQuestion.hidden = NO;
+        
+        _imageAnswer.hidden = YES;
+        _subheadingAnswer.hidden = YES;
+        _mainAnswer.hidden = YES;
+        _subAnswer.hidden = YES;
+        
+        _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Question",nil);
+        _title.textColor = [UIColor blueColor];
+        
+        
+    } else {
+        _imageQuestion.hidden = YES;
+        _subheadingQuestion.hidden = YES;
+        _mainQuestion.hidden = YES;
+        _subQuestion.hidden = YES;
+        
+        _imageAnswer.hidden = NO;
+        _subheadingAnswer.hidden = NO;
+        _mainAnswer.hidden = NO;
+        _subAnswer.hidden = NO;
+        
+        _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
+        _title.textColor = [UIColor redColor];
+    }
+}
+
 - (void)segmentAction:(id)sender
 {
-	UISegmentedControl *segControl = sender;
-    
-    switch (segControl.selectedSegmentIndex)
-	{
-		case 0:	//show question
-		{
-            if (_isQuestionShowing == NO) {
-                
-                //keep the answer part data
-                if (isFromNewCreatedCard) {
-                    [self doAnswerData];
-                }
-                
-                _isQuestionShowing = YES;
-                [self refreshAll];
-            }
-			break;
-		}
-		case 1: //show answer
-		{
-            if (_isQuestionShowing == YES) {
-                
-                //keep the question part data
-                if (isFromNewCreatedCard) {
-                    [self doQuestionData];
-                }
-                
-                _isQuestionShowing = NO;
-                [self refreshAll];
-            }
-			break;
-		}
-	}
+	[self switchLogoStatus];
+    [self showQuestionOrAnswer];
 
 }
 
-- (void) doAnswerData {
+- (void) doQuestionAndAnswerData {
     _currentCard.answer.title = _title.text;
-    _currentCard.answer.subheading = _subheading.text;
-    _currentCard.answer.main = _main.text;
-    _currentCard.answer.sub = _sub.text;
+    _currentCard.answer.subheading = _subheadingAnswer.text;
+    _currentCard.answer.main = _mainAnswer.text;
+    _currentCard.answer.sub = _subAnswer.text;
     _currentCard.answer.imageFullPath = _imageFullPath;
     
-    _currentCard.answer.css.subheadingAlign = _subheadingAlign;
-    _currentCard.answer.css.subheadingColor = _subheadingColor;
-    _currentCard.answer.css.subheadingSize = _subheadingSize;
-    _currentCard.answer.css.mainAlign = _mainAlign;
-    _currentCard.answer.css.mainColor = _mainColor;
-    _currentCard.answer.css.mainSize = _mainSize;
-    _currentCard.answer.css.subAlign = _subAlign;
-    _currentCard.answer.css.subColor = _subColor;
-    _currentCard.answer.css.subSize = _subSize;
-}
-
-- (void) doQuestionData {
+    _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
+    _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
+    _currentCard.answer.css.subheadingSize = _subheadingSizeAnswer;
+    _currentCard.answer.css.mainAlign = _mainAlignAnswer;
+    _currentCard.answer.css.mainColor = _mainColorAnswer;
+    _currentCard.answer.css.mainSize = _mainSizeAnswer;
+    _currentCard.answer.css.subAlign = _subAlignAnswer;
+    _currentCard.answer.css.subColor = _subColorAnswer;
+    _currentCard.answer.css.subSize = _subSizeAnswer;
+    
     _currentCard.question.title = _title.text;
-    _currentCard.question.subheading = _subheading.text;
-    _currentCard.question.main = _main.text;
-    _currentCard.question.sub = _sub.text;
+    _currentCard.question.subheading = _subheadingQuestion.text;
+    _currentCard.question.main = _mainQuestion.text;
+    _currentCard.question.sub = _subQuestion.text;
     _currentCard.question.imageFullPath = _imageFullPath;
     
-    _currentCard.question.css.subheadingAlign = _subheadingAlign;
-    _currentCard.question.css.subheadingColor = _subheadingColor;
-    _currentCard.question.css.subheadingSize = _subheadingSize;
-    _currentCard.question.css.mainAlign = _mainAlign;
-    _currentCard.question.css.mainColor = _mainColor;
-    _currentCard.question.css.mainSize = _mainSize;
-    _currentCard.question.css.subAlign = _subAlign;
-    _currentCard.question.css.subColor = _subColor;
-    _currentCard.question.css.subSize = _subSize;
+    _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
+    _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
+    _currentCard.question.css.subheadingSize = _subheadingSizeQuestion;
+    _currentCard.question.css.mainAlign = _mainAlignQuestion;
+    _currentCard.question.css.mainColor = _mainColorQuestion;
+    _currentCard.question.css.mainSize = _mainSizeQuestion;
+    _currentCard.question.css.subAlign = _subAlignQuestion;
+    _currentCard.question.css.subColor = _subColorQuestion;
+    _currentCard.question.css.subSize = _subSizeQuestion;
 }
+
 
 
 #pragma mark -
@@ -717,129 +812,233 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) switchLogoStatus {
     
-    if (([_currentCard.creator isEqualToString:[OpenUDID value]]) && (_isQuestionShowing)) {
+    if (([_currentCard.creator isEqualToString:[OpenUDID value]]) && (_segmentedControl.selectedSegmentIndex == 0)) {
         //We don't need to show logoLinkageButton in AnswerView
         _logoLinkageButton.hidden = FALSE;
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
         [_logoImage addGestureRecognizer:logoSingeTap];
+        _logoImage.hidden = NO;
+    } else if ((![_currentCard.creator isEqualToString:[OpenUDID value]]) && (_segmentedControl.selectedSegmentIndex == 0)) {
+        _logoLinkageButton.hidden = TRUE;
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
+        [_logoImage addGestureRecognizer:logoSingeTap];
+        _logoImage.hidden = NO;
     } else {
         _logoLinkageButton.hidden = TRUE;
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
         [_logoImage addGestureRecognizer:logoSingeTap];
+        _logoImage.hidden = YES;
     }
 }
 
 //CSS part which is included in three main parts: CSS, template(position) and content
-- (void) updateQuestionOrAnswerCSS {
+- (void) updateQuestionAndAnswerCSS {
     
     if (_currentCard == nil) {
         [Common alertViewCommon:@"Need to set currentCard beforehand"];
     }
     
-    CSS *css;
-    if (_isQuestionShowing) {
-        css = _currentCard.question.css;
-    } else {
-        css = _currentCard.answer.css;
-    }
-    
+    //PartA: Question
+    CSS *css = _currentCard.question.css;
     //1. subheading
     //during creating a new card, we used default value
-    _subheading.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
-    _subheadingSize = css.subheadingSize;
+    _subheadingQuestion.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
+    _subheadingSizeQuestion = css.subheadingSize;
     
     if ([css.subheadingColor isEqualToString:@"Blue"]) {
-        _subheading.textColor = [UIColor blueColor];
-        _subheadingColor = @"Blue";
+        _subheadingQuestion.textColor = [UIColor blueColor];
+        _subheadingColorQuestion = @"Blue";
     } else if ([css.subheadingColor isEqualToString:@"Red"]) {
-        _subheading.textColor = [UIColor redColor];
-        _subheadingColor = @"Red";
+        _subheadingQuestion.textColor = [UIColor redColor];
+        _subheadingColorQuestion = @"Red";
     } else if ([css.subheadingColor isEqualToString:@"Yellow"]) {
-        _subheading.textColor = [UIColor yellowColor];
-        _subheadingColor = @"Yellow";
+        _subheadingQuestion.textColor = [UIColor yellowColor];
+        _subheadingColorQuestion = @"Yellow";
     } else if ([css.subheadingColor isEqualToString:@"Black"]) {
-        _subheading.textColor = [UIColor blackColor];
-        _subheadingColor = @"Black";
+        _subheadingQuestion.textColor = [UIColor blackColor];
+        _subheadingColorQuestion = @"Black";
     } else if ([css.subheadingColor isEqualToString:@"Green"]) {
-        _subheading.textColor = [UIColor greenColor];
-        _subheadingColor = @"Green";
+        _subheadingQuestion.textColor = [UIColor greenColor];
+        _subheadingColorQuestion = @"Green";
     }
     
     if ([css.subheadingAlign isEqualToString:@"Left"]) {
-        _subheading.textAlignment = NSTextAlignmentLeft;
-        _subheadingAlign = @"Left";
+        _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+        _subheadingAlignQuestion = @"Left";
     } else if ([css.subheadingAlign isEqualToString:@"Center"]) {
-        _subheading.textAlignment = NSTextAlignmentCenter;
-        _subheadingAlign = @"Center";
+        _subheadingQuestion.textAlignment = NSTextAlignmentCenter;
+        _subheadingAlignQuestion = @"Center";
     }else if ([css.subheadingAlign isEqualToString:@"Right"]) {
-        _subheading.textAlignment = NSTextAlignmentRight;
-        _subheadingAlign = @"Right";
+        _subheadingQuestion.textAlignment = NSTextAlignmentRight;
+        _subheadingAlignQuestion = @"Right";
     }
     
     //2. main
     //during creating a new card, we used default value
-    _main.font = [UIFont boldSystemFontOfSize:css.mainSize];
-    _mainSize = css.mainSize;
+    _mainQuestion.font = [UIFont boldSystemFontOfSize:css.mainSize];
+    _mainSizeQuestion = css.mainSize;
     
     if ([css.mainColor isEqualToString:@"Blue"]) {
-        _main.textColor = [UIColor blueColor];
-        _mainColor = @"Blue";
+        _mainQuestion.textColor = [UIColor blueColor];
+        _mainColorQuestion = @"Blue";
     } else if ([css.mainColor isEqualToString:@"Red"]) {
-        _main.textColor = [UIColor redColor];
-        _mainColor = @"Red";
+        _mainQuestion.textColor = [UIColor redColor];
+        _mainColorQuestion = @"Red";
     } else if ([css.mainColor isEqualToString:@"Yellow"]) {
-        _main.textColor = [UIColor yellowColor];
-        _mainColor = @"Yellow";
+        _mainQuestion.textColor = [UIColor yellowColor];
+        _mainColorQuestion = @"Yellow";
     } else if ([css.mainColor isEqualToString:@"Black"]) {
-        _main.textColor = [UIColor blackColor];
-        _mainColor = @"Black";
+        _mainQuestion.textColor = [UIColor blackColor];
+        _mainColorQuestion = @"Black";
     } else if ([css.mainColor isEqualToString:@"Green"]) {
-        _main.textColor = [UIColor greenColor];
-        _mainColor = @"Green";
+        _mainQuestion.textColor = [UIColor greenColor];
+        _mainColorQuestion = @"Green";
     }
     
     if ([css.mainAlign isEqualToString:@"Left"]) {
-        _main.textAlignment = NSTextAlignmentLeft;
-        _mainAlign = @"Left";
+        _mainQuestion.textAlignment = NSTextAlignmentLeft;
+        _mainAlignQuestion = @"Left";
     } else if ([css.mainAlign isEqualToString:@"Center"]) {
-        _main.textAlignment = NSTextAlignmentCenter;
-        _mainAlign = @"Center";
+        _mainQuestion.textAlignment = NSTextAlignmentCenter;
+        _mainAlignQuestion = @"Center";
     }else if ([css.mainAlign isEqualToString:@"Right"]) {
-        _main.textAlignment = NSTextAlignmentRight;
-        _mainAlign = @"Right";
+        _mainQuestion.textAlignment = NSTextAlignmentRight;
+        _mainAlignQuestion = @"Right";
     }
     
     //3. sub
     //during creating a new card, we used default value
-    _sub.font = [UIFont boldSystemFontOfSize:css.subSize];
-    _subSize = css.subSize;
+    _subQuestion.font = [UIFont boldSystemFontOfSize:css.subSize];
+    _subSizeQuestion = css.subSize;
     
     if ([css.subColor isEqualToString:@"Blue"]) {
-        _sub.textColor = [UIColor blueColor];
-        _subColor = @"Blue";
+        _subQuestion.textColor = [UIColor blueColor];
+        _subColorQuestion = @"Blue";
     } else if ([css.subColor isEqualToString:@"Red"]) {
-        _sub.textColor = [UIColor redColor];
-        _subColor = @"Red";
+        _subQuestion.textColor = [UIColor redColor];
+        _subColorQuestion = @"Red";
     } else if ([css.subColor isEqualToString:@"Yellow"]) {
-        _sub.textColor = [UIColor yellowColor];
-        _subColor = @"Yellow";
+        _subQuestion.textColor = [UIColor yellowColor];
+        _subColorQuestion = @"Yellow";
     } else if ([css.subColor isEqualToString:@"Black"]) {
-        _sub.textColor = [UIColor blackColor];
-        _subColor = @"Black";
+        _subQuestion.textColor = [UIColor blackColor];
+        _subColorQuestion = @"Black";
     } else if ([css.subColor isEqualToString:@"Green"]) {
-        _sub.textColor = [UIColor greenColor];
-        _subColor = @"Green";
+        _subQuestion.textColor = [UIColor greenColor];
+        _subColorQuestion = @"Green";
     }
     
     if ([css.subAlign isEqualToString:@"Left"]) {
-        _sub.textAlignment = NSTextAlignmentLeft;
-        _subAlign = @"Left";
+        _subQuestion.textAlignment = NSTextAlignmentLeft;
+        _subAlignQuestion = @"Left";
     } else if ([css.subAlign isEqualToString:@"Center"]) {
-        _sub.textAlignment = NSTextAlignmentCenter;
-        _subAlign = @"Center";
+        _subQuestion.textAlignment = NSTextAlignmentCenter;
+        _subAlignQuestion = @"Center";
     }else if ([css.subAlign isEqualToString:@"Right"]) {
-        _sub.textAlignment = NSTextAlignmentRight;
-        _subAlign = @"Right";
+        _subQuestion.textAlignment = NSTextAlignmentRight;
+        _subAlignQuestion = @"Right";
+    }
+    
+    
+    //PartB: Answer
+    css= _currentCard.question.css;
+    //1. subheading
+    //during creating a new card, we used default value
+    _subheadingAnswer.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
+    _subheadingSizeAnswer = css.subheadingSize;
+    
+    if ([css.subheadingColor isEqualToString:@"Blue"]) {
+        _subheadingAnswer.textColor = [UIColor blueColor];
+        _subheadingColorAnswer = @"Blue";
+    } else if ([css.subheadingColor isEqualToString:@"Red"]) {
+        _subheadingAnswer.textColor = [UIColor redColor];
+        _subheadingColorAnswer = @"Red";
+    } else if ([css.subheadingColor isEqualToString:@"Yellow"]) {
+        _subheadingAnswer.textColor = [UIColor yellowColor];
+        _subheadingColorAnswer = @"Yellow";
+    } else if ([css.subheadingColor isEqualToString:@"Black"]) {
+        _subheadingAnswer.textColor = [UIColor blackColor];
+        _subheadingColorAnswer = @"Black";
+    } else if ([css.subheadingColor isEqualToString:@"Green"]) {
+        _subheadingAnswer.textColor = [UIColor greenColor];
+        _subheadingColorAnswer = @"Green";
+    }
+    
+    if ([css.subheadingAlign isEqualToString:@"Left"]) {
+        _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+        _subheadingAlignAnswer = @"Left";
+    } else if ([css.subheadingAlign isEqualToString:@"Center"]) {
+        _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
+        _subheadingAlignAnswer = @"Center";
+    }else if ([css.subheadingAlign isEqualToString:@"Right"]) {
+        _subheadingAnswer.textAlignment = NSTextAlignmentRight;
+        _subheadingAlignAnswer = @"Right";
+    }
+    
+    //2. main
+    //during creating a new card, we used default value
+    _mainAnswer.font = [UIFont boldSystemFontOfSize:css.mainSize];
+    _mainSizeAnswer = css.mainSize;
+    
+    if ([css.mainColor isEqualToString:@"Blue"]) {
+        _mainAnswer.textColor = [UIColor blueColor];
+        _mainColorAnswer = @"Blue";
+    } else if ([css.mainColor isEqualToString:@"Red"]) {
+        _mainAnswer.textColor = [UIColor redColor];
+        _mainColorAnswer = @"Red";
+    } else if ([css.mainColor isEqualToString:@"Yellow"]) {
+        _mainAnswer.textColor = [UIColor yellowColor];
+        _mainColorAnswer = @"Yellow";
+    } else if ([css.mainColor isEqualToString:@"Black"]) {
+        _mainAnswer.textColor = [UIColor blackColor];
+        _mainColorAnswer = @"Black";
+    } else if ([css.mainColor isEqualToString:@"Green"]) {
+        _mainAnswer.textColor = [UIColor greenColor];
+        _mainColorAnswer = @"Green";
+    }
+    
+    if ([css.mainAlign isEqualToString:@"Left"]) {
+        _mainAnswer.textAlignment = NSTextAlignmentLeft;
+        _mainAlignAnswer = @"Left";
+    } else if ([css.mainAlign isEqualToString:@"Center"]) {
+        _mainAnswer.textAlignment = NSTextAlignmentCenter;
+        _mainAlignAnswer = @"Center";
+    }else if ([css.mainAlign isEqualToString:@"Right"]) {
+        _mainAnswer.textAlignment = NSTextAlignmentRight;
+        _mainAlignAnswer = @"Right";
+    }
+    
+    //3. sub
+    //during creating a new card, we used default value
+    _subAnswer.font = [UIFont boldSystemFontOfSize:css.subSize];
+    _subSizeAnswer = css.subSize;
+    
+    if ([css.subColor isEqualToString:@"Blue"]) {
+        _subAnswer.textColor = [UIColor blueColor];
+        _subColorAnswer = @"Blue";
+    } else if ([css.subColor isEqualToString:@"Red"]) {
+        _subAnswer.textColor = [UIColor redColor];
+        _subColorAnswer = @"Red";
+    } else if ([css.subColor isEqualToString:@"Yellow"]) {
+        _subAnswer.textColor = [UIColor yellowColor];
+        _subColorAnswer = @"Yellow";
+    } else if ([css.subColor isEqualToString:@"Black"]) {
+        _subAnswer.textColor = [UIColor blackColor];
+        _subColorAnswer = @"Black";
+    } else if ([css.subColor isEqualToString:@"Green"]) {
+        _subAnswer.textColor = [UIColor greenColor];
+        _subColorAnswer = @"Green";
+    }
+    
+    if ([css.subAlign isEqualToString:@"Left"]) {
+        _subAnswer.textAlignment = NSTextAlignmentLeft;
+        _subAlignAnswer = @"Left";
+    } else if ([css.subAlign isEqualToString:@"Center"]) {
+        _subAnswer.textAlignment = NSTextAlignmentCenter;
+        _subAlignAnswer = @"Center";
+    }else if ([css.subAlign isEqualToString:@"Right"]) {
+        _subAnswer.textAlignment = NSTextAlignmentRight;
+        _subAlignAnswer = @"Right";
     }
 }
 
@@ -848,22 +1047,15 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
 
-- (void) updateQuestionOrAnswerTemplate {
+- (void) updateQuestionAndAnswerTemplate {
     if (isUserInterfaceIdiomPhone) {
-        if (_isQuestionShowing) {
-            [self updateQuestionViewTemplateForiPhone];
-        } else {
-            [self updateAnswerViewTemplateForiPhone];
-        }
-    } else {
-        if (_isQuestionShowing) {
-            [self updateQuestionViewTemplateForiPad];    
-        } else {
-            [self updateAnswerViewTemplateForiPad];
-        }
-        
+        [self updateQuestionViewTemplateForiPhone];
+        [self updateAnswerViewTemplateForiPhone];
     }
-    
+    else {
+        [self updateQuestionViewTemplateForiPad];
+        [self updateAnswerViewTemplateForiPad];
+    }
 }
 
 //postion part which is included in three main parts: CSS, template(position) and content
@@ -874,130 +1066,116 @@ extern BOOL isFromNewCreatedCard;
     switch (index) {
         case 0: //Template 0
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(0, 0, 210, 30);
-            _subheading.font = [UIFont boldSystemFontOfSize:14];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentCenter;
-            _subheadingAlign = @"Center";
-            _subheadingColor = @"Black";
-            _subheadingSize = 14;
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(0, 0, 210, 30);
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
+            _subheadingAlignAnswer = @"Center";
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 14;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 40, 210, 150);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(0, 40, 210, 150);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 12;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(210, 0, 140, 140);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
             
             break;
         }
         case 1: //Template 1
         {
             
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(0, 0, 210, 30);
-            _subheading.font = [UIFont boldSystemFontOfSize:12];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 12;
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(0, 0, 210, 30);
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 12;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 30, 210, 190);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(0, 30, 210, 190);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 12;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(210, 0, 140, 140);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
             
             break;
         }
         case 2: //Template 2
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 210, 190);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(0, 0, 210, 190);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 12;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(210, 0, 140, 140);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
             
             break;
         }
         case 3: //Template 3
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 360, 190);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(0, 0, 360, 190);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 12;
             
-            _sub.hidden = YES;
+            _subAnswer.hidden = YES;
             
-            _image.hidden = TRUE;
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = TRUE;
             
             break;
         }
         case 4: //Template4
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 210, 190);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(0, 0, 210, 190);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 12;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(210, 0, 140, 140);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(210, 0, 140, 140);
+
             
             break;
         }
@@ -1017,136 +1195,123 @@ extern BOOL isFromNewCreatedCard;
     switch (index) {
         case 0: //Template 0
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(20, 10, 360, 80);
-            _subheading.font = [UIFont boldSystemFontOfSize:34];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentCenter;
-            _subheadingAlign = @"Center";
-            _subheadingColor = @"Black";
-            _subheadingSize = 34;
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(20, 10, 360, 80);
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
+            _subheadingAlignAnswer = @"Center";
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 34;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 100, 360, 320);
-            _main.font = [UIFont boldSystemFontOfSize:30];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 30;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(20, 100, 360, 320);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:30];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 30;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(380, 10, 350, 350);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(380, 10, 350, 350);
+
             
             break;
         }
         case 1: //Template 1
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(20, 10, 700, 60);
-            _subheading.font = [UIFont boldSystemFontOfSize:42];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 42;
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(20, 10, 700, 60);
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:42];
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 42;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 80, 360, 300);
-            _main.font = [UIFont boldSystemFontOfSize:38];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 38;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(20, 80, 360, 300);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:38];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 38;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 380, 500, 50);
-            _sub.font = [UIFont boldSystemFontOfSize:38];
-            _sub.textColor = [UIColor redColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Left";
-            _subColor = @"Black";
-            _subSize = 38;
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(20, 380, 500, 50);
+            _subAnswer.font = [UIFont boldSystemFontOfSize:38];
+            _subAnswer.textColor = [UIColor redColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 38;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(380, 80, 330, 330);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(380, 80, 330, 330);
             
             break;
         }
         case 2: //Template 2
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont boldSystemFontOfSize:34];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 34;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(20, 10, 360, 360);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 34;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(380, 10, 350, 350);
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(380, 10, 350, 350);
             
             break;
         }
         case 3: //Template 3
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 10, 700, 400);
-            _main.font = [UIFont boldSystemFontOfSize:34];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 34;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(20, 10, 700, 400);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 34;
             
-            _sub.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
             
-            _image.hidden = TRUE;
-            
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
+            _imageAnswer.hidden = TRUE;
             
             break;
         }
         case 4: //Template4
         {
-            _subheading.hidden = TRUE;
+            _subheadingAnswer.hidden = TRUE;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 10, 360, 360);
-            _main.font = [UIFont boldSystemFontOfSize:34];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentLeft;
-            _mainAlign = @"Left";
-            _mainColor = @"Black";
-            _mainSize = 34;
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(20, 10, 360, 360);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 34;
             
-            _sub.hidden = YES;
+            _subAnswer.hidden = YES;
             
-            _image.hidden = FALSE;
-            _image.frame = CGRectMake(380, 10, 350, 350);
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(380, 10, 350, 350);
             
-            _logoImage.hidden = TRUE;
-            _logoLinkageButton.hidden = TRUE;
             
             break;
         }
@@ -1168,130 +1333,130 @@ extern BOOL isFromNewCreatedCard;
     switch (index) {
         case 0: //Template 0
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(20, 10, 700, 50);
-            _subheading.font = [UIFont boldSystemFontOfSize:30];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 30;
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(20, 10, 700, 50);
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:30];
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 30;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 70, 700, 350);
-            _main.font = [UIFont boldSystemFontOfSize:38];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 38;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(20, 70, 700, 350);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 38;
             
-            _sub.hidden = TRUE;
+            _subQuestion.hidden = TRUE;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             
             break;
         }
         case 1: //Template 1
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(20, 10, 700, 50);
-            _subheading.font = [UIFont boldSystemFontOfSize:34];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 34;
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(20, 10, 700, 50);
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:34];
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 34;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 70, 700, 140);
-            _main.font = [UIFont boldSystemFontOfSize:38];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 38;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(20, 70, 700, 140);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 38;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 220, 700, 180);
-            _sub.font = [UIFont boldSystemFontOfSize:30];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Black";
-            _subSize = 30;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(20, 220, 700, 180);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:30];
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 30;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         case 2: //Template 2
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 70, 700, 200);
-            _main.font = [UIFont boldSystemFontOfSize:42];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 42;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(20, 70, 700, 200);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 42;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 290, 700, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:34];
-            _sub.textColor = [UIColor redColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Red";
-            _subSize = 34;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(20, 290, 700, 100);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:34];
+            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Red";
+            _subSizeQuestion = 34;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             
             break;
         }
         case 3: //Template 3
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 10, 700, 200);
-            _main.font = [UIFont boldSystemFontOfSize:42];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 42;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(20, 10, 700, 200);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 42;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(20, 220, 700, 200);
-            _sub.font = [UIFont boldSystemFontOfSize:34];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Center";
-            _subColor = @"Black";
-            _subSize = 34;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(20, 220, 700, 200);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:34];
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 34;
             
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         case 4: //Template 4
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(20, 40, 700, 350);
-            _main.font = [UIFont boldSystemFontOfSize:42];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 42;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(20, 40, 700, 350);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 42;
             
-            _sub.hidden = TRUE;
+            _subQuestion.hidden = TRUE;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         default:
@@ -1310,130 +1475,130 @@ extern BOOL isFromNewCreatedCard;
     switch (index) {
         case 0: //Template 0
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(0, 0, 350, 40);
-            _subheading.font = [UIFont boldSystemFontOfSize:14];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 14;
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(0, 0, 350, 40);
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 14;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 40, 350, 150);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(0, 40, 350, 150);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 12;
             
-            _sub.hidden = TRUE;
+            _subQuestion.hidden = TRUE;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             
             break;
         }
         case 1: //Template 1
         {
-            _subheading.hidden = FALSE;
-            _subheading.frame = CGRectMake(0, 0, 350, 25);
-            _subheading.font = [UIFont boldSystemFontOfSize:14];
-            _subheading.textColor = [UIColor blackColor];
-            _subheading.textAlignment = NSTextAlignmentLeft;
-            _subheadingAlign = @"Left";
-            _subheadingColor = @"Black";
-            _subheadingSize = 14;
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(0, 0, 350, 25);
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 14;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 25, 350, 90);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(0, 25, 350, 90);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 90, 350, 95);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentLeft;
-            _subAlign = @"Center";
-            _subColor = @"Black";
-            _subSize = 12;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(0, 90, 350, 95);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 12;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         case 2: //Template 2
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 350, 130);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(0, 0, 350, 130);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 130, 350, 60);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor redColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Red";
-            _subSize = 12;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(0, 130, 350, 60);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Red";
+            _subSizeQuestion = 12;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             
             break;
         }
         case 3: //Template 3
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 350, 90);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(0, 0, 350, 90);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 12;
             
-            _sub.hidden = FALSE;
-            _sub.frame = CGRectMake(0, 90, 350, 100);
-            _sub.font = [UIFont boldSystemFontOfSize:12];
-            _sub.textColor = [UIColor blackColor];
-            _sub.textAlignment = NSTextAlignmentCenter;
-            _subAlign = @"Center";
-            _subColor = @"Black";
-            _subSize = 12;
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(0, 90, 350, 100);
+            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 12;
             
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         case 4: //Template 4
         {
-            _subheading.hidden = YES;
+            _subheadingQuestion.hidden = YES;
             
-            _main.hidden = FALSE;
-            _main.frame = CGRectMake(0, 0, 350, 190);
-            _main.font = [UIFont boldSystemFontOfSize:12];
-            _main.textColor = [UIColor blackColor];
-            _main.textAlignment = NSTextAlignmentCenter;
-            _mainAlign = @"Center";
-            _mainColor = @"Black";
-            _mainSize = 12;
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(0, 0, 350, 190);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 12;
             
-            _sub.hidden = TRUE;
+            _subQuestion.hidden = TRUE;
             
-            _image.hidden = TRUE;
+            _imageQuestion.hidden = TRUE;
             break;
         }
         default:
@@ -1604,19 +1769,30 @@ extern BOOL isFromNewCreatedCard;
     [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
     
     [_keyboardTopView setItems:_buttonArray];
-    [_subheading setInputAccessoryView:_keyboardTopView];
-    [_main setInputAccessoryView:_keyboardTopView];
-    [_sub setInputAccessoryView:_keyboardTopView];
+    
+    [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
+    [_mainQuestion setInputAccessoryView:_keyboardTopView];
+    [_subQuestion setInputAccessoryView:_keyboardTopView];
+    [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
+    [_mainAnswer setInputAccessoryView:_keyboardTopView];
+    [_subAnswer setInputAccessoryView:_keyboardTopView];
 }
 
 -(IBAction)dismissKeyBoard
 {
-    [_subheading resignFirstResponder];
-    [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_main resignFirstResponder];
-    [_main setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_sub resignFirstResponder];
-    [_subheading setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_subheadingQuestion resignFirstResponder];
+    [_subheadingQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_mainQuestion resignFirstResponder];
+    [_mainQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_subQuestion resignFirstResponder];
+    [_subheadingQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
+    
+    [_subheadingAnswer resignFirstResponder];
+    [_subheadingAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_mainAnswer resignFirstResponder];
+    [_mainAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_subAnswer resignFirstResponder];
+    [_subheadingAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         //we will save until after we press the save button
@@ -1690,7 +1866,12 @@ extern BOOL isFromNewCreatedCard;
             _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         }
         [imageData writeToFile:_imageFullPath atomically:YES];
-        _image.image = [UIImage imageWithData:imageData];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            _imageQuestion.image = [UIImage imageWithData:imageData];
+        } else {
+            _imageAnswer.image = [UIImage imageWithData:imageData];
+        }
+        
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
@@ -1775,12 +1956,18 @@ extern BOOL isFromNewCreatedCard;
         selectFontSize = 40;
     }
     
-    if (responderTextView.tag == 100){
-        _subheadingSize = selectFontSize;
-    } else if (responderTextView.tag == 101) {
-        _mainSize = selectFontSize;
-    } else if (responderTextView.tag == 102) {
-        _subSize = selectFontSize;
+    if (responderTextView.tag == kTagSubheadingQuestion){
+        _subheadingSizeQuestion = selectFontSize;
+    } else if (responderTextView.tag == kTagMainQuestion) {
+        _mainSizeQuestion = selectFontSize;
+    } else if (responderTextView.tag == kTagSubQuestion) {
+        _subSizeQuestion = selectFontSize;
+    } else if (responderTextView.tag == kTagSubheadingAnswer) {
+        _subheadingSizeAnswer = selectFontSize;
+    } else if (responderTextView.tag == kTagMainAnswer) {
+        _mainSizeAnswer = selectFontSize;
+    } else if (responderTextView.tag == kTagSubAnswer) {
+        _subSizeAnswer = selectFontSize;
     }
     
     [_keyboardTopView setItems:_buttonArray];
@@ -1805,13 +1992,19 @@ extern BOOL isFromNewCreatedCard;
     }
     responderTextView.selectedRange = range;  // to restore cursor position
     
-    if (responderTextView.tag == 100){
-        _subheadingAlign = selectAlignStr;
-    } else if (responderTextView.tag == 101) {
-        _mainAlign = selectAlignStr;
-    } else if (responderTextView.tag == 102) {
-        _subAlign = selectAlignStr;
-    }
+    if (responderTextView.tag == kTagSubheadingQuestion){
+        _subheadingAlignQuestion = selectAlignStr;
+    } else if (responderTextView.tag == kTagMainQuestion) {
+        _mainAlignQuestion = selectAlignStr;
+    } else if (responderTextView.tag == kTagSubQuestion) {
+        _subAlignQuestion = selectAlignStr;
+    } else if (responderTextView.tag == kTagSubheadingAnswer) {
+        _subheadingAlignAnswer = selectAlignStr;
+    } else if (responderTextView.tag == kTagMainAnswer) {
+        _mainAlignAnswer = selectAlignStr;
+    } else if (responderTextView.tag == kTagSubAnswer) {
+        _subAlignAnswer = selectAlignStr;
+    } 
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -1839,13 +2032,19 @@ extern BOOL isFromNewCreatedCard;
         selectColorStr = @"Green";
     }
     
-    if (responderTextView.tag == 100){
-        _subheadingColor = selectColorStr;
-    } else if (responderTextView.tag == 101) {
-        _mainColor = selectColorStr;
-    } else if (responderTextView.tag == 102) {
-        _subColor = selectColorStr;
-    }
+    if (responderTextView.tag == kTagSubheadingQuestion){
+        _subheadingColorQuestion = selectColorStr;
+    } else if (responderTextView.tag == kTagMainQuestion) {
+        _mainColorQuestion = selectColorStr;
+    } else if (responderTextView.tag == kTagSubQuestion) {
+        _subColorQuestion = selectColorStr;
+    } else if (responderTextView.tag == kTagSubheadingAnswer) {
+        _subheadingColorAnswer = selectColorStr;
+    } else if (responderTextView.tag == kTagMainAnswer) {
+        _mainColorAnswer = selectColorStr;
+    } else if (responderTextView.tag == kTagSubAnswer) {
+        _subColorAnswer = selectColorStr;
+    } 
     
     [_keyboardTopView setItems:_buttonArray];
 }
@@ -1999,14 +2198,7 @@ extern BOOL isFromNewCreatedCard;
     
     _currentCard.packID = _currentPack.packID;
     
-    if (isFromNewCreatedCard == FALSE)  //we don't need to do this when it's in Create Card operation
-    {
-        if (_isQuestionShowing) {
-            [self doQuestionData];
-        } else {
-            [self doAnswerData];
-        }
-    }
+    [self doQuestionAndAnswerData];
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         [_currentPack addCard:_currentCard];
@@ -2066,12 +2258,11 @@ extern BOOL isFromNewCreatedCard;
     NSString *templateIDString = (NSString *)[notification object];
     _currentCard.templateID = [templateIDString integerValue];
     
-    [self updateQuestionOrAnswerTemplate];
-    
+    [self updateQuestionAndAnswerTemplate];
     
     // we put all the save operations only when click the "save button"
     if (!isFromNewCreatedCard) {
-        [self saveEdittedCard];    
+        [self saveEdittedCard];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];

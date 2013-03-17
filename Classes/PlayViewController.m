@@ -161,7 +161,7 @@
 {
     [_flashCardViewArray removeAllObjects];
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+20; //Since it's horizontal movement, so this is a constant value
+    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+30; //Since it's horizontal movement, so this is a constant value
     for (int index = 0; index < [cardArray count]; index++)
 	{
 		//flash card height = scroll height; flash card width < scroll width
@@ -209,12 +209,12 @@
     if (_currentFlashCardView) {
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
-            NSLog(@"%d", 0);
-            [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
+            [_currentFlashCardView refreshAll];
+            [_currentFlashCardView disableCardEdit];
         } else {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
-            [_currentFlashCardView segmentAction:_currentFlashCardView.segmentedControl];
-            NSLog(@"%d", 1);
+            [_currentFlashCardView refreshAll];
+            [_currentFlashCardView disableCardEdit];
         }
         
         [_currentFlashCardView setNeedsDisplay];

@@ -126,12 +126,7 @@ BOOL isFromNewCreatedCard = NO;
         return;
     }
     
-    //Step3: Save. since we share same variable for both answer and question, we have this idea to keep both question and answer data when creating card. You can find another keep logic at segmentAction
-    if (_newCardView.segmentedControl.selectedSegmentIndex == 0) {
-        [_newCardView doQuestionData];
-    } else {
-        [_newCardView doAnswerData];
-    }
+    //Step3: Save.
     [_newCardView saveEdittedCard];
     
     //Step4: Send notification to remove the background in master view

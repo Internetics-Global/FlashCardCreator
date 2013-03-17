@@ -29,27 +29,47 @@ typedef enum RescreenshotReason {
     NSString     *_logoLinkURL;
     UIButton     *_logoLinkageButton;
     UILabel      *_packName;
-    UITextView   *_subheading; // means subheading. only suitable for question
-    UITextView   *_main;
-    UITextView   *_sub;
+    
+    
     UITextView   *_title;
-    UIImageView  *_image;
     NSString     *_imageFullPath;
     UIScrollView *_verticalScrollView;
     
-    NSInteger _subheadingSize;
-	NSString  *_subheadingColor;
-    NSString  *_subheadingAlign;
-    NSInteger _mainSize;
-	NSString  *_mainColor;
-    NSString  *_mainAlign;
-    NSInteger _subSize;
-	NSString  *_subColor;
-    NSString  *_subAlign;
+    UITextView   *_subheadingQuestion;
+    UITextView   *_mainQuestion;
+    UITextView   *_subQuestion;
+    UIImageView  *_imageQuestion;
+    NSInteger    _subheadingSizeQuestion;
+	NSString     *_subheadingColorQuestion;
+    NSString     *_subheadingAlignQuestion;
+    NSInteger    _mainSizeQuestion;
+	NSString     *_mainColorQuestion;
+    NSString     *_mainAlignQuestion;
+    NSInteger    _subSizeQuestion;
+	NSString     *_subColorQuestion;
+    NSString     *_subAlignQuestion;
+    
+    UITextView   *_subheadingAnswer;
+    UITextView   *_mainAnswer;
+    UITextView   *_subAnswer;
+    UIImageView  *_imageAnswer;
+    NSInteger    _subheadingSizeAnswer;
+	NSString     *_subheadingColorAnswer;
+    NSString     *_subheadingAlignAnswer;
+    NSInteger    _mainSizeAnswer;
+	NSString     *_mainColorAnswer;
+    NSString     *_mainAlignAnswer;
+    NSInteger    _subSizeAnswer;
+	NSString     *_subColorAnswer;
+    NSString     *_subAlignAnswer;
+    
+    NSMutableDictionary *_qDict;
+    NSMutableDictionary *_aDict;
     
     BOOL    _isLogoImageViewClicked;
     BOOL    _keyboardShown;
     BOOL    _isAllCardsLogoNeedToBeUpdate;
+    
     NSArray *_buttonArray;
     NSArray *_fontSizeArray;
     NSArray *_colorArray;
@@ -77,9 +97,6 @@ typedef enum RescreenshotReason {
 - (void) refreshAll;
 
 - (void) saveEdittedCard;
-
-- (void) doAnswerData;
-- (void) doQuestionData;
 
 - (void)segmentAction:(id)sender;
 

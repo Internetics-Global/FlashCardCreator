@@ -160,7 +160,7 @@
             _rightPackImage = [[UIImageView alloc] init];
             _rightPackImage.frame = CGRectMake(0, 0, 180, 144);
             _rightPackImage.contentMode = UIViewContentModeScaleAspectFill;
-            _rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
+            _rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2-20, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
             _rightPackImage.layer.cornerRadius = 5;
             _rightPackImage.layer.masksToBounds = TRUE;
             _rightPackImage.layer.opacity = 0.85;
