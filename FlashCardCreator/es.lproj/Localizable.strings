@@ -10,6 +10,12 @@
 "DIALOG_DOWNLOAD_PACK" = "Descarga paquete de muestra";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Usted puede hacer cambios solamente en aquellas tarjetas que son creados por usted mismo";
 "DIALOG_EXISTING_PACK_NAME"                = "Nombre actual del paquete, por favor ingrese una diferente";
+"DIALOG_CHECK_NETWORK_STATUS"       = "Por favor, comprueba tu red";
+"DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Desconectado Dropbox enlace";
+"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
+"DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
+"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Registrarse cuenta de Dropbox no";
+"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Descargue el paquete ...";
 
 "NavigationBarItem_Packs" = "Packs";
 "NavigationBarItem_Create" = "Crear";

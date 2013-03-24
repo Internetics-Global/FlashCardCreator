@@ -140,7 +140,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 - (void) dropboxSwitchAction {
     if (!_dropboxSwitch.on) {
         [[DBSession sharedSession] unlinkAll];
-        [Common alertViewCommon:@"Your dropbox account has been unlinked"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_DROPBOX_HAS_BEEN_UNLINKED",@"")];
     } else {
         [[DBSession sharedSession] linkFromController:self];
         isLoggingDropboxInSettingView = YES;

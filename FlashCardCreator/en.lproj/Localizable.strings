@@ -10,6 +10,12 @@
 "DIALOG_DOWNLOAD_PACK"              = "Downloading sample pack";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can make changes on only those cards that are created by yourself";
 "DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
+"DIALOG_CHECK_NETWORK_STATUS"       = "Please check your network";
+"DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Your dropbox account has been unlinked";
+"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You can not create a card whose group is not created by you";
+"DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
+"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Fail to login dropbox account";
+"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download sample pack first";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

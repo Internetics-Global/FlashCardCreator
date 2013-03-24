@@ -89,7 +89,7 @@
     
     //step2: upload to dropbox
     if ([DataManager apiReachable] == NO) {
-        [Common alertViewCommon:@"Please check your network"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];
         return;
     }
     

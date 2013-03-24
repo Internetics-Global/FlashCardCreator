@@ -161,7 +161,7 @@ extern BOOL isLoggingDropboxInSettingView;
 {
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (!isExamplePackDownloadedSuccessful) {
-        [Common alertViewCommon:@"Download example pack firstly"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST",@"")];
         return NO;
     }
     
@@ -225,7 +225,7 @@ extern BOOL isLoggingDropboxInSettingView;
     
     if(![linkedNum boolValue])
     {
-        [Common alertViewCommon:@"Failed to login to Dropbox."];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
     } else
     {
         //[Common alertViewCommon:@"Dropbox is linked now"];

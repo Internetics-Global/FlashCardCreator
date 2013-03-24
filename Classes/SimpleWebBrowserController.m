@@ -206,7 +206,7 @@
     NSLog(@"error:%@",error);
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
-            [Common alertViewCommon:@"Check the network status"];
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];
         }
     }
 }

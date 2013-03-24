@@ -122,7 +122,7 @@ BOOL isFromNewCreatedCard = NO;
     
     //Step2: exception dealing
     if (_currentPack.packID == -1) {
-        [Common alertViewCommon:@"You need to create a pack first"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_NEED_TO_CREATE_PACK_FIRST",@"")];
         return;
     }
     

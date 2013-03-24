@@ -10,6 +10,12 @@
 "DIALOG_DOWNLOAD_PACK" = "Downloading sample pack";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Sie können Änderungen nur auf diesen Karten, die Sie selbst erstellt werden machen";
 "DIALOG_EXISTING_PACK_NAME"                = "Bestehende Pack Namen, geben Sie bitte eine andere";
+"DIALOG_CHECK_NETWORK_STATUS"       = "Bitte überprüfen Sie Ihr Netzwerk";
+"DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Disconnected Dropbox Link";
+"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Sie haben noch um die Gruppe zu erstellen, so kann ich nicht erstellen Sie eine neue Karte";
+"DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Angelegt wird, bevor die Errichtung einer Gruppe erforderlich";
+"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Anmelden Dropbox Konto nicht";
+"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download Paket";
 
 "NavigationBarItem_Packs" = "Packs";
 "NavigationBarItem_Create" = "Erstellen";

@@ -246,7 +246,7 @@
 - (void)createNewCard:(id)sender
 {
     if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
-        [Common alertViewCommon:@"Not allow to create card whose pack is not created by yourself"];
+        [Common alertViewCommon:NSLocalizedString(@"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
         return;
     }
     
