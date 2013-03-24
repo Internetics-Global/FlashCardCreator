@@ -8,6 +8,8 @@
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK" = "あなたのネットワークを確認してください";
 "DIALOG_DOWNLOAD_PACK" ="サンプルパックのダウンロード";
+"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "ご自身で作成されただけのカードに変更を加えることができます";
+"DIALOG_EXISTING_PACK_NAME"                = "パックの名前、既存の入力に別のものをしてください";
 
 "NavigationBarItem_Packs" = "パック";
 "NavigationBarItem_Create" = "作成";

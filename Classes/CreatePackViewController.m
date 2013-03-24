@@ -121,7 +121,7 @@
         [self dismissModalViewControllerAnimated:YES];
     } else {
         
-        [Common alertViewCommon:@"Existing pack name, please input a different one"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_EXISTING_PACK_NAME",@"")];
     }
     
 }

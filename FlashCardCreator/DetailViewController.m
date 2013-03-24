@@ -485,7 +485,7 @@ enum template_color_enum {
     }
     
     if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
-        [Common alertViewCommon:@"You can not make changes, which is not created by yourself"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return;
     }
     
