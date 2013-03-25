@@ -16,6 +16,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Fail to login dropbox account";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download sample pack first";
+"DIALOG_ENTER_VALID_URL"       = "Please input a valid URL";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -37,6 +38,7 @@
 "ToolbarItem_Question"      = "Question";
 
 "Keyboard_Done"             = "Done";
+"Keyboard_Cancel"             = "Cancel";
 
 "ToolbarItem_Align"        = "Align";
 "ToolbarItem_Size"         = "Size";
@@ -72,6 +74,7 @@
 "Title_More" = "More";
 "Title_Help" = "Help";
 "Title_Total_Number_Card" = "Total cards";
+"Title_Select_Template" = "Select Template";
 
 "UIButton_Save_Card"  = "Save";
 

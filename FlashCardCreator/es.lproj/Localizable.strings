@@ -12,10 +12,11 @@
 "DIALOG_EXISTING_PACK_NAME"                = "Nombre actual del paquete, por favor ingrese una diferente";
 "DIALOG_CHECK_NETWORK_STATUS"       = "Por favor, comprueba tu red";
 "DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Desconectado Dropbox enlace";
-"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
+"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Registrarse cuenta de Dropbox no";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Descargue el paquete ...";
+"DIALOG_ENTER_VALID_URL"       = "Por favor, introduzca una URL válida";
 
 "NavigationBarItem_Packs" = "Packs";
 "NavigationBarItem_Create" = "Crear";
@@ -37,6 +38,7 @@
 "ToolbarItem_Question" = "Pregunta";
 
 "Keyboard_Done" = "Hecho";
+"Keyboard_Cancel"             = "Cancelar";
 
 "ToolbarItem_Align" = "Alinear";
 "ToolbarItem_Size" = "Tamaño";
@@ -72,6 +74,7 @@
 "Title_More" = "Más";
 "Title_Help" = "Ayudar";
 "Title_Total_Number_Card" = "Número total de tarjetas";
+"Title_Select_Template" = "Seleccione una plantilla";
 
 "UIButton_Save_Card" = "Guardar";
 

@@ -16,6 +16,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "作成は、グループの設立に先立って必要とされる";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropboxのアカウントが失敗をログに記録する";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "パッケージをダウンロードします...";
+"DIALOG_ENTER_VALID_URL"       = "有効なURLを入力してください";
 
 "NavigationBarItem_Packs" = "パック";
 "NavigationBarItem_Create" = "作成";
@@ -37,6 +38,7 @@
 "ToolbarItem_Question" ="質問";
 
 "Keyboard_Done" = "完了";
+"Keyboard_Cancel"             = "キャンセル";
 
 "ToolbarItem_Align" = "整列";
 "ToolbarItem_Size"= "サイズ";
@@ -72,6 +74,7 @@
 "Title_More" = "もっと";
 "Title_Help" = "助ける";
 "Title_Total_Number_Card" = "カードの総数";
+"Title_Select_Template" = "テンプレートを選択";
 
 "UIButton_Save_Card" ="保存";
 

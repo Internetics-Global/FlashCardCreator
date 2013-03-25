@@ -76,6 +76,11 @@ enum template_color_enum {
         _nextCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad)
                                              defaultPack:_currentPack defaultCard:_currentCard];
     }
+    
+    [[_currentCardView layer] setShadowOffset:CGSizeMake(1, 1)];
+    [[_currentCardView layer] setShadowRadius:3];
+    [[_currentCardView layer] setShadowOpacity:0.5];
+    [[_currentCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
 
 }
 

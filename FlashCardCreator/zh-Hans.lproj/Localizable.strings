@@ -16,6 +16,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "创建前需先建立一个组";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "登录Dropbox账户失败";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "下载包中...";
+"DIALOG_ENTER_VALID_URL"       = "请输入有效的URL";
 
 
 "NavigationBarItem_Packs"   = "组";
@@ -38,6 +39,7 @@
 "ToolbarItem_Question"      = "问题";
 
 "Keyboard_Done"             = "完成";
+"Keyboard_Cancel"             = "取消";
 
 "ToolbarItem_Align"        = "对齐";
 "ToolbarItem_Size"         = "尺寸";
@@ -73,6 +75,7 @@
 "Title_More" = "更多";
 "Title_Help" = "帮助";
 "Title_Total_Number_Card" = "总卡片数";
+"Title_Select_Template" = "选择模板";
 
 "UIButton_Save_Card"  = "保存";
 

@@ -16,6 +16,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Créé est nécessaire avant la mise en place d'un groupe";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Connectez-vous compte Dropbox ne";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Télécharger le paquet ...";
+"DIALOG_ENTER_VALID_URL"       = "S'il vous plaît entrer une URL valide";
 
 "NavigationBarItem_Packs" = "Packs";
 "NavigationBarItem_Create" = "Créer";
@@ -37,6 +38,7 @@
 "ToolbarItem_Question" = "Question";
 
 "Keyboard_Done" = "Terminé";
+"Keyboard_Cancel"             = "Annuler";
 
 "ToolbarItem_Align" = "Aligner";
 "ToolbarItem_Size" = "Taille";
@@ -72,6 +74,7 @@
 "Title_More" = "Plus";
 "Title_Help" = "Aider";
 "Title_Total_Number_Card" = "Nombre total de cartes";
+"Title_Select_Template" = "Sélectionnez un modèle";
 
 "UIButton_Save_Card" = "Enregistrer";
 

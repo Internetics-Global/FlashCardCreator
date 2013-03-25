@@ -2114,9 +2114,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) editLogoLinkageURL:(id) sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set URL"
-                                                    message:[NSString stringWithFormat:@"Enter a valid URL"]
-                                                   delegate:self cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Ok", nil];
+                                                    message:[NSString stringWithFormat:NSLocalizedString(@"DIALOG_ENTER_VALID_URL",@"")
+]
+                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                          otherButtonTitles:NSLocalizedString(@"Keyboard_Done",@""), nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     if ([[_currentPack cards] count]  >0) {
         _logoLinkURL = ((Card *)[_currentPack cards][0]).question.logoURLLinkage;
