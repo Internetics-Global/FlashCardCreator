@@ -43,6 +43,7 @@
 @synthesize indexCard = _indexCard;
 @synthesize indexPack = _indexPack;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
+@synthesize tableView = _tableView;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -73,10 +74,7 @@
         _indexCard = 0;
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
         
-        //3. others
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            self.clearsSelectionOnViewWillAppear = NO;
-        }
+        
 
     }
     return self;
@@ -85,6 +83,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (isUserInterfaceIdiomPhone) {
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];    
+    } else {
+        self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    }
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view insertSubview:self.tableView atIndex:0];
 
     _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Packs",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
@@ -111,8 +121,7 @@
             @[helpButton,settingButton,playButton, shareButton];
     }
     
-    self.tableView.backgroundColor = [UIColor blackColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     if (isUserInterfaceIdiomPhone) {
         self.title = _currentPack.packName;
     }
@@ -496,7 +505,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isUserInterfaceIdiomPhone) {
-        return 100;
+        return 90;
     } else {
         return kCellSizeHeight;
     }

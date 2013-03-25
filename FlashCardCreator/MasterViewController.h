@@ -14,7 +14,7 @@
 @class Pack;
 @class Card;
 
-@interface MasterViewController : UITableViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate> {
+@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,UITableViewDelegate,UITableViewDataSource> {
     
     Pack *_currentPack;
     Card *_currentCard;
@@ -36,6 +36,8 @@
     UIImageView *_rightPackImage;
     UILabel *_rightPackCardNo;
     UIBarButtonItem *_selectPackButton;
+    
+    UITableView *_tableView;
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;
@@ -44,6 +46,8 @@
 @property (nonatomic, assign) NSUInteger indexCard;
 @property (nonatomic, assign) NSUInteger indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
+
+@property (nonatomic, strong) UITableView *tableView;
 
 - (void)shareButtonClicked;
 
