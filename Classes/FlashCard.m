@@ -162,7 +162,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(660, 10, 120, 80);
+        _logoImage.frame = CGRectMake(690, 15, 90, 60);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -176,7 +176,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _logoLinkageButton.frame = CGRectMake(695, 95, 50, 20);
+        _logoLinkageButton.frame = CGRectMake(715, 80, 25, 25);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
@@ -386,7 +386,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(355, 2, 42, 28);
+        _logoImage.frame = CGRectMake(355, 5, 30, 20);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
@@ -402,7 +402,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _logoLinkageButton.frame = CGRectMake(365, 32, 20, 8);
+        _logoLinkageButton.frame = CGRectMake(365, 27, 12, 12);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
