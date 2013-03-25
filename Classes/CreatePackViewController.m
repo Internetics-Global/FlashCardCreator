@@ -108,7 +108,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
         
         [[NSUserDefaults standardUserDefaults] setInteger:_newPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
-        
         //Update_date info
         NSString *updateDate = [FileOperationHelper getTodayString];
         NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_newPack.packName];

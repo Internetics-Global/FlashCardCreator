@@ -412,7 +412,7 @@ extern BOOL isFromNewCreatedCard;
     
     
     if (_verticalScrollView == nil) {
-        _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 175)];
+        _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 195)];
         //_verticalScrollView.backgroundColor = [UIColor blueColor];
         [self addSubview:_verticalScrollView];
     }
@@ -1076,21 +1076,21 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(0, 0, 210, 30);
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:16];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
             _subheadingAlignAnswer = @"Center";
             _subheadingColorAnswer = @"Black";
-            _subheadingSizeAnswer = 14;
+            _subheadingSizeAnswer = 16;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(0, 40, 210, 150);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:14];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 12;
+            _mainSizeAnswer = 14;
             
             _subAnswer.hidden = TRUE;
             
@@ -1104,23 +1104,30 @@ extern BOOL isFromNewCreatedCard;
             
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(0, 0, 210, 30);
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:16];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
             _subheadingColorAnswer = @"Black";
-            _subheadingSizeAnswer = 12;
+            _subheadingSizeAnswer = 16;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(0, 30, 210, 190);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.frame = CGRectMake(0, 30, 210, 130);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:14];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 12;
+            _mainSizeAnswer = 14;
             
-            _subAnswer.hidden = TRUE;
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(0, 160, 210, 30);
+            _subAnswer.font = [UIFont boldSystemFontOfSize:14];
+            _subAnswer.textColor = [UIColor redColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Red";
+            _subSizeAnswer = 14;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
@@ -1133,12 +1140,12 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(0, 0, 210, 190);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:14];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 12;
+            _mainSizeAnswer = 14;
             
             _subAnswer.hidden = TRUE;
             
@@ -1153,12 +1160,12 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(0, 0, 360, 190);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:14];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 12;
+            _mainSizeAnswer = 14;
             
             _subAnswer.hidden = YES;
             
@@ -1172,12 +1179,12 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(0, 0, 210, 190);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:12];
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:14];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 12;
+            _mainSizeAnswer = 14;
             
             _subAnswer.hidden = TRUE;
             
@@ -1255,7 +1262,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
-            _subColorAnswer = @"Black";
+            _subColorAnswer = @"Red";
             _subSizeAnswer = 38;
             
             _imageAnswer.hidden = FALSE;
@@ -1485,21 +1492,21 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(0, 0, 350, 40);
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
             _subheadingColorQuestion = @"Black";
-            _subheadingSizeQuestion = 14;
+            _subheadingSizeQuestion = 16;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(0, 40, 350, 150);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
             _mainColorQuestion = @"Black";
-            _mainSizeQuestion = 12;
+            _mainSizeQuestion = 14;
             
             _subQuestion.hidden = TRUE;
             
@@ -1511,30 +1518,30 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(0, 0, 350, 25);
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:14];
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
             _subheadingColorQuestion = @"Black";
-            _subheadingSizeQuestion = 14;
+            _subheadingSizeQuestion = 16;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(0, 25, 350, 90);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
             _mainColorQuestion = @"Black";
-            _mainSizeQuestion = 12;
+            _mainSizeQuestion = 14;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(0, 90, 350, 95);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.font = [UIFont boldSystemFontOfSize:14];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Center";
             _subColorQuestion = @"Black";
-            _subSizeQuestion = 12;
+            _subSizeQuestion = 14;
             
             _imageQuestion.hidden = TRUE;
             break;
@@ -1545,21 +1552,21 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(0, 0, 350, 130);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
             _mainColorQuestion = @"Black";
-            _mainSizeQuestion = 12;
+            _mainSizeQuestion = 14;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(0, 130, 350, 60);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.font = [UIFont boldSystemFontOfSize:14];
             _subQuestion.textColor = [UIColor redColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
             _subColorQuestion = @"Red";
-            _subSizeQuestion = 12;
+            _subSizeQuestion = 14;
             
             _imageQuestion.hidden = TRUE;
             
@@ -1571,21 +1578,21 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(0, 0, 350, 90);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
             _mainColorQuestion = @"Black";
-            _mainSizeQuestion = 12;
+            _mainSizeQuestion = 14;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(0, 90, 350, 100);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _subQuestion.font = [UIFont boldSystemFontOfSize:14];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
             _subColorQuestion = @"Black";
-            _subSizeQuestion = 12;
+            _subSizeQuestion = 14;
             
             
             _imageQuestion.hidden = TRUE;
@@ -1597,12 +1604,12 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(0, 0, 350, 190);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:12];
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
             _mainColorQuestion = @"Black";
-            _mainSizeQuestion = 12;
+            _mainSizeQuestion = 14;
             
             _subQuestion.hidden = TRUE;
             
@@ -1946,28 +1953,28 @@ extern BOOL isFromNewCreatedCard;
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size12",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:12];
+        responderTextView.font = [UIFont boldSystemFontOfSize:12];
         selectFontSize = 12;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size16",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:16];
+        responderTextView.font = [UIFont boldSystemFontOfSize:16];
         selectFontSize = 16;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size20",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:20];
+        responderTextView.font = [UIFont boldSystemFontOfSize:20];
         selectFontSize = 20;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size24",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:24];
+        responderTextView.font = [UIFont boldSystemFontOfSize:24];
         selectFontSize = 24;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size28",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:28];
+        responderTextView.font = [UIFont boldSystemFontOfSize:28];
         selectFontSize = 28;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size32",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:32];
+        responderTextView.font = [UIFont boldSystemFontOfSize:32];
         selectFontSize = 32;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size36",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:36];
+        responderTextView.font = [UIFont boldSystemFontOfSize:36];
         selectFontSize = 36;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size40",nil)]) {
-        responderTextView.font = [UIFont systemFontOfSize:40];
+        responderTextView.font = [UIFont boldSystemFontOfSize:40];
         selectFontSize = 40;
     }
     
@@ -2274,7 +2281,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *templateIDString = (NSString *)[notification object];
     _currentCard.templateID = [templateIDString integerValue];
     
-    [self updateQuestionAndAnswerTemplate];
+    [self updateQuestionOrAnswerTemplate];//we will do other side's update when clicking segment
     
     // we put all the save operations only when click the "save button"
     if (!isFromNewCreatedCard) {
