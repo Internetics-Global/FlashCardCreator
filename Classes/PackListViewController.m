@@ -10,6 +10,7 @@
 
 #import "Pack.h"
 #import "User.h"
+#import "FileOperationHelper.h"
 
 
 @implementation PackListViewController
@@ -226,6 +227,20 @@
     Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:index];
     [[User defaultUser] removePack:currentPack];
     [self resetPackContent];
+    
+    //Recalculate:
+    Pack *latestPack = [[[User defaultUser] packs] lastObject];
+    if (latestPack != nil) {
+        [[NSUserDefaults standardUserDefaults] setInteger:latestPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
+        //Update_date info
+        NSString *updateDate = [FileOperationHelper getTodayString];
+        NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+        [dict setObject:updateDate forKey:@"update_date"];
+        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     [_swipeView reloadData];
 }
                                            
