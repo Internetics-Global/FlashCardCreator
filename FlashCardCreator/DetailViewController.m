@@ -89,7 +89,7 @@ enum template_color_enum {
     [super loadView];
     
     _templateBackgroundSelectButton = [[UIBarButtonItem alloc]
-                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"change_template_background_button~ipad"] target:self action:@selector(selectCardBackgroundTemplate:)]];;
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"change_template_background_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)]];;
     
     //we don't setting button on iPhone
     _settingButton = [[UIBarButtonItem alloc]

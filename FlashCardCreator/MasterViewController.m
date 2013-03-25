@@ -540,7 +540,7 @@
     if (coverImage) {
         cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];    
     } else {
-        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.jpg"];
+        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
     }
     
     if (_indexCard == indexPath.row) {

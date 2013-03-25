@@ -162,7 +162,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(645, 10, 150, 100);
+        _logoImage.frame = CGRectMake(660, 10, 120, 80);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -176,7 +176,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _logoLinkageButton.frame = CGRectMake(700, 90, 50, 20);
+        _logoLinkageButton.frame = CGRectMake(695, 95, 50, 20);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
@@ -332,10 +332,8 @@ extern BOOL isFromNewCreatedCard;
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-90-10, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-45, 90, 25);
-        [_changeTemplateButton setTitle:@"   Select Template" forState:UIControlStateNormal];
-        _changeTemplateButton.titleLabel.font = [UIFont systemFontOfSize:9];
-        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"select_template_button.png"] forState:UIControlStateNormal];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-30-5, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-50, 30, 30);
+        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
@@ -388,7 +386,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(340, 5, 50, 30);
+        _logoImage.frame = CGRectMake(355, 2, 42, 28);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
@@ -404,7 +402,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _logoLinkageButton.frame = CGRectMake(357, 32, 20, 8);
+        _logoLinkageButton.frame = CGRectMake(365, 32, 20, 8);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
@@ -563,10 +561,8 @@ extern BOOL isFromNewCreatedCard;
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-72-10, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-30, 72, 20);
-        [_changeTemplateButton setTitle:@"   Select Template" forState:UIControlStateNormal];
-        _changeTemplateButton.titleLabel.font = [UIFont systemFontOfSize:7];
-        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"select_template_button.png"] forState:UIControlStateNormal];
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-16-2, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-16-10, 16, 16);
+        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
     }
@@ -575,19 +571,13 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark - Editable related
-- (void)checkCardEditable {
+- (BOOL)checkCardEditable {
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        if (_segmentedControl.selectedSegmentIndex == 0) {
-            [self enableCardEdit];
-        } else {
-            [self enableCardEdit];
-        }
-        
+        return YES;
     } else {
-        [self disableCardEdit];
+        return NO;
     }
 }
-
 
 - (void) disableCardEdit{
     
@@ -637,21 +627,21 @@ extern BOOL isFromNewCreatedCard;
     _mainQuestion.userInteractionEnabled         = TRUE;
     _mainQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _mainQuestion.layer.borderWidth = 2;
+        _mainQuestion.layer.borderWidth = 1;
     } else {
         _mainQuestion.layer.borderWidth = 3;
     }
     _subQuestion.userInteractionEnabled          = TRUE;
     _subQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _subQuestion.layer.borderWidth = 2;
+        _subQuestion.layer.borderWidth = 1;
     } else {
         _subQuestion.layer.borderWidth = 3;
     }
     _subheadingQuestion.userInteractionEnabled   = TRUE;
     _subheadingQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _subheadingQuestion.layer.borderWidth = 2;
+        _subheadingQuestion.layer.borderWidth = 1;
     } else {
         _subheadingQuestion.layer.borderWidth = 3;
     }
@@ -660,21 +650,21 @@ extern BOOL isFromNewCreatedCard;
     _mainAnswer.userInteractionEnabled         = TRUE;
     _mainAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _mainAnswer.layer.borderWidth = 2;
+        _mainAnswer.layer.borderWidth = 1;
     } else {
         _mainAnswer.layer.borderWidth = 3;
     }
     _subAnswer.userInteractionEnabled          = TRUE;
     _subAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _subAnswer.layer.borderWidth = 2;
+        _subAnswer.layer.borderWidth = 1;
     } else {
         _subAnswer.layer.borderWidth = 3;
     }
     _subheadingAnswer.userInteractionEnabled   = TRUE;
     _subheadingAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
-        _subheadingAnswer.layer.borderWidth = 2;
+        _subheadingAnswer.layer.borderWidth = 1;
     } else {
         _subheadingAnswer.layer.borderWidth = 3;
     }
@@ -693,7 +683,11 @@ extern BOOL isFromNewCreatedCard;
     [self updateQuestionOrAnswerTemplate];
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
-    [self checkCardEditable];
+    if ([self checkCardEditable] == YES) {
+        [self enableCardEdit];
+    } else {
+        [self disableCardEdit];
+    }
 }
 
 
@@ -1084,7 +1078,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(0, 40, 210, 150);
+            _mainAnswer.frame = CGRectMake(0, 35, 210, 150);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1112,7 +1106,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(0, 30, 210, 130);
+            _mainAnswer.frame = CGRectMake(0, 33, 210, 130);
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1491,7 +1485,7 @@ extern BOOL isFromNewCreatedCard;
         case 0: //Template 0
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(0, 0, 350, 40);
+            _subheadingQuestion.frame = CGRectMake(1, 0, 350, 40);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1500,7 +1494,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(0, 40, 350, 150);
+            _mainQuestion.frame = CGRectMake(1, 43, 350, 150);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1517,7 +1511,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(0, 0, 350, 25);
+            _subheadingQuestion.frame = CGRectMake(1, 0, 350, 25);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1526,7 +1520,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(0, 25, 350, 90);
+            _mainQuestion.frame = CGRectMake(1, 28, 350, 90);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1535,7 +1529,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(0, 90, 350, 95);
+            _subQuestion.frame = CGRectMake(1, 120, 350, 70);
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1551,7 +1545,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(0, 0, 350, 130);
+            _mainQuestion.frame = CGRectMake(1, 0, 350, 130);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1560,7 +1554,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(0, 130, 350, 60);
+            _subQuestion.frame = CGRectMake(1, 133, 350, 60);
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor redColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1577,7 +1571,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(0, 0, 350, 90);
+            _mainQuestion.frame = CGRectMake(1, 0, 350, 90);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1586,7 +1580,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(0, 90, 350, 100);
+            _subQuestion.frame = CGRectMake(1, 93, 350, 100);
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1603,7 +1597,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(0, 0, 350, 190);
+            _mainQuestion.frame = CGRectMake(1, 0, 350, 190);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1904,6 +1898,10 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (UIImage *)captureWholeViewAsImage {
+    BOOL isEditable = [self checkCardEditable];
+    if (isEditable == YES) {
+        [self disableCardEdit];
+    }
     CGRect screenRect = self.bounds;
     UIGraphicsBeginImageContext(screenRect.size);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -1912,6 +1910,9 @@ extern BOOL isFromNewCreatedCard;
     [self.layer renderInContext:ctx];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    if (isEditable == YES) {
+        [self enableCardEdit];
+    }
     return newImage;
 }
 

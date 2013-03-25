@@ -88,7 +88,7 @@ typedef enum RescreenshotReason {
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;;
 
 
-- (void) checkCardEditable;
+- (BOOL) checkCardEditable;
 - (void) disableCardEdit;
 - (void) enableCardEdit;
 
