@@ -68,6 +68,13 @@
 
 "Title_Add_A_New_Pack" = "Añadir un nuevo paquete";
 "Title_Create_A_New_Card" = "Crear una nueva tarjeta";
+"Title_About" = "Sobre nosotros";
+"Title_More" = "Más";
+"Title_Help" = "Ayudar";
+"Title_Total_Number_Card" = "Número total de tarjetas";
 
 "UIButton_Save_Card" = "Guardar";
+
+"Indicator_Upload"  = "Carga de primera ...";
+"Indicator_Create_Share_Link"  = "Cree compartir enlaces ...";
 

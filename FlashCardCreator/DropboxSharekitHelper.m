@@ -196,8 +196,8 @@
     [_HUD setTransform:at];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
-    _HUD.labelText = @"Uploading first...";
-    _HUD.detailsLabelText = @"to Dropbox and create share linkage";
+    _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
+;
     _isCreatingShareLinkage = NO;
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
@@ -214,7 +214,8 @@
     _progressivePercent = 0;
     
     _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelText = @"Then create share link...";
+    _HUD.labelText = NSLocalizedString(@"Indicator_Create_Share_Link",@"")
+;
     
     while (_isCreatingShareLinkage == YES) {
         usleep(50000);

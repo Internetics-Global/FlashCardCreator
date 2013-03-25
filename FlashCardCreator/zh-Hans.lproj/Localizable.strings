@@ -27,7 +27,7 @@
 "NavigationBarItem_More"    = "更多";
 "NavigationBarItem_Back"    = "返回";
 
-"NavigationBarItem_More_Dropbox"    = "网络存储箱";
+"NavigationBarItem_More_Dropbox"    = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "随机播放";
 "NavigationBarItem_More_Register"   = "注册";
 "NavigationBarItem_More_Logo_In"   = "登陆";
@@ -69,6 +69,13 @@
 
 "Title_Add_A_New_Pack" = "添加新组";
 "Title_Create_A_New_Card" = "创建一个新卡片";
+"Title_About" = "关于我们";
+"Title_More" = "更多";
+"Title_Help" = "帮助";
+"Title_Total_Number_Card" = "总卡片数";
 
 "UIButton_Save_Card"  = "保存";
+
+"Indicator_Upload"  = "上传到Dropbox...";
+"Indicator_Create_Share_Link"  = "创建分享链接...";
 

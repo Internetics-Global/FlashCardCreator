@@ -108,7 +108,7 @@
     
 }
 
--(void)destroy{
+-(void)destroy {
 	//Step1: delete from database
     NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Question_Tables WHERE card_id=%d", _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
@@ -117,18 +117,23 @@
     
     //Step2: delted image resources
     NSError *error = nil;
-    //We never delete placeholder imae
-    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.jpg"]) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath]) {
-            [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
-            if (error) {
-                [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+    
+    //For history reason, we share logo image common under the same package. This could introduce into some waste of space, but temporarily, we have to do it like this.
+    if (0) {
+        //We never delete placeholder imae
+        if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.jpg"]) {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath]) {
+                [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
+                if (error) {
+                    [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
+                    NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                }
             }
         }
     }
+    
     error = nil;
-    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"question_placeholder_content.png"]) {
+    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"question_placeholder_content.jpg"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {

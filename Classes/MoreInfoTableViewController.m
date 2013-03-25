@@ -23,7 +23,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title =@"More";
+        self.title =NSLocalizedString(@"Title_More",@"");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableViewNotification:) name:REFRESH_SETTING_TABLEVIEW_NOTIFICATION
  object:nil];
     }

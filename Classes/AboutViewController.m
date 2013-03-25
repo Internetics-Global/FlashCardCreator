@@ -15,7 +15,7 @@
 - (void)loadView {
 	[super loadView];
 	
-    self.title = @"About Us";
+    self.title = NSLocalizedString(@"Title_About",@"");
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	scroller = [[UIScrollView alloc] initWithFrame:self.view.frame];

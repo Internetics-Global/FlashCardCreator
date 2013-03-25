@@ -181,7 +181,8 @@
             _rightPackCardNo.frame = rect;
             [_rightPackView addSubview:_rightPackCardNo];
         }
-        [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+        
+        [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
         
         [self.navigationController.view insertSubview:_rightPackView atIndex:0];
         [self.navigationController.view bringSubviewToFront:_rightPackView];
@@ -336,6 +337,11 @@
 
 - (void)editButtonClicked:(id) sender
 {
+    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+        return;
+    }
+    
     if ([((UIBarButtonItem *) sender).title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         self.tableView.editing = TRUE;
         ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Done", @"");
@@ -592,6 +598,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+        return;
+    }
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         NSArray *tempCards = [_currentPack cards];

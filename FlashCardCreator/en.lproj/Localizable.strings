@@ -68,6 +68,13 @@
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";
+"Title_About" = "About US";
+"Title_More" = "More";
+"Title_Help" = "Help";
+"Title_Total_Number_Card" = "Total cards";
 
 "UIButton_Save_Card"  = "Save";
+
+"Indicator_Upload"  = "Uploading first…";
+"Indicator_Create_Share_Link"  = "Then create share linkage...";
 

@@ -26,7 +26,7 @@
 "NavigationBarItem_More" = "詳細";
 "NavigationBarItem_Back"= "戻る";
 
-"NavigationBarItem_More_Dropbox" = "Dropboxが";
+"NavigationBarItem_More_Dropbox" = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "ランダム再生";
 "NavigationBarItem_More_Register" = "登録";
 "NavigationBarItem_More_Logo_In"   = "ログイン";
@@ -68,5 +68,12 @@
 
 "Title_Add_A_New_Pack" = "新パックを追加";
 "Title_Create_A_New_Card" = "新しいカードを作成";
+"Title_About" = "私達について";
+"Title_More" = "もっと";
+"Title_Help" = "助ける";
+"Title_Total_Number_Card" = "カードの総数";
 
 "UIButton_Save_Card" ="保存";
+
+"Indicator_Upload"  = "第一のアップロード...";
+"Indicator_Create_Share_Link"  = "共有リンクの作成...";

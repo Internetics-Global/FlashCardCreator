@@ -17,7 +17,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Help";
+    self.title = NSLocalizedString(@"Title_Help",@"");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
