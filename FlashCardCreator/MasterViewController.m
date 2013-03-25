@@ -85,9 +85,9 @@
     [super viewDidLoad];
     
     if (isUserInterfaceIdiomPhone) {
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];    
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     } else {
-        self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPAD_UI_MASTER_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     }
     
     self.tableView.delegate = self;
