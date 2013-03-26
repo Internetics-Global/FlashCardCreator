@@ -31,7 +31,7 @@
     [button sizeToFit];
     CGRect rect = button.frame;
     rect.size.width = rect.size.width +15;
-    rect.size.height = rect.size.height + 11;
+    rect.size.height = rect.size.height + 7;
     button.frame = rect;
     
     [button addTarget:target action:action forControlEvents:UIControlEventTouchDown];

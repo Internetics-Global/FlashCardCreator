@@ -505,7 +505,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isUserInterfaceIdiomPhone) {
-        return 90;
+        return 80;
     } else {
         return kCellSizeHeight;
     }
@@ -520,14 +520,10 @@
 	if (cell == nil) {
 		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] init];
-        if (isUserInterfaceIdiomPhone) {  //we made some tricks on iPhones
-            backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selected_table_cell.png"]];
-            backgroundView.layer.opacity = 0.8;
-        } else {
-            backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];
-            backgroundView.layer.cornerRadius = 10;
-            backgroundView.layer.masksToBounds = YES;
-        }
+        backgroundView.layer.opacity = 0.8;
+        backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];
+        backgroundView.layer.cornerRadius = 0;
+        backgroundView.layer.masksToBounds = YES;
         cell.selectedBackgroundView = backgroundView;
 	}
     

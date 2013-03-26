@@ -350,11 +350,15 @@ enum template_color_enum {
     
     
     popupList.imagePaddingHorizontal = 5;
-    popupList.font = [UIFont systemFontOfSize:14];
+    if (isUserInterfaceIdiomPhone) {
+        popupList.font = [UIFont systemFontOfSize:12];
+    } else {
+        popupList.font = [UIFont systemFontOfSize:14];
+    }
     popupList.imagePaddingVertical = 2;
     popupList.textPaddingHorizontal = 5;
     popupList.alignment = UIControlContentHorizontalAlignmentLeft;
-    [popupList useSystemDefaultFontNonBold];
+
     [popupList showAnchoredTo:sender inView:self.view withItems:listItems withDelegate:self];
     
     self.templateBackgroundSelectPopup = popupList;

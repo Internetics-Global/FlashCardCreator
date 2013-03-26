@@ -55,7 +55,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 100, 68.75)];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 100, 58.75)];
     _cellImageView.layer.cornerRadius = 5;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];
@@ -77,7 +77,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, (kCellSizeWidth-40), (kCellSizeHeight-20))];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, (kCellSizeWidth-40), (kCellSizeHeight-26))];
     _cellImageView.layer.cornerRadius = 10;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];
