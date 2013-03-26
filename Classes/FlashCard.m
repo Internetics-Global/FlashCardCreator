@@ -1513,7 +1513,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(1, 0, 350, 39);
+            _subheadingQuestion.frame = CGRectMake(1, 0, 350, 30);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1522,7 +1522,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(1, 43, 350, 90);
+            _mainQuestion.frame = CGRectMake(1, 33, 350, 90);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1547,7 +1547,7 @@ extern BOOL isFromNewCreatedCard;
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(1, 0, 350, 125);
+            _mainQuestion.frame = CGRectMake(1, 0, 350, 135);
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1556,7 +1556,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(1, 130, 350, 62);
+            _subQuestion.frame = CGRectMake(1, 140, 350, 52);
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor redColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
