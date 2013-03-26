@@ -106,7 +106,7 @@ enum template_color_enum {
         @[playButton,_templateBackgroundSelectButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[_helpButton,_settingButton, playButton, shareButton,_templateBackgroundSelectButton];
+                                @[playButton,shareButton,_settingButton,_helpButton,_templateBackgroundSelectButton];
     }
     
     //Don't need the back button when on iPad
