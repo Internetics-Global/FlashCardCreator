@@ -115,7 +115,7 @@
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
         
         UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]
-                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"help_button.png"] target:self action:@selector(helpButtonClicked:)]];
+                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
         
         self.navigationItem.rightBarButtonItems =
             @[playButton,shareButton,settingButton,helpButton];
