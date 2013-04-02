@@ -1920,6 +1920,14 @@ extern BOOL isFromNewCreatedCard;
         [self disableCardEdit];
         _segmentedControl.hidden = YES;
     }
+    
+    bool switchSegment = NO;
+    if (_segmentedControl.selectedSegmentIndex == 1) {
+        _segmentedControl.selectedSegmentIndex = 0;
+        [self refreshAll];
+        switchSegment = YES;
+    }
+    
     CGRect screenRect = self.bounds;
     if (isUserInterfaceIdiomPhone) {
         screenRect.size.height = kFlashCardViewHeight_Detail_iPhone-45;
@@ -1937,6 +1945,12 @@ extern BOOL isFromNewCreatedCard;
         [self enableCardEdit];
         _segmentedControl.hidden = NO;
     }
+    
+    if (switchSegment == YES) {
+        _segmentedControl.selectedSegmentIndex = 1;
+          [self refreshAll];
+    }
+    
     return newImage;
 }
 

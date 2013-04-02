@@ -49,16 +49,29 @@
 			break;
 		}
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.contentMode = UIViewContentModeScaleToFill;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
 		
-		CGRect rect = self.view.frame;
+		CGRect rect = CGRectMake(0, 0, 486, 260);
 		rect.origin.x = 0 + cx;
 		rect.origin.y = 0;
-
 		imageView.frame = rect;
-
-		[_scrollView addSubview:imageView];
-
+        [_scrollView addSubview:imageView];
+        
+        UITextView *helpText = [[UITextView alloc] initWithFrame:CGRectZero];
+        NSString *localizedStr = [NSString stringWithFormat:@"HelpText%d", (nimages + 1)];
+        helpText.text = NSLocalizedString(localizedStr,@"");
+        helpText.backgroundColor = [UIColor clearColor];
+        if (isUserInterfaceIdiomPhone) {
+            helpText.font = [UIFont systemFontOfSize:16];    
+        } else {
+            helpText.font = [UIFont systemFontOfSize:20];
+        }
+        helpText.textColor = [UIColor whiteColor];
+        rect = CGRectMake(0, 265, 486, 245);
+        rect.origin.x = 0 + cx;
+        helpText.frame = rect;
+        [_scrollView addSubview:helpText];
+        
 		cx += _scrollView.frame.size.width;
 	}
 	
