@@ -231,7 +231,7 @@ extern BOOL isFromNewCreatedCard;
     if (_imageAnswer == nil) {
         _imageAnswer= [[UIImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer.contentMode = UIViewContentModeCenter;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
         _imageAnswer.layer.cornerRadius = 15;
@@ -473,7 +473,7 @@ extern BOOL isFromNewCreatedCard;
     if (_imageAnswer ==  nil) {
         _imageAnswer= [[UIImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer.contentMode = UIViewContentModeCenter;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
         _imageAnswer.tag = 1;
@@ -626,6 +626,13 @@ extern BOOL isFromNewCreatedCard;
     }
 
     _imageQuestion.userInteractionEnabled        = TRUE;
+    _imageQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _imageQuestion.layer.borderWidth = 2;
+    } else {
+        _imageQuestion.layer.borderWidth = 3;
+    }
+    
     _mainQuestion.userInteractionEnabled         = TRUE;
     _mainQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
@@ -649,6 +656,13 @@ extern BOOL isFromNewCreatedCard;
     }
     
     _imageAnswer.userInteractionEnabled        = TRUE;
+    _imageAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _imageAnswer.layer.borderWidth = 2;
+    } else {
+        _imageAnswer.layer.borderWidth = 3;
+    }
+    
     _mainAnswer.userInteractionEnabled         = TRUE;
     _mainAnswer.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
