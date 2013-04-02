@@ -2176,7 +2176,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
     
-    NSURL *url = [NSURL URLWithString:_logoLinkURL];
+    NSURL *url = [NSURL URLWithString:_currentCard.question.logoURLLinkage];
     
     if (url) {
         SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];

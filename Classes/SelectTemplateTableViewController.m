@@ -32,6 +32,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Title_Select_Template",@"");
     self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +70,7 @@
     if (isUserInterfaceIdiomPhone) {
          imageName= [NSString stringWithFormat:@"templateScreenshot%d.png",indexPath.row];    
     } else {
-        imageName = [NSString stringWithFormat:@"templateScreenshot%d_iPad.jpg",indexPath.row];    
+        imageName = [NSString stringWithFormat:@"templateScreenshot%d_iPad.png",indexPath.row];    
     }
     
     cell.imageView.image = [UIImage imageNamed:imageName];

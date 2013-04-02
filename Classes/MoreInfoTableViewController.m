@@ -198,7 +198,7 @@ BOOL isLoggingDropboxInSettingView = NO;
         
     }else if (indexPath.section ==3) {
         if (indexPath.row ==0) {
-            NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+            NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
             controller.hidesToolbar = NO;
             if (isUserInterfaceIdiomPhone) {
