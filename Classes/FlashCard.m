@@ -202,6 +202,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
+        _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -213,6 +214,7 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
+        _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -225,6 +227,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
+        _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -252,6 +255,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
+        _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = TRUE;
@@ -264,6 +268,7 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
+        _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = TRUE;
@@ -277,6 +282,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
+        _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = TRUE;
@@ -445,6 +451,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
+        _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -454,8 +461,8 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.userInteractionEnabled = FALSE;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
-        //_main.backgroundColor = [UIColor greenColor];
         _mainQuestion.delegate = self;
+        _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -467,6 +474,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
+        _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -493,6 +501,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
+        _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = YES;
@@ -503,8 +512,8 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.userInteractionEnabled = FALSE;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
-        //_main.backgroundColor = [UIColor greenColor];
         _mainAnswer.delegate = self;
+        _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = YES;
@@ -516,6 +525,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
+        _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = YES;
