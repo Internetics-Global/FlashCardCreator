@@ -2270,9 +2270,14 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    _currentCard.templateBackgroundName = _backgroundImageName;
+    
+    _currentCard.packID = _currentPack.packID;
+    
+    [self doQuestionAndAnswerData];
+    
     UIImage *origialmage = [self captureWholeViewAsImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    
     if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
         NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
         [imageData writeToFile:savedFullPath atomically:YES];
@@ -2280,11 +2285,6 @@ extern BOOL isFromNewCreatedCard;
     } else {
         [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
     }
-    _currentCard.templateBackgroundName = _backgroundImageName; //to be noticed, currently, templateBackground means backgroundImageName;
-    
-    _currentCard.packID = _currentPack.packID;
-    
-    [self doQuestionAndAnswerData];
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         [_currentPack addCard:_currentCard];
