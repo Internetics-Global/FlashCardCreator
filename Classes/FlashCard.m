@@ -350,7 +350,7 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (_logoLinkageButton == nil) {
-        _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _logoLinkageButton.frame = CGRectMake(560, 85, 25, 25);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
