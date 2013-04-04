@@ -43,15 +43,24 @@
 	NSUInteger nimages = 0;
 	CGFloat cx = 0;
 	for (; ; nimages++) {
-		NSString *imageName = [NSString stringWithFormat:@"help%d.jpg", (nimages + 1)];
+        NSString *imageName;
+        if (isUserInterfaceIdiomPhone) {
+            imageName = [NSString stringWithFormat:@"help%d_iPhone.jpg", (nimages + 1)];    
+        } else {
+            imageName = [NSString stringWithFormat:@"help%d.jpg", (nimages + 1)];
+        }
 		UIImage *image = [UIImage imageNamed:imageName];
 		if (image == nil) {
 			break;
 		}
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-		
-		CGRect rect = CGRectMake(0, 0, 486, 260);
+		CGRect rect;
+		if (isUserInterfaceIdiomPhone) {
+            rect = CGRectMake(0, 0, IPHONE_UI_WIDTH, 169);
+        } else {
+            rect = CGRectMake(0, 0, 486, 260);
+        }
 		rect.origin.x = 0 + cx;
 		rect.origin.y = 0;
 		imageView.frame = rect;
@@ -61,13 +70,18 @@
         NSString *localizedStr = [NSString stringWithFormat:@"HelpText%d", (nimages + 1)];
         helpText.text = NSLocalizedString(localizedStr,@"");
         helpText.backgroundColor = [UIColor clearColor];
+        helpText.userInteractionEnabled = FALSE;
         if (isUserInterfaceIdiomPhone) {
             helpText.font = [UIFont systemFontOfSize:16];    
         } else {
             helpText.font = [UIFont systemFontOfSize:20];
         }
         helpText.textColor = [UIColor whiteColor];
-        rect = CGRectMake(0, 265, 486, 245);
+        if (isUserInterfaceIdiomPhone) {
+            rect = CGRectMake(0, 160, IPHONE_UI_WIDTH, 245);
+        } else {
+            rect = CGRectMake(0, 260, 486, 245);
+        }
         rect.origin.x = 0 + cx;
         helpText.frame = rect;
         [_scrollView addSubview:helpText];
