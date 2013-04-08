@@ -343,7 +343,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(580, 5, 210, 128);
+        _logoImage.frame = CGRectMake(610, 15, 210, 128);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -557,7 +557,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(300, 5, 100, 64);
+        _logoImage.frame = CGRectMake(310, 5, 100, 64);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
@@ -597,12 +597,6 @@ extern BOOL isFromNewCreatedCard;
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if (_segmentedControl.selectedSegmentIndex == 0) {
-        _logoImage.hidden = NO;
-    } else {
-        _logoImage.hidden = TRUE;
-    }
-    
     _imageQuestion.userInteractionEnabled        = FALSE;
     _mainQuestion.userInteractionEnabled         = FALSE;
     _mainQuestion.layer.borderWidth = 0;
@@ -627,14 +621,6 @@ extern BOOL isFromNewCreatedCard;
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if (_segmentedControl.selectedSegmentIndex == 0 ) {
-        _logoLinkageButton.hidden = FALSE;
-        _logoImage.hidden = FALSE;
-    } else {
-        _logoLinkageButton.hidden = TRUE;
-        _logoImage.hidden = TRUE;
-    }
-
     _imageQuestion.userInteractionEnabled        = TRUE;
     _imageQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
@@ -1259,7 +1245,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(380, 10, 350, 350);
+            _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
 
             
             break;
@@ -1301,7 +1287,7 @@ extern BOOL isFromNewCreatedCard;
         case 2: //Template 2
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 380, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:42];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1360,7 +1346,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = YES;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(380, 10, 350, 350);
+            _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
             
             
             break;
