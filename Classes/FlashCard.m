@@ -162,19 +162,42 @@ extern BOOL isFromNewCreatedCard;
     }
     
 
-    if (_title == nil) {
-        _title = [[UITextView alloc]init];
-        _title.frame = CGRectMake(60, 30, 200, 110);
-        _title.backgroundColor = [UIColor clearColor];
-        _title.font =[UIFont systemFontOfSize:40];
-        _title.textAlignment = NSTextAlignmentCenter;
-        _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-        _title.userInteractionEnabled = FALSE;
-        _title.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _title.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _title.layer.shadowOpacity = 1.0f;
-        _title.layer.shadowRadius = 3.5f;
-        [self addSubview:_title];
+    if (_questionTitle == nil) {
+        _questionTitle = [[UITextField alloc]init];
+        _questionTitle.frame = CGRectMake(60, 30, 200, 110);
+        _questionTitle.backgroundColor = [UIColor clearColor];
+        _questionTitle.font =[UIFont systemFontOfSize:40];
+        _questionTitle.textAlignment = NSTextAlignmentCenter;
+        _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _questionTitle.userInteractionEnabled = FALSE;
+        _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowRadius = 3.5f;
+        _questionTitle.textColor = [UIColor blueColor];
+        _questionTitle.delegate = self;
+        _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _questionTitle.returnKeyType = UIReturnKeyDone;
+        [self addSubview:_questionTitle];
+    }
+    
+    if (_answerTitle == nil) {
+        _answerTitle = [[UITextField alloc]init];
+        _answerTitle.frame = CGRectMake(60, 30, 200, 110);
+        _answerTitle.backgroundColor = [UIColor clearColor];
+        _answerTitle.font =[UIFont systemFontOfSize:40];
+        _answerTitle.textAlignment = NSTextAlignmentCenter;
+        _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _answerTitle.userInteractionEnabled = FALSE;
+        _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowRadius = 3.5f;
+        _answerTitle.textColor = [UIColor redColor];
+        _answerTitle.delegate = self;
+        _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _answerTitle.returnKeyType = UIReturnKeyDone;
+        [self addSubview:_answerTitle];
     }
     
     if (_verticalScrollView == nil) {
@@ -383,19 +406,42 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    if (_title == nil) {
-        _title = [[UITextView alloc]init];
-        _title.frame = CGRectMake(30, 0, 100, 40);
-        _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-        _title.font =[UIFont systemFontOfSize:18];
-        _title.textAlignment = NSTextAlignmentCenter;
-        _title.backgroundColor = [UIColor clearColor];
-        _title.userInteractionEnabled = FALSE;
-        _title.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _title.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _title.layer.shadowOpacity = 1.0f;
-        _title.layer.shadowRadius = .5f;
-        [self addSubview:_title];
+    if (_questionTitle == nil) {
+        _questionTitle = [[UITextField alloc]init];
+        _questionTitle.frame = CGRectMake(30, 0, 100, 40);
+        _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _questionTitle.font =[UIFont systemFontOfSize:18];
+        _questionTitle.textAlignment = NSTextAlignmentCenter;
+        _questionTitle.backgroundColor = [UIColor clearColor];
+        _questionTitle.userInteractionEnabled = FALSE;
+        _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowRadius = .5f;
+        _questionTitle.textColor = [UIColor blueColor];
+        _questionTitle.delegate = self;
+        _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _questionTitle.returnKeyType = UIReturnKeyDone;;
+        [self addSubview:_questionTitle];
+    }
+    
+    if (_answerTitle == nil) {
+        _answerTitle = [[UITextField alloc]init];
+        _answerTitle.frame = CGRectMake(30, 0, 100, 40);
+        _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _answerTitle.font =[UIFont systemFontOfSize:18];
+        _answerTitle.textAlignment = NSTextAlignmentCenter;
+        _answerTitle.backgroundColor = [UIColor clearColor];
+        _answerTitle.userInteractionEnabled = FALSE;
+        _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowRadius = .5f;
+        _answerTitle.textColor = [UIColor redColor];
+        _answerTitle.delegate = self;
+        _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _answerTitle.returnKeyType = UIReturnKeyDone;
+        [self addSubview:_answerTitle];
     }
     
     
@@ -619,6 +665,9 @@ extern BOOL isFromNewCreatedCard;
     _subheadingAnswer.userInteractionEnabled   = FALSE;
     _subheadingAnswer.layer.borderWidth = 0;
     
+    _questionTitle.userInteractionEnabled = FALSE;
+    _answerTitle.userInteractionEnabled = FALSE;
+    
     _changeTemplateButton.hidden = TRUE;
 }
 
@@ -689,6 +738,9 @@ extern BOOL isFromNewCreatedCard;
     
     _changeTemplateButton.hidden = FALSE;
     _changeTemplateButton.userInteractionEnabled = YES;
+    
+    _questionTitle.userInteractionEnabled = YES;
+    _answerTitle.userInteractionEnabled = YES;
 }
 
 
@@ -734,6 +786,8 @@ extern BOOL isFromNewCreatedCard;
     } else {
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
+    
+    _answerTitle.text = _currentCard.answer.title;
 
     _subheadingAnswer.text = _currentCard.answer.subheading;
     _mainAnswer.text =_currentCard.answer.main;
@@ -758,6 +812,8 @@ extern BOOL isFromNewCreatedCard;
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
+    _questionTitle.text = _currentCard.question.title;
+    
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
     _subQuestion.text =_currentCard.question.sub;
@@ -779,8 +835,8 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.hidden = YES;
         _subAnswer.hidden = YES;
         
-        _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Question",nil);
-        _title.textColor = [UIColor blueColor];
+        _questionTitle.hidden = NO;
+        _answerTitle.hidden = YES;
         
         
     } else {
@@ -794,8 +850,8 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.hidden = NO;
         _subAnswer.hidden = NO;
         
-        _title.text = _title.text = NSLocalizedString(@"ToolbarItem_Answer",nil);
-        _title.textColor = [UIColor redColor];
+        _questionTitle.hidden = YES;
+        _answerTitle.hidden = NO;
     }
 }
 
@@ -805,7 +861,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) doQuestionAndAnswerData {
-    _currentCard.answer.title = _title.text;
+    _currentCard.answer.title = _answerTitle.text;
     _currentCard.answer.subheading = _subheadingAnswer.text;
     _currentCard.answer.main = _mainAnswer.text;
     _currentCard.answer.sub = _subAnswer.text;
@@ -821,7 +877,7 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.answer.css.subColor = _subColorAnswer;
     _currentCard.answer.css.subSize = _subSizeAnswer;
     
-    _currentCard.question.title = _title.text;
+    _currentCard.question.title = _questionTitle.text;
     _currentCard.question.subheading = _subheadingQuestion.text;
     _currentCard.question.main = _mainQuestion.text;
     _currentCard.question.sub = _subQuestion.text;
@@ -2135,6 +2191,26 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) backAction:(id) sender{
     [_keyboardTopView setItems:_buttonArray];
+}
+
+#pragma mark -
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        //we will save until after we press the save button
+        [self doQuestionAndAnswerData];
+    } else {
+        [self saveEdittedCard];
+    }
+    
 }
 
 

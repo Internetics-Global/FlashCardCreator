@@ -18,7 +18,7 @@ typedef enum RescreenshotReason {
 @class Pack;
 @class BadgeLabel;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
     BadgeLabel *_cardSNText;
     UIButton *_changeTemplateButton;
     
@@ -31,7 +31,8 @@ typedef enum RescreenshotReason {
     UILabel      *_sidebarTitle;
     
     
-    UITextView   *_title;
+    UITextField   *_questionTitle;
+    UITextField   *_answerTitle;
     NSString     *_imageFullPath;
     UIScrollView *_verticalScrollView;
     
