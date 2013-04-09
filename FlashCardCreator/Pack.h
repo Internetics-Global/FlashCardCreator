@@ -12,6 +12,7 @@
 @interface Pack : NSObject {
     NSInteger _packID;
 	NSString *_packName;
+    NSString *_sidebarTitle;
     NSString *_coverImageURL;
 	NSInteger _userID;
     NSString *_languageName;
@@ -22,6 +23,7 @@
 
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, copy) NSString *packName;
+@property (nonatomic, copy) NSString *sidebarTitle;
 @property (nonatomic, copy) NSString *coverImageURL;
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *languageName;

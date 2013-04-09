@@ -17,6 +17,7 @@
 
 @synthesize packID = _packID;
 @synthesize packName = _packName;
+@synthesize sidebarTitle = _sidebarTitle;
 @synthesize coverImageURL = _coverImageURL;
 @synthesize userID = _userID;
 @synthesize languageName = _languageName;
@@ -44,6 +45,7 @@
         _packID = -1;
     }
     _packName = [dict valueForKey:@"pack_name"];
+    _sidebarTitle = [dict valueForKey:@"sidebar_title"];
      _coverImageURL = [dict valueForKey:@"cover_image"];
     if ([[dict allKeys] containsObject:@"user_id"]) {
         _userID = [[dict valueForKey:@"user_id"] intValue];
@@ -92,7 +94,7 @@
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\" WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\", sidebar_title=\"%@\" WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -103,7 +105,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,sidebar_title) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -152,12 +154,13 @@
 		NSMutableDictionary *packDict = [[NSMutableDictionary alloc] init];
 		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:0] forKey:@"pack_id"];
 		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"pack_name"];
-		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"user_id"];
-        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"language_name"];
-        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"is_public"];
-        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"cover_image"];
-        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"creator"];
-        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"creator_nick_name"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:2] forKey:@"sidebar_title"];
+		[packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:3] forKey:@"user_id"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"language_name"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"is_public"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"cover_image"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"creator"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"creator_nick_name"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}

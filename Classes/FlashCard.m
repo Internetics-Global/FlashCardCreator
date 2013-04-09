@@ -291,17 +291,16 @@ extern BOOL isFromNewCreatedCard;
     }
     _subAnswer.hidden = TRUE;
     
-    if (_packName == nil) {
-        _packName = [[UILabel alloc] init];
-        _packName.frame = CGRectMake(0, 0, 400, 60);
-        [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _packName.center = CGPointMake(30, 275);
-        //_packName.text = @"This is the pack name";
-        _packName.textAlignment = NSTextAlignmentCenter;
-        _packName.backgroundColor = [UIColor clearColor];
-        _packName.font = [UIFont systemFontOfSize:20];
-        _packName.textColor = [UIColor whiteColor];
-        [self addSubview:_packName];
+    if (_sidebarTitle == nil) {
+        _sidebarTitle = [[UILabel alloc] init];
+        _sidebarTitle.frame = CGRectMake(0, 0, 400, 60);
+        [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+        _sidebarTitle.center = CGPointMake(30, 275);
+        _sidebarTitle.textAlignment = NSTextAlignmentCenter;
+        _sidebarTitle.backgroundColor = [UIColor clearColor];
+        _sidebarTitle.font = [UIFont systemFontOfSize:20];
+        _sidebarTitle.textColor = [UIColor whiteColor];
+        [self addSubview:_sidebarTitle];
     }
     
     
@@ -407,17 +406,16 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    if (_packName ==  nil) {
-        _packName = [[UILabel alloc] init];
-        _packName.frame = CGRectMake(0, 0, 200, 30);
-        [_packName setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _packName.center = CGPointMake(15, 112);
-        //_packName.text = @"This is the pack name";
-        _packName.textAlignment = NSTextAlignmentCenter;
-        _packName.backgroundColor = [UIColor clearColor];
-        _packName.font = [UIFont systemFontOfSize:12];
-        _packName.textColor = [UIColor whiteColor];
-        [self addSubview:_packName];
+    if (_sidebarTitle ==  nil) {
+        _sidebarTitle = [[UILabel alloc] init];
+        _sidebarTitle.frame = CGRectMake(0, 0, 200, 30);
+        [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
+        _sidebarTitle.center = CGPointMake(15, 112);
+        _sidebarTitle.textAlignment = NSTextAlignmentCenter;
+        _sidebarTitle.backgroundColor = [UIColor clearColor];
+        _sidebarTitle.font = [UIFont systemFontOfSize:12];
+        _sidebarTitle.textColor = [UIColor whiteColor];
+        [self addSubview:_sidebarTitle];
     }
     
     //Step3: Common
@@ -716,7 +714,13 @@ extern BOOL isFromNewCreatedCard;
     [self refreshAnswerContent];
     
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
-    _packName.text = _currentPack.packName;
+    
+    //it's quite strange logic below, but it indeed
+    if (_currentPack.sidebarTitle.length == 0) {
+        _sidebarTitle.text = _currentPack.packName;
+    } else {
+        _sidebarTitle.text = _currentPack.sidebarTitle;
+    }
     _backgroundImageName = _currentCard.templateBackgroundName;
     _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
 }

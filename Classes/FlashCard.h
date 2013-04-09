@@ -28,7 +28,7 @@ typedef enum RescreenshotReason {
     NSString     *_logoImageFullPath;
     NSString     *_logoLinkURL;
     UIButton     *_logoLinkageButton;
-    UILabel      *_packName;
+    UILabel      *_sidebarTitle;
     
     
     UITextView   *_title;

@@ -59,7 +59,7 @@
     [super loadView];
 
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 10, 200, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 5, 190, 24)];
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
@@ -76,9 +76,26 @@
     [self.view addSubview:_packNameText];
     
     if (isUserInterfaceIdiomPhone) {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 45, 200, 24)];
+         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 35, 190, 24)];
     } else {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
+        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
+    }
+    _sidebarTitle.textAlignment = UITextAlignmentCenter;
+    _sidebarTitle.backgroundColor = [UIColor whiteColor];
+    _sidebarTitle.text = @"Side bar title";
+    _sidebarTitle.font = [UIFont systemFontOfSize:16];
+    _sidebarTitle.delegate = self;
+    _sidebarTitle.borderStyle = UITextBorderStyleNone;
+    _sidebarTitle.layer.cornerRadius = 5;
+    _sidebarTitle.layer.masksToBounds = YES;
+    [_sidebarTitle setClearsOnBeginEditing:YES];
+    _sidebarTitle.returnKeyType = UIReturnKeyDone;
+    [self.view addSubview:_sidebarTitle];
+    
+    if (isUserInterfaceIdiomPhone) {
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 65, 190, 24)];
+    } else {
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 150, 200, 24)];
     }
     _creatorText.textAlignment = UITextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
@@ -93,9 +110,9 @@
     [self.view addSubview:_creatorText];
     
     if (isUserInterfaceIdiomPhone){
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 80,200,200)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 95,190,190)];
     } else {
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 150,200,200)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 200,200,200)];
     }
     _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     _coverImageView.layer.masksToBounds = YES;
@@ -120,6 +137,7 @@
 - (void) saveAndCloseCreatePackView {
     if ([self isNewPack]) {
         _newPack.packName = _packNameText.text;
+        _newPack.sidebarTitle = _sidebarTitle.text;
         _newPack.creator = [OpenUDID value];
         _newPack.creatorNickName = _creatorText.text;
         [[User defaultUser] addPack:_newPack];
