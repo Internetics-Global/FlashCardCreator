@@ -230,10 +230,6 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
-        _subheadingQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subheadingQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subheadingQuestion.layer.shadowOpacity = .5f;
-        _subheadingQuestion.layer.shadowRadius = 2.0f;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -246,10 +242,6 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
         _mainQuestion.backgroundColor = [UIColor clearColor];
-        _mainQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _mainQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _mainQuestion.layer.shadowOpacity = .5f;
-        _mainQuestion.layer.shadowRadius = 2.0f;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -263,10 +255,6 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
         _subQuestion.backgroundColor = [UIColor clearColor];
-        _subQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subQuestion.layer.shadowOpacity = 1.0f;
-        _subQuestion.layer.shadowRadius = 1.0f;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -295,10 +283,6 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
-        _subheadingAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subheadingAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subheadingAnswer.layer.shadowOpacity = .5f;
-        _subheadingAnswer.layer.shadowRadius = 2.0f;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = TRUE;
@@ -312,10 +296,6 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
         _mainAnswer.backgroundColor = [UIColor clearColor];
-        _mainAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _mainAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _mainAnswer.layer.shadowOpacity = .5f;
-        _mainAnswer.layer.shadowRadius = 2.0f;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = TRUE;
@@ -330,10 +310,6 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
         _subAnswer.backgroundColor = [UIColor clearColor];
-        _subAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subAnswer.layer.shadowOpacity = .5f;
-        _subAnswer.layer.shadowRadius = 2.0f;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = TRUE;
@@ -528,10 +504,6 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
-        _subheadingQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subheadingQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subheadingQuestion.layer.shadowOpacity = .5f;
-        _subheadingQuestion.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -543,10 +515,6 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
         _mainQuestion.backgroundColor = [UIColor clearColor];
-        _mainQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _mainQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _mainQuestion.layer.shadowOpacity = .5f;
-        _mainQuestion.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -559,10 +527,6 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
         _subQuestion.backgroundColor = [UIColor clearColor];
-        _subQuestion.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subQuestion.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subQuestion.layer.shadowOpacity = .5f;
-        _subQuestion.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -590,10 +554,6 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
-        _subheadingAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subheadingAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subheadingAnswer.layer.shadowOpacity = .5f;
-        _subheadingAnswer.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = YES;
@@ -606,10 +566,6 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
         _mainAnswer.backgroundColor = [UIColor clearColor];
-        _mainAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _mainAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _mainAnswer.layer.shadowOpacity = .5f;
-        _mainAnswer.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = YES;
@@ -622,10 +578,6 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
         _subAnswer.backgroundColor = [UIColor clearColor];
-        _subAnswer.layer.shadowColor = [[UIColor greenColor] CGColor];
-        _subAnswer.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _subAnswer.layer.shadowOpacity = .5f;
-        _subAnswer.layer.shadowRadius = .5f;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = YES;
