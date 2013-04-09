@@ -68,6 +68,7 @@
 "Label_Question"      = "问题";
 "Label_Answer"        = "答案";
 "Label_New_Pack_Name" = "新组";
+"Label_Creator"       = "您的昵称";
 
 "Title_Add_A_New_Pack" = "添加新组";
 "Title_Create_A_New_Card" = "创建一个新卡片";

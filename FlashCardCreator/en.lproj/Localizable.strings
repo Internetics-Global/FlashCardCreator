@@ -67,6 +67,7 @@
 "Label_Question"      = "Question";
 "Label_Answer"        = "Answer";
 "Label_New_Pack_Name" = "New pack name";
+"Label_Creator"       = "Your name";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";

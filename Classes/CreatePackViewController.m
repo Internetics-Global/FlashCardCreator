@@ -59,7 +59,7 @@
     [super loadView];
 
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 20, 200, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 10, 200, 24)];
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
@@ -75,14 +75,31 @@
     _packNameText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_packNameText];
     
-    if (isUserInterfaceIdiomPhone){
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 60,200,200)];
+    if (isUserInterfaceIdiomPhone) {
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 45, 200, 24)];
     } else {
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 100,200,200)];    
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
     }
-    _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _coverImageView.layer.cornerRadius = 10;
+    _creatorText.textAlignment = UITextAlignmentCenter;
+    _creatorText.backgroundColor = [UIColor whiteColor];
+    _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
+    _creatorText.font = [UIFont systemFontOfSize:16];
+    _creatorText.delegate = self;
+    _creatorText.borderStyle = UITextBorderStyleNone;
+    _creatorText.layer.cornerRadius = 5;
+    _creatorText.layer.masksToBounds = YES;
+    [_creatorText setClearsOnBeginEditing:YES];
+    _creatorText.returnKeyType = UIReturnKeyDone;
+    [self.view addSubview:_creatorText];
+    
+    if (isUserInterfaceIdiomPhone){
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-200)/2, 80,200,200)];
+    } else {
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 150,200,200)];
+    }
+    _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     _coverImageView.layer.masksToBounds = YES;
+    _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
     _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.png"];
     [self.view addSubview:_coverImageView];

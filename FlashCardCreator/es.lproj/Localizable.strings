@@ -67,6 +67,7 @@
 "Label_Question" = "Pregunta";
 "Label_Answer" = "Respuesta";
 "Label_New_Pack_Name" = "nombre de paquete de nuevo";
+"Label_Creator"       = "Su nombre";
 
 "Title_Add_A_New_Pack" = "Añadir un nuevo paquete";
 "Title_Create_A_New_Card" = "Crear una nueva tarjeta";

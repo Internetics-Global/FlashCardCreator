@@ -14,6 +14,7 @@
 @interface CreatePackViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UITextField *_packNameText;
     UIImageView *_coverImageView;
+    UITextField *_creatorText;
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
     

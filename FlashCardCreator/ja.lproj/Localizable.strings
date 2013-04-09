@@ -67,6 +67,7 @@
 "Label_Question" ="質問";
 "Label_Answer" = "回答";
 "Label_New_Pack_Name" = "新パック名";
+"Label_Creator"       = "あなたの名前";
 
 "Title_Add_A_New_Pack" = "新パックを追加";
 "Title_Create_A_New_Card" = "新しいカードを作成";
