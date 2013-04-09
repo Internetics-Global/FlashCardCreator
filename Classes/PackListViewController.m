@@ -110,7 +110,7 @@
     UITextField *packCreatorText;
     UIButton *deleteButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 255)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 300)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
 
@@ -120,14 +120,12 @@
     packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, 180, 25.0f)];
     packNameText.textAlignment = UITextAlignmentCenter;
     packNameText.font = [UIFont systemFontOfSize:16];
-    packNameText.borderStyle = UITextBorderStyleNone;
-    packNameText.layer.cornerRadius = 5;
-    packNameText.layer.masksToBounds = YES;
+    packNameText.borderStyle = UITextBorderStyleLine;
     [packNameText setClearsOnBeginEditing:YES];
     packNameText.returnKeyType = UIReturnKeyDone;
     packNameText.text = currentPack.packName;
     packNameText.textColor = [UIColor whiteColor];
-    packNameText.backgroundColor = [UIColor lightGrayColor];
+    packNameText.backgroundColor = [UIColor clearColor];
     packNameText.delegate = self;
     packNameText.tag = index;
     packNameText.userInteractionEnabled = YES;
