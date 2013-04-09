@@ -768,7 +768,7 @@ extern BOOL isFromNewCreatedCard;
     _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     
     //it's quite strange logic below, but it indeed
-    if (_currentPack.sidebarTitle.length == 0) {
+    if ((_currentPack.sidebarTitle.length == 0) || ([_currentPack.sidebarTitle rangeOfString:@"null"].length != 0)) {
         _sidebarTitle.text = _currentPack.packName;
     } else {
         _sidebarTitle.text = _currentPack.sidebarTitle;
@@ -1144,7 +1144,7 @@ extern BOOL isFromNewCreatedCard;
 //postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateAnswerViewTemplateForiPhone {
     
-    int index = _currentCard.templateID;
+    int index = _currentCard.answer.templateID;
     
     switch (index) {
         case 0: //Template 0
@@ -1287,7 +1287,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) updateAnswerViewTemplateForiPad{
     
-    int index = _currentCard.templateID;
+    int index = _currentCard.answer.templateID;
     
     switch (index) {
         case 0: //Template 0
@@ -1432,7 +1432,7 @@ extern BOOL isFromNewCreatedCard;
 //postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateQuestionViewTemplateForiPad {
     
-    int index = _currentCard.templateID;
+    int index = _currentCard.question.templateID;
     
     switch (index) {
         case 0: //Template 0
@@ -1574,7 +1574,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) updateQuestionViewTemplateForiPhone {
     
-    int index = _currentCard.templateID;
+    int index = _currentCard.question.templateID;
     
     switch (index) {
         case 0: //Template 0
@@ -2391,6 +2391,7 @@ extern BOOL isFromNewCreatedCard;
 - (void) changeTemplateButtonClick:(id)sender {
     
     SelectTemplateTableViewController *selectTemplateTableViewController = [[SelectTemplateTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    selectTemplateTableViewController.isQuestionShowing = (_segmentedControl.selectedSegmentIndex == 0)?YES:NO;
     
     if (isUserInterfaceIdiomPhone) {
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:selectTemplateTableViewController];
@@ -2416,7 +2417,11 @@ extern BOOL isFromNewCreatedCard;
     }
     
     NSString *templateIDString = (NSString *)[notification object];
-    _currentCard.templateID = [templateIDString integerValue];
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        _currentCard.question.templateID = [templateIDString integerValue];
+    } else {
+        _currentCard.answer.templateID = [templateIDString integerValue];
+    }
     
     [self updateQuestionOrAnswerTemplate];//we will do other side's update when clicking segment
     

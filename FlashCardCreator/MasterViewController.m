@@ -437,7 +437,10 @@
     cardExample.answer.subheading = @"";
     cardExample.answer.main = @"";
     cardExample.answer.sub = @"";
-    cardExample.templateID = 0;
+    cardExample.question.templateID = 0;
+    cardExample.answer.templateID = 0;
+    cardExample.question.title = NSLocalizedString(@"ToolbarItem_Question",nil);
+    cardExample.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);
     [self.currentPack addCard:cardExample];
     
     _indexPack = [[[User defaultUser] packs] count] -1;
@@ -897,7 +900,7 @@
             }
             assembledCard.creator = questionDict[@"creator"];
             assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
-            assembledCard.templateID = [questionDict[@"template_id"] intValue];
+            assembledCard.question.templateID = [questionDict[@"template_id"] intValue];
             
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
             [assembledCard question].css.subheadingColor = questionDict[@"subheading_color"];
@@ -949,6 +952,8 @@
             [assembledCard answer].subheading = answerDict[@"subheading"];
             [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
             [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
+            
+            assembledCard.answer.templateID = [answerDict[@"template_id"] intValue];
             
             [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
             [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];

@@ -78,10 +78,13 @@ BOOL isFromNewCreatedCard = NO;
             // we take default value
         }
         _newCard.cardSN = [[_currentPack cards] count] + 1;
-        _newCard.templateID = 0;
+        _newCard.question.templateID = 0;
+        _newCard.answer.templateID = 0;
         _newCard.packID = _currentPack.packID;
         _newCard.cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
         _newCard.creator = [OpenUDID value];
+        _newCard.question.title = NSLocalizedString(@"ToolbarItem_Question",nil);
+        _newCard.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);
                 
         //Step2: Init card
         float flashCardYPositionInScrollView;

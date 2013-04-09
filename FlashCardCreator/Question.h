@@ -21,6 +21,7 @@
     NSString *_imageFullPath;
     NSString *_logoFullPath;
     NSString *_logoURLLinkage;
+    NSInteger _templateID;
     
     CSS *_css;
 }
@@ -35,6 +36,7 @@
 @property (nonatomic, copy) NSString *imageFullPath;
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
+@property (nonatomic, assign) NSInteger templateID;
 
 @property (strong, nonatomic) CSS *css;
 

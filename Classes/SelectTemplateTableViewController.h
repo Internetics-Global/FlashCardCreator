@@ -10,4 +10,6 @@
 
 @interface SelectTemplateTableViewController : UITableViewController
 
+@property (nonatomic, assign) BOOL isQuestionShowing;
+
 @end

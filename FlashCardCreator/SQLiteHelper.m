@@ -83,17 +83,17 @@
 		sqlite3_finalize(createItems);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer,template_id integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer, template_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
 	}

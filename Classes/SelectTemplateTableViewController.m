@@ -68,9 +68,18 @@
     
     NSString *imageName;
     if (isUserInterfaceIdiomPhone) {
-         imageName= [NSString stringWithFormat:@"templateScreenshot%d.png",indexPath.row];    
+        if (_isQuestionShowing == YES) {
+            //templateScreenshot0_answer.png
+            imageName= [NSString stringWithFormat:@"templateScreenshot%d_question.png",indexPath.row];     
+        } else {
+            imageName= [NSString stringWithFormat:@"templateScreenshot%d_answer.png",indexPath.row];     
+        }
     } else {
-        imageName = [NSString stringWithFormat:@"templateScreenshot%d_iPad.png",indexPath.row];    
+        if (_isQuestionShowing == YES) {
+            imageName= [NSString stringWithFormat:@"templateScreenshot%d_question_iPad.png",indexPath.row];     
+        } else {
+            imageName= [NSString stringWithFormat:@"templateScreenshot%d_answer_iPad.png",indexPath.row];     
+        }   
     }
     
     cell.imageView.image = [UIImage imageNamed:imageName];

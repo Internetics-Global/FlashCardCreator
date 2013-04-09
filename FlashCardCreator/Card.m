@@ -17,7 +17,6 @@
 @synthesize cardID = _cardID;
 @synthesize packID = _packID;
 @synthesize cardSN = _cardSN;
-@synthesize templateID = _templateID;
 @synthesize cardName = _cardName;
 @synthesize coverImageURL = _coverImageURL;
 @synthesize templateBackgroundName = _templateBackgroundName;
@@ -34,7 +33,6 @@
     _cardID = -1;
     _packID = -1;
     _cardSN = -1;
-    _templateID = 0; //begin from 0
     _templateBackgroundName = @"card_background_blue.png";
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
@@ -48,7 +46,6 @@
 	_cardID = [[dataDict valueForKey:@"card_id"] intValue];
     _packID = [[dataDict valueForKey:@"pack_id"] intValue];
     _cardSN = [[dataDict valueForKey:@"card_sn"] intValue];
-    _templateID = [[dataDict valueForKey:@"template_id"] intValue];
     _cardName = [dataDict valueForKey:@"card_name"];    
     _coverImageURL = [dataDict valueForKey:@"thumb_pic"];
     _templateBackgroundName = [dataDict valueForKey:@"template_background"];
@@ -87,7 +84,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d, template_id=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _templateID, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -97,7 +94,7 @@
 	if (_cardID == -1) {
 		_cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn, template_id) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _templateID];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
