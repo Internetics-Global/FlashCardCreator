@@ -110,14 +110,14 @@
     UITextField *packCreatorText;
     UIButton *deleteButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 300)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 370)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
 
     
     Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     
-    packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, 180, 25.0f)];
+    packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
     packNameText.textAlignment = UITextAlignmentCenter;
     packNameText.font = [UIFont systemFontOfSize:16];
     packNameText.borderStyle = UITextBorderStyleLine;
@@ -131,14 +131,14 @@
     packNameText.userInteractionEnabled = YES;
     [view addSubview:packNameText];
     
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 40, 180.0f, 150.0f)];
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 80, 180.0f, 150.0f)];
     coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
-    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 180, 20.0f)];
+    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 240.0f, 180, 20.0f)];
     packCreatorText.textAlignment = UITextAlignmentCenter;
     packCreatorText.textColor = [UIColor whiteColor];
     packCreatorText.backgroundColor = [UIColor clearColor];
@@ -161,7 +161,7 @@
     [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(50.0f, 225.0f, 100.0, 30);
+    deleteButton.frame = CGRectMake(50.0f, 265.0f, 100.0, 30);
     NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
     if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];

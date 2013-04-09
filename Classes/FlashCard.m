@@ -391,7 +391,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_creatorText == nil) {
         _creatorText = [[UITextView alloc] init];
-        _creatorText.frame = CGRectMake(560, 15, 110, 50);
+        _creatorText.frame = CGRectMake(560, 35, 110, 50);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
