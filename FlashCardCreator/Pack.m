@@ -22,6 +22,7 @@
 @synthesize languageName = _languageName;
 @synthesize cards = _cards;
 @synthesize creator = _creator;
+@synthesize creatorNickName = _creatorNickName;
 
 #pragma mark -
 #pragma mark Initialization
@@ -51,6 +52,7 @@
     }
     _languageName = [dict valueForKey:@"language_name"];
     _creator = [dict valueForKey:@"creator"];
+    _creatorNickName = [dict valueForKey:@"creator_nick_name"];
     
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
@@ -90,7 +92,7 @@
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\" WHERE id=%d", _packName, _languageName,0, _coverImageURL, _creator, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\" WHERE id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -101,7 +103,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -155,6 +157,7 @@
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"is_public"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"cover_image"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"creator"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"creator_nick_name"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}

@@ -121,6 +121,7 @@
     if ([self isNewPack]) {
         _newPack.packName = _packNameText.text;
         _newPack.creator = [OpenUDID value];
+        _newPack.creatorNickName = _creatorText.text;
         [[User defaultUser] addPack:_newPack];
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
         

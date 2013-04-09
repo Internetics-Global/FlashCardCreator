@@ -777,6 +777,7 @@
             NSDictionary *packDict = (NSDictionary *)packJsonObject;
             pack.packName = packDict[@"pack_name"];
             pack.creator = packDict[@"creator"];
+            pack.creatorNickName = packDict[@"creator_nick_name"];
             
             packPlatformStr = packDict[@"platform"];
             

@@ -16,6 +16,7 @@
 	NSInteger _userID;
     NSString *_languageName;
     NSString *_creator; //we use OpenUDID to generate
+    NSString *_creatorNickName; //User input this during creating pack
     NSMutableArray *_cards;
 }
 
@@ -27,6 +28,7 @@
 @property (nonatomic, assign) BOOL isPublic;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, copy) NSString *creator;
+@property (nonatomic, copy) NSString *creatorNickName;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;

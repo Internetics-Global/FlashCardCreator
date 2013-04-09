@@ -110,7 +110,7 @@
     UILabel *indexLabel;
     UIButton *deleteButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 220)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 235)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
         
@@ -122,15 +122,20 @@
     [view addSubview:coverImageView];
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
-    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 160.0f, 200, 20.0f)];
+    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 160.0f, 200, 40.0f)];
     indexLabel.textAlignment = UITextAlignmentCenter;
+    indexLabel.numberOfLines = 2; 
     indexLabel.textColor = [UIColor whiteColor];
     indexLabel.backgroundColor = [UIColor clearColor];
     indexLabel.font = [UIFont systemFontOfSize:16];
     [view addSubview:indexLabel];
     Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
-    indexLabel.text = currentPack.packName;
-    
+    if (currentPack.creatorNickName.length ==0) {
+        indexLabel.text = currentPack.creatorNickName;    
+    } else {
+        indexLabel.text = [NSString stringWithFormat:@"%@\n (by %@)",currentPack.packName, currentPack.creatorNickName];    
+    }
+
     
     deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
@@ -140,7 +145,7 @@
     [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(50.0f, 185.0f, 100.0, 30);
+    deleteButton.frame = CGRectMake(50.0f, 205.0f, 100.0, 30);
     NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
     if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
