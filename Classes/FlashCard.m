@@ -170,6 +170,10 @@ extern BOOL isFromNewCreatedCard;
         _title.textAlignment = NSTextAlignmentCenter;
         _title.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _title.userInteractionEnabled = FALSE;
+        _title.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _title.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _title.layer.shadowOpacity = 1.0f;
+        _title.layer.shadowRadius = 3.5f;
         [self addSubview:_title];
     }
     
@@ -388,6 +392,10 @@ extern BOOL isFromNewCreatedCard;
         _title.textAlignment = NSTextAlignmentCenter;
         _title.backgroundColor = [UIColor clearColor];
         _title.userInteractionEnabled = FALSE;
+        _title.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _title.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _title.layer.shadowOpacity = 1.0f;
+        _title.layer.shadowRadius = .5f;
         [self addSubview:_title];
     }
     
