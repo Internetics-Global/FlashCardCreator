@@ -18,7 +18,6 @@
 @synthesize swipeView = _swipeView;
 @synthesize pageControl = _pageControl;
 @synthesize packArray = _packArray;
-@synthesize currentPackName = _currentPackName;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -107,34 +106,53 @@
 {
     UIView *contentView = view;
     UIImageView *coverImageView ;
-    UILabel *indexLabel;
+    UITextField *packNameText;
+    UITextField *packCreatorText;
     UIButton *deleteButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 235)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 255)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
-        
 
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 0, 180.0f, 150.0f)];
+    
+    Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+    
+    packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, 180, 25.0f)];
+    packNameText.textAlignment = UITextAlignmentCenter;
+    packNameText.font = [UIFont systemFontOfSize:16];
+    packNameText.borderStyle = UITextBorderStyleNone;
+    packNameText.layer.cornerRadius = 5;
+    packNameText.layer.masksToBounds = YES;
+    [packNameText setClearsOnBeginEditing:YES];
+    packNameText.returnKeyType = UIReturnKeyDone;
+    packNameText.text = currentPack.packName;
+    packNameText.textColor = [UIColor whiteColor];
+    packNameText.backgroundColor = [UIColor lightGrayColor];
+    packNameText.delegate = self;
+    packNameText.tag = index;
+    packNameText.userInteractionEnabled = YES;
+    [view addSubview:packNameText];
+    
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 40, 180.0f, 150.0f)];
     coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
-    indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 160.0f, 200, 40.0f)];
-    indexLabel.textAlignment = UITextAlignmentCenter;
-    indexLabel.numberOfLines = 2; 
-    indexLabel.textColor = [UIColor whiteColor];
-    indexLabel.backgroundColor = [UIColor clearColor];
-    indexLabel.font = [UIFont systemFontOfSize:16];
-    [view addSubview:indexLabel];
-    Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
-    if (currentPack.creatorNickName.length ==0) {
-        indexLabel.text = currentPack.creatorNickName;    
-    } else {
-        indexLabel.text = [NSString stringWithFormat:@"%@\n (by %@)",currentPack.packName, currentPack.creatorNickName];    
-    }
+    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 200.0f, 180, 20.0f)];
+    packCreatorText.textAlignment = UITextAlignmentCenter;
+    packCreatorText.textColor = [UIColor whiteColor];
+    packCreatorText.backgroundColor = [UIColor clearColor];
+    packCreatorText.font = [UIFont systemFontOfSize:12];
+    packCreatorText.borderStyle = UITextBorderStyleNone;
+    packCreatorText.layer.cornerRadius = 5;
+    packCreatorText.layer.masksToBounds = YES;
+    [packCreatorText setClearsOnBeginEditing:YES];
+    packCreatorText.returnKeyType = UIReturnKeyDone;
+    packCreatorText.text= [NSString stringWithFormat:@"By:%@",currentPack.creatorNickName];
+    packCreatorText.userInteractionEnabled = NO;
+    [view addSubview:packCreatorText];
 
     
     deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -145,7 +163,7 @@
     [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(50.0f, 205.0f, 100.0, 30);
+    deleteButton.frame = CGRectMake(50.0f, 225.0f, 100.0, 30);
     NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
     if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
@@ -247,6 +265,23 @@
     }
     
     [_swipeView reloadData];
+}
+
+
+#pragma mark -
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
+    Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:textField.tag];
+    currentPack.packName = textField.text;
+    [currentPack save];
 }
                                            
                                         

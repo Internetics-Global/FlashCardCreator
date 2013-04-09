@@ -10,7 +10,7 @@
 #import "SwipeView.h"
 
 
-@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource> {
+@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate> {
     SwipeView *_swipeView;
     UIPageControl *_pageControl;
     NSMutableArray *_packArray;
