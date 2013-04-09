@@ -30,6 +30,7 @@ typedef enum RescreenshotReason {
     UIButton     *_logoLinkageButton;
     UILabel      *_sidebarTitle;
     
+    UITextView   *_creatorText;
     
     UITextField   *_questionTitle;
     UITextField   *_answerTitle;

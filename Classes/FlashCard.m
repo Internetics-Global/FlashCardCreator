@@ -164,10 +164,10 @@ extern BOOL isFromNewCreatedCard;
 
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(60, 30, 200, 110);
+        _questionTitle.frame = CGRectMake(80, 30, 200, 110);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
-        _questionTitle.textAlignment = NSTextAlignmentCenter;
+        _questionTitle.textAlignment = NSTextAlignmentLeft;
         _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
@@ -183,10 +183,10 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(60, 30, 200, 110);
+        _answerTitle.frame = CGRectMake(80, 30, 200, 110);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
-        _answerTitle.textAlignment = NSTextAlignmentCenter;
+        _answerTitle.textAlignment = NSTextAlignmentLeft;
         _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
@@ -369,7 +369,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(610, 15, 210, 128);
+        _logoImage.frame = CGRectMake(660, 15, 128, 128);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
@@ -383,10 +383,21 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _logoLinkageButton.frame = CGRectMake(560, 85, 25, 25);
+        _logoLinkageButton.frame = CGRectMake(640, 85, 25, 25);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
+    }
+    
+    if (_creatorText == nil) {
+        _creatorText = [[UITextView alloc] init];
+        _creatorText.frame = CGRectMake(560, 15, 110, 50);
+        _creatorText.textAlignment = NSTextAlignmentLeft;
+        _creatorText.backgroundColor = [UIColor clearColor];
+        _creatorText.font = [UIFont systemFontOfSize:12];
+        _creatorText.textColor = [UIColor grayColor];
+        _creatorText.userInteractionEnabled = FALSE;
+        [self addSubview:_creatorText];
     }
 
 }
@@ -411,7 +422,7 @@ extern BOOL isFromNewCreatedCard;
         _questionTitle.frame = CGRectMake(30, 0, 100, 40);
         _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _questionTitle.font =[UIFont systemFontOfSize:18];
-        _questionTitle.textAlignment = NSTextAlignmentCenter;
+        _questionTitle.textAlignment = NSTextAlignmentLeft;
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
@@ -430,7 +441,7 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.frame = CGRectMake(30, 0, 100, 40);
         _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _answerTitle.font =[UIFont systemFontOfSize:18];
-        _answerTitle.textAlignment = NSTextAlignmentCenter;
+        _answerTitle.textAlignment = NSTextAlignmentLeft;
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
@@ -609,7 +620,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(310, 5, 100, 64);
+        _logoImage.frame = CGRectMake(330, 5, 64, 64);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
@@ -625,11 +636,24 @@ extern BOOL isFromNewCreatedCard;
     
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _logoLinkageButton.frame = CGRectMake(283, 24, 12, 12);
+        _logoLinkageButton.frame = CGRectMake(318, 24, 12, 12);
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
     }
+    
+    if (_creatorText == nil) {
+        _creatorText = [[UITextView alloc] init];
+        _creatorText.frame = CGRectMake(250, 5, 80, 30);
+        _creatorText.textAlignment = NSTextAlignmentLeft;
+        _creatorText.backgroundColor = [UIColor clearColor];
+        _creatorText.font = [UIFont systemFontOfSize:8];
+        _creatorText.textColor = [UIColor grayColor];
+        _creatorText.userInteractionEnabled = FALSE;
+        _creatorText.text = [NSString stringWithFormat:@"Created by:\n%@",_currentPack.creatorNickName];
+        [self addSubview:_creatorText];
+    }
+    
 }
 
 
@@ -672,6 +696,8 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) enableCardEdit{
+    
+    _logoLinkageButton.hidden = FALSE;
     
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
@@ -775,6 +801,8 @@ extern BOOL isFromNewCreatedCard;
     }
     _backgroundImageName = _currentCard.templateBackgroundName;
     _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
+    
+    _creatorText.text = [NSString stringWithFormat:@"Created by:\n%@",_currentPack.creatorNickName];
 }
 
 - (void) refreshAnswerContent {
@@ -2397,8 +2425,7 @@ extern BOOL isFromNewCreatedCard;
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:selectTemplateTableViewController];
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     } else {
-        if (_popoverController == nil)
-            _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
+        _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
         _popoverController.popoverContentSize = CGSizeMake(250, 95*5);
         [_popoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     }
