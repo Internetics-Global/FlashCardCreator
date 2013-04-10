@@ -14,7 +14,7 @@
     NSInteger _answerID;
     NSInteger _cardID;
     NSInteger _cssID;
-	NSString *_title;
+	NSString *_title;//This field should be card based, however, forhistory reason, it put here
     NSString *_subheading;
     NSString *_main;
     NSString *_sub;

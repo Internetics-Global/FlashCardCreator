@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SwipeView.h"
 
+@class Pack;
 
-@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate> {
+@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     SwipeView *_swipeView;
     UIPageControl *_pageControl;
     NSMutableArray *_packArray;
@@ -19,6 +20,11 @@
     BOOL _hideDeleteButton;
     
     UIBarButtonItem *_editBtnItem;
+    
+    UIImagePickerController *_picker;
+    UIPopoverController *_imagePickerPopover;
+    
+    Pack  *_currentPack;
 }
 
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;

@@ -23,6 +23,7 @@
 "NavigationBarItem_Create" = "作成";
 "NavigationBarItem_Edit"= "編集";
 "NavigationBarItem_Delete"    = "削除";
+"NavigationBarItem_Change"    = "";
 "NavigationBarItem_Done" ="完了";
 "NavigationBarItem_Share" = "シェアパック";
 "NavigationBarItem_More" = "詳細";

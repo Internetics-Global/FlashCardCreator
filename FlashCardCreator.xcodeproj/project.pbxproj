@@ -201,6 +201,7 @@
 		88BC796A170D419A00EFBFCE /* help5_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7963170D419A00EFBFCE /* help5_iphone.jpg */; };
 		88BC796B170D419A00EFBFCE /* help6_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7964170D419A00EFBFCE /* help6_iphone.jpg */; };
 		88BC796C170D419A00EFBFCE /* help7_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7965170D419A00EFBFCE /* help7_iphone.jpg */; };
+		88CA253617152EE700859BDC /* orangeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* orangeButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -728,6 +729,7 @@
 		88BC7963170D419A00EFBFCE /* help5_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help5_iphone.jpg; path = Resources/help5_iphone.jpg; sourceTree = "<group>"; };
 		88BC7964170D419A00EFBFCE /* help6_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help6_iphone.jpg; path = Resources/help6_iphone.jpg; sourceTree = "<group>"; };
 		88BC7965170D419A00EFBFCE /* help7_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help7_iphone.jpg; path = Resources/help7_iphone.jpg; sourceTree = "<group>"; };
+		88CA253517152EE700859BDC /* orangeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = orangeButton.png; path = Resources/orangeButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1166,6 +1168,7 @@
 			isa = PBXGroup;
 			children = (
 				2DD058F816E83FBD00F779BD /* redButton.png */,
+				88CA253517152EE700859BDC /* orangeButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
 				2DC1777916E4641200939E61 /* helping_button.png */,
 				2DC1777A16E4641200939E61 /* helping_button@2x.png */,
@@ -1776,6 +1779,7 @@
 				88491B461714522300833692 /* templateScreenshot4_answer.png in Resources */,
 				88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */,
 				88491B481714522300833692 /* templateScreenshot4_question.png in Resources */,
+				88CA253617152EE700859BDC /* orangeButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

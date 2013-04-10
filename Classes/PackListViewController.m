@@ -11,6 +11,7 @@
 #import "Pack.h"
 #import "User.h"
 #import "FileOperationHelper.h"
+#import "UIImage+Scale.h"
 
 
 @implementation PackListViewController
@@ -42,6 +43,19 @@
         self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _hideDeleteButton = TRUE;
+        
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
+        _picker.delegate = self;
+        
+        if (isUserInterfaceIdiomPhone) {
+            
+        } else {
+            if (_imagePickerPopover == nil) {
+                _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            }
+        }
         
     }
     return self;
@@ -109,13 +123,14 @@
     UITextField *packNameText;
     UITextField *packCreatorText;
     UIButton *deleteButton;
+    UIButton *changeImageButton;
      
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 370)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
 
     
-    Pack *currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     
     packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
     packNameText.textAlignment = UITextAlignmentCenter;
@@ -123,7 +138,7 @@
     packNameText.borderStyle = UITextBorderStyleNone;
     [packNameText setClearsOnBeginEditing:YES];
     packNameText.returnKeyType = UIReturnKeyDone;
-    packNameText.text = currentPack.packName;
+    packNameText.text = _currentPack.packName;
     packNameText.textColor = [UIColor whiteColor];
     packNameText.backgroundColor = [UIColor clearColor];
     packNameText.delegate = self;
@@ -148,7 +163,7 @@
     packCreatorText.layer.masksToBounds = YES;
     [packCreatorText setClearsOnBeginEditing:YES];
     packCreatorText.returnKeyType = UIReturnKeyDone;
-    packCreatorText.text= [NSString stringWithFormat:@"By:%@",currentPack.creatorNickName];
+    packCreatorText.text= [NSString stringWithFormat:@"By:%@",_currentPack.creatorNickName];
     packCreatorText.userInteractionEnabled = NO;
     [view addSubview:packCreatorText];
 
@@ -161,10 +176,31 @@
     [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(50.0f, 265.0f, 100.0, 30);
+    deleteButton.frame = CGRectMake(20.0f, 265.0f, 75.0, 30);
     NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
     if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
+        
+    }
+    
+    changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
+    [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"orangeButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+    changeImageButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    changeImageButton.tintColor = [UIColor whiteColor];
+    [changeImageButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
+    changeImageButton.tag = index;
+    changeImageButton.userInteractionEnabled = TRUE;
+    changeImageButton.frame = CGRectMake(105.0f, 265.0f, 75.0, 30);
+    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
+    [changeImageButton addGestureRecognizer:logoSingeTap];
+    
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
+        if (changeImageButton.superview) {
+            [changeImageButton removeFromSuperview];
+        }
+    } else {
+        [view addSubview:changeImageButton];    
     }
     
     
@@ -245,8 +281,8 @@
 - (void) deleteCurrentPack:(id) sender {
     
     NSInteger index = ((UIButton *)sender).tag;
-    Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:index];
-    [[User defaultUser] removePack:currentPack];
+    _currentPack = [[[User defaultUser] packs] objectAtIndex:index];
+    [[User defaultUser] removePack:_currentPack];
     [self resetPackContent];
     
     //Recalculate:
@@ -264,6 +300,46 @@
     
     [_swipeView reloadData];
 }
+
+- (void) selectFromImageLibrary: (id) sender {
+    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:((UITapGestureRecognizer *) sender).view.tag];
+    if (isUserInterfaceIdiomPhone) {
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
+    } else {
+        CGPoint point = [sender locationInView:self.view];
+        CGRect rect = CGRectMake(point.x, point.y, 50, 50);
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+    }
+}
+
+
+#pragma mark -
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    if (isUserInterfaceIdiomPhone) {
+        [_picker dismissModalViewControllerAnimated:YES];
+    } else {
+        [_imagePickerPopover dismissPopoverAnimated:YES];
+    }
+    
+    UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    
+    if (_currentPack) {
+        if (([_currentPack.coverImageURL rangeOfString:@".png"].location == NSNotFound) || ([_currentPack.coverImageURL hasSuffix:@"default_pack_cover_image.png"])||((_currentPack.coverImageURL.length == 0))) {
+            _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePath];
+        }
+        [imageData writeToFile:_currentPack.coverImageURL atomically:YES];
+        [_currentPack save];
+        [self resetPackContent];
+        [self.swipeView reloadData];
+    } else {
+        [Common alertViewCommon:@"error: _currentPack is nil"];
+    }
+    
+
+}
+
 
 
 #pragma mark -
