@@ -147,7 +147,7 @@ extern BOOL isLoggingDropboxInSettingView;
     //11. Get example packs (online) and save to local
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/qgezvu1mpno0aok/Pack1365520545-1145172915.zip?type=demo"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/94df36mwhm1a849/Pack1365552622-2082715617.zip?type=demo"];
     }
     
     return YES;
