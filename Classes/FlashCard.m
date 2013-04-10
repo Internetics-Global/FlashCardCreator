@@ -48,6 +48,9 @@ extern BOOL isFromNewCreatedCard;
 #define kTagMainAnswer            201
 #define kTagSubAnswer             202
 
+#define kTagTitleQuestion         301
+#define kTagTitleAnser            302
+
 @interface FlashCard ()
 
 
@@ -178,6 +181,7 @@ extern BOOL isFromNewCreatedCard;
         _questionTitle.delegate = self;
         _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
         _questionTitle.returnKeyType = UIReturnKeyDone;
+        _questionTitle.tag = kTagTitleQuestion;
         [self addSubview:_questionTitle];
     }
     
@@ -197,6 +201,7 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.delegate = self;
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
         _answerTitle.returnKeyType = UIReturnKeyDone;
+        _answerTitle.tag = kTagTitleAnser;
         [self addSubview:_answerTitle];
     }
     
@@ -432,7 +437,8 @@ extern BOOL isFromNewCreatedCard;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
         _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
-        _questionTitle.returnKeyType = UIReturnKeyDone;;
+        _questionTitle.returnKeyType = UIReturnKeyDone;
+        _questionTitle.tag = kTagTitleQuestion;
         [self addSubview:_questionTitle];
     }
     
@@ -452,6 +458,7 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.delegate = self;
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
         _answerTitle.returnKeyType = UIReturnKeyDone;
+        _answerTitle.tag = kTagTitleAnser;
         [self addSubview:_answerTitle];
     }
     
@@ -2236,7 +2243,17 @@ extern BOOL isFromNewCreatedCard;
         //we will save until after we press the save button
         [self doQuestionAndAnswerData];
     } else {
-        [self saveEdittedCard];
+        //[self saveEdittedCard];
+        if (textField.tag == kTagTitleQuestion) {
+            [self reSceenshotAll:kReasonQuestionTitleChangeEnum withStringVal:textField.text];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+        } else if (textField.tag == kTagTitleAnser) {
+            [self reSceenshotAll:kReasonAnswerTitleChangeEnum withStringVal:textField.text];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+        } else {
+            NSLog(@"%s:Error",__FUNCTION__);
+        }
+        
     }
     
 }
@@ -2355,7 +2372,7 @@ extern BOOL isFromNewCreatedCard;
     }
     
     //we have to disable it, since it could affect performance
-    //[self reSceenshotAll:kReasonLogoImageChangeEnum stringVal:imagePath];
+    //[self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
 }
@@ -2465,7 +2482,7 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark - Re-screenshot all cards under current pack
-- (void) reSceenshotAll: (RescreenshotReason) why stringVal: (NSString *) val{
+- (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val{
     float flashCardYPositionInScrollView;
     FlashCard *tempCardView;
     if (isUserInterfaceIdiomPhone) {
@@ -2484,6 +2501,10 @@ extern BOOL isFromNewCreatedCard;
             card.templateBackgroundName = val;
         } else if (why == kReasonLogoImageChangeEnum) {
             card.question.logoFullPath = val;
+        } else if (why == kReasonQuestionTitleChangeEnum) {
+            card.question.title = val;
+        } else if (why == kReasonAnswerTitleChangeEnum) {
+            card.answer.title = val;
         }
         
         tempCardView.currentCard = card;

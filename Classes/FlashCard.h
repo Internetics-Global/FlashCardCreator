@@ -11,6 +11,8 @@
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
     kReasonLogoImageChangeEnum = 1,
+    kReasonQuestionTitleChangeEnum = 2,
+    kReasonAnswerTitleChangeEnum = 3,
     
 } RescreenshotReason;
 
@@ -32,8 +34,6 @@ typedef enum RescreenshotReason {
     
     UITextView   *_creatorText;
     
-    UITextField   *_questionTitle;
-    UITextField   *_answerTitle;
     NSString     *_imageFullPath;
     UIScrollView *_verticalScrollView;
     
@@ -87,8 +87,10 @@ typedef enum RescreenshotReason {
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, assign) BOOL isQuestionShowing;
-@property (nonatomic, strong) UISegmentedControl *segmentedControl;;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
 
+@property (nonatomic, strong) UITextField   *questionTitle;
+@property (nonatomic, strong) UITextField   *answerTitle;
 
 - (BOOL) checkCardEditable;
 - (void) disableCardEdit;
@@ -104,6 +106,6 @@ typedef enum RescreenshotReason {
 
 - (UIImage *)captureWholeViewAsImage;
 
-- (void) reSceenshotAll: (RescreenshotReason) why stringVal: (NSString *) val;  //Re-screenshot all cards under current pack
+- (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val;  //Re-screenshot all cards under current pack
 
 @end

@@ -522,7 +522,7 @@ enum template_color_enum {
     }
     
     //Step4: Change all cards card template background, screenshot them, and save them
-    [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum stringVal:templateBackgroundName];
+    [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum withStringVal:templateBackgroundName];
     [_currentCardView refreshAll];
     
     //Step5: tell the master view to update cell

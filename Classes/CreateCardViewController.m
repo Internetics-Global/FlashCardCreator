@@ -107,7 +107,20 @@ BOOL isFromNewCreatedCard = NO;
         [_newCardView refreshAll];
         [_newCardView enableCardEdit];
         
-        //Step5: set flag
+        //Step5: Some special assignment
+        if ([_currentPack cards].count >0) {
+            Card *firstCard = (Card *) [[_currentPack cards] objectAtIndex:0];
+            _newCardView.questionTitle.text = firstCard.question.title;
+            _newCardView.answerTitle.text = firstCard.answer.title;
+            
+            _newCard.question.title = firstCard.question.title;
+            _newCard.answer.title = firstCard.answer.title;
+        }
+        
+        _newCardView.questionTitle.userInteractionEnabled = NO;
+        _newCardView.answerTitle.userInteractionEnabled = NO;
+        
+        //Step6: set flag
         isFromNewCreatedCard = YES;
     }
     
