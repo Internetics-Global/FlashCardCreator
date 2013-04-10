@@ -132,7 +132,8 @@
     [packNameText setClearsOnBeginEditing:YES];
     packNameText.returnKeyType = UIReturnKeyDone;
     packNameText.text = _currentPack.packName;
-    
+    packNameText.layer.cornerRadius = 5;
+    packNameText.layer.masksToBounds = YES;
     packNameText.delegate = self;
     packNameText.tag = index;
     packNameText.userInteractionEnabled = YES;
