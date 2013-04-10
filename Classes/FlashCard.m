@@ -164,7 +164,7 @@ extern BOOL isFromNewCreatedCard;
 
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 30, 200, 110);
+        _questionTitle.frame = CGRectMake(80, 30, 400, 110);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
@@ -183,7 +183,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 30, 200, 110);
+        _answerTitle.frame = CGRectMake(80, 30, 400, 110);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
@@ -419,7 +419,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(30, 0, 100, 40);
+        _questionTitle.frame = CGRectMake(40, 10, 200, 40);
         _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _questionTitle.font =[UIFont systemFontOfSize:18];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
@@ -438,7 +438,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(30, 0, 100, 40);
+        _answerTitle.frame = CGRectMake(40, 10, 200, 40);
         _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _answerTitle.font =[UIFont systemFontOfSize:18];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
