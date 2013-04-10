@@ -121,7 +121,9 @@
     
     NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
-    SHKItem *item = [SHKItem URL:[NSURL URLWithString:urlSchemeLinkage] title:@"example" contentType:SHKURLContentTypeUndefined];
+    NSString *finalShareLink = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    SHKItem *item = [SHKItem URL:[NSURL URLWithString:finalShareLink] title:@"example" contentType:SHKURLContentTypeUndefined];
 	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
     [SHK setRootViewController:self.baseViewController];
 	[actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];

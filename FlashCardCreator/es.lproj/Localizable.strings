@@ -8,6 +8,7 @@
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK" = "Por favor, compruebe su red";
 "DIALOG_DOWNLOAD_PACK" = "Descarga paquete de muestra";
+"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Descarga de paquete de ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Usted puede hacer cambios solamente en aquellas tarjetas que son creados por usted mismo";
 "DIALOG_EXISTING_PACK_NAME"                = "Nombre actual del paquete, por favor ingrese una diferente";
 "DIALOG_CHECK_NETWORK_STATUS"       = "Por favor, comprueba tu red";

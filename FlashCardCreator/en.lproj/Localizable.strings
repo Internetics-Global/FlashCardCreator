@@ -8,6 +8,7 @@
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your network";
 "DIALOG_DOWNLOAD_PACK"              = "Downloading sample pack";
+"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Downloading pack from ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can only make changes to cards you have created yourself.";
 "DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
 "DIALOG_CHECK_NETWORK_STATUS"       = "Please check your network";

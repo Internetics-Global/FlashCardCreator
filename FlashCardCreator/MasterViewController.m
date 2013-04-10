@@ -34,6 +34,7 @@
 #import "PlayViewController.h"
 #import "HelpViewController.h"
 #import "NSArray+Randomised.h"
+#import "NSString+QueryString.h"
 
 
 @implementation MasterViewController
@@ -726,7 +727,13 @@
         return;
     }
     
-    [self showProgressIndicator];
+    NSString *httpURL = [urlStr stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
+    NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
+    NSDictionary *params = [NSString queryParamsFromString:downloadableURL];
+    NSString *type = params[@"type"];
+    NSString *from = params[@"from"];
+    
+    [self showProgressIndicator:type withSource:from];
     
     if ([urlStr rangeOfString:@".zip"].length == 0) {
         [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
@@ -991,7 +998,7 @@
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
-- (void)showProgressIndicator {
+- (void)showProgressIndicator:(NSString *) type withSource:(NSString *) from {
     
     _progressivePercent = 0;
 	
@@ -1009,7 +1016,11 @@
     _HUD.mode = MBProgressHUDModeDeterminate;
     
     _HUD.delegate = self;
-    _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");
+    if ([type isEqualToString:@"demo"]) {
+        _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");    
+    } else {
+        _HUD.labelText = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@""), from];
+    }
     
     // myProgressTask uses the HUD instance to update progress
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];

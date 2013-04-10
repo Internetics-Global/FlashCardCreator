@@ -8,6 +8,7 @@
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "请检查您的网络";
 "DIALOG_DOWNLOAD_PACK"              = "下载例子中";
+"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "下载中，来自 ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "只有那些自己所创建的卡，您可以更改";
 "DIALOG_EXISTING_PACK_NAME"                = "名称已存在，请重新输入";
 "DIALOG_CHECK_NETWORK_STATUS"       = "请检查您的网络";

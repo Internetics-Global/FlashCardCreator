@@ -147,7 +147,7 @@ extern BOOL isLoggingDropboxInSettingView;
     //11. Get example packs (online) and save to local
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/qgezvu1mpno0aok/Pack1365520545-1145172915.zip"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/qgezvu1mpno0aok/Pack1365520545-1145172915.zip?type=demo"];
     }
     
     return YES;
@@ -166,12 +166,6 @@ extern BOOL isLoggingDropboxInSettingView;
     }
     
     if ([[url scheme] isEqualToString:@"fcc"]) {
-        //NSString *httpURL = [[url absoluteString] stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
-        //NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
-        //NSDictionary *params = [NSString queryParamsFromString:[url absoluteString]];
-        //NSString *fromWho = params[@"from"];
-        //NSString *packName = params[@"packname"];
-        //NSString *cardName = params[@"cardname"];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
         
