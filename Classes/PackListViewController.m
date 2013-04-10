@@ -92,12 +92,6 @@
     self.title = @"Pack List";
     
     [self resetPackContent];
-    
-    if ([[User defaultUser] packs].count <= 1) {
-        self.navigationItem.rightBarButtonItem = nil;
-    } else {
-        self.navigationItem.rightBarButtonItem = _editBtnItem;
-    }
 }
 
 #pragma mark -
@@ -135,15 +129,25 @@
     packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
     packNameText.textAlignment = UITextAlignmentCenter;
     packNameText.font = [UIFont systemFontOfSize:16];
-    packNameText.borderStyle = UITextBorderStyleNone;
     [packNameText setClearsOnBeginEditing:YES];
     packNameText.returnKeyType = UIReturnKeyDone;
     packNameText.text = _currentPack.packName;
-    packNameText.textColor = [UIColor whiteColor];
-    packNameText.backgroundColor = [UIColor clearColor];
+    
     packNameText.delegate = self;
     packNameText.tag = index;
     packNameText.userInteractionEnabled = YES;
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")]) {
+        packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
+        packNameText.layer.borderWidth = 1;
+        packNameText.userInteractionEnabled = TRUE;
+        packNameText.backgroundColor = [UIColor whiteColor];
+        packNameText.textColor = [UIColor blackColor];
+    } else {
+        packNameText.layer.borderWidth = 0;
+        packNameText.userInteractionEnabled = FALSE;
+        packNameText.backgroundColor = [UIColor clearColor];
+        packNameText.textColor = [UIColor whiteColor];
+    }
     [view addSubview:packNameText];
     
     coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 80, 180.0f, 150.0f)];
@@ -153,7 +157,7 @@
     [view addSubview:coverImageView];
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
     
-    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 240.0f, 180, 20.0f)];
+    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 235.0f, 180, 20.0f)];
     packCreatorText.textAlignment = UITextAlignmentCenter;
     packCreatorText.textColor = [UIColor whiteColor];
     packCreatorText.backgroundColor = [UIColor clearColor];
@@ -171,12 +175,12 @@
     deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
     [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
-    deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
     deleteButton.tintColor = [UIColor whiteColor];
-    [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(20.0f, 265.0f, 75.0, 30);
+    deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
+    [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
     if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
@@ -186,14 +190,12 @@
     changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
     [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"orangeButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
-    changeImageButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
     changeImageButton.tintColor = [UIColor whiteColor];
-    [changeImageButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
     changeImageButton.tag = index;
     changeImageButton.userInteractionEnabled = TRUE;
-    changeImageButton.frame = CGRectMake(105.0f, 265.0f, 75.0, 30);
-    UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
-    [changeImageButton addGestureRecognizer:logoSingeTap];
+    changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
+    [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
     
     if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         if (changeImageButton.superview) {
@@ -256,7 +258,7 @@
 }
                                            
 - (void) editBtnItemClicked:(id)sender {
-    if ([((UIBarButtonItem *) sender).title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
         _hideDeleteButton = FALSE;
         [_swipeView reloadData];
@@ -302,11 +304,11 @@
 }
 
 - (void) selectFromImageLibrary: (id) sender {
-    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:((UITapGestureRecognizer *) sender).view.tag];
+    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:((UIButton *) sender).tag];
     if (isUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
     } else {
-        CGPoint point = [sender locationInView:self.view];
+        CGPoint point = ((UIButton *)sender).frame.origin;
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
     }

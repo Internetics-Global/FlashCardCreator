@@ -23,7 +23,7 @@
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = "Edit";
 "NavigationBarItem_Delete"    = "Delete";
-"NavigationBarItem_Change"    = "Change";
+"NavigationBarItem_Change"    = "Select Image";
 "NavigationBarItem_Done"    = "Done";
 "NavigationBarItem_Share"   = "Share the pack";
 "NavigationBarItem_More"    = "More";
