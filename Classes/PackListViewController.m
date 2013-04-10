@@ -177,7 +177,6 @@
     [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
     [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
     deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    deleteButton.tintColor = [UIColor whiteColor];
     deleteButton.tag = index;
     deleteButton.userInteractionEnabled = TRUE;
     deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
@@ -190,9 +189,9 @@
     
     changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
-    [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"orangeButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+    [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"grayButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
     changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    changeImageButton.tintColor = [UIColor whiteColor];
+    [changeImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     changeImageButton.tag = index;
     changeImageButton.userInteractionEnabled = TRUE;
     changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
