@@ -50,6 +50,8 @@ extern BOOL isFromNewCreatedCard;
 
 #define kTagTitleQuestion         301
 #define kTagTitleAnser            302
+#define kTagSidebar               303
+#define kTagCreator               304
 
 @interface FlashCard ()
 
@@ -320,14 +322,18 @@ extern BOOL isFromNewCreatedCard;
     _subAnswer.hidden = TRUE;
     
     if (_sidebarTitle == nil) {
-        _sidebarTitle = [[UILabel alloc] init];
+        _sidebarTitle = [[UITextField alloc] init];
         _sidebarTitle.frame = CGRectMake(0, 0, 400, 60);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _sidebarTitle.center = CGPointMake(30, 275);
+        _sidebarTitle.center = CGPointMake(50, 275);
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:20];
         _sidebarTitle.textColor = [UIColor whiteColor];
+        _sidebarTitle.delegate = self;
+        _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _sidebarTitle.returnKeyType = UIReturnKeyDone;
+        _sidebarTitle.tag = kTagSidebar;
         [self addSubview:_sidebarTitle];
     }
     
@@ -395,13 +401,29 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (_creatorText == nil) {
-        _creatorText = [[UITextView alloc] init];
-        _creatorText.frame = CGRectMake(560, 35, 110, 50);
+        
+        UITextField *des = [[UITextField alloc] init];
+        des.frame = CGRectMake(540, 45, 110, 50);
+        des.textAlignment = NSTextAlignmentLeft;
+        des.backgroundColor = [UIColor clearColor];
+        des.font = [UIFont systemFontOfSize:12];
+        des.textColor = [UIColor grayColor];
+        des.text = @"Created by:";
+        des.userInteractionEnabled = FALSE;
+        [self addSubview:des];
+        
+        
+        _creatorText = [[UITextField alloc] init];
+        _creatorText.frame = CGRectMake(540, 70, 110, 50);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
         _creatorText.textColor = [UIColor grayColor];
         _creatorText.userInteractionEnabled = FALSE;
+        _creatorText.delegate = self;
+        _creatorText.keyboardType = UIKeyboardAppearanceDefault;
+        _creatorText.returnKeyType = UIReturnKeyDone;
+        _creatorText.tag = kTagCreator;
         [self addSubview:_creatorText];
     }
 
@@ -470,15 +492,19 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    if (_sidebarTitle ==  nil) {
-        _sidebarTitle = [[UILabel alloc] init];
+    if (_sidebarTitle ==  nil) {        
+        _sidebarTitle = [[UITextField alloc] init];
         _sidebarTitle.frame = CGRectMake(0, 0, 200, 30);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _sidebarTitle.center = CGPointMake(15, 112);
+        _sidebarTitle.center = CGPointMake(25, 112);
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:12];
         _sidebarTitle.textColor = [UIColor whiteColor];
+        _sidebarTitle.delegate = self;
+        _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _sidebarTitle.returnKeyType = UIReturnKeyDone;
+        _sidebarTitle.tag = kTagSidebar;
         [self addSubview:_sidebarTitle];
     }
     
@@ -650,14 +676,28 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (_creatorText == nil) {
-        _creatorText = [[UITextView alloc] init];
-        _creatorText.frame = CGRectMake(250, 5, 80, 30);
+        UITextField *des = [[UITextField alloc] init];
+        des.frame = CGRectMake(250, 15, 80, 15);
+        des.textAlignment = NSTextAlignmentLeft;
+        des.backgroundColor = [UIColor clearColor];
+        des.font = [UIFont systemFontOfSize:8];
+        des.textColor = [UIColor grayColor];
+        des.text = @"Created by:";
+        des.userInteractionEnabled = FALSE;
+        [self addSubview:des];
+        
+        
+        _creatorText = [[UITextField alloc] init];
+        _creatorText.frame = CGRectMake(250, 25, 80, 15);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:8];
         _creatorText.textColor = [UIColor grayColor];
         _creatorText.userInteractionEnabled = FALSE;
-        _creatorText.text = [NSString stringWithFormat:@"Created by:\n%@",_currentPack.creatorNickName];
+        _creatorText.delegate = self;
+        _creatorText.keyboardType = UIKeyboardAppearanceDefault;
+        _creatorText.returnKeyType = UIReturnKeyDone;
+        _creatorText.tag = kTagCreator;
         [self addSubview:_creatorText];
     }
     
@@ -698,6 +738,9 @@ extern BOOL isFromNewCreatedCard;
     
     _questionTitle.userInteractionEnabled = FALSE;
     _answerTitle.userInteractionEnabled = FALSE;
+    
+    _sidebarTitle.userInteractionEnabled = FALSE;
+    _creatorText.userInteractionEnabled = FALSE;
     
     _changeTemplateButton.hidden = TRUE;
 }
@@ -774,6 +817,9 @@ extern BOOL isFromNewCreatedCard;
     
     _questionTitle.userInteractionEnabled = YES;
     _answerTitle.userInteractionEnabled = YES;
+    
+    _sidebarTitle.userInteractionEnabled = YES;
+    _creatorText.userInteractionEnabled = YES;
 }
 
 
@@ -809,7 +855,7 @@ extern BOOL isFromNewCreatedCard;
     _backgroundImageName = _currentCard.templateBackgroundName;
     _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
     
-    _creatorText.text = [NSString stringWithFormat:@"Created by:\n%@",_currentPack.creatorNickName];
+    _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
 }
 
 - (void) refreshAnswerContent {
@@ -2250,6 +2296,13 @@ extern BOOL isFromNewCreatedCard;
         } else if (textField.tag == kTagTitleAnser) {
             [self reSceenshotAll:kReasonAnswerTitleChangeEnum withStringVal:textField.text];
             [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+        } else if (textField.tag == kTagSidebar) {
+            [self reSceenshotAll:kReasonSidebarTitleChangeEnum withStringVal:textField.text];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+            
+        } else if (textField.tag == kTagCreator) {
+            [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
         } else {
             NSLog(@"%s:Error",__FUNCTION__);
         }
@@ -2493,6 +2546,14 @@ extern BOOL isFromNewCreatedCard;
         flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value
         tempCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad) defaultPack:_currentPack defaultCard:_currentCard];
         
+    }
+    
+    if (why == kReasonSidebarTitleChangeEnum) {
+        _currentPack.sidebarTitle = val;
+        [_currentPack save];
+    } else if (why == kReasonCreatorTitleChaneEnum) {
+        _currentPack.creatorNickName = val;
+        [_currentPack save];
     }
     
     for (Card *card in [_currentPack cards]) {

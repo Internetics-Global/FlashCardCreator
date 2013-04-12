@@ -151,26 +151,12 @@
     }
     [view addSubview:packNameText];
     
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 80, 180.0f, 150.0f)];
+    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
     coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
     coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
-    
-    packCreatorText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 235.0f, 180, 20.0f)];
-    packCreatorText.textAlignment = UITextAlignmentCenter;
-    packCreatorText.textColor = [UIColor whiteColor];
-    packCreatorText.backgroundColor = [UIColor clearColor];
-    packCreatorText.font = [UIFont systemFontOfSize:12];
-    packCreatorText.borderStyle = UITextBorderStyleNone;
-    packCreatorText.layer.cornerRadius = 5;
-    packCreatorText.layer.masksToBounds = YES;
-    [packCreatorText setClearsOnBeginEditing:YES];
-    packCreatorText.returnKeyType = UIReturnKeyDone;
-    packCreatorText.text= [NSString stringWithFormat:@"By:%@",_currentPack.creatorNickName];
-    packCreatorText.userInteractionEnabled = NO;
-    [view addSubview:packCreatorText];
 
     
     deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -13,6 +13,8 @@ typedef enum RescreenshotReason {
     kReasonLogoImageChangeEnum = 1,
     kReasonQuestionTitleChangeEnum = 2,
     kReasonAnswerTitleChangeEnum = 3,
+    kReasonSidebarTitleChangeEnum = 4,
+    kReasonCreatorTitleChaneEnum = 5,
     
 } RescreenshotReason;
 
@@ -30,9 +32,8 @@ typedef enum RescreenshotReason {
     NSString     *_logoImageFullPath;
     NSString     *_logoLinkURL;
     UIButton     *_logoLinkageButton;
-    UILabel      *_sidebarTitle;
-    
-    UITextView   *_creatorText;
+    UITextField  *_sidebarTitle;
+    UITextField   *_creatorText;
     
     NSString     *_imageFullPath;
     UIScrollView *_verticalScrollView;
