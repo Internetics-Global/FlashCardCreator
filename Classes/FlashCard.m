@@ -403,7 +403,7 @@ extern BOOL isFromNewCreatedCard;
     if (_creatorText == nil) {
         
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(540, 45, 110, 50);
+        des.frame = CGRectMake(540, 45, 90, 50);
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:12];
@@ -414,7 +414,7 @@ extern BOOL isFromNewCreatedCard;
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(540, 70, 110, 50);
+        _creatorText.frame = CGRectMake(540, 70, 90, 50);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
@@ -677,7 +677,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_creatorText == nil) {
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(250, 15, 80, 15);
+        des.frame = CGRectMake(250, 15, 68, 15);
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:8];
@@ -688,7 +688,7 @@ extern BOOL isFromNewCreatedCard;
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(250, 25, 80, 15);
+        _creatorText.frame = CGRectMake(250, 25, 68, 15);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:8];
