@@ -721,6 +721,7 @@ extern BOOL isFromNewCreatedCard;
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     _imageQuestion.userInteractionEnabled        = FALSE;
+    _imageQuestion.layer.borderWidth = 0;
     _mainQuestion.userInteractionEnabled         = FALSE;
     _mainQuestion.layer.borderWidth = 0;
     _subQuestion.userInteractionEnabled          = FALSE;
@@ -729,6 +730,7 @@ extern BOOL isFromNewCreatedCard;
     _subheadingQuestion.layer.borderWidth = 0;
     
     _imageAnswer.userInteractionEnabled        = FALSE;
+    _imageAnswer.layer.borderWidth = 0;
     _mainAnswer.userInteractionEnabled         = FALSE;
     _mainAnswer.layer.borderWidth = 0;
     _subAnswer.userInteractionEnabled          = FALSE;
