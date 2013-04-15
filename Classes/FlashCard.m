@@ -973,6 +973,9 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.question.css.subAlign = _subAlignQuestion;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
+    
+    _currentPack.creatorNickName = _creatorText.text;
+    _currentPack.sidebarTitle = _sidebarTitle.text;
 }
 
 

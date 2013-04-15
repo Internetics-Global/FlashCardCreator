@@ -462,6 +462,13 @@
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
     self.currentPack = [[User defaultUser] packs] [_indexPack];
     [self.tableView reloadData];
+    if (isUserInterfaceIdiomPhone) {
+        //do nothing
+    } else {
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    
+    }
 }
 
 - (void) updateMasterAfterDetailScrollNotification:(NSNotification *) notification {
