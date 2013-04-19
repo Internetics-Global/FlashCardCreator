@@ -545,7 +545,7 @@
     //Just to keep consistent: indexPath.row should be same as card.cardSN
     if (card.cardSN != indexPath.row +1) {
         NSLog(@"card.cardSN = %d, indexPath.row = %d", card.cardSN, indexPath.row);
-        [Common alertViewCommon:@"We have to reorder it since it's not consistent"];
+        NSLog(@"******warning: We have to reorder it since it's not consistent");
         card.cardSN = indexPath.row +1;
         [card save];
     }

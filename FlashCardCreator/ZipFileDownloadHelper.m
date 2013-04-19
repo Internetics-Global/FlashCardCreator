@@ -36,7 +36,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error download: %@", error);
         [_delegate downloadFail];
-        [Common alertViewCommon:[error description]];
+        //[Common alertViewCommon:[error description]];
+        [Common alertViewCommon:@"Network issue or Dropbox sever is temporarily unavailable"];
     }];
     [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
         NSLog(@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile);
