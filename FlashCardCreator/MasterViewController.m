@@ -136,7 +136,7 @@
     if (_addCardButton == nil) {
         if (isUserInterfaceIdiomPhone) {
             _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 160, 60)];
-            _addCardButtonBackground.backgroundColor = [UIColor blackColor];
+            _addCardButtonBackground.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"add_card_background.png"]];
             _addCardButtonBackground.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
             _addCardButton.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
@@ -146,7 +146,7 @@
         } else {
             
             _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, IPAD_UI_MASTER_WIDTH, 80)];
-            _addCardButtonBackground.backgroundColor = [UIColor blackColor];
+            _addCardButtonBackground.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"add_card_background.png"]];
             _addCardButtonBackground.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-40);
             
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
