@@ -45,7 +45,7 @@
 	for (; ; nimages++) {
         NSString *imageName;
         if (isUserInterfaceIdiomPhone) {
-            imageName = [NSString stringWithFormat:@"help%d_iPhone.jpg", (nimages + 1)];    
+            imageName = [NSString stringWithFormat:@"help%d_iphone.jpg", (nimages + 1)];    
         } else {
             imageName = [NSString stringWithFormat:@"help%d.jpg", (nimages + 1)];
         }
