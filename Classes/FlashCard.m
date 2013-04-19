@@ -653,7 +653,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(330, 5, 64, 64);
+        _logoImage.frame = CGRectMake(330, 5, 64, 40);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
