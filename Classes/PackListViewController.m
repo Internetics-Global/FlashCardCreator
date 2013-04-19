@@ -129,7 +129,6 @@
     packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
     packNameText.textAlignment = UITextAlignmentCenter;
     packNameText.font = [UIFont systemFontOfSize:16];
-    [packNameText setClearsOnBeginEditing:YES];
     packNameText.returnKeyType = UIReturnKeyDone;
     packNameText.text = _currentPack.packName;
     packNameText.layer.cornerRadius = 5;
