@@ -577,7 +577,7 @@ extern BOOL isFromNewCreatedCard;
     if (_imageAnswer ==  nil) {
         _imageAnswer= [[UIImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeCenter;
+        _imageAnswer.contentMode = UIViewContentModeScaleAspectFill;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
         _imageAnswer.tag = 1;
