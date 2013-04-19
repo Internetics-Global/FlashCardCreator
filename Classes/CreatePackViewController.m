@@ -66,7 +66,7 @@
     _packNameText.textAlignment = UITextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
-    _packNameText.font = [UIFont systemFontOfSize:16];
+    _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
     _packNameText.borderStyle = UITextBorderStyleNone;
     _packNameText.layer.cornerRadius = 5;
@@ -83,7 +83,7 @@
     _sidebarTitle.textAlignment = UITextAlignmentCenter;
     _sidebarTitle.backgroundColor = [UIColor whiteColor];
     _sidebarTitle.text = @"Side bar title";
-    _sidebarTitle.font = [UIFont systemFontOfSize:16];
+    _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
     _sidebarTitle.borderStyle = UITextBorderStyleNone;
     _sidebarTitle.layer.cornerRadius = 5;
@@ -100,7 +100,7 @@
     _creatorText.textAlignment = UITextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
     _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
-    _creatorText.font = [UIFont systemFontOfSize:16];
+    _creatorText.font = [UIFont systemFontOfSize:14];
     _creatorText.delegate = self;
     _creatorText.borderStyle = UITextBorderStyleNone;
     _creatorText.layer.cornerRadius = 5;
