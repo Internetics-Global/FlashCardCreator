@@ -839,6 +839,14 @@ extern BOOL isFromNewCreatedCard;
     } else {
         [self disableCardEdit];
     }
+    
+    //we don't want to edit title during new card
+    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        _questionTitle.userInteractionEnabled = false;
+        _answerTitle.userInteractionEnabled = false;
+    }
+    
+
 }
 
 
