@@ -2021,6 +2021,8 @@ extern BOOL isFromNewCreatedCard;
         [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
     
+    
+    
 }
 
 - (void)selectFromImageLibraryByImage:(UITapGestureRecognizer *)sender {
@@ -2062,7 +2064,7 @@ extern BOOL isFromNewCreatedCard;
             _currentCard.question.logoFullPath = _logoImageFullPath;
         } else {
             //do save operation and update all others
-            [self updatelogoImageForAllCards:_logoImageFullPath];    
+            [self updatelogoImageForAllCards:_logoImageFullPath];
         }
         
     } else {
@@ -2432,13 +2434,12 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    for (Card *card in [_currentPack cards]) {
-        card.question.logoFullPath =imagePath;
-        [card save];
-    }
+//    for (Card *card in [_currentPack cards]) {
+//        card.question.logoFullPath =imagePath;
+//        [card save];
+//    }
     
-    //we have to disable it, since it could affect performance
-    //[self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
+    [self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
