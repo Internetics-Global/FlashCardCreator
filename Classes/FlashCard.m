@@ -2305,17 +2305,17 @@ extern BOOL isFromNewCreatedCard;
         //[self saveEdittedCard];
         if (textField.tag == kTagTitleQuestion) {
             [self reSceenshotAll:kReasonQuestionTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
         } else if (textField.tag == kTagTitleAnser) {
             [self reSceenshotAll:kReasonAnswerTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
         } else if (textField.tag == kTagSidebar) {
             [self reSceenshotAll:kReasonSidebarTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
             
         } else if (textField.tag == kTagCreator) {
             [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
         } else {
             NSLog(@"%s:Error",__FUNCTION__);
         }
@@ -2423,7 +2423,7 @@ extern BOOL isFromNewCreatedCard;
         [card save];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
 - (void) updatelogoImageForAllCards:(NSString *) imagePath {
@@ -2440,7 +2440,7 @@ extern BOOL isFromNewCreatedCard;
     //we have to disable it, since it could affect performance
     //[self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
 - (void) saveEdittedCard {
@@ -2493,7 +2493,12 @@ extern BOOL isFromNewCreatedCard;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     //Send notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    if (self.tag == NEW_FLASHCARDVIEW_TAG){
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:@"SENT_FROM_NEW_CARD"];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    }
+    
     
     
 }
@@ -2542,7 +2547,7 @@ extern BOOL isFromNewCreatedCard;
         [self doQuestionAndAnswerData];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:_currentCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
 

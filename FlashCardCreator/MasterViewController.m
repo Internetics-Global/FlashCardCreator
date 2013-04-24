@@ -461,25 +461,16 @@
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
     
-    Card *card = (Card *)[notification object];
-    
-    int i=0;
-    for (Card *tempCard in [_currentPack cards]) {
-        if (tempCard.cardID == card.cardID) {
-            break;
-        } else {
-            i++;
-        }
-    }
-    
-    _indexCard = i;
-    
+    NSString *notificationStr = (NSString *)[notification object];
     
     self.currentPack = [[User defaultUser] packs] [_indexPack];
     [self.tableView reloadData];
-    if (isUserInterfaceIdiomPhone) {
-        //do nothing
+    if ((isUserInterfaceIdiomPhone) || (![notificationStr isEqualToString:@"SENT_FROM_NEW_CARD"])) {
+        //when we just edit the current card, we don't update detail view second time
+        //or
+        //when we in on iPhone
     } else {
+        _indexCard = [[_currentPack cards] count] -1;
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self.tableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];

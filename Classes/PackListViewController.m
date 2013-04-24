@@ -136,7 +136,7 @@
     packNameText.delegate = self;
     packNameText.tag = index;
     packNameText.userInteractionEnabled = YES;
-    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")]) {
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")] && ([_currentPack.creator isEqualToString:[OpenUDID value]])) {
         packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
         packNameText.layer.borderWidth = 1;
         packNameText.userInteractionEnabled = TRUE;
@@ -182,12 +182,12 @@
     changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
     [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
     
-    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")] && ([_currentPack.creator isEqualToString:[OpenUDID value]])) {
+        [view addSubview:changeImageButton];    
+    } else {
         if (changeImageButton.superview) {
             [changeImageButton removeFromSuperview];
         }
-    } else {
-        [view addSubview:changeImageButton];    
     }
     
     
