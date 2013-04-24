@@ -54,6 +54,6 @@
 
 @property (nonatomic, strong) PopupListComponent *templateBackgroundSelectPopup;
 
-- (void) showCurrentCardInScrollView;
+- (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment;
 
 @end

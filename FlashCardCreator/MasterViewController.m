@@ -368,7 +368,7 @@
                 self.detailViewController.title = @"";
                 self.detailViewController.currentPack = nil;
                 self.detailViewController.indexCard = 0;
-                [self.detailViewController showCurrentCardInScrollView];
+                [self.detailViewController showCurrentCardInScrollView:YES];
             }
         }
     }
@@ -408,7 +408,7 @@
         self.detailViewController.currentCard = nil;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = 0;
-        [self.detailViewController showCurrentCardInScrollView];
+        [self.detailViewController showCurrentCardInScrollView:YES];
     }
     
 }
@@ -460,12 +460,29 @@
 }
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
+    
+    Card *card = (Card *)[notification object];
+    
+    int i=0;
+    for (Card *tempCard in [_currentPack cards]) {
+        if (tempCard.cardID == card.cardID) {
+            break;
+        } else {
+            i++;
+        }
+    }
+    
+    _indexCard = i;
+    
+    
     self.currentPack = [[User defaultUser] packs] [_indexPack];
     [self.tableView reloadData];
     if (isUserInterfaceIdiomPhone) {
         //do nothing
     } else {
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self.tableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     
     }
@@ -593,7 +610,7 @@
             self.detailViewController.currentCard = _currentCard;
             self.detailViewController.currentPack = _currentPack;
             self.detailViewController.indexCard = _indexCard;
-            [self.detailViewController showCurrentCardInScrollView];
+            [self.detailViewController showCurrentCardInScrollView:YES];
         }
     }
     
@@ -650,7 +667,7 @@
                 self.detailViewController.title = @"";
                 self.detailViewController.currentCard = nil;
                 self.detailViewController.indexCard = 0;
-                [self.detailViewController showCurrentCardInScrollView];
+                [self.detailViewController showCurrentCardInScrollView:YES];
             }
         } else {
             //Update right pack info

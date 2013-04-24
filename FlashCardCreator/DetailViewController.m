@@ -131,7 +131,7 @@ enum template_color_enum {
     [super viewWillAppear:animated];
     if (isUserInterfaceIdiomPhone){
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
-        [self showCurrentCardInScrollView];
+        [self showCurrentCardInScrollView:NO];
     } else {
         _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
         
@@ -141,7 +141,7 @@ enum template_color_enum {
             if (isExamplePackDownloadedSuccessful == TRUE) {
                 static dispatch_once_t oncetoken;
                 dispatch_once(&oncetoken, ^{
-                    [self showCurrentCardInScrollView];
+                    [self showCurrentCardInScrollView:NO];
                 });
             }
         }
@@ -152,7 +152,7 @@ enum template_color_enum {
 #pragma mark -
 #pragma mark - Layout 
 
-- (void) showCurrentCardInScrollView {
+- (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
@@ -174,6 +174,11 @@ enum template_color_enum {
     label.text = _currentPack.packName;
     [label sizeToFit];
     [self.navigationItem setTitleView:label];
+    
+    if ((shouldResetSegment == YES) && (_currentCardView.segmentedControl.selectedSegmentIndex == 1)) {
+        _currentCardView.segmentedControl.selectedSegmentIndex = 0;
+        [_currentCardView segmentAction:nil];
+    }
 }
 
 - (void)layoutScrollObjectsForiPad
@@ -459,7 +464,7 @@ enum template_color_enum {
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
         _indexCard = page;
         _currentCard = [_currentPack cards][page];
-        [self showCurrentCardInScrollView];
+        [self showCurrentCardInScrollView:NO];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
     }
