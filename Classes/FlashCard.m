@@ -1831,6 +1831,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    
     //Step1: Get keyboard height
     NSDictionary* info = [aNotification userInfo];
     NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
@@ -1839,6 +1840,12 @@ extern BOOL isFromNewCreatedCard;
     
     //Step2: Get cursor Y value relative to view
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    if (responderTextView.text.length == 0) {
+        NSRange range;
+        range.location = 0;
+        range.length = 0;
+        responderTextView.selectedRange = range;
+    }
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     //NSLog(@"Y position for current cursorY is %f",cursorY);
     
