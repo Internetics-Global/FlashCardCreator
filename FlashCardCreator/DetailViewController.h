@@ -42,6 +42,8 @@
     
     PopupListComponent *_templateBackgroundSelectPopup;
     
+    MBProgressHUD *_HUD;
+    
 }
 
 @property (strong, nonatomic) id detailItem;

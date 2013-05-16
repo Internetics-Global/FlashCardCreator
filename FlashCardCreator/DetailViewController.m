@@ -526,6 +526,20 @@ enum template_color_enum {
             break;
     }
     
+    //Show progress indicator and invoke other long-time post-execution
+    if (!_HUD)
+        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    
+    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+    
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    [_HUD show:YES];
+    [self performSelector:@selector(execTemplateBackgroundChangeTask:) withObject:templateBackgroundName afterDelay:0.01];
+    
+}
+
+- (void) execTemplateBackgroundChangeTask:(NSString *)templateBackgroundName {
     //Step4: Change all cards card template background, screenshot them, and save them
     [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum withStringVal:templateBackgroundName];
     [_currentCardView refreshAll];
@@ -533,6 +547,8 @@ enum template_color_enum {
     //Step5: tell the master view to update cell
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     
+    [_HUD removeFromSuperview];
+    _HUD = nil;
 }
 
 - (void) popupListcompoentDidCancel:(PopupListComponent *)sender
