@@ -18,6 +18,7 @@
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "登录Dropbox账户失败";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "下载包中...";
 "DIALOG_ENTER_VALID_URL"       = "请输入有效的URL";
+"DIALOG_APPLY_TO_ALL_CARD"       = "正应用到全部卡片中...";
 
 
 "NavigationBarItem_Packs"   = "组";

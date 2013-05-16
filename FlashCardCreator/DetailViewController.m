@@ -534,6 +534,7 @@ enum template_color_enum {
     [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
     
     _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
     [_HUD show:YES];
     [self performSelector:@selector(execTemplateBackgroundChangeTask:) withObject:templateBackgroundName afterDelay:0.01];
     
