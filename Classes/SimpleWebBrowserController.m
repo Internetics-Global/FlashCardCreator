@@ -193,8 +193,8 @@
     forwardButton.enabled = [webview canGoForward];
 
     //The following code is just for test
-    [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[0].value='Clive';"];
-    [webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[1].value='clive@internetics.net.au';"];
+    //[webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[0].value='Clive';"];
+    //[webview stringByEvaluatingJavaScriptFromString:@"document.getElementsByClassName('text required')[1].value='clive@internetics.net.au';"];
 
     
 }

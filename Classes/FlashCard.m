@@ -434,7 +434,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_backgroundImageView == nil) {
         _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
-        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
         _backgroundImageView.backgroundColor = [UIColor whiteColor];
         _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone-45);
         _backgroundImageView.userInteractionEnabled = NO;
@@ -577,7 +577,7 @@ extern BOOL isFromNewCreatedCard;
     if (_imageAnswer ==  nil) {
         _imageAnswer= [[UIImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeScaleAspectFill;
+        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
         _imageAnswer.tag = 1;
@@ -1370,6 +1370,18 @@ extern BOOL isFromNewCreatedCard;
             
             break;
         }
+        case 5: //Template 5
+        {
+            _subheadingAnswer.hidden = TRUE;
+            _mainAnswer.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.frame = CGRectMake(1, 5, 360, 185);
+            _imageAnswer.hidden = FALSE;
+            
+            break;
+        }
+            
         default:
         {
             NSLog(@"%s:No template is selected",__FUNCTION__);
@@ -1513,6 +1525,19 @@ extern BOOL isFromNewCreatedCard;
             
             break;
         }
+        
+        case 5: //Template 5
+        {
+            _subheadingAnswer.hidden = TRUE;
+            _mainAnswer.hidden = TRUE;
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(10, 10, 700, 420);
+            
+            break;
+        }
+            
         default:
         {
             NSLog(@"%s:No template is selected",__FUNCTION__);

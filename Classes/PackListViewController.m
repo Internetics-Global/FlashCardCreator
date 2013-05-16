@@ -151,7 +151,7 @@
     [view addSubview:packNameText];
     
     coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
-    coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+    coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
