@@ -1904,8 +1904,8 @@ extern BOOL isFromNewCreatedCard;
         if (gap >32)
             offset.y = gap+32;
     } else {
-        if (gap >40)
-            offset.y = gap+40;
+        if (gap >44)
+            offset.y = gap+44;
     }
     
     //Step5: move scrollview
@@ -2381,7 +2381,6 @@ extern BOOL isFromNewCreatedCard;
     
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
-    NSLog(@"Y position for current cursorY is %f",cursorY);
     
     CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
     
@@ -2393,19 +2392,19 @@ extern BOOL isFromNewCreatedCard;
         gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
     }
     
-    if ((textView.contentSize.height > height)) {
+    if ((textView.contentSize.height > height) && (height != 0)) {
         if (gap > -responderTextView.font.lineHeight) {
             offset.y = offset.y + responderTextView.font.lineHeight;
         }
         [_verticalScrollView setContentOffset:offset animated:YES];
-    } else if ((textView.contentSize.height < height)) {
+    } else if ((textView.contentSize.height < height)&& (height != 0)) {
         if (gap < -responderTextView.font.lineHeight) {
             offset.y = offset.y - responderTextView.font.lineHeight;
         }
         [_verticalScrollView setContentOffset:offset animated:YES];
     }
     
-    NSLog(@"%f",responderTextView.font.lineHeight);
+    NSLog(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
     
     height= textView.contentSize.height;
     
