@@ -52,20 +52,40 @@
         [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
             NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
             dispatch_sync(dispatch_get_main_queue(), ^{
-                if (motion.attitude.roll < -0.3) {
-                    if (enableSwitch == YES) {
-                        [self switchQuestionAnswerView];
-                        enableSwitch = NO;
+                
+                if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
+                    if (motion.attitude.roll < -0.3) {
+                        if (enableSwitch == YES) {
+                            [self switchQuestionAnswerView];
+                            enableSwitch = NO;
+                        }
+                        
+                    } else if (motion.attitude.roll > 0) {
+                        if (enableSwitch == NO) {
+                            enableSwitch = YES;
+                        }
+                        
+                    } else {
+                        //do nothing
                     }
                     
-                } else if (motion.attitude.roll > 0) {
-                    if (enableSwitch == NO) {
-                        enableSwitch = YES;
+                } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
+                    if (motion.attitude.roll > 0.3) {
+                        if (enableSwitch == YES) {
+                            [self switchQuestionAnswerView];
+                            enableSwitch = NO;
+                        }
+                        
+                    } else if (motion.attitude.roll < 0) {
+                        if (enableSwitch == NO) {
+                            enableSwitch = YES;
+                        }
+                        
+                    } else {
+                        //do nothing
                     }
-                    
-                } else {
-                    //do nothing
                 }
+                
             });
             
         }];
@@ -236,7 +256,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations {
     
-    return UIInterfaceOrientationMaskLandscapeLeft;
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 #pragma mark -

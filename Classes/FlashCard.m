@@ -438,7 +438,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_backgroundImageView == nil) {
         _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
-        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
         _backgroundImageView.backgroundColor = [UIColor whiteColor];
         _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone-45);
         _backgroundImageView.userInteractionEnabled = NO;
@@ -1900,8 +1900,12 @@ extern BOOL isFromNewCreatedCard;
         gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
     }
     
-    if (gap >5) {
-        offset.y = gap+20;
+    if (isUserInterfaceIdiomPhone) {
+        if (gap >32)
+            offset.y = gap+32;
+    } else {
+        if (gap >40)
+            offset.y = gap+40;
     }
     
     //Step5: move scrollview
@@ -2374,30 +2378,34 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
     static CGFloat height = 0;
-        
     
-    if (([text isEqualToString:@"\n"]) || (textView.contentSize.height > height)) {
-        UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
-        CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
-        NSLog(@"Y position for current cursorY is %f",cursorY);
-        
-        CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
-        
-        CGPoint offset = _verticalScrollView.contentOffset;
-        CGFloat gap;
-        if (isUserInterfaceIdiomPhone) {
-            gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
-        } else {
-            gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
-        }
-        
-        if (gap >0) {
+    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
+    NSLog(@"Y position for current cursorY is %f",cursorY);
+    
+    CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+    
+    CGPoint offset = _verticalScrollView.contentOffset;
+    CGFloat gap;
+    if (isUserInterfaceIdiomPhone) {
+        gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
+    } else {
+        gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
+    }
+    
+    if ((textView.contentSize.height > height)) {
+        if (gap > -responderTextView.font.lineHeight) {
             offset.y = offset.y + responderTextView.font.lineHeight;
         }
         [_verticalScrollView setContentOffset:offset animated:YES];
-        
-        
+    } else if ((textView.contentSize.height < height)) {
+        if (gap < -responderTextView.font.lineHeight) {
+            offset.y = offset.y - responderTextView.font.lineHeight;
+        }
+        [_verticalScrollView setContentOffset:offset animated:YES];
     }
+    
+    NSLog(@"%f",responderTextView.font.lineHeight);
     
     height= textView.contentSize.height;
     
