@@ -79,6 +79,10 @@ extern BOOL isFromNewCreatedCard;
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(orientationChangeNotificaton:)
+                                                     name:UIDeviceOrientationDidChangeNotification object:nil];
+        
         if ((card == nil) || (pack == nil)) {
             NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
         }
@@ -2370,6 +2374,7 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
     static CGFloat height = 0;
+        
     
     if (([text isEqualToString:@"\n"]) || (textView.contentSize.height > height)) {
         UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
@@ -2390,6 +2395,7 @@ extern BOOL isFromNewCreatedCard;
             offset.y = offset.y + responderTextView.font.lineHeight;
         }
         [_verticalScrollView setContentOffset:offset animated:YES];
+        
         
     }
     
@@ -2636,6 +2642,15 @@ extern BOOL isFromNewCreatedCard;
         [card save];
     }
 }
+
+#pragma mark -
+#pragma mark - Rotation
+- (void)orientationChangeNotificaton:(NSNotification*)aNotification {
+    if (_keyboardShown) {
+        [self dismissKeyBoard];    
+    }
+}
+
 
 
 #pragma mark -
