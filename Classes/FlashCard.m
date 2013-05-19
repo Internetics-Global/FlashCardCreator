@@ -79,10 +79,6 @@ extern BOOL isFromNewCreatedCard;
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(orientationChangeNotificaton:)
-                                                     name:UIDeviceOrientationDidChangeNotification object:nil];
-        
         if ((card == nil) || (pack == nil)) {
             NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
         }
@@ -2647,14 +2643,6 @@ extern BOOL isFromNewCreatedCard;
         }
         
         [card save];
-    }
-}
-
-#pragma mark -
-#pragma mark - Rotation
-- (void)orientationChangeNotificaton:(NSNotification*)aNotification {
-    if (_keyboardShown) {
-        [self dismissKeyBoard];    
     }
 }
 
