@@ -21,6 +21,7 @@ typedef enum RescreenshotReason {
 @class Card;
 @class Pack;
 @class BadgeLabel;
+@class MBProgressHUD;
 
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
     BadgeLabel *_cardSNText;
@@ -83,6 +84,8 @@ typedef enum RescreenshotReason {
     UIImagePickerController *_picker;
     UIPopoverController *_imagePickerPopover;
     UIPopoverController *_popoverController;
+    
+    MBProgressHUD *_HUD;
 }
 
 @property (nonatomic, strong) Card *currentCard;

@@ -23,6 +23,7 @@
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
 #import "SelectTemplateTableViewController.h"
+#import "MBProgressHUD.h"
 
 extern BOOL isFromNewCreatedCard;
 
@@ -2100,7 +2101,17 @@ extern BOOL isFromNewCreatedCard;
             _currentCard.question.logoFullPath = _logoImageFullPath;
         } else {
             //do save operation and update all others
-            [self updatelogoImageForAllCards:_logoImageFullPath];
+            
+            if (!_HUD) {
+                _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];    
+            }
+            [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+            [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+
+            _HUD.mode = MBProgressHUDModeIndeterminate;
+            [_HUD show:YES];
+            _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+            [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
         }
         
     } else {
@@ -2122,6 +2133,12 @@ extern BOOL isFromNewCreatedCard;
             [self saveEdittedCard];
         }
     }
+}
+
+- (void) execUpdatelogoImageForAllCards:(NSString *)logoImageFullPath {
+    [self updatelogoImageForAllCards:logoImageFullPath];
+    [_HUD removeFromSuperview];
+    _HUD = nil;
 }
 
 - (UIImage *)captureWholeViewAsImage {
