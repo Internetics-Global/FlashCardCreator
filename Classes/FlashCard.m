@@ -107,6 +107,7 @@ extern BOOL isFromNewCreatedCard;
     
     _backgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
+    _logoImageFullPath = @"";
     
     _subheadingSizeQuestion = 40;
     _subheadingColorQuestion = @"Black";
@@ -2086,6 +2087,8 @@ extern BOOL isFromNewCreatedCard;
     
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    
+    _logoImageFullPath = _currentCard.question.logoFullPath;
     
     if (_isLogoImageViewClicked) {
         if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
