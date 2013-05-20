@@ -2358,26 +2358,45 @@ extern BOOL isFromNewCreatedCard;
         [self doQuestionAndAnswerData];
     } else {
         //[self saveEdittedCard];
-        if (textField.tag == kTagTitleQuestion) {
-            [self reSceenshotAll:kReasonQuestionTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-        } else if (textField.tag == kTagTitleAnser) {
-            [self reSceenshotAll:kReasonAnswerTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-        } else if (textField.tag == kTagSidebar) {
-            [self reSceenshotAll:kReasonSidebarTitleChangeEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-            
-        } else if (textField.tag == kTagCreator) {
-            [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-        } else {
-            NSLog(@"%s:Error",__FUNCTION__);
-        }
         
+        if (!_HUD) {
+            _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+        }
+        [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+        [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+        
+        _HUD.mode = MBProgressHUDModeIndeterminate;
+        [_HUD show:YES];
+        _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+        [self performSelector:@selector(execTextFieldDidEndEditingTask:) withObject:textField afterDelay:0.01];
+    
     }
     
 }
+
+- (void) execTextFieldDidEndEditingTask:(UITextField *)textField  {
+    if (textField.tag == kTagTitleQuestion) {
+        [self reSceenshotAll:kReasonQuestionTitleChangeEnum withStringVal:textField.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    } else if (textField.tag == kTagTitleAnser) {
+        [self reSceenshotAll:kReasonAnswerTitleChangeEnum withStringVal:textField.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    } else if (textField.tag == kTagSidebar) {
+        [self reSceenshotAll:kReasonSidebarTitleChangeEnum withStringVal:textField.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+        
+    } else if (textField.tag == kTagCreator) {
+        [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    } else {
+        NSLog(@"%s:Error",__FUNCTION__);
+    }
+    
+    [_HUD removeFromSuperview];
+    _HUD = nil;
+}
+
+
 
 
 #pragma mark -
