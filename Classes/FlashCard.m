@@ -2413,6 +2413,11 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
     static CGFloat height = 0;
+    static int tag = -1;
+    
+    if (tag != textView.tag) {
+        height = 0; 
+    }
     
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
@@ -2442,6 +2447,7 @@ extern BOOL isFromNewCreatedCard;
     NSLog(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
     
     height= textView.contentSize.height;
+    tag = textView.tag;
     
     return YES;
 }
