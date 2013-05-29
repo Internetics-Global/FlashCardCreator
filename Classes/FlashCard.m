@@ -270,7 +270,7 @@ extern BOOL isFromNewCreatedCard;
     if (_imageAnswer == nil) {
         _imageAnswer= [[UIImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeCenter;
+        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
         _imageAnswer.layer.cornerRadius = 15;
@@ -1447,7 +1447,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeAnswer = 38;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 380, 500, 50);
+            _subAnswer.frame = CGRectMake(10, 380, 360, 50);
             _subAnswer.font = [UIFont boldSystemFontOfSize:38];
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
