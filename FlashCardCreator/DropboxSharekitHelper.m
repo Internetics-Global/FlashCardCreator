@@ -148,7 +148,8 @@
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
     NSLog(@"File upload failed with error - %@", error);
     [_HUD hide:YES];
-    [Common alertViewCommon:@"Failure to upload"];
+    [Common alertViewCommon:@"Failure to upload, please try again"];
+    NSLog(@"failure to upload: %@", [error description]);
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress

@@ -25,6 +25,7 @@
 #import "CreatePackViewController.h"
 
 extern BOOL isLoggingDropboxInSettingView;
+BOOL _isDownloadingSamplePack;
 
 @implementation AppDelegate
 
@@ -147,7 +148,10 @@ extern BOOL isLoggingDropboxInSettingView;
     //11. Get example packs (online) and save to local
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
+        _isDownloadingSamplePack = TRUE;
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"http://www.dropbox.com/s/1evrmjjypjisb0o/Pack1366592957-936257718.zip?type=demo"];
+    } else {
+        _isDownloadingSamplePack = FALSE;
     }
     
     return YES;
@@ -159,9 +163,8 @@ extern BOOL isLoggingDropboxInSettingView;
 //url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-    if (!isExamplePackDownloadedSuccessful) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST",@"")];
+    if (_isDownloadingSamplePack) {
+        _isDownloadingSamplePack = FALSE;
         return NO;
     }
     

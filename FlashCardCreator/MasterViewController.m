@@ -36,6 +36,7 @@
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
 
+extern BOOL _isDownloadingSamplePack;
 
 @implementation MasterViewController
 
@@ -505,6 +506,8 @@
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    
+    _isDownloadingSamplePack = FALSE;
     
 }
 
