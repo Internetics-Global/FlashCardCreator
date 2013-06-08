@@ -936,15 +936,30 @@ extern BOOL _isDownloadingSamplePack;
             
             //Deal with font size difference between iPhone and iPad
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
+                NSLog(@"You are using iPad and pack was made on iPhone");
                 [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
+                NSLog(@"You are using iPhone and pack was made on iPad");
                 [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
+            } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
+                NSLog(@"You are using iPhone and pack was made on non-iOS platform");
+                [assembledCard question].css.subheadingSize = 16;
+                [assembledCard question].css.mainSize = 20;
+                [assembledCard question].css.subSize = 16;
+                
+            } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
+                NSLog(@"You are using iPad and pack was made on non-iOS platform");
+                [assembledCard question].css.subheadingSize = 32;
+                [assembledCard question].css.mainSize = 40;
+                [assembledCard question].css.subSize = 32;
+                
             } else {
+                NSLog(@"The platform you are using and pack was made are the same");
                 [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
                 [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue];
                 [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue];
