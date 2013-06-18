@@ -163,6 +163,7 @@
         FlashCard *cardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad) defaultPack:_currentPack defaultCard:_currentCard];
         cardView.currentPack = _currentPack;
         cardView.currentCard = cardArray[index];
+        cardView.calledViewController = self;
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;
@@ -188,6 +189,7 @@
         FlashCard *cardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
         cardView.currentPack = _currentPack;
         cardView.currentCard = cardArray[index];
+        cardView.calledViewController = self;
 		CGRect rect = cardView.frame;
         rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
         cardView.frame = rect;

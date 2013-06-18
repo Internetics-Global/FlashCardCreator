@@ -97,6 +97,8 @@ typedef enum RescreenshotReason {
 @property (nonatomic, strong) UITextField   *questionTitle;
 @property (nonatomic, strong) UITextField   *answerTitle;
 
+@property (nonatomic, strong) UIViewController *calledViewController;
+
 - (BOOL) checkCardEditable;
 - (void) disableCardEdit;
 - (void) enableCardEdit;

@@ -2536,7 +2536,14 @@ extern BOOL isFromNewCreatedCard;
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
+        
+        if (_calledViewController) {
+            //means this is called from play mode
+            [_calledViewController presentModalViewController:navController animated:YES];
+        } else {
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
+        }
+
         
     } else {
         [Common alertViewCommon:@"Incorrect URL format or empty "];
