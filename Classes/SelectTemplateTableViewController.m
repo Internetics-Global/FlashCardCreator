@@ -50,11 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_isQuestionShowing) {
-        return 5;
-    } else {
-        return 6;    
-    }
+    return 6;
     
 }
 

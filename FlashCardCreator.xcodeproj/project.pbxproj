@@ -205,6 +205,9 @@
 		88BC796B170D419A00EFBFCE /* help6_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7964170D419A00EFBFCE /* help6_iphone.jpg */; };
 		88BC796C170D419A00EFBFCE /* help7_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7965170D419A00EFBFCE /* help7_iphone.jpg */; };
 		88CA253617152EE700859BDC /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* grayButton.png */; };
+		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
+		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
+		88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88F68599177049ED0083AF7B /* question_placeholder_content.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -736,6 +739,9 @@
 		88BC7964170D419A00EFBFCE /* help6_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help6_iphone.jpg; path = Resources/help6_iphone.jpg; sourceTree = "<group>"; };
 		88BC7965170D419A00EFBFCE /* help7_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help7_iphone.jpg; path = Resources/help7_iphone.jpg; sourceTree = "<group>"; };
 		88CA253517152EE700859BDC /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayButton.png; path = Resources/grayButton.png; sourceTree = "<group>"; };
+		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
+		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
+		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -892,6 +898,8 @@
 				88491B341714522300833692 /* templateScreenshot4_question.png */,
 				8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */,
 				8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */,
+				88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */,
+				88F68575177048780083AF7B /* templateScreenshot5_question.png */,
 			);
 			name = "Template Screenshot";
 			sourceTree = "<group>";
@@ -1274,6 +1282,7 @@
 				2DE809C516DF679200B7959A /* selected_table_cell.png */,
 				2DE809C616DF679300B7959A /* selected_table_cell@2x.png */,
 				2D3727C116DDA8E60068DE31 /* default_pack_cover_image.png */,
+				88F68599177049ED0083AF7B /* question_placeholder_content.jpg */,
 				2D6A55C216D813E6002D1489 /* answer_placeholder_content.jpg */,
 				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
 				2D5C186616D1A74800E1E785 /* close_button.png */,
@@ -1792,6 +1801,9 @@
 				88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */,
 				8839D2B51744B5B600338B45 /* templateScreenshot5_answer_iPad.png in Resources */,
 				8839D2B61744B5B600338B45 /* templateScreenshot5_answer.png in Resources */,
+				88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */,
+				88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */,
+				88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

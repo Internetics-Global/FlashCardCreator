@@ -873,7 +873,7 @@ extern BOOL isFromNewCreatedCard;
 - (void) refreshAnswerContent {
     
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
-    _imageFullPath = _currentCard.answer.imageFullPath;
+    _answerImageFullPath = _currentCard.answer.imageFullPath;
     if (imageTemp) {
         _imageAnswer.image = imageTemp;
     } else {
@@ -891,11 +891,11 @@ extern BOOL isFromNewCreatedCard;
 - (void) refreshQuestionContent {
     
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath];
-    _imageFullPath = _currentCard.question.imageFullPath;
+    _questionImageFullPath = _currentCard.question.imageFullPath;
     if (imageTemp) {
         _imageQuestion.image = imageTemp;
     } else {
-        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.png"];
+        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
     }
     
     imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.logoFullPath];
@@ -958,7 +958,7 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.answer.subheading = _subheadingAnswer.text;
     _currentCard.answer.main = _mainAnswer.text;
     _currentCard.answer.sub = _subAnswer.text;
-    _currentCard.answer.imageFullPath = _imageFullPath;
+    _currentCard.answer.imageFullPath = _answerImageFullPath;
     
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
@@ -974,7 +974,7 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.question.subheading = _subheadingQuestion.text;
     _currentCard.question.main = _mainQuestion.text;
     _currentCard.question.sub = _subQuestion.text;
-    _currentCard.question.imageFullPath = _imageFullPath;
+    _currentCard.question.imageFullPath = _questionImageFullPath;
     
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
@@ -1684,6 +1684,20 @@ extern BOOL isFromNewCreatedCard;
             _imageQuestion.hidden = TRUE;
             break;
         }
+        
+        case 5: //Template 5
+        {
+            _subheadingQuestion.hidden = TRUE;
+            
+            _mainQuestion.hidden = TRUE;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(10, 10, 700, 420);
+            break;
+        }
+            
         default:
         {
             NSLog(@"%s:No template is selected",__FUNCTION__);
@@ -1826,6 +1840,21 @@ extern BOOL isFromNewCreatedCard;
             _imageQuestion.hidden = TRUE;
             break;
         }
+        
+        case 5: //Template 5
+        {
+            _subheadingQuestion.hidden = TRUE;
+            
+            _mainQuestion.hidden = TRUE;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(1, 5, 360, 185);
+            
+            break;
+        }
+    
         default:
         {
             NSLog(@"%s:No template is selected",__FUNCTION__);
@@ -2118,20 +2147,32 @@ extern BOOL isFromNewCreatedCard;
         }
         
     } else {
-        if (([_imageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_imageFullPath hasSuffix:@"answer_placeholder_content.jpg"]) || ((_imageFullPath.length == 0))) {
-            _imageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-        }
-        [imageData writeToFile:_imageFullPath atomically:YES];
+        
         if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
+                || ((_questionImageFullPath.length == 0))) {
+                _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            }
+            [imageData writeToFile:_questionImageFullPath atomically:YES];
             _imageQuestion.image = [UIImage imageWithData:imageData];
         } else {
+            if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
+                || ((_answerImageFullPath.length == 0))) {
+                _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            }
+            [imageData writeToFile:_answerImageFullPath atomically:YES];
             _imageAnswer.image = [UIImage imageWithData:imageData];
         }
         
-        
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
-            _currentCard.answer.imageFullPath = _imageFullPath;
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                _currentCard.question.imageFullPath = _questionImageFullPath;
+            } else {
+                _currentCard.answer.imageFullPath = _answerImageFullPath;
+            }
         } else {
             [self saveEdittedCard];
         }

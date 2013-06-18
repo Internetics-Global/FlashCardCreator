@@ -36,7 +36,8 @@ typedef enum RescreenshotReason {
     UITextField  *_sidebarTitle;
     UITextField   *_creatorText;
     
-    NSString     *_imageFullPath;
+    NSString     *_questionImageFullPath;
+    NSString     *_answerImageFullPath;
     UIScrollView *_verticalScrollView;
     
     UITextView   *_subheadingQuestion;
