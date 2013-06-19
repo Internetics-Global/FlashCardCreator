@@ -17,7 +17,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "作成は、グループの設立に先立って必要とされる";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropboxのアカウントが失敗をログに記録する";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "パッケージをダウンロードします...";
-"DIALOG_ENTER_VALID_URL"       = "有効なURLを入力してください";
+"DIALOG_ENTER_VALID_URL"       = "有効なURL/Emailを入力してください";
 "DIALOG_APPLY_TO_ALL_CARD"       = "すべてのカードに適用されます";
 
 "NavigationBarItem_Packs" = "パック";

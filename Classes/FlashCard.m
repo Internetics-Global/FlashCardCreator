@@ -2497,7 +2497,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Add logo linkage relate
 
 - (void) editLogoLinkageURL:(id) sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Set URL"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
                                                     message:[NSString stringWithFormat:NSLocalizedString(@"DIALOG_ENTER_VALID_URL",@"")
 ]
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
@@ -2528,9 +2528,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
     
-    NSURL *url = [NSURL URLWithString:_currentCard.question.logoURLLinkage];
-    
-    if (url) {
+    NSString *str = _currentCard.question.logoURLLinkage;
+    if ([str hasPrefix:@"http://"]) {
+        
+        NSURL *url = [NSURL URLWithString:_currentCard.question.logoURLLinkage];
         SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
         controller.hidesToolbar = NO;
         
@@ -2543,11 +2544,31 @@ extern BOOL isFromNewCreatedCard;
         } else {
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
         }
-
+        
+    } else if ([str rangeOfString:@"@"].location != NSNotFound) {
+        
+        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+		mailer.mailComposeDelegate = self;
+		NSArray *sendTo = [[NSArray alloc] initWithObjects:str, nil];
+		[mailer setToRecipients:sendTo];
+		[mailer setSubject:@"Hello"];
+		//[mailer setMessageBody:[NSString stringWithFormat:@"<html><head></head><body><br><br><br>%@</body></html>", [self supportText]] isHTML:YES];
+        if (_calledViewController) {
+            //means this is called from play mode
+            [_calledViewController presentModalViewController:mailer animated:YES];
+        } else {
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:mailer animated:YES];
+        }
         
     } else {
-        [Common alertViewCommon:@"Incorrect URL format or empty "];
+        [Common alertViewCommon:@"Incorrect URL or Email format"];    
     }
+}
+
+#pragma mark -
+#pragma mark - MFMailComposeViewController delegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+	[controller dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -

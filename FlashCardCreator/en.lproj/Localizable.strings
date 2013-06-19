@@ -17,7 +17,7 @@
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropbox login failure. Please try again.";
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download sample pack first";
-"DIALOG_ENTER_VALID_URL"       = "Please input a valid URL";
+"DIALOG_ENTER_VALID_URL"       = "Please input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 
 "NavigationBarItem_Packs"   = "Packs";

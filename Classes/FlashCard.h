@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
@@ -23,7 +24,7 @@ typedef enum RescreenshotReason {
 @class BadgeLabel;
 @class MBProgressHUD;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate> {
     BadgeLabel *_cardSNText;
     UIButton *_changeTemplateButton;
     
