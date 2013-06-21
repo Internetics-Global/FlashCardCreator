@@ -123,7 +123,13 @@
     
     NSString *finalShareLink = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    SHKItem *item = [SHKItem URL:[NSURL URLWithString:finalShareLink] title:@"example" contentType:SHKURLContentTypeUndefined];
+    NSString *redirectedStr =[self redirectURL:finalShareLink];
+    if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+        [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
+        return;
+    }
+    
+    SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
 	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
     [SHK setRootViewController:self.baseViewController];
 	[actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
@@ -227,6 +233,29 @@
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	[_HUD removeFromSuperview];
+}
+
+- (NSString *) redirectURL:(NSString *)urlStr {
+    NSString *returnURL;
+    NSString *requestURL = [NSString stringWithFormat:@"%@%@",URL_REDIRECT_API,urlStr];
+    
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
+                                          returningResponse:&response
+                                                      error:&error];
+    
+    if (error == nil)
+    {
+        NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if (([newStr rangeOfString:@"http://"].location != 0) || ([[newStr uppercaseString] rangeOfString:@"Error"].location != NSNotFound)) {
+        } else {
+            returnURL = newStr;
+        }
+    } 
+    
+    return returnURL;
 }
 
 @end

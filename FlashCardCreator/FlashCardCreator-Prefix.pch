@@ -61,6 +61,10 @@
 #define PUBLIC_PACK_ID 31415
 #define PUBLIC_PACK_JSON_FILE @"https://s3-ap-southeast-2.amazonaws.com/flashcardcreator/public_pack.json"
 
+//URL redirect
+//For example: http://tinyurl.com/api-create.php?url=http://scripting.com/  
+#define URL_REDIRECT_API @"http://tinyurl.com/api-create.php?url="
+
 //Based on landscape
 #define IPHONE_UI_MASTER_TABLE_WIDTH           160
 #define IPHONE_UI_NAVIGATION_BAR_HEIGHT        32
