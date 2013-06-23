@@ -20,4 +20,15 @@
     
 }
 
++ (int) getScreenWidthInLandscape {
+    int width;
+    if (isUserInterfaceIdiomPhone) {
+        width = IPHONE_UI_WIDTH;
+    } else {
+        width = IPAD_UI_WIDTH;
+    }
+    
+    return width;
+}
+
 @end

@@ -12,4 +12,6 @@
 
 + (void)alertViewCommon:(NSString *) msg;
 
++ (int) getScreenWidthInLandscape;
+
 @end
