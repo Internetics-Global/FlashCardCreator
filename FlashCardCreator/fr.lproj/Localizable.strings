@@ -46,6 +46,7 @@
 "ToolbarItem_Align" = "Aligner";
 "ToolbarItem_Size" = "Taille";
 "ToolbarItem_Color" = "Couleur";
+"ToolbarItem_Symbol"        = "Symbole";
 "ToolbarItem_Back" = "Retour";
 
 "ToolbarItem_Align_Left" = "gauche";

@@ -31,4 +31,15 @@
     return width;
 }
 
++ (int) getScreenHeightInLandscape {
+    int height;
+    if (isUserInterfaceIdiomPhone) {
+        height = IPHONE_UI_HEIGHT;
+    } else {
+        height = IPAD_UI_HEIGHT;
+    }
+    
+    return height;
+}
+
 @end

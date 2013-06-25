@@ -11,7 +11,8 @@
 #import "EmoticonView.h"
 #import "Common.h"
 
-#define DEFAULT_ROW_COUNT 3
+#define DEFAULT_ROW_COUNT_IPHONE 3
+#define DEFAULT_ROW_COUNT_IPAD 6
 #define DEFAULT_COLUMN_COUNT_IPHONE 7
 #define DEFAULT_COLUMN_COUNT_IPAD   12
 
@@ -73,20 +74,29 @@
 
 - (id)initWithEmoticons:(NSArray *)emoticons{
     int columnCount;
+    int rowCount;
     if (isUserInterfaceIdiomPhone) {
         columnCount = DEFAULT_COLUMN_COUNT_IPHONE;
+        rowCount = DEFAULT_ROW_COUNT_IPHONE;
     } else {
         columnCount = DEFAULT_COLUMN_COUNT_IPAD;
+        rowCount = DEFAULT_ROW_COUNT_IPAD;
     }
-    return [self initWithEmoticons:emoticons rowCount:DEFAULT_ROW_COUNT columnCount:columnCount];
+    return [self initWithEmoticons:emoticons rowCount:rowCount columnCount:columnCount];
 }
 
 
 - (id)initWithEmoticons:(NSArray *)emoticons rowCount:(NSInteger)rowCount columnCount:(NSInteger)columnCount{
     
     int screenWidth = [Common getScreenWidthInLandscape];
+    int height = 0;
+    if (isUserInterfaceIdiomPhone) {
+        height = 180;
+    } else {
+        height =350;
+    }
     
-    if (self = [super initWithFrame:CGRectMake(0, 0, screenWidth, 180)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, screenWidth, height)]) {
         _rowCount = rowCount;
         _columnCount = columnCount;
         
@@ -94,7 +104,7 @@
         _emoticons = emoticons;
         _emoticonViews = [[NSMutableArray alloc] initWithCapacity:[emoticons count]];
         
-        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 8, screenWidth - 16, 180 -16)];
+        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 8, screenWidth - 8, height -24)];
         [self addSubview:_gridContainerView];
         
         for (Emoticon *emoticon in _emoticons) {

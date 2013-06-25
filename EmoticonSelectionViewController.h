@@ -28,6 +28,7 @@
 @property (nonatomic, assign) id<EmoticonSelectionViewControllerDelegate> delegate;
 
 - (id)initWithEmoticons:(NSArray *)emoticons rowCount:(NSInteger)rowCount columnCount:(NSInteger)columnCount;
+- (void)layoutEmotions;
 
 @end
 

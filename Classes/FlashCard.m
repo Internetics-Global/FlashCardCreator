@@ -24,6 +24,11 @@
 #import "UIImage+Scale.h"
 #import "SelectTemplateTableViewController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
+#import "EmoticonSelectionViewController.h"
+#import "EmoticonHelper.h"
+#import "Emoticon.h"
+#import "Common.h"
 
 extern BOOL isFromNewCreatedCard;
 
@@ -53,6 +58,8 @@ extern BOOL isFromNewCreatedCard;
 #define kTagTitleAnser            302
 #define kTagSidebar               303
 #define kTagCreator               304
+
+#define KEYBOARD_ANIMATION_DURATION 0.25
 
 @interface FlashCard ()
 
@@ -145,6 +152,8 @@ extern BOOL isFromNewCreatedCard;
             _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
         }
     }
+    
+    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
     self.backgroundColor = [UIColor clearColor];
 
@@ -1868,33 +1877,78 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Keyboard Notification and related
 
 - (void)keyboardWillHide:(NSNotification*)aNotification {
-    if (isUserInterfaceIdiomPhone) {
-        //we don't need to hide navigation bar on ipAD
-        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
+    
+    //we only deal with current card and new created card
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+        return;
     }
+    
 }
 
+// Responsiblity:
+// 1. bring the _keyboardTopView in front
+// 2. record the keyboard parameters(_keyboardDuration,etc) for later use by dismissKeyboard
+// 3. hide navigation if iPhone
 - (void)keyboardWillShow:(NSNotification*)aNotification {
+    
+    //step1: we only deal with current card and new created card
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+        return;
+    }
+    
+    //only repsonde to UITextView
+    if (_isUITextViewFocused) {
+        //step2:bring _keyboardTopView in front
+        if (isUserInterfaceIdiomPhone) {
+            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+            [keyWindow.rootViewController.view bringSubviewToFront:_keyboardTopView];
+        } else {
+            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate.splitViewController.view bringSubviewToFront:_keyboardTopView];
+        }
+        
+        //step3: bring out the _keyboardTopView
+        CGRect keyboardBounds;
+        [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+        _keyboardDuration = [aNotification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+        _keyboardCurve = [aNotification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+        _keyboardHeight = keyboardBounds.size.width;
+        
+        CGFloat delta = (_keyboardHeight + _keyboardTopView.frame.size.height +_keyboardTopView.frame.origin.y) - [Common getScreenHeightInLandscape];
+        
+        
+        if (delta != 0) {
+            CGRect newFrame = _keyboardTopView.frame;
+            newFrame = CGRectOffset(newFrame, 0, -delta);
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
+            [UIView setAnimationCurve:[_keyboardCurve intValue]];
+            _keyboardTopView.frame = newFrame;
+            [UIView commitAnimations];
+        }
+    }
+
+    
     if (isUserInterfaceIdiomPhone) {
         //we don't need to hide navigation bar on ipAD
         [[NSNotificationCenter defaultCenter] postNotificationName:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
     }
+    
+    
 }
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+        return;
+    }
+    
     if ([self getFirstResponderUITextViewUnderVerticalScrollView] == nil) {
         return;
     }
     
-    
-    //Step1: Get keyboard height
-    NSDictionary* info = [aNotification userInfo];
-    NSValue *aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-    _keyboardHeight = [aValue CGRectValue].size.height;
-    //NSLog(@"Keyboard height is %f",_keyboardHeight);
-    
-    //Step2: Get cursor Y value relative to view
+    //Step1: Get cursor Y value relative to view
     UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
     if (responderTextView.text.length == 0) {
         NSRange range;
@@ -1905,7 +1959,7 @@ extern BOOL isFromNewCreatedCard;
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     //NSLog(@"Y position for current cursorY is %f",cursorY);
     
-    //Step3: Get view's Y value relative to screen
+    //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
     if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
         yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
@@ -1918,7 +1972,7 @@ extern BOOL isFromNewCreatedCard;
         }
     }
     
-    //Step4: calculate the offset and gap value
+    //Step3: calculate the offset and gap value
     CGPoint offset = _verticalScrollView.contentOffset;
     CGFloat gap;
     if (isUserInterfaceIdiomPhone) {
@@ -1935,7 +1989,7 @@ extern BOOL isFromNewCreatedCard;
             offset.y = gap+44;
     }
     
-    //Step5: move scrollview
+    //Step4: move scrollview
     [_verticalScrollView setContentOffset:offset animated:YES];
     
     if (_keyboardShown)
@@ -1947,12 +2001,17 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+        return;
+    }
+    
+    if ((_isUITextViewFocused == FALSE) && (isUserInterfaceIdiomPhone)) {
+        //we don't need to hide navigation bar on iPad
+        //we don't need to do this in UITextView since we will do that at DissmissKeyboard
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
+    }
     
     _keyboardShown = NO;
-    
-    CGPoint offset = _verticalScrollView.contentOffset;
-    offset.y = 0;
-    [_verticalScrollView setContentOffset:offset animated:YES];
     
 }
 
@@ -1964,12 +2023,14 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
+    UIBarButtonItem * symbolButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(symbolSwitch:)];
+    
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
-    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,symbolButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
@@ -2030,26 +2091,64 @@ extern BOOL isFromNewCreatedCard;
     if (_keyboardTopView == nil) {
         _keyboardTopView = [[UIToolbar alloc]init];
     }
-    
-    if (isUserInterfaceIdiomPhone) {
-        _keyboardTopView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
-    } else {
-        _keyboardTopView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
-    }
+
     [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
+    
+    _keyboardTopView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     
     [_keyboardTopView setItems:_buttonArray];
     
-    [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
-    [_mainQuestion setInputAccessoryView:_keyboardTopView];
-    [_subQuestion setInputAccessoryView:_keyboardTopView];
-    [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
-    [_mainAnswer setInputAccessoryView:_keyboardTopView];
-    [_subAnswer setInputAccessoryView:_keyboardTopView];
+    if (isUserInterfaceIdiomPhone) {
+        _keyboardTopView.frame = CGRectMake(0, IPHONE_UI_HEIGHT, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
+    } else {
+        _keyboardTopView.frame = CGRectMake(0, IPAD_UI_HEIGHT, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        [keyWindow.rootViewController.view addSubview:_keyboardTopView];
+    } else {
+        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate.splitViewController.view addSubview:_keyboardTopView];
+    }
+    
+    //[_subheadingQuestion setInputAccessoryView:_keyboardTopView];
+    //[_mainQuestion setInputAccessoryView:_keyboardTopView];
+    //[_subQuestion setInputAccessoryView:_keyboardTopView];
+    //[_subheadingAnswer setInputAccessoryView:_keyboardTopView];
+    //[_mainAnswer setInputAccessoryView:_keyboardTopView];
+    //[_subAnswer setInputAccessoryView:_keyboardTopView];
 }
+
 
 -(IBAction)dismissKeyBoard
 {
+    if (isUserInterfaceIdiomPhone) {
+        //we don't need to hide navigation bar on iPad
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
+    }
+    
+    CGPoint offset = _verticalScrollView.contentOffset;
+    offset.y = 0;
+    [_verticalScrollView setContentOffset:offset animated:YES];
+    
+    //step1:close keyboard and related view
+    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+    CGFloat delta = _keyboardTopView.frame.origin.y - [Common getScreenHeightInLandscape];
+    if (delta != 0) {
+        CGRect newFrame = _keyboardTopView.frame;
+        newFrame = CGRectOffset(newFrame, 0, -delta);
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
+        [UIView setAnimationCurve:[_keyboardCurve intValue]];
+        _keyboardTopView.frame = newFrame;
+        [UIView commitAnimations];
+    }
+    [_emoticonSelectionViewController.view removeFromSuperview];
+    _emoticonSelectionViewController = nil;
+    
+    //step2:
     [_subheadingQuestion resignFirstResponder];
     [_subheadingQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
     [_mainQuestion resignFirstResponder];
@@ -2254,6 +2353,49 @@ extern BOOL isFromNewCreatedCard;
     [_keyboardTopView setItems:_alignArray];
 }
 
+- (void) symbolSwitch:(id) sender {
+    
+    if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
+        
+        [_firstRespondTextView resignFirstResponder];
+        
+        int columnCount;
+        int rowCount;
+        if (isUserInterfaceIdiomPhone) {
+            columnCount = 7;
+            rowCount = 3;
+        } else {
+            columnCount = 12;
+            rowCount = 5;
+        }
+        
+        if (_emoticonSelectionViewController == nil) {
+            _emoticonSelectionViewController = [[EmoticonSelectionViewController alloc] initWithEmoticons:[EmoticonHelper defaultEmoticons] rowCount:rowCount columnCount:columnCount];
+            _emoticonSelectionViewController.delegate = self;
+            _emoticonSelectionViewController.view.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], _keyboardHeight);
+            [_emoticonSelectionViewController layoutEmotions];
+            
+            if (isUserInterfaceIdiomPhone) {
+                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+                [keyWindow.rootViewController.view addSubview:_emoticonSelectionViewController.view];
+                _emoticonSelectionViewController.view.frame = CGRectOffset(_emoticonSelectionViewController.view.frame, 0, (IPHONE_UI_HEIGHT-_keyboardHeight));
+                [keyWindow.rootViewController.view bringSubviewToFront:_emoticonSelectionViewController.view];
+            } else {
+                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.splitViewController.view addSubview:_emoticonSelectionViewController.view];
+                _emoticonSelectionViewController.view.frame = CGRectOffset(_emoticonSelectionViewController.view.frame, 0, (IPAD_UI_HEIGHT-_keyboardHeight));
+                [appDelegate.splitViewController.view bringSubviewToFront:_emoticonSelectionViewController.view];
+            }
+        }
+        _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;
+    } else {
+        [_firstRespondTextView becomeFirstResponder];
+        _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+    }
+    
+    
+}
+
 - (void) changeFontSize:(id) sender{
     
     NSUInteger selectFontSize;
@@ -2394,6 +2536,12 @@ extern BOOL isFromNewCreatedCard;
     return YES;
 }
 
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    _isUITextViewFocused = FALSE;
+    return TRUE;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
     
@@ -2450,6 +2598,14 @@ extern BOOL isFromNewCreatedCard;
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
 }
+
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    _firstRespondTextView = textView;
+    _isUITextViewFocused = TRUE;
+    return TRUE;
+}
+
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {
@@ -2601,13 +2757,13 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) saveEdittedCard {
     
-    if (_currentPack == nil) {
-        [Common alertViewCommon:@"Error to create new card, since _currentPack is nil"];
+    //we only deal with current card and new created card
+    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
     
-    //we only deal with current card and new created card
-    if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+    if (_currentPack == nil) {
+        [Common alertViewCommon:@"Error to create new card, since _currentPack is nil"];
         return;
     }
     
@@ -2758,6 +2914,22 @@ extern BOOL isFromNewCreatedCard;
         
         [card save];
     }
+}
+
+#pragma mark -
+#pragma mark - EmoticonSelectionViewControllerDelegate
+- (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
+    
+
+    NSString *newValue;
+    if (_firstRespondTextView.text == NULL) {
+        newValue = [NSString stringWithFormat:@"%@",emoticon.code];
+    } else {
+        newValue = [NSString stringWithFormat:@"%@%@",
+                    _firstRespondTextView.text,emoticon.code];
+    }
+    
+    _firstRespondTextView.text = newValue;
 }
 
 

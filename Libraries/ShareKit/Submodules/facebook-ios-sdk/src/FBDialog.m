@@ -421,7 +421,8 @@ params   = _params;
     
     [self dialogWillAppear];	
     [self addObservers];	
-}	
+}
+
 
 // Show a spinner during the loading time for the dialog. This is designed to show	
 // on top of the webview but before the contents have loaded.	

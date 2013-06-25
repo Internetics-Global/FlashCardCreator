@@ -2,12 +2,13 @@
 //  FlashCard.h
 //  FlashCardCreator
 //
-//  Created by Wang Bourne on 13/03/13.
+//  Created by Bourne Wang on 22/06/13.
 //  Copyright (c) 2013 Internetics. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "EmoticonSelectionViewController.h"
 
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
@@ -19,12 +20,17 @@ typedef enum RescreenshotReason {
     
 } RescreenshotReason;
 
+typedef enum{
+    KeyboardSwitchButtonTypeEmoticon, 
+    KeyboardSwitchButtonTypeSystem   
+} KeyboardSwitchButtonType;
+
 @class Card;
 @class Pack;
 @class BadgeLabel;
 @class MBProgressHUD;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate> {
     BadgeLabel *_cardSNText;
     UIButton *_changeTemplateButton;
     
@@ -75,19 +81,30 @@ typedef enum RescreenshotReason {
     BOOL    _isLogoImageViewClicked;
     BOOL    _keyboardShown;
     BOOL    _isAllCardsLogoNeedToBeUpdate;
+    BOOL    _isUITextViewFocused; //used to diff better UITextView and UITextField
     
     NSArray *_buttonArray;
     NSArray *_fontSizeArray;
     NSArray *_colorArray;
     NSArray *_alignArray;
     UIToolbar *_keyboardTopView;
-    CGFloat _keyboardHeight;
     
     UIImagePickerController *_picker;
     UIPopoverController *_imagePickerPopover;
     UIPopoverController *_popoverController;
     
     MBProgressHUD *_HUD;
+    
+    KeyboardSwitchButtonType      _keyboardSwitchButtonType;
+    
+    EmoticonSelectionViewController *_emoticonSelectionViewController;
+    
+    UITextView   *_firstRespondTextView;
+    
+    NSNumber *_keyboardDuration;
+    NSNumber *_keyboardCurve;
+    CGFloat   _keyboardHeight;
+    
 }
 
 @property (nonatomic, strong) Card *currentCard;
