@@ -1883,7 +1883,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    if ((_dismissKeyboardFromSymbolSwitch == FALSE) &&(_isUITextViewFocused)) {
+    if ((_dismissKeyboardFromEmotionSwitch == FALSE) &&(_isUITextViewFocused)) {
         [self hideMessageView];
     }
     
@@ -2035,7 +2035,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    _dismissKeyboardFromSymbolSwitch = FALSE;
+    _dismissKeyboardFromEmotionSwitch = FALSE;
     
     if ((_isUITextViewFocused == FALSE) && (isUserInterfaceIdiomPhone)) {
         //we don't need to hide navigation bar on iPad
@@ -2054,14 +2054,14 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
-    _symbolButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(symbolSwitch:)];
+    _emotionButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
-    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_symbolButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
@@ -2416,18 +2416,18 @@ extern BOOL isFromNewCreatedCard;
     [_keyboardTopView setItems:_alignArray];
 }
 
-- (void) symbolSwitch:(id) sender {
+- (void) emotionAndKeyboardSwitch:(id) sender {
     
     UIBarButtonItem *senderItem = (UIBarButtonItem *)sender;
     
     if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
         [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
-        _dismissKeyboardFromSymbolSwitch = TRUE;
+        _dismissKeyboardFromEmotionSwitch = TRUE;
         [_firstRespondTextView resignFirstResponder];
     
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;
     } else {
-        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil)];
+        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
         [_firstRespondTextView becomeFirstResponder];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     }
@@ -2579,7 +2579,7 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     _isUITextViewFocused = FALSE;
     _messageViewBackgroundView.hidden = TRUE;
-    [_symbolButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
+    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     return TRUE;
 }
@@ -2646,7 +2646,7 @@ extern BOOL isFromNewCreatedCard;
     _firstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _messageViewBackgroundView.hidden = FALSE;
-    [_symbolButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
+    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
     return TRUE;
