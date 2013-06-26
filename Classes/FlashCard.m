@@ -2047,14 +2047,14 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
-    UIBarButtonItem * symbolButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(symbolSwitch:)];
+    _symbolButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(symbolSwitch:)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
     
     
-    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,symbolButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_symbolButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
     
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
@@ -2578,6 +2578,8 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     _isUITextViewFocused = FALSE;
     _messageViewBackgroundView.hidden = TRUE;
+    [_symbolButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
+    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     return TRUE;
 }
 
@@ -2643,6 +2645,9 @@ extern BOOL isFromNewCreatedCard;
     _firstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _messageViewBackgroundView.hidden = FALSE;
+    [_symbolButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
+    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+    
     return TRUE;
 }
 

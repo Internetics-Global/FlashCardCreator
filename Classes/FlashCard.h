@@ -107,6 +107,8 @@ typedef enum{
     
     UIView  *_messageViewBackgroundView;
     
+    UIBarButtonItem *_symbolButton;
+    
 }
 
 @property (nonatomic, strong) Card *currentCard;
