@@ -82,6 +82,7 @@ typedef enum{
     BOOL    _keyboardShown;
     BOOL    _isAllCardsLogoNeedToBeUpdate;
     BOOL    _isUITextViewFocused; //used to diff better UITextView and UITextField
+    BOOL    _dismissKeyboardFromSymbolSwitch;
     
     NSArray *_buttonArray;
     NSArray *_fontSizeArray;

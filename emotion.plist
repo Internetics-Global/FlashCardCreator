@@ -4,78 +4,78 @@
 <dict>
 	<key>001</key>
 	<array>
-		<string>Check</string>
-		<string>✓</string>
+		<string>Multiple</string>
+		<string>×</string>
 	</array>
 	<key>002</key>
-	<array>
-		<string>Cross</string>
-		<string>✗ </string>
-	</array>
-	<key>003</key>
-	<array>
-		<string>Star</string>
-		<string>★</string>
-	</array>
-	<key>004</key>
-	<array>
-		<string>Square</string>
-		<string>□</string>
-	</array>
-	<key>005</key>
-	<array>
-		<string>Almost</string>
-		<string>≈</string>
-	</array>
-	<key>006</key>
 	<array>
 		<string>Division</string>
 		<string>÷</string>
 	</array>
-	<key>007</key>
+	<key>003</key>
 	<array>
-		<string>Pointer</string>
-		<string>►</string>
+		<string>Summation</string>
+		<string>∑</string>
 	</array>
-	<key>008</key>
+	<key>004</key>
 	<array>
-		<string>Infinity</string>
-		<string>∞ </string>
+		<string>Lambda</string>
+		<string>λ</string>
 	</array>
-	<key>009</key>
-	<array>
-		<string>Subset</string>
-		<string>⊂</string>
-	</array>
-	<key>010</key>
-	<array>
-		<string>Superset</string>
-		<string>⊃</string>
-	</array>
-	<key>011</key>
+	<key>005</key>
 	<array>
 		<string>Intersection</string>
 		<string>∩</string>
 	</array>
-	<key>012</key>
+	<key>006</key>
 	<array>
 		<string>Union</string>
 		<string>∪</string>
 	</array>
+	<key>007</key>
+	<array>
+		<string>Integral</string>
+		<string>∫</string>
+	</array>
+	<key>008</key>
+	<array>
+		<string>Therefore</string>
+		<string>∴</string>
+	</array>
+	<key>009</key>
+	<array>
+		<string>Not equal</string>
+		<string>≠</string>
+	</array>
+	<key>010</key>
+	<array>
+		<string>Approxi</string>
+		<string>≈</string>
+	</array>
+	<key>011</key>
+	<array>
+		<string>Not approxi</string>
+		<string>≉</string>
+	</array>
+	<key>012</key>
+	<array>
+		<string>Less than</string>
+		<string>≤</string>
+	</array>
 	<key>013</key>
 	<array>
-		<string>Isin</string>
-		<string>∈</string>
+		<string>More than</string>
+		<string>≥</string>
 	</array>
 	<key>014</key>
 	<array>
-		<string>Notin</string>
-		<string>∉</string>
+		<string>Subset</string>
+		<string>⊂</string>
 	</array>
 	<key>015</key>
 	<array>
-		<string>Niv</string>
-		<string>∋</string>
+		<string>Superset</string>
+		<string>⊃</string>
 	</array>
 	<key>016</key>
 	<array>
@@ -84,73 +84,158 @@
 	</array>
 	<key>017</key>
 	<array>
-		<string>Micro</string>
-		<string>µ</string>
+		<string>Flat sign</string>
+		<string>♭</string>
 	</array>
 	<key>018</key>
 	<array>
-		<string>Omega</string>
-		<string>Ω</string>
+		<string>Sharp sign</string>
+		<string>♯</string>
 	</array>
 	<key>019</key>
 	<array>
-		<string>Triangle</string>
-		<string>△</string>
+		<string>Natural sign</string>
+		<string>♮</string>
 	</array>
 	<key>020</key>
 	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
+		<string>Quarter note</string>
+		<string>♩</string>
 	</array>
 	<key>021</key>
 	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
+		<string>Eighth note</string>
+		<string>♪</string>
 	</array>
 	<key>022</key>
 	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
+		<string>Double eight notes</string>
+		<string>♫</string>
 	</array>
 	<key>023</key>
 	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
+		<string>Check</string>
+		<string>✓</string>
 	</array>
-    <key>024</key>
+	<key>024</key>
 	<array>
-		<string>Micro</string>
-		<string>µ</string>
+		<string>Cross</string>
+		<string>✗</string>
 	</array>
 	<key>025</key>
+	<array>
+		<string>Star</string>
+		<string>★</string>
+	</array>
+	<key>026</key>
+	<array>
+		<string>Square</string>
+		<string>□</string>
+	</array>
+	<key>027</key>
+	<array>
+		<string>Pointer</string>
+		<string>►</string>
+	</array>
+	<key>028</key>
+	<array>
+		<string>Infinity</string>
+		<string>∞ </string>
+	</array>
+	<key>029</key>
 	<array>
 		<string>Omega</string>
 		<string>Ω</string>
 	</array>
-	<key>026</key>
-	<array>
-		<string>Triangle</string>
-		<string>△</string>
-	</array>
-	<key>027</key>
-	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
-	</array>
-	<key>028</key>
-	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
-	</array>
-	<key>029</key>
-	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
-	</array>
 	<key>030</key>
 	<array>
-		<string>Triangle</string>
-		<string>⊿</string>
+		<string>Snowflake</string>
+		<string>❄</string>
 	</array>
-</dict>
+	<key>031</key>
+	<array>
+		<string>Recycling</string>
+		<string>♻</string>
+	</array>
+	<key>032</key>
+	<array>
+		<string>Caution</string>
+		<string>⚠</string>
+	</array>
+	<key>033</key>
+	<array>
+		<string>Nuclear</string>
+		<string>☢</string>
+	</array>
+	<key>034</key>
+	<array>
+		<string>Skull</string>
+		<string>☠</string>
+	</array>
+	<key>035</key>
+	<array>
+		<string>Airplane</string>
+		<string>✈</string>
+	</array>
+	<key>036</key>
+	<array>
+		<string>Recording</string>
+		<string>✇</string>
+	</array>
+	<key>037</key>
+	<array>
+		<string>Telephone</string>
+		<string>☎</string>
+	</array>
+	<key>038</key>
+	<array>
+		<string>Check mark</string>
+		<string>✓</string>
+	</array>
+	<key>039</key>
+	<array>
+		<string>Flag</string>
+		<string>⚑</string>
+	</array>
+	<key>040</key>
+	<array>
+		<string>Heart</string>
+		<string>♥</string>
+	</array>
+	<key>041</key>
+	<array>
+		<string>Latin cross</string>
+		<string>✝</string>
+	</array>
+	<key>042</key>
+	<array>
+		<string>Cross</string>
+		<string>✚</string>
+	</array>
+	<key>043</key>
+	<array>
+		<string>Caduceus</string>
+		<string>☤</string>
+	</array>
+	<key>044</key>
+	<array>
+		<string>Peace</string>
+		<string>☮</string>
+	</array>
+	<key>045</key>
+	<array>
+		<string>Male</string>
+		<string>♂</string>
+	</array>
+	<key>046</key>
+	<array>
+		<string>Female</string>
+		<string>♀</string>
+	</array>
+	<key>047</key>
+	<array>
+		<string>Umbrella</string>
+		<string>☂</string>
+	</array>
+	</dict>
 </plist>

@@ -1883,7 +1883,12 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    if ((_dismissKeyboardFromSymbolSwitch == FALSE) &&(_isUITextViewFocused)) {
+        [self hideMessageView];
+    }
+    
 }
+
 
 // Responsiblity:
 // 1. bring the _keyboardTopView in front
@@ -2029,6 +2034,8 @@ extern BOOL isFromNewCreatedCard;
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
+    
+    _dismissKeyboardFromSymbolSwitch = FALSE;
     
     if ((_isUITextViewFocused == FALSE) && (isUserInterfaceIdiomPhone)) {
         //we don't need to hide navigation bar on iPad
@@ -2199,6 +2206,22 @@ extern BOOL isFromNewCreatedCard;
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+    [self hideMessageView];
+    
+    //step2:
+    [_firstRespondTextView resignFirstResponder];
+    [_firstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
+    
+    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        //we will save until after we press the save button
+        [self doQuestionAndAnswerData];
+    } else {
+        [self saveEdittedCard];
+    }
+    
+}
+
+- (void) hideMessageView {
     CGFloat delta = _messageViewBackgroundView.frame.origin.y - [Common getScreenHeightInLandscape];
     if (delta != 0) {
         CGRect newFrame = _messageViewBackgroundView.frame;
@@ -2210,29 +2233,6 @@ extern BOOL isFromNewCreatedCard;
         _messageViewBackgroundView.frame = newFrame;
         [UIView commitAnimations];
     }
-    
-    //step2:
-    [_subheadingQuestion resignFirstResponder];
-    [_subheadingQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_mainQuestion resignFirstResponder];
-    [_mainQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_subQuestion resignFirstResponder];
-    [_subheadingQuestion setContentOffset:CGPointMake(0, 0) animated:YES];
-    
-    [_subheadingAnswer resignFirstResponder];
-    [_subheadingAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_mainAnswer resignFirstResponder];
-    [_mainAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
-    [_subAnswer resignFirstResponder];
-    [_subheadingAnswer setContentOffset:CGPointMake(0, 0) animated:YES];
-    
-    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-        //we will save until after we press the save button
-        [self doQuestionAndAnswerData];
-    } else {
-        [self saveEdittedCard];
-    }
-    
 }
 
 #pragma mark -
@@ -2422,6 +2422,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
         [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
+        _dismissKeyboardFromSymbolSwitch = TRUE;
         [_firstRespondTextView resignFirstResponder];
     
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;

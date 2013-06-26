@@ -127,6 +127,7 @@ enum template_color_enum {
     
 }
 
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (isUserInterfaceIdiomPhone){
