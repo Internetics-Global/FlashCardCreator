@@ -2965,16 +2965,25 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - EmoticonSelectionViewControllerDelegate
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
     
+    int  location =_firstRespondTextView.selectedRange.location;
+    NSString *beforeStr = @"";
+    NSString *afterStr = @"";
+    
+    beforeStr = [_firstRespondTextView.text substringToIndex:location];
+    afterStr = [_firstRespondTextView.text substringFromIndex:location];
 
     NSString *newValue;
     if (_firstRespondTextView.text == NULL) {
-        newValue = [NSString stringWithFormat:@"%@",emoticon.code];
-    } else {
-        newValue = [NSString stringWithFormat:@"%@%@",
-                    _firstRespondTextView.text,emoticon.code];
+        _firstRespondTextView.text = @"";
     }
     
+    newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,emoticon.code,afterStr];
+    
     _firstRespondTextView.text = newValue;
+    
+    NSRange range = _firstRespondTextView.selectedRange;
+    range.location = location + 1;
+    [_firstRespondTextView setSelectedRange:range];
 }
 
 
