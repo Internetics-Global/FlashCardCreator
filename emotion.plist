@@ -237,5 +237,45 @@
 		<string>Umbrella</string>
 		<string>☂</string>
 	</array>
-	</dict>
+	<key>048</key>
+	<array>
+		<string>Ellipse</string>
+		<string>⬭</string>
+	</array>
+	<key>049</key>
+	<array>
+		<string>Circle</string>
+		<string>○</string>
+	</array>
+	<key>050</key>
+	<array>
+		<string>Hexagon</string>
+		<string>⬡</string>
+	</array>
+	<key>051</key>
+	<array>
+		<string>Pentagon</string>
+		<string>⬠</string>
+	</array>
+	<key>052</key>
+	<array>
+		<string>Rectangle</string>
+		<string>▭</string>
+	</array>
+	<key>053</key>
+	<array>
+		<string>Rhombus</string>
+		<string>♢</string>
+	</array>
+	<key>054</key>
+	<array>
+		<string>triangle</string>
+		<string>⊿ </string>
+	</array>
+	<key>055</key>
+	<array>
+		<string>triangle</string>
+		<string>△</string>
+	</array>
+</dict>
 </plist>
