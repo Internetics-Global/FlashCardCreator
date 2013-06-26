@@ -105,6 +105,8 @@ typedef enum{
     NSNumber *_keyboardCurve;
     CGFloat   _keyboardHeight;
     
+    UIView  *_messageViewBackgroundView;
+    
 }
 
 @property (nonatomic, strong) Card *currentCard;

@@ -117,5 +117,40 @@
 		<string>Triangle</string>
 		<string>⊿</string>
 	</array>
+    <key>024</key>
+	<array>
+		<string>Micro</string>
+		<string>µ</string>
+	</array>
+	<key>025</key>
+	<array>
+		<string>Omega</string>
+		<string>Ω</string>
+	</array>
+	<key>026</key>
+	<array>
+		<string>Triangle</string>
+		<string>△</string>
+	</array>
+	<key>027</key>
+	<array>
+		<string>Triangle</string>
+		<string>⊿</string>
+	</array>
+	<key>028</key>
+	<array>
+		<string>Triangle</string>
+		<string>⊿</string>
+	</array>
+	<key>029</key>
+	<array>
+		<string>Triangle</string>
+		<string>⊿</string>
+	</array>
+	<key>030</key>
+	<array>
+		<string>Triangle</string>
+		<string>⊿</string>
+	</array>
 </dict>
 </plist>

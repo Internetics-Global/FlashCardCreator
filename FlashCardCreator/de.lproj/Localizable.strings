@@ -47,6 +47,7 @@
 "ToolbarItem_Size" = "Größe";
 "ToolbarItem_Color" = "Farbe";
 "ToolbarItem_Symbol"        = "Symbol";
+"ToolbarItem_Keyboard"        = "Keyboard";
 "ToolbarItem_Back" = "Zurück";
 
 "ToolbarItem_Align_Left" = "Left";

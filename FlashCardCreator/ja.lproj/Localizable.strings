@@ -47,6 +47,7 @@
 "ToolbarItem_Size"= "サイズ";
 "ToolbarItem_Color" ="色";
 "ToolbarItem_Symbol"        = "シンボル";
+"ToolbarItem_Keyboard"        = "Keyboard";
 "ToolbarItem_Back"= "戻る";
 
 "ToolbarItem_Align_Left" = "左";

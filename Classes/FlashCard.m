@@ -1898,35 +1898,49 @@ extern BOOL isFromNewCreatedCard;
     
     //only repsonde to UITextView
     if (_isUITextViewFocused) {
-        //step2:bring _keyboardTopView in front
-        if (isUserInterfaceIdiomPhone) {
-            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-            [keyWindow.rootViewController.view bringSubviewToFront:_keyboardTopView];
-        } else {
-            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.splitViewController.view bringSubviewToFront:_keyboardTopView];
-        }
         
-        //step3: bring out the _keyboardTopView
+        //step1: bring out the _keyboardTopView
         CGRect keyboardBounds;
         [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
         _keyboardDuration = [aNotification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
         _keyboardCurve = [aNotification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
         _keyboardHeight = keyboardBounds.size.width;
         
-        CGFloat delta = (_keyboardHeight + _keyboardTopView.frame.size.height +_keyboardTopView.frame.origin.y) - [Common getScreenHeightInLandscape];
+        int emotionViewHeight;
+        int cssToolbarHeight;
+        if (isUserInterfaceIdiomPhone) {
+            emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
+            cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
+        } else {
+            emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
+            cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
+        }
+        
+        CGFloat delta = _messageViewBackgroundView.frame.origin.y + cssToolbarHeight + emotionViewHeight - [Common getScreenHeightInLandscape];
         
         
         if (delta != 0) {
-            CGRect newFrame = _keyboardTopView.frame;
+            CGRect newFrame = _messageViewBackgroundView.frame;
             newFrame = CGRectOffset(newFrame, 0, -delta);
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationBeginsFromCurrentState:YES];
             [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
             [UIView setAnimationCurve:[_keyboardCurve intValue]];
-            _keyboardTopView.frame = newFrame;
+            _messageViewBackgroundView.frame = newFrame;
             [UIView commitAnimations];
         }
+        
+        if (_isUITextViewFocused) {
+            //step2:bring _messageViewBackgroundView in front
+            if (isUserInterfaceIdiomPhone) {
+                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+                [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
+            } else {
+                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
+            }
+        }
+        
     }
 
     
@@ -1946,6 +1960,16 @@ extern BOOL isFromNewCreatedCard;
     
     if ([self getFirstResponderUITextViewUnderVerticalScrollView] == nil) {
         return;
+    }
+    
+    if (_isUITextViewFocused) {
+        if (isUserInterfaceIdiomPhone) {
+            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+            [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
+        } else {
+            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
+        }
     }
     
     //Step1: Get cursor Y value relative to view
@@ -1996,6 +2020,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     
     _keyboardShown = YES;
+    
 }
 
 
@@ -2010,7 +2035,6 @@ extern BOOL isFromNewCreatedCard;
         //we don't need to do this in UITextView since we will do that at DissmissKeyboard
         [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
     }
-    
     _keyboardShown = NO;
     
 }
@@ -2087,29 +2111,69 @@ extern BOOL isFromNewCreatedCard;
         _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];
     }
     
-    //Keyboard top view
+    
+    [self setUpMessageView];
+    
+}
+
+- (void) setUpMessageView {
+    
+    //step2: emotion view
+    int columnCount;
+    int rowCount;
+    int emotionViewHeight;
+    int cssToolbarHeight; 
+    if (isUserInterfaceIdiomPhone) {
+        columnCount = CSS_EMOTION_COLUMN_COUNT_IPHONE;
+        rowCount = CSS_EMOTION_ROW_COUNT_IPHONE;
+        cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
+        emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
+    } else {
+        columnCount = CSS_EMOTION_COLUMN_COUNT_IPAD;
+        rowCount = CSS_EMOTION_ROW_COUNT_IPAD;
+        emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
+        cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
+    }
+    
+    //step1: background view
+    if (_messageViewBackgroundView == nil) {
+        _messageViewBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, [Common getScreenHeightInLandscape], [Common getScreenWidthInLandscape], (cssToolbarHeight + emotionViewHeight))];
+        [_messageViewBackgroundView setBackgroundColor:[UIColor clearColor]];
+        
+        if (isUserInterfaceIdiomPhone) {
+            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+            [keyWindow.rootViewController.view addSubview:_messageViewBackgroundView];
+            [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
+        } else {
+            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appDelegate.splitViewController.view addSubview:_messageViewBackgroundView];
+            [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
+        }
+    }
+    
+    //step2: Keyboard top view
     if (_keyboardTopView == nil) {
         _keyboardTopView = [[UIToolbar alloc]init];
     }
-
+    
     [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
     
     _keyboardTopView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     
+    _keyboardTopView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
     [_keyboardTopView setItems:_buttonArray];
+    [_messageViewBackgroundView addSubview:_keyboardTopView];
+    [_messageViewBackgroundView bringSubviewToFront:_keyboardTopView];
     
-    if (isUserInterfaceIdiomPhone) {
-        _keyboardTopView.frame = CGRectMake(0, IPHONE_UI_HEIGHT, IPHONE_UI_WIDTH, IPHONE_UI_TOOL_BAR_HEIGHT);
-    } else {
-        _keyboardTopView.frame = CGRectMake(0, IPAD_UI_HEIGHT, IPAD_UI_WIDTH, IPAD_UI_TOOL_BAR_HEIGHT);
-    }
+    //step3: Emotion view
     
-    if (isUserInterfaceIdiomPhone) {
-        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-        [keyWindow.rootViewController.view addSubview:_keyboardTopView];
-    } else {
-        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate.splitViewController.view addSubview:_keyboardTopView];
+    if (_emoticonSelectionViewController == nil) {
+        _emoticonSelectionViewController = [[EmoticonSelectionViewController alloc] initWithEmoticons:[EmoticonHelper defaultEmoticons] rowCount:rowCount columnCount:columnCount];
+        _emoticonSelectionViewController.delegate = self;
+        _emoticonSelectionViewController.view.frame = CGRectMake(0, cssToolbarHeight, [Common getScreenWidthInLandscape], emotionViewHeight);
+        [_emoticonSelectionViewController layoutEmotions];
+        
+        [_messageViewBackgroundView addSubview:_emoticonSelectionViewController.view];
     }
     
     //[_subheadingQuestion setInputAccessoryView:_keyboardTopView];
@@ -2118,6 +2182,7 @@ extern BOOL isFromNewCreatedCard;
     //[_subheadingAnswer setInputAccessoryView:_keyboardTopView];
     //[_mainAnswer setInputAccessoryView:_keyboardTopView];
     //[_subAnswer setInputAccessoryView:_keyboardTopView];
+    
 }
 
 
@@ -2134,19 +2199,17 @@ extern BOOL isFromNewCreatedCard;
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
-    CGFloat delta = _keyboardTopView.frame.origin.y - [Common getScreenHeightInLandscape];
+    CGFloat delta = _messageViewBackgroundView.frame.origin.y - [Common getScreenHeightInLandscape];
     if (delta != 0) {
-        CGRect newFrame = _keyboardTopView.frame;
+        CGRect newFrame = _messageViewBackgroundView.frame;
         newFrame = CGRectOffset(newFrame, 0, -delta);
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
         [UIView setAnimationCurve:[_keyboardCurve intValue]];
-        _keyboardTopView.frame = newFrame;
+        _messageViewBackgroundView.frame = newFrame;
         [UIView commitAnimations];
     }
-    [_emoticonSelectionViewController.view removeFromSuperview];
-    _emoticonSelectionViewController = nil;
     
     //step2:
     [_subheadingQuestion resignFirstResponder];
@@ -2355,40 +2418,15 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) symbolSwitch:(id) sender {
     
+    UIBarButtonItem *senderItem = (UIBarButtonItem *)sender;
+    
     if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
-        
+        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
         [_firstRespondTextView resignFirstResponder];
-        
-        int columnCount;
-        int rowCount;
-        if (isUserInterfaceIdiomPhone) {
-            columnCount = 7;
-            rowCount = 3;
-        } else {
-            columnCount = 12;
-            rowCount = 5;
-        }
-        
-        if (_emoticonSelectionViewController == nil) {
-            _emoticonSelectionViewController = [[EmoticonSelectionViewController alloc] initWithEmoticons:[EmoticonHelper defaultEmoticons] rowCount:rowCount columnCount:columnCount];
-            _emoticonSelectionViewController.delegate = self;
-            _emoticonSelectionViewController.view.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], _keyboardHeight);
-            [_emoticonSelectionViewController layoutEmotions];
-            
-            if (isUserInterfaceIdiomPhone) {
-                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-                [keyWindow.rootViewController.view addSubview:_emoticonSelectionViewController.view];
-                _emoticonSelectionViewController.view.frame = CGRectOffset(_emoticonSelectionViewController.view.frame, 0, (IPHONE_UI_HEIGHT-_keyboardHeight));
-                [keyWindow.rootViewController.view bringSubviewToFront:_emoticonSelectionViewController.view];
-            } else {
-                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.splitViewController.view addSubview:_emoticonSelectionViewController.view];
-                _emoticonSelectionViewController.view.frame = CGRectOffset(_emoticonSelectionViewController.view.frame, 0, (IPAD_UI_HEIGHT-_keyboardHeight));
-                [appDelegate.splitViewController.view bringSubviewToFront:_emoticonSelectionViewController.view];
-            }
-        }
+    
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;
     } else {
+        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil)];
         [_firstRespondTextView becomeFirstResponder];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     }
@@ -2539,6 +2577,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     _isUITextViewFocused = FALSE;
+    _messageViewBackgroundView.hidden = TRUE;
     return TRUE;
 }
 
@@ -2603,6 +2642,7 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     _firstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
+    _messageViewBackgroundView.hidden = FALSE;
     return TRUE;
 }
 
