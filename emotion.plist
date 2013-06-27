@@ -250,12 +250,12 @@
 	<key>050</key>
 	<array>
 		<string>Hexagon</string>
-		<string>⬡</string>
+		<string>◁</string>
 	</array>
 	<key>051</key>
 	<array>
 		<string>Pentagon</string>
-		<string>⬠</string>
+		<string>▷</string>
 	</array>
 	<key>052</key>
 	<array>
@@ -270,7 +270,7 @@
 	<key>054</key>
 	<array>
 		<string>triangle</string>
-		<string>⊿ </string>
+		<string>▽</string>
 	</array>
 	<key>055</key>
 	<array>
