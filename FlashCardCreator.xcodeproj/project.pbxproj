@@ -252,13 +252,6 @@
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
-		88BC6B5E1775BAB2006DEF79 /* emotion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88BC6B5D1775BAB2006DEF79 /* emotion.plist */; };
-		88BC6B9E1775C5C1006DEF79 /* Emoticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6B931775C5BE006DEF79 /* Emoticon.m */; };
-		88BC6B9F1775C5C1006DEF79 /* EmoticonGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6B951775C5BF006DEF79 /* EmoticonGridView.m */; };
-		88BC6BA01775C5C1006DEF79 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6B971775C5BF006DEF79 /* EmoticonHelper.m */; };
-		88BC6BA21775C5C1006DEF79 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6B9B1775C5C0006DEF79 /* EmoticonSelectionViewController.m */; };
-		88BC6BA31775C5C1006DEF79 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6B9D1775C5C0006DEF79 /* EmoticonView.m */; };
-		88BC6BAC1775C827006DEF79 /* ColorPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BC6BAA1775C826006DEF79 /* ColorPageControl.m */; };
 		88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC795F170D419A00EFBFCE /* help1_iphone.jpg */; };
 		88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7960170D419A00EFBFCE /* help2_iphone.jpg */; };
 		88BC7968170D419A00EFBFCE /* help3_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7961170D419A00EFBFCE /* help3_iphone.jpg */; };
@@ -267,6 +260,13 @@
 		88BC796B170D419A00EFBFCE /* help6_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7964170D419A00EFBFCE /* help6_iphone.jpg */; };
 		88BC796C170D419A00EFBFCE /* help7_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7965170D419A00EFBFCE /* help7_iphone.jpg */; };
 		88CA253617152EE700859BDC /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* grayButton.png */; };
+		88D453231780DE3900500487 /* ColorPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453181780DE3900500487 /* ColorPageControl.m */; };
+		88D453241780DE3900500487 /* Emoticon.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531A1780DE3900500487 /* Emoticon.m */; };
+		88D453251780DE3900500487 /* EmoticonGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531C1780DE3900500487 /* EmoticonGridView.m */; };
+		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
+		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
+		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
+		88D4532A1780DE4700500487 /* emotion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88D453291780DE4700500487 /* emotion.plist */; };
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88F68599177049ED0083AF7B /* question_placeholder_content.jpg */; };
@@ -848,19 +848,6 @@
 		88491B341714522300833692 /* templateScreenshot4_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question.png; path = Resources/templateScreenshot4_question.png; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
-		88BC6B5D1775BAB2006DEF79 /* emotion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emotion.plist; sourceTree = "<group>"; };
-		88BC6B921775C5BE006DEF79 /* Emoticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoticon.h; sourceTree = "<group>"; };
-		88BC6B931775C5BE006DEF79 /* Emoticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoticon.m; sourceTree = "<group>"; };
-		88BC6B941775C5BE006DEF79 /* EmoticonGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonGridView.h; sourceTree = "<group>"; };
-		88BC6B951775C5BF006DEF79 /* EmoticonGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonGridView.m; sourceTree = "<group>"; };
-		88BC6B961775C5BF006DEF79 /* EmoticonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonHelper.h; sourceTree = "<group>"; };
-		88BC6B971775C5BF006DEF79 /* EmoticonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonHelper.m; sourceTree = "<group>"; };
-		88BC6B9A1775C5BF006DEF79 /* EmoticonSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSelectionViewController.h; sourceTree = "<group>"; };
-		88BC6B9B1775C5C0006DEF79 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSelectionViewController.m; sourceTree = "<group>"; };
-		88BC6B9C1775C5C0006DEF79 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonView.h; sourceTree = "<group>"; };
-		88BC6B9D1775C5C0006DEF79 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonView.m; sourceTree = "<group>"; };
-		88BC6BAA1775C826006DEF79 /* ColorPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPageControl.m; sourceTree = "<group>"; };
-		88BC6BAB1775C827006DEF79 /* ColorPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPageControl.h; sourceTree = "<group>"; };
 		88BC795F170D419A00EFBFCE /* help1_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help1_iphone.jpg; path = Resources/help1_iphone.jpg; sourceTree = "<group>"; };
 		88BC7960170D419A00EFBFCE /* help2_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help2_iphone.jpg; path = Resources/help2_iphone.jpg; sourceTree = "<group>"; };
 		88BC7961170D419A00EFBFCE /* help3_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help3_iphone.jpg; path = Resources/help3_iphone.jpg; sourceTree = "<group>"; };
@@ -869,6 +856,19 @@
 		88BC7964170D419A00EFBFCE /* help6_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help6_iphone.jpg; path = Resources/help6_iphone.jpg; sourceTree = "<group>"; };
 		88BC7965170D419A00EFBFCE /* help7_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help7_iphone.jpg; path = Resources/help7_iphone.jpg; sourceTree = "<group>"; };
 		88CA253517152EE700859BDC /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayButton.png; path = Resources/grayButton.png; sourceTree = "<group>"; };
+		88D453171780DE3900500487 /* ColorPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorPageControl.h; path = Classes/emotion/ColorPageControl.h; sourceTree = "<group>"; };
+		88D453181780DE3900500487 /* ColorPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorPageControl.m; path = Classes/emotion/ColorPageControl.m; sourceTree = "<group>"; };
+		88D453191780DE3900500487 /* Emoticon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Emoticon.h; path = Classes/emotion/Emoticon.h; sourceTree = "<group>"; };
+		88D4531A1780DE3900500487 /* Emoticon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Emoticon.m; path = Classes/emotion/Emoticon.m; sourceTree = "<group>"; };
+		88D4531B1780DE3900500487 /* EmoticonGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonGridView.h; path = Classes/emotion/EmoticonGridView.h; sourceTree = "<group>"; };
+		88D4531C1780DE3900500487 /* EmoticonGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonGridView.m; path = Classes/emotion/EmoticonGridView.m; sourceTree = "<group>"; };
+		88D4531D1780DE3900500487 /* EmoticonHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonHelper.h; path = Classes/emotion/EmoticonHelper.h; sourceTree = "<group>"; };
+		88D4531E1780DE3900500487 /* EmoticonHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonHelper.m; path = Classes/emotion/EmoticonHelper.m; sourceTree = "<group>"; };
+		88D4531F1780DE3900500487 /* EmoticonSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonSelectionViewController.h; path = Classes/emotion/EmoticonSelectionViewController.h; sourceTree = "<group>"; };
+		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
+		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
+		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
+		88D453291780DE4700500487 /* emotion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = emotion.plist; path = Classes/emotion/emotion.plist; sourceTree = "<group>"; };
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
@@ -1167,7 +1167,6 @@
 			isa = PBXGroup;
 			children = (
 				88BC6BAD17764CD8006DEF79 /* emotions */,
-				88BC6B5D1775BAB2006DEF79 /* emotion.plist */,
 				2D1A054016EDEB8600527311 /* Template Colors */,
 				2DC177A816E46A6500939E61 /* help */,
 				2D26346416C2080D001A024D /* Template Screenshot */,
@@ -1518,18 +1517,18 @@
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
 			isa = PBXGroup;
 			children = (
-				88BC6BAA1775C826006DEF79 /* ColorPageControl.m */,
-				88BC6BAB1775C827006DEF79 /* ColorPageControl.h */,
-				88BC6B921775C5BE006DEF79 /* Emoticon.h */,
-				88BC6B931775C5BE006DEF79 /* Emoticon.m */,
-				88BC6B941775C5BE006DEF79 /* EmoticonGridView.h */,
-				88BC6B951775C5BF006DEF79 /* EmoticonGridView.m */,
-				88BC6B961775C5BF006DEF79 /* EmoticonHelper.h */,
-				88BC6B971775C5BF006DEF79 /* EmoticonHelper.m */,
-				88BC6B9A1775C5BF006DEF79 /* EmoticonSelectionViewController.h */,
-				88BC6B9B1775C5C0006DEF79 /* EmoticonSelectionViewController.m */,
-				88BC6B9C1775C5C0006DEF79 /* EmoticonView.h */,
-				88BC6B9D1775C5C0006DEF79 /* EmoticonView.m */,
+				88D453171780DE3900500487 /* ColorPageControl.h */,
+				88D453181780DE3900500487 /* ColorPageControl.m */,
+				88D453191780DE3900500487 /* Emoticon.h */,
+				88D4531A1780DE3900500487 /* Emoticon.m */,
+				88D4531B1780DE3900500487 /* EmoticonGridView.h */,
+				88D4531C1780DE3900500487 /* EmoticonGridView.m */,
+				88D4531D1780DE3900500487 /* EmoticonHelper.h */,
+				88D4531E1780DE3900500487 /* EmoticonHelper.m */,
+				88D4531F1780DE3900500487 /* EmoticonSelectionViewController.h */,
+				88D453201780DE3900500487 /* EmoticonSelectionViewController.m */,
+				88D453211780DE3900500487 /* EmoticonView.h */,
+				88D453221780DE3900500487 /* EmoticonView.m */,
 			);
 			name = Emotion;
 			sourceTree = "<group>";
@@ -1592,6 +1591,7 @@
 				880087E2177B0C520051594B /* 053@2x.png */,
 				880087E3177B0C530051594B /* 054@2x.png */,
 				880087E4177B0C540051594B /* 055@2x.png */,
+				88D453291780DE4700500487 /* emotion.plist */,
 			);
 			name = emotions;
 			sourceTree = "<group>";
@@ -2018,7 +2018,6 @@
 				88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */,
 				88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */,
 				88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */,
-				88BC6B5E1775BAB2006DEF79 /* emotion.plist in Resources */,
 				880087AE177AE9AA0051594B /* 001@2x.png in Resources */,
 				880087AF177AE9AA0051594B /* 002@2x.png in Resources */,
 				880087B0177AE9AA0051594B /* 003@2x.png in Resources */,
@@ -2074,6 +2073,7 @@
 				880087EA177B0C550051594B /* 053@2x.png in Resources */,
 				880087EB177B0C550051594B /* 054@2x.png in Resources */,
 				880087EC177B0C550051594B /* 055@2x.png in Resources */,
+				88D4532A1780DE4700500487 /* emotion.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2145,12 +2145,12 @@
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
-				88BC6B9E1775C5C1006DEF79 /* Emoticon.m in Sources */,
-				88BC6B9F1775C5C1006DEF79 /* EmoticonGridView.m in Sources */,
-				88BC6BA01775C5C1006DEF79 /* EmoticonHelper.m in Sources */,
-				88BC6BA21775C5C1006DEF79 /* EmoticonSelectionViewController.m in Sources */,
-				88BC6BA31775C5C1006DEF79 /* EmoticonView.m in Sources */,
-				88BC6BAC1775C827006DEF79 /* ColorPageControl.m in Sources */,
+				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,
+				88D453241780DE3900500487 /* Emoticon.m in Sources */,
+				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
+				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
+				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
+				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
