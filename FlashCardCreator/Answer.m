@@ -35,6 +35,8 @@
     _css = [[CSS alloc] init];
     _templateID = 0; //begin from 0
     
+    _imageFullPath = @"";
+    
 	return self;
 }
 

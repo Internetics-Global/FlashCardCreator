@@ -37,6 +37,9 @@
     _logoURLLinkage = @"http://www.";
     _templateID = 0;
     
+    _imageFullPath = @"";
+    _logoFullPath = @"";
+    
 	return self;
 }
 

@@ -33,6 +33,9 @@
     _packID = -1;
     _userID = -1;
     _cards = [[NSMutableArray alloc] init];
+    
+    _coverImageURL = @"";
+    
 	return self;
 }
 

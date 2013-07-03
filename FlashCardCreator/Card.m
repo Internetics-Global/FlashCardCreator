@@ -37,6 +37,8 @@
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     
+    _coverImageURL = @"";
+    
 	return self;
 }
 
