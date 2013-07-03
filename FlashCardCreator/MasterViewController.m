@@ -933,18 +933,36 @@ extern BOOL _isDownloadingSamplePack;
             [assembledCard question].css.mainColor = questionDict[@"main_color"];
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
+        
             
             //Deal with font size difference between iPhone and iPad
+            int subheadingSize = [questionDict[@"subheading_size"] integerValue];;
+            int mainSize = [questionDict[@"main_size"] integerValue];
+            int subSize = [questionDict[@"sub_size"] integerValue];
+            
+            if (subheadingSize == 0) {
+                //this occur when no subheading_size field in json file, then we use default value
+                subheadingSize = [assembledCard question].css.subheadingSize;
+            }
+            
+            if (mainSize == 0) {
+                mainSize = [assembledCard question].css.mainSize;
+            }
+            
+            if (subSize == 0) {
+                subSize = [assembledCard question].css.subSize;
+            }
+            
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
                 NSLog(@"You are using iPad and pack was made on iPhone");
-                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = subheadingSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = mainSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = subSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
                 NSLog(@"You are using iPhone and pack was made on iPad");
-                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = subSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPhone and pack was made on non-iOS platform");
@@ -960,9 +978,9 @@ extern BOOL _isDownloadingSamplePack;
                 
             } else {
                 NSLog(@"The platform you are using and pack was made are the same");
-                [assembledCard question].css.subheadingSize = [questionDict[@"subheading_size"] integerValue];
-                [assembledCard question].css.mainSize = [questionDict[@"main_size"] integerValue];
-                [assembledCard question].css.subSize = [questionDict[@"sub_size"] integerValue];
+                [assembledCard question].css.subheadingSize = subheadingSize;
+                [assembledCard question].css.mainSize = mainSize;
+                [assembledCard question].css.subSize = subSize;
             }
             
         }
@@ -1003,19 +1021,36 @@ extern BOOL _isDownloadingSamplePack;
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
             
             //Deal with font size difference between iPhone and iPad
+            int subheadingSize = [answerDict[@"subheading_size"] integerValue];;
+            int mainSize = [answerDict[@"main_size"] integerValue];
+            int subSize = [answerDict[@"sub_size"] integerValue];
+            
+            if (subheadingSize == 0) {
+                //this occur when no subheading_size field in json file, then we use default value 
+                subheadingSize = [assembledCard answer].css.subheadingSize;
+            }
+            
+            if (mainSize == 0) {
+                mainSize = [assembledCard answer].css.mainSize;
+            }
+            
+            if (subSize == 0) {
+                subSize = [assembledCard answer].css.subSize;
+            }
+            
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
-                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = subheadingSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = mainSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = subSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue] * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = subSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else {
-                [assembledCard answer].css.subheadingSize = [answerDict[@"subheading_size"] integerValue];
-                [assembledCard answer].css.mainSize = [answerDict[@"main_size"] integerValue];
-                [assembledCard answer].css.subSize = [answerDict[@"sub_size"] integerValue];
+                [assembledCard answer].css.subheadingSize = subheadingSize;
+                [assembledCard answer].css.mainSize = mainSize;
+                [assembledCard answer].css.subSize = subSize;
             }
             
         }

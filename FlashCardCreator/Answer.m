@@ -36,6 +36,7 @@
     _templateID = 0; //begin from 0
     
     _imageFullPath = @"";
+    _logoFullPath = @"";
     
 	return self;
 }
