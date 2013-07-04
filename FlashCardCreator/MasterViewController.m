@@ -751,6 +751,10 @@ extern BOOL _isDownloadingSamplePack;
     NSString *type = params[@"type"];
     NSString *from = params[@"from"];
     
+    if (from == NULL) {
+        from = @"unkown person";
+    }
+    
     [self showProgressIndicator:type withSource:from];
     
     if ([urlStr rangeOfString:@".zip"].length == 0) {
