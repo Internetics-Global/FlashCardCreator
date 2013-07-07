@@ -57,11 +57,6 @@
 		<string>Not approxi</string>
 		<string>≉</string>
 	</array>
-	<key>012</key>
-	<array>
-		<string>Less than</string>
-		<string>≤</string>
-	</array>
 	<key>013</key>
 	<array>
 		<string>More than</string>
@@ -106,11 +101,6 @@
 	<array>
 		<string>Eighth note</string>
 		<string>♪</string>
-	</array>
-	<key>022</key>
-	<array>
-		<string>Double eight notes</string>
-		<string>♫</string>
 	</array>
 	<key>023</key>
 	<array>
@@ -162,16 +152,6 @@
 		<string>Caution</string>
 		<string>⚠</string>
 	</array>
-	<key>033</key>
-	<array>
-		<string>Nuclear</string>
-		<string>☢</string>
-	</array>
-	<key>034</key>
-	<array>
-		<string>Skull</string>
-		<string>☠</string>
-	</array>
 	<key>035</key>
 	<array>
 		<string>Airplane</string>
@@ -192,11 +172,6 @@
 		<string>Check mark</string>
 		<string>✓</string>
 	</array>
-	<key>039</key>
-	<array>
-		<string>Flag</string>
-		<string>⚑</string>
-	</array>
 	<key>040</key>
 	<array>
 		<string>Heart</string>
@@ -212,16 +187,6 @@
 		<string>Cross</string>
 		<string>✚</string>
 	</array>
-	<key>043</key>
-	<array>
-		<string>Caduceus</string>
-		<string>☤</string>
-	</array>
-	<key>044</key>
-	<array>
-		<string>Peace</string>
-		<string>☮</string>
-	</array>
 	<key>045</key>
 	<array>
 		<string>Male</string>
@@ -231,16 +196,6 @@
 	<array>
 		<string>Female</string>
 		<string>♀</string>
-	</array>
-	<key>047</key>
-	<array>
-		<string>Umbrella</string>
-		<string>☂</string>
-	</array>
-	<key>048</key>
-	<array>
-		<string>Ellipse</string>
-		<string>⬭</string>
 	</array>
 	<key>049</key>
 	<array>
@@ -256,11 +211,6 @@
 	<array>
 		<string>Pentagon</string>
 		<string>▷</string>
-	</array>
-	<key>052</key>
-	<array>
-		<string>Rectangle</string>
-		<string>▭</string>
 	</array>
 	<key>053</key>
 	<array>
