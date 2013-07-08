@@ -2827,14 +2827,16 @@ extern BOOL isFromNewCreatedCard;
     
     [self doQuestionAndAnswerData];
     
-    UIImage *origialmage = [self captureWholeViewAsImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
-        NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
-        [imageData writeToFile:savedFullPath atomically:YES];
-        _currentCard.coverImageURL = savedFullPath;
-    } else {
-        [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        UIImage *origialmage = [self captureWholeViewAsImage];
+        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+        if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
+            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [imageData writeToFile:savedFullPath atomically:YES];
+            _currentCard.coverImageURL = savedFullPath;
+        } else {
+            [imageData writeToFile:_currentCard.coverImageURL atomically:YES];
+        }
     }
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
