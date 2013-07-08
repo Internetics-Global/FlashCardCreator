@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "EmoticonSelectionViewController.h"
+#import "SimpleWebBrowserController.h"
 
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
@@ -109,6 +110,8 @@ typedef enum{
     UIView  *_messageViewBackgroundView;
     
     UIBarButtonItem *_emotionButton;
+    
+    SimpleWebBrowserController *_webViewController;
     
 }
 
