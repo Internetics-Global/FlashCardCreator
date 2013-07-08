@@ -75,33 +75,58 @@
 		sqlite3_stmt *createUsers = [SQLiteHelper prepareStatementForQuery:@"create table Users_Tables (user_id integer, nick_name text);"];
 		sqlite3_step(createUsers);
 		sqlite3_finalize(createUsers);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Users_Tables (user_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
+        
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
 		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text);"];
 		sqlite3_step(createItems);
 		sqlite3_finalize(createItems);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Packs_Tables (pack_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Cards_Tables (card_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
 	}
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer, template_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Question_Tables (question_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
 	}
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Answer_Tables (answer_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
 	}
     
     if (![SQLiteHelper tableExists:@"CSS_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
+        
+        sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on CSS_Tables (css_id);"];
+		sqlite3_step(createIndex);
+		sqlite3_finalize(createIndex);
 	}
     
 }
