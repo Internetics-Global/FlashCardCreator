@@ -563,11 +563,13 @@ extern BOOL _isDownloadingSamplePack;
     
     cell.indexLabel.text = [NSString stringWithFormat:@"%d",card.cardSN];
     
-    UIImage *coverImage = [UIImage imageWithContentsOfFile:card.coverImageURL];
-    if (coverImage) {
-        cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];    
+
+    BOOL flag = ([card.coverImageURL rangeOfString:@".png"].location != NSNotFound) ||
+                           ([card.coverImageURL rangeOfString:@".jpg"].location != NSNotFound);
+    if (flag) {
+        cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];
     } else {
-        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
+        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];        
     }
     
     if (_indexCard == indexPath.row) {

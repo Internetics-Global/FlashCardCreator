@@ -143,7 +143,6 @@ extern BOOL isFromNewCreatedCard;
     _picker = [[UIImagePickerController alloc] init];
     _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
-    _picker.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
         
@@ -2242,6 +2241,8 @@ extern BOOL isFromNewCreatedCard;
     
     _isLogoImageViewClicked = YES;
     
+    _picker.delegate = self;
+    
     if (isUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
     } else {
@@ -2258,6 +2259,8 @@ extern BOOL isFromNewCreatedCard;
     
     _isLogoImageViewClicked = NO;
     
+    _picker.delegate = self;
+    
     if (isUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
     } else {
@@ -2270,6 +2273,9 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    _picker.delegate = nil;
+    
     if (isUserInterfaceIdiomPhone) {
         [_picker dismissModalViewControllerAnimated:YES];
     } else {
@@ -2960,6 +2966,8 @@ extern BOOL isFromNewCreatedCard;
         
         [card save];
     }
+    
+    tempCardView = nil;
 }
 
 #pragma mark -
@@ -2994,6 +3002,8 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _picker = nil;
 }
 
 
