@@ -391,7 +391,7 @@ enum template_color_enum {
 {
     PlayViewController *playViewController = [[PlayViewController alloc] init];
     playViewController.currentPack = self.currentPack;
-    playViewController.currentCard = self.currentCard;
+    //playViewController.currentCard = self.currentCard;
     if (isUserInterfaceIdiomPhone) {
         playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
     } else {

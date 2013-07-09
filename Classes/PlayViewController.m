@@ -19,7 +19,6 @@
 
 @implementation PlayViewController
 
-@synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -28,7 +27,6 @@
     if (self) {
         _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _scrollView = [[UIScrollView alloc] init];
-        _flashCardViewArray = [NSMutableArray array];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(landscapeLeftRightOrientationChanged:)
@@ -92,6 +90,7 @@
     } else {
         NSLog(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
     }
+    
 }
 
 
@@ -104,8 +103,11 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
+    [self initialzeCardViews];
 	[self layoutView];
 }
+
+
 
 - (void)layoutView {
     _closeButton.backgroundColor = [UIColor clearColor];
@@ -118,98 +120,201 @@
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.clipsToBounds = YES;
     _scrollView.pagingEnabled = YES;
-    _scrollView.bounces = NO;
     _scrollView.delegate = self;
     _scrollView.bounces = YES;
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-40, 10, 30, 30);
-        _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
+        _scrollView.frame = CGRectMake(0, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
-        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
+        _scrollView.frame = CGRectMake(0, IPAD_UI_NAVIGATION_BAR_HEIGHT, IPAD_UI_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
     }
     
     [self.view addSubview:_scrollView];
     [self.view addSubview:_closeButton];
     
-    NSArray *shuffledCardArray = nil;
     BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
     if (isRandomPlayMode == YES) {
-        shuffledCardArray = [[_currentPack cards] randomised];
+        _shuffledCardArray = [[_currentPack cards] randomised];
     } else {
         //Bubble sorting
-        shuffledCardArray = [[_currentPack cards] cardSNOrdered];
+        _shuffledCardArray = [[_currentPack cards] cardSNOrdered];
     }
     
-    if (isUserInterfaceIdiomPhone) {
-        [self layoutScrollObjectsForiPhone:shuffledCardArray];
-    } else {
-        [self layoutScrollObjectsForiPad:shuffledCardArray];
+    [self showCurrentCardInScrollView:YES];
+    
+}
+
+- (void)layoutScrollObjectsForiPad
+{
+    CGRect rect;
+    
+    for (FlashCard *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
     }
     
-    _currentFlashCardView = (FlashCard *)_flashCardViewArray[0];
+    if (_shuffledCardArray.count == 0) {
+        return;
+    }
+    
+    //1. Content size
+    [_scrollView setContentSize:CGSizeMake(([_shuffledCardArray count] * IPAD_UI_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
+    
+    //2. Set current
+    _currentFlashCardView.currentCard = _shuffledCardArray[_indexCard];
+    _currentFlashCardView.currentPack = _currentPack;
+    _currentFlashCardView.calledViewController = self;
     [self addGestureSupport];
-}
-
-- (void)layoutScrollObjectsForiPad:(NSArray *)cardArray
-{
-    [_flashCardViewArray removeAllObjects];
+    
+    rect = _currentFlashCardView.frame;
     CGFloat curXLoc = (IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2;
-    for (int index = 0; index < [cardArray count]; index++)
-	{
-		//flash card height = scroll height; flash card width < scroll width
-        CGFloat flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT; //Since it's horizontal movement, so this
-        FlashCard *cardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad) defaultPack:_currentPack defaultCard:_currentCard];
-        cardView.currentPack = _currentPack;
-        cardView.currentCard = cardArray[index];
-        cardView.calledViewController = self;
-		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
-        cardView.frame = rect;
-        [cardView refreshAll];
-        [cardView disableCardEdit];
-        [cardView.segmentedControl setHidden:YES];
-		[_scrollView addSubview:cardView];
-        curXLoc += IPAD_UI_WIDTH;
-        [_flashCardViewArray addObject:cardView];
-	}
-	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPAD_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPad)];
-}
-
-- (void)layoutScrollObjectsForiPhone:(NSArray *)cardArray
-{
-    [_flashCardViewArray removeAllObjects];
-    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
-    float flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+30; //Since it's horizontal movement, so this is a constant value
-    for (int index = 0; index < [cardArray count]; index++)
-	{
-		//flash card height = scroll height; flash card width < scroll width
-        FlashCard *cardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
-        cardView.currentPack = _currentPack;
-        cardView.currentCard = cardArray[index];
-        cardView.calledViewController = self;
-		CGRect rect = cardView.frame;
-        rect.origin = CGPointMake(curXLoc, flashCardYPositionInScrollView);
-        cardView.frame = rect;
-        [cardView refreshAll];
-        [cardView disableCardEdit];
-        [cardView.segmentedControl setHidden:YES];
-        //cardView.backgroundColor = [UIColor greenColor];
-		[_scrollView addSubview:cardView];
-        curXLoc += IPHONE_UI_WIDTH;
-        [_flashCardViewArray addObject:cardView];
-	}
-	
-	[_scrollView setContentSize:CGSizeMake(([[_currentPack cards] count] * IPHONE_UI_WIDTH), kFlashCardViewHeight_PlayMode_iPhone)];
+    curXLoc += IPAD_UI_WIDTH *_indexCard;
+    rect.origin.x = curXLoc;
+    _currentFlashCardView.frame = rect;
+    [_scrollView addSubview:_currentFlashCardView];
+    
+    [_currentFlashCardView refreshAll];
+    [_currentFlashCardView disableCardEdit];
+    [_currentFlashCardView.segmentedControl setHidden:YES];
+    
+    //3. Set previous
+    if (_indexCard == 0) {
+        //_previousCardView = nil;
+    } else {
+        _previousFlashCardView.currentCard = _shuffledCardArray[_indexCard-1];
+        _previousFlashCardView.currentPack = _currentPack;
+        _previousFlashCardView.calledViewController = nil;
+        rect.origin.x = curXLoc -IPAD_UI_WIDTH;
+        _previousFlashCardView.frame = rect;
+        [_scrollView addSubview:_previousFlashCardView];
+        
+        [_previousFlashCardView refreshAll];
+        [_previousFlashCardView disableCardEdit];
+        [_previousFlashCardView.segmentedControl setHidden:YES];
+    }
+    
+    //5. Set next
+    if (([_shuffledCardArray count]-1) == _indexCard) {
+        //_nextCardView = nil;
+    } else {
+        _nextFlashCardView.currentCard = _shuffledCardArray[_indexCard+1];
+        _nextFlashCardView.currentPack = _currentPack;
+        _nextFlashCardView.calledViewController = nil;
+        rect.origin.x = curXLoc +IPAD_UI_WIDTH;
+        _nextFlashCardView.frame = rect;
+        [_scrollView addSubview:_nextFlashCardView];
+        
+        [_nextFlashCardView refreshAll];
+        [_nextFlashCardView disableCardEdit];
+        [_nextFlashCardView.segmentedControl setHidden:YES];
+    }
     
 }
+
+
+- (void)layoutScrollObjectsForiPhone
+{
+    CGRect rect;
+    
+    for (FlashCard *cardView in [_scrollView subviews]) {
+        [cardView removeFromSuperview];
+    }
+    
+    if (_shuffledCardArray.count == 0) {
+        return;
+    }
+    
+    //1. Content size
+    [_scrollView setContentSize:CGSizeMake(([_shuffledCardArray count] * IPHONE_UI_WIDTH), IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)];
+    
+    //2. Set current
+    _currentFlashCardView.currentCard = _shuffledCardArray[_indexCard];
+    _currentFlashCardView.currentPack = _currentPack;
+    _currentFlashCardView.calledViewController = self;
+    [self addGestureSupport];
+    
+    rect = _currentFlashCardView.frame;
+    CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2;
+    curXLoc += IPHONE_UI_WIDTH *_indexCard;
+    rect.origin.x = curXLoc;
+    _currentFlashCardView.frame = rect;
+    [_scrollView addSubview:_currentFlashCardView];
+    
+    [_currentFlashCardView refreshAll];
+    [_currentFlashCardView disableCardEdit];
+    [_currentFlashCardView.segmentedControl setHidden:YES];
+    
+    //3. Set previous
+    if (_indexCard == 0) {
+        //_previousCardView = nil;
+    } else {
+        _previousFlashCardView.currentCard = _shuffledCardArray[_indexCard-1];
+        _previousFlashCardView.currentPack = _currentPack;
+        _previousFlashCardView.calledViewController = nil;
+        rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
+        _previousFlashCardView.frame = rect;
+        [_scrollView addSubview:_previousFlashCardView];
+        
+        [_previousFlashCardView refreshAll];
+        [_previousFlashCardView disableCardEdit];
+        [_previousFlashCardView.segmentedControl setHidden:YES];
+    }
+    
+    //5. Set next
+    if (([_shuffledCardArray count]-1) == _indexCard) {
+        //_nextCardView = nil;
+    } else {
+        _nextFlashCardView.currentCard = _shuffledCardArray[_indexCard+1];
+        _nextFlashCardView.currentPack = _currentPack;
+        _nextFlashCardView.calledViewController = nil;
+        rect.origin.x = curXLoc +IPHONE_UI_WIDTH;
+        _nextFlashCardView.frame = rect;
+        [_scrollView addSubview:_nextFlashCardView];
+        
+        [_nextFlashCardView refreshAll];
+        [_nextFlashCardView disableCardEdit];
+        [_nextFlashCardView.segmentedControl setHidden:YES];
+    }
+    
+}
+
 
 - (void) closePlayView {
     [self dismissModalViewControllerAnimated:YES];
     
+}
+
+- (void) initialzeCardViews {
+    
+    float flashCardYPositionInScrollView;
+    
+    if (isUserInterfaceIdiomPhone) {
+        
+        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+IPHONE_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this is a constant value
+        _currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone) defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        _previousFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)
+                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        _nextFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)
+                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        
+    } else {
+        
+        flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this
+        
+        _currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
+                                                 defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        _previousFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
+                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        _nextFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
+                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+    }
+    
+    [[_currentFlashCardView layer] setShadowOffset:CGSizeMake(1, 1)];
+    [[_currentFlashCardView layer] setShadowRadius:3];
+    [[_currentFlashCardView layer] setShadowOpacity:0.5];
+    [[_currentFlashCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
 }
 
 #pragma mark -
@@ -219,8 +324,38 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
-    _currentFlashCardView = (FlashCard *)_flashCardViewArray[page];
-    [self addGestureSupport];
+    
+    if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        _scrollView.userInteractionEnabled = FALSE; // avoid blank pages.
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    //Step1: calculate page(index)
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    
+    if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        _indexCard = page;
+        [self showCurrentCardInScrollView:YES];
+    }
+    _scrollView.userInteractionEnabled = YES;
+    
+}
+
+- (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
+    if (isUserInterfaceIdiomPhone) {
+        [self layoutScrollObjectsForiPhone];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
+    } else {
+        [self layoutScrollObjectsForiPad];
+        [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_WIDTH),0) animated:NO];
+    }
+    
+    if ((shouldResetSegment == YES) && (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
+        _currentFlashCardView.segmentedControl.selectedSegmentIndex = 0;
+        [_currentFlashCardView segmentAction:nil];
+    }
 }
 
 
@@ -309,12 +444,10 @@
 
 - (void)my_viewDidUnload
 {
-    
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
 }
 
 

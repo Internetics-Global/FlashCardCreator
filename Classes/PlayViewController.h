@@ -17,13 +17,18 @@
     UIScrollView *_scrollView;
     UIButton *_closeButton;
     Pack *_currentPack;
-    Card *_currentCard;
-    FlashCard *_currentFlashCardView;
     NSMutableArray *_flashCardViewArray;
     CMMotionManager *_motionManager;
+    
+    FlashCard *_previousFlashCardView;
+    FlashCard *_currentFlashCardView;
+    FlashCard *_nextFlashCardView;
+    
+    int _indexCard;
+    
+    NSArray *_shuffledCardArray;
 }
 
 @property (strong, nonatomic) Pack *currentPack;
-@property (strong, nonatomic) Card *currentCard;
 
 @end
