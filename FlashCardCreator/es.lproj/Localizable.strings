@@ -54,16 +54,17 @@
 "ToolbarItem_Align_Center" = "Centro";
 "ToolbarItem_Align_Right" = "Derecha";
 
-"ToolbarItem_Align_Size12" = "Tamaño 12";
-"ToolbarItem_Align_Size16" = "Tamaño 16";
-"ToolbarItem_Align_Size20" = "Tamaño 20";
-"ToolbarItem_Align_Size24" = "Tamaño 24";
-"ToolbarItem_Align_Size28" = "Tamaño 28";
-"ToolbarItem_Align_Size32" = "Tamaño 32";
-"ToolbarItem_Align_Size36" = "Tamaño 36";
-"ToolbarItem_Align_Size40" = "Tamaño 36";
-"ToolbarItem_Align_Size160"= "Tamaño 160";
-"ToolbarItem_Align_Size70" = "Tamaño 70";
+"ToolbarItem_Size12"        = "Tamaño 12";
+"ToolbarItem_Size18"        = "Tamaño 18";
+"ToolbarItem_Size24"        = "Tamaño 24";
+"ToolbarItem_Size28"        = "Tamaño 28";
+"ToolbarItem_Size32"        = "Tamaño 32";
+"ToolbarItem_Size36"        = "Tamaño 36";
+"ToolbarItem_Size40"        = "Tamaño 40";
+"ToolbarItem_Size60"        = "Tamaño 60";
+"ToolbarItem_Size80"        = "Tamaño 80";
+"ToolbarItem_Size100"        = "Tamaño 100";
+"ToolbarItem_Size160"        = "Tamaño 160";
 
 
 "ToolbarItem_Color_Red" = "Red";

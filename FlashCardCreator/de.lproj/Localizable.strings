@@ -54,16 +54,17 @@
 "ToolbarItem_Align_Center" = "Center";
 "ToolbarItem_Align_Right" = "rechts";
 
-"ToolbarItem_Align_Size12" = "Größe 12";
-"ToolbarItem_Align_Size16" = "Größe 16";
-"ToolbarItem_Align_Size20" = "Größe 20";
-"ToolbarItem_Align_Size24" = "Größe 24";
-"ToolbarItem_Align_Size28" = "Größe 28";
-"ToolbarItem_Align_Size32" = "Größe 32";
-"ToolbarItem_Align_Size36" = "Größe 36";
-"ToolbarItem_Align_Size40" = "Größe 40";
-"ToolbarItem_Align_Size160"= "Größe 160";
-"ToolbarItem_Align_Size70" = "Größe 70";
+"ToolbarItem_Size12"        = "Größe 12";
+"ToolbarItem_Size18"        = "Größe 18";
+"ToolbarItem_Size24"        = "Größe 24";
+"ToolbarItem_Size28"        = "Größe 28";
+"ToolbarItem_Size32"        = "Größe 32";
+"ToolbarItem_Size36"        = "Größe 36";
+"ToolbarItem_Size40"        = "Größe 40";
+"ToolbarItem_Size60"        = "Größe 60";
+"ToolbarItem_Size80"        = "Größe 80";
+"ToolbarItem_Size100"        = "Größe 100";
+"ToolbarItem_Size160"        = "Größe 160";
 
 "ToolbarItem_Color_Red" = "Red";
 "ToolbarItem_Color_Green" = "Grün";
