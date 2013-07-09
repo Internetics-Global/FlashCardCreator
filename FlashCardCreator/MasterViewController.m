@@ -683,19 +683,28 @@ extern BOOL _isDownloadingSamplePack;
         return;
     
     //Step1: recalculate cardSN
-    if (fromIndexPath.row <= toIndexPath.row) {
+    Card *temp;
+    if (fromIndexPath.row < toIndexPath.row) {
         for (int i = fromIndexPath.row +1; i<= toIndexPath.row; i++) {
-            Card *temp = (Card *)([_currentPack cards][i]);
+            temp = (Card *)([_currentPack cards][i]);
             temp.cardSN = i;
             [temp save];
         }
         
+        temp = (Card *)([_currentPack cards][fromIndexPath.row]);;
+        temp.cardSN = toIndexPath.row + 1;
+        [temp save];
+        
     } else {
         for (int i = toIndexPath.row; i< fromIndexPath.row; i++) {
-            Card *temp = (Card *)([_currentPack cards][i]);
+            temp = (Card *)([_currentPack cards][i]);
             temp.cardSN = i+2;
             [temp save];
         }
+        
+        temp = (Card *)([_currentPack cards][fromIndexPath.row]);;
+        temp.cardSN = toIndexPath.row + 1;
+        [temp save];
     }
     
     //Step2: execute move. We just reset cardSN
