@@ -150,6 +150,7 @@
     }
     
     _currentFlashCardView = (FlashCard *)_flashCardViewArray[0];
+    [self addGestureSupport];
 }
 
 - (void)layoutScrollObjectsForiPad:(NSArray *)cardArray
@@ -219,6 +220,7 @@
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     NSLog (@"current page is :%d", page);
     _currentFlashCardView = (FlashCard *)_flashCardViewArray[page];
+    [self addGestureSupport];
 }
 
 
@@ -241,6 +243,30 @@
         
     } else {
         NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
+    }
+}
+
+- (void) addGestureSupport {
+    UISwipeGestureRecognizer * recognizerUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureUpAction:)];
+    [recognizerUp setDirection:(UISwipeGestureRecognizerDirectionUp)];
+    [_currentFlashCardView addGestureRecognizer:recognizerUp];
+    
+    UISwipeGestureRecognizer * recognizerDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureDownAction:)];
+    [recognizerDown setDirection:(UISwipeGestureRecognizerDirectionDown)];
+    [_currentFlashCardView addGestureRecognizer:recognizerDown];
+    
+    
+}
+
+- (void)gestureUpAction:(UITapGestureRecognizer *)sender {
+    if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
+        [self switchQuestionAnswerView];
+    }
+}
+
+- (void)gestureDownAction:(UITapGestureRecognizer *)sender {
+    if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 0) {
+        [self switchQuestionAnswerView];
     }
 }
 
