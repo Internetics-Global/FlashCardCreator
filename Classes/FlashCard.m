@@ -2082,11 +2082,15 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
+    UIBarButtonItem *fontSize160 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size160",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize70 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Size70",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
     if (_fontSizeArray == nil) {
         if (isUserInterfaceIdiomPhone) {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize16,fontSize20,fontSize24,fontSize28, fontSize70,nil];
         } else {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize24,fontSize28,fontSize32,fontSize36,fontSize40,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize24,fontSize28,fontSize32,fontSize36,fontSize40,fontSize160,nil];
         }
         
     }
@@ -2473,6 +2477,12 @@ extern BOOL isFromNewCreatedCard;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size40",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:40];
         selectFontSize = 40;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size160",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:160];
+        selectFontSize = 160;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Size70",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:70];
+        selectFontSize = 70;
     }
     
     if (responderTextView.tag == kTagSubheadingQuestion){

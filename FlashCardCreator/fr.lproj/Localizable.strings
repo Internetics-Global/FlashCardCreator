@@ -62,6 +62,8 @@
 "ToolbarItem_Align_Size32" = "Taille 32";
 "ToolbarItem_Align_Size36" = "Taille 36";
 "ToolbarItem_Align_Size40" = "Taille 36";
+"ToolbarItem_Align_Size160"= "Taille 160";
+"ToolbarItem_Align_Size70" = "Taille 70";
 
 "ToolbarItem_Color_Red" = "Red";
 "ToolbarItem_Color_Green" = "vert";

@@ -62,6 +62,8 @@
 "ToolbarItem_Align_Size32" = "サイズ32";
 "ToolbarItem_Align_Size36" = "サイズ36";
 "ToolbarItem_Align_Size40" = "サイズ40";
+"ToolbarItem_Align_Size160"= "サイズ 160";
+"ToolbarItem_Align_Size70" = "サイズ 70";
 
 "ToolbarItem_Color_Red" = "赤";
 "ToolbarItem_Color_Green" = "グリーン";
