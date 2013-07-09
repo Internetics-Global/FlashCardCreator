@@ -124,6 +124,18 @@
 	sqlite3_step(statement);
 	sqlite3_finalize(statement);
     
+    //Deleted image resources
+    NSError *error = nil;
+    //We never delete placeholder imae
+    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image.png"]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL]) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of pack coverImageURL"];
+            }
+        }
+    }
+    
     for (Card *card in _cards) {
         [card destroy];
     }
