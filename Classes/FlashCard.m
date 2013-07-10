@@ -711,6 +711,21 @@ extern BOOL isFromNewCreatedCard;
         [self addSubview:_creatorText];
     }
     
+    
+}
+
+- (int) setTextViewTopPadding: (int) fontSize {
+    
+    int val = 0;
+    
+    if (val < 40) {
+        val = -(fontSize/6) -1;    
+    } else {
+        val = -(fontSize/7) + 2;
+    }
+    
+
+    return val;
 }
 
 
@@ -856,7 +871,19 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.userInteractionEnabled = false;
     }
     
+    [self updateUITextViewPaddingTop];
+    
 
+}
+
+
+- (void) updateUITextViewPaddingTop {
+    _subheadingQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeQuestion], 0, 0, 0.0);
+    _subheadingAnswer.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeAnswer], 0, 0, 0.0);
+    _mainQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_mainSizeQuestion], 0, 0, 0.0);
+    _mainAnswer.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_mainSizeAnswer], 0, 0, 0.0);
+    _subQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subSizeQuestion], 0, 0, 0.0);
+    _subAnswer.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subSizeAnswer], 0, 0, 0.0);
 }
 
 
@@ -2488,7 +2515,11 @@ extern BOOL isFromNewCreatedCard;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size160",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:160];
         selectFontSize = 160;
+    } else {
+        responderTextView.font = [UIFont boldSystemFontOfSize:32];
+        selectFontSize = 32;
     }
+    
     
     if (responderTextView.tag == kTagSubheadingQuestion){
         _subheadingSizeQuestion = selectFontSize;
@@ -2503,6 +2534,8 @@ extern BOOL isFromNewCreatedCard;
     } else if (responderTextView.tag == kTagSubAnswer) {
         _subSizeAnswer = selectFontSize;
     }
+    
+    responderTextView.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:selectFontSize], 0, 0, 0.0);
     
     [_keyboardTopView setItems:_buttonArray];
 }
