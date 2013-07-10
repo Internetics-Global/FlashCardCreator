@@ -129,7 +129,12 @@
         
         CGRect emoticonViewFrame = emoticonView.frame;
         emoticonViewFrame.origin.x = floorf(emoticonViewFrame.origin.x);
-        emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 15;  // ccaa need to get to know why it's 10
+        if (isUserInterfaceIdiomPhone) {
+            emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 20;  // ccaa need to get to know why it's 20    
+        } else {
+            emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 10;
+        }
+        
         emoticonView.frame = emoticonViewFrame;
     }
 }
