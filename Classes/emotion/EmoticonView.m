@@ -23,16 +23,25 @@
         //_emoticon = [emoticon retain];
         _emoticon = emoticon;
         
+        /* we don't need this now
         _emoticonView = [[UIImageView alloc] initWithImage:emoticon.image];
         _emoticonView.frame = CGRectMake(0, 0, EMOTICON_IMAGE_WIDTH, EMOTICON_IMAGE_HEIGHT);
         _emoticonView.center = CGPointMake(20, 20);
         _emoticonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self addSubview:_emoticonView];
+        [self addSubview:_emoticonView]; */
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 40, 20)];
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.font = [UIFont systemFontOfSize:12.0];
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, EMOTICON_IMAGE_WIDTH, EMOTICON_IMAGE_HEIGHT)];
+        if (isUserInterfaceIdiomPhone) {
+             _titleLabel.font = [UIFont systemFontOfSize:18.0];
+        } else {
+             _titleLabel.font = [UIFont systemFontOfSize:24.0];
+        }
         _titleLabel.text = emoticon.title;
+        _titleLabel.backgroundColor = [UIColor colorWithRed:194.0/255 green:195.0/255 blue:199.0/255 alpha:1];
+        _titleLabel.clipsToBounds = YES;
+        _titleLabel.layer.cornerRadius = 6;
+        _titleLabel.layer.masksToBounds = YES;
         _titleLabel.textAlignment = UITextAlignmentCenter;
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_titleLabel];

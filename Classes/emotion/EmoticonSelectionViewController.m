@@ -45,18 +45,19 @@
     NSInteger emoticonsPerPage = _emoticonRowCount * _emoticonColumnCount;
     NSInteger pageCount = ceilf([_emoticons count]/(emoticonsPerPage*1.0));
     
-    CGRect scrollViewFrame = CGRectMake(0, 1, self.view.bounds.size.width, self.view.bounds.size.height);
+    CGRect scrollViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     _emoticonScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
     _emoticonScrollView.clipsToBounds = NO;
     _emoticonScrollView.showsHorizontalScrollIndicator = NO;
     _emoticonScrollView.showsVerticalScrollIndicator = NO;
     _emoticonScrollView.delegate = self;
     _emoticonScrollView.pagingEnabled = YES;
+    //_emoticonScrollView.backgroundColor = [UIColor blueColor]
     _emoticonScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
     _emoticonScrollView.contentSize = CGSizeMake(self.view.bounds.size.width * pageCount, self.view.bounds.size.height);
     [self.view addSubview:_emoticonScrollView];
     
-    _pageControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 30, self.view.bounds.size.width, 20)];
+    _pageControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 20, self.view.bounds.size.width, 20)];
     _pageControl.numberOfPages = pageCount;
     _pageControl.normalPageColor = [UIColor colorWithRed:128/255.0 green:138/255.0 blue:151/255.0 alpha:1];
     _pageControl.currentPageColor = [UIColor whiteColor];
@@ -80,7 +81,7 @@
         NSArray *subArray = [_emoticons subarrayWithRange:subRange];
         EmoticonGridView *emoticonGridView = [[EmoticonGridView alloc] initWithEmoticons:subArray];
         emoticonGridView.delegate = self;
-        
+        //emoticonGridView.backgroundColor = [UIColor redColor];
         emoticonGridView.frame = CGRectOffset(_emoticonScrollView.bounds, i * screenWidth, 0) ;
         [_emoticonGridViews addObject:emoticonGridView];
         [_emoticonScrollView addSubview:emoticonGridView];

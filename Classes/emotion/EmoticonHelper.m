@@ -12,20 +12,21 @@
 @implementation EmoticonHelper
 
 + (NSArray *)defaultEmoticons{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"emotion" ofType:@"plist"];
-    NSDictionary *emoticonsDictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"emotions" ofType:@"txt"];
+    NSString* content = [NSString stringWithContentsOfFile:filePath
+                              encoding:NSUTF8StringEncoding error:nil];
+    NSString *filtedContent = [[[content stringByReplacingOccurrencesOfString:@" " withString:@""]
+                                      stringByReplacingOccurrencesOfString:@"\n" withString:@""]
+                                              stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSArray *stringsArray = [filtedContent componentsSeparatedByString:@","];
     
-    NSArray * allKeys = [NSArray arrayWithArray:[[emoticonsDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)]];
-    NSMutableArray *emoticonsArrary = [NSMutableArray arrayWithCapacity:[allKeys count]];
-    for (NSString *key in allKeys) {
-        NSArray *valueArrary = (NSArray *)[emoticonsDictionary objectForKey:key];
-        if ([valueArrary count] >= 2) {
-            Emoticon *emoticon = [Emoticon emoticonWithType:EmoticonTypeDefault 
-                                                          title:[valueArrary objectAtIndex:0] 
-                                                           code:[valueArrary objectAtIndex:1]
-                                                          image:[UIImage imageNamed:[NSString stringWithFormat:@"%@@2x",key]]];
-            [emoticonsArrary addObject:emoticon];
-        }
+    NSMutableArray *emoticonsArrary = [NSMutableArray arrayWithCapacity:[stringsArray count]];
+    for (int i=0; i<[stringsArray count]; i++) {
+        Emoticon *emoticon = [Emoticon emoticonWithType:EmoticonTypeDefault
+                                                  title:[stringsArray objectAtIndex:i]
+                                                   code:[stringsArray objectAtIndex:i]
+                                                  image:[UIImage imageNamed:@"emotion_placeholder.png"]];
+        [emoticonsArrary addObject:emoticon];
     }
     
     return emoticonsArrary;

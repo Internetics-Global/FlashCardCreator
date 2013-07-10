@@ -11,9 +11,9 @@
 #import "EmoticonView.h"
 #import "Common.h"
 
-#define DEFAULT_ROW_COUNT_IPHONE 3
-#define DEFAULT_ROW_COUNT_IPAD 6
-#define DEFAULT_COLUMN_COUNT_IPHONE 7
+#define DEFAULT_ROW_COUNT_IPHONE 4
+#define DEFAULT_ROW_COUNT_IPAD 7
+#define DEFAULT_COLUMN_COUNT_IPHONE 10
 #define DEFAULT_COLUMN_COUNT_IPAD   12
 
 #define CONTAINER_MARGIN 8
@@ -27,7 +27,7 @@
 
 - (CGRect)_frameForEmoticonViewAtIndex:(NSInteger)index{
     CGFloat emoticonViewWidth = _gridContainerView.bounds.size.width / _columnCount;
-    CGFloat emoticonViewHeight = _gridContainerView.bounds.size.height / _rowCount;
+    CGFloat emoticonViewHeight = (_gridContainerView.bounds.size.height - 20) / _rowCount;
     
     NSInteger row = index / _columnCount;
     NSInteger column = index % _columnCount;
@@ -45,7 +45,6 @@
     NSInteger row = point.y / emoticonViewHeight;
     NSInteger column = point.x / emoticonViewWidth;
     
-    //先计算出个数 (row + 1 -1)*_columnCount + (column + 1), 选中的index则减一便可
     NSInteger index =  row * _columnCount + column;
     
     if ([_emoticons count] > index) {
@@ -91,7 +90,7 @@
     int screenWidth = [Common getScreenWidthInLandscape];
     int height = 0;
     if (isUserInterfaceIdiomPhone) {
-        height = 180;
+        height = 162;
     } else {
         height =350;
     }
@@ -104,7 +103,8 @@
         _emoticons = emoticons;
         _emoticonViews = [[NSMutableArray alloc] initWithCapacity:[emoticons count]];
         
-        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 8, screenWidth - 8, height -24)];
+        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 4, screenWidth - 8, height)];
+        _gridContainerView.backgroundColor = [UIColor clearColor];
         [self addSubview:_gridContainerView];
         
         for (Emoticon *emoticon in _emoticons) {
@@ -129,7 +129,7 @@
         
         CGRect emoticonViewFrame = emoticonView.frame;
         emoticonViewFrame.origin.x = floorf(emoticonViewFrame.origin.x);
-        emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y);
+        emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 15;  // ccaa need to get to know why it's 10
         emoticonView.frame = emoticonViewFrame;
     }
 }
