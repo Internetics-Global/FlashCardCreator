@@ -1075,6 +1075,12 @@
         _previousContentOffset = _scrollView.contentOffset;
         _scrollOffset += delta / (_vertical? _itemSize.height: _itemSize.width);
         
+        // _scrollOffset divide by zero check
+        if(isnan(_scrollOffset))
+        {
+            _scrollOffset = 0.0f;
+        }
+        
         //update view and call delegate
         [self didScroll];
     }
