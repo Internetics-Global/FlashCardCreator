@@ -111,7 +111,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) initDefaultValue {
     _isAllCardsLogoNeedToBeUpdate = NO;
-    
+    _isTextFieldsChanged = NO;
     _backgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
     _logoImageFullPath = @"";
@@ -2633,8 +2633,17 @@ extern BOOL isFromNewCreatedCard;
     return TRUE;
 }
 
+- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    _isTextFieldsChanged = YES;
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
+    
+    if (_isTextFieldsChanged == NO) {
+        return;
+    }
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         //we will save until after we press the save button
@@ -2654,6 +2663,8 @@ extern BOOL isFromNewCreatedCard;
         [self performSelector:@selector(execTextFieldDidEndEditingTask:) withObject:textField afterDelay:0.01];
     
     }
+    
+    _isTextFieldsChanged = NO;
     
 }
 
