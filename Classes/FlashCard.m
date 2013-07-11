@@ -1570,7 +1570,7 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(10, 10, 700, 420);
+            _imageAnswer.frame = CGRectMake(10, 20, 700, 410);
             
             break;
         }
@@ -1729,7 +1729,7 @@ extern BOOL isFromNewCreatedCard;
             _subQuestion.hidden = TRUE;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(10, 10, 700, 420);
+            _imageQuestion.frame = CGRectMake(10, 20, 700, 410);
             break;
         }
             
