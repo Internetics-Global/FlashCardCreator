@@ -2031,18 +2031,13 @@ extern BOOL isFromNewCreatedCard;
     CGPoint offset = _verticalScrollView.contentOffset;
     CGFloat gap;
     if (isUserInterfaceIdiomPhone) {
-        gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
+        gap = _keyboardHeight +IPHONE_UI_TOOL_BAR_HEIGHT -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
     } else {
-        gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
+        gap = _keyboardHeight + IPAD_UI_TOOL_BAR_HEIGHT -(IPAD_UI_HEIGHT - yInScrren - cursorY);
     }
     
-    if (isUserInterfaceIdiomPhone) {
-        if (gap >32)
-            offset.y = gap+32;
-    } else {
-        if (gap >44)
-            offset.y = gap+44;
-    }
+    if (gap >0)
+        offset.y = gap+responderTextView.font.lineHeight;
     
     //Step4: move scrollview
     [_verticalScrollView setContentOffset:offset animated:YES];
@@ -2724,9 +2719,9 @@ extern BOOL isFromNewCreatedCard;
     CGPoint offset = _verticalScrollView.contentOffset;
     CGFloat gap;
     if (isUserInterfaceIdiomPhone) {
-        gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
+        gap = _keyboardHeight + IPHONE_UI_TOOL_BAR_HEIGHT -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
     } else {
-        gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
+        gap = _keyboardHeight + IPAD_UI_TOOL_BAR_HEIGHT -(IPAD_UI_HEIGHT - yInScrren - cursorY);
     }
     
     if ((textView.contentSize.height > height) && (height != 0)) {
