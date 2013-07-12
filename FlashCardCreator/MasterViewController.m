@@ -231,7 +231,7 @@ extern BOOL _isDownloadingSamplePack;
 {
     
     PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
-    packListViewController.currentPackName = _currentPack.packName;
+    packListViewController.packIDInMasterView = _currentPack.packID;
     
     if (isUserInterfaceIdiomPhone) {
         packListViewController.view.frame = CGRectMake(10, 10, 320, 131);
@@ -566,8 +566,9 @@ extern BOOL _isDownloadingSamplePack;
 
     BOOL flag = ([card.coverImageURL rangeOfString:@".png"].location != NSNotFound) ||
                            ([card.coverImageURL rangeOfString:@".jpg"].location != NSNotFound);
-    if (flag) {
-        cell.cellImageView.image = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    UIImage *image = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    if (flag && (image != NULL)) {
+        cell.cellImageView.image = image;
     } else {
         cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];        
     }

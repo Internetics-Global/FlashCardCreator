@@ -155,7 +155,12 @@
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
-    coverImageView.image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
+    UIImage *image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
+    if (image == NULL) {
+        coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
+    } else {
+        coverImageView.image = image;
+    }
 
     
     deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -166,8 +171,8 @@
     deleteButton.userInteractionEnabled = TRUE;
     deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
     [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
-    NSString *str = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packName;
-    if ((!_hideDeleteButton) && (![_currentPackName isEqualToString:str]) && (_packArray.count > 1)) {
+    NSInteger packID = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packID;
+    if ((!_hideDeleteButton) && !(_packIDInMasterView == packID) && (_packArray.count > 1)) {
         [view addSubview:deleteButton];
         
     }
