@@ -858,15 +858,25 @@ extern BOOL _isDownloadingSamplePack;
         NSLog(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
     }
     
+    BOOL buildCardResultError = FALSE;
     NSMutableArray *array = [NSMutableArray array];
     for (NSString *zippedCardFileName in fileListArray) {
-        Card *assembledCard = [[Card alloc] init];
+        Card *assembledCard;
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:packPlatformStr];
             if (assembledCard)
                 [array addObject:assembledCard];
+            else {
+                NSLog(@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFileName);
+                buildCardResultError = TRUE;
+            }
         }
+    }
+    
+    if (buildCardResultError == TRUE) {
+        [Common alertViewCommon:@"Error when unzipFileThenAssembleCard, please check downloaded pack"];
+        return;
     }
     
     NSArray *shuffledCardArray = [array cardSNOrdered];
@@ -902,11 +912,13 @@ extern BOOL _isDownloadingSamplePack;
         if( NO==ret ) {
             NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
         } else {
-            NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
+            //NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
         }
         [za UnzipCloseFile];
         
         [[NSFileManager defaultManager] removeItemAtPath:zippedFilePath error:nil];
+    } else {
+        NSLog(@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath);
     }
     
     //step2: Assemable question card
