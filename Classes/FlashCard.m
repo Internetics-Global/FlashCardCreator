@@ -246,6 +246,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
+        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
@@ -258,6 +259,7 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
+        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
@@ -271,6 +273,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
+        _subQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
@@ -299,6 +302,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
+        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
@@ -312,6 +316,7 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
+        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
@@ -326,6 +331,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
+        _subAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
@@ -557,6 +563,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
+        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
@@ -568,6 +575,7 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
+        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
@@ -580,6 +588,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
+        _subQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
         _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
@@ -607,6 +616,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
+        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
@@ -619,6 +629,7 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
+        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
@@ -631,6 +642,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
+        _subAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
         _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
@@ -872,6 +884,8 @@ extern BOOL isFromNewCreatedCard;
     }
     
     [self updateUITextViewPaddingTop];
+    
+    [self adjustAllTextViewsToFitIfNecessary];
     
 
 }
@@ -2752,6 +2766,8 @@ extern BOOL isFromNewCreatedCard;
     height= textView.contentSize.height;
     tag = textView.tag;
     
+    [self adjustFontToFit:textView];
+    
     return YES;
 }
 
@@ -2861,6 +2877,46 @@ extern BOOL isFromNewCreatedCard;
     [self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+}
+
+// only adjust font size if text height > frame's height
+- (void) adjustAllTextViewsToFitIfNecessary {
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        [self adjustFontToFit:_subheadingQuestion];
+        [self adjustFontToFit:_mainQuestion];
+        [self adjustFontToFit:_subQuestion];
+    } else {
+        [self adjustFontToFit:_subheadingAnswer];
+        [self adjustFontToFit:_mainAnswer];
+        [self adjustFontToFit:_subAnswer];
+    }
+}
+
+
+- (void) adjustFontToFit:(UITextView *) textView {
+    
+    if ((textView == NULL) || (textView.text.length ==0)) {
+        return;
+    }
+    
+    CGFloat frameHeight = textView.frame.size.height;
+    CGFloat textHeight = textView.contentSize.height;
+    CGFloat originalTextHeight = textHeight;
+    UIFont  *font = textView.font;;
+    BOOL outputFlag = FALSE;
+    
+    while (textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize])) {
+        font = textView.font;
+        [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
+        textHeight = textView.contentSize.height;
+        outputFlag = TRUE;
+    }
+    
+    if (outputFlag == TRUE)
+        NSLog(@"Original text height:%f, final text height:%f, final font size is :%f",originalTextHeight, textView.contentSize.height, font.pointSize);
+    
+    textView.contentOffset = CGPointMake(0, 0);
+    
 }
 
 - (void) saveEdittedCard {
