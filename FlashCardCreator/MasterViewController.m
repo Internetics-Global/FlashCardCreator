@@ -86,6 +86,11 @@ extern BOOL _isDownloadingSamplePack;
 {
     [super viewDidLoad];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background_navigationbar.png"]]];
+        [self.navigationController.navigationBar setTranslucent:FALSE];
+    }
+    
     if (isUserInterfaceIdiomPhone) {
         self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     } else {
@@ -128,6 +133,8 @@ extern BOOL _isDownloadingSamplePack;
         self.title = _currentPack.packName;
     }
     [self.tableView reloadData];
+
+    
 
     
 }

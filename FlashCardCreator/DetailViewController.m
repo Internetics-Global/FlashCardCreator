@@ -58,6 +58,11 @@ enum template_color_enum {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background_navigationbar.png"]]];
+        [self.navigationController.navigationBar setTranslucent:FALSE];
+    }
+    
     float flashCardYPositionInScrollView;
     if (isUserInterfaceIdiomPhone) {
         flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2+5; //Since it's horizontal movement, so this is a constant value
