@@ -81,6 +81,13 @@ enum template_color_enum {
     [[_currentCardView layer] setShadowRadius:3];
     [[_currentCardView layer] setShadowOpacity:0.5];
     [[_currentCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
+    
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+       //do nothing
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
 
 }
 
