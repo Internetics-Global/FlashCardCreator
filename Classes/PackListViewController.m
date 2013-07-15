@@ -89,6 +89,16 @@
         _swipeView.itemsPerPage = 3;
         _swipeView.alignment = SwipeViewAlignmentEdge;
     }
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        CGRect rect = _swipeView.frame;
+        if (isUserInterfaceIdiomPhone == FALSE) {
+            rect.origin.y = rect.origin.y + IPAD_UI_NAVIGATION_BAR_HEIGHT;
+        }
+        
+        _swipeView.frame = rect;
+    }
+    
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
     _pageControl.defersCurrentPageDisplay = YES;
