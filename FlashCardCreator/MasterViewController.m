@@ -105,6 +105,7 @@ extern BOOL _isDownloadingSamplePack;
 
     _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Packs",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
     
+    
     UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)]];
     
@@ -554,6 +555,7 @@ extern BOOL _isDownloadingSamplePack;
         backgroundView.layer.cornerRadius = 0;
         backgroundView.layer.masksToBounds = YES;
         cell.selectedBackgroundView = backgroundView;
+        cell.backgroundColor = [UIColor clearColor];
 	}
     
     
