@@ -256,6 +256,7 @@ extern BOOL _isDownloadingSamplePack;
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         
         _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
+        _packListPickerPopover.popoverContentSize = CGSizeMake(640, 320);
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }
