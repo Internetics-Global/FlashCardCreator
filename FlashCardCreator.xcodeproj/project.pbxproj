@@ -198,6 +198,7 @@
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
+		88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* AmazonClientManager.m */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
 		88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC795F170D419A00EFBFCE /* help1_iphone.jpg */; };
 		88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7960170D419A00EFBFCE /* help2_iphone.jpg */; };
@@ -214,6 +215,9 @@
 		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
+		88E739E71797C2F7004160F5 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */; };
+		88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E61797C2F7004160F5 /* AWSRuntime.framework */; };
+		88F47F661793FBE200EE068F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F47F651793FBE200EE068F /* Media.xcassets */; };
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88F68599177049ED0083AF7B /* question_placeholder_content.jpg */; };
@@ -741,6 +745,8 @@
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
+		88A175271797C3BD00FE778C /* AmazonClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonClientManager.h; sourceTree = "<group>"; };
+		88A175281797C3BD00FE778C /* AmazonClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonClientManager.m; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
 		88BC795F170D419A00EFBFCE /* help1_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help1_iphone.jpg; path = Resources/help1_iphone.jpg; sourceTree = "<group>"; };
 		88BC7960170D419A00EFBFCE /* help2_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help2_iphone.jpg; path = Resources/help2_iphone.jpg; sourceTree = "<group>"; };
@@ -763,6 +769,9 @@
 		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
+		88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
+		88E739E61797C2F7004160F5 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Libraries/AWSRuntime.framework; sourceTree = "<group>"; };
+		88F47F651793FBE200EE068F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = FlashCardCreator/Media.xcassets; sourceTree = "<group>"; };
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
@@ -796,6 +805,8 @@
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
 				2D5C188916D1A76700E1E785 /* DropboxSDK.framework in Frameworks */,
 				2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */,
+				88E739E71797C2F7004160F5 /* AWSSimpleDB.framework in Frameworks */,
+				88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,6 +1064,8 @@
 				2D89234916806BF200B43BCD /* PublicPackRequest.m */,
 				2DE809E716E0811C00B7959A /* DropboxShareKitHelper.h */,
 				2DE809E816E0811C00B7959A /* DropboxSharekitHelper.m */,
+				88A175271797C3BD00FE778C /* AmazonClientManager.h */,
+				88A175281797C3BD00FE778C /* AmazonClientManager.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -1102,6 +1115,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				88E739C31797C2DB004160F5 /* Amazon */,
 				2D1A051F16EDEAD300527311 /* PopupListComponent */,
 				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
 				2DDF5A3316B0F72700191C43 /* OpenUDID */,
@@ -1328,6 +1342,7 @@
 		2DCE0AFC16798E04007A8CAD = {
 			isa = PBXGroup;
 			children = (
+				88F47F651793FBE200EE068F /* Media.xcassets */,
 				2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */,
 				2D5F3D4F167B5365009D2ADC /* Libraries */,
 				2D5F3D56167D557C009D2ADC /* Classes */,
@@ -1435,6 +1450,15 @@
 				88D04E4B178D39170058A0D9 /* emotions.txt */,
 			);
 			name = emotions;
+			sourceTree = "<group>";
+		};
+		88E739C31797C2DB004160F5 /* Amazon */ = {
+			isa = PBXGroup;
+			children = (
+				88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */,
+				88E739E61797C2F7004160F5 /* AWSRuntime.framework */,
+			);
+			name = Amazon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1747,6 +1771,7 @@
 				2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */,
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
 				2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */,
+				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */,
 				2D5C187A16D1A74800E1E785 /* close_button.png in Resources */,
@@ -1876,6 +1901,7 @@
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
 				2DCE0B2516798E04007A8CAD /* MasterViewController.m in Sources */,
 				2DCE0B2816798E04007A8CAD /* DetailViewController.m in Sources */,
+				88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */,
 				2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */,
 				2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */,
 				2D5F3D30167AB3D4009D2ADC /* User.m in Sources */,
@@ -2080,6 +2106,7 @@
 		2DCE0B3816798E04007A8CAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -2097,6 +2124,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "13F3866E-FD2C-488E-900E-85A5B429FEE2";
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2105,6 +2133,7 @@
 		2DCE0B3916798E04007A8CAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

@@ -12,6 +12,7 @@
 #import "DataManager.h"
 #import "SHKItem.h"
 #import "SHK.h"
+#import "AmazonClientManager.h"
 
 @implementation DropboxSharekitHelper
 
@@ -129,10 +130,34 @@
         return;
     }
     
+    // insert this record in amazon singleDB for pack download limit control
+    // shareLinkage is kind of "https://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip"
+    // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+    NSRange range = [[shareLinkage lastPathComponent] rangeOfString:@".zip"];
+    NSString *simpleDBItemName = [[shareLinkage lastPathComponent] substringToIndex:range.location];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
+      [self insertIntoAmazonSingleDB:simpleDBItemName];
+    });
+    
+    
+    
+
     SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
 	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
     [SHK setRootViewController:self.baseViewController];
 	[actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+    
+    
+}
+
+- (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName {
+    BOOL result = false;
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"100",@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
+    NSString *defaultDomain = [AmazonClientManager defaultDomain];
+    result = [AmazonClientManager insertOrUpdateItem:dict withItemName:itemName withDomainName:defaultDomain];
+    return result;
 }
 
 #pragma mark -

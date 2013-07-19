@@ -124,5 +124,10 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch]!=NSOrderedDescending)
 
 
+//Amazon SimpleDB service
+#define SimpleDB_ACCESS_KEY_ID                @"AKIAJTO4QTQX2BPPFNAQ"
+#define SimpleDB_SECRET_KEY                   @"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"
+#define SimpleDB_DOMAIN_NAME_FOR_THIS_APP     @"flashcardcreator"
+
 
 

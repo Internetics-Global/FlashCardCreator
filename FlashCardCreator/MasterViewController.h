@@ -38,6 +38,10 @@
     UIBarButtonItem *_selectPackButton;
     
     UITableView *_tableView;
+    
+    //for Amazon simpleDB
+    NSString *_amazonSimpleDBItemName;
+    int       _currentDownloadCount;
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;

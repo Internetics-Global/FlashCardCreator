@@ -35,6 +35,7 @@
 #import "HelpViewController.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
+#import "AmazonClientManager.h"
 
 extern BOOL _isDownloadingSamplePack;
 
@@ -393,6 +394,7 @@ extern BOOL _isDownloadingSamplePack;
 
     
     NSString *url = (NSString *)[notification object];
+    
     [self downloadURLViaURLScheme:url];
 }
 
@@ -777,16 +779,46 @@ extern BOOL _isDownloadingSamplePack;
         from = @"unkown person";
     }
     
-    [self showProgressIndicator:type withSource:from];
     
     if ([urlStr rangeOfString:@".zip"].length == 0) {
         [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
         return;
     }
     
-    NSString *downloadableDropboxURL = [ZipFileDownloadHelper convertToDropboxDownloadURL:urlStr];
-    [_zipFileDownloadHelp downloadZipFile:downloadableDropboxURL];
-    _zipFileDownloadHelp.delegate = self;
+    //urlStr is kind of "fcc://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip?from=Microsoft"
+    //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
+    NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
+    NSString *simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
+    BOOL isAllowedToDownload = [self checkDownloadable:simpleDBItemName];
+    if (isAllowedToDownload) {
+        [self showProgressIndicator:type withSource:from];
+        NSString *downloadableDropboxURL = [ZipFileDownloadHelper convertToDropboxDownloadURL:urlStr];
+        [_zipFileDownloadHelp downloadZipFile:downloadableDropboxURL];
+        _zipFileDownloadHelp.delegate = self;
+    }  else {
+        [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
+    }
+    
+}
+
+- (BOOL) checkDownloadable: (NSString *) itemName{
+    BOOL result = false;
+    
+    NSString *defaultDomain = [AmazonClientManager defaultDomain];
+    //itemName = @"Pack1374144082-185879295"; //only for test, will be removed
+    _amazonSimpleDBItemName = itemName;
+    NSMutableDictionary *dict = [AmazonClientManager fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
+    
+    _currentDownloadCount = [[dict objectForKey:@"currentNo"] integerValue];
+    int maxNo = [[dict objectForKey:@"maxNo"] integerValue];
+    
+    if ((_currentDownloadCount < maxNo)  || (maxNo == 0)) {  //maxNo = 0 means no record in AmazonSDB
+        result = TRUE;
+    } else {
+        result = FALSE;
+    }
+    
+    return result;
 }
 
 #pragma mark -
@@ -907,9 +939,21 @@ extern BOOL _isDownloadingSamplePack;
     [[NSUserDefaults standardUserDefaults] setObject:dict forKey:pack.packName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self updateDownloadLimitCount];
+    
     //Step6: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
     
+}
+
+- (void) updateDownloadLimitCount {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSString *defaultDomain = [AmazonClientManager defaultDomain];
+        NSString *currentNo = [NSString stringWithFormat:@"%d",_currentDownloadCount + 1];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentNo, @"currentNo", nil];
+        [AmazonClientManager insertOrUpdateItem:dict withItemName:_amazonSimpleDBItemName withDomainName:defaultDomain];
+    });
 }
 
 - (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath platform:(NSString *)packPlatformStr {
