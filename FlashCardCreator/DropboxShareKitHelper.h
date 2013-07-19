@@ -13,7 +13,7 @@
 @class Pack;
 @class Card;
 
-@interface DropboxSharekitHelper : NSObject <DBRestClientDelegate,MBProgressHUDDelegate> {
+@interface DropboxSharekitHelper : NSObject <DBRestClientDelegate,MBProgressHUDDelegate, UIAlertViewDelegate> {
     Pack *_currentPack;
     Card *_currentCard;
     UIViewController *_baseViewController;
@@ -23,6 +23,8 @@
     
     float _progressivePercent;
     BOOL _isCreatingShareLinkage;
+    
+    NSString *_finalShareLinkBeforeRedirect;
 }
 
 

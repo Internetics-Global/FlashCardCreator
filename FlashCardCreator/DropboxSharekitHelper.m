@@ -122,9 +122,25 @@
     
     NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
-    NSString *finalShareLink = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *redirectedStr =[self redirectURL:finalShareLink];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                    message:@"Input a value for max download limit"
+                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                          otherButtonTitles:nil, nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [alert textFieldAtIndex:0].text = @"9999";
+    alert.delegate = self;
+    [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSString *maxNoString = [alertView textFieldAtIndex:0].text;
+    int maxNo = [maxNoString integerValue];
+    
+    NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
     if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
         [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
         return;
@@ -133,28 +149,27 @@
     // insert this record in amazon singleDB for pack download limit control
     // shareLinkage is kind of "https://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip"
     // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-    NSRange range = [[shareLinkage lastPathComponent] rangeOfString:@".zip"];
-    NSString *simpleDBItemName = [[shareLinkage lastPathComponent] substringToIndex:range.location];
+    NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+    NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
-      [self insertIntoAmazonSingleDB:simpleDBItemName];
+        [self insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
     });
     
     
     
-
+    
     SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
 	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
     [SHK setRootViewController:self.baseViewController];
 	[actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
-    
-    
 }
 
-- (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName {
+
+- (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName withMaxNo: (int) maxNo {
     BOOL result = false;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"100",@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
     NSString *defaultDomain = [AmazonClientManager defaultDomain];
     result = [AmazonClientManager insertOrUpdateItem:dict withItemName:itemName withDomainName:defaultDomain];
     return result;
