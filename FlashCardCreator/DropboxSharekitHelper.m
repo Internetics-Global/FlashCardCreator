@@ -126,7 +126,7 @@
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:@"Input a value for max download limit"
+                                                    message:@"Set max number of downloads"
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                           otherButtonTitles:nil, nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
