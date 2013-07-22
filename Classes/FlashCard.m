@@ -2827,18 +2827,23 @@ extern BOOL isFromNewCreatedCard;
         
     } else if ([str rangeOfString:@"@"].location != NSNotFound) {
         
-        MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
-		mailer.mailComposeDelegate = self;
-		NSArray *sendTo = [[NSArray alloc] initWithObjects:str, nil];
-		[mailer setToRecipients:sendTo];
-		[mailer setSubject:@"Hello"];
-		//[mailer setMessageBody:[NSString stringWithFormat:@"<html><head></head><body><br><br><br>%@</body></html>", [self supportText]] isHTML:YES];
-        if (_calledViewController) {
-            //means this is called from play mode
-            [_calledViewController presentModalViewController:mailer animated:YES];
+        if ([MFMailComposeViewController canSendMail]) {
+            MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+            mailer.mailComposeDelegate = self;
+            NSArray *sendTo = [[NSArray alloc] initWithObjects:str, nil];
+            [mailer setToRecipients:sendTo];
+            [mailer setSubject:@"Hello"];
+            //[mailer setMessageBody:[NSString stringWithFormat:@"<html><head></head><body><br><br><br>%@</body></html>", [self supportText]] isHTML:YES];
+            if (_calledViewController) {
+                //means this is called from play mode
+                [_calledViewController presentModalViewController:mailer animated:YES];
+            } else {
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:mailer animated:YES];
+            }
         } else {
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:mailer animated:YES];
+            [Common alertViewCommon:@"Please set your mail address!"];
         }
+        
         
     } else {
         [Common alertViewCommon:@"Incorrect URL or Email format"];    
