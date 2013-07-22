@@ -72,7 +72,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        //self.automaticallyAdjustsScrollViewInsets = NO;//we will add this back when xcode5 is finally released
     }
     
     //configure swipe view

@@ -88,7 +88,7 @@ extern BOOL _isDownloadingSamplePack;
     [super viewDidLoad];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background_navigationbar.png"]]];
+        //[self.navigationController.navigationBar setBarTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background_navigationbar.png"]]];//we will add this back when xcode5 is finally released
         [self.navigationController.navigationBar setTranslucent:FALSE];
     }
     
