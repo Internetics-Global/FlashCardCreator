@@ -2110,9 +2110,9 @@ extern BOOL isFromNewCreatedCard;
     //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
     UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if (isUserInterfaceIdiomPhone) {
-        customButton.bounds = CGRectMake(0, 0, 56, 24);
+        customButton.bounds = CGRectMake(0, 0, 48, 40);
     } else {
-        customButton.bounds = CGRectMake(0, 0, 70, 30);
+        customButton.bounds = CGRectMake(0, 0, 60, 50);
     }
     [customButton setTitle:NSLocalizedString(@"Keyboard_Done",nil) forState:UIControlStateNormal];
     [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
