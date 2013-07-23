@@ -2912,7 +2912,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) adjustFontToFit:(UITextView *) textView {
     
-    if ((textView == NULL) || (textView.text.length ==0)) {
+    if ((textView == NULL) || (textView.text.length ==0) || (textView.hidden == TRUE)) {
         return;
     }
     
@@ -2922,7 +2922,7 @@ extern BOOL isFromNewCreatedCard;
     UIFont  *font = textView.font;;
     BOOL outputFlag = FALSE;
     
-    while (textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize])) {
+    while ((textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize]))&&(textHeight >0)&&(font.pointSize >0)) {
         font = textView.font;
         [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
         textHeight = textView.contentSize.height;
@@ -2930,7 +2930,7 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (outputFlag == TRUE)
-        NSLog(@"Original text height:%f, final text height:%f, final font size is :%f",originalTextHeight, textView.contentSize.height, font.pointSize);
+        NSLog(@"CardSN %d:Original text(%@) height:%f, final text height:%f, final font size is :%f",_currentCard.cardSN,textView.text,originalTextHeight, textView.contentSize.height, font.pointSize);
     
     textView.contentOffset = CGPointMake(0, 0);
     

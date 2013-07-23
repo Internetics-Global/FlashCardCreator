@@ -54,18 +54,23 @@
 
 + (void) checkUserExist{
     
+    BOOL exist = FALSE;
+    
     NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Users_Tables WHERE user_id=\"%@\"", GLOBAL_USER_ID];
     sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     while (sqlite3_step(queryStatement) == SQLITE_ROW) {
+        exist = TRUE;
         break;
     }
     sqlite3_finalize(queryStatement);
     
-    //will execute following only when no GLOBAL_USER_ID table exists
-    NSString *query2 = [[NSString alloc] initWithFormat:@"INSERT INTO Users_Tables(user_id, nick_name) VALUES (%d,\"%@\")", [GLOBAL_USER_ID intValue], @"vistor"];
-	sqlite3_stmt *queryStatement2 = [SQLiteHelper prepareStatementForQuery:query2];
-	sqlite3_step(queryStatement2);
-	sqlite3_finalize(queryStatement2);
+    if (exist == FALSE) {
+        //will execute following only when no GLOBAL_USER_ID table exists
+        NSString *query2 = [[NSString alloc] initWithFormat:@"INSERT INTO Users_Tables(user_id, nick_name) VALUES (%d,\"%@\")", [GLOBAL_USER_ID intValue], @"vistor"];
+        sqlite3_stmt *queryStatement2 = [SQLiteHelper prepareStatementForQuery:query2];
+        sqlite3_step(queryStatement2);
+        sqlite3_finalize(queryStatement2);
+    }
     
     
 }

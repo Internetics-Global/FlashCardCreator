@@ -68,6 +68,7 @@
 				[dataDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:1] forKey:@"nick_name"];
 				[dataDict setValue:[Pack packsForUserID:[[dataDict valueForKey:@"user_id"] intValue]] forKey:@"packs"];
 				defaultUser = [[User alloc] initWithDictionary:dataDict];
+                break;
 			}
 			sqlite3_finalize(queryStatement);
 		}
