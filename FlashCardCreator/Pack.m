@@ -160,6 +160,7 @@
 
 +(NSMutableArray *) packsForUserID:(NSInteger)userID{
 	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Packs_Tables WHERE user_id=%d", userID];
+    
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	NSMutableArray *returnArray = nil;
 	while (sqlite3_step(queryStatement) == SQLITE_ROW) {
@@ -180,6 +181,7 @@
 		[returnArray addObject:packDict];
 	}
 	sqlite3_finalize(queryStatement);
+    
 	return returnArray;
 }
 

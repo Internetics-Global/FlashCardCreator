@@ -130,6 +130,7 @@
 	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Cards_Tables WHERE pack_id=%d", packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	NSMutableArray *returnArray = nil;
+    
 	while (sqlite3_step(queryStatement) == SQLITE_ROW) {
 		if (returnArray == nil) {
 			returnArray = [[NSMutableArray alloc] init];

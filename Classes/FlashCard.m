@@ -2093,7 +2093,20 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
+    //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
+    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (isUserInterfaceIdiomPhone) {
+        customButton.bounds = CGRectMake(0, 0, 48, 24);
+    } else {
+        customButton.bounds = CGRectMake(0, 0, 60, 30);    
+    }
+    [customButton setTitle:NSLocalizedString(@"Keyboard_Done",nil) forState:UIControlStateNormal];
+    [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+    [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+    [customButton addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchDown];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
     
     
     _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
