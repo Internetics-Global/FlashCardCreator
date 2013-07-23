@@ -212,7 +212,8 @@ BOOL _isDownloadingSamplePack;
         // Means that we have NO record for last card or pack create
         _lastCreatedPack = nil;
     } else {
-        for (Pack *pack in [[User defaultUser] packs]) {
+        NSMutableArray *packArray = [[User defaultUser] packs];
+        for (Pack *pack in packArray) {
             if (lastCreatedPackID == pack.packID) {
                 return pack;
             }

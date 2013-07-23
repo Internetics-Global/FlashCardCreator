@@ -166,7 +166,8 @@
         return NO;
     }
     
-    for (Pack *pack in [[User defaultUser] packs]) {
+    NSMutableArray *packArray = [[User defaultUser] packs];
+    for (Pack *pack in packArray) {
         if ([pack.packName isEqualToString:_packNameText.text])
             return NO;
     }

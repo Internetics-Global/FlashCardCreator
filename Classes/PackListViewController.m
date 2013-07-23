@@ -238,7 +238,8 @@
 - (void) resetPackContent {
     NSMutableArray *imageArray = [NSMutableArray array];
     
-    for (Pack *pack in [[User defaultUser] packs]) {
+    NSMutableArray *packArray = [[User defaultUser] packs];
+    for (Pack *pack in packArray) {
         [imageArray addObject:pack.coverImageURL];
     }
     self.packArray = imageArray;
