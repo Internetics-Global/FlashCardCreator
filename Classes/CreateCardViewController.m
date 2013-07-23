@@ -131,6 +131,23 @@ BOOL isFromNewCreatedCard = NO;
     [super viewDidLoad];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (_newCardView) {
+        [_newCardView setUpMessageView];
+    }
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    if (_newCardView) {
+        [_newCardView removeMessageView];
+    }
+}
+
 - (void) saveAndCloseCreateCardView {
     
     //Step1: dismiss window

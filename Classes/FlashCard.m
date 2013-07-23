@@ -2160,10 +2160,20 @@ extern BOOL isFromNewCreatedCard;
     }
     
     
-    [self setUpMessageView];
+    //[self setUpMessageView];
     
 }
 
+- (void) removeMessageView {
+    if (_messageViewBackgroundView.superview) {
+        [_messageViewBackgroundView removeFromSuperview];
+    }
+}
+
+/**
+   _messageViewBackgroundView is related to UIWindow, so it's very easy to have memory leak even
+   we are using ARC. this kind of memory leak is called retain cycle
+*/
 - (void) setUpMessageView {
     
     //step2: emotion view
@@ -2188,14 +2198,16 @@ extern BOOL isFromNewCreatedCard;
         _messageViewBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, [Common getScreenHeightInLandscape], [Common getScreenWidthInLandscape], (cssToolbarHeight + emotionViewHeight))];
         [_messageViewBackgroundView setBackgroundColor:[UIColor clearColor]];
         
-        if (isUserInterfaceIdiomPhone) {
-            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-            [keyWindow.rootViewController.view addSubview:_messageViewBackgroundView];
-            [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
-        } else {
-            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.splitViewController.view addSubview:_messageViewBackgroundView];
-            [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
+        if (_messageViewBackgroundView.superview == nil) {
+            if (isUserInterfaceIdiomPhone) {
+                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+                [keyWindow.rootViewController.view addSubview:_messageViewBackgroundView];
+                [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
+            } else {
+                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [appDelegate.splitViewController.view addSubview:_messageViewBackgroundView];
+                [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
+            }
         }
     }
     

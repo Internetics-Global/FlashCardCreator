@@ -159,8 +159,10 @@ enum template_color_enum {
             }
         }
     }
+    
 
 }
+
 
 #pragma mark -
 #pragma mark - Layout 
@@ -192,6 +194,7 @@ enum template_color_enum {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;
         [_currentCardView segmentAction:nil];
     }
+
 }
 
 - (void)layoutScrollObjectsForiPad
@@ -213,7 +216,7 @@ enum template_color_enum {
     _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     _currentCardView.currentCard = _currentCard;
     _currentCardView.currentPack = _currentPack;
-    
+    [_currentCardView setUpMessageView];
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2;
     curXLoc += IPAD_UI_DETAIL_WIDTH *_indexCard;
@@ -230,6 +233,7 @@ enum template_color_enum {
     } else {
         _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
         _previousCardView.currentPack = _currentPack;
+        [_previousCardView removeMessageView];
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
         [_scrollView addSubview:_previousCardView]; 
@@ -243,6 +247,7 @@ enum template_color_enum {
     } else {
         _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
         _nextCardView.currentPack = _currentPack;
+        [_nextCardView removeMessageView];
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;
         [_scrollView addSubview:_nextCardView]; 
@@ -271,7 +276,7 @@ enum template_color_enum {
     _currentCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     _currentCardView.currentCard = _currentCard;
     _currentCardView.currentPack = _currentPack;
-    
+    [_currentCardView setUpMessageView];
     rect = _currentCardView.frame;
     CGFloat curXLoc = (IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2;
     curXLoc += IPHONE_UI_WIDTH *_indexCard;
@@ -289,6 +294,7 @@ enum template_color_enum {
     } else {
         _previousCardView.currentCard = [_currentPack cards][_indexCard-1];
         _previousCardView.currentPack = _currentPack;
+        [_previousCardView removeMessageView];
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
         if (_previousCardView.superview == nil) {
@@ -303,6 +309,7 @@ enum template_color_enum {
     } else {
         _nextCardView.currentCard = [_currentPack cards][_indexCard+1];
         _nextCardView.currentPack = _currentPack;
+        [_nextCardView removeMessageView];
         rect.origin.x = curXLoc +IPHONE_UI_WIDTH;
         _nextCardView.frame = rect;
         if (_nextCardView.superview == nil) {
