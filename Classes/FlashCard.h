@@ -85,6 +85,7 @@ typedef enum{
     BOOL    _isUITextViewFocused; //used to diff better UITextView and UITextField
     BOOL    _dismissKeyboardFromEmotionSwitch;
     BOOL    _isTextFieldsChanged; // when no changes, don't need to do save operation
+    BOOL    _doneButtonPressed;
     
     NSArray *_buttonArray;
     NSArray *_fontSizeArray;

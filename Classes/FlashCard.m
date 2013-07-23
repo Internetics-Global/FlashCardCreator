@@ -112,6 +112,7 @@ extern BOOL isFromNewCreatedCard;
 - (void) initDefaultValue {
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
+    _doneButtonPressed = NO;
     _backgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
     _logoImageFullPath = @"";
@@ -2079,6 +2080,19 @@ extern BOOL isFromNewCreatedCard;
     }
     _keyboardShown = NO;
     
+    if (_doneButtonPressed == YES) {
+        _doneButtonPressed = NO;
+        
+        if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+            //we will save until after we press the save button
+            [self doQuestionAndAnswerData];
+        } else {
+            [self saveEdittedCard];
+        }
+    }
+    
+    
+    
 }
 
 - (void) setInputAccessoryViewDone  {
@@ -2096,9 +2110,9 @@ extern BOOL isFromNewCreatedCard;
     //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
     UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if (isUserInterfaceIdiomPhone) {
-        customButton.bounds = CGRectMake(0, 0, 48, 24);
+        customButton.bounds = CGRectMake(0, 0, 56, 24);
     } else {
-        customButton.bounds = CGRectMake(0, 0, 60, 30);    
+        customButton.bounds = CGRectMake(0, 0, 70, 30);
     }
     [customButton setTitle:NSLocalizedString(@"Keyboard_Done",nil) forState:UIControlStateNormal];
     [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
@@ -2278,12 +2292,8 @@ extern BOOL isFromNewCreatedCard;
     [_firstRespondTextView resignFirstResponder];
     [_firstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
     
-    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-        //we will save until after we press the save button
-        [self doQuestionAndAnswerData];
-    } else {
-        [self saveEdittedCard];
-    }
+    //Step3: save data in keyboardWasHidden
+    _doneButtonPressed = YES;
     
 }
 

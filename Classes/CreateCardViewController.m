@@ -39,7 +39,20 @@ BOOL isFromNewCreatedCard = NO;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAndCloseCreateCardView)];
+        
+        UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        if (isUserInterfaceIdiomPhone) {
+            customButton.bounds = CGRectMake(0, 0, 56, 24);
+        } else {
+            customButton.bounds = CGRectMake(0, 0, 70, 30);
+        }
+        [customButton setTitle:NSLocalizedString(@"Keyboard_Done",nil) forState:UIControlStateNormal];
+        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+        [customButton addTarget:self action:@selector(saveAndCloseCreateCardView) forControlEvents:UIControlEventTouchDown];
+        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
+        
         self.navigationItem.rightBarButtonItem = saveButton;
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
         self.navigationItem.leftBarButtonItem = backButton;
