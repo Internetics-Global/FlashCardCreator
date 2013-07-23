@@ -116,16 +116,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _isViewShowing = YES;
-
-    if (_loadingView == nil) {
-        if (_loadingView == nil) {
-            _loadingView = [[MBProgressHUD alloc] initWithView:self.view];
-        }
-        [self.view addSubview:_loadingView];
-        _loadingView.mode = MBProgressHUDModeText;
-        _loadingView.labelText = @"Loading...";
-        [_loadingView show:YES];
-    }
 }
 
 
@@ -176,13 +166,12 @@
 
 
 - (void)webViewDidStartLoad:(UIWebView *)webview {
-    [self.view addSubview:_loadingView];
+    self.title = @"Loading...";
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webview {
     //[self zoomToFit];
     _haveLoadURLFinished = YES;
-    [_loadingView removeFromSuperview];
     
 	NSString *str = [webview stringByEvaluatingJavaScriptFromString:@"document.title"];
 	if ([str length] > 0) {
@@ -201,7 +190,6 @@
 
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [_loadingView removeFromSuperview];
     NSLog(@"%s",__FUNCTION__);
     NSLog(@"error:%@",error);
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {

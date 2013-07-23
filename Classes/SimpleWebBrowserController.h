@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class HUDActivityView;
-@class MBProgressHUD;
 
 @interface SimpleWebBrowserController:UIViewController <UIWebViewDelegate> {
     UIBarItem               *backButton;
@@ -19,7 +18,6 @@
     
     UIWebView               *_webView;
     NSURL                   *_initialURL;
-    MBProgressHUD         *_loadingView;
     
     NSString                *initialHTML;
     
