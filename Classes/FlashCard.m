@@ -2450,7 +2450,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         screenRect.size.height = 550;    
     }
-    UIGraphicsBeginImageContext(screenRect.size);
+    UIGraphicsBeginImageContextWithOptions(screenRect.size, NO, 0.3);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [self.backgroundColor set];
     CGContextFillRect(ctx, screenRect);
