@@ -136,9 +136,13 @@
         }
     }
     
+    sqlite3_exec([SQLiteHelper defaultDatabase], "BEGIN", 0, 0, 0);
+    
     for (Card *card in _cards) {
         [card destroy];
     }
+    
+    sqlite3_exec([SQLiteHelper defaultDatabase], "COMMIT", 0, 0, 0);
 }
 
 - (void)addCard:(Card *)card{
