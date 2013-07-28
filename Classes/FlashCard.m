@@ -3037,10 +3037,15 @@ extern BOOL isFromNewCreatedCard;
     }
 }
 
+- (void) dismissPopoverController {
+    [_popoverController dismissPopoverAnimated:YES];    
+}
+
 - (void) templateSelectedNotification: (NSNotification *) notification {
     
     
-    [_popoverController dismissPopoverAnimated:YES];
+    [self performSelectorInBackground:@selector(dismissPopoverController) withObject:nil];
+    
     
     //  We don't want to accept when there's create card action now
     if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
