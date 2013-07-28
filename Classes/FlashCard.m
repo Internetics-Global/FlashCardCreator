@@ -2488,15 +2488,15 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) sizeUpDownAction {
-    [_keyboardTopView setItems:_fontSizeArray];
+    [_keyboardTopView setItems:_fontSizeArray animated:TRUE];
 }
 
 - (void) selectColorAction {
-    [_keyboardTopView setItems:_colorArray];
+    [_keyboardTopView setItems:_colorArray animated:TRUE];
 }
 
 - (void) alignAction {
-    [_keyboardTopView setItems:_alignArray];
+    [_keyboardTopView setItems:_alignArray animated:TRUE];
 }
 
 - (void) emotionAndKeyboardSwitch:(id) sender {
@@ -2581,7 +2581,7 @@ extern BOOL isFromNewCreatedCard;
     
     responderTextView.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:selectFontSize], 0, 0, 0.0);
     
-    [_keyboardTopView setItems:_buttonArray];
+    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 - (void) alignPosition:(id) sender{
@@ -2617,7 +2617,7 @@ extern BOOL isFromNewCreatedCard;
         _subAlignAnswer = selectAlignStr;
     } 
     
-    [_keyboardTopView setItems:_buttonArray];
+    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 - (void) changeColor:(id) sender{
@@ -2657,12 +2657,12 @@ extern BOOL isFromNewCreatedCard;
         _subColorAnswer = selectColorStr;
     } 
     
-    [_keyboardTopView setItems:_buttonArray];
+    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 
 - (void) backAction:(id) sender{
-    [_keyboardTopView setItems:_buttonArray];
+    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 #pragma mark -
