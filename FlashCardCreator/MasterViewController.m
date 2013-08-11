@@ -776,7 +776,7 @@ extern BOOL _isDownloadingSamplePack;
     NSString *from = params[@"from"];
     
     if (from == NULL) {
-        from = @"unkown person";
+        from = @"Unkown person";
     }
     
     
