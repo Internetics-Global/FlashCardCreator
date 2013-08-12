@@ -17,6 +17,7 @@
 @class Card;
 @class Pack;
 @class FlashCard;
+@class DropboxSharekitHelper;
 
 @interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate> {
     UISegmentedControl *_segmentedControl;
@@ -43,6 +44,8 @@
     PopupListComponent *_templateBackgroundSelectPopup;
     
     MBProgressHUD *_HUD;
+    
+    DropboxSharekitHelper *_shareHelper;
     
 }
 

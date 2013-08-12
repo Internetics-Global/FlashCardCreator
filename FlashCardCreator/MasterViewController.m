@@ -335,8 +335,8 @@ extern BOOL _isDownloadingSamplePack;
 
 - (void)shareButtonClicked {
     if ((_currentPack) && (_currentCard)) {
-        DropboxSharekitHelper *shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [shareHelper shareAction];
+        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_shareHelper shareAction];
     } else {
         NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
     }

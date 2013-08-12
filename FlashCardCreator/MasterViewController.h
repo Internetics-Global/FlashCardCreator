@@ -13,6 +13,7 @@
 @class DetailViewController;
 @class Pack;
 @class Card;
+@class DropboxSharekitHelper;
 
 @interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,UITableViewDelegate,UITableViewDataSource> {
     
@@ -42,6 +43,8 @@
     //for Amazon simpleDB
     NSString *_amazonSimpleDBItemName;
     int       _currentDownloadCount;
+    
+    DropboxSharekitHelper *_shareHelper;
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;
