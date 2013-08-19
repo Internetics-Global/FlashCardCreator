@@ -175,6 +175,7 @@
     _currentFlashCardView.frame = rect;
     [_scrollView addSubview:_currentFlashCardView];
     
+    _currentFlashCardView.isPlayingCard = YES;
     [_currentFlashCardView refreshAll];
     [_currentFlashCardView disableCardEdit];
     [_currentFlashCardView.segmentedControl setHidden:YES];
@@ -216,6 +217,7 @@
 
 - (void)layoutScrollObjectsForiPhone
 {
+    
     CGRect rect;
     
     for (FlashCard *cardView in [_scrollView subviews]) {

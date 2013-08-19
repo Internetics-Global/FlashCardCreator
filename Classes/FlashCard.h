@@ -120,6 +120,7 @@ typedef enum{
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, strong) Pack *currentPack;
 @property (nonatomic, assign) BOOL isQuestionShowing;
+@property (nonatomic, assign) BOOL isPlayingCard;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 
 @property (nonatomic, strong) UITextField   *questionTitle;

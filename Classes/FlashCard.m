@@ -112,6 +112,7 @@ extern BOOL isFromNewCreatedCard;
 - (void) initDefaultValue {
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
+    _isPlayingCard = NO;
     _doneButtonPressed = NO;
     _backgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
@@ -918,6 +919,15 @@ extern BOOL isFromNewCreatedCard;
     _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
+    
+    if (([_currentCard.question.logoFullPath rangeOfString:@"placeholder"].location != NSNotFound) && (_isPlayingCard == true)) {
+        _logoImage.hidden = true;
+    } else {
+        _logoImage.hidden = false;
+    }
+    
+    
+    
 }
 
 - (void) refreshAnswerContent {
@@ -2431,17 +2441,25 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (UIImage *)captureWholeViewAsImage {
-    BOOL isEditable = [self checkCardEditable];
-    if (isEditable == YES) {
-        [self disableCardEdit];
-        _segmentedControl.hidden = YES;
-    }
     
     bool switchSegment = NO;
     if (_segmentedControl.selectedSegmentIndex == 1) {
         _segmentedControl.selectedSegmentIndex = 0;
         [self refreshAll];
         switchSegment = YES;
+    }
+    
+    BOOL isEditable = [self checkCardEditable];
+    if (isEditable == YES) {
+        [self disableCardEdit];
+        _segmentedControl.hidden = YES;
+        
+        if ((_currentCard.question.logoFullPath.length == 0) || ([_currentCard.question.logoFullPath rangeOfString:@"placeholder"].location != NSNotFound)) {
+            _logoImage.hidden = true;
+        } else {
+            _logoImage.hidden = false;
+        }
+        
     }
     
     CGRect screenRect = self.bounds;
@@ -2460,6 +2478,7 @@ extern BOOL isFromNewCreatedCard;
     if (isEditable == YES) {
         [self enableCardEdit];
         _segmentedControl.hidden = NO;
+        _logoImage.hidden = NO;
     }
     
     if (switchSegment == YES) {
