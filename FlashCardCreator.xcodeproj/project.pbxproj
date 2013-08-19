@@ -58,7 +58,6 @@
 		2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17F316D1A59300E1E785 /* ZipArchive.m */; };
 		2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17FA16D1A5BB00E1E785 /* AFDownloadRequestOperation.m */; };
 		2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180516D1A5F700E1E785 /* SelectTemplateTableViewController.m */; };
-		2D5C181C16D1A62800E1E785 /* BadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180B16D1A62700E1E785 /* BadgeLabel.m */; };
 		2D5C181D16D1A62800E1E785 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180D16D1A62700E1E785 /* Common.m */; };
 		2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C180F16D1A62700E1E785 /* NSArray+Randomised.m */; };
 		2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181116D1A62700E1E785 /* NSString+QueryString.m */; };
@@ -211,6 +210,7 @@
 		88BC796A170D419A00EFBFCE /* help5_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7963170D419A00EFBFCE /* help5_iphone.jpg */; };
 		88BC796B170D419A00EFBFCE /* help6_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7964170D419A00EFBFCE /* help6_iphone.jpg */; };
 		88BC796C170D419A00EFBFCE /* help7_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7965170D419A00EFBFCE /* help7_iphone.jpg */; };
+		88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C2235517C2BC5E006EB652 /* JSBadgeView.m */; };
 		88CA253617152EE700859BDC /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* grayButton.png */; };
 		88D04E4C178D39170058A0D9 /* emotions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88D04E4B178D39170058A0D9 /* emotions.txt */; };
 		88D453231780DE3900500487 /* ColorPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453181780DE3900500487 /* ColorPageControl.m */; };
@@ -564,8 +564,6 @@
 		2D5C17FA16D1A5BB00E1E785 /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = Libraries/AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = "<group>"; };
 		2D5C180416D1A5F700E1E785 /* SelectTemplateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectTemplateTableViewController.h; path = Classes/SelectTemplateTableViewController.h; sourceTree = "<group>"; };
 		2D5C180516D1A5F700E1E785 /* SelectTemplateTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectTemplateTableViewController.m; path = Classes/SelectTemplateTableViewController.m; sourceTree = "<group>"; };
-		2D5C180A16D1A62700E1E785 /* BadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BadgeLabel.h; path = Classes/BadgeLabel.h; sourceTree = "<group>"; };
-		2D5C180B16D1A62700E1E785 /* BadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BadgeLabel.m; path = Classes/BadgeLabel.m; sourceTree = "<group>"; };
 		2D5C180C16D1A62700E1E785 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = Classes/Common.h; sourceTree = "<group>"; };
 		2D5C180D16D1A62700E1E785 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Common.m; path = Classes/Common.m; sourceTree = "<group>"; };
 		2D5C180E16D1A62700E1E785 /* NSArray+Randomised.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Randomised.h"; path = "Classes/NSArray+Randomised.h"; sourceTree = "<group>"; };
@@ -763,6 +761,8 @@
 		88BC7963170D419A00EFBFCE /* help5_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help5_iphone.jpg; path = Resources/help5_iphone.jpg; sourceTree = "<group>"; };
 		88BC7964170D419A00EFBFCE /* help6_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help6_iphone.jpg; path = Resources/help6_iphone.jpg; sourceTree = "<group>"; };
 		88BC7965170D419A00EFBFCE /* help7_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help7_iphone.jpg; path = Resources/help7_iphone.jpg; sourceTree = "<group>"; };
+		88C2235417C2BC5E006EB652 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Classes/JSBadgeView.h; sourceTree = "<group>"; };
+		88C2235517C2BC5E006EB652 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Classes/JSBadgeView.m; sourceTree = "<group>"; };
 		88CA253517152EE700859BDC /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayButton.png; path = Resources/grayButton.png; sourceTree = "<group>"; };
 		88D04E4B178D39170058A0D9 /* emotions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emotions.txt; sourceTree = "<group>"; };
 		88D453171780DE3900500487 /* ColorPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorPageControl.h; path = Classes/emotion/ColorPageControl.h; sourceTree = "<group>"; };
@@ -950,8 +950,8 @@
 		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C180A16D1A62700E1E785 /* BadgeLabel.h */,
-				2D5C180B16D1A62700E1E785 /* BadgeLabel.m */,
+				88C2235417C2BC5E006EB652 /* JSBadgeView.h */,
+				88C2235517C2BC5E006EB652 /* JSBadgeView.m */,
 				2D5C180C16D1A62700E1E785 /* Common.h */,
 				2D5C180D16D1A62700E1E785 /* Common.m */,
 				2D5C180E16D1A62700E1E785 /* NSArray+Randomised.h */,
@@ -1951,7 +1951,6 @@
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
 				2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */,
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
-				2D5C181C16D1A62800E1E785 /* BadgeLabel.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
@@ -1981,6 +1980,7 @@
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
+				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

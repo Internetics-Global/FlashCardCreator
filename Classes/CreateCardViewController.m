@@ -23,7 +23,6 @@
 #import "AppDelegate.h"
 #import "MasterViewController.h"
 #import "UIImage+Scale.h"
-#import "BadgeLabel.h"
 
 BOOL isFromNewCreatedCard = NO;
 

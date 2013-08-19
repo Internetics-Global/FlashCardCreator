@@ -28,11 +28,11 @@ typedef enum{
 
 @class Card;
 @class Pack;
-@class BadgeLabel;
 @class MBProgressHUD;
+@class JSBadgeView;
 
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate> {
-    BadgeLabel *_cardSNText;
+    JSBadgeView *_cardSNText;
     UIButton *_changeTemplateButton;
     
     UIImageView  *_backgroundImageView;

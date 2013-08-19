@@ -13,7 +13,7 @@
 
 
 #import "FlashCard.h"
-#import "BadgeLabel.h"
+#import "JSBadgeView.h"
 #import "Pack.h"
 #import "Question.h"
 #import "Answer.h"
@@ -357,17 +357,8 @@ extern BOOL isFromNewCreatedCard;
     
     
     if (_cardSNText == nil) {
-        
-        _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(0, kQuestionViewTopMarginForiPad+15, 27, 27);
-        [_cardSNText setStyle:BadgeLabelStyleAppIcon];
-        _cardSNText.backgroundColor = [UIColor colorWithRed:143.0/255 green:204.0/255 blue:1 alpha:1];
-        _cardSNText.textColor = [UIColor blackColor];
-        _cardSNText.font = [UIFont systemFontOfSize:28];
-        CGPoint point = _cardSNText.center;
-        point.x = 25;
-        _cardSNText.center = point;
-        [self addSubview:_cardSNText];
+        CGPoint point = CGPointMake(30, kQuestionViewTopMarginForiPad+25);
+        _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
         
     }
     
@@ -528,17 +519,8 @@ extern BOOL isFromNewCreatedCard;
     
     //Step3: Common
     if (_cardSNText == nil) {
-        
-        _cardSNText = [[BadgeLabel alloc] init];
-        _cardSNText.frame = CGRectMake(4, kQuestionViewTopMarginForiPhone+5, 20, 20);
-        [_cardSNText setStyle:BadgeLabelStyleAppIcon];
-        _cardSNText.backgroundColor = [UIColor colorWithRed:143.0/255 green:204.0/255 blue:1 alpha:1];
-        _cardSNText.textColor = [UIColor blackColor];
-        _cardSNText.font = [UIFont systemFontOfSize:14];
-        CGPoint point = _cardSNText.center;
-        point.x = 15;
-        _cardSNText.center = point;
-        [self addSubview:_cardSNText];
+        CGPoint point = CGPointMake(15, kQuestionViewTopMarginForiPhone+15);
+        _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
         
     }
     
@@ -907,7 +889,7 @@ extern BOOL isFromNewCreatedCard;
     [self refreshQuestionContent];
     [self refreshAnswerContent];
     
-    _cardSNText.text = [NSString stringWithFormat:@"%d",_currentCard.cardSN];
+    _cardSNText.badgeText= [NSString stringWithFormat:@"%d",_currentCard.cardSN];
     
     //it's quite strange logic below, but it indeed
     if ((_currentPack.sidebarTitle.length == 0) || ([_currentPack.sidebarTitle rangeOfString:@"null"].length != 0)) {
