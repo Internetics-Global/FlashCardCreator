@@ -2810,9 +2810,9 @@ extern BOOL isFromNewCreatedCard;
         [_verticalScrollView setContentOffset:offset animated:YES];
     } else if ((textView.contentSize.height < height)&& (height != 0)) {
         if (gap < -responderTextView.font.lineHeight) {
-            offset.y = offset.y - responderTextView.font.lineHeight;
+            //offset.y = offset.y - responderTextView.font.lineHeight;
         }
-        [_verticalScrollView setContentOffset:offset animated:YES];
+        //[_verticalScrollView setContentOffset:offset animated:YES];
     }
     
     NSLog(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
