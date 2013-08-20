@@ -93,9 +93,9 @@ extern BOOL _isDownloadingSamplePack;
     }
     
     if (isUserInterfaceIdiomPhone) {
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+        self.tableView = [[FMMoveTableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     } else {
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, IPAD_UI_MASTER_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+        self.tableView = [[FMMoveTableView alloc] initWithFrame:CGRectMake(0, 0, IPAD_UI_MASTER_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     }
     
     self.tableView.delegate = self;
@@ -690,6 +690,39 @@ extern BOOL _isDownloadingSamplePack;
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    [self moveAction:fromIndexPath toIndexPath:toIndexPath];    
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+#pragma mark -
+#pragma mark - FMMoveTableView special delegate
+
+
+- (void)moveTableView:(FMMoveTableView *)tableView willMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (BOOL)moveTableView:(FMMoveTableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+        return false;
+    }  else {
+        return true;
+    }
+}
+
+- (void)moveTableView:(FMMoveTableView *)tableView moveRowFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    [self moveAction:fromIndexPath toIndexPath:toIndexPath];
+}
+
+
+#pragma mark -
+#pragma mark - Move action
+
+- (void) moveAction: (NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *) toIndexPath {
     NSLog(@"move from:%d to:%d", fromIndexPath.row, toIndexPath.row);
     
     if (fromIndexPath.row == toIndexPath.row)
@@ -727,17 +760,12 @@ extern BOOL _isDownloadingSamplePack;
     
     _currentPack.cards = [_currentPack snOrderedCards]; //We need to reorder
     
-
+    
     [self.tableView reloadData];
     if (!isUserInterfaceIdiomPhone) {
         [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
     }
-    
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
 }
 
 #pragma mark -

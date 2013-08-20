@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "ZipFileDownloadHelper.h"
 #import "MBProgressHUD.h"
+#import "FMMoveTableView.h"
+#import "FMMoveTableViewCell.h"
 
 @class DetailViewController;
 @class Pack;
 @class Card;
 @class DropboxSharekitHelper;
 
-@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,UITableViewDelegate,UITableViewDataSource> {
+@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource> {
     
     Pack *_currentPack;
     Card *_currentCard;
@@ -38,7 +40,7 @@
     UILabel *_rightPackCardNo;
     UIBarButtonItem *_selectPackButton;
     
-    UITableView *_tableView;
+    FMMoveTableView *_tableView;
     
     //for Amazon simpleDB
     NSString *_amazonSimpleDBItemName;
@@ -54,7 +56,7 @@
 @property (nonatomic, assign) NSUInteger indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) FMMoveTableView *tableView;
 
 - (void)shareButtonClicked;
 

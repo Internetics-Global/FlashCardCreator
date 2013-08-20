@@ -157,6 +157,8 @@
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
+		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
+		880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025F017C3297F00A485CE /* FMMoveTableViewCell.m */; };
 		880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800877F177AE9AA0051594B /* emotion_placeholder.png */; };
 		8806405B1700043F00F9B76D /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806405A1700043F00F9B76D /* change_template_button.png */; };
 		8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806407D170011DF00F9B76D /* setting_button@2x.png */; };
@@ -707,6 +709,10 @@
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
+		880025ED17C3297F00A485CE /* FMMoveTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMMoveTableView.h; path = Libraries/FMFramework/FMMoveTableView.h; sourceTree = "<group>"; };
+		880025EE17C3297F00A485CE /* FMMoveTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMMoveTableView.m; path = Libraries/FMFramework/FMMoveTableView.m; sourceTree = "<group>"; };
+		880025EF17C3297F00A485CE /* FMMoveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMMoveTableViewCell.h; path = Libraries/FMFramework/FMMoveTableViewCell.h; sourceTree = "<group>"; };
+		880025F017C3297F00A485CE /* FMMoveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMMoveTableViewCell.m; path = Libraries/FMFramework/FMMoveTableViewCell.m; sourceTree = "<group>"; };
 		8800877F177AE9AA0051594B /* emotion_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emotion_placeholder.png; path = Resources/emoticons/emotion_placeholder.png; sourceTree = "<group>"; };
 		8806405A1700043F00F9B76D /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_button.png; path = Resources/change_template_button.png; sourceTree = "<group>"; };
 		8806407D170011DF00F9B76D /* setting_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_button@2x.png"; path = "Resources/setting_button@2x.png"; sourceTree = "<group>"; };
@@ -1123,6 +1129,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				880025CB17C3294F00A485CE /* FMFramework */,
 				88E739C31797C2DB004160F5 /* Amazon */,
 				2D1A051F16EDEAD300527311 /* PopupListComponent */,
 				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
@@ -1434,6 +1441,17 @@
 				2D5C17C216D1A54200E1E785 /* OpenUDID.m */,
 			);
 			name = OpenUDID;
+			sourceTree = "<group>";
+		};
+		880025CB17C3294F00A485CE /* FMFramework */ = {
+			isa = PBXGroup;
+			children = (
+				880025ED17C3297F00A485CE /* FMMoveTableView.h */,
+				880025EE17C3297F00A485CE /* FMMoveTableView.m */,
+				880025EF17C3297F00A485CE /* FMMoveTableViewCell.h */,
+				880025F017C3297F00A485CE /* FMMoveTableViewCell.m */,
+			);
+			name = FMFramework;
 			sourceTree = "<group>";
 		};
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
@@ -1981,6 +1999,8 @@
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
+				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
+				880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

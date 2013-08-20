@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FMMoveTableViewCell.h"
 
-@interface CardCell : UITableViewCell {
+@interface CardCell : FMMoveTableViewCell {
     UILabel *_indexLabel;
     UIImageView *_cellImageView;
 }
