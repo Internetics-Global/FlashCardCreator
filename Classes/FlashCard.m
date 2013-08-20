@@ -2106,7 +2106,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         customButton.bounds = CGRectMake(0, 0, 60, 50);
     }
-    [customButton setTitle:NSLocalizedString(@"Keyboard_Done",nil) forState:UIControlStateNormal];
+    [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
     [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
     [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
     [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
