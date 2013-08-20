@@ -42,6 +42,7 @@
 
 "Keyboard_Done" = "Terminé";
 "Keyboard_Cancel"             = "Annuler";
+"Keyboard_Save"             = "Enregistrer";
 
 "ToolbarItem_Align" = "Aligner";
 "ToolbarItem_Size" = "Taille";

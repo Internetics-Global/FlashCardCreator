@@ -42,6 +42,7 @@
 
 "Keyboard_Done" = "完了";
 "Keyboard_Cancel"             = "キャンセル";
+"Keyboard_Save"             = "保存";
 
 "ToolbarItem_Align" = "整列";
 "ToolbarItem_Size"= "サイズ";

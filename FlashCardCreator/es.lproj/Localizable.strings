@@ -42,6 +42,7 @@
 
 "Keyboard_Done" = "Hecho";
 "Keyboard_Cancel"             = "Cancelar";
+"Keyboard_Save"             = "Guardar";
 
 "ToolbarItem_Align" = "Alinear";
 "ToolbarItem_Size" = "Tamaño";
