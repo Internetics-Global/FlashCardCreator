@@ -17,7 +17,7 @@
 @class Card;
 @class DropboxSharekitHelper;
 
-@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource> {
+@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource, UIAlertViewDelegate> {
     
     Pack *_currentPack;
     Card *_currentCard;

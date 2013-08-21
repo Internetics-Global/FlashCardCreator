@@ -90,6 +90,14 @@
     return dir;
 }
 
++ (NSString *)unzippedPackInfoJsonFilePath {
+    NSString *dir = [FileOperationHelper downloadedPackFileDirectory];
+    NSString *path = [dir stringByAppendingPathComponent:@"packInformation.json"];
+    return path;
+}
+
+
+
 #pragma mark -
 #pragma mark - Generate unique file name
 
@@ -110,7 +118,7 @@
 #pragma mark -
 #pragma mark - Zip action
 
-+ (NSString *) zipPackForUpload:(Pack *)pack  {
++ (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password  {
     //Step1: exception 
     if (pack == nil) {
         [Common alertViewCommon:@"Selected pack is empty"];
@@ -141,7 +149,12 @@
     ZipArchive* zipFile = [[ZipArchive alloc] init];
     NSString *generatePackZipFilePath = [cardAssembleDir stringByAppendingPathComponent:
                                      [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()]];
-    [zipFile CreateZipFile2:generatePackZipFilePath];
+    if ([password isEqualToString:@""]) {
+        [zipFile CreateZipFile2:generatePackZipFilePath];    
+    } else {
+        [zipFile CreateZipFile2:generatePackZipFilePath Password:password];    
+    }
+    
 
     NSString *generateCardZipFilePath = nil;
     
@@ -242,6 +255,22 @@
     NSDate *dateFromString = [[NSDate alloc] init];
     dateFromString = [dateFormatter dateFromString:str];
     return dateFromString;
+}
+
++ (BOOL) IsEncrypted:(NSString*)path
+{
+    NSData* fileData = [NSData dataWithContentsOfFile:path];
+    NSData* generalBitFlag = [fileData subdataWithRange:NSMakeRange(6, 2)];
+    NSString* genralBitFlgStr = [generalBitFlag description];
+    
+    if ([genralBitFlgStr characterAtIndex:2]!='0')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 

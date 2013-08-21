@@ -62,10 +62,24 @@
     if (![[DBSession sharedSession] isLinked]) {
 		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
     } else {
-        [self exectueShareAfterDropboxLinked];
+        [self setPassword];
     }
     
 }
+
+
+- (void) setPassword {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                    message:@"Set a password?"
+                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
+                                          otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+    alert.tag = 1;
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [alert textFieldAtIndex:0].text = @"";
+    alert.delegate = self;
+    [alert show];
+}
+
 
 - (DBRestClient *)restClient {
     if (!_restClient) {
@@ -76,12 +90,12 @@
     return _restClient;
 }
 
-- (void) exectueShareAfterDropboxLinked {
+- (void) exectueShareAfterDropboxLinked:(NSString *) password {
     
     NSString *generatedZipFilePath = nil;
     //step1: create zip file
     if (_currentPack) {
-        generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack];
+        generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
     } else {
         [Common alertViewCommon:@"You need to select a pack first"];
         NSLog(@"%s:Pack to share is nil or public pack",__FUNCTION__);
@@ -129,6 +143,7 @@
                                                     message:@"Set max number of downloads"
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                           otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+    alert.tag = 2;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert textFieldAtIndex:0].text = @"9999";
     alert.delegate = self;
@@ -137,40 +152,62 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSString *maxNoString = [alertView textFieldAtIndex:0].text;
     
-    int maxNo;
-    if (buttonIndex == 1) {
-        //unlimited
-        maxNo = 9999999;
-    } else {
-        maxNo = [maxNoString integerValue];    
+    
+    switch (alertView.tag) {
+        case 1: {
+            NSString *password = [alertView textFieldAtIndex:0].text;
+            [self exectueShareAfterDropboxLinked:password];
+            
+        }
+            
+            break;
+            
+        case 2: {
+            NSString *maxNoString = [alertView textFieldAtIndex:0].text;
+            
+            int maxNo;
+            if (buttonIndex == 1) {
+                //unlimited
+                maxNo = 9999999;
+            } else {
+                maxNo = [maxNoString integerValue];
+            }
+            
+            NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
+            if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
+                return;
+            }
+            
+            // insert this record in amazon singleDB for pack download limit control
+            // shareLinkage is kind of "https://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip"
+            // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+            NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+            NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            dispatch_async(queue, ^{
+                NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
+                [self insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+            });
+            
+            
+            
+            
+            SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
+            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+            [SHK setRootViewController:self.baseViewController];
+            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+        }
+            
+            break;
+            
+        default:
+            break;
     }
     
-    NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
-    if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
-        [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
-        return;
-    }
-    
-    // insert this record in amazon singleDB for pack download limit control
-    // shareLinkage is kind of "https://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip"
-    // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-    NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-    NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-        NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
-        [self insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
-    });
     
     
-    
-    
-    SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
-	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
-    [SHK setRootViewController:self.baseViewController];
-	[actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
 }
 
 

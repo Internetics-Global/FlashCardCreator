@@ -22,8 +22,10 @@
 + (NSString *) temporaryDirectory;
 + (NSString *) temporaryPathForFileNamed:(NSString *)fileName;
 
++ (NSString *)unzippedPackInfoJsonFilePath;
+
 + (NSString *) generateUniqueJPEGImageFilePath;
-+ (NSString *) zipPackForUpload:(Pack *) pack;
++ (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password;
 
 + (NSString *)downloadedPackFileDirectory;
 + (NSString *)downloadedZipPackFileFixedPath;
@@ -31,4 +33,6 @@
 + (NSString *)getTodayString;
 
 + (NSDate *)convertStringToNSDate:(NSString *) str;
+
++ (BOOL) IsEncrypted:(NSString*)path;
 @end

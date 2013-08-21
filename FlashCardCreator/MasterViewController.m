@@ -779,7 +779,7 @@ extern BOOL _isDownloadingSamplePack;
 - (void)downloadSuccess:(BOOL)isSucess {
     if (isSucess == YES) {
         [_HUD hide:YES];
-        [self unzipFileThenAssemblePack];
+        [self checkPassword];
     }
 }
 
@@ -849,18 +849,65 @@ extern BOOL _isDownloadingSamplePack;
     return result;
 }
 
+
+#pragma mark -
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *password = [alertView textFieldAtIndex:0].text;
+    
+    if (password == NULL) {
+        password = @"";
+    }
+    
+    if (buttonIndex == 0) {
+        ZipArchive* za = [[ZipArchive alloc] init];
+        NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
+        if( [za UnzipOpenFile:downloadedZipPackFileFixedPath Password:password]) {
+            BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
+            
+            NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[FileOperationHelper unzippedPackInfoJsonFilePath] error:nil];
+            NSNumber *fileSizeNumber = [fileAttributes objectForKey:NSFileSize];
+            long long fileSize = [fileSizeNumber longLongValue];
+            
+            if (( NO==ret ) || (fileSize == 0)) {
+                //when password encripted, will go into here to
+                NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
+                [Common alertViewCommon:@"Wrong password"];
+            } else {
+                NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
+                
+                [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
+                
+                [self assemblePack];
+            }
+            [za UnzipCloseFile];
+            
+        } 
+    } else if (buttonIndex == 1) {
+        //cancel and do nothing. For example, downloaded zip file is broken or unzippable
+    }
+}
+
+
 #pragma mark -
 #pragma mark - Unzip and assemble pack/card
 
-- (void) unzipFileThenAssemblePack {
+- (void) checkPassword {
     
-    NSString *packPlatformStr;
-    
-    //Step1: unzip file
     ZipArchive* za = [[ZipArchive alloc] init];
     NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
-    if( [za UnzipOpenFile:downloadedZipPackFileFixedPath] )
-    {
+    if( [FileOperationHelper IsEncrypted:downloadedZipPackFileFixedPath]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:@"Input a password"
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        alert.delegate = self;
+        [alert show];
+    } else {
+        [za UnzipOpenFile:downloadedZipPackFileFixedPath];
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
             NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
@@ -870,9 +917,15 @@ extern BOOL _isDownloadingSamplePack;
         [za UnzipCloseFile];
         
         [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
-    } else {
-        [Common alertViewCommon:@"Downloaded zip file is broken or unzippable"];
+        
+        [self assemblePack];
     }
+    
+}
+
+- (void) assemblePack {
+    
+    NSString *packPlatformStr;
     
     //Step2: buid pack
     Pack *pack = [[Pack alloc] init];

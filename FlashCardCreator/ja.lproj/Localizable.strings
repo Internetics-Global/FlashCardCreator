@@ -44,6 +44,8 @@
 "Keyboard_Cancel"             = "キャンセル";
 "Keyboard_Save"             = "保存";
 "Keyboard_Unlimited"             = "無制限の";
+"Keyboard_Set" = "セット";
+"Keyboard_No_Needed" = "ノー";
 
 "ToolbarItem_Align" = "整列";
 "ToolbarItem_Size"= "サイズ";

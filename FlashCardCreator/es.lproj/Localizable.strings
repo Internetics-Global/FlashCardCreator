@@ -44,6 +44,8 @@
 "Keyboard_Cancel"             = "Cancelar";
 "Keyboard_Save"             = "Guardar";
 "Keyboard_Unlimited"             = "Ilimitado";
+"Keyboard_Set" = "Set";
+"Keyboard_No_Needed" = "No es necesario";
 
 "ToolbarItem_Align" = "Alinear";
 "ToolbarItem_Size" = "Tamaño";
