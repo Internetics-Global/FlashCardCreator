@@ -763,9 +763,16 @@ extern BOOL isFromNewCreatedCard;
     _answerTitle.userInteractionEnabled = FALSE;
     
     _sidebarTitle.userInteractionEnabled = FALSE;
-    _creatorText.userInteractionEnabled = FALSE;
     
     _changeTemplateButton.hidden = TRUE;
+    
+    if (_isPlayingCard) {
+        _creatorText.userInteractionEnabled = TRUE;
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
+        [_creatorText addGestureRecognizer:logoSingeTap];
+    } else {
+        _creatorText.userInteractionEnabled = FALSE;
+    }
 }
 
 - (void) enableCardEdit{
@@ -2675,7 +2682,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {    
     _isUITextViewFocused = FALSE;
     _messageViewBackgroundView.hidden = TRUE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
