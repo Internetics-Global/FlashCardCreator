@@ -19,6 +19,12 @@
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download sample pack first";
 "DIALOG_ENTER_VALID_URL"       = "Please input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
+"DIALOG_SET_PASSWORD"       = "Set a passwords?";
+"DIALOG_INPUT_PASSWORD"       = "Input a password";
+"DIALOG_AlERT"       = "Alert";
+"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
+"DIALOG_WRONG_PASSWORD"       = "Wrong password";
+
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -29,6 +35,7 @@
 "NavigationBarItem_Share"   = "Share the pack";
 "NavigationBarItem_More"    = "More";
 "NavigationBarItem_Back"    = "Back";
+"NavigationBarItem_Play"    = "Play";
 
 "NavigationBarItem_More_Dropbox"    = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "Random Play";
@@ -44,6 +51,8 @@
 "Keyboard_Cancel"             = "Cancel";
 "Keyboard_Save"             = "Save";
 "Keyboard_Unlimited"             = "Unlimited";
+"Keyboard_Set" = "Set";
+"Keyboard_No_Needed" = "No needed";
 
 "ToolbarItem_Align"        = "Align";
 "ToolbarItem_Size"         = "Size";
@@ -78,6 +87,7 @@
 "Label_Answer"        = "Answer";
 "Label_New_Pack_Name" = "New pack name";
 "Label_Creator"       = "Your name";
+"Label_Creator_Hint"       = "Created by";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";
