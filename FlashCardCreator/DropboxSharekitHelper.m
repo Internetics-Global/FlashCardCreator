@@ -128,7 +128,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
                                                     message:@"Set max number of downloads"
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                          otherButtonTitles:nil, nil];
+                                          otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert textFieldAtIndex:0].text = @"9999";
     alert.delegate = self;
@@ -138,7 +138,14 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     NSString *maxNoString = [alertView textFieldAtIndex:0].text;
-    int maxNo = [maxNoString integerValue];
+    
+    int maxNo;
+    if (buttonIndex == 1) {
+        //unlimited
+        maxNo = 9999999;
+    } else {
+        maxNo = [maxNoString integerValue];    
+    }
     
     NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
     if ((redirectedStr == nil) || (redirectedStr.length == 0)) {

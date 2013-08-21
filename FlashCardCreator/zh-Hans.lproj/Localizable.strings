@@ -44,6 +44,7 @@
 "Keyboard_Done"             = "完成";
 "Keyboard_Cancel"             = "取消";
 "Keyboard_Save"             = "保存";
+"Keyboard_Unlimited"             = "没有限制";
 
 "ToolbarItem_Align"        = "对齐";
 "ToolbarItem_Size"         = "尺寸";

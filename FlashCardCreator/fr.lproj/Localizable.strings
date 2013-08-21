@@ -43,6 +43,7 @@
 "Keyboard_Done" = "Terminé";
 "Keyboard_Cancel"             = "Annuler";
 "Keyboard_Save"             = "Enregistrer";
+"Keyboard_Unlimited"             = "Illimité";
 
 "ToolbarItem_Align" = "Aligner";
 "ToolbarItem_Size" = "Taille";
