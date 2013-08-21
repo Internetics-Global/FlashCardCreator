@@ -147,7 +147,7 @@
     NSString *newUrl = [NSString stringWithFormat:@"%@%@", [[request URL] host], [[request URL] path]];
     
     if (navigationType == UIWebViewNavigationTypeLinkClicked && ![newUrl isEqualToString:curUrl]) {
-        [Common alertViewCommon:@"Link is clicked "];
+        //[Common alertViewCommon:@"Link is clicked "];
     }
     
     if ((navigationType == UIWebViewNavigationTypeFormSubmitted || navigationType == UIWebViewNavigationTypeFormResubmitted) && (![newUrl isEqualToString:curUrl]) )  {
