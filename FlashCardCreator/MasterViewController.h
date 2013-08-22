@@ -47,6 +47,8 @@
     int       _currentDownloadCount;
     
     DropboxSharekitHelper *_shareHelper;
+    
+    NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;

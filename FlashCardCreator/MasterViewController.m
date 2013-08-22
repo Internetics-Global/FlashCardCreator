@@ -48,6 +48,12 @@ extern BOOL _isDownloadingSamplePack;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 @synthesize tableView = _tableView;
 
+
+typedef enum {
+    UIAlertViewTypeEnum_SetPassword  = 0,
+    UIAlertViewTypeEnum_DeleteCard = 1
+} UIAlertViewTypeEnum;
+
 #pragma mark -
 #pragma mark - Life cycle
 
@@ -641,49 +647,61 @@ extern BOOL _isDownloadingSamplePack;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    _currentIndexPath = indexPath;
+    
     if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return;
     }
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        NSArray *tempCards = [_currentPack cards];
-        
-        for (int i = indexPath.row +1; i < [tempCards count] ; i++) {
-            ((Card *)tempCards[i]).cardSN = i;
-            [((Card *)tempCards[i]) save];
-        }
-        [_currentPack removeCard:tempCards[indexPath.row]];
-        
-        _currentPack.cards = [_currentPack snOrderedCards]; //We need to re-order
-        
-		[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
-                              withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView reloadData];
-        
-        if (!isUserInterfaceIdiomPhone) {
-            if ([[_currentPack cards] count] >0) {
-                NSIndexPath *selectedIndexPath;
-                if (indexPath.row != 0) {
-                    selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:0];
-                } else {
-                    selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];    
-                }
-                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"")
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        alert.tag = UIAlertViewTypeEnum_DeleteCard;
+        alert.delegate = self;
+        [alert show];
+    }
+    
+}
+
+- (void) deleteCurrentCard:(NSIndexPath *)indexPath {
+    
+    NSArray *tempCards = [_currentPack cards];
+    
+    for (int i = indexPath.row +1; i < [tempCards count] ; i++) {
+        ((Card *)tempCards[i]).cardSN = i;
+        [((Card *)tempCards[i]) save];
+    }
+    [_currentPack removeCard:tempCards[indexPath.row]];
+    
+    _currentPack.cards = [_currentPack snOrderedCards]; //We need to re-order
+    
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
+                          withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+    
+    if (!isUserInterfaceIdiomPhone) {
+        if ([[_currentPack cards] count] >0) {
+            NSIndexPath *selectedIndexPath;
+            if (indexPath.row != 0) {
+                selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:0];
             } else {
-                self.detailViewController.title = @"";
-                self.detailViewController.currentCard = nil;
-                self.detailViewController.indexCard = 0;
-                [self.detailViewController showCurrentCardInScrollView:YES];
+                selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             }
+            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
         } else {
-            //Update right pack info
-            [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+            self.detailViewController.title = @"";
+            self.detailViewController.currentCard = nil;
+            self.detailViewController.indexCard = 0;
+            [self.detailViewController showCurrentCardInScrollView:YES];
         }
-        
-	}
+    } else {
+        //Update right pack info
+        [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+    }
     
 }
 
@@ -854,38 +872,57 @@ extern BOOL _isDownloadingSamplePack;
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *password = [alertView textFieldAtIndex:0].text;
-    
-    if (password == NULL) {
-        password = @"";
-    }
-    
-    if (buttonIndex == 0) {
-        ZipArchive* za = [[ZipArchive alloc] init];
-        NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
-        if( [za UnzipOpenFile:downloadedZipPackFileFixedPath Password:password]) {
-            BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
+    switch (alertView.tag) {
+        case UIAlertViewTypeEnum_SetPassword:{
+            NSString *password = [alertView textFieldAtIndex:0].text;
             
-            NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[FileOperationHelper unzippedPackInfoJsonFilePath] error:nil];
-            NSNumber *fileSizeNumber = [fileAttributes objectForKey:NSFileSize];
-            long long fileSize = [fileSizeNumber longLongValue];
-            
-            if (( NO==ret ) || (fileSize == 0)) {
-                //when password encripted, will go into here to
-                NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
-                [Common alertViewCommon:@"Wrong password"];
-            } else {
-                NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
-                
-                [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
-                
-                [self assemblePack];
+            if (password == NULL) {
+                password = @"";
             }
-            [za UnzipCloseFile];
             
-        } 
-    } else if (buttonIndex == 1) {
-        //cancel and do nothing. For example, downloaded zip file is broken or unzippable
+            if (buttonIndex == 0) {
+                ZipArchive* za = [[ZipArchive alloc] init];
+                NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
+                if( [za UnzipOpenFile:downloadedZipPackFileFixedPath Password:password]) {
+                    BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
+                    
+                    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[FileOperationHelper unzippedPackInfoJsonFilePath] error:nil];
+                    NSNumber *fileSizeNumber = [fileAttributes objectForKey:NSFileSize];
+                    long long fileSize = [fileSizeNumber longLongValue];
+                    
+                    if (( NO==ret ) || (fileSize == 0)) {
+                        //when password encripted, will go into here to
+                        NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
+                        [Common alertViewCommon:@"Wrong password"];
+                    } else {
+                        NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
+                        
+                        [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
+                        
+                        [self assemblePack];
+                    }
+                    [za UnzipCloseFile];
+                    
+                } 
+            } else if (buttonIndex == 1) {
+                //cancel and do nothing. For example, downloaded zip file is broken or unzippable
+            }
+            
+            break;
+        }
+            
+            
+        case UIAlertViewTypeEnum_DeleteCard: {
+            if (buttonIndex == 0) {
+                [self deleteCurrentCard:_currentIndexPath];
+            } else if (buttonIndex == 1) {
+                //do nothing
+            }
+            break;
+        }   
+            
+        default:
+            break;
     }
 }
 
@@ -904,6 +941,7 @@ extern BOOL _isDownloadingSamplePack;
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alert textFieldAtIndex:0].text = @"";
+        alert.tag = UIAlertViewTypeEnum_SetPassword;
         alert.delegate = self;
         [alert show];
     } else {
