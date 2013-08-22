@@ -287,25 +287,14 @@
 
 - (void) deleteCurrentPack:(id) sender {
     
-    NSInteger index = ((UIButton *)sender).tag;
-    _currentPack = [[[User defaultUser] packs] objectAtIndex:index];
-    [[User defaultUser] removePack:_currentPack];
-    [self resetPackContent];
+    _currentIndex = ((UIButton *)sender).tag;
     
-    //Recalculate:
-    Pack *latestPack = [[[User defaultUser] packs] lastObject];
-    if (latestPack != nil) {
-        [[NSUserDefaults standardUserDefaults] setInteger:latestPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
-        //Update_date info
-        NSString *updateDate = [FileOperationHelper getTodayString];
-        NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-        [dict setObject:updateDate forKey:@"update_date"];
-        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    [_swipeView reloadData];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                    message:NSLocalizedString(@"DIALOG_DELETE_PACK",@"")
+                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                          otherButtonTitles:NSLocalizedString(@"Keyboard_Delete",@""), nil];
+    alert.delegate = self;
+    [alert show];
 }
 
 - (void) selectFromImageLibrary: (id) sender {
@@ -345,6 +334,35 @@
     }
     
 
+}
+
+#pragma mark -
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        //do nothing
+    } else if (buttonIndex == 1) {
+        // delete operation
+        _currentPack = [[[User defaultUser] packs] objectAtIndex:_currentIndex];
+        [[User defaultUser] removePack:_currentPack];
+        [self resetPackContent];
+        
+        //Recalculate:
+        Pack *latestPack = [[[User defaultUser] packs] lastObject];
+        if (latestPack != nil) {
+            [[NSUserDefaults standardUserDefaults] setInteger:latestPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
+            //Update_date info
+            NSString *updateDate = [FileOperationHelper getTodayString];
+            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+            [dict setObject:updateDate forKey:@"update_date"];
+            [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        
+        [_swipeView reloadData];
+    }
 }
 
 

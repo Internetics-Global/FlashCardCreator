@@ -11,7 +11,7 @@
 
 @class Pack;
 
-@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
+@interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
     SwipeView *_swipeView;
     UIPageControl *_pageControl;
     NSMutableArray *_packArray;
@@ -25,6 +25,8 @@
     UIPopoverController *_imagePickerPopover;
     
     Pack  *_currentPack;
+    
+    int _currentIndex;
 }
 
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;

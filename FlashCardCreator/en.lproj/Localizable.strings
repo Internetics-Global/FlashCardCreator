@@ -24,6 +24,7 @@
 "DIALOG_AlERT"       = "Alert";
 "DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";
+"DIALOG_DELETE_PACK"       = "Are you sure to delete?";
 
 
 "NavigationBarItem_Packs"   = "Packs";
@@ -53,6 +54,7 @@
 "Keyboard_Unlimited"             = "Unlimited";
 "Keyboard_Set" = "Set";
 "Keyboard_No_Needed" = "Not needed";
+"Keyboard_Delete" = "Delete";
 
 "ToolbarItem_Align"        = "Align";
 "ToolbarItem_Size"         = "Size";
