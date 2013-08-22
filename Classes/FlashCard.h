@@ -82,7 +82,6 @@ typedef enum{
     BOOL    _isLogoImageViewClicked;
     BOOL    _keyboardShown;
     BOOL    _isAllCardsLogoNeedToBeUpdate;
-    BOOL    _isUITextViewFocused; //used to diff better UITextView and UITextField
     BOOL    _dismissKeyboardFromEmotionSwitch;
     BOOL    _isTextFieldsChanged; // when no changes, don't need to do save operation
     BOOL    _doneButtonPressed;
@@ -103,7 +102,9 @@ typedef enum{
     
     EmoticonSelectionViewController *_emoticonSelectionViewController;
     
-    UITextView   *_firstRespondTextView;
+    //when use, please use together
+    UITextView   *_lastBecomeFirstRespondTextView; //
+    BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
     
     NSNumber *_keyboardDuration;
     NSNumber *_keyboardCurve;

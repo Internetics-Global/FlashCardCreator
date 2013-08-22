@@ -110,6 +110,9 @@ extern BOOL isFromNewCreatedCard;
 
 
 - (void) initDefaultValue {
+    
+    _isUITextViewFocused = NO;
+    
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
     _isPlayingCard = NO;
@@ -2004,7 +2007,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    if ([self getFirstResponderUITextViewUnderVerticalScrollView] == nil) {
+    if (_isUITextViewFocused == FALSE) {
         return;
     }
     
@@ -2019,7 +2022,7 @@ extern BOOL isFromNewCreatedCard;
     }
     
     //Step1: Get cursor Y value relative to view
-    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     if (responderTextView.text.length == 0) {
         NSRange range;
         range.location = 0;
@@ -2289,8 +2292,8 @@ extern BOOL isFromNewCreatedCard;
     [self hideMessageView];
     
     //step2:
-    [_firstRespondTextView resignFirstResponder];
-    [_firstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
+    _isUITextViewFocused = NO;
+    [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
     
     //Step3: save data in keyboardWasHidden
     _doneButtonPressed = YES;
@@ -2483,19 +2486,6 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Text edit function
 
-- (UITextView *) getFirstResponderUITextViewUnderVerticalScrollView {
-    //we put all the editable UITextView as subview of verticalScrollView
-    for(UIView *view in [_verticalScrollView subviews])
-    {
-        if([view isKindOfClass:[UITextView class]])
-        {
-            if (view.isFirstResponder)
-                return (UITextView *)view;
-        }
-    }
-    return nil;
-}
-
 - (void) sizeUpDownAction {
     [_keyboardTopView setItems:_fontSizeArray animated:TRUE];
 }
@@ -2515,13 +2505,15 @@ extern BOOL isFromNewCreatedCard;
     if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
         [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
         _dismissKeyboardFromEmotionSwitch = TRUE;
-        [_firstRespondTextView resignFirstResponder];
-    
+        _isUITextViewFocused = FALSE;
+        [_lastBecomeFirstRespondTextView resignFirstResponder];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;
     } else {
+        [_lastBecomeFirstRespondTextView becomeFirstResponder];
+        _isUITextViewFocused = TRUE;
         [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
-        [_firstRespondTextView becomeFirstResponder];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+        
     }
     
     
@@ -2533,7 +2525,7 @@ extern BOOL isFromNewCreatedCard;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
     
-    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size12",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:12];
@@ -2598,7 +2590,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *selectAlignStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
-    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     NSRange range = responderTextView.selectedRange;
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Left",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentLeft;
@@ -2634,7 +2626,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *selectColorStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
-    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Black",nil)]) {
         responderTextView.textColor = [UIColor blackColor];
         selectColorStr = @"Black";
@@ -2761,7 +2753,7 @@ extern BOOL isFromNewCreatedCard;
 
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    _firstRespondTextView = textView;
+    _lastBecomeFirstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _messageViewBackgroundView.hidden = FALSE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
@@ -2780,7 +2772,7 @@ extern BOOL isFromNewCreatedCard;
         height = 0; 
     }
     
-    UITextView *responderTextView = [self getFirstResponderUITextViewUnderVerticalScrollView];
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     
     CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
@@ -3142,25 +3134,25 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - EmoticonSelectionViewControllerDelegate
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
     
-    int  location =_firstRespondTextView.selectedRange.location;
+    int  location =_lastBecomeFirstRespondTextView.selectedRange.location;
     NSString *beforeStr = @"";
     NSString *afterStr = @"";
     
-    beforeStr = [_firstRespondTextView.text substringToIndex:location];
-    afterStr = [_firstRespondTextView.text substringFromIndex:location];
+    beforeStr = [_lastBecomeFirstRespondTextView.text substringToIndex:location];
+    afterStr = [_lastBecomeFirstRespondTextView.text substringFromIndex:location];
 
     NSString *newValue;
-    if (_firstRespondTextView.text == NULL) {
-        _firstRespondTextView.text = @"";
+    if (_lastBecomeFirstRespondTextView.text == NULL) {
+        _lastBecomeFirstRespondTextView.text = @"";
     }
     
     newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,emoticon.code,afterStr];
     
-    _firstRespondTextView.text = newValue;
+    _lastBecomeFirstRespondTextView.text = newValue;
     
-    NSRange range = _firstRespondTextView.selectedRange;
+    NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
     range.location = location + 1;
-    [_firstRespondTextView setSelectedRange:range];
+    [_lastBecomeFirstRespondTextView setSelectedRange:range];
 }
 
 
