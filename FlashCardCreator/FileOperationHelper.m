@@ -257,21 +257,6 @@
     return dateFromString;
 }
 
-+ (BOOL) IsEncrypted:(NSString*)path
-{
-    NSData* fileData = [NSData dataWithContentsOfFile:path];
-    NSData* generalBitFlag = [fileData subdataWithRange:NSMakeRange(6, 2)];
-    NSString* genralBitFlgStr = [generalBitFlag description];
-    
-    if ([genralBitFlgStr characterAtIndex:2]!='0')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 
 @end

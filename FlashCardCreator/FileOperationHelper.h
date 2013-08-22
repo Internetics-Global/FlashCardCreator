@@ -33,6 +33,4 @@
 + (NSString *)getTodayString;
 
 + (NSDate *)convertStringToNSDate:(NSString *) str;
-
-+ (BOOL) IsEncrypted:(NSString*)path;
 @end

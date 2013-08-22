@@ -934,7 +934,8 @@ typedef enum {
     
     ZipArchive* za = [[ZipArchive alloc] init];
     NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
-    if( [FileOperationHelper IsEncrypted:downloadedZipPackFileFixedPath]) {
+    [za UnzipOpenFile:downloadedZipPackFileFixedPath];
+    if( [za UnzipIsEncrypted]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
                                                         message:@"Input a password"
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
@@ -945,7 +946,6 @@ typedef enum {
         alert.delegate = self;
         [alert show];
     } else {
-        [za UnzipOpenFile:downloadedZipPackFileFixedPath];
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
             NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
