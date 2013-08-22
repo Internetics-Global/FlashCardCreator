@@ -2154,11 +2154,13 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *fontSize160 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size160",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
+    UIBarButtonItem *fontSize260 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size260",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
     if (_fontSizeArray == nil) {
         if (isUserInterfaceIdiomPhone) {
             _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32, fontSize80,nil];
         } else {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize60, fontSize80, fontSize100, fontSize160,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize60, fontSize80, fontSize100, fontSize160,fontSize260,nil];
         }
         
     }
@@ -2560,6 +2562,9 @@ extern BOOL isFromNewCreatedCard;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size160",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:160];
         selectFontSize = 160;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size260",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:260];
+        selectFontSize = 260;
     } else {
         responderTextView.font = [UIFont boldSystemFontOfSize:32];
         selectFontSize = 32;

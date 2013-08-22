@@ -70,6 +70,7 @@
 "ToolbarItem_Size80"        = "80号";
 "ToolbarItem_Size100"        = "100号";
 "ToolbarItem_Size160"        = "160号";
+"ToolbarItem_Size260"        = "260号";
 
 "ToolbarItem_Color_Red"        = "红色";
 "ToolbarItem_Color_Green"        = "绿色";
