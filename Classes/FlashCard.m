@@ -909,7 +909,8 @@ extern BOOL isFromNewCreatedCard;
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
-    if (([_currentCard.question.logoFullPath rangeOfString:@"placeholder"].location != NSNotFound) && (_isPlayingCard == true)) {
+    NSString *logoFullPath = _currentCard.question.logoFullPath;
+    if (((logoFullPath.length == 0) || ([logoFullPath rangeOfString:@"placeholder"].location != NSNotFound)) && (_isPlayingCard == true)) {
         _logoImage.hidden = true;
     } else {
         _logoImage.hidden = false;
