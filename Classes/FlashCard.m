@@ -2295,6 +2295,7 @@ extern BOOL isFromNewCreatedCard;
     
     //step2:
     _isUITextViewFocused = NO;
+    [_lastBecomeFirstRespondTextView resignFirstResponder];
     [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
     
     //Step3: save data in keyboardWasHidden
