@@ -224,7 +224,9 @@ extern BOOL isFromNewCreatedCard;
     
     if (_verticalScrollView == nil) {
         _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 110, 740, 440)];
+        _verticalScrollView.contentSize = _verticalScrollView.frame.size;
         _verticalScrollView.backgroundColor = [UIColor clearColor];
+        _verticalScrollView.scrollEnabled = TRUE;
         [self addSubview:_verticalScrollView];
     }
     
@@ -499,7 +501,9 @@ extern BOOL isFromNewCreatedCard;
     
     if (_verticalScrollView == nil) {
         _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 195)];
+        _verticalScrollView.contentSize = _verticalScrollView.frame.size;
         //_verticalScrollView.backgroundColor = [UIColor blueColor];
+        _verticalScrollView.scrollEnabled = TRUE;
         [self addSubview:_verticalScrollView];
     }
     
@@ -2011,6 +2015,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    
     if (_isUITextViewFocused) {
         if (isUserInterfaceIdiomPhone) {
             UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
@@ -2057,13 +2062,32 @@ extern BOOL isFromNewCreatedCard;
     if (gap >0)
         offset.y = gap+responderTextView.font.lineHeight;
     
-    //Step4: move scrollview
+    
+    //Step4: set contentSize which is used by user for manually scroll up/down
+    CGFloat scrollableOffset = responderTextView.frame.size.height - cursorY;
+    CGSize size = _verticalScrollView.contentSize;
+    if (gap > 0) {
+        if (isUserInterfaceIdiomPhone ) {
+          size.height =size.height + fabsf(scrollableOffset) + gap;
+        } else {
+          size.height =size.height + fabsf(scrollableOffset) + gap;
+        }
+        
+    } else {
+        size.height =size.height + fabsf(scrollableOffset) - fabsf(gap);
+    }
+    _verticalScrollView.contentSize = size;
+    
+    //Step5: move scrollview
     [_verticalScrollView setContentOffset:offset animated:YES];
+    
     
     if (_keyboardShown)
         return;
     
     _keyboardShown = YES;
+    
+    
     
 }
 
@@ -2285,9 +2309,16 @@ extern BOOL isFromNewCreatedCard;
         [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
     }
     
+    //reset contentSize which is used by user for manually scroll up/down
+    CGSize size = _verticalScrollView.contentSize;
+    size.height = _verticalScrollView.frame.size.height;
+    _verticalScrollView.contentSize = size;
+    
+    //reset offset
     CGPoint offset = _verticalScrollView.contentOffset;
     offset.y = 0;
     [_verticalScrollView setContentOffset:offset animated:YES];
+
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
