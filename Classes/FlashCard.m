@@ -2786,6 +2786,7 @@ extern BOOL isFromNewCreatedCard;
     //    CGRect frame = textView.frame;
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
+    
 }
 
 
@@ -2808,7 +2809,7 @@ extern BOOL isFromNewCreatedCard;
     if (tag != textView.tag) {
         height = 0; 
     }
-    
+
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     
@@ -2841,7 +2842,36 @@ extern BOOL isFromNewCreatedCard;
     
     [self adjustFontToFit:textView];
     
-    return YES;
+    //limit text within text box
+    NSString *originalStr = textView.text;
+    textView.text = [textView.text stringByAppendingString:text];
+    CGFloat lineHeight = textView.font.lineHeight;
+    int currentLines = textView.contentSize.height / lineHeight;
+    int maxLines = textView.frame.size.height/lineHeight;
+    if (currentLines > maxLines) {
+        NSString * firstHalfString = [originalStr substringToIndex:range.location];
+        NSString * secondHalfString = [originalStr substringFromIndex: range.location];
+        textView.text = [NSString stringWithFormat: @"%@%@%@",
+                         firstHalfString,
+                         text,
+                         secondHalfString];
+        int timeout = 0;
+        while (true) {
+            timeout =50;
+            textView.text = [textView.text substringToIndex:(textView.text.length -1)];
+            int newCurrentLines = textView.contentSize.height / lineHeight;
+            if ((newCurrentLines == maxLines) || (timeout > 50))
+                break;
+        }
+        
+        textView.selectedRange = range;
+        return false;
+    } else {
+        textView.text = originalStr;
+        textView.selectedRange = range;
+        return true;
+    }
+    
 }
 
 #pragma mark -
