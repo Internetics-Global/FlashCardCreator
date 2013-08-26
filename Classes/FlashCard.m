@@ -2973,6 +2973,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) adjustFontToFit:(UITextView *) textView {
     
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        return;
+    }
+    
     if ((textView == NULL) || (textView.text.length ==0) || (textView.hidden == TRUE)) {
         return;
     }
