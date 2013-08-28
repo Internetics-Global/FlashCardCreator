@@ -2864,6 +2864,7 @@ extern BOOL isFromNewCreatedCard;
                 break;
         }
         
+        range.location++;
         textView.selectedRange = range;
         return false;
     } else {
