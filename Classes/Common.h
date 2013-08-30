@@ -15,4 +15,8 @@
 + (int) getScreenWidthInLandscape;
 + (int) getScreenHeightInLandscape;
 
++ (NSString *) appVersion;
+
++ (NSString *) build;
+
 @end

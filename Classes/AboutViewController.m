@@ -18,11 +18,18 @@
     self.title = NSLocalizedString(@"Title_About",@"");
 	self.view.backgroundColor = [UIColor blackColor];
 	
-	scroller = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    scroller.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	AboutView *about = [[AboutView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    about.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	scroller.contentSize = CGSizeMake(about.frame.size.width, about.frame.size.height);
+	AboutView *about;
+    if (isUserInterfaceIdiomPhone) {
+        scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_WIDTH, 300)];
+        about = [[AboutView alloc] initWithFrame:CGRectMake(10, 0, IPHONE_UI_WIDTH - 20, 300)];
+        scroller.contentSize = CGSizeMake(IPHONE_UI_WIDTH, 300);
+    } else {
+        scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 300, 500)];
+        about = [[AboutView alloc] initWithFrame:CGRectMake(10, 0, 300, 500)];
+        scroller.contentSize = CGSizeMake(300, 500);
+    }
+    
+	
 	[about.linkButton addTarget:self action:@selector(web) forControlEvents:UIControlEventTouchUpInside];
 	[scroller addSubview:about];
 	[self.view addSubview:scroller];
