@@ -75,10 +75,22 @@ BOOL isLoggingDropboxInSettingView = NO;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"SwitchCell";
+    
+    if ((indexPath.section == 0) || (indexPath.section == 1)) {
+        CellIdentifier = @"SwitchCell";    
+    } else {
+        CellIdentifier = @"CommonCell";  
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        if ([CellIdentifier isEqualToString:@"SwitchCell"]) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"SwitchCell"];
+        } else {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CommonCell"];    
+        }
         cell.backgroundColor = [UIColor whiteColor];
     }
 
