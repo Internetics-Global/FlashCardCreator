@@ -1687,10 +1687,10 @@ extern BOOL isFromNewCreatedCard;
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(10, 320, 700, 100);
             _subQuestion.font = [UIFont boldSystemFontOfSize:34];
-            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
-            _subColorQuestion = @"Red";
+            _subColorQuestion = @"Black";
             _subSizeQuestion = 34;
             
             _imageQuestion.hidden = TRUE;
@@ -1843,10 +1843,10 @@ extern BOOL isFromNewCreatedCard;
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(1, 140, 350, 52);
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
-            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
-            _subColorQuestion = @"Red";
+            _subColorQuestion = @"Black";
             _subSizeQuestion = 16;
             
             _imageQuestion.hidden = TRUE;
