@@ -51,8 +51,14 @@ extern BOOL _isDownloadingSamplePack;
 
 typedef enum {
     UIAlertViewTypeEnum_SetPassword  = 0,
-    UIAlertViewTypeEnum_DeleteCard = 1
+    UIAlertViewTypeEnum_DeleteCard = 1,
+    UIAlertViewTypeEnum_Download_From_Code = 2
 } UIAlertViewTypeEnum;
+
+enum popover_enum {
+    popover_enum_share = 0,
+    popover_enum_template_select = 1
+};
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -124,7 +130,7 @@ typedef enum {
         UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
         UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked)]];
+                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
         
         UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
@@ -339,13 +345,35 @@ typedef enum {
     
 }
 
-- (void)shareButtonClicked {
-    if ((_currentPack) && (_currentCard)) {
-        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_shareHelper shareAction];
-    } else {
-        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+- (void)shareButtonClicked:(id) sender {
+    
+    if (self.shareSelectPopup) {
+        [self.shareSelectPopup hide];
     }
+    
+    PopupListComponent *popupList = [[PopupListComponent alloc] init];
+    NSArray* listItems = [NSArray arrayWithObjects:
+                          [[PopupListComponentItem alloc] initWithCaption:@"Install from Code" image:nil
+                                                                   itemId:0 showCaption:YES],
+                          [[PopupListComponentItem alloc] initWithCaption:@"Share the pack"  image:nil
+                                                                   itemId:1 showCaption:YES],
+                          nil];
+    
+    popupList.imagePaddingHorizontal = 5;
+    if (isUserInterfaceIdiomPhone) {
+        popupList.font = [UIFont systemFontOfSize:12];
+    } else {
+        popupList.font = [UIFont systemFontOfSize:14];
+    }
+    popupList.tag = popover_enum_share;
+    popupList.imagePaddingVertical = 2;
+    popupList.textPaddingHorizontal = 5;
+    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
+    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
+    
+    self.shareSelectPopup = popupList;
+
+    
 }
 
 - (void)moreButtonClicked:(id) sender
@@ -919,7 +947,27 @@ typedef enum {
                 //do nothing
             }
             break;
-        }   
+        }
+            
+        case UIAlertViewTypeEnum_Download_From_Code: {
+            if (buttonIndex == 0) {
+                NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+                if (downloadCode.length > 0) {
+                    NSString *urlStr = nil;
+                    if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
+                        urlStr = downloadCode;
+                    } else {
+                        urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+                    }
+                    
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+                }
+            } else {
+                //do nothing
+            }            
+            
+            break;
+        }
             
         default:
             break;
@@ -1397,6 +1445,54 @@ typedef enum {
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark -
+#pragma mark - PopupListComponentDelegate delegate
+- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
+{
+    self.shareSelectPopup = nil;
+    
+    if (sender.tag == popover_enum_share) {
+        switch (itemId) {
+            case 0: {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
+                                                                message:nil
+                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [alert textFieldAtIndex:0].text = @"";
+                [alert textFieldAtIndex:0].placeholder = @"p8c5yv6";
+                alert.tag = UIAlertViewTypeEnum_Download_From_Code;
+                alert.delegate = self;
+                [alert show];
+                break;
+            }
+            case 1: {
+                if ((_currentPack) && (_currentCard)) {
+                    _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                    [_shareHelper shareAction];
+                } else {
+                    NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        
+    } else {
+        
+    }
+    
+}
+
+
+- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
+{
+    NSLog(@"Popup cancelled");
+    self.shareSelectPopup = nil;
 }
 
 

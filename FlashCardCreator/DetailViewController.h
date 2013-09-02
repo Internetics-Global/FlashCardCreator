@@ -19,7 +19,7 @@
 @class FlashCard;
 @class DropboxSharekitHelper;
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate, UIAlertViewDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -42,6 +42,7 @@
     UIBarButtonItem *_helpButton;
     
     PopupListComponent *_templateBackgroundSelectPopup;
+    PopupListComponent *_shareSelectPopup;
     
     MBProgressHUD *_HUD;
     
@@ -58,6 +59,7 @@
 @property (nonatomic, strong) UIPopoverController *masterPopoverController;
 
 @property (nonatomic, strong) PopupListComponent *templateBackgroundSelectPopup;
+@property (nonatomic, strong) PopupListComponent *shareSelectPopup;
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment;
 

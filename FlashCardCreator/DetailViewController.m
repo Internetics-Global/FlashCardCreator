@@ -28,6 +28,11 @@ enum template_color_enum {
     template_color_enum_red = 5
     };
 
+enum popover_enum {
+    popover_enum_share = 0,
+    popover_enum_template_select = 1
+};
+
 
 
 @implementation DetailViewController
@@ -38,6 +43,7 @@ enum template_color_enum {
 @synthesize masterPopoverController = _masterPopoverController;
 
 @synthesize templateBackgroundSelectPopup  = _templateBackgroundSelectPopup;
+@synthesize shareSelectPopup  = _shareSelectPopup;
 
 #pragma mark -
 #pragma mark Life cycle
@@ -109,7 +115,7 @@ enum template_color_enum {
     UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked)]];
+                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
     _helpButton = [[UIBarButtonItem alloc]
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
     
@@ -323,19 +329,43 @@ enum template_color_enum {
 #pragma mark -
 #pragma mark UIBarButtonItem action (only for iPad)
 
-- (void)shareButtonClicked {
+- (void)shareButtonClicked:(id) sender {
+    
+    if (self.templateBackgroundSelectPopup) {
+        [self.templateBackgroundSelectPopup hide];
+    }
+    
+    if (self.shareSelectPopup) {
+        [self.shareSelectPopup hide];
+    }
     
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
         [_helpPopoverController dismissPopoverAnimated:YES];
     }
     
-    if ((_currentPack) && (_currentCard)) {
-        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_shareHelper shareAction];
+    PopupListComponent *popupList = [[PopupListComponent alloc] init];
+    NSArray* listItems = [NSArray arrayWithObjects:
+                 [[PopupListComponentItem alloc] initWithCaption:@"Install from Code" image:nil
+                                                          itemId:0 showCaption:YES],
+                 [[PopupListComponentItem alloc] initWithCaption:@"Share the pack"  image:nil
+                                                          itemId:1 showCaption:YES],
+                 nil];
+    
+    popupList.imagePaddingHorizontal = 5;
+    if (isUserInterfaceIdiomPhone) {
+        popupList.font = [UIFont systemFontOfSize:12];
     } else {
-        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+        popupList.font = [UIFont systemFontOfSize:14];
     }
+    popupList.tag = popover_enum_share;
+    popupList.imagePaddingVertical = 2;
+    popupList.textPaddingHorizontal = 5;
+    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
+    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
+    
+    self.shareSelectPopup = popupList;
+    
 }
 
 - (void)helpButtonClicked:(id) sender
@@ -356,6 +386,10 @@ enum template_color_enum {
 - (void) selectCardBackgroundTemplate:(id) sender {
     if (self.templateBackgroundSelectPopup) {
         [self.templateBackgroundSelectPopup hide];
+    }
+    
+    if (self.shareSelectPopup) {
+        [self.shareSelectPopup hide];
     }
     
     PopupListComponent *popupList = [[PopupListComponent alloc] init];
@@ -383,8 +417,9 @@ enum template_color_enum {
     popupList.imagePaddingVertical = 2;
     popupList.textPaddingHorizontal = 5;
     popupList.alignment = UIControlContentHorizontalAlignmentLeft;
+    popupList.tag = popover_enum_template_select;
 
-    [popupList showAnchoredTo:sender inView:self.view withItems:listItems withDelegate:self];
+    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
     
     self.templateBackgroundSelectPopup = popupList;
 }
@@ -511,6 +546,7 @@ enum template_color_enum {
 {
     //Step1: close popover window
     self.templateBackgroundSelectPopup = nil;
+    self.shareSelectPopup = nil;
     
     
     //Step2: Check exception
@@ -518,45 +554,75 @@ enum template_color_enum {
         return;
     }
     
-    if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
-        return;
+    if (sender.tag == popover_enum_share) {
+        switch (itemId) {
+            case 0: {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
+                                                                message:nil
+                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [alert textFieldAtIndex:0].text = @"";
+                [alert textFieldAtIndex:0].placeholder = @"p8c5yv6";
+                alert.delegate = self;
+                [alert show];
+                break;
+            }
+            case 1: {
+                if ((_currentPack) && (_currentCard)) {
+                    _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                    [_shareHelper shareAction];
+                } else {
+                    NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                }
+                break;
+            }   
+            default:
+                break;
+        }
+        
+    } else {
+        
+        if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+            return;
+        }
+        
+        
+        //Step3: Get the selected info
+        NSString *templateBackgroundName;
+        switch (itemId) {
+            case template_color_enum_coffee:
+                templateBackgroundName = @"card_background_coffee.png";
+                break;
+            case template_color_enum_blue:
+                templateBackgroundName = @"card_background_blue.png";
+                break;
+            case template_color_enum_red:
+                templateBackgroundName = @"card_background_red.png";
+                break;
+            case template_color_enum_gray:
+                templateBackgroundName = @"card_background_gray.png";
+                break;
+            case template_color_enum_purple:
+                templateBackgroundName = @"card_background_purple.png";
+                break;
+            default:
+                break;
+        }
+        
+        //Show progress indicator and invoke other long-time post-execution
+        if (!_HUD)
+            _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+        
+        [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
+        [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+        
+        _HUD.mode = MBProgressHUDModeIndeterminate;
+        _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+        [_HUD show:YES];
+        [self performSelector:@selector(execTemplateBackgroundChangeTask:) withObject:templateBackgroundName afterDelay:0.01];
     }
-    
-    
-    //Step3: Get the selected info
-    NSString *templateBackgroundName;
-    switch (itemId) {
-        case template_color_enum_coffee:
-            templateBackgroundName = @"card_background_coffee.png";
-            break;
-        case template_color_enum_blue:
-            templateBackgroundName = @"card_background_blue.png";
-            break;
-        case template_color_enum_red:
-            templateBackgroundName = @"card_background_red.png";
-            break;
-        case template_color_enum_gray:
-            templateBackgroundName = @"card_background_gray.png";
-            break;
-        case template_color_enum_purple:
-            templateBackgroundName = @"card_background_purple.png";
-            break;
-        default:
-            break;
-    }
-    
-    //Show progress indicator and invoke other long-time post-execution
-    if (!_HUD)
-        _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
-    
-    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
-    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
-    
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
-    [_HUD show:YES];
-    [self performSelector:@selector(execTemplateBackgroundChangeTask:) withObject:templateBackgroundName afterDelay:0.01];
     
 }
 
@@ -576,6 +642,7 @@ enum template_color_enum {
 {
     NSLog(@"Popup cancelled");
     self.templateBackgroundSelectPopup = nil;
+    self.shareSelectPopup = nil;
 }
 
 #pragma mark -
@@ -606,6 +673,26 @@ enum template_color_enum {
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark -
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+        if (downloadCode.length > 0) {
+            NSString *urlStr = nil;
+            if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
+                urlStr = downloadCode;
+            } else {
+                urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+            }
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+        }
+    } else {
+        //do nothing
+    }
 }
 
 

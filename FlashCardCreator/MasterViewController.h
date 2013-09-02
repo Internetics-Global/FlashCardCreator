@@ -11,13 +11,14 @@
 #import "MBProgressHUD.h"
 #import "FMMoveTableView.h"
 #import "FMMoveTableViewCell.h"
+#import "PopupListComponent.h"
 
 @class DetailViewController;
 @class Pack;
 @class Card;
 @class DropboxSharekitHelper;
 
-@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource, UIAlertViewDelegate> {
+@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource, UIAlertViewDelegate,PopupListComponentDelegate> {
     
     Pack *_currentPack;
     Card *_currentCard;
@@ -49,6 +50,7 @@
     DropboxSharekitHelper *_shareHelper;
     
     NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
+    
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;
@@ -57,7 +59,7 @@
 @property (nonatomic, assign) NSUInteger indexCard;
 @property (nonatomic, assign) NSUInteger indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
-
+@property (nonatomic, strong) PopupListComponent *shareSelectPopup;
 @property (nonatomic, strong) FMMoveTableView *tableView;
 
 - (void)shareButtonClicked;

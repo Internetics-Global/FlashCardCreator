@@ -114,6 +114,8 @@
 @property UIControlContentHorizontalAlignment alignment;   // default: center
 @property UIPopoverArrowDirection allowedArrowDirections;  // Can OR values together
 
+@property int tag;
+
 /* 
  Optional: user data item to remember.
  Any data creator wants to store and access later to identify this popup
