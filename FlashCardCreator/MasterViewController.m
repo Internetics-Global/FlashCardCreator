@@ -1463,7 +1463,7 @@ enum popover_enum {
                                                       otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [alert textFieldAtIndex:0].text = @"";
-                [alert textFieldAtIndex:0].placeholder = @"p8c5yv6";
+                [alert textFieldAtIndex:0].placeholder = @"p8c5tv6";
                 alert.tag = UIAlertViewTypeEnum_Download_From_Code;
                 alert.delegate = self;
                 [alert show];
