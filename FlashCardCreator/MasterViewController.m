@@ -822,7 +822,7 @@ typedef enum {
     NSString *from = params[@"from"];
     
     if (from == NULL) {
-        from = @"Unkown person";
+        from = @"Unknown person";
     }
     
     
