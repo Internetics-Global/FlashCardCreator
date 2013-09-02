@@ -990,7 +990,8 @@ typedef enum {
             //We need to move cover image to imagesDirectory
             error = nil;
             NSString *currentcoverImageURL = [[FileOperationHelper downloadedPackFileDirectory ] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
-            NSString *newCoverImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
+            NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            
             if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
                 [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
                 if (error) {
@@ -1077,6 +1078,9 @@ typedef enum {
 
 - (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath platform:(NSString *)packPlatformStr {
     
+    NSError *error = nil;
+    NSString *newFileName = nil;
+    
     //step1: unzip file
     ZipArchive* za = [[ZipArchive alloc] init];
     if( [za UnzipOpenFile:zippedFilePath] )
@@ -1097,7 +1101,7 @@ typedef enum {
     //step2: Assemable question card
     Card *assembledCard = [[Card alloc] init];
     NSString *imagesDir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Images"];
-    NSError *error = nil;
+    error = nil;
     NSString *questionJsonPath = [imagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
     NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];
     if (!questionData) {
@@ -1116,9 +1120,34 @@ typedef enum {
             [assembledCard question].sub = questionDict[@"sub"];
             [assembledCard question].subheading = questionDict[@"subheading"];
             [assembledCard question].logoURLLinkage = questionDict[@"logo_url"];
-            [assembledCard question].logoFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"logo"]];
-            [assembledCard question].imageFullPath = [imagesDir stringByAppendingPathComponent:questionDict[@"image"]];
-            assembledCard.coverImageURL = [imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]];
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
+            if (error) {
+                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            } else {
+                [assembledCard question].logoFullPath = newFileName;
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
+            if (error) {
+                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            } else {
+                [assembledCard question].imageFullPath = newFileName;
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
+            if (error) {
+                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            } else {
+                assembledCard.coverImageURL = newFileName;
+            }
+            
             assembledCard.templateBackgroundName = questionDict[@"template_background"];
             if (assembledCard.templateBackgroundName.length ==0) {
                 //compatibility with previous version
@@ -1209,8 +1238,27 @@ typedef enum {
             [assembledCard answer].main = answerDict[@"main"];
             [assembledCard answer].sub = answerDict[@"sub"];
             [assembledCard answer].subheading = answerDict[@"subheading"];
-            [assembledCard answer].imageFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"image"]];
-            [assembledCard answer].logoFullPath = [imagesDir stringByAppendingPathComponent:answerDict[@"logo"]];
+            
+            if ([[assembledCard answer].main rangeOfString:@"Point to"].length > 0) {
+                error = nil;
+            }
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
+            if (error) {
+                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            } else {
+                [assembledCard answer].imageFullPath = newFileName;
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
+            if (error) {
+                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            } else {
+                [assembledCard answer].logoFullPath = newFileName;
+            }
             
             assembledCard.answer.templateID = [answerDict[@"template_id"] intValue];
             
