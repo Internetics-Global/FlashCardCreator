@@ -193,8 +193,9 @@
             
             
             
-            
-            SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
+            NSString *finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
+            SHKItem *item = [SHKItem text:finalPostMessage];
             SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
             [SHK setRootViewController:self.baseViewController];
             [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
