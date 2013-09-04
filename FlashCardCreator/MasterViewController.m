@@ -1244,15 +1244,50 @@ enum popover_enum {
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPhone and pack was made on non-iOS platform");
-                [assembledCard question].css.subheadingSize = 16;
-                [assembledCard question].css.mainSize = 20;
-                [assembledCard question].css.subSize = 16;
+
+                //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
+                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                float factor = 0;
+                if ((subheadingSize < 16) && (subheadingSize >0)) {
+                    factor = subheadingSize/16.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
+                    [assembledCard question].css.mainSize = mainSize/factor;
+                    [assembledCard question].css.subSize = subSize/factor; 
+                } else if ((mainSize < 20) && (mainSize >0)) {
+                    factor = mainSize/20.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
+                    [assembledCard question].css.subSize = subSize/factor;
+                } else if ((subSize < 16) && (subSize >0)) {
+                    factor = subSize/16.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard question].css.mainSize = mainSize/factor;
+                    [assembledCard question].css.subSize = subSize/factor;  // ==16
+                }
+                
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPad and pack was made on non-iOS platform");
-                [assembledCard question].css.subheadingSize = 32;
-                [assembledCard question].css.mainSize = 40;
-                [assembledCard question].css.subSize = 32;
+                
+                //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
+                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                float factor = 0;
+                if ((subheadingSize < 32) && (subheadingSize >0)) {
+                    factor = subheadingSize/32.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
+                    [assembledCard question].css.mainSize = mainSize/factor;
+                    [assembledCard question].css.subSize = subSize/factor;
+                } else if ((mainSize < 40) && (mainSize >0)) {
+                    factor = mainSize/40.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
+                    [assembledCard question].css.subSize = subSize/factor;
+                } else if ((subSize < 32) && (subSize >0)) {
+                    factor = subSize/32.0;
+                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard question].css.mainSize = mainSize/factor;
+                    [assembledCard question].css.subSize = subSize/factor;  // ==32
+                }
                 
             } else {
                 NSLog(@"The platform you are using and pack was made are the same");
@@ -1346,15 +1381,49 @@ enum popover_enum {
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPhone and pack was made on non-iOS platform");
-                [assembledCard answer].css.subheadingSize = 16;
-                [assembledCard answer].css.mainSize = 20;
-                [assembledCard answer].css.subSize = 16;
+                
+                //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
+                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                float factor = 0;
+                if ((subheadingSize < 16) && (subheadingSize >0)) {
+                    factor = subheadingSize/16.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
+                    [assembledCard answer].css.mainSize = mainSize/factor;
+                    [assembledCard answer].css.subSize = subSize/factor;
+                } else if ((mainSize < 20) && (mainSize >0)) {
+                    factor = mainSize/20.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
+                    [assembledCard answer].css.subSize = subSize/factor;
+                } else if ((subSize < 16) && (subSize >0)) {
+                    factor = subSize/16.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard answer].css.mainSize = mainSize/factor;
+                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
+                }
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPad and pack was made on non-iOS platform");
-                [assembledCard answer].css.subheadingSize = 32;
-                [assembledCard answer].css.mainSize = 40;
-                [assembledCard answer].css.subSize = 32;
+                
+                //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
+                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                float factor = 0;
+                if ((subheadingSize < 32) && (subheadingSize >0)) {
+                    factor = subheadingSize/32.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
+                    [assembledCard answer].css.mainSize = mainSize/factor;
+                    [assembledCard answer].css.subSize = subSize/factor;
+                } else if ((mainSize < 40) && (mainSize >0)) {
+                    factor = mainSize/40.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
+                    [assembledCard answer].css.subSize = subSize/factor;
+                } else if ((subSize < 32) && (subSize >0)) {
+                    factor = subSize/32.0;
+                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                    [assembledCard answer].css.mainSize = mainSize/factor;
+                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
+                }
                 
             } else {
                 NSLog(@"The platform you are using and pack was made are the same");
