@@ -1344,7 +1344,20 @@ enum popover_enum {
                 [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 [assembledCard answer].css.subSize = subSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
+            } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
+                NSLog(@"You are using iPhone and pack was made on non-iOS platform");
+                [assembledCard answer].css.subheadingSize = 16;
+                [assembledCard answer].css.mainSize = 20;
+                [assembledCard answer].css.subSize = 16;
+                
+            } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
+                NSLog(@"You are using iPad and pack was made on non-iOS platform");
+                [assembledCard answer].css.subheadingSize = 32;
+                [assembledCard answer].css.mainSize = 40;
+                [assembledCard answer].css.subSize = 32;
+                
             } else {
+                NSLog(@"The platform you are using and pack was made are the same");
                 [assembledCard answer].css.subheadingSize = subheadingSize;
                 [assembledCard answer].css.mainSize = mainSize;
                 [assembledCard answer].css.subSize = subSize;
