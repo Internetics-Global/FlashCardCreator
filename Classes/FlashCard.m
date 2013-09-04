@@ -1642,7 +1642,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 20, 700, 50);
+            _subheadingQuestion.frame = CGRectMake(10, 20, 500, 50);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:34];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1798,7 +1798,7 @@ extern BOOL isFromNewCreatedCard;
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(1, 5, 350, 33);
+            _subheadingQuestion.frame = CGRectMake(1, 5, 300, 33);
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
