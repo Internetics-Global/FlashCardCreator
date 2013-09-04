@@ -1038,7 +1038,7 @@ enum popover_enum {
             //We need to move cover image to imagesDirectory
             error = nil;
             NSString *currentcoverImageURL = [[FileOperationHelper downloadedPackFileDirectory ] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
-            NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             
             if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
                 [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
@@ -1133,7 +1133,8 @@ enum popover_enum {
     ZipArchive* za = [[ZipArchive alloc] init];
     if( [za UnzipOpenFile:zippedFilePath] )
     {
-        BOOL ret = [za UnzipFileTo:[FileOperationHelper imagesDirectory] overWrite:YES];
+        [[NSFileManager defaultManager] removeItemAtPath:[FileOperationHelper temporaryImagesDirectory] error:nil];
+        BOOL ret = [za UnzipFileTo:[FileOperationHelper temporaryImagesDirectory] overWrite:YES];
         if( NO==ret ) {
             NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
         } else {
@@ -1146,11 +1147,12 @@ enum popover_enum {
         NSLog(@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath);
     }
     
-    //step2: Assemable question card
     Card *assembledCard = [[Card alloc] init];
-    NSString *imagesDir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Images"];
+    NSString *temporaryImagesDir = [FileOperationHelper temporaryImagesDirectory];
+    
+    //step2: Assemable question card
     error = nil;
-    NSString *questionJsonPath = [imagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
+    NSString *questionJsonPath = [temporaryImagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
     NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];
     if (!questionData) {
         [Common alertViewCommon:@"Error when parsing questionTextContent.json"];
@@ -1170,30 +1172,43 @@ enum popover_enum {
             [assembledCard question].logoURLLinkage = questionDict[@"logo_url"];
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
-            if (error) {
-                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([questionDict[@"logo"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard question].logoFullPath = newFileName;
+                }
             } else {
-                [assembledCard question].logoFullPath = newFileName;
+                [assembledCard question].logoFullPath = @"";
+            }
+            
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([questionDict[@"image"] length] >0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard question].imageFullPath = newFileName;
+                }
+            } else {
+                [assembledCard question].imageFullPath = @"";
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
-            if (error) {
-                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
-            } else {
-                [assembledCard question].imageFullPath = newFileName;
-            }
-            
-            error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
-            if (error) {
-                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
-            } else {
-                assembledCard.coverImageURL = newFileName;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([questionDict[@"cover_image"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    assembledCard.coverImageURL = newFileName;
+                }
+            }   else {
+                assembledCard.coverImageURL = @"";
             }
             
             assembledCard.templateBackgroundName = questionDict[@"template_background"];
@@ -1304,7 +1319,7 @@ enum popover_enum {
     
     //step3: Assemable answer card
     error = nil;
-    NSString *answerJsonPath = [imagesDir stringByAppendingPathComponent:@"answerTextContent.json"];
+    NSString *answerJsonPath = [temporaryImagesDir stringByAppendingPathComponent:@"answerTextContent.json"];
     NSData *answerData = [NSData dataWithContentsOfFile:answerJsonPath];
     if (!answerData) {
         [Common alertViewCommon:@"Error when parsing answerTextContent.json"];
@@ -1326,21 +1341,29 @@ enum popover_enum {
                 error = nil;
             }
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
-            if (error) {
-                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([answerDict[@"image"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].imageFullPath = newFileName;
+                }
             } else {
-                [assembledCard answer].imageFullPath = newFileName;
+                [assembledCard answer].imageFullPath = @"";
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePath];
-            [[NSFileManager defaultManager] moveItemAtPath:[imagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
-            if (error) {
-                NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([answerDict[@"logo"] length] >0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].logoFullPath = newFileName;
+                }
             } else {
-                [assembledCard answer].logoFullPath = newFileName;
+                [assembledCard answer].logoFullPath = @"";
             }
             
             assembledCard.answer.templateID = [answerDict[@"template_id"] intValue];

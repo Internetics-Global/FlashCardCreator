@@ -207,7 +207,7 @@
     }
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+    NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
     [imageData writeToFile:savedFullPath atomically:YES];
     _coverImageView.image = [UIImage imageWithContentsOfFile:savedFullPath];
     _newPack.coverImageURL = savedFullPath;

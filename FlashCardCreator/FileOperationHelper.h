@@ -15,6 +15,7 @@
 
 + (NSString *) cachesDirectory;
 + (NSString *) imagesDirectory;
++ (NSString *) temporaryImagesDirectory;
 + (NSString *) assembleFactoryDirectory;
 
 + (NSString *) documentsPathForFileNamed:(NSString *)fileName;
@@ -24,7 +25,7 @@
 
 + (NSString *)unzippedPackInfoJsonFilePath;
 
-+ (NSString *) generateUniqueJPEGImageFilePath;
++ (NSString *) generateUniqueJPEGImageFilePathUnderImagesFolder;
 + (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password;
 
 + (NSString *)downloadedPackFileDirectory;

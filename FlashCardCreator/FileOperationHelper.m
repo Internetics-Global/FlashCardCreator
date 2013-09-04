@@ -55,6 +55,22 @@
 	return returnPath;
 }
 
+/**
+ *	which is used to hold unzipped images, and will finally removed to imagesDirectory
+ *
+ *	@return	<#return value description#>
+ */
++ (NSString *)temporaryImagesDirectory{
+    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Temporary_Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", returnPath);
+        }
+    }
+	return returnPath;
+}
+
 + (NSString *)assembleFactoryDirectory{
     NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Card Assemble Factory"];
     NSError *error = nil;
@@ -101,7 +117,11 @@
 #pragma mark -
 #pragma mark - Generate unique file name
 
-+ (NSString *) generateUniqueJPEGImageFilePath {
+/**
+ *	an unique name will be generated and will be under directory of "Images"
+ *
+ */
++ (NSString *) generateUniqueJPEGImageFilePathUnderImagesFolder {
     NSString *path = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -178,7 +198,9 @@
     return generatePackZipFilePath;
 }
 
-//We put all the necessary files for uploading under Documents/Card Assemble Factory
+/**
+ *	We put all the necessary files for uploading under Documents/Card Assemble Factory
+ */
 + (NSString *) zipCardForUpload:(Card *) card {
     
     if (card == nil) {

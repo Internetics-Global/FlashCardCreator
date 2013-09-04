@@ -323,7 +323,7 @@
     
     if (_currentPack) {
         if (([_currentPack.coverImageURL rangeOfString:@".png"].location == NSNotFound) || ([_currentPack.coverImageURL hasSuffix:@"default_pack_cover_image.png"])||((_currentPack.coverImageURL.length == 0))) {
-            _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
         [imageData writeToFile:_currentPack.coverImageURL atomically:YES];
         [_currentPack save];

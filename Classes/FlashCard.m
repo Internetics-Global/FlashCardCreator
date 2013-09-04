@@ -2403,7 +2403,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_isLogoImageViewClicked) {
         if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
-            _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
         
         [imageData writeToFile:_logoImageFullPath atomically:YES];
@@ -2434,7 +2434,7 @@ extern BOOL isFromNewCreatedCard;
             if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
                 || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
                 || ((_questionImageFullPath.length == 0))) {
-                _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+                _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
             [imageData writeToFile:_questionImageFullPath atomically:YES];
             _imageQuestion.image = [UIImage imageWithData:imageData];
@@ -2442,7 +2442,7 @@ extern BOOL isFromNewCreatedCard;
             if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
                 || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
                 || ((_answerImageFullPath.length == 0))) {
-                _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+                _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
             [imageData writeToFile:_answerImageFullPath atomically:YES];
             _imageAnswer.image = [UIImage imageWithData:imageData];
@@ -3054,7 +3054,7 @@ extern BOOL isFromNewCreatedCard;
         UIImage *origialmage = [self captureWholeViewAsImage];
         NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
         if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             [imageData writeToFile:savedFullPath atomically:YES];
             _currentCard.coverImageURL = savedFullPath;
         } else {
@@ -3189,7 +3189,7 @@ extern BOOL isFromNewCreatedCard;
         UIImage *origialmage = [tempCardView captureWholeViewAsImage];
         NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
         if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePath];
+            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             [imageData writeToFile:savedFullPath atomically:YES];
             card.coverImageURL = savedFullPath;
         } else {
