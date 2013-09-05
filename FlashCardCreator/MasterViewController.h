@@ -62,6 +62,6 @@
 @property (nonatomic, strong) PopupListComponent *shareSelectPopup;
 @property (nonatomic, strong) FMMoveTableView *tableView;
 
-- (void)shareButtonClicked;
+- (void)shareButtonClicked:(id) sender;
 
 @end

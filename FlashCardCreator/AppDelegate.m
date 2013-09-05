@@ -24,7 +24,7 @@
 #import "SHKConfiguration.h"
 #import "CreatePackViewController.h"
 
-extern BOOL isLoggingDropboxInSettingView;
+extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
 BOOL _isDownloadingSamplePack;
 
 @implementation AppDelegate
@@ -238,8 +238,14 @@ BOOL _isDownloadingSamplePack;
     {
         //[Common alertViewCommon:@"Dropbox is linked now"];
         
-        if (isLoggingDropboxInSettingView == NO) {  //which means it's not just a single dropbox log in action
-            [self.masterViewController shareButtonClicked];    
+        if (isLoggingDropboxInSettingView == NO) {
+            
+//            if (isUserInterfaceIdiomPhone) {
+//                [self.masterViewController shareButtonClicked:nil];
+//            }  else {
+//                [self.detailViewController shareButtonClicked:nil];
+//            }
+            
         }
     }
     

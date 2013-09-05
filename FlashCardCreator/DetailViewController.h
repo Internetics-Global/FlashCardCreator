@@ -63,4 +63,6 @@
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment;
 
+- (void)shareButtonClicked:(id) sender;
+
 @end
