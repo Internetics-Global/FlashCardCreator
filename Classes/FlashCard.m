@@ -348,7 +348,12 @@ extern BOOL isFromNewCreatedCard;
         _sidebarTitle = [[UITextField alloc] init];
         _sidebarTitle.frame = CGRectMake(0, 0, 400, 60);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _sidebarTitle.center = CGPointMake(50, 275);
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            _sidebarTitle.center = CGPointMake(30, 275);
+        } else {
+            _sidebarTitle.center = CGPointMake(50, 275);
+        }
+
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:20];
@@ -512,7 +517,11 @@ extern BOOL isFromNewCreatedCard;
         _sidebarTitle = [[UITextField alloc] init];
         _sidebarTitle.frame = CGRectMake(0, 0, 200, 30);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
-        _sidebarTitle.center = CGPointMake(25, 112);
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            _sidebarTitle.center = CGPointMake(15, 112);
+        } else {
+            _sidebarTitle.center = CGPointMake(25, 112);
+        }
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:12];
@@ -2142,9 +2151,18 @@ extern BOOL isFromNewCreatedCard;
         customButton.bounds = CGRectMake(0, 0, 60, 50);
     }
     [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
-    [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-    [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+    if (isUserInterfaceIdiomPhone) {
+        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    }   else {
+        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    }
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        
+    } else {
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+    }
     [customButton addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchDown];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];

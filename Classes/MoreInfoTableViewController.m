@@ -145,6 +145,11 @@ BOOL isLoggingDropboxInSettingView = NO;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+    }
         
     return cell;
 }

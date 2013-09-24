@@ -79,6 +79,11 @@
     _swipeView.alignment = SwipeViewAlignmentCenter;
     _swipeView.pagingEnabled = YES;
     _swipeView.wrapEnabled = NO;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        _swipeView.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
+    }
+    
     _swipeView.truncateFinalPage = YES;
     int packSize = [[[User defaultUser] packs] count];
     if (packSize == 1) {
@@ -90,14 +95,6 @@
         _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        CGRect rect = _swipeView.frame;
-        if (isUserInterfaceIdiomPhone == FALSE) {
-            rect.origin.y = rect.origin.y + IPAD_UI_NAVIGATION_BAR_HEIGHT;
-        }
-        
-        _swipeView.frame = rect;
-    }
     
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
@@ -106,6 +103,8 @@
     self.title = @"Pack List";
     
     [self resetPackContent];
+    
+
 }
 
 #pragma mark -

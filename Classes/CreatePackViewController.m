@@ -53,13 +53,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 }
 
 - (void)loadView {
     [super loadView];
 
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 5, 190, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 10, 190, 24)];
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
@@ -76,7 +80,7 @@
     [self.view addSubview:_packNameText];
     
     if (isUserInterfaceIdiomPhone) {
-         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 35, 190, 24)];
+         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 45, 190, 24)];
     } else {
         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
     }
@@ -93,7 +97,7 @@
     [self.view addSubview:_sidebarTitle];
     
     if (isUserInterfaceIdiomPhone) {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 65, 190, 24)];
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 80, 190, 24)];
     } else {
         _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 150, 200, 24)];
     }

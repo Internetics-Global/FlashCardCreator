@@ -142,6 +142,10 @@ BOOL isFromNewCreatedCard = NO;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];    
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
