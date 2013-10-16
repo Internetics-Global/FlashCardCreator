@@ -143,6 +143,8 @@
         _newPack.packName = _packNameText.text;
         _newPack.sidebarTitle = _sidebarTitle.text;
         _newPack.creator = [OpenUDID value];
+        _newPack.createDate = (int)[[NSDate date] timeIntervalSince1970];
+        _newPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         _newPack.creatorNickName = _creatorText.text;
         [[User defaultUser] addPack:_newPack];
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];

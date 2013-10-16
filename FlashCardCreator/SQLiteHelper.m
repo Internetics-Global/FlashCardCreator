@@ -88,7 +88,7 @@
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
-		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text);"];
+		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text,create_date integer,last_visit_date integer);"];
 		sqlite3_step(createItems);
 		sqlite3_finalize(createItems);
         

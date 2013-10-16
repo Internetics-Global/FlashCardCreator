@@ -1102,6 +1102,8 @@ enum popover_enum {
             pack.packName = packDict[@"pack_name"];
             pack.sidebarTitle = packDict[@"sidebar_title"];
             pack.creator = packDict[@"creator"];
+            pack.createDate = (int)[[NSDate date] timeIntervalSince1970];
+            pack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.creatorNickName = packDict[@"creator_nick_name"];
             
             packPlatformStr = packDict[@"platform"];

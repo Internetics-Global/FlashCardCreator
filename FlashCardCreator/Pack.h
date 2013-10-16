@@ -18,6 +18,8 @@
     NSString *_languageName;
     NSString *_creator; //we use OpenUDID to generate
     NSString *_creatorNickName; //User input this during creating pack
+    int       _lastVisitDate;
+    int       _createDate;
     NSMutableArray *_cards;
 }
 
@@ -31,6 +33,8 @@
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, copy) NSString *creator;
 @property (nonatomic, copy) NSString *creatorNickName;
+@property (assign, nonatomic) int createDate;
+@property (assign, nonatomic) int lastVisitDate;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;

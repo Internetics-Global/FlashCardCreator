@@ -9,6 +9,7 @@
 #import "User.h"
 #import "SQLiteHelper.h"
 #import "Pack.h"
+#import "FileOperationHelper.h"
 
 @implementation User
 
@@ -100,6 +101,57 @@
 -(void)removePack:(Pack *)pack{
 	[_packs removeObject:pack];
 	[pack destroy];
+}
+
+// Sort self.packs
+- (NSMutableArray  *) sortPacks:(SortTypeEnum) sortType {
+    
+    NSArray *shuffledArray= [NSArray arrayWithArray:self.packs];
+    
+
+    switch (sortType) {
+        case SortTypeLastCreatedAscend:
+            
+            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+                return (a.createDate >= b.createDate);
+            }];
+            self.packs = [NSMutableArray arrayWithArray:shuffledArray];
+            
+            break;
+        case SortTypeLastCreatedDescend:
+            
+            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+                return (a.createDate <= b.createDate);
+            }];
+            self.packs = [NSMutableArray arrayWithArray:shuffledArray];
+
+            break;
+        case SortTypeLastVisitedAscend:
+            
+            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+                return (a.lastVisitDate >= b.lastVisitDate);
+            }];
+            self.packs = [NSMutableArray arrayWithArray:shuffledArray];
+
+            break;
+        case SortTypeLastVisitedDescend:
+            
+            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+                return (a.lastVisitDate <= b.lastVisitDate);
+            }];
+            self.packs = [NSMutableArray arrayWithArray:shuffledArray];
+
+            break;
+        case SortTypeDefault:
+            //do nothing
+            break;
+            
+        default:
+            break;
+    }
+    
+    return  self.packs;
+    
 }
 
 

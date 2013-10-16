@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SwipeView.h"
-
+#import "User.h"
 @class Pack;
 
 @interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
@@ -27,12 +27,14 @@
     Pack  *_currentPack;
     
     int _currentIndex;
+    
+    SortTypeEnum _sortTypeEnum;
 }
 
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIButton *userNewButton;
-@property (weak, nonatomic) IBOutlet UITextField *sortedLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sortedButton;
 
 
 @property (nonatomic, strong) NSMutableArray *packArray;

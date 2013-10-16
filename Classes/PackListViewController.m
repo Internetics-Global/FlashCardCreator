@@ -27,6 +27,10 @@
 {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
+        
+        _sortTypeEnum = SortTypeLastVisitedDescend;
+        _packArray = [[User defaultUser] sortPacks:_sortTypeEnum];
+        
         //From: click "add pack" button on navigation bar
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePackListNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
@@ -61,6 +65,7 @@
                 _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
             }
         }
+
         
     }
     return self;
@@ -111,10 +116,10 @@
     
     if ([self isPackListOpenedBefore]) {
         _userNewButton.hidden = TRUE;
-        _sortedLabel.hidden = TRUE;
+        //_sortedLabel.hidden = TRUE;
     } else {
         _userNewButton.hidden = FALSE;
-        _sortedLabel.hidden = FALSE;
+        //_sortedLabel.hidden = FALSE;
     }
     
     
@@ -123,6 +128,7 @@
     _pageControl.defersCurrentPageDisplay = YES;
     
     [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
+    [_sortedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
     
     self.title = @"Pack List";
     
@@ -216,7 +222,7 @@
     coverImageView.layer.cornerRadius = 10;
     coverImageView.layer.masksToBounds = YES;
     [view addSubview:coverImageView];
-    UIImage *image = [UIImage imageWithContentsOfFile:[_packArray objectAtIndex:index]];
+    UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[_packArray objectAtIndex:index]).coverImageURL];
     if (image == NULL) {
         coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
     } else {
@@ -229,7 +235,6 @@
         playButton.backgroundColor = [UIColor clearColor];
         packNameText.tag = index;
         [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-        [playButton addTarget:self action:@selector(playSelectedPack:) forControlEvents:UIControlEventTouchDown];
         playButton.userInteractionEnabled = FALSE;
         [view addSubview:playButton];
     }
@@ -287,6 +292,10 @@
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
+    
+    Pack *selectedPack = [_packArray objectAtIndex:index];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    [selectedPack save];
 }
 
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
@@ -313,6 +322,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
     }
     
+    Pack *selectedPack = [_packArray objectAtIndex:index];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];;
+    [selectedPack save];
+    
     
 }
 
@@ -324,13 +337,8 @@
 #pragma mark - Reset DataSource
 
 - (void) resetPackContent {
-    NSMutableArray *imageArray = [NSMutableArray array];
-    
-    NSMutableArray *packArray = [[User defaultUser] packs];
-    for (Pack *pack in packArray) {
-        [imageArray addObject:pack.coverImageURL];
-    }
-    self.packArray = imageArray;
+    _packArray = [[User defaultUser] sortPacks:_sortTypeEnum];
+
 }
 
 #pragma mark -
@@ -344,9 +352,31 @@
 #pragma mark -
 #pragma mark - Control touch event
 
-- (void) playSelectedPack:(id)sender {
-
+- (void) switchSort:(id)sender {
+    UIButton *button = (UIButton *) sender;
+    
+    switch (button.tag) {
+        case 0:
+            button.tag = 1;
+            _sortTypeEnum = SortTypeLastCreatedDescend;
+            [self resetPackContent];
+            [button setTitle:@"Sorted by recently created first" forState:UIControlStateNormal];
+            [self.swipeView reloadData];
+            break;
+        case 1:
+            button.tag = 0;
+            _sortTypeEnum = SortTypeLastVisitedDescend;
+            [self resetPackContent];
+            [button setTitle:@"Sorted by recently viewed first" forState:UIControlStateNormal];
+            [self.swipeView reloadData];
+            break;
+            
+        default:
+            break;
+    }
+    
 }
+
 
 - (void) showIntroduction:(id)sender {
     if (isUserInterfaceIdiomPhone) {

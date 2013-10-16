@@ -59,6 +59,13 @@
     _creator = [dict valueForKey:@"creator"];
     _creatorNickName = [dict valueForKey:@"creator_nick_name"];
     
+    if ([[dict allKeys] containsObject:@"create_date"]) {
+        _createDate = [[dict valueForKey:@"create_date"] intValue];
+    }
+    if ([[dict allKeys] containsObject:@"last_visit_date"]) {;
+        _lastVisitDate = [[dict valueForKey:@"last_visit_date"] intValue];
+    }
+    
 	if ([[dict allKeys] containsObject:@"cards"]) {
 		NSMutableArray *cardsArray = (NSMutableArray *)[dict valueForKey:@"cards"];
 		for (int i = 0; i < [cardsArray count]; i++) {
@@ -97,7 +104,7 @@
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\", sidebar_title=\"%@\" WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -108,7 +115,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,sidebar_title) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -181,6 +188,8 @@
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"cover_image"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"creator"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"creator_nick_name"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"create_date"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"last_visit_date"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}
