@@ -98,7 +98,8 @@
 
 //Master view cell size
 #define kCellSizeWidth                         IPAD_UI_MASTER_WIDTH
-#define kCellSizeHeight                        130
+#define kCellSizeHeight_iPad                        130
+#define kCellSizeHeight_iPhone                      88
 
 //UIImageJPEGRepresentation quality factor
 #define kJPEGQualityFactor                     0.7

@@ -47,7 +47,7 @@
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:contentView];
     
-    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 30, 20)];
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kCellSizeHeight_iPhone/2-10, 30, 20)];
     _indexLabel.text = @"N";
     _indexLabel.textColor = [UIColor grayColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
@@ -55,7 +55,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 100, 58.75)];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 100, kCellSizeHeight_iPhone-20)];
     _cellImageView.layer.cornerRadius = 5;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];
@@ -69,7 +69,7 @@
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:contentView];
     
-    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kCellSizeHeight/2-10, 30, 20)];
+    _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kCellSizeHeight_iPad/2-10, 30, 20)];
     _indexLabel.text = @"N";
     _indexLabel.textColor = [UIColor grayColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
@@ -77,7 +77,7 @@
     _indexLabel.textAlignment = UITextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
-    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, (kCellSizeWidth-40), (kCellSizeHeight-26))];
+    _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, (kCellSizeWidth-40), (kCellSizeHeight_iPad-26))];
     _cellImageView.layer.cornerRadius = 10;
     _cellImageView.layer.masksToBounds = YES;
     [self.contentView addSubview:_cellImageView];

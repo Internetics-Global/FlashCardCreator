@@ -643,9 +643,9 @@ enum popover_enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isUserInterfaceIdiomPhone) {
-        return 80;
+        return kCellSizeHeight_iPhone;
     } else {
-        return kCellSizeHeight;
+        return kCellSizeHeight_iPad;
     }
 }
 
