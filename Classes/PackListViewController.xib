@@ -8,7 +8,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PackListViewController">
             <connections>
                 <outlet property="pageControl" destination="12" id="14"/>
+                <outlet property="sortedLabel" destination="kdJ-jF-GJS" id="ARE-iI-0wX"/>
                 <outlet property="swipeView" destination="8" id="11"/>
+                <outlet property="userNewButton" destination="B7M-Ff-Qtx" id="H2D-Ca-lW2"/>
                 <outlet property="view" destination="6" id="7"/>
             </connections>
         </placeholder>
@@ -33,6 +35,24 @@
                         <action selector="pageControlTapped" destination="-1" eventType="valueChanged" id="13"/>
                     </connections>
                 </pageControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B7M-Ff-Qtx">
+                    <rect key="frame" x="-1" y="442" width="84" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="New User?">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sorted by: Recently viewed first" textAlignment="center" minimumFontSize="17" id="kdJ-jF-GJS" userLabel="sorted label">
+                    <rect key="frame" x="105" y="442" width="215" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

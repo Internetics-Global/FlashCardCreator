@@ -106,9 +106,6 @@
     _scrollView = [[UIScrollView alloc] init];
 	_scrollView.delegate = self;
 	_scrollView.delaysContentTouches = _delaysContentTouches;
-    _scrollView.bounces = _bounces && !_wrapEnabled;
-	_scrollView.alwaysBounceHorizontal = !_vertical && _bounces;
-    _scrollView.alwaysBounceVertical = _vertical && _bounces;
 	_scrollView.pagingEnabled = _pagingEnabled;
 	_scrollView.scrollEnabled = _scrollEnabled;
     _scrollView.decelerationRate = _decelerationRate;
@@ -1049,13 +1046,27 @@
 - (void)didTap:(UITapGestureRecognizer *)tapGesture
 {
     CGPoint point = [tapGesture locationInView:_scrollView];
-    NSInteger index = _vertical? (point.y / (_itemSize.height)): (point.x / (_itemSize.width));
+    NSInteger index = (point.x / (_itemSize.width));
     if (index >= 0 && index < _numberOfItems)
     {
-        if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemAtIndex:)])
-        {
-            [_delegate swipeView:self didSelectItemAtIndex:index];
+        float valX = ((int)point.x % ((int)_itemSize.width));
+        float valY = (int)point.y;
+        //this is special case for play button
+        if ((valX > _itemSize.width - 80 - 10) && (valX < _itemSize.width - 10)
+            && (valY > 105) && (valY < 80 + 105)) {
+            
+            if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemPlayButtonAtIndex:)])
+            {
+                [_delegate swipeView:self didSelectItemPlayButtonAtIndex:index];
+            }
+            
+        } else {
+            if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemAtIndex:)])
+            {
+                [_delegate swipeView:self didSelectItemAtIndex:index];
+            }
         }
+        
     }
 }
 

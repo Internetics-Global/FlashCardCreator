@@ -118,5 +118,6 @@ SwipeViewAlignment;
 - (void)swipeViewDidEndScrollingAnimation:(SwipeView *)swipeView;
 - (BOOL)swipeView:(SwipeView *)swipeView shouldSelectItemAtIndex:(NSInteger)index;
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index;
+- (void)swipeView:(SwipeView *)swipeView didSelectItemPlayButtonAtIndex:(NSInteger)index;
 
 @end

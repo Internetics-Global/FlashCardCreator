@@ -36,6 +36,7 @@
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
 #import "AmazonClientManager.h"
+#import "SimpleWebBrowserController.h"
 
 extern BOOL _isDownloadingSamplePack;
 
@@ -82,6 +83,12 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterSaveCardNotification:) name:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterDetailScrollNotification:) name:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toCreateNewPackNotification:) name:TO_CREATE_NEW_PACK_NOTIFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showIntroductionVideoNotification:) name:SHOW_VIDEO_NOTIFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:PLAY_NOTIFICATION object:nil];
         
         //2. Initialize
         _currentPack = [[Pack alloc] init];
@@ -155,6 +162,8 @@ enum popover_enum {
 
 - (void)viewDidAppear:(BOOL)animated {
 
+    [super viewDidAppear:animated];
+    
     if (_addCardButton == nil) {
         if (isUserInterfaceIdiomPhone) {
             _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 160, 60)];
@@ -268,8 +277,11 @@ enum popover_enum {
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         
-        _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
-        _packListPickerPopover.popoverContentSize = CGSizeMake(640, 320);
+        if (_packListPickerPopover == nil) {
+            _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
+            _packListPickerPopover.popoverContentSize = CGSizeMake(640, 320);
+        }
+        
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
 }
@@ -532,6 +544,59 @@ enum popover_enum {
     
 }
 
+- (void) playNotification :(NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        [_packListPickerPopover dismissPopoverAnimated:YES];
+    }
+    
+    int index = [[notification object] intValue];
+    Pack *selectedPack = [[[User defaultUser] packs] objectAtIndex:index];
+    
+    PlayViewController *playViewController = [[PlayViewController alloc] init];
+    playViewController.currentPack = selectedPack;
+    if (isUserInterfaceIdiomPhone) {
+        playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
+    } else {
+        playViewController.view.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
+    }
+    playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    if ((self.currentCard == nil) || (self.currentPack == nil)) {
+        [Common alertViewCommon:@"Current card or pack is nil"];
+        return;
+    }
+    
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
+}
+
+- (void) toCreateNewPackNotification:(NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone == false) {
+        [_packListPickerPopover dismissPopoverAnimated:YES];
+    }
+    
+    [self createNewPack:nil];
+    
+}
+
+- (void) showIntroductionVideoNotification:(NSNotification *) notification {
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.youtube.com/embed/TJkmc8-eyvE"];
+    SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+    controller.hidesToolbar = NO;
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        controller.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentModalViewController:controller animated:YES];
+    }
+    
+    
+    
+}
+
 #pragma mark -
 #pragma mark - Update UI
 
@@ -542,17 +607,23 @@ enum popover_enum {
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
     
-    //Step2: update detail view
-    self.detailViewController.detailItem = _currentCard.cardName;
-    self.detailViewController.currentCard = _currentCard;
-    self.detailViewController.currentPack = _currentPack;
-    self.detailViewController.indexCard = _indexCard;
-    
-    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
-    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-    
     _isDownloadingSamplePack = FALSE;
+
+    //New user use introduction
+    BOOL isPackListOpenedBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
+    if (isPackListOpenedBefore == FALSE){
+        [self selectAvailablePacks:nil];
+    } else {
+        //Step2: update detail view
+        self.detailViewController.detailItem = _currentCard.cardName;
+        self.detailViewController.currentCard = _currentCard;
+        self.detailViewController.currentPack = _currentPack;
+        self.detailViewController.indexCard = _indexCard;
+        
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
     
 }
 

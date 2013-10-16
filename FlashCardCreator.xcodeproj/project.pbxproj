@@ -223,6 +223,10 @@
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
 		88E739E71797C2F7004160F5 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */; };
 		88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E61797C2F7004160F5 /* AWSRuntime.framework */; };
+		88EEEE3C180E26E0002AB9A1 /* create_new_pack.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */; };
+		88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */; };
+		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
+		88EEEE69180E434F002AB9A1 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE67180E434F002AB9A1 /* play.png */; };
 		88F47F661793FBE200EE068F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F47F651793FBE200EE068F /* Media.xcassets */; };
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
@@ -785,6 +789,10 @@
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
 		88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
 		88E739E61797C2F7004160F5 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Libraries/AWSRuntime.framework; sourceTree = "<group>"; };
+		88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_new_pack.png; path = Resources/create_new_pack.png; sourceTree = "<group>"; };
+		88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "create_new_pack@2x.png"; path = "Resources/create_new_pack@2x.png"; sourceTree = "<group>"; };
+		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		88EEEE67180E434F002AB9A1 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = Resources/play.png; sourceTree = "<group>"; };
 		88F47F651793FBE200EE068F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = FlashCardCreator/Media.xcassets; sourceTree = "<group>"; };
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
@@ -796,6 +804,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */,
 				2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */,
 				2D66C17E16A6B39200795CF9 /* CoreLocation.framework in Frameworks */,
 				2D5C189716D1A94F00E1E785 /* libShareKit.a in Frameworks */,
@@ -1330,6 +1339,9 @@
 		2DC554E4169D425A00251C1B /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				88EEEE67180E434F002AB9A1 /* play.png */,
+				88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */,
+				88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */,
 				88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */,
 				88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */,
 				88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */,
@@ -1395,6 +1407,7 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */,
 				2D37280D16DDCBA00068DE31 /* CoreMotion.framework */,
 				2DF980E416C26CC60092AAF6 /* CoreText.framework */,
 				2D66C18A16A6B5D500795CF9 /* Accounts.framework */,
@@ -1860,6 +1873,7 @@
 				2D1A053F16EDEB2100527311 /* popoverBg@2x.png in Resources */,
 				2D1A054616EDED8800527311 /* template_color_blue.png in Resources */,
 				2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */,
+				88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */,
 				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
 				2D1A054916EDED8800527311 /* template_color_purple.png in Resources */,
 				2D1A054A16EDED8800527311 /* template_color_red.png in Resources */,
@@ -1880,6 +1894,7 @@
 				881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */,
 				8810F481170B025B00D40562 /* help6.jpg in Resources */,
 				8810F482170B025B00D40562 /* help7.jpg in Resources */,
+				88EEEE69180E434F002AB9A1 /* play.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
 				88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */,
 				88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */,
@@ -1903,6 +1918,7 @@
 				88491B411714522300833692 /* templateScreenshot3_answer_iPad.png in Resources */,
 				88491B421714522300833692 /* templateScreenshot3_answer.png in Resources */,
 				88491B431714522300833692 /* templateScreenshot3_question_iPad.png in Resources */,
+				88EEEE3C180E26E0002AB9A1 /* create_new_pack.png in Resources */,
 				88491B441714522300833692 /* templateScreenshot3_question.png in Resources */,
 				88491B451714522300833692 /* templateScreenshot4_answer_iPad.png in Resources */,
 				88491B461714522300833692 /* templateScreenshot4_answer.png in Resources */,

@@ -39,8 +39,13 @@
             self.navigationItem.leftBarButtonItem = backButton;
         }
         
-        _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
-        self.navigationItem.rightBarButtonItem = _editBtnItem;
+        if ([self isPackListOpenedBefore] == FALSE) {
+            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
+            self.navigationItem.rightBarButtonItem = _editBtnItem;
+        } else {
+            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
+            self.navigationItem.rightBarButtonItem = _editBtnItem;
+        }
         
         _hideDeleteButton = TRUE;
         
@@ -66,6 +71,14 @@
     [self.swipeView reloadData];    
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"isPackListOpenedBefore"
+     ];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -79,6 +92,7 @@
     _swipeView.alignment = SwipeViewAlignmentCenter;
     _swipeView.pagingEnabled = YES;
     _swipeView.wrapEnabled = NO;
+    
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         _swipeView.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
@@ -95,14 +109,29 @@
         _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     
+    if ([self isPackListOpenedBefore]) {
+        _userNewButton.hidden = TRUE;
+        _sortedLabel.hidden = TRUE;
+    } else {
+        _userNewButton.hidden = FALSE;
+        _sortedLabel.hidden = FALSE;
+    }
+    
     
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
     _pageControl.defersCurrentPageDisplay = YES;
     
+    [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
+    
     self.title = @"Pack List";
     
     [self resetPackContent];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.automaticallyAdjustsScrollViewInsets = FALSE;
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     
 
 }
@@ -120,7 +149,11 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return [self.packArray count];
+    if ([self isPackListOpenedBefore] == FALSE) {
+        return [self.packArray count] + 1;
+    } else {
+        return [self.packArray count];
+    }
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -128,7 +161,6 @@
     UIView *contentView = view;
     UIImageView *coverImageView ;
     UITextField *packNameText;
-    UITextField *packCreatorText;
     UIButton *deleteButton;
     UIButton *changeImageButton;
      
@@ -136,6 +168,22 @@
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
 
+    
+    //this is only for first start-up logic to introduce functions
+    if ([self isPackListOpenedBefore] == FALSE) {
+        if (index ==0) {
+            UIImageView *addNewPackImageView ;
+            addNewPackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
+            addNewPackImageView.contentMode = UIViewContentModeScaleAspectFit;
+            addNewPackImageView.layer.cornerRadius = 10;
+            addNewPackImageView.layer.masksToBounds = YES;
+            addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
+            [view addSubview:addNewPackImageView];
+            [view layoutSubviews];
+            return view;
+        }
+        index = index -1;
+    }
     
     _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     
@@ -173,6 +221,17 @@
         coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
     } else {
         coverImageView.image = image;
+    }
+    
+    if ([self isPackListOpenedBefore] == FALSE) {
+        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        playButton.frame = CGRectMake(100, 150, 80, 80);
+        playButton.backgroundColor = [UIColor clearColor];
+        packNameText.tag = index;
+        [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        [playButton addTarget:self action:@selector(playSelectedPack:) forControlEvents:UIControlEventTouchDown];
+        playButton.userInteractionEnabled = FALSE;
+        [view addSubview:playButton];
     }
 
     
@@ -220,15 +279,45 @@
     _pageControl.currentPage = swipeView.currentPage;
 }
 
-- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
-{
-    NSLog(@"Selected item at index %d", index);
+-  (void)swipeView:(SwipeView *)swipeView didSelectItemPlayButtonAtIndex:(NSInteger)index {
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [self dismissModalViewControllerAnimated:YES];    
+       //dismiss popover view in notification
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
+}
+
+- (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"Selected item at index %d", index);
+
+    if ([self isPackListOpenedBefore] == FALSE) {
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            //dismiss popover view in notification
+        }
+        
+        if (index ==0) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index-1]];
+        }
+    } else {
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
+    }
+    
+    
+}
+
+- (BOOL) isPackListOpenedBefore {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
 }
 
 #pragma mark -
@@ -255,6 +344,19 @@
 #pragma mark -
 #pragma mark - Control touch event
 
+- (void) playSelectedPack:(id)sender {
+
+}
+
+- (void) showIntroduction:(id)sender {
+    if (isUserInterfaceIdiomPhone) {
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_VIDEO_NOTIFICATION object:self];
+}
+
 - (IBAction)pageControlTapped
 {
     //update swipe view page
@@ -278,6 +380,17 @@
         
     }
     
+}
+
+- (void) createNewPackButtonClicked:(id)sender {
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
+        
 }
 
 - (void) backButtonClicked {
