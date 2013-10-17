@@ -24,6 +24,7 @@
 "NavigationBarItem_Packs"   = "组";
 "NavigationBarItem_Create"  = "创建";
 "NavigationBarItem_Edit"    = "编辑";
+"NavigationBarItem_Edit_Cards"    = "Edit cards";
 "NavigationBarItem_Create_New_Pack"    = "Create New Pack";
 "NavigationBarItem_Delete"    = "删除";
 "NavigationBarItem_Change"    = "更改图片";

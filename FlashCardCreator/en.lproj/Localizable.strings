@@ -31,6 +31,7 @@
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = "Edit";
+"NavigationBarItem_Edit_Cards"    = "Edit cards";
 "NavigationBarItem_Create_New_Pack"    = "Create New Pack";
 "NavigationBarItem_Delete"    = "Delete";
 "NavigationBarItem_Change"    = "Change Image";

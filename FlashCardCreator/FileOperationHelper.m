@@ -279,6 +279,11 @@
     return dateFromString;
 }
 
++ (BOOL) isPackListOpenedBefore {
+    //return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
+    return FALSE; // always false
+}
+
 
 
 @end

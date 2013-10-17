@@ -622,8 +622,7 @@ enum popover_enum {
     _isDownloadingSamplePack = FALSE;
 
     //New user use introduction
-    BOOL isPackListOpenedBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
-    if (isPackListOpenedBefore == FALSE){
+    if ([FileOperationHelper isPackListOpenedBefore] == FALSE){
         [self selectAvailablePacks:nil];
     } else {
         //Step2: update detail view

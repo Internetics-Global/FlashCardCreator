@@ -43,15 +43,8 @@
             self.navigationItem.leftBarButtonItem = backButton;
         }
         
-        if ([self isPackListOpenedBefore] == FALSE) {
-            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
-            self.navigationItem.rightBarButtonItem = _editBtnItem;
-        } else {
-            _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
-            self.navigationItem.rightBarButtonItem = _editBtnItem;
-        }
-        
-        _hideDeleteButton = TRUE;
+        _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
+        self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _picker = [[UIImagePickerController alloc] init];
         _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -65,6 +58,8 @@
                 _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
             }
         }
+        
+        _currentIndex = -1;
 
         
     }
@@ -114,7 +109,7 @@
         _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     
-    if ([self isPackListOpenedBefore]) {
+    if ([FileOperationHelper isPackListOpenedBefore]) {
         _userNewButton.hidden = TRUE;
         //_sortedLabel.hidden = TRUE;
     } else {
@@ -155,7 +150,7 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    if ([self isPackListOpenedBefore] == FALSE) {
+    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
         return [self.packArray count] + 1;
     } else {
         return [self.packArray count];
@@ -175,106 +170,102 @@
     view = contentView;
 
     
-    //this is only for first start-up logic to introduce functions
-    if ([self isPackListOpenedBefore] == FALSE) {
-        if (index ==0) {
-            UIImageView *addNewPackImageView ;
-            addNewPackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
-            addNewPackImageView.contentMode = UIViewContentModeScaleAspectFit;
-            addNewPackImageView.layer.cornerRadius = 10;
-            addNewPackImageView.layer.masksToBounds = YES;
-            addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
-            [view addSubview:addNewPackImageView];
-            [view layoutSubviews];
-            return view;
-        }
+    if (index ==0) {
+        UIImageView *addNewPackImageView ;
+        addNewPackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
+        addNewPackImageView.contentMode = UIViewContentModeScaleAspectFit;
+        addNewPackImageView.layer.cornerRadius = 10;
+        addNewPackImageView.layer.masksToBounds = YES;
+        addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
+        [view addSubview:addNewPackImageView];
+        [view layoutSubviews];
+    } else {
         index = index -1;
-    }
-    
-    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
-    
-    packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
-    packNameText.textAlignment = UITextAlignmentCenter;
-    packNameText.font = [UIFont systemFontOfSize:16];
-    packNameText.returnKeyType = UIReturnKeyDone;
-    packNameText.text = _currentPack.packName;
-    packNameText.layer.cornerRadius = 5;
-    packNameText.layer.masksToBounds = YES;
-    packNameText.delegate = self;
-    packNameText.tag = index;
-    packNameText.userInteractionEnabled = YES;
-    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")] && ([_currentPack.creator isEqualToString:[OpenUDID value]])) {
-        packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
-        packNameText.layer.borderWidth = 1;
-        packNameText.userInteractionEnabled = TRUE;
-        packNameText.backgroundColor = [UIColor whiteColor];
-        packNameText.textColor = [UIColor blackColor];
-    } else {
-        packNameText.layer.borderWidth = 0;
-        packNameText.userInteractionEnabled = FALSE;
-        packNameText.backgroundColor = [UIColor clearColor];
-        packNameText.textColor = [UIColor whiteColor];
-    }
-    [view addSubview:packNameText];
-    
-    coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
-    coverImageView.contentMode = UIViewContentModeScaleAspectFit;
-    coverImageView.layer.cornerRadius = 10;
-    coverImageView.layer.masksToBounds = YES;
-    [view addSubview:coverImageView];
-    UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[_packArray objectAtIndex:index]).coverImageURL];
-    if (image == NULL) {
-        coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
-    } else {
-        coverImageView.image = image;
-    }
-    
-    if ([self isPackListOpenedBefore] == FALSE) {
-        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        playButton.frame = CGRectMake(130, 170, 60, 60);
-        playButton.backgroundColor = [UIColor redColor];
+        _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+        
+        packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
+        packNameText.textAlignment = UITextAlignmentCenter;
+        packNameText.font = [UIFont systemFontOfSize:16];
+        packNameText.returnKeyType = UIReturnKeyDone;
+        packNameText.text = _currentPack.packName;
+        packNameText.layer.cornerRadius = 5;
+        packNameText.layer.masksToBounds = YES;
+        packNameText.delegate = self;
         packNameText.tag = index;
-        
-        [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-        playButton.userInteractionEnabled = FALSE;
-        [view addSubview:playButton];
-    }
-
-    
-    deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
-    [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
-    deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    deleteButton.tag = index;
-    deleteButton.userInteractionEnabled = TRUE;
-    deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
-    [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
-    NSInteger packID = ((Pack *)[[[User defaultUser] packs] objectAtIndex:index]).packID;
-    if ((!_hideDeleteButton) && !(_packIDInMasterView == packID) && (_packArray.count > 1)) {
-        [view addSubview:deleteButton];
-        
-    }
-    
-    changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
-    [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"grayButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
-    changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    [changeImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    changeImageButton.tag = index;
-    changeImageButton.userInteractionEnabled = TRUE;
-    changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
-    [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
-    
-    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")] && ([_currentPack.creator isEqualToString:[OpenUDID value]])) {
-        [view addSubview:changeImageButton];    
-    } else {
-        if (changeImageButton.superview) {
-            [changeImageButton removeFromSuperview];
+        packNameText.userInteractionEnabled = YES;
+        if (_currentIndex == index) {
+            packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
+            packNameText.layer.borderWidth = 1;
+            packNameText.userInteractionEnabled = TRUE;
+            packNameText.backgroundColor = [UIColor whiteColor];
+            packNameText.textColor = [UIColor blackColor];
+        } else {
+            packNameText.layer.borderWidth = 0;
+            packNameText.userInteractionEnabled = FALSE;
+            packNameText.backgroundColor = [UIColor clearColor];
+            packNameText.textColor = [UIColor whiteColor];
         }
+        [view addSubview:packNameText];
+        
+        coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
+        coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+        coverImageView.layer.cornerRadius = 10;
+        coverImageView.layer.masksToBounds = YES;
+        [view addSubview:coverImageView];
+        UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[_packArray objectAtIndex:index]).coverImageURL];
+        if (image == NULL) {
+            coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
+        } else {
+            coverImageView.image = image;
+        }
+        
+        if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
+            UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            playButton.frame = CGRectMake(130, 170, 60, 60);
+            playButton.backgroundColor = [UIColor clearColor];
+            packNameText.tag = index;
+            
+            [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+            playButton.userInteractionEnabled = FALSE;
+            [view addSubview:playButton];
+        }
+        
+        
+        deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
+        [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+        deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        deleteButton.tag = index;
+        deleteButton.userInteractionEnabled = TRUE;
+        deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
+        [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
+        if (_currentIndex ==index) {
+            [view addSubview:deleteButton];
+        }
+        
+        //change image and edit cards share common button
+        changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"grayButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+        changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [changeImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        changeImageButton.tag = index;
+        changeImageButton.userInteractionEnabled = TRUE;
+        changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
+        [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Edit_Cards", @"") forState:UIControlStateNormal];
+        if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+            [view addSubview:changeImageButton];
+        }
+        if (_currentIndex == index) {
+            [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
+            [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
+        } else {
+            [changeImageButton setTitle:@"Edit cards" forState:UIControlStateNormal];
+            [changeImageButton addTarget:self action:@selector(editCardsButtonClicked:) forControlEvents:UIControlEventTouchDown];
+            
+        }
+        
+        [view layoutSubviews];
     }
-    
-    
-    [view layoutSubviews];
     
     return view;
 }
@@ -294,7 +285,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
     
-    if ([self isPackListOpenedBefore] == FALSE) {
+    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
         if (index == 0) {
             //do nothing
         } else {
@@ -313,7 +304,7 @@
 {
     NSLog(@"Selected item at index %d", index);
 
-    if ([self isPackListOpenedBefore] == FALSE) {
+    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
         if (isUserInterfaceIdiomPhone) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
@@ -333,7 +324,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
     }
     
-    if ([self isPackListOpenedBefore] == FALSE) {
+    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
         if (index == 0) {
             //do nothing
         } else {
@@ -350,10 +341,6 @@
     
 }
 
-- (BOOL) isPackListOpenedBefore {
-    //return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
-    return FALSE;
-}
 
 #pragma mark -
 #pragma mark - Reset DataSource
@@ -373,6 +360,17 @@
 
 #pragma mark -
 #pragma mark - Control touch event
+
+- (void) editCardsButtonClicked: (id) sender {
+    
+    UIButton *editCardsButton = (UIButton *) sender;
+    _currentIndex = editCardsButton.tag;
+    _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
+    
+    [_swipeView reloadData];
+    
+    
+}
 
 - (void) switchSort:(id)sender {
     UIButton *button = (UIButton *) sender;
@@ -418,11 +416,9 @@
 - (void) editBtnItemClicked:(id)sender {
     if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
-        _hideDeleteButton = FALSE;
         [_swipeView reloadData];
     } else {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
-        _hideDeleteButton = YES;
         if ([[User defaultUser] packs].count <= 1) {
             self.navigationItem.rightBarButtonItem = nil;
         } else {
@@ -435,13 +431,23 @@
 }
 
 - (void) createNewPackButtonClicked:(id)sender {
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController popViewControllerAnimated:YES];
+    
+    if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Done", @"")]) {
+        [_editBtnItem setTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"")];
+        _currentIndex = -1;
+        [self.swipeView reloadData];
+        
     } else {
-        [self dismissModalViewControllerAnimated:YES];
+        
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
         
 }
 

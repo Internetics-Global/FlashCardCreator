@@ -23,6 +23,7 @@
 "NavigationBarItem_Packs" = "パック";
 "NavigationBarItem_Create" = "作成";
 "NavigationBarItem_Edit"= "編集";
+"NavigationBarItem_Edit_Cards"    = "Edit cards";
 "NavigationBarItem_Create_New_Pack"    = "Create New Pack";
 "NavigationBarItem_Delete"    = "削除";
 "NavigationBarItem_Change"    = "";

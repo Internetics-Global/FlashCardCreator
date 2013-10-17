@@ -162,6 +162,7 @@
 		880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800877F177AE9AA0051594B /* emotion_placeholder.png */; };
 		8806405B1700043F00F9B76D /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806405A1700043F00F9B76D /* change_template_button.png */; };
 		8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806407D170011DF00F9B76D /* setting_button@2x.png */; };
+		881002F9180F801900FA0A52 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881002F8180F801900FA0A52 /* play@2x.png */; };
 		8810F481170B025B00D40562 /* help6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8810F47F170B025B00D40562 /* help6.jpg */; };
 		8810F482170B025B00D40562 /* help7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8810F480170B025B00D40562 /* help7.jpg */; };
 		8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8810F483170BA06400D40562 /* template_background_change_button@2x.png */; };
@@ -720,6 +721,7 @@
 		8800877F177AE9AA0051594B /* emotion_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emotion_placeholder.png; path = Resources/emoticons/emotion_placeholder.png; sourceTree = "<group>"; };
 		8806405A1700043F00F9B76D /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_button.png; path = Resources/change_template_button.png; sourceTree = "<group>"; };
 		8806407D170011DF00F9B76D /* setting_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_button@2x.png"; path = "Resources/setting_button@2x.png"; sourceTree = "<group>"; };
+		881002F8180F801900FA0A52 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "Resources/play@2x.png"; sourceTree = "<group>"; };
 		8810F47F170B025B00D40562 /* help6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help6.jpg; path = Resources/help6.jpg; sourceTree = "<group>"; };
 		8810F480170B025B00D40562 /* help7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help7.jpg; path = Resources/help7.jpg; sourceTree = "<group>"; };
 		8810F483170BA06400D40562 /* template_background_change_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "template_background_change_button@2x.png"; path = "Resources/template_background_change_button@2x.png"; sourceTree = "<group>"; };
@@ -1340,6 +1342,7 @@
 			isa = PBXGroup;
 			children = (
 				88EEEE67180E434F002AB9A1 /* play.png */,
+				881002F8180F801900FA0A52 /* play@2x.png */,
 				88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */,
 				88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */,
 				88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */,
@@ -1895,6 +1898,7 @@
 				8810F481170B025B00D40562 /* help6.jpg in Resources */,
 				8810F482170B025B00D40562 /* help7.jpg in Resources */,
 				88EEEE69180E434F002AB9A1 /* play.png in Resources */,
+				881002F9180F801900FA0A52 /* play@2x.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
 				88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */,
 				88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */,

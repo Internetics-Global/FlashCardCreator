@@ -34,4 +34,6 @@
 + (NSString *)getTodayString;
 
 + (NSDate *)convertStringToNSDate:(NSString *) str;
+
++ (BOOL) isPackListOpenedBefore;
 @end

@@ -17,25 +17,23 @@
     NSMutableArray *_packArray;
     
     NSInteger _packIDInMasterView;
-    BOOL _hideDeleteButton;
     
-    UIBarButtonItem *_editBtnItem;
+    UIBarButtonItem *_editBtnItem; // "create a new pack" and "done" share this common button
     
     UIImagePickerController *_picker;
     UIPopoverController *_imagePickerPopover;
     
     Pack  *_currentPack;
-    
     int _currentIndex;
     
     SortTypeEnum _sortTypeEnum;
+
 }
 
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIButton *userNewButton;
 @property (weak, nonatomic) IBOutlet UIButton *sortedButton;
-
 
 @property (nonatomic, strong) NSMutableArray *packArray;
 @property (nonatomic, assign) NSInteger indexCurrentPack;

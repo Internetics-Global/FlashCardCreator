@@ -61,6 +61,7 @@
 
 
 #import "SwipeView.h"
+#import "FileOperationHelper.h"
 
 
 @interface SwipeView () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
@@ -1051,10 +1052,9 @@
     {
         float valX = ((int)point.x % ((int)_itemSize.width));
         float valY = (int)point.y;
-        BOOL isPackListOpenedBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
         //this is special case for play button
         if ((valX > _itemSize.width - 60 - 10) && (valX < _itemSize.width - 10)
-            && (valY > 130) && (valY < 60 + 130) && (isPackListOpenedBefore == FALSE)) {
+            && (valY > 130) && (valY < 60 + 130) && ([FileOperationHelper isPackListOpenedBefore] == FALSE)) {
             
             if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemPlayButtonAtIndex:)])
             {
