@@ -109,14 +109,6 @@
         _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     
-    if ([FileOperationHelper isPackListOpenedBefore]) {
-        _userNewButton.hidden = TRUE;
-        //_sortedLabel.hidden = TRUE;
-    } else {
-        _userNewButton.hidden = FALSE;
-        //_sortedLabel.hidden = FALSE;
-    }
-    
     
     //configure page control
     _pageControl.numberOfPages = [_packArray count];
@@ -150,11 +142,7 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-        return [self.packArray count] + 1;
-    } else {
-        return [self.packArray count];
-    }
+    return [self.packArray count] + 1;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -207,8 +195,21 @@
         }
         [view addSubview:packNameText];
         
-        coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
-        coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+        UIView *imageViewBackGround = [[UIView alloc] initWithFrame:CGRectMake(5.0f, 85, 190.0f, 160.0f)];
+        imageViewBackGround.userInteractionEnabled = FALSE;
+        [view addSubview:imageViewBackGround];
+        if (_currentIndex == index) {
+            //highlighted color
+            imageViewBackGround.backgroundColor = [UIColor orangeColor];
+            imageViewBackGround.alpha = 0.2;
+            imageViewBackGround.layer.cornerRadius = 10;
+            imageViewBackGround.layer.masksToBounds = YES;
+        } else {
+            imageViewBackGround.backgroundColor = [UIColor clearColor];
+        }
+        
+        coverImageView = [[UIImageView alloc] initWithFrame:CGRectInset(imageViewBackGround.frame, 5, 5)];
+        coverImageView.contentMode = UIViewContentModeScaleAspectFill;
         coverImageView.layer.cornerRadius = 10;
         coverImageView.layer.masksToBounds = YES;
         [view addSubview:coverImageView];
@@ -219,16 +220,14 @@
             coverImageView.image = image;
         }
         
-        if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-            UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            playButton.frame = CGRectMake(130, 170, 60, 60);
-            playButton.backgroundColor = [UIColor clearColor];
-            packNameText.tag = index;
-            
-            [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-            playButton.userInteractionEnabled = FALSE;
-            [view addSubview:playButton];
-        }
+        
+        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        playButton.frame = CGRectMake(130, 170, 60, 60);
+        playButton.backgroundColor = [UIColor clearColor];
+        packNameText.tag = index;
+        [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        playButton.userInteractionEnabled = FALSE;
+        [view addSubview:playButton];
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -285,16 +284,10 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
     
-    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-        if (index == 0) {
-            //do nothing
-        } else {
-            Pack *selectedPack = [_packArray objectAtIndex:index -1];
-            selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-            [selectedPack save];
-        }
+    if (index == 0) {
+        //do nothing
     } else {
-        Pack *selectedPack = [_packArray objectAtIndex:index];
+        Pack *selectedPack = [_packArray objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack save];
     }
@@ -305,17 +298,7 @@
     NSLog(@"Selected item at index %d", index);
 
     if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-        if (isUserInterfaceIdiomPhone) {
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            //dismiss popover view in notification
-        }
         
-        if (index ==0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index-1]];
-        }
     } else {
         if (isUserInterfaceIdiomPhone) {
             [self.navigationController popViewControllerAnimated:YES];
@@ -369,7 +352,8 @@
     
     [_swipeView reloadData];
     
-    
+    [_swipeView scrollToItemAtIndex:(_currentIndex) duration:0];
+
 }
 
 - (void) switchSort:(id)sender {
@@ -468,7 +452,10 @@
 }
 
 - (void) selectFromImageLibrary: (id) sender {
-    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:((UIButton *) sender).tag];
+    
+    int index = ((UIButton *) sender).tag;
+    
+    _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     if (isUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
     } else {
@@ -476,6 +463,10 @@
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
     }
+    
+    Pack *selectedPack = [_packArray objectAtIndex:index];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    [selectedPack save];
 }
 
 
