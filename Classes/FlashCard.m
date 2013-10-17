@@ -2866,7 +2866,7 @@ extern BOOL isFromNewCreatedCard;
     CGFloat lineHeight = textView.font.lineHeight;
     int currentLines = textView.contentSize.height / lineHeight;
     int maxLines = textView.frame.size.height/lineHeight;
-    if (currentLines > maxLines) {
+    if ((currentLines > maxLines)&&(maxLines > 0)&&(originalStr.length >0)) {
         NSString * firstHalfString = [originalStr substringToIndex:range.location];
         NSString * secondHalfString = [originalStr substringFromIndex: range.location];
         textView.text = [NSString stringWithFormat: @"%@%@%@",

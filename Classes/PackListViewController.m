@@ -293,9 +293,19 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
     
-    Pack *selectedPack = [_packArray objectAtIndex:index];
-    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-    [selectedPack save];
+    if ([self isPackListOpenedBefore] == FALSE) {
+        if (index == 0) {
+            //do nothing
+        } else {
+            Pack *selectedPack = [_packArray objectAtIndex:index -1];
+            selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+            [selectedPack save];
+        }
+    } else {
+        Pack *selectedPack = [_packArray objectAtIndex:index];
+        selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+        [selectedPack save];
+    }
 }
 
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
@@ -322,9 +332,19 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
     }
     
-    Pack *selectedPack = [_packArray objectAtIndex:index];
-    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];;
-    [selectedPack save];
+    if ([self isPackListOpenedBefore] == FALSE) {
+        if (index == 0) {
+            //do nothing
+        } else {
+            Pack *selectedPack = [_packArray objectAtIndex:index -1];
+            selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+            [selectedPack save];
+        }
+    } else {
+        Pack *selectedPack = [_packArray objectAtIndex:index];
+        selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+        [selectedPack save];
+    }
     
     
 }
