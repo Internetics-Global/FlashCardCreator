@@ -51,6 +51,8 @@
     
     NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
     
+    BOOL _isRestartApp;
+    
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;

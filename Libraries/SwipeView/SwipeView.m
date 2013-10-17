@@ -1053,8 +1053,8 @@
         float valY = (int)point.y;
         BOOL isPackListOpenedBefore = [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
         //this is special case for play button
-        if ((valX > _itemSize.width - 80 - 10) && (valX < _itemSize.width - 10)
-            && (valY > 105) && (valY < 80 + 105) && (isPackListOpenedBefore == FALSE)) {
+        if ((valX > _itemSize.width - 60 - 10) && (valX < _itemSize.width - 10)
+            && (valY > 130) && (valY < 60 + 130) && (isPackListOpenedBefore == FALSE)) {
             
             if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemPlayButtonAtIndex:)])
             {

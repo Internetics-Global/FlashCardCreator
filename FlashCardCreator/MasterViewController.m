@@ -22,7 +22,7 @@
 #import "Card.h"
 #import "CSS.h"
 #import "PackListViewController.h"
-
+#import "DataManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "CreatePackViewController.h"
 #import "UINavigationController+DismissKeyboard.h"
@@ -95,6 +95,7 @@ enum popover_enum {
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
+        _isRestartApp = TRUE;
         
         
 
@@ -233,6 +234,17 @@ enum popover_enum {
     [self.navigationController.view addSubview:_addCardButtonBackground];    
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
+    
+    
+    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+    if ((isExamplePackDownloadedSuccessful == FALSE) && ([DataManager apiReachable])) {
+        //do nothing
+    } else {
+        if (_isRestartApp) {
+            [self performSelector:@selector(selectAvailablePacks:) withObject:nil afterDelay:0.2];
+            _isRestartApp = FALSE;
+        }
+    }
     
 }
 

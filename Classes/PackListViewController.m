@@ -231,9 +231,10 @@
     
     if ([self isPackListOpenedBefore] == FALSE) {
         UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        playButton.frame = CGRectMake(100, 150, 80, 80);
-        playButton.backgroundColor = [UIColor clearColor];
+        playButton.frame = CGRectMake(130, 170, 60, 60);
+        playButton.backgroundColor = [UIColor redColor];
         packNameText.tag = index;
+        
         [playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
         playButton.userInteractionEnabled = FALSE;
         [view addSubview:playButton];
@@ -350,7 +351,8 @@
 }
 
 - (BOOL) isPackListOpenedBefore {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
+    //return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
+    return FALSE;
 }
 
 #pragma mark -
