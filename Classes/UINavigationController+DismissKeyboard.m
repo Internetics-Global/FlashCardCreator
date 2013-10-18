@@ -19,10 +19,23 @@
 }
 
 
+
+#pragma mark -
+#pragma mark - Rotate control
+
 //Restrict all the Navigation controller to landscape
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-            toInterfaceOrientation == UIInterfaceOrientationLandscapeRight);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (BOOL)shouldAutorotate {
+    
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 

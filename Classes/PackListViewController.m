@@ -132,9 +132,18 @@
 #pragma mark -
 #pragma mark - Rotate control
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (BOOL)shouldAutorotate {
+    
     return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 #pragma mark -
@@ -296,32 +305,22 @@
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
     NSLog(@"Selected item at index %d", index);
-
-    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-        
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
-        if (isUserInterfaceIdiomPhone) {
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
+        //dismiss popover view in notification
     }
     
-    if ([FileOperationHelper isPackListOpenedBefore] == FALSE) {
-        if (index == 0) {
-            //do nothing
-        } else {
-            Pack *selectedPack = [_packArray objectAtIndex:index -1];
-            selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-            [selectedPack save];
-        }
+    if (index == 0) {
+        [self createNewPackButtonClicked:nil];
     } else {
-        Pack *selectedPack = [_packArray objectAtIndex:index];
+        Pack *selectedPack = [_packArray objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack save];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index -1]];
     }
-    
-    
 }
 
 
@@ -542,6 +541,12 @@
     Pack *currentPack = [[[User defaultUser] packs] objectAtIndex:textField.tag];
     currentPack.packName = textField.text;
     [currentPack save];
+}
+
+//iOS7 special for UIImagePickerController
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
                                            
                                         

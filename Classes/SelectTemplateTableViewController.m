@@ -108,4 +108,19 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark – Rotate control
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (BOOL)shouldAutorotate {
+    
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    
+    return UIInterfaceOrientationMaskLandscape;
+}
+
 @end

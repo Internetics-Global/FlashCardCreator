@@ -230,6 +230,29 @@
     [textField resignFirstResponder];
 }
 
+//iOS7 special for UIImagePickerController
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+#pragma mark -
+#pragma mark - Rotate control
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (BOOL)shouldAutorotate {
+    
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    
+    return UIInterfaceOrientationMaskLandscape;
+}
+
 #pragma mark -
 #pragma mark - Memory Management
 
