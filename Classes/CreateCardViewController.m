@@ -148,6 +148,12 @@ BOOL isFromNewCreatedCard = NO;
     }
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //iOS7 special, since UIImagePickerController will display status bar forcely.
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
