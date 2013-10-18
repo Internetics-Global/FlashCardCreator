@@ -167,6 +167,8 @@ enum popover_enum {
     }
     
 
+    //iOS7 special, since UIImagePickerController will display status bar forcely.
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 
