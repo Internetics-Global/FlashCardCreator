@@ -70,7 +70,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.swipeView reloadData];
     
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
