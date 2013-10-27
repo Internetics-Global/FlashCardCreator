@@ -214,7 +214,7 @@
         if (_currentIndex == index) {
             //highlighted color
             imageViewBackGround.backgroundColor = [UIColor orangeColor];
-            imageViewBackGround.alpha = 0.2;
+            imageViewBackGround.alpha = 0.8;
             imageViewBackGround.layer.cornerRadius = 10;
             imageViewBackGround.layer.masksToBounds = YES;
         } else {
@@ -264,9 +264,18 @@
         changeImageButton.userInteractionEnabled = TRUE;
         changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
         [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Edit_Cards", @"") forState:UIControlStateNormal];
-        if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
-            [view addSubview:changeImageButton];
+        
+        
+        if (_currentIndex == -1) { // in the moment of coming in
+            if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+                [view addSubview:changeImageButton];
+            }
+        } else {
+            if ([_currentPack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
+                [view addSubview:changeImageButton];
+            }
         }
+        
         if (_currentIndex == index) {
             [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
             [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
@@ -524,6 +533,9 @@
             [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
+        
+        _currentIndex = -1;
+        [_editBtnItem setTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"")];
         
         [_swipeView reloadData];
     }
