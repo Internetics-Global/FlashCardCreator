@@ -93,7 +93,7 @@
     }
     
     //configure swipe view
-    _swipeView.alignment = SwipeViewAlignmentCenter;
+    _swipeView.alignment = SwipeViewAlignmentEdge;
     _swipeView.pagingEnabled = YES;
     _swipeView.wrapEnabled = NO;
     
