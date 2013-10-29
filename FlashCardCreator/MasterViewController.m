@@ -281,17 +281,17 @@ enum popover_enum {
         
     } else {
         
-        packListViewController.view.frame = CGRectMake(10, 10, 640, 320);
+        packListViewController.view.frame = CGRectMake(10, 10, 950, 345);
         packListViewController.view.clipsToBounds = YES;
         packListViewController.view.layer.cornerRadius = 0;
         packListViewController.view.backgroundColor =[UIColor clearColor];
-        packListViewController.contentSizeForViewInPopover = CGSizeMake(660, 300);
+        packListViewController.contentSizeForViewInPopover = CGSizeMake(970, 325);
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
-            _packListPickerPopover.popoverContentSize = CGSizeMake(640, 320);
+            _packListPickerPopover.popoverContentSize = CGSizeMake(950, 345);
         }
         
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];

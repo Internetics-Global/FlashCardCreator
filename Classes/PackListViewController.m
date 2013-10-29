@@ -110,7 +110,6 @@
         _swipeView.itemsPerPage = 2;
     else {
         _swipeView.itemsPerPage = 3;
-        _swipeView.alignment = SwipeViewAlignmentEdge;
     }
     
     
@@ -166,14 +165,14 @@
     UIButton *deleteButton;
     UIButton *changeImageButton;
      
-    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 370)];
+    contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 220.0f, 370)];
     contentView.backgroundColor = [UIColor clearColor];
     view = contentView;
 
     
     if (index ==0) {
         UIImageView *addNewPackImageView ;
-        addNewPackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10.0f, 90, 180.0f, 150.0f)];
+        addNewPackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 90, 180.0f, 150.0f)];
         addNewPackImageView.contentMode = UIViewContentModeScaleAspectFit;
         addNewPackImageView.layer.cornerRadius = 10;
         addNewPackImageView.layer.masksToBounds = YES;
@@ -184,7 +183,7 @@
         index = index -1;
         _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
-        packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
+        packNameText = [[UITextField alloc] initWithFrame:CGRectMake(20.0f, 50.0f, 180, 25.0f)];
         packNameText.textAlignment = UITextAlignmentCenter;
         packNameText.font = [UIFont systemFontOfSize:16];
         packNameText.returnKeyType = UIReturnKeyDone;
@@ -249,7 +248,7 @@
         deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
         deleteButton.tag = index;
         deleteButton.userInteractionEnabled = TRUE;
-        deleteButton.frame = CGRectMake(10.0f, 255.0f, 85, 25);
+        deleteButton.frame = CGRectMake(20.0f, 255.0f, 85, 25);
         [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         if (_currentIndex ==index) {
             [view addSubview:deleteButton];

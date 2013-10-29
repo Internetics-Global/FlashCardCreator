@@ -1053,8 +1053,20 @@
         float valX = ((int)point.x % ((int)_itemSize.width));
         float valY = (int)point.y;
         //this is special case for play button
-        if ((valX > _itemSize.width - 60 - 10) && (valX < _itemSize.width - 10)
-            && (valY > 130) && (valY < 60 + 130) && ([FileOperationHelper isPackListOpenedBefore] == FALSE)) {
+        
+        int originY = 0;
+        int originX = 0;
+        if (isUserInterfaceIdiomPhone) {
+            originY = 130;
+            originX = 30;
+        } else {
+            originY = 140;
+            originX = 30;
+        }
+        
+        if ((valX > _itemSize.width - 60 - originX) && (valX < _itemSize.width - originX)
+            
+            && (valY > originY) && (valY < 60 + originY) && ([FileOperationHelper isPackListOpenedBefore] == FALSE)) {
             
             if ([_delegate respondsToSelector:@selector(swipeView:didSelectItemPlayButtonAtIndex:)])
             {
