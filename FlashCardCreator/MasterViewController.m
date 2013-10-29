@@ -239,9 +239,12 @@ enum popover_enum {
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if ((isExamplePackDownloadedSuccessful == FALSE) && ([DataManager apiReachable])) {
         //do nothing
-    } else {
+    } else if (_isDownloadingSamplePack){
+        _isDownloadingSamplePack = FALSE;
+        
+    }else {
         if (_isRestartApp) {
-            [self performSelector:@selector(selectAvailablePacks:) withObject:nil afterDelay:0.2];
+            [self performSelector:@selector(selectAvailablePacks:) withObject:nil afterDelay:0.1];
             _isRestartApp = FALSE;
         }
     }
@@ -620,8 +623,6 @@ enum popover_enum {
     self.indexCard = 0;
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
-    
-    _isDownloadingSamplePack = FALSE;
 
     //New user use introduction
     if ([FileOperationHelper isPackListOpenedBefore] == FALSE){
