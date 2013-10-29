@@ -297,11 +297,6 @@
 }
 
 -  (void)swipeView:(SwipeView *)swipeView didSelectItemPlayButtonAtIndex:(NSInteger)index {
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-       //dismiss popover view in notification
-    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index -1]]; //begin from second (first is the add pack button)
     

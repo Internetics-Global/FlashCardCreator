@@ -560,6 +560,8 @@ enum popover_enum {
     
     if (isUserInterfaceIdiomPhone == FALSE) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
+    } else {
+        //[self.navigationController popToRootViewControllerAnimated:TRUE];
     }
     
     int index = [[notification object] intValue];
