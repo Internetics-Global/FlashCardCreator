@@ -45,7 +45,6 @@ extern BOOL _isDownloadingSamplePack;
 @synthesize currentPack = _currentPack;
 @synthesize currentCard = _currentCard;
 @synthesize indexCard = _indexCard;
-@synthesize indexPack = _indexPack;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 @synthesize tableView = _tableView;
 
@@ -460,8 +459,8 @@ enum popover_enum {
 }
 
 - (void) selectedPackNotification:(NSNotification *) notification {
-    _indexPack = [(NSString *)[notification object] intValue];
-    self.currentPack = [[User defaultUser] packs][_indexPack];
+    int index = [(NSString *)[notification object] intValue];
+    self.currentPack = [[User defaultUser] packs][index];
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
@@ -517,7 +516,6 @@ enum popover_enum {
     cardExample.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);
     [self.currentPack addCard:cardExample];
     
-    _indexPack = [[[User defaultUser] packs] count] -1;
     _indexCard = 0;
     
     [self.tableView reloadData];
@@ -536,7 +534,6 @@ enum popover_enum {
     
     NSString *notificationStr = (NSString *)[notification object];
     
-    self.currentPack = [[User defaultUser] packs] [_indexPack];
     [self.tableView reloadData];
     if ((isUserInterfaceIdiomPhone) || (![notificationStr isEqualToString:@"SENT_FROM_NEW_CARD"])) {
         //when we just edit the current card, we don't update detail view second time
@@ -1144,7 +1141,6 @@ enum popover_enum {
     //Step3: Update user's pack and database
     pack.userID = [User defaultUser].userID;
     [[User defaultUser] addPack:pack];
-    _indexPack = [[[User defaultUser] packs] count] -1;
     
     [[NSFileManager defaultManager] removeItemAtPath:downloadedPackInfoFilePath error:nil];
     
