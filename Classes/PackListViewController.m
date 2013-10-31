@@ -18,7 +18,6 @@
 
 @synthesize swipeView = _swipeView;
 @synthesize pageControl = _pageControl;
-@synthesize packArray = _packArray;
 
 #pragma mark -
 #pragma mark - Life cycle
@@ -34,7 +33,7 @@
         }
         
         
-        _packArray = [[User defaultUser] sortPacks:_sortTypeEnum];
+        [[User defaultUser] sortPacks:_sortTypeEnum];
         
         //From: click "add pack" button on navigation bar
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePackListNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
@@ -119,7 +118,7 @@
     
     
     //configure page control
-    _pageControl.numberOfPages = [_packArray count];
+    _pageControl.numberOfPages = [[User defaultUser].packs count];
     _pageControl.defersCurrentPageDisplay = YES;
     
     [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
@@ -171,7 +170,7 @@
 
 - (NSInteger)numberOfItemsInSwipeView:(SwipeView *)swipeView
 {
-    return [self.packArray count] + 1;
+    return [[User defaultUser].packs count] + 1;
 }
 
 - (UIView *)swipeView:(SwipeView *)swipeView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -242,7 +241,7 @@
         coverImageView.layer.cornerRadius = 10;
         coverImageView.layer.masksToBounds = YES;
         [view addSubview:coverImageView];
-        UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[_packArray objectAtIndex:index]).coverImageURL];
+        UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[[User defaultUser].packs objectAtIndex:index]).coverImageURL];
         if (image == NULL) {
             coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
         } else {
@@ -320,7 +319,7 @@
     if (index == 0) {
         //do nothing
     } else {
-        Pack *selectedPack = [_packArray objectAtIndex:index -1];
+        Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack save];
     }
@@ -339,7 +338,7 @@
     if (index == 0) {
         [self createNewPackButtonClicked:nil];
     } else {
-        Pack *selectedPack = [_packArray objectAtIndex:index -1];
+        Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack save];
         
@@ -352,7 +351,7 @@
 #pragma mark - Reset DataSource
 
 - (void) resetPackContent {
-    _packArray = [[User defaultUser] sortPacks:_sortTypeEnum];
+    [[User defaultUser] sortPacks:_sortTypeEnum];
 
 }
 
@@ -491,7 +490,7 @@
         [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
     }
     
-    Pack *selectedPack = [_packArray objectAtIndex:index];
+    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
     [selectedPack save];
 }

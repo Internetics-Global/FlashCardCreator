@@ -104,7 +104,7 @@
 }
 
 // Sort self.packs
-- (NSMutableArray  *) sortPacks:(SortTypeEnum) sortType {
+- (void) sortPacks:(SortTypeEnum) sortType {
     
     NSArray *shuffledArray= [NSArray arrayWithArray:self.packs];
     
@@ -149,8 +149,6 @@
         default:
             break;
     }
-    
-    return  self.packs;
     
 }
 

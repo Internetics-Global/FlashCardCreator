@@ -33,6 +33,6 @@ typedef enum {
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addPack:(Pack *)pack;
 -(void)removePack:(Pack *)pack;
-- (NSMutableArray *) sortPacks:(SortTypeEnum) sortType;
+- (void) sortPacks:(SortTypeEnum) sortType;
 
 @end

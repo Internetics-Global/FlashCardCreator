@@ -14,7 +14,6 @@
 @interface PackListViewController : UIViewController <SwipeViewDelegate, SwipeViewDataSource,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
     SwipeView *_swipeView;
     UIPageControl *_pageControl;
-    NSMutableArray *_packArray;
     
     NSInteger _packIDInMasterView;
     
@@ -35,7 +34,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *userNewButton;
 @property (weak, nonatomic) IBOutlet UIButton *sortedButton;
 
-@property (nonatomic, strong) NSMutableArray *packArray;
 @property (nonatomic, assign) NSInteger indexCurrentPack;
 @property (nonatomic, assign) NSInteger packIDInMasterView;
 
