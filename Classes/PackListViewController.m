@@ -183,7 +183,7 @@
         index = index -1;
         _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
-        packNameText = [[UITextField alloc] initWithFrame:CGRectMake(20.0f, 50.0f, 180, 25.0f)];
+        packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
         packNameText.textAlignment = UITextAlignmentCenter;
         packNameText.font = [UIFont systemFontOfSize:16];
         packNameText.returnKeyType = UIReturnKeyDone;
@@ -212,7 +212,7 @@
         [view addSubview:imageViewBackGround];
         if (_currentIndex == index) {
             //highlighted color
-            imageViewBackGround.backgroundColor = [UIColor orangeColor];
+            imageViewBackGround.backgroundColor = [UIColor colorWithRed:207.0/255 green:112.0/255 blue:0 alpha:0.5];
             imageViewBackGround.alpha = 0.8;
             imageViewBackGround.layer.cornerRadius = 10;
             imageViewBackGround.layer.masksToBounds = YES;
