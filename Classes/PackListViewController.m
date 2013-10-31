@@ -27,8 +27,13 @@
 {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sortTypeEnum"] == nil) {
+            _sortTypeEnum = SortTypeLastVisitedDescend;
+        } else {
+            _sortTypeEnum = [[NSUserDefaults standardUserDefaults] integerForKey:@"sortTypeEnum"];
+        }
         
-        _sortTypeEnum = SortTypeLastVisitedDescend;
+        
         _packArray = [[User defaultUser] sortPacks:_sortTypeEnum];
         
         //From: click "add pack" button on navigation bar
@@ -119,6 +124,18 @@
     
     [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
     [_sortedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
+    switch (_sortTypeEnum) {
+        case SortTypeLastCreatedDescend:
+            [_sortedButton setTitle:@"Sorted by recently created first" forState:UIControlStateNormal];
+            break;
+            
+        case SortTypeLastVisitedDescend:
+            [_sortedButton setTitle:@"Sorted by recently viewed first" forState:UIControlStateNormal];
+            break;
+            
+        default:
+            break;
+    }
     
     self.title = @"Pack List";
     
@@ -384,6 +401,10 @@
         default:
             break;
     }
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:_sortTypeEnum forKey:@"sortTypeEnum"
+     ];
+    [[NSUserDefaults standardUserDefaults]synchronize];
     
 }
 
