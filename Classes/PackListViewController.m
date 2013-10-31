@@ -209,7 +209,7 @@
         packNameText.delegate = self;
         packNameText.tag = index;
         packNameText.userInteractionEnabled = YES;
-        if (_currentIndex == index) {
+        if ((_currentIndex == index) && [_currentPack.creator isEqualToString:[OpenUDID value]]) {
             packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
             packNameText.layer.borderWidth = 1;
             packNameText.userInteractionEnabled = TRUE;
@@ -282,9 +282,7 @@
         
         
         if (_currentIndex == -1) { // in the moment of coming in
-            if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
-                [view addSubview:changeImageButton];
-            }
+            [view addSubview:changeImageButton];
         } else {
             if ([_currentPack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
                 [view addSubview:changeImageButton];
@@ -294,6 +292,13 @@
         if (_currentIndex == index) {
             [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
             [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
+            
+            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+                [changeImageButton setEnabled:FALSE];
+            } else {
+                [changeImageButton setEnabled:TRUE];
+            }
+            
         } else {
             [changeImageButton setTitle:@"Edit cards" forState:UIControlStateNormal];
             [changeImageButton addTarget:self action:@selector(editCardsButtonClicked:) forControlEvents:UIControlEventTouchDown];
