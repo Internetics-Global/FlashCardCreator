@@ -37,6 +37,7 @@
 #import "NSString+QueryString.h"
 #import "AmazonClientManager.h"
 #import "SimpleWebBrowserController.h"
+#import "AppDelegate.h"
 
 extern BOOL _isDownloadingSamplePack;
 
@@ -462,6 +463,9 @@ enum popover_enum {
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
     
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.packIDForMasterViewPack = self.currentPack.packID;
+    
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
         self.detailViewController.title = _currentPack.packName;
@@ -497,6 +501,9 @@ enum popover_enum {
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
 	self.currentPack = (Pack *)[notification object];
+    
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.packIDForMasterViewPack = self.currentPack.packID;
     
     //Add a new card template
     Card *cardExample = [[Card alloc] init];
@@ -617,6 +624,10 @@ enum popover_enum {
 - (void) updateMasterDetailViewNotification:(NSNotification *) notification {
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
+    
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.packIDForMasterViewPack = self.currentPack.packID;
+    
     self.indexCard = 0;
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
@@ -746,6 +757,7 @@ enum popover_enum {
          */
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
     
 }
 

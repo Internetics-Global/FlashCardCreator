@@ -84,6 +84,8 @@ BOOL _isDownloadingSamplePack;
         self.masterViewController.currentPack = _lastCreatedPack;
         self.detailViewController.currentPack = _lastCreatedPack;
         
+        _packIDForMasterViewPack = _lastCreatedPack.packID;
+        
     } else {    
        //do nothing, it will be empty
     }

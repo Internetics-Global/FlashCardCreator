@@ -12,6 +12,7 @@
 #import "User.h"
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
+#import "AppDelegate.h"
 
 
 @implementation PackListViewController
@@ -266,7 +267,8 @@
         deleteButton.userInteractionEnabled = TRUE;
         deleteButton.frame = CGRectMake(20.0f, 255.0f, 85, 25);
         [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
-        if (_currentIndex ==index) {
+        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        if ((_currentIndex ==index)&&(appDelegate.packIDForMasterViewPack != _currentPack.packID)) {
             [view addSubview:deleteButton];
         }
         
@@ -304,6 +306,7 @@
             [changeImageButton addTarget:self action:@selector(editCardsButtonClicked:) forControlEvents:UIControlEventTouchDown];
             
         }
+        
         
         [view layoutSubviews];
     }

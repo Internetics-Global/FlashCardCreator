@@ -24,4 +24,6 @@
 @property (strong, nonatomic) MasterViewController *masterViewController;
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
+@property (assign, nonatomic) int packIDForMasterViewPack;
+
 @end
