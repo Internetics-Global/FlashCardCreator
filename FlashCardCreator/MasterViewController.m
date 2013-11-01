@@ -633,7 +633,7 @@ enum popover_enum {
     [self.tableView reloadData];
 
     //New user use introduction
-    if ([FileOperationHelper isPackListOpenedBefore] == FALSE){
+    if (_isRestartApp == TRUE){
         [self selectAvailablePacks:nil];
     } else {
         //Step2: update detail view
