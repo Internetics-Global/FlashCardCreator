@@ -87,7 +87,16 @@
 #pragma mark Operation
 
 -(void)save{
-	if (_packID == -1) {
+	[self savePackOnly];
+    
+	for (int i = 0; i < [_cards count]; i++) {
+		NSLog(@"%s:saving cards...",__FUNCTION__);
+		[_cards[i] save];
+	}
+}
+
+- (void) savePackOnly {
+    if (_packID == -1) {
 		[self performSelector:@selector(insert)];
 	}else {
 		if ([SQLiteHelper checkIntegerValueExists:_packID forColumn:@"pack_id" inTable:@"Packs_Tables"]) {
@@ -95,10 +104,6 @@
 		}else {
 			[self performSelector:@selector(insert)];
 		}
-	}
-	for (int i = 0; i < [_cards count]; i++) {
-		NSLog(@"%s:saving cards...",__FUNCTION__);
-		[_cards[i] save];
 	}
 }
 

@@ -283,13 +283,19 @@
         [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Edit_Cards", @"") forState:UIControlStateNormal];
         
         
-        if (_currentIndex == -1) { // in the moment of coming in
-            [view addSubview:changeImageButton];
+        if ((_currentPack.packID == appDelegate.packIDForMasterViewPack)
+            && (![_currentPack.creator isEqualToString:[OpenUDID value]])) {
+            // not show changeImageButton
         } else {
-            if ([_currentPack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
+            if (_currentIndex == -1) { // in the moment of coming in
                 [view addSubview:changeImageButton];
+            } else {
+                if ([_currentPack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
+                    [view addSubview:changeImageButton];
+                }
             }
         }
+        
         
         if (_currentIndex == index) {
             [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
@@ -329,7 +335,7 @@
     } else {
         Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-        [selectedPack save];
+        [selectedPack savePackOnly];
     }
 }
 
@@ -348,7 +354,7 @@
     } else {
         Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index -1];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-        [selectedPack save];
+        [selectedPack savePackOnly];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index -1]];
     }
@@ -500,7 +506,7 @@
     
     Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-    [selectedPack save];
+    [selectedPack savePackOnly];
 }
 
 
@@ -521,7 +527,7 @@
             _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
         [imageData writeToFile:_currentPack.coverImageURL atomically:YES];
-        [_currentPack save];
+        [_currentPack savePackOnly];
         [self resetPackContent];
         [self.swipeView reloadData];
     } else {
