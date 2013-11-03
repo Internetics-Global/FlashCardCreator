@@ -3039,6 +3039,7 @@ extern BOOL isFromNewCreatedCard;
     while ((textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize]))&&(textHeight >0)&&(font.pointSize >0)) {
         font = textView.font;
         [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
+        [textView layoutSubviews];
         textHeight = textView.contentSize.height;
         outputFlag = TRUE;
     }
@@ -3049,6 +3050,8 @@ extern BOOL isFromNewCreatedCard;
     textView.contentOffset = CGPointMake(0, 0);
     
 }
+
+
 
 - (void) saveEdittedCard {
     
