@@ -67,7 +67,7 @@ BOOL isLoggingDropboxInSettingView = NO;
     } else if (section == 1) {
         return 1;
     } else if (section == 2) {
-        return (([self isUserHasLoginInternectics] == YES)?1:2);
+        return (2);
     } else {
         return 2;
     }
@@ -122,21 +122,21 @@ BOOL isLoggingDropboxInSettingView = NO;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.accessoryView = _playModeSwitch;
         
-    } else if (indexPath.section ==2) {
-        if ([self isUserHasLoginInternectics] == YES) {
-            cell.textLabel.text = @"Submit new listing";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else {
-            if (indexPath.row ==0) {
-                cell.textLabel.text = @"Register";
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            } else if (indexPath.row ==1) {
-                cell.textLabel.text = @"Submit new listing";
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-        }
+//    } else if (indexPath.section ==2) {
+//        if ([self isUserHasLoginInternectics] == YES) {
+//            cell.textLabel.text = @"Submit new listing";
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        } else {
+//            if (indexPath.row ==0) {
+//                cell.textLabel.text = @"Register";
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//            } else if (indexPath.row ==1) {
+//                cell.textLabel.text = @"Submit new listing";
+//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//            }
+//        }
         
-    } else if (indexPath.section ==3) {
+    } else if (indexPath.section ==2) {
         if (indexPath.row ==0) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -180,40 +180,40 @@ BOOL isLoggingDropboxInSettingView = NO;
         
     }else if (indexPath.section ==1) {
         
-    }else if (indexPath.section ==2) {
-        if (indexPath.row == 0) {
-            NSURL *url;
-            if ([self isUserHasLoginInternectics] == YES) {
-                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
-                
-            } else {
-                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
-            }
-            
-            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-            controller.hidesToolbar = NO;
-            
-            if (isUserInterfaceIdiomPhone) {
-                [self.navigationController pushViewController:controller animated:YES];
-            } else {
-                UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
-                navController.modalPresentationStyle = UIModalPresentationFormSheet;
-                [self presentModalViewController:navController animated:YES];
-            }
-            
-        } else {
-            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
-            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-            controller.hidesToolbar = NO;
-            if (isUserInterfaceIdiomPhone) {
-                [self.navigationController pushViewController:controller animated:YES];
-            } else {
-                controller.modalPresentationStyle = UIModalPresentationFormSheet;
-                [self presentModalViewController:controller animated:YES];
-            }
-        }
+//    }else if (indexPath.section ==2) {
+//        if (indexPath.row == 0) {
+//            NSURL *url;
+//            if ([self isUserHasLoginInternectics] == YES) {
+//                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
+//                
+//            } else {
+//                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
+//            }
+//            
+//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+//            controller.hidesToolbar = NO;
+//            
+//            if (isUserInterfaceIdiomPhone) {
+//                [self.navigationController pushViewController:controller animated:YES];
+//            } else {
+//                UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
+//                navController.modalPresentationStyle = UIModalPresentationFormSheet;
+//                [self presentModalViewController:navController animated:YES];
+//            }
+//            
+//        } else {
+//            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
+//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+//            controller.hidesToolbar = NO;
+//            if (isUserInterfaceIdiomPhone) {
+//                [self.navigationController pushViewController:controller animated:YES];
+//            } else {
+//                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+//                [self presentModalViewController:controller animated:YES];
+//            }
+//        }
         
-    }else if (indexPath.section ==3) {
+    }else if (indexPath.section ==2) {
         if (indexPath.row ==0) {
             NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
