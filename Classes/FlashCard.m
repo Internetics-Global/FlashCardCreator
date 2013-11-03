@@ -2877,6 +2877,7 @@ extern BOOL isFromNewCreatedCard;
         while (true) {
             timeout =50;
             textView.text = [textView.text substringToIndex:(textView.text.length -1)];
+            [textView layoutSubviews];
             int newCurrentLines = textView.contentSize.height / lineHeight;
             if ((newCurrentLines == maxLines) || (timeout > 50))
                 break;
