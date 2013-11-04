@@ -204,6 +204,8 @@
 		88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B331714522300833692 /* templateScreenshot4_question_iPad.png */; };
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
+		88624A9018274348004B5016 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88624A8E18274348004B5016 /* AWSSimpleDB.framework */; };
+		88624A9118274348004B5016 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88624A8F18274348004B5016 /* DropboxSDK.framework */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
 		88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* AmazonClientManager.m */; };
@@ -212,8 +214,6 @@
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
 		88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
-		88AD55FD18273D69000DE4C6 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */; };
-		88AD55FE18273D69000DE4C6 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */; };
 		88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC795F170D419A00EFBFCE /* help1_iphone.jpg */; };
 		88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7960170D419A00EFBFCE /* help2_iphone.jpg */; };
 		88BC7968170D419A00EFBFCE /* help3_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7961170D419A00EFBFCE /* help3_iphone.jpg */; };
@@ -770,6 +770,8 @@
 		88491B331714522300833692 /* templateScreenshot4_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question_iPad.png; path = Resources/templateScreenshot4_question_iPad.png; sourceTree = "<group>"; };
 		88491B341714522300833692 /* templateScreenshot4_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question.png; path = Resources/templateScreenshot4_question.png; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
+		88624A8E18274348004B5016 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
+		88624A8F18274348004B5016 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
 		88A175271797C3BD00FE778C /* AmazonClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonClientManager.h; sourceTree = "<group>"; };
@@ -779,8 +781,6 @@
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
 		88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_normal@2x.png"; path = "Resources/uibarbuttonitem_normal@2x.png"; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
-		88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
-		88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 		88BC795F170D419A00EFBFCE /* help1_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help1_iphone.jpg; path = Resources/help1_iphone.jpg; sourceTree = "<group>"; };
 		88BC7960170D419A00EFBFCE /* help2_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help2_iphone.jpg; path = Resources/help2_iphone.jpg; sourceTree = "<group>"; };
 		88BC7961170D419A00EFBFCE /* help3_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help3_iphone.jpg; path = Resources/help3_iphone.jpg; sourceTree = "<group>"; };
@@ -838,11 +838,11 @@
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
 				2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */,
-				88AD55FE18273D69000DE4C6 /* DropboxSDK.framework in Frameworks */,
+				88624A9118274348004B5016 /* DropboxSDK.framework in Frameworks */,
 				2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */,
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
 				2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */,
-				88AD55FD18273D69000DE4C6 /* AWSSimpleDB.framework in Frameworks */,
+				88624A9018274348004B5016 /* AWSSimpleDB.framework in Frameworks */,
 				2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */,
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
@@ -1432,8 +1432,8 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */,
-				88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */,
+				88624A8E18274348004B5016 /* AWSSimpleDB.framework */,
+				88624A8F18274348004B5016 /* DropboxSDK.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
 				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
 				880E6721182720710054DDD0 /* AVFoundation.framework */,
@@ -2204,9 +2204,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"\\\\\\\"$(SRCROOT)/Libraries\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\"",
 					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 					/Users/bournewang/.Trash,
+					/Users/bournewang/Project/FlashCardCreator/Libraries,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
@@ -2232,9 +2233,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"\\\\\\\"$(SRCROOT)/Libraries\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\"",
 					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 					/Users/bournewang/.Trash,
+					/Users/bournewang/Project/FlashCardCreator/Libraries,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
