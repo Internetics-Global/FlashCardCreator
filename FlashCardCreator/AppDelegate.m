@@ -24,6 +24,8 @@
 #import "SHKConfiguration.h"
 #import "CreatePackViewController.h"
 
+#import <Appsee/Appsee.h>
+
 extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
 BOOL _isDownloadingSamplePack;
 
@@ -31,6 +33,8 @@ BOOL _isDownloadingSamplePack;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Appsee start:@"556562735fb44188885a874b63449621"];
+    
     //1. check database
     [SQLiteHelper verifyDatabase];
     

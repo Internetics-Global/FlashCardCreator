@@ -162,6 +162,10 @@
 		880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800877F177AE9AA0051594B /* emotion_placeholder.png */; };
 		8806405B1700043F00F9B76D /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806405A1700043F00F9B76D /* change_template_button.png */; };
 		8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806407D170011DF00F9B76D /* setting_button@2x.png */; };
+		880E67201827205B0054DDD0 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E671F1827205B0054DDD0 /* Appsee.framework */; };
+		880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6723182720BF0054DDD0 /* CoreMedia.framework */; };
+		880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6721182720710054DDD0 /* AVFoundation.framework */; };
+		880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6726182720CE0054DDD0 /* CoreVideo.framework */; };
 		881002F9180F801900FA0A52 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881002F8180F801900FA0A52 /* play@2x.png */; };
 		8810031C180FBD2600FA0A52 /* icon120x120iOS7.png in Resources */ = {isa = PBXBuildFile; fileRef = 8810031B180FBD2600FA0A52 /* icon120x120iOS7.png */; };
 		8810031E180FBD8A00FA0A52 /* icon76x76iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8810031D180FBD8A00FA0A52 /* icon76x76iPad.png */; };
@@ -724,6 +728,10 @@
 		8800877F177AE9AA0051594B /* emotion_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emotion_placeholder.png; path = Resources/emoticons/emotion_placeholder.png; sourceTree = "<group>"; };
 		8806405A1700043F00F9B76D /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_button.png; path = Resources/change_template_button.png; sourceTree = "<group>"; };
 		8806407D170011DF00F9B76D /* setting_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_button@2x.png"; path = "Resources/setting_button@2x.png"; sourceTree = "<group>"; };
+		880E671F1827205B0054DDD0 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appsee.framework; path = Libraries/Appsee.framework; sourceTree = "<group>"; };
+		880E6721182720710054DDD0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		880E6723182720BF0054DDD0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		880E6726182720CE0054DDD0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		881002F8180F801900FA0A52 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "Resources/play@2x.png"; sourceTree = "<group>"; };
 		8810031B180FBD2600FA0A52 /* icon120x120iOS7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120x120iOS7.png; sourceTree = "<group>"; };
 		8810031D180FBD8A00FA0A52 /* icon76x76iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon76x76iPad.png; sourceTree = "<group>"; };
@@ -812,9 +820,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
+				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
+				880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */,
 				88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */,
 				2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */,
 				2D66C17E16A6B39200795CF9 /* CoreLocation.framework in Frameworks */,
+				880E67201827205B0054DDD0 /* Appsee.framework in Frameworks */,
 				2D5C189716D1A94F00E1E785 /* libShareKit.a in Frameworks */,
 				2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */,
 				2D66C18B16A6B5D600795CF9 /* Accounts.framework in Frameworks */,
@@ -1149,6 +1161,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				880E66FD182720460054DDD0 /* Appsee */,
 				880025CB17C3294F00A485CE /* FMFramework */,
 				88E739C31797C2DB004160F5 /* Amazon */,
 				2D1A051F16EDEAD300527311 /* PopupListComponent */,
@@ -1419,6 +1432,9 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
+				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
+				880E6721182720710054DDD0 /* AVFoundation.framework */,
 				88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */,
 				2D37280D16DDCBA00068DE31 /* CoreMotion.framework */,
 				2DF980E416C26CC60092AAF6 /* CoreText.framework */,
@@ -1477,6 +1493,14 @@
 				880025F017C3297F00A485CE /* FMMoveTableViewCell.m */,
 			);
 			name = FMFramework;
+			sourceTree = "<group>";
+		};
+		880E66FD182720460054DDD0 /* Appsee */ = {
+			isa = PBXGroup;
+			children = (
+				880E671F1827205B0054DDD0 /* Appsee.framework */,
+			);
+			name = Appsee;
 			sourceTree = "<group>";
 		};
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
@@ -2179,8 +2203,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Libraries\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/Libraries\\\"",
+					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
@@ -2205,8 +2230,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Libraries\"",
+					"$(SRCROOT)",
+					"\\\"$(SRCROOT)/Libraries\\\"",
+					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
