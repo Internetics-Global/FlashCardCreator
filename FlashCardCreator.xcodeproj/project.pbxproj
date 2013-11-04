@@ -212,8 +212,8 @@
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
 		88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
-		88AD55F818273B2B000DE4C6 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55F718273B2B000DE4C6 /* AWSSimpleDB.framework */; };
-		88AD55FA18273B3A000DE4C6 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55F918273B3A000DE4C6 /* DropboxSDK.framework */; };
+		88AD55FD18273D69000DE4C6 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */; };
+		88AD55FE18273D69000DE4C6 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */; };
 		88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC795F170D419A00EFBFCE /* help1_iphone.jpg */; };
 		88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7960170D419A00EFBFCE /* help2_iphone.jpg */; };
 		88BC7968170D419A00EFBFCE /* help3_iphone.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88BC7961170D419A00EFBFCE /* help3_iphone.jpg */; };
@@ -779,8 +779,8 @@
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
 		88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_normal@2x.png"; path = "Resources/uibarbuttonitem_normal@2x.png"; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
-		88AD55F718273B2B000DE4C6 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = ../../../.Trash/AWSSimpleDB.framework; sourceTree = "<group>"; };
-		88AD55F918273B3A000DE4C6 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = ../../../.Trash/DropboxSDK.framework; sourceTree = "<group>"; };
+		88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
+		88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 		88BC795F170D419A00EFBFCE /* help1_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help1_iphone.jpg; path = Resources/help1_iphone.jpg; sourceTree = "<group>"; };
 		88BC7960170D419A00EFBFCE /* help2_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help2_iphone.jpg; path = Resources/help2_iphone.jpg; sourceTree = "<group>"; };
 		88BC7961170D419A00EFBFCE /* help3_iphone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = help3_iphone.jpg; path = Resources/help3_iphone.jpg; sourceTree = "<group>"; };
@@ -838,11 +838,11 @@
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
 				2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */,
-				88AD55FA18273B3A000DE4C6 /* DropboxSDK.framework in Frameworks */,
+				88AD55FE18273D69000DE4C6 /* DropboxSDK.framework in Frameworks */,
 				2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */,
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
 				2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */,
-				88AD55F818273B2B000DE4C6 /* AWSSimpleDB.framework in Frameworks */,
+				88AD55FD18273D69000DE4C6 /* AWSSimpleDB.framework in Frameworks */,
 				2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */,
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
@@ -1432,7 +1432,8 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88AD55F918273B3A000DE4C6 /* DropboxSDK.framework */,
+				88AD55FB18273D69000DE4C6 /* AWSSimpleDB.framework */,
+				88AD55FC18273D69000DE4C6 /* DropboxSDK.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
 				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
 				880E6721182720710054DDD0 /* AVFoundation.framework */,
@@ -1534,7 +1535,6 @@
 		88E739C31797C2DB004160F5 /* Amazon */ = {
 			isa = PBXGroup;
 			children = (
-				88AD55F718273B2B000DE4C6 /* AWSSimpleDB.framework */,
 				88E739E61797C2F7004160F5 /* AWSRuntime.framework */,
 			);
 			name = Amazon;
