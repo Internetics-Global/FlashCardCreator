@@ -78,7 +78,6 @@
 		2D5C188516D1A74800E1E785 /* rightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C187116D1A74800E1E785 /* rightArrow.png */; };
 		2D5C188616D1A74800E1E785 /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C187216D1A74800E1E785 /* rightArrow@2x.png */; };
 		2D5C188716D1A74800E1E785 /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */; };
-		2D5C188916D1A76700E1E785 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5C188816D1A76700E1E785 /* DropboxSDK.framework */; };
 		2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5C188A16D1A77200E1E785 /* SDWebImage.framework */; };
 		2D5C188E16D1A77D00E1E785 /* MySHKConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */; };
 		2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C189016D1A7B700E1E785 /* CardCell.m */; };
@@ -229,7 +228,6 @@
 		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
-		88E739E71797C2F7004160F5 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */; };
 		88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E61797C2F7004160F5 /* AWSRuntime.framework */; };
 		88EEEE3C180E26E0002AB9A1 /* create_new_pack.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */; };
 		88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */; };
@@ -610,7 +608,6 @@
 		2D5C187116D1A74800E1E785 /* rightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightArrow.png; path = Resources/rightArrow.png; sourceTree = "<group>"; };
 		2D5C187216D1A74800E1E785 /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rightArrow@2x.png"; path = "Resources/rightArrow@2x.png"; sourceTree = "<group>"; };
 		2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SelectedCellBackground.png; path = Resources/SelectedCellBackground.png; sourceTree = "<group>"; };
-		2D5C188816D1A76700E1E785 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 		2D5C188A16D1A77200E1E785 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Libraries/SDWebImage.framework; sourceTree = "<group>"; };
 		2D5C188C16D1A77D00E1E785 /* MySHKConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MySHKConfigurator.h; path = Classes/MySHKConfigurator.h; sourceTree = "<group>"; };
 		2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MySHKConfigurator.m; path = Classes/MySHKConfigurator.m; sourceTree = "<group>"; };
@@ -803,7 +800,6 @@
 		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
-		88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
 		88E739E61797C2F7004160F5 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Libraries/AWSRuntime.framework; sourceTree = "<group>"; };
 		88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_new_pack.png; path = Resources/create_new_pack.png; sourceTree = "<group>"; };
 		88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "create_new_pack@2x.png"; path = "Resources/create_new_pack@2x.png"; sourceTree = "<group>"; };
@@ -846,9 +842,7 @@
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
-				2D5C188916D1A76700E1E785 /* DropboxSDK.framework in Frameworks */,
 				2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */,
-				88E739E71797C2F7004160F5 /* AWSSimpleDB.framework in Frameworks */,
 				88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1451,7 +1445,6 @@
 				2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */,
 				2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */,
 				2DC0628E167FFF5600F2EA07 /* Security.framework */,
-				2D5C188816D1A76700E1E785 /* DropboxSDK.framework */,
 				2D5F3D50167B537C009D2ADC /* SystemConfiguration.framework */,
 				2DCE0B0B16798E04007A8CAD /* UIKit.framework */,
 				2DCE0B0D16798E04007A8CAD /* Foundation.framework */,
@@ -1534,7 +1527,6 @@
 		88E739C31797C2DB004160F5 /* Amazon */ = {
 			isa = PBXGroup;
 			children = (
-				88E739E51797C2F7004160F5 /* AWSSimpleDB.framework */,
 				88E739E61797C2F7004160F5 /* AWSRuntime.framework */,
 			);
 			name = Amazon;
@@ -2199,7 +2191,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2216,7 +2208,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13F3866E-FD2C-488E-900E-85A5B429FEE2";
+				PROVISIONING_PROFILE = "82D8D61E-C20F-4EFA-B10E-6AA50D2D1EDA";
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2226,7 +2218,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2243,6 +2235,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "82D8D61E-C20F-4EFA-B10E-6AA50D2D1EDA";
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
 			};
