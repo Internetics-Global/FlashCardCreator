@@ -469,10 +469,15 @@
             [self dismissModalViewControllerAnimated:YES];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
+        [self performSelector:@selector(sendNotificationAfterCreateNewPack) withObject:nil afterDelay:0.2]; // only in iOS7, you can not directly call without delay, otherwise, you will not be able to click navigation bar again
+        
     }
     
         
+}
+
+- (void) sendNotificationAfterCreateNewPack {
+    [[NSNotificationCenter defaultCenter] postNotificationName:TO_CREATE_NEW_PACK_NOTIFICATION object:self];
 }
 
 - (void) backButtonClicked {

@@ -69,10 +69,18 @@
 
 
 - (void) setPassword {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:@"Set a password?"
-                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
-                                          otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+    UIAlertView *alert;
+    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+        alert = [[UIAlertView alloc] initWithTitle:nil
+                                   message:@"Set a password?"
+                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+    } else {
+        alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                           message:@"Set a password?"
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+    }
     alert.tag = 1;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert textFieldAtIndex:0].text = @"";
@@ -139,10 +147,18 @@
     _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:@"Set max number of downloads"
-                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                          otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+    UIAlertView *alert;
+    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+        alert = [[UIAlertView alloc] initWithTitle:nil
+                                           message:@"Set max number of downloads"
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+    } else {
+        alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                   message:@"Set max number of downloads"
+                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+    }
     alert.tag = 2;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [alert textFieldAtIndex:0].text = @"9999";
