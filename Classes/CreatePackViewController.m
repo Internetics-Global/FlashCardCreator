@@ -118,7 +118,7 @@
     } else {
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 200,200,200)];
     }
-    _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
     _coverImageView.layer.masksToBounds = YES;
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
@@ -132,6 +132,14 @@
     
     self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGRect rect = _coverImageView.frame;
+    rect.origin.y = _creatorText.frame.origin.y + 40;
+    _coverImageView.frame = rect;
 }
 
 - (void) closeCreatePackView {
