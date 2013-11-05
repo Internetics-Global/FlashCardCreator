@@ -291,6 +291,10 @@ enum popover_enum {
         packListViewController.contentSizeForViewInPopover = CGSizeMake(970, 325);
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+        }
+        
         
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];

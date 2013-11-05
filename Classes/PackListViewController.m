@@ -49,9 +49,6 @@
         }
         
         _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
-        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-            [_editBtnItem setTintColor:[UIColor blackColor]];
-        }
         self.navigationItem.rightBarButtonItem = _editBtnItem;
         
         _picker = [[UIImagePickerController alloc] init];

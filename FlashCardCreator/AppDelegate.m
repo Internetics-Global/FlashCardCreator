@@ -109,6 +109,7 @@ BOOL _isDownloadingSamplePack;
         
         attributes = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor],[UIFont boldSystemFontOfSize:20], nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont, nil]];
         [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+        
 
     }
     
