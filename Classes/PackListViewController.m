@@ -198,19 +198,19 @@
         [view layoutSubviews];
     } else {
         index = index -1;
-        _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+        Pack *pack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
         packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
         packNameText.textAlignment = UITextAlignmentCenter;
         packNameText.font = [UIFont systemFontOfSize:16];
         packNameText.returnKeyType = UIReturnKeyDone;
-        packNameText.text = _currentPack.packName;
+        packNameText.text = pack.packName;
         packNameText.layer.cornerRadius = 5;
         packNameText.layer.masksToBounds = YES;
         packNameText.delegate = self;
         packNameText.tag = index;
         packNameText.userInteractionEnabled = YES;
-        if ((_currentIndex == index) && [_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        if ((_currentIndex == index) && [pack.creator isEqualToString:[OpenUDID value]]) {
             packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
             packNameText.layer.borderWidth = 1;
             packNameText.userInteractionEnabled = TRUE;
@@ -268,7 +268,7 @@
         deleteButton.frame = CGRectMake(20.0f, 255.0f, 85, 25);
         [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        if ((_currentIndex ==index)&&(appDelegate.packIDForMasterViewPack != _currentPack.packID)) {
+        if ((_currentIndex ==index)&&(appDelegate.packIDForMasterViewPack != pack.packID)) {
             [view addSubview:deleteButton];
         }
         
@@ -283,14 +283,14 @@
         [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Edit_Cards", @"") forState:UIControlStateNormal];
         
         
-        if ((_currentPack.packID == appDelegate.packIDForMasterViewPack)
-            && (![_currentPack.creator isEqualToString:[OpenUDID value]])) {
+        if ((pack.packID == appDelegate.packIDForMasterViewPack)
+            && (![pack.creator isEqualToString:[OpenUDID value]])) {
             // not show changeImageButton
         } else {
             if (_currentIndex == -1) { // in the moment of coming in
                 [view addSubview:changeImageButton];
             } else {
-                if ([_currentPack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
+                if ([pack.creator isEqualToString:[OpenUDID value]] && (_currentIndex == index)) {
                     [view addSubview:changeImageButton];
                 }
             }
@@ -301,7 +301,7 @@
             [changeImageButton setTitle:NSLocalizedString(@"NavigationBarItem_Change", @"") forState:UIControlStateNormal];
             [changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
             
-            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+            if ([pack.creator isEqualToString:[OpenUDID value]] == FALSE) {
                 [changeImageButton setEnabled:FALSE];
             } else {
                 [changeImageButton setEnabled:TRUE];
