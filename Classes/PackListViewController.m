@@ -247,7 +247,7 @@
         [view addSubview:coverImageView];
         UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[[User defaultUser].packs objectAtIndex:index]).coverImageURL];
         if (image == NULL) {
-            coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.png"];
+            coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
         } else {
             coverImageView.image = image;
         }
@@ -531,7 +531,7 @@
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
     
     if (_currentPack) {
-        if (([_currentPack.coverImageURL rangeOfString:@".png"].location == NSNotFound) || ([_currentPack.coverImageURL hasSuffix:@"default_pack_cover_image.png"])||((_currentPack.coverImageURL.length == 0))) {
+        if (([_currentPack.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ([_currentPack.coverImageURL hasSuffix:@"default_pack_cover_image.jpg"])||((_currentPack.coverImageURL.length == 0))) {
             _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
         [imageData writeToFile:_currentPack.coverImageURL atomically:YES];

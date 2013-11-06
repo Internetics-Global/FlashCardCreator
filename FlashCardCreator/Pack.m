@@ -138,8 +138,8 @@
     
     //Deleted image resources
     NSError *error = nil;
-    //We never delete placeholder imae
-    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image.png"]) {
+    //We never delete placeholder image
+    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image.jpg"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL]) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {

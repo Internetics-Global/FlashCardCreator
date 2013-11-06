@@ -122,10 +122,10 @@
     _coverImageView.layer.masksToBounds = YES;
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
-    _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.png"];
+    _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.jpg"];
     [self.view addSubview:_coverImageView];
     
-    _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.png", [[NSBundle mainBundle] resourcePath]];
+    _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.jpg", [[NSBundle mainBundle] resourcePath]];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
     [_coverImageView addGestureRecognizer:imageSingeTap];
