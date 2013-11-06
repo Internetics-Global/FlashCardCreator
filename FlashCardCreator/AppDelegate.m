@@ -139,6 +139,7 @@ BOOL _isDownloadingSamplePack;
     [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        
         [[UISegmentedControl appearance] setTintColor:[UIColor colorWithRed:233.0/255 green:233.0/255 blue:233.0/255 alpha:1]];
     } else {
         [[UISegmentedControl appearance] setBackgroundImage:segmentUnselected

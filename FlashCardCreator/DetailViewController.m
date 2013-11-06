@@ -65,7 +65,6 @@ enum popover_enum {
     self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        //[self.navigationController.navigationBar setBarTintColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background_navigationbar.png"]]];//we will add this back when xcode5 is finally released
         [self.navigationController.navigationBar setTranslucent:FALSE];
     }
     
