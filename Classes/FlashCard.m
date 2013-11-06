@@ -2535,6 +2535,10 @@ extern BOOL isFromNewCreatedCard;
     return newImage;
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
 
 #pragma mark -
 #pragma mark - Text edit function
