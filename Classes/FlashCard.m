@@ -147,6 +147,7 @@ extern BOOL isFromNewCreatedCard;
     //We can not make UIImagePickerController in landscape since it's illegal
     _picker = [[UIImagePickerController alloc] init];
     _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _picker.navigationBar.barStyle = UIBarStyleBlack;
     _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
     
     if (isUserInterfaceIdiomPhone) {
@@ -3161,11 +3162,11 @@ extern BOOL isFromNewCreatedCard;
     // we put all the save operations only when click the "save button"
     if (!isFromNewCreatedCard) {
         [self saveEdittedCard];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     } else {
         [self doQuestionAndAnswerData];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
 

@@ -109,6 +109,7 @@
 #define PREVIOUS_FLASHCARDVIEW_TAG             110
 #define NEXT_FLASHCARDVIEW_TAG                 112
 #define NEW_FLASHCARDVIEW_TAG                  113
+#define OTHER_FLASHCARDVIEW_TAG                114
 
 #define FONT_FACTOR_BETWEEN_IPAD_IPHONE     0.5
 #define FONT_OFFSET_BETWEEN_IPAD_IPHONE     2

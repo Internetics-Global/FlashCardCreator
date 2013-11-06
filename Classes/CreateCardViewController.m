@@ -190,6 +190,8 @@ BOOL isFromNewCreatedCard = NO;
     
     //Step5: set flag
     isFromNewCreatedCard = NO;
+    _newCardView.tag = OTHER_FLASHCARDVIEW_TAG;
+    _newCardView = nil;
 }
 
 - (void) backAndPopCreateCardView {
