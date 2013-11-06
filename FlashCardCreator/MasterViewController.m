@@ -236,7 +236,7 @@ enum popover_enum {
     
     
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-    if ((isExamplePackDownloadedSuccessful == FALSE) && ([DataManager apiReachable])) {
+    if (isExamplePackDownloadedSuccessful == FALSE) {
         //do nothing
     } else if (_isDownloadingSamplePack){
         _isDownloadingSamplePack = FALSE;
