@@ -1286,7 +1286,7 @@ enum popover_enum {
             error = nil;
             newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             if ([questionDict[@"image"] length] >0) {
-                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
+                [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
                     NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
@@ -1441,7 +1441,7 @@ enum popover_enum {
             error = nil;
             newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image"] length] > 0) {
-                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
+                [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
                     NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
@@ -1558,6 +1558,8 @@ enum popover_enum {
         NSLog(@"Unexpected questionTextContent.json format");
     }
     [[NSFileManager defaultManager] removeItemAtPath:answerJsonPath error:nil];
+    
+    [[NSFileManager defaultManager] removeItemAtPath:temporaryImagesDir error:nil];
     
     return assembledCard;
     
