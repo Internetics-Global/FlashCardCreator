@@ -1721,7 +1721,7 @@ extern BOOL isFromNewCreatedCard;
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 230, 690, 190);
+            _subQuestion.frame = CGRectMake(10, 230, 700, 190);
             _subQuestion.font = [UIFont boldSystemFontOfSize:34];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -3144,8 +3144,8 @@ extern BOOL isFromNewCreatedCard;
 - (void) templateSelectedNotification: (NSNotification *) notification {
     
     
-    [self performSelectorInBackground:@selector(dismissPopoverController) withObject:nil];
-    
+    //[self performSelectorInBackground:@selector(dismissPopoverController) withObject:nil];
+    [self performSelector:@selector(dismissPopoverController) withObject:nil];
     
     //  We don't want to accept when there's create card action now
     if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
