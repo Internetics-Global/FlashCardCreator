@@ -90,12 +90,15 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:PLAY_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        
         //2. Initialize
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
         _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
-        _isRestartApp = TRUE;
         
         
 
@@ -241,11 +244,6 @@ enum popover_enum {
     } else if (_isDownloadingSamplePack){
         _isDownloadingSamplePack = FALSE;
         
-    }else {
-        if (_isRestartApp) {
-            [self performSelector:@selector(selectAvailablePacks:) withObject:nil afterDelay:0.1];
-            _isRestartApp = FALSE;
-        }
     }
     
 }
@@ -456,6 +454,8 @@ enum popover_enum {
 
 - (void) downloadPackNotification:(NSNotification *) notification {
 
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isDownloadingPack = TRUE;
     
     NSString *url = (NSString *)[notification object];
     
@@ -566,6 +566,24 @@ enum popover_enum {
     
 }
 
+- (void) showPackListNotification :(NSNotification *) notification {
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.isDownloadingPack == FALSE) {
+        [self selectAvailablePacks:nil];
+    }
+}
+
+
+- (void) dismissPackListNotification :(NSNotification *) notification {
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    } else {
+        if (_packListPickerPopover) {
+            [_packListPickerPopover dismissPopoverAnimated:NO];
+        }
+    }
+}
+
 - (void) playNotification :(NSNotification *) notification {
     
     if (isUserInterfaceIdiomPhone == FALSE) {
@@ -628,18 +646,18 @@ enum popover_enum {
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
     
-    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.packIDForMasterViewPack = self.currentPack.packID;
     
     self.indexCard = 0;
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
-
-    //New user use introduction
-    if (_isRestartApp == TRUE){
-        [self selectAvailablePacks:nil];
-    } else {
-        //Step2: update detail view
+    
+    [self selectAvailablePacks:nil];
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.packIDForMasterViewPack = self.currentPack.packID;
+        appDelegate.isDownloadingPack = FALSE;
+        
         self.detailViewController.detailItem = _currentCard.cardName;
         self.detailViewController.currentCard = _currentCard;
         self.detailViewController.currentPack = _currentPack;
@@ -937,6 +955,7 @@ enum popover_enum {
     
     if ([DataManager apiReachable] == NO) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")];
+        
         return;
     }
     

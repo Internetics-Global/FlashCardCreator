@@ -267,5 +267,10 @@ BOOL _isDownloadingSamplePack;
     isLoggingDropboxInSettingView = NO;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isDownloadingPack = FALSE;
+}
+
 
 @end

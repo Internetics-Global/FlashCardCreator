@@ -26,4 +26,6 @@
 
 @property (assign, nonatomic) int packIDForMasterViewPack;
 
+@property (assign, nonatomic) BOOL isDownloadingPack;
+
 @end

@@ -2209,10 +2209,12 @@
 					/Users/bournewang/.Trash,
 					/Users/bournewang/Project/FlashCardCreator/Libraries,
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -2238,10 +2240,12 @@
 					/Users/bournewang/.Trash,
 					/Users/bournewang/Project/FlashCardCreator/Libraries,
 				);
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
