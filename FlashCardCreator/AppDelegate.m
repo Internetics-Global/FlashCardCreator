@@ -174,7 +174,7 @@ BOOL _isDownloadingSamplePack;
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful ==NO) {
         _isDownloadingSamplePack = TRUE;
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/8we1gsnb707hlf5/Pack1378102901-868581600.zip?type=demo"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:@"https://www.dropbox.com/s/93qa5tu5cwgoaw3/checknetworkstatussample.zip?type=demo"];
     } else {
         _isDownloadingSamplePack = FALSE;
     }
