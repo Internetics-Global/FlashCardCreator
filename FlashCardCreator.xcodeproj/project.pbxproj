@@ -203,8 +203,6 @@
 		88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B331714522300833692 /* templateScreenshot4_question_iPad.png */; };
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
-		88624A9018274348004B5016 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88624A8E18274348004B5016 /* AWSSimpleDB.framework */; };
-		88624A9118274348004B5016 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88624A8F18274348004B5016 /* DropboxSDK.framework */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
 		88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */; };
@@ -239,6 +237,8 @@
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88F68599177049ED0083AF7B /* question_placeholder_content.jpg */; };
+		9A7E451318274AB900A05C05 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */; };
+		9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451218274AB900A05C05 /* DropboxSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -769,8 +769,6 @@
 		88491B331714522300833692 /* templateScreenshot4_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question_iPad.png; path = Resources/templateScreenshot4_question_iPad.png; sourceTree = "<group>"; };
 		88491B341714522300833692 /* templateScreenshot4_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question.png; path = Resources/templateScreenshot4_question.png; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
-		88624A8E18274348004B5016 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
-		88624A8F18274348004B5016 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
 		88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = default_pack_cover_image.jpg; path = Resources/default_pack_cover_image.jpg; sourceTree = "<group>"; };
@@ -813,6 +811,8 @@
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
+		9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
+		9A7E451218274AB900A05C05 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -838,11 +838,11 @@
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
 				2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */,
-				88624A9118274348004B5016 /* DropboxSDK.framework in Frameworks */,
+				9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */,
 				2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */,
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
 				2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */,
-				88624A9018274348004B5016 /* AWSSimpleDB.framework in Frameworks */,
+				9A7E451318274AB900A05C05 /* AWSSimpleDB.framework in Frameworks */,
 				2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */,
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
@@ -1432,8 +1432,8 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				88624A8E18274348004B5016 /* AWSSimpleDB.framework */,
-				88624A8F18274348004B5016 /* DropboxSDK.framework */,
+				9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */,
+				9A7E451218274AB900A05C05 /* DropboxSDK.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
 				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
 				880E6721182720710054DDD0 /* AVFoundation.framework */,
@@ -1570,6 +1570,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Internetics;
+				TargetAttributes = {
+					2DCE0B0616798E04007A8CAD = {
+						DevelopmentTeam = 35A5R96666;
+					};
+				};
 			};
 			buildConfigurationList = 2DCE0B0116798E04007A8CAD /* Build configuration list for PBXProject "FlashCardCreator" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2199,15 +2204,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 					/Users/bournewang/.Trash,
 					/Users/bournewang/Project/FlashCardCreator/Libraries,
+					/Users/clivefrance/Apps/FlashCardCreator/Libraries,
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2220,7 +2226,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "82D8D61E-C20F-4EFA-B10E-6AA50D2D1EDA";
+				PROVISIONING_PROFILE = "756C85D7-F979-4C07-8D4E-3C74CCFF9D94";
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2230,15 +2236,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mark Beeley (4M79B4CF9L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
 					/Users/bournewang/.Trash,
 					/Users/bournewang/Project/FlashCardCreator/Libraries,
+					/Users/clivefrance/Apps/FlashCardCreator/Libraries,
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2251,7 +2258,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "82D8D61E-C20F-4EFA-B10E-6AA50D2D1EDA";
+				PROVISIONING_PROFILE = "756C85D7-F979-4C07-8D4E-3C74CCFF9D94";
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
 			};
