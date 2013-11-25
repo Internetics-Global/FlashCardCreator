@@ -33,7 +33,7 @@ BOOL _isDownloadingSamplePack;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Appsee start:@"556562735fb44188885a874b63449621"];
+    //[Appsee start:@"556562735fb44188885a874b63449621"];
     
     //1. check database
     [SQLiteHelper verifyDatabase];
