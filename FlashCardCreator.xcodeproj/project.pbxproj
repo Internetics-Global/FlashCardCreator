@@ -820,8 +820,8 @@
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
-		9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = SOURCE_ROOT; };
-		9A7E451218274AB900A05C05 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = SOURCE_ROOT; };
+		9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
+		9A7E451218274AB900A05C05 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1519,7 +1519,7 @@
 			);
 			name = TestFlightSDK2.0.2;
 			path = Libraries/TestFlightSDK2.0.2;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		880E66FD182720460054DDD0 /* Appsee */ = {
 			isa = PBXGroup;
@@ -2236,12 +2236,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
-					/Users/bournewang/.Trash,
-					/Users/bournewang/Project/FlashCardCreator/Libraries,
-					/Users/clivefrance/Apps/FlashCardCreator/Libraries,
+					"$(SRCROOT)/Libraries/**",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2250,7 +2245,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries/TestFlightSDK2.0.2,
+					"$(SRCROOT)/Libraries/**",
 				);
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
@@ -2275,12 +2270,7 @@
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Libraries\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries,
-					/Users/bournewang/.Trash,
-					/Users/bournewang/Project/FlashCardCreator/Libraries,
-					/Users/clivefrance/Apps/FlashCardCreator/Libraries,
+					"$(SRCROOT)/Libraries/**",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2289,7 +2279,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/bournewang/Documents/Project/FlashCardCreator/Libraries/TestFlightSDK2.0.2,
+					"$(SRCROOT)/Libraries/**",
 				);
 				LLVM_LTO = NO;
 				OTHER_LDFLAGS = (
