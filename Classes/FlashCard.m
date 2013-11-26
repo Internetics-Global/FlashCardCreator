@@ -2556,7 +2556,7 @@ extern BOOL isFromNewCreatedCard;
     
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
-    if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
+    if (_lastBecomeFirstRespondTextView.inputView == nil) {
         [_emotionButtonForInputView setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
         _dismissKeyboardFromEmotionSwitch = TRUE;
         _isUITextViewFocused = FALSE;
