@@ -86,11 +86,20 @@ typedef enum{
     BOOL    _isTextFieldsChanged; // when no changes, don't need to do save operation
     BOOL    _doneButtonPressed;
     
-    NSArray *_buttonArray;
-    NSArray *_fontSizeArray;
-    NSArray *_colorArray;
-    NSArray *_alignArray;
-    UIToolbar *_keyboardTopView;
+    //keyboard related
+    NSArray                            *_fontSizeArray;
+    NSArray                            *_colorArray;
+    NSArray                            *_alignArray;
+    NSArray                            *_buttonArray; //for input accessory view
+    NSArray                            *_buttonArrayForInputView; //for input view
+    UIToolbar                          *_keyboardTopView; //for input accessory view
+    UIToolbar                          *_keyboardTopViewForInputView; //for input view
+    UIView                             *_keyboardInputBaseView; //for input view
+    KeyboardSwitchButtonType            _keyboardSwitchButtonType;
+    EmoticonSelectionViewController    *_emoticonSelectionViewController;
+    CGFloat                             _keyboardHeight;
+    UIBarButtonItem                    *_emotionButton;
+    UIBarButtonItem                    *_emotionButtonForInputView;
     
     UIImagePickerController *_picker;
     UIPopoverController *_imagePickerPopover;
@@ -98,21 +107,9 @@ typedef enum{
     
     MBProgressHUD *_HUD;
     
-    KeyboardSwitchButtonType      _keyboardSwitchButtonType;
-    
-    EmoticonSelectionViewController *_emoticonSelectionViewController;
-    
     //when use, please use together
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
-    
-    NSNumber *_keyboardDuration;
-    NSNumber *_keyboardCurve;
-    CGFloat   _keyboardHeight;
-    
-    UIView  *_messageViewBackgroundView;
-    
-    UIBarButtonItem *_emotionButton;
     
     SimpleWebBrowserController *_webViewController;
     
@@ -144,8 +141,5 @@ typedef enum{
 - (UIImage *)captureWholeViewAsImage;
 
 - (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val;  //Re-screenshot all cards under current pack
-
-- (void) removeMessageView;
-- (void) setUpMessageView;
 
 @end

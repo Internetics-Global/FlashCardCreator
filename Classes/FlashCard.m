@@ -142,7 +142,9 @@ extern BOOL isFromNewCreatedCard;
     _subAlignAnswer = @"Center";
     
     _keyboardShown = FALSE;
-    [self setInputAccessoryViewDone];
+    
+    [self setUpInputView];
+    [self setUpInputAccessoryView];
     
     //We can not make UIImagePickerController in landscape since it's illegal
     _picker = [[UIImagePickerController alloc] init];
@@ -1941,17 +1943,9 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    if ((_dismissKeyboardFromEmotionSwitch == FALSE) &&(_isUITextViewFocused)) {
-        [self hideMessageView];
-    }
-    
 }
 
 
-// Responsiblity:
-// 1. bring the _keyboardTopView in front
-// 2. record the keyboard parameters(_keyboardDuration,etc) for later use by dismissKeyboard
-// 3. hide navigation if iPhone
 - (void)keyboardWillShow:(NSNotification*)aNotification {
     
     //step1: we only deal with current card and new created card
@@ -1959,52 +1953,6 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    //only repsonde to UITextView
-    if (_isUITextViewFocused) {
-        
-        //step1: bring out the _keyboardTopView
-        CGRect keyboardBounds;
-        [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-        _keyboardDuration = [aNotification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-        _keyboardCurve = [aNotification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-        _keyboardHeight = keyboardBounds.size.width;
-        
-        int emotionViewHeight;
-        int cssToolbarHeight;
-        if (isUserInterfaceIdiomPhone) {
-            emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
-            cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
-        } else {
-            emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
-            cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
-        }
-        
-        CGFloat delta = _messageViewBackgroundView.frame.origin.y + cssToolbarHeight + emotionViewHeight - [Common getScreenHeightInLandscape];
-        
-        
-        if (delta != 0) {
-            CGRect newFrame = _messageViewBackgroundView.frame;
-            newFrame = CGRectOffset(newFrame, 0, -delta);
-            [UIView beginAnimations:nil context:NULL];
-            [UIView setAnimationBeginsFromCurrentState:YES];
-            [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
-            [UIView setAnimationCurve:[_keyboardCurve intValue]];
-            _messageViewBackgroundView.frame = newFrame;
-            [UIView commitAnimations];
-        }
-        
-        if (_isUITextViewFocused) {
-            //step2:bring _messageViewBackgroundView in front
-            if (isUserInterfaceIdiomPhone) {
-                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-                [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
-            } else {
-                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
-            }
-        }
-        
-    }
 
     
     if (isUserInterfaceIdiomPhone) {
@@ -2023,17 +1971,6 @@ extern BOOL isFromNewCreatedCard;
     
     if (_isUITextViewFocused == FALSE) {
         return;
-    }
-    
-    
-    if (_isUITextViewFocused) {
-        if (isUserInterfaceIdiomPhone) {
-            UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-            [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
-        } else {
-            AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
-        }
     }
     
     //Step1: Get cursor Y value relative to view
@@ -2132,7 +2069,52 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
-- (void) setInputAccessoryViewDone  {
+// For keyboard input view (top parts)
+- (void) setInputViewTopViewItems  {
+    
+    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownActionForInputView)];
+    
+    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorActionForInputView)];
+    
+    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignActionForInputView)];
+    
+    _emotionButtonForInputView = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
+    
+    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
+    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (isUserInterfaceIdiomPhone) {
+        customButton.bounds = CGRectMake(0, 0, 48, 40);
+    } else {
+        customButton.bounds = CGRectMake(0, 0, 60, 50);
+    }
+    [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
+    if (isUserInterfaceIdiomPhone) {
+        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    }   else {
+        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    }
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        
+    } else {
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+    }
+    [customButton addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchDown];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
+    
+    
+    _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButton,nil];
+
+    
+}
+
+
+// For keyboard input accessary view
+- (void) setInputAccessoryViewItems  {
     
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
     
@@ -2234,24 +2216,13 @@ extern BOOL isFromNewCreatedCard;
         _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];
     }
     
-    
-    //[self setUpMessageView];
-    
 }
 
-- (void) removeMessageView {
-    if (_messageViewBackgroundView.superview) {
-        [_messageViewBackgroundView removeFromSuperview];
-    }
-}
 
-/**
-   _messageViewBackgroundView is related to UIWindow, so it's very easy to have memory leak even
-   we are using ARC. this kind of memory leak is called retain cycle
-*/
-- (void) setUpMessageView {
+- (void) setUpInputView {
     
-    //step2: emotion view
+    [self setInputViewTopViewItems];
+    
     int columnCount;
     int rowCount;
     int emotionViewHeight;
@@ -2268,25 +2239,64 @@ extern BOOL isFromNewCreatedCard;
         cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
     }
     
-    //step1: background view
-    if (_messageViewBackgroundView == nil) {
-        _messageViewBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, [Common getScreenHeightInLandscape], [Common getScreenWidthInLandscape], (cssToolbarHeight + emotionViewHeight))];
-        [_messageViewBackgroundView setBackgroundColor:[UIColor clearColor]];
+    //background view
+    if (_keyboardInputBaseView == nil) {
+        _keyboardInputBaseView = [[UIView alloc] initWithFrame:CGRectMake(0, [Common getScreenHeightInLandscape], [Common getScreenWidthInLandscape], (cssToolbarHeight + emotionViewHeight))];
+        [_keyboardInputBaseView setBackgroundColor:[UIColor clearColor]];
         
-        if (_messageViewBackgroundView.superview == nil) {
-            if (isUserInterfaceIdiomPhone) {
-                UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-                [keyWindow.rootViewController.view addSubview:_messageViewBackgroundView];
-                [keyWindow.rootViewController.view bringSubviewToFront:_messageViewBackgroundView];
-            } else {
-                AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                [appDelegate.splitViewController.view addSubview:_messageViewBackgroundView];
-                [appDelegate.splitViewController.view bringSubviewToFront:_messageViewBackgroundView];
-            }
-        }
+    }
+
+    
+    //Emotion view
+    
+    if (_emoticonSelectionViewController == nil) {
+        _emoticonSelectionViewController = [[EmoticonSelectionViewController alloc] initWithEmoticons:[EmoticonHelper defaultEmoticons] rowCount:rowCount columnCount:columnCount];
+        _emoticonSelectionViewController.delegate = self;
+        _emoticonSelectionViewController.view.frame = CGRectMake(0, cssToolbarHeight, [Common getScreenWidthInLandscape], emotionViewHeight);
+        [_emoticonSelectionViewController layoutEmotions];
+        
+        [_keyboardInputBaseView addSubview:_emoticonSelectionViewController.view];
     }
     
-    //step2: Keyboard top view
+    
+    //Keyboard top view for keyboard input view
+    if (_keyboardTopViewForInputView == nil) {
+        _keyboardTopViewForInputView = [[UIToolbar alloc]init];
+    }
+    
+    [_keyboardTopViewForInputView setBarStyle:UIBarStyleBlackTranslucent];
+    
+    _keyboardTopViewForInputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    
+    _keyboardTopViewForInputView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
+    [_keyboardTopViewForInputView setItems:_buttonArrayForInputView];
+    [_keyboardInputBaseView addSubview:_keyboardTopViewForInputView];
+    [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputView];
+
+    
+}
+
+- (void) setUpInputAccessoryView {
+    
+    [self setInputAccessoryViewItems];
+    
+    int columnCount;
+    int rowCount;
+    int emotionViewHeight;
+    int cssToolbarHeight;
+    if (isUserInterfaceIdiomPhone) {
+        columnCount = CSS_EMOTION_COLUMN_COUNT_IPHONE;
+        rowCount = CSS_EMOTION_ROW_COUNT_IPHONE;
+        cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
+        emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
+    } else {
+        columnCount = CSS_EMOTION_COLUMN_COUNT_IPAD;
+        rowCount = CSS_EMOTION_ROW_COUNT_IPAD;
+        emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
+        cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
+    }
+    
+    //Keyboard top view for accessary view
     if (_keyboardTopView == nil) {
         _keyboardTopView = [[UIToolbar alloc]init];
     }
@@ -2297,26 +2307,14 @@ extern BOOL isFromNewCreatedCard;
     
     _keyboardTopView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
     [_keyboardTopView setItems:_buttonArray];
-    [_messageViewBackgroundView addSubview:_keyboardTopView];
-    [_messageViewBackgroundView bringSubviewToFront:_keyboardTopView];
     
-    //step3: Emotion view
-    
-    if (_emoticonSelectionViewController == nil) {
-        _emoticonSelectionViewController = [[EmoticonSelectionViewController alloc] initWithEmoticons:[EmoticonHelper defaultEmoticons] rowCount:rowCount columnCount:columnCount];
-        _emoticonSelectionViewController.delegate = self;
-        _emoticonSelectionViewController.view.frame = CGRectMake(0, cssToolbarHeight, [Common getScreenWidthInLandscape], emotionViewHeight);
-        [_emoticonSelectionViewController layoutEmotions];
-        
-        [_messageViewBackgroundView addSubview:_emoticonSelectionViewController.view];
-    }
-    
-    //[_subheadingQuestion setInputAccessoryView:_keyboardTopView];
-    //[_mainQuestion setInputAccessoryView:_keyboardTopView];
-    //[_subQuestion setInputAccessoryView:_keyboardTopView];
-    //[_subheadingAnswer setInputAccessoryView:_keyboardTopView];
-    //[_mainAnswer setInputAccessoryView:_keyboardTopView];
-    //[_subAnswer setInputAccessoryView:_keyboardTopView];
+    //default input method
+    [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
+    [_mainQuestion setInputAccessoryView:_keyboardTopView];
+    [_subQuestion setInputAccessoryView:_keyboardTopView];
+    [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
+    [_mainAnswer setInputAccessoryView:_keyboardTopView];
+    [_subAnswer setInputAccessoryView:_keyboardTopView];
     
 }
 
@@ -2341,7 +2339,8 @@ extern BOOL isFromNewCreatedCard;
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
-    [self hideMessageView];
+    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopView];
+    [_lastBecomeFirstRespondTextView setInputView:nil];
     
     //step2:
     _isUITextViewFocused = NO;
@@ -2351,20 +2350,6 @@ extern BOOL isFromNewCreatedCard;
     //Step3: save data in keyboardWasHidden
     _doneButtonPressed = YES;
     
-}
-
-- (void) hideMessageView {
-    CGFloat delta = _messageViewBackgroundView.frame.origin.y - [Common getScreenHeightInLandscape];
-    if (delta != 0) {
-        CGRect newFrame = _messageViewBackgroundView.frame;
-        newFrame = CGRectOffset(newFrame, 0, -delta);
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationDuration:[_keyboardDuration doubleValue]];
-        [UIView setAnimationCurve:[_keyboardCurve intValue]];
-        _messageViewBackgroundView.frame = newFrame;
-        [UIView commitAnimations];
-    }
 }
 
 #pragma mark -
@@ -2555,23 +2540,39 @@ extern BOOL isFromNewCreatedCard;
     [_keyboardTopView setItems:_alignArray animated:TRUE];
 }
 
+- (void) sizeUpDownActionForInputView {
+    [_keyboardTopViewForInputView setItems:_fontSizeArray animated:TRUE];
+}
+
+- (void) selectColorActionForInputView {
+    [_keyboardTopViewForInputView setItems:_colorArray animated:TRUE];
+}
+
+- (void) alignActionForInputView {
+    [_keyboardTopViewForInputView setItems:_alignArray animated:TRUE];
+}
+
 - (void) emotionAndKeyboardSwitch:(id) sender {
     
-    UIBarButtonItem *senderItem = (UIBarButtonItem *)sender;
+    [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     if (_keyboardSwitchButtonType == KeyboardSwitchButtonTypeSystem) {
-        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
+        [_emotionButtonForInputView setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
         _dismissKeyboardFromEmotionSwitch = TRUE;
         _isUITextViewFocused = FALSE;
-        [_lastBecomeFirstRespondTextView resignFirstResponder];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeEmoticon;
+        _lastBecomeFirstRespondTextView.inputAccessoryView = nil;
+        _lastBecomeFirstRespondTextView.inputView = _keyboardInputBaseView;
     } else {
-        [_lastBecomeFirstRespondTextView becomeFirstResponder];
         _isUITextViewFocused = TRUE;
-        [senderItem setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
+        [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+        _lastBecomeFirstRespondTextView.inputAccessoryView = _keyboardTopView;
+        _lastBecomeFirstRespondTextView.inputView = nil;
         
     }
+    
+    [_lastBecomeFirstRespondTextView becomeFirstResponder];
     
     
 }
@@ -2724,6 +2725,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) backAction:(id) sender{
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
+    [_keyboardTopViewForInputView setItems:_buttonArrayForInputView animated:TRUE];
 }
 
 #pragma mark -
@@ -2737,9 +2739,8 @@ extern BOOL isFromNewCreatedCard;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {    
     _isUITextViewFocused = FALSE;
-    _messageViewBackgroundView.hidden = TRUE;
+    _keyboardInputBaseView.hidden = TRUE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
-    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     return TRUE;
 }
 
@@ -2816,9 +2817,8 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     _lastBecomeFirstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
-    _messageViewBackgroundView.hidden = FALSE;
+    _keyboardInputBaseView.hidden = FALSE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
-    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
     return TRUE;
 }

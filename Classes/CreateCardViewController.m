@@ -156,19 +156,11 @@ BOOL isFromNewCreatedCard = NO;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
-    if (_newCardView) {
-        [_newCardView setUpMessageView];
-    }
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
-    if (_newCardView) {
-        [_newCardView removeMessageView];
-    }
 }
 
 - (void) saveAndCloseCreateCardView {
