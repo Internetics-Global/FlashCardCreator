@@ -2741,6 +2741,11 @@ extern BOOL isFromNewCreatedCard;
     _isUITextViewFocused = FALSE;
     _keyboardInputBaseView.hidden = TRUE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
+    
+    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopView];
+    [_lastBecomeFirstRespondTextView setInputView:nil];
+    _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
+    
     return TRUE;
 }
 
