@@ -125,10 +125,10 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-40, 10, 30, 30);
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-50, 20, 30, 30);
         _scrollView.frame = CGRectMake(0, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
     } else {
-        _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-40, 10, 30, 30);
+        _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-50, 20, 30, 30);
         _scrollView.frame = CGRectMake(0, IPAD_UI_NAVIGATION_BAR_HEIGHT, IPAD_UI_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
     }
     
