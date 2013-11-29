@@ -1953,6 +1953,15 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    //only repsonde to UITextView
+    if (_isUITextViewFocused) {
+        
+        //step1: bring out the _keyboardTopView
+        CGRect keyboardBounds;
+        [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+        _keyboardHeight = keyboardBounds.size.width;
+        
+    }
 
     
     if (isUserInterfaceIdiomPhone) {
@@ -2887,7 +2896,7 @@ extern BOOL isFromNewCreatedCard;
         while (true) {
             timeout =50;
             textView.text = [textView.text substringToIndex:(textView.text.length -1)];
-            [textView layoutSubviews];
+            [textView layoutIfNeeded];
             int newCurrentLines = textView.contentSize.height / lineHeight;
             if ((newCurrentLines == maxLines) || (timeout > 50))
                 break;
