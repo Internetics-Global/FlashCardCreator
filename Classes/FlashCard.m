@@ -2892,15 +2892,9 @@ extern BOOL isFromNewCreatedCard;
                          firstHalfString,
                          text,
                          secondHalfString];
-        int timeout = 0;
-        while (true) {
-            timeout =50;
-            textView.text = [textView.text substringToIndex:(textView.text.length -1)];
-            [textView layoutIfNeeded];
-            int newCurrentLines = textView.contentSize.height / lineHeight;
-            if ((newCurrentLines == maxLines) || (timeout > 50))
-                break;
-        }
+        
+        textView.text = [textView.text substringToIndex:(textView.text.length -1)];
+        [textView layoutIfNeeded];
         
         range.location++;
         textView.selectedRange = range;
