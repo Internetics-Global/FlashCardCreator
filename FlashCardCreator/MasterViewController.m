@@ -324,7 +324,20 @@ enum popover_enum {
             [self.navigationController.view addSubview:_backgroundOfCreateCardView];
         }];
         [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
+        
+        
+        //Avoid fast click to crash app
+        _addCardButton.enabled = FALSE;
+        _backgroundOfCreateCardView.enabled = FALSE;
+        double delayInSeconds = 0.6;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            _addCardButton.enabled = YES;
+            _backgroundOfCreateCardView.enabled = YES;
+        });
+        
     }
+
     
     
     CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
