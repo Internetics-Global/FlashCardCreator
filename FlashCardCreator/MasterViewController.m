@@ -586,6 +586,11 @@ enum popover_enum {
 
 
 - (void) showPackListAfterApplicationDidBecomeActive {
+    
+    if (self.view.window == nil) {
+        return;//for safe and to avoid same issue in showPackListNotification
+    }
+    
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (appDelegate.isDownloadingPack == FALSE) {
         [self selectAvailablePacks:nil];
