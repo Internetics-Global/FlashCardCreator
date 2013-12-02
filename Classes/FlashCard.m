@@ -256,7 +256,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
-        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
@@ -269,7 +269,7 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
-        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
@@ -283,7 +283,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
-        _subQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
@@ -312,7 +312,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
-        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
@@ -326,7 +326,7 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
-        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
@@ -341,7 +341,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
-        _subAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
@@ -566,7 +566,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
         _subheadingQuestion.delegate = self;
-        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
@@ -578,7 +578,7 @@ extern BOOL isFromNewCreatedCard;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
         _mainQuestion.delegate = self;
-        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainQuestion];
     }
@@ -591,7 +591,7 @@ extern BOOL isFromNewCreatedCard;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
-        _subQuestion.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subQuestion];
     }
@@ -619,7 +619,7 @@ extern BOOL isFromNewCreatedCard;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
         _subheadingAnswer.delegate = self;
-        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
@@ -632,7 +632,7 @@ extern BOOL isFromNewCreatedCard;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
         _mainAnswer.delegate = self;
-        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_mainAnswer];
     }
@@ -645,7 +645,7 @@ extern BOOL isFromNewCreatedCard;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
         _subAnswer.delegate = self;
-        _subAnswer.autocorrectionType = UITextAutocorrectionTypeNo;
+        _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
         [_verticalScrollView addSubview:_subAnswer];
     }
