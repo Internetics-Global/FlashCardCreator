@@ -580,6 +580,12 @@ enum popover_enum {
 }
 
 - (void) showPackListNotification :(NSNotification *) notification {
+    //avoid this kind of issue: [UIPopoverController _commonPresentPopoverFromRect:inView:permittedArrowDirections:animated:]: Popovers cannot be presented from a view which does not have a window.
+    [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
+}
+
+
+- (void) showPackListAfterApplicationDidBecomeActive {
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (appDelegate.isDownloadingPack == FALSE) {
         [self selectAvailablePacks:nil];
