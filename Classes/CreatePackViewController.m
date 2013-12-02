@@ -118,7 +118,7 @@
     } else {
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 200,200,200)];
     }
-    _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     _coverImageView.layer.masksToBounds = YES;
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;

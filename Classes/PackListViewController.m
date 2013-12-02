@@ -241,7 +241,7 @@
         }
         
         coverImageView = [[UIImageView alloc] initWithFrame:CGRectInset(imageViewBackGround.frame, 5, 5)];
-        coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+        coverImageView.contentMode = UIViewContentModeScaleAspectFit;
         coverImageView.layer.cornerRadius = 10;
         coverImageView.layer.masksToBounds = YES;
         [view addSubview:coverImageView];
