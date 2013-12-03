@@ -837,16 +837,23 @@ enum popover_enum {
     
     NSArray *tempCards = [_currentPack cards];
     
-    for (int i = indexPath.row +1; i < [tempCards count] ; i++) {
-        ((Card *)tempCards[i]).cardSN = i;
-        [((Card *)tempCards[i]) save];
-    }
+    //remove card from _currentPack
     [_currentPack removeCard:tempCards[indexPath.row]];
+    //_currentPack.cards = [_currentPack snOrderedCards]; //We need to re-order
     
-    _currentPack.cards = [_currentPack snOrderedCards]; //We need to re-order
-    
+    //remove from tableView
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil]
                           withRowAnimation:UITableViewRowAnimationFade];
+    
+    //reset cardSN
+    for (int i = indexPath.row; i < [tempCards count] ; i++) {
+        if (((Card *)tempCards[i]).cardSN != i + 1) {
+            ((Card *)tempCards[i]).cardSN = i + 1;
+            [((Card *)tempCards[i]) save];
+        }
+    }
+    
+    //update tableview
     [self.tableView reloadData];
     
     if (!isUserInterfaceIdiomPhone) {
