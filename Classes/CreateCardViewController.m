@@ -146,6 +146,8 @@ BOOL isFromNewCreatedCard = NO;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];    
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveNewCreatedCardNotification:) name:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -228,6 +230,13 @@ BOOL isFromNewCreatedCard = NO;
     _currentPack = nil;
     _newCard = nil;
     _newCardView = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark – notification
+- (void) saveNewCreatedCardNotification: (NSNotification *) notification {
+    [self saveAndCloseCreateCardView];
 }
 
 @end

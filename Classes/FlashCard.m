@@ -2069,6 +2069,7 @@ extern BOOL isFromNewCreatedCard;
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
             [self doQuestionAndAnswerData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
         } else {
             [self saveEdittedCard];
         }
