@@ -357,6 +357,7 @@
     if ((shouldResetSegment == YES) && (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
         _currentFlashCardView.segmentedControl.selectedSegmentIndex = 0;
         [_currentFlashCardView segmentAction:nil];
+        [_currentFlashCardView disableCardEdit];
     }
 }
 
