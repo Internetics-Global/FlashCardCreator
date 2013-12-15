@@ -2947,12 +2947,10 @@ extern BOOL isFromNewCreatedCard;
     if ([str hasPrefix:@"http://"]) {
         
         NSURL *url = [NSURL URLWithString:_currentCard.question.logoURLLinkage];
-        if (_webViewController == NULL) {
-            _webViewController = [[SimpleWebBrowserController alloc] initWithURL:url];
-            _webViewController.hidesToolbar = NO;
-        }
+        SimpleWebBrowserController *webViewController = [[SimpleWebBrowserController alloc] initWithURL:url];
+        webViewController.hidesToolbar = NO;
         
-        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:_webViewController];
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:webViewController];
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
         
         if (_calledViewController) {
@@ -3272,7 +3270,6 @@ extern BOOL isFromNewCreatedCard;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _picker = nil;
-    _webViewController = nil;
 }
 
 

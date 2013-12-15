@@ -111,8 +111,6 @@ typedef enum{
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
     
-    SimpleWebBrowserController *_webViewController;
-    
 }
 
 @property (nonatomic, strong) Card *currentCard;
