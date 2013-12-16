@@ -122,7 +122,7 @@ typedef enum{
 @property (nonatomic, strong) UITextField   *questionTitle;
 @property (nonatomic, strong) UITextField   *answerTitle;
 
-@property (nonatomic, strong) UIViewController *calledViewController;
+@property (nonatomic, weak) UIViewController *calledViewController;
 
 - (BOOL) checkCardEditable;
 - (void) disableCardEdit;
