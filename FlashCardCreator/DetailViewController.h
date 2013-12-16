@@ -19,7 +19,7 @@
 @class FlashCard;
 @class DropboxSharekitHelper;
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate, UIAlertViewDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -57,6 +57,8 @@
 @property (nonatomic, assign) int indexCard;
 
 @property (nonatomic, strong) UIPopoverController *masterPopoverController;
+@property (nonatomic, strong) UIPopoverController *settingPopoverController;
+@property (nonatomic, strong) UIPopoverController *helpPopoverController;
 
 @property (nonatomic, strong) PopupListComponent *templateBackgroundSelectPopup;
 @property (nonatomic, strong) PopupListComponent *shareSelectPopup;

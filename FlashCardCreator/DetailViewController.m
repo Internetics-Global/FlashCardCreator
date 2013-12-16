@@ -41,6 +41,8 @@ enum popover_enum {
 @synthesize currentPack = _currentPack;
 @synthesize indexCard = _indexCard;
 @synthesize masterPopoverController = _masterPopoverController;
+@synthesize settingPopoverController = _settingPopoverController;
+@synthesize helpPopoverController = _helpPopoverController;
 
 @synthesize templateBackgroundSelectPopup  = _templateBackgroundSelectPopup;
 @synthesize shareSelectPopup  = _shareSelectPopup;
@@ -373,6 +375,7 @@ enum popover_enum {
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
     if (_helpPopoverController == nil) {
         _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+        _helpPopoverController.delegate = self;
     }
     _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
     [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
@@ -429,6 +432,7 @@ enum popover_enum {
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:moreInfoViewController];
     if (_settingPopoverController == nil) {
         _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+        _settingPopoverController.delegate = self;
     }
     
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 480);
@@ -688,6 +692,13 @@ enum popover_enum {
     } else {
         //do nothing
     }
+}
+
+#pragma mark – UIPopoverControllerDelegate
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    //we ignore  _masterPopoverController by not setting delegate = self
+    self.settingPopoverController = nil;
+    self.helpPopoverController = nil;
 }
 
 
