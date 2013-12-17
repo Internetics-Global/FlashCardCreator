@@ -53,6 +53,14 @@
 		verionLable.textColor = [UIColor whiteColor];
 		verionLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:verionLable];
+        
+        UILabel *buildLable = [[UILabel alloc] initWithFrame:CGRectMake(0, (verionLable.frame.origin.y + verionLable.frame.size.height + 20), width, 20)];
+		buildLable.backgroundColor = [UIColor clearColor];
+		buildLable.text = [NSString stringWithFormat:@"Build: %@",[Common build]];
+        buildLable.textAlignment = UITextAlignmentCenter;
+		buildLable.textColor = [UIColor whiteColor];
+		buildLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        [self addSubview:buildLable];
     }
     return self;
 }
