@@ -1069,16 +1069,21 @@ enum popover_enum {
                         //when password encripted, will go into here to
                         NSLog(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
                         [Common alertViewCommon:@"Wrong password"];
+                        [za UnzipCloseFile];
                     } else {
                         NSLog(@"%s\nUnzip file successfully",__FUNCTION__);
+                        [za UnzipCloseFile];
                         
                         [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
                         
                         [self assemblePack];
                     }
-                    [za UnzipCloseFile];
                     
-                } 
+                } else {
+                    NSLog(@"%sFailure to unzip downloaded file(%@)",__FUNCTION__,downloadedZipPackFileFixedPath);
+                    [Common alertViewCommon:@"Failure to unzip downloaded file"];
+                    [za UnzipCloseFile];
+                }
             } else if (buttonIndex == 1) {
                 //cancel and do nothing. For example, downloaded zip file is broken or unzippable
             }
@@ -1185,18 +1190,23 @@ enum popover_enum {
             packPlatformStr = packDict[@"platform"];
             
             //We need to move cover image to imagesDirectory
-            error = nil;
-            NSString *currentcoverImageURL = [[FileOperationHelper downloadedPackFileDirectory ] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
-            NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-            
-            if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
-                [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
-                if (error) {
-                    NSLog(@"%s:Error when moving Pack's cover image",__FUNCTION__);
-                    return;
+            if ([packDict[@"cover_image"] lastPathComponent].length > 0) {
+                
+                error = nil;
+                NSString *currentcoverImageURL = [[FileOperationHelper downloadedPackFileDirectory ] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
+                NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                
+                if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
+                    [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
+                    if (error) {
+                        NSLog(@"%s:Error when moving Pack's cover image",__FUNCTION__);
+                        return;
+                    }
                 }
+                pack.coverImageURL = newCoverImageURL;
+            } else {
+                pack.coverImageURL = @"";
             }
-            pack.coverImageURL = newCoverImageURL;
             
         }
     } else {

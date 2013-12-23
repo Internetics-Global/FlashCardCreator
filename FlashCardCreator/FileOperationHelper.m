@@ -185,7 +185,10 @@
     }
     
     [zipFile addFileToZip:packInfoJsonFilePath newname:[packInfoJsonFilePath lastPathComponent]];
-    [zipFile addFileToZip:pack.coverImageURL newname:[pack.coverImageURL lastPathComponent]];
+    
+    if ([pack.coverImageURL lastPathComponent].length > 0) {
+        [zipFile addFileToZip:pack.coverImageURL newname:[pack.coverImageURL lastPathComponent]];
+    }
     
     if( ![zipFile CloseZipFile2] )
     {
@@ -242,15 +245,28 @@
                                        [NSString stringWithFormat:@"card%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()]];
     [zipFile CreateZipFile2:generateCardZipFilePath];
     
-    [zipFile addFileToZip:card.answer.logoFullPath newname:[card.answer.logoFullPath lastPathComponent]];
-    [zipFile addFileToZip:card.answer.imageFullPath newname:[card.answer.imageFullPath lastPathComponent]];
+    if ([card.answer.logoFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.answer.logoFullPath newname:[card.answer.logoFullPath lastPathComponent]];
+    }
+    
+    if ([card.answer.imageFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.answer.imageFullPath newname:[card.answer.imageFullPath lastPathComponent]];
+    }
     [zipFile addFileToZip:[cardAssembleDir stringByAppendingPathComponent:@"answerTextContent.json"] newname:@"answerTextContent.json"];
     
-    [zipFile addFileToZip:card.question.logoFullPath newname:[card.question.logoFullPath lastPathComponent]];
-    [zipFile addFileToZip:card.question.imageFullPath newname:[card.question.imageFullPath lastPathComponent]];
+    if ([card.question.logoFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.question.logoFullPath newname:[card.question.logoFullPath lastPathComponent]];
+    }
+    
+    if ([card.question.imageFullPath lastPathComponent].length >0) {
+        [zipFile addFileToZip:card.question.imageFullPath newname:[card.question.imageFullPath lastPathComponent]];
+    }
+    
     [zipFile addFileToZip:[cardAssembleDir stringByAppendingPathComponent:@"questionTextContent.json"] newname:@"questionTextContent.json"];
     
-    [zipFile addFileToZip:card.coverImageURL newname:[card.coverImageURL lastPathComponent]];
+    if ([card.coverImageURL lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.coverImageURL newname:[card.coverImageURL lastPathComponent]];
+    }
     
     if( ![zipFile CloseZipFile2] )
     {

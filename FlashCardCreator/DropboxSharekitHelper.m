@@ -104,6 +104,12 @@
     //step1: create zip file
     if (_currentPack) {
         generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
+        
+        if (generatedZipFilePath == nil) {
+            [Common alertViewCommon:@"Failure to create zipped share file."];
+            return;
+        }
+        
     } else {
         [Common alertViewCommon:@"You need to select a pack first"];
         NSLog(@"%s:Pack to share is nil or public pack",__FUNCTION__);
