@@ -53,4 +53,15 @@
 }
 
 
++ (int) sqliteVersion {
+    int currentVersion = [[NSUserDefaults standardUserDefaults] integerForKey:@"SQLiteVersion"];
+    return currentVersion;
+}
+
++ (void) setSqliteVersion: (int) version {
+    [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"SQLiteVersion"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 @end

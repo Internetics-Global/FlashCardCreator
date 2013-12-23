@@ -19,4 +19,8 @@
 
 + (NSString *) build;
 
++ (int) sqliteVersion;
+
++ (void) setSqliteVersion: (int) version;
+
 @end

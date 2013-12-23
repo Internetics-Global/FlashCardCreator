@@ -245,16 +245,13 @@ BOOL _isDownloadingSamplePack;
 
 - (void) checkSQLiteVersion {
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SQLiteVersion" ofType:@"plist"]];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"SQLiteVersion"] != nil) {
-        int currentVersion = [[NSUserDefaults standardUserDefaults] integerForKey:@"SQLiteVersion"];
-        
-        if ([[dict valueForKey:@"SQLiteVersion"] intValue] > currentVersion) {
-            [Common alertViewCommon:@"Unintalling old version is necessary before installing new"];
-        }
+    int newVersion = [[dict valueForKeyPath:@"SQLiteVersion"] integerValue];
+    
+    if ((newVersion > [Common sqliteVersion]) && ([Common sqliteVersion] != 0)) {
+        [Common alertViewCommon:@"Unintalling old version is necessary before installing new"];
     }
     
-    [[NSUserDefaults standardUserDefaults] setInteger:[[dict valueForKey:@"SQLiteVersion"] intValue] forKey:@"SQLiteVersion"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [Common setSqliteVersion:newVersion];
 }
 
 #pragma mark -

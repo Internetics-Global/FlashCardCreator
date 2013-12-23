@@ -61,6 +61,14 @@
 		buildLable.textColor = [UIColor whiteColor];
 		buildLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:buildLable];
+        
+        UILabel *sqliteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (buildLable.frame.origin.y + verionLable.frame.size.height + 20), width, 20)];
+		sqliteLabel.backgroundColor = [UIColor clearColor];
+		sqliteLabel.text = [NSString stringWithFormat:@"SQlite: %d",[Common sqliteVersion]];
+        sqliteLabel.textAlignment = UITextAlignmentCenter;
+		sqliteLabel.textColor = [UIColor whiteColor];
+		sqliteLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        [self addSubview:sqliteLabel];
     }
     return self;
 }
