@@ -240,6 +240,7 @@
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88F6859A177049ED0083AF7B /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88F68599177049ED0083AF7B /* question_placeholder_content.jpg */; };
+		88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */; };
 		9A7E451318274AB900A05C05 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */; };
 		9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451218274AB900A05C05 /* DropboxSDK.framework */; };
 /* End PBXBuildFile section */
@@ -820,6 +821,7 @@
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88F68599177049ED0083AF7B /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
+		88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SQLiteVersion.plist; sourceTree = "<group>"; };
 		9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
 		9A7E451218274AB900A05C05 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1413,7 +1415,7 @@
 				2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */,
 				2D5F3D4F167B5365009D2ADC /* Libraries */,
 				2D5F3D56167D557C009D2ADC /* Classes */,
-				2DCE0B1216798E04007A8CAD /* Supporting Files */,
+				2DCE0B1216798E04007A8CAD /* Apps */,
 				2D5F3D081679EFA8009D2ADC /* Resources */,
 				2DCE0B1A16798E04007A8CAD /* AppDelegate.h */,
 				2DCE0B1B16798E04007A8CAD /* AppDelegate.m */,
@@ -1474,16 +1476,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2DCE0B1216798E04007A8CAD /* Supporting Files */ = {
+		2DCE0B1216798E04007A8CAD /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */,
 				2DCE0B1316798E04007A8CAD /* FlashCardCreator-Info.plist */,
 				2DCE0B1416798E04007A8CAD /* InfoPlist.strings */,
 				2DCE0B1716798E04007A8CAD /* main.m */,
 				2DCE0B1916798E04007A8CAD /* FlashCardCreator-Prefix.pch */,
 				2DA97ED916CB7E04004E7FAB /* Localizable.strings */,
 			);
-			name = "Supporting Files";
+			name = Apps;
 			path = FlashCardCreator;
 			sourceTree = "<group>";
 		};
@@ -1934,6 +1937,7 @@
 				2D1A053816EDEB2100527311 /* popoverArrowLeft.png in Resources */,
 				2D1A053916EDEB2100527311 /* popoverArrowLeft@2x.png in Resources */,
 				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
+				88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */,
 				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
 				2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */,
 				2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */,

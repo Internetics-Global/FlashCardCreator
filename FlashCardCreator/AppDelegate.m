@@ -39,6 +39,7 @@ BOOL _isDownloadingSamplePack;
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
     //1. check database
+    [self checkSQLiteVersion];
     [SQLiteHelper verifyDatabase];
     
     //2. check user has opened app (once open, a default user will be setup)
@@ -240,6 +241,20 @@ BOOL _isDownloadingSamplePack;
     }
     
     return nil;
+}
+
+- (void) checkSQLiteVersion {
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SQLiteVersion" ofType:@"plist"]];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"SQLiteVersion"] != nil) {
+        int currentVersion = [[NSUserDefaults standardUserDefaults] integerForKey:@"SQLiteVersion"];
+        
+        if ([[dict valueForKey:@"SQLiteVersion"] intValue] > currentVersion) {
+            [Common alertViewCommon:@"Unintalling old version is necessary before installing new"];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:[[dict valueForKey:@"SQLiteVersion"] intValue] forKey:@"SQLiteVersion"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark -
