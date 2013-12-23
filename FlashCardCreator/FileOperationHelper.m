@@ -25,6 +25,27 @@
 	return cacheFolderPath;
 }
 
+
++ (NSString *)documentDirectory{
+	NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentFolderPath = searchPaths[0];
+	return documentFolderPath;
+}
+
+/**
+ *  !!!!!!Used to save all app data except .db file
+ */
++ (NSString *)dataDocumentDirectory{
+    NSError *error = nil;
+	NSString *path = [self documentsPathForFileNamed:@"com.intenectics.fcc"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", path);
+        }
+    }
+	return path;
+}
+
 + (NSString *)documentsPathForFileNamed:(NSString *)fileName{
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentFolderPath = searchPaths[0];
@@ -45,7 +66,7 @@
 #pragma mark - FlashCardCreator's directory structure
 
 + (NSString *)imagesDirectory{
-    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
+    NSString *returnPath = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -61,7 +82,7 @@
  *	@return	<#return value description#>
  */
 + (NSString *)temporaryImagesDirectory{
-    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Temporary_Images"];
+    NSString *returnPath = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Temporary_Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -72,7 +93,7 @@
 }
 
 + (NSString *)assembleFactoryDirectory{
-    NSString *returnPath = [[self cachesDirectory] stringByAppendingPathComponent:@"Card Assemble Factory"];
+    NSString *returnPath = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Card Assemble Factory"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -97,7 +118,7 @@
 }
 
 + (NSString *)downloadedPackFileDirectory {
-    NSString *dir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Downloaded Pack"];
+    NSString *dir = [[FileOperationHelper dataDocumentDirectory] stringByAppendingPathComponent:@"Downloaded Pack"];
     NSError *error = nil;
     if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
         NSLog(@"Failed to create directory at %@", dir);
@@ -122,7 +143,7 @@
  *
  */
 + (NSString *) generateUniqueJPEGImageFilePathUnderImagesFolder {
-    NSString *path = [[self cachesDirectory] stringByAppendingPathComponent:@"Images"];
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -298,6 +319,41 @@
 + (BOOL) isPackListOpenedBefore {
     //return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPackListOpenedBefore"];
     return FALSE; // always false
+}
+
+
+
++ (BOOL)addSkipBackupAttributeToFileAtPath:(NSString *)aFilePath
+{
+    assert([[NSFileManager defaultManager] fileExistsAtPath:aFilePath]);
+    NSError *error = nil;
+    BOOL success = NO;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.1"))
+    {
+        success = [[NSURL fileURLWithPath:aFilePath] setResourceValue:[NSNumber numberWithBool:YES]
+                                                               forKey:NSURLIsExcludedFromBackupKey
+                                                                error:&error];
+    }
+    else if (SYSTEM_VERSION_EQUAL_TO(@"5.0.1"))
+    {
+        const char* filePath = [aFilePath fileSystemRepresentation];
+        const char* attrName = "com.apple.MobileBackup";
+        u_int8_t attrValue = 1;
+        int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+        success = (result == 0);
+    }
+    else
+    {
+        NSLog(@"Can not add 'do no back up' attribute at systems before 5.0.1");
+    }
+    
+    if(!success)
+    {
+        NSLog(@"Error excluding %@ from backup %@", [aFilePath lastPathComponent], error);
+    }
+    
+    return success;
 }
 
 

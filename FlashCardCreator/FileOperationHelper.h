@@ -14,6 +14,8 @@
 @interface FileOperationHelper : NSObject
 
 + (NSString *) cachesDirectory;
++ (NSString *) documentDirectory;
++ (NSString *) dataDocumentDirectory;
 + (NSString *) imagesDirectory;
 + (NSString *) temporaryImagesDirectory;
 + (NSString *) assembleFactoryDirectory;
@@ -36,4 +38,7 @@
 + (NSDate *)convertStringToNSDate:(NSString *) str;
 
 + (BOOL) isPackListOpenedBefore;
+
++ (BOOL)addSkipBackupAttributeToFileAtPath:(NSString *)aFilePath;
+
 @end

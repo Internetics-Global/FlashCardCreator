@@ -19,7 +19,7 @@
 #import "User.h"
 
 #import "NSString+QueryString.h"
-
+#import "FileOperationHelper.h"
 #import "MySHKConfigurator.h"
 #import "SHKConfiguration.h"
 #import "CreatePackViewController.h"
@@ -41,6 +41,9 @@ BOOL _isDownloadingSamplePack;
     //1. check database
     [self checkSQLiteVersion];
     [SQLiteHelper verifyDatabase];
+    
+    //skip iCloud backup
+    [FileOperationHelper addSkipBackupAttributeToFileAtPath:[FileOperationHelper dataDocumentDirectory]];
     
     //2. check user has opened app (once open, a default user will be setup)
     [SQLiteHelper checkUserExist];
