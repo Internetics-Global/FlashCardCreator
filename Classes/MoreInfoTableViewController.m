@@ -67,7 +67,11 @@ BOOL isLoggingDropboxInSettingView = NO;
     } else if (section == 1) {
         return 1;
     } else if (section == 2) {
+#ifdef CLIENT_DEBUG_MODE
+        return (3);
+#else
         return (2);
+#endif
     } else {
         return 2;
     }
@@ -140,9 +144,18 @@ BOOL isLoggingDropboxInSettingView = NO;
         if (indexPath.row ==0) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else {
+        } else if (indexPath.row == 1) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if (indexPath.row == 2){
+            cell.textLabel.text = @"Always editable(Debug mode)";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UISwitch *editableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [editableSwitch addTarget:self action:@selector(editableSwitchAction) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = editableSwitch;
+            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
+            [editableSwitch setOn:b];
+            
         }
     }
     
@@ -169,6 +182,12 @@ BOOL isLoggingDropboxInSettingView = NO;
     [[NSUserDefaults standardUserDefaults] setBool:_playModeSwitch.on forKey:@"isRandomPlayMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+}
+
+- (void) editableSwitchAction {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
+    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isCardEditableForDebugMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

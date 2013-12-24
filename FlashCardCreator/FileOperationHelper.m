@@ -13,6 +13,7 @@
 #import "Question.h"
 #import "Answer.h"
 #import "CSS.h"
+#import <sys/xattr.h>
 
 @implementation FileOperationHelper
 

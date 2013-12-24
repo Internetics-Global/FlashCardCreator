@@ -747,11 +747,20 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Editable related
 - (BOOL)checkCardEditable {
+    BOOL result;
+#ifdef CLIENT_DEBUG_MODE
+    result = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
+    BOOL flag = [_currentCard.creator isEqualToString:[OpenUDID value]];
+    return (result || flag);
+#else
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-        return YES;
+        result = YES;
     } else {
-        return NO;
+        result = NO;
     }
+#endif
+    return result;
+    
 }
 
 - (void) disableCardEdit{
@@ -946,6 +955,7 @@ extern BOOL isFromNewCreatedCard;
     if (imageTemp) {
         _imageAnswer.image = imageTemp;
     } else {
+        NSLog(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
     
@@ -964,6 +974,7 @@ extern BOOL isFromNewCreatedCard;
     if (imageTemp) {
         _imageQuestion.image = imageTemp;
     } else {
+        NSLog(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
     }
     
@@ -971,6 +982,7 @@ extern BOOL isFromNewCreatedCard;
     if (imageTemp) {
         _logoImage.image = imageTemp;
     } else {
+        NSLog(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
