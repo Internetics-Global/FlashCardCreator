@@ -41,4 +41,8 @@
 
 + (BOOL)addSkipBackupAttributeToFileAtPath:(NSString *)aFilePath;
 
++ (NSArray *)listFilesAtPath:(NSString *)path;
+
++ (NSString *)cachesPathForFileNamed:(NSString *)fileName;
+
 @end

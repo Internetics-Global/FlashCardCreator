@@ -210,7 +210,8 @@ enum popover_enum {
             _rightPackImage.layer.opacity = 0.85;
             [_rightPackView addSubview:_rightPackImage];
         }
-        _rightPackImage.image = [UIImage imageWithContentsOfFile:_currentPack.coverImageURL];
+        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
+        _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
         
         
         if (_rightPackCardNo == nil) {
@@ -750,7 +751,8 @@ enum popover_enum {
 
     BOOL flag = ([card.coverImageURL rangeOfString:@".png"].location != NSNotFound) ||
                            ([card.coverImageURL rangeOfString:@".jpg"].location != NSNotFound);
-    UIImage *image = [UIImage imageWithContentsOfFile:card.coverImageURL];
+    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[card.coverImageURL lastPathComponent]];
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
     if (flag && (image != NULL)) {
         cell.cellImageView.image = image;
     } else {

@@ -42,8 +42,30 @@ BOOL _isDownloadingSamplePack;
     [self checkSQLiteVersion];
     [SQLiteHelper verifyDatabase];
     
+    //move old files
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSError *error;
+        NSString *oldImagesPath = [FileOperationHelper cachesPathForFileNamed:@"Images"];
+        NSArray *allFiles = [FileOperationHelper listFilesAtPath:oldImagesPath];
+        for (NSString *fileName in allFiles) {
+            if (([fileName rangeOfString:@".jpg"].length > 0) || ([fileName rangeOfString:@".png"].length > 0)) {
+                NSString *dest = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+                NSString *from = [oldImagesPath stringByAppendingPathComponent:fileName];
+                
+                if([[NSFileManager defaultManager] fileExistsAtPath:dest] == false) {
+                    [[NSFileManager defaultManager] moveItemAtPath:from toPath:dest error:&error];
+                    if (error) {
+                        NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                    }
+                }
+            }
+        }
+    });
+    
     //skip iCloud backup
     [FileOperationHelper addSkipBackupAttributeToFileAtPath:[FileOperationHelper dataDocumentDirectory]];
+    
     
     //2. check user has opened app (once open, a default user will be setup)
     [SQLiteHelper checkUserExist];

@@ -53,6 +53,12 @@
 	return [documentFolderPath stringByAppendingPathComponent:fileName];
 }
 
++ (NSString *)cachesPathForFileNamed:(NSString *)fileName{
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	NSString *cachesFolderPath = searchPaths[0];
+	return [cachesFolderPath stringByAppendingPathComponent:fileName];
+}
+
 
 + (NSString *)temporaryDirectory{
 	NSString *temporaryDirectory = NSTemporaryDirectory();
@@ -178,6 +184,11 @@
     } else {
         platformStr = @"iPad";
     }
+    
+    if (pack.creator.length == 0) {
+        pack.creator = [OpenUDID value];
+    }
+    
     NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", platformStr,@"platform",nil];
     NSData *jsonPackData = [NSJSONSerialization dataWithJSONObject:packDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *packInfoJsonFilePath = [cardAssembleDir stringByAppendingPathComponent:@"packInformation.json"];
@@ -355,6 +366,18 @@
     }
     
     return success;
+}
+
++ (NSArray *)listFilesAtPath:(NSString *)path
+{
+    int count;
+    
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+    for (count = 0; count < (int)[directoryContent count]; count++)
+    {
+        NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+    }
+    return directoryContent;
 }
 
 

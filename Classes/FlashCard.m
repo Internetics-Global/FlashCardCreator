@@ -950,8 +950,9 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) refreshAnswerContent {
     
-    UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.answer.imageFullPath];
-    _answerImageFullPath = _currentCard.answer.imageFullPath;
+    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
+    UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
+    _answerImageFullPath = path;
     if (imageTemp) {
         _imageAnswer.image = imageTemp;
     } else {
@@ -969,8 +970,9 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) refreshQuestionContent {
     
-    UIImage *imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath];
-    _questionImageFullPath = _currentCard.question.imageFullPath;
+    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
+    UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
+    _questionImageFullPath = path;
     if (imageTemp) {
         _imageQuestion.image = imageTemp;
     } else {
@@ -978,7 +980,8 @@ extern BOOL isFromNewCreatedCard;
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
     }
     
-    imageTemp = [UIImage imageWithContentsOfFile:_currentCard.question.logoFullPath];
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
+    imageTemp = [UIImage imageWithContentsOfFile:path];
     if (imageTemp) {
         _logoImage.image = imageTemp;
     } else {
@@ -2425,7 +2428,7 @@ extern BOOL isFromNewCreatedCard;
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
     NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
     
-    _logoImageFullPath = _currentCard.question.logoFullPath;
+    _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingString:[_currentCard.question.logoFullPath lastPathComponent]];
     
     if (_isLogoImageViewClicked) {
         if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {

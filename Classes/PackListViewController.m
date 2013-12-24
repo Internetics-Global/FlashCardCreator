@@ -245,7 +245,8 @@
         coverImageView.layer.cornerRadius = 10;
         coverImageView.layer.masksToBounds = YES;
         [view addSubview:coverImageView];
-        UIImage *image = [UIImage imageWithContentsOfFile:((Pack *)[[User defaultUser].packs objectAtIndex:index]).coverImageURL];
+        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[((Pack *)[[User defaultUser].packs objectAtIndex:index]).coverImageURL lastPathComponent]];
+        UIImage *image = [UIImage imageWithContentsOfFile:path];
         if (image == NULL) {
             coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
         } else {
