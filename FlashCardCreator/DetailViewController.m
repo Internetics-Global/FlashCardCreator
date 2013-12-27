@@ -373,6 +373,9 @@ enum popover_enum {
     
     HelpViewController *helpViewController = [[HelpViewController alloc] init];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
+    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+        navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    }
     if (_helpPopoverController == nil) {
         _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
         _helpPopoverController.delegate = self;
