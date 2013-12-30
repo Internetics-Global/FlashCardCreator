@@ -148,7 +148,7 @@ BOOL isLoggingDropboxInSettingView = NO;
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 2){
-            cell.textLabel.text = @"Always editable(Debug mode)";
+            cell.textLabel.text = @"Always editable";
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *editableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
             [editableSwitch addTarget:self action:@selector(editableSwitchAction) forControlEvents:UIControlEventValueChanged];
@@ -188,6 +188,8 @@ BOOL isLoggingDropboxInSettingView = NO;
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
     [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isCardEditableForDebugMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [Common alertViewCommon:@"Note: re-select packs to take effect."];
 }
 
 

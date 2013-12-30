@@ -343,7 +343,7 @@ enum popover_enum {
     
     PopupListComponent *popupList = [[PopupListComponent alloc] init];
     NSArray* listItems = [NSArray arrayWithObjects:
-                 [[PopupListComponentItem alloc] initWithCaption:@"Install from Code" image:nil
+                 [[PopupListComponentItem alloc] initWithCaption:@"Install from code" image:nil
                                                           itemId:0 showCaption:YES],
                  [[PopupListComponentItem alloc] initWithCaption:@"Share the pack"  image:nil
                                                           itemId:1 showCaption:YES],
