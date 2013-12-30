@@ -496,6 +496,12 @@
 	[self layoutSubviewsForInterfaceOrientation:self.interfaceOrientation withAnimation:YES];
 }
 
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.hidden = TRUE;
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -523,6 +529,8 @@
     //We made this modifcation: https://github.com/mattgemmell/MGSplitViewController/pull/73
     //By Wang Bourne
     [self layoutSubviews];
+    
+    self.view.hidden = FALSE;
 }
 
 
