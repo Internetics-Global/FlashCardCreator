@@ -160,35 +160,32 @@ BOOL _isDownloadingSamplePack;
     UIImage *segmentUnselectedUnselected =
     [UIImage imageNamed:@"segment_seperator.png"];
     
-    
-    attributes = [NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:UITextAttributeTextColor];
+    //UISegmentedControl related
+    attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,
+                  [UIFont boldSystemFontOfSize:14.0f],UITextAttributeFont,nil];
     [[UISegmentedControl appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,
+                  [UIFont boldSystemFontOfSize:14.0f],UITextAttributeFont,nil];
     [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        
-        [[UISegmentedControl appearance] setTintColor:[UIColor colorWithRed:233.0/255 green:233.0/255 blue:233.0/255 alpha:1]];
-    } else {
-        [[UISegmentedControl appearance] setBackgroundImage:segmentUnselected
-                                                   forState: UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        
-        [[UISegmentedControl appearance] setBackgroundImage:segmentSelected
-                                                   forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearance] setDividerImage:segmentUnselectedUnselected
-                                     forLeftSegmentState:UIControlStateNormal
-                                       rightSegmentState:UIControlStateNormal
-                                              barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearance] setDividerImage:segmentSelectedUnselected
-                                     forLeftSegmentState:UIControlStateSelected
-                                       rightSegmentState:UIControlStateNormal
-                                              barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearance] setDividerImage:segUnselectedSelected
-                                     forLeftSegmentState:UIControlStateNormal
-                                       rightSegmentState:UIControlStateSelected
-                                              barMetrics:UIBarMetricsDefault];
-    }
+    [[UISegmentedControl appearance] setBackgroundImage:segmentUnselected
+                                               forState: UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    [[UISegmentedControl appearance] setBackgroundImage:segmentSelected
+                                               forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segmentUnselectedUnselected
+                                 forLeftSegmentState:UIControlStateNormal
+                                   rightSegmentState:UIControlStateNormal
+                                          barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segmentSelectedUnselected
+                                 forLeftSegmentState:UIControlStateSelected
+                                   rightSegmentState:UIControlStateNormal
+                                          barMetrics:UIBarMetricsDefault];
+    [[UISegmentedControl appearance] setDividerImage:segUnselectedSelected
+                                 forLeftSegmentState:UIControlStateNormal
+                                   rightSegmentState:UIControlStateSelected
+                                          barMetrics:UIBarMetricsDefault];
     
     //9.Sharekit configuration
     //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
