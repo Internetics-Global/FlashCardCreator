@@ -152,13 +152,6 @@ extern BOOL isFromNewCreatedCard;
     _picker.navigationBar.barStyle = UIBarStyleBlack;
     _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
     
-    if (isUserInterfaceIdiomPhone) {
-        
-    } else {
-        if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
-        }
-    }
     
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
@@ -1031,6 +1024,7 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.hidden = NO;
     }
 }
+
 
 - (void)segmentAction:(id)sender
 {
@@ -2391,7 +2385,15 @@ extern BOOL isFromNewCreatedCard;
     } else {
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        
+        if (_imagePickerPopover == nil) {
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            _imagePickerPopover.delegate = self;
+            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        } else {
+            [_imagePickerPopover dismissPopoverAnimated:YES];
+            _imagePickerPopover=nil;
+        }
     }
     
     
@@ -2410,7 +2412,14 @@ extern BOOL isFromNewCreatedCard;
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        if (_imagePickerPopover == nil) {
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            _imagePickerPopover.delegate = self;
+            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        } else {
+            [_imagePickerPopover dismissPopoverAnimated:YES];
+            _imagePickerPopover=nil;
+        }
     }
     
 }
@@ -2423,6 +2432,7 @@ extern BOOL isFromNewCreatedCard;
         [_picker dismissModalViewControllerAnimated:YES];
     } else {
         [_imagePickerPopover dismissPopoverAnimated:YES];
+        _imagePickerPopover = nil;
     }
     
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -3153,21 +3163,28 @@ extern BOOL isFromNewCreatedCard;
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:selectTemplateTableViewController];
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     } else {
-        _popoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
-        _popoverController.popoverContentSize = CGSizeMake(250, 95*5);
-        [_popoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+        if (_selectTemplatePopoverController == nil) {
+            _selectTemplatePopoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
+            _selectTemplatePopoverController.delegate = self;
+            _selectTemplatePopoverController.popoverContentSize = CGSizeMake(250, 95*5);
+            [_selectTemplatePopoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+        } else {
+            [_selectTemplatePopoverController dismissPopoverAnimated:YES];
+            _selectTemplatePopoverController = nil;
+        }
+        
     }
 }
 
-- (void) dismissPopoverController {
-    [_popoverController dismissPopoverAnimated:YES];    
+- (void) dismissSelectTemplatePopoverController {
+    [_selectTemplatePopoverController dismissPopoverAnimated:YES];
+    _selectTemplatePopoverController = nil;
+    
 }
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
     
-    
-    //[self performSelectorInBackground:@selector(dismissPopoverController) withObject:nil];
-    [self performSelector:@selector(dismissPopoverController) withObject:nil];
+    [self performSelector:@selector(dismissSelectTemplatePopoverController) withObject:nil];
     
     //  We don't want to accept when there's create card action now
     if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
@@ -3192,6 +3209,13 @@ extern BOOL isFromNewCreatedCard;
     } else {
         [self doQuestionAndAnswerData];
     }
+    
+}
+
+#pragma mark – UIPopoverControllerDelegate
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    [popoverController dismissPopoverAnimated:YES];
+    popoverController = nil;
     
 }
 
@@ -3285,6 +3309,8 @@ extern BOOL isFromNewCreatedCard;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _picker = nil;
+    _imagePickerPopover = nil;
+    _selectTemplatePopoverController = nil;
 }
 
 

@@ -31,7 +31,7 @@ typedef enum{
 @class MBProgressHUD;
 @class JSBadgeView;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate> {
     JSBadgeView *_cardSNText;
     UIButton *_changeTemplateButton;
     
@@ -103,7 +103,7 @@ typedef enum{
     
     UIImagePickerController *_picker;
     UIPopoverController *_imagePickerPopover;
-    UIPopoverController *_popoverController;
+    UIPopoverController *_selectTemplatePopoverController;
     
     MBProgressHUD *_HUD;
     
