@@ -3259,31 +3259,33 @@ extern BOOL isFromNewCreatedCard;
     
     for (Card *card in [_currentPack cards]) {
         
-        if (why == kReasonTemplateBackgroundChangeEnum) {
-            card.templateBackgroundName = val;
-        } else if (why == kReasonLogoImageChangeEnum) {
-            card.question.logoFullPath = val;
-        } else if (why == kReasonQuestionTitleChangeEnum) {
-            card.question.title = val;
-        } else if (why == kReasonAnswerTitleChangeEnum) {
-            card.answer.title = val;
+        @autoreleasepool {
+            if (why == kReasonTemplateBackgroundChangeEnum) {
+                card.templateBackgroundName = val;
+            } else if (why == kReasonLogoImageChangeEnum) {
+                card.question.logoFullPath = val;
+            } else if (why == kReasonQuestionTitleChangeEnum) {
+                card.question.title = val;
+            } else if (why == kReasonAnswerTitleChangeEnum) {
+                card.answer.title = val;
+            }
+            
+            tempCardView.currentCard = card;
+            tempCardView.segmentedControl.selectedSegmentIndex = 0;
+            [tempCardView refreshAll];
+            
+            UIImage *origialmage = [tempCardView captureWholeViewAsImage];
+            NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+            if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
+                NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                [imageData writeToFile:savedFullPath atomically:YES];
+                card.coverImageURL = savedFullPath;
+            } else {
+                [imageData writeToFile:card.coverImageURL atomically:YES];
+            }
+            
+            [card save];
         }
-        
-        tempCardView.currentCard = card;
-        tempCardView.segmentedControl.selectedSegmentIndex = 0;
-        [tempCardView refreshAll];
-        
-        UIImage *origialmage = [tempCardView captureWholeViewAsImage];
-        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-        if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-            [imageData writeToFile:savedFullPath atomically:YES];
-            card.coverImageURL = savedFullPath;
-        } else {
-            [imageData writeToFile:card.coverImageURL atomically:YES];
-        }
-        
-        [card save];
     }
     
     tempCardView = nil;
