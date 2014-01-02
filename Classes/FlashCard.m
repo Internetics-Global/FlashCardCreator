@@ -3116,6 +3116,13 @@ extern BOOL isFromNewCreatedCard;
     
     [self doQuestionAndAnswerData];
     
+    //在操作后，我们不需要返回之前的现场，因为我们是在new card save操作(窗口将被关闭）
+    if ((self.tag == NEW_FLASHCARDVIEW_TAG) && (_segmentedControl.selectedSegmentIndex == 1)) {
+        [_segmentedControl setSelectedSegmentIndex:0];
+        [self refreshAll];
+
+    }
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
         UIImage *origialmage = [self captureWholeViewAsImage];
         NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
