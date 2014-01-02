@@ -146,13 +146,6 @@ extern BOOL isFromNewCreatedCard;
     [self setUpInputView];
     [self setUpInputAccessoryView];
     
-    //We can not make UIImagePickerController in landscape since it's illegal
-    _picker = [[UIImagePickerController alloc] init];
-    _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    _picker.navigationBar.barStyle = UIBarStyleBlack;
-    _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
-    
-    
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
     self.backgroundColor = [UIColor clearColor];
@@ -2378,16 +2371,24 @@ extern BOOL isFromNewCreatedCard;
     
     _isLogoImageViewClicked = YES;
     
-    _picker.delegate = self;
+    if (_imagePickerController != nil) {
+        _imagePickerPopover = nil;
+    }
+    
+    _imagePickerController = [[UIImagePickerController alloc] init];
+    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
+    _imagePickerController.contentSizeForViewInPopover = CGSizeMake(320, 400);
+    _imagePickerController.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
         if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
             _imagePickerPopover.delegate = self;
             [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         } else {
@@ -2404,16 +2405,24 @@ extern BOOL isFromNewCreatedCard;
     
     _isLogoImageViewClicked = NO;
     
-    _picker.delegate = self;
+    if (_imagePickerController != nil) {
+        _imagePickerPopover = nil;
+    }
+    
+    _imagePickerController = [[UIImagePickerController alloc] init];
+    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    _imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
+    _imagePickerController.contentSizeForViewInPopover = CGSizeMake(320, 400);
+    _imagePickerController.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
         if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
+            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
             _imagePickerPopover.delegate = self;
             [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         } else {
@@ -2426,19 +2435,17 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    _picker.delegate = nil;
+    UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
     
     if (isUserInterfaceIdiomPhone) {
-        [_picker dismissModalViewControllerAnimated:YES];
+        [picker dismissModalViewControllerAnimated:YES];
     } else {
         [_imagePickerPopover dismissPopoverAnimated:YES];
         _imagePickerPopover = nil;
     }
     
-    UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-    
-    _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingString:[_currentCard.question.logoFullPath lastPathComponent]];
+    _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
     
     if (_isLogoImageViewClicked) {
         if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
@@ -3308,7 +3315,7 @@ extern BOOL isFromNewCreatedCard;
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    _picker = nil;
+    _imagePickerController = nil;
     _imagePickerPopover = nil;
     _selectTemplatePopoverController = nil;
 }

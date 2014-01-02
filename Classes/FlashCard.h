@@ -101,7 +101,7 @@ typedef enum{
     UIBarButtonItem                    *_emotionButton;
     UIBarButtonItem                    *_emotionButtonForInputView;
     
-    UIImagePickerController *_picker;
+    UIImagePickerController *_imagePickerController;
     UIPopoverController *_imagePickerPopover;
     UIPopoverController *_selectTemplatePopoverController;
     
