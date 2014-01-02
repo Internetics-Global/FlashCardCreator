@@ -210,8 +210,14 @@ enum popover_enum {
             _rightPackImage.layer.opacity = 0.85;
             [_rightPackView addSubview:_rightPackImage];
         }
-        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
-        _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
+        
+        NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
+        if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
+            _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+        } else {
+            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+            _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
+        }
         
         
         if (_rightPackCardNo == nil) {
