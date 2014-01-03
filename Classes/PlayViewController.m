@@ -46,6 +46,7 @@
     static BOOL enableSwitch = YES;
     
     _motionManager.deviceMotionUpdateInterval =0.01;
+    __weak PlayViewController *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
         [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
             NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
@@ -54,7 +55,7 @@
                 if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
                     if (motion.attitude.roll < -0.3) {
                         if (enableSwitch == YES) {
-                            [self switchQuestionAnswerView];
+                            [safeSelf switchQuestionAnswerView];
                             enableSwitch = NO;
                         }
                         
@@ -70,7 +71,7 @@
                 } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
                     if (motion.attitude.roll > 0.3) {
                         if (enableSwitch == YES) {
-                            [self switchQuestionAnswerView];
+                            [safeSelf switchQuestionAnswerView];
                             enableSwitch = NO;
                         }
                         

@@ -208,9 +208,10 @@
             NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
             NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
             dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            __weak DropboxSharekitHelper *safeSelf = self;
             dispatch_async(queue, ^{
                 NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
-                [self insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
             });
             
             
