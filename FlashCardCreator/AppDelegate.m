@@ -168,6 +168,7 @@ BOOL _isDownloadingSamplePack;
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,
                   [UIFont boldSystemFontOfSize:14.0f],UITextAttributeFont,nil];
     [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
+    [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateSelected];
     
     [[UISegmentedControl appearance] setBackgroundImage:segmentUnselected
                                                forState: UIControlStateNormal barMetrics:UIBarMetricsDefault];
