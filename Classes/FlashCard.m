@@ -2387,14 +2387,14 @@ extern BOOL isFromNewCreatedCard;
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
-        if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
-            _imagePickerPopover.delegate = self;
-            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-        } else {
+        if (_imagePickerPopover != nil) {
             [_imagePickerPopover dismissPopoverAnimated:YES];
             _imagePickerPopover=nil;
         }
+        
+        _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
+        _imagePickerPopover.delegate = self;
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
     
     
@@ -2421,14 +2421,14 @@ extern BOOL isFromNewCreatedCard;
         CGPoint point = [sender locationInView:self];
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
-        if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
-            _imagePickerPopover.delegate = self;
-            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-        } else {
+        if (_imagePickerPopover != nil) {
             [_imagePickerPopover dismissPopoverAnimated:YES];
             _imagePickerPopover=nil;
         }
+        
+        _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
+        _imagePickerPopover.delegate = self;
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
     
 }
@@ -2440,7 +2440,9 @@ extern BOOL isFromNewCreatedCard;
     
     if (isUserInterfaceIdiomPhone) {
         [picker dismissModalViewControllerAnimated:YES];
+        picker = nil;
     } else {
+//        picker = nil;
         [_imagePickerPopover dismissPopoverAnimated:YES];
         _imagePickerPopover = nil;
     }
