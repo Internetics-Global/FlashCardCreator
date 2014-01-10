@@ -373,6 +373,7 @@ extern BOOL isFromNewCreatedCard;
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:
                              @[NSLocalizedString(@"ToolbarItem_Question",nil),
                              NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                                   self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
@@ -2169,6 +2170,8 @@ extern BOOL isFromNewCreatedCard;
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
     
     //Font Array
+    UIBarButtonItem *fontSizeAlert = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:nil];
+    
     UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
     UIBarButtonItem *fontSize18 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size18",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
@@ -2183,6 +2186,12 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
+    UIBarButtonItem *fontSize45 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size45",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize50 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size50",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
+    UIBarButtonItem *fontSize55 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size55",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    
     UIBarButtonItem *fontSize60 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size60",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
     UIBarButtonItem *fontSize80 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size80",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
@@ -2195,9 +2204,9 @@ extern BOOL isFromNewCreatedCard;
     
     if (_fontSizeArray == nil) {
         if (isUserInterfaceIdiomPhone) {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32, fontSize80,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize80,nil];
         } else {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize60, fontSize80, fontSize100, fontSize160,fontSize260,nil];
+            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize60, fontSize80, fontSize100, fontSize160,fontSize260,nil];
         }
         
     }
@@ -2650,6 +2659,15 @@ extern BOOL isFromNewCreatedCard;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size40",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:40];
         selectFontSize = 40;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size45",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:45];
+        selectFontSize = 45;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size50",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:50];
+        selectFontSize = 50;
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size55",nil)]) {
+        responderTextView.font = [UIFont boldSystemFontOfSize:55];
+        selectFontSize = 55;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size60",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:60];
         selectFontSize = 60;

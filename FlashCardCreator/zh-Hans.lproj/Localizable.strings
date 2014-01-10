@@ -61,18 +61,21 @@
 "ToolbarItem_Align_Center"        = "居中";
 "ToolbarItem_Align_Right"        = "右对齐";
 
-"ToolbarItem_Size12"        = "12号";
-"ToolbarItem_Size18"        = "18号";
-"ToolbarItem_Size24"        = "24号";
-"ToolbarItem_Size28"        = "28号";
-"ToolbarItem_Size32"        = "32号";
-"ToolbarItem_Size36"        = "36号";
-"ToolbarItem_Size40"        = "40号";
-"ToolbarItem_Size60"        = "60号";
-"ToolbarItem_Size80"        = "80号";
-"ToolbarItem_Size100"        = "100号";
-"ToolbarItem_Size160"        = "160号";
-"ToolbarItem_Size260"        = "260号";
+"ToolbarItem_Size12"        = " 12 ";
+"ToolbarItem_Size18"        = " 18 ";
+"ToolbarItem_Size24"        = " 24 ";
+"ToolbarItem_Size28"        = " 28 ";
+"ToolbarItem_Size32"        = " 32 ";
+"ToolbarItem_Size36"        = " 36 ";
+"ToolbarItem_Size40"        = " 40 ";
+"ToolbarItem_Size45"        = " 45 ";
+"ToolbarItem_Size50"        = " 50 ";
+"ToolbarItem_Size55"        = " 55 ";
+"ToolbarItem_Size60"        = " 60 ";
+"ToolbarItem_Size80"        = " 80 ";
+"ToolbarItem_Size100"        = " 100 ";
+"ToolbarItem_Size160"        = " 160 ";
+"ToolbarItem_Size260"        = " 260 ";
 
 "ToolbarItem_Color_Red"        = "红色";
 "ToolbarItem_Color_Green"        = "绿色";
