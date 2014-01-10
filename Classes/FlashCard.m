@@ -2171,6 +2171,7 @@ extern BOOL isFromNewCreatedCard;
     
     //Font Array
     UIBarButtonItem *fontSizeAlert = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:nil];
+    [fontSizeAlert setEnabled:FALSE];
     
     UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
     
