@@ -112,8 +112,9 @@
     //Step2: delted image resources
     NSError *error = nil;
     //We never delete placeholder imae
+    BOOL isDir;
     if (![[self.coverImageURL lastPathComponent] isEqualToString:@"card_cover_image_placeholder.png"]) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of card coverImageURL"];

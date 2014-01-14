@@ -139,8 +139,9 @@
     //Deleted image resources
     NSError *error = nil;
     //We never delete placeholder image
+    BOOL isDir;
     if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image.jpg"]) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of pack coverImageURL"];
