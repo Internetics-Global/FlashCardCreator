@@ -2087,6 +2087,7 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownActionForInputView)];
     
+    
     UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorActionForInputView)];
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignActionForInputView)];
@@ -2210,6 +2211,13 @@ extern BOOL isFromNewCreatedCard;
     
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
+    NSDictionary *textAttributes;
+    if (isUserInterfaceIdiomPhone) {
+        textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14], UITextAttributeFont,nil];
+    } else {
+        textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:16], UITextAttributeFont,nil];
+    }
+    [backButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     
     //Font Array
     UIBarButtonItem *fontSizeAlert = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:nil];
