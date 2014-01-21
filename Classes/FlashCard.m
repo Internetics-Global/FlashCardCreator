@@ -2096,31 +2096,53 @@ extern BOOL isFromNewCreatedCard;
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
-    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if (isUserInterfaceIdiomPhone) {
-        customButton.bounds = CGRectMake(0, 0, 48, 40);
+        saveButton.bounds = CGRectMake(0, 0, 48, 40);
     } else {
-        customButton.bounds = CGRectMake(0, 0, 60, 50);
+        saveButton.bounds = CGRectMake(0, 0, 60, 50);
     }
-    [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
+    [saveButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
     if (isUserInterfaceIdiomPhone) {
-        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     }   else {
-        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         
     } else {
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
     }
-    [customButton addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchDown];
+    [saveButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
+    
+    if (isUserInterfaceIdiomPhone) {
+        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        closeButton.bounds = CGRectMake(0, 0, 48, 40);
+        [closeButton setTitle:NSLocalizedString(@"Keyboard_Cancel",nil) forState:UIControlStateNormal];
+        [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            
+        } else {
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+        }
+        [closeButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
+        
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
+        
+        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
+        
+    } else {
+        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
+    }
     
     
-    _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    
 
     
 }
@@ -2140,31 +2162,51 @@ extern BOOL isFromNewCreatedCard;
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
     //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
-    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
     if (isUserInterfaceIdiomPhone) {
-        customButton.bounds = CGRectMake(0, 0, 48, 40);
+        saveButton.bounds = CGRectMake(0, 0, 48, 40);
     } else {
-        customButton.bounds = CGRectMake(0, 0, 60, 50);
+        saveButton.bounds = CGRectMake(0, 0, 60, 50);
     }
-    [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
+    [saveButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
     if (isUserInterfaceIdiomPhone) {
-        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     }   else {
-        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         
     } else {
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
     }
-    [customButton addTarget:self action:@selector(dismissKeyBoard) forControlEvents:UIControlEventTouchDown];
+    [saveButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
     
     
-    _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,btnSpace,doneButton,nil];
+    if (isUserInterfaceIdiomPhone) {
+        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        closeButton.bounds = CGRectMake(0, 0, 48, 40);
+        [closeButton setTitle:NSLocalizedString(@"Keyboard_Cancel",nil) forState:UIControlStateNormal];
+        [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+            
+        } else {
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
+            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
+        }
+        [closeButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
+        
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
+        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
+        
+    } else {
+        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
+    }
+    
     
     //Back Button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
@@ -2341,7 +2383,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
--(IBAction)dismissKeyBoard
+-(void)dismissKeyBoard:(id) sender
 {
     if (isUserInterfaceIdiomPhone) {
         //we don't need to hide navigation bar on iPad
@@ -2370,7 +2412,12 @@ extern BOOL isFromNewCreatedCard;
     [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
     
     //Step3: save data in keyboardWasHidden
-    _doneButtonPressed = YES;
+    if ([[(UIButton *)sender titleLabel].text isEqualToString:NSLocalizedString(@"Keyboard_Save",@"")]) {
+        _doneButtonPressed = YES;
+    } else {
+        _doneButtonPressed = NO;
+    }
+    
     
 }
 
