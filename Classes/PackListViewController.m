@@ -28,7 +28,7 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sortTypeEnum"] == nil) {
-            _sortTypeEnum = SortTypeLastVisitedDescend;
+            _sortTypeEnum = SortTypeLastVisitedDescend; //default value
         } else {
             _sortTypeEnum = [[NSUserDefaults standardUserDefaults] integerForKey:@"sortTypeEnum"];
         }
@@ -123,13 +123,14 @@
     
     [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
     [_sortedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
+    _sortedButton.showsTouchWhenHighlighted = TRUE;
     switch (_sortTypeEnum) {
         case SortTypeLastCreatedDescend:
-            [_sortedButton setTitle:@"Sorted by recently created first" forState:UIControlStateNormal];
+            [_sortedButton setTitle:@"Sorted by recently created" forState:UIControlStateNormal];
             break;
             
         case SortTypeLastVisitedDescend:
-            [_sortedButton setTitle:@"Sorted by recently viewed first" forState:UIControlStateNormal];
+            [_sortedButton setTitle:@"Sorted by recently viewed" forState:UIControlStateNormal];
             break;
             
         default:
@@ -395,19 +396,17 @@
 - (void) switchSort:(id)sender {
     UIButton *button = (UIButton *) sender;
     
-    switch (button.tag) {
-        case 0:
-            button.tag = 1;
+    switch (_sortTypeEnum) {
+        case SortTypeLastVisitedDescend:
             _sortTypeEnum = SortTypeLastCreatedDescend;
             [self resetPackContent];
-            [button setTitle:@"Sorted by recently created first" forState:UIControlStateNormal];
+            [button setTitle:@"Sorted by recently created" forState:UIControlStateNormal];
             [self.swipeView reloadData];
             break;
-        case 1:
-            button.tag = 0;
+        case SortTypeLastCreatedDescend:
             _sortTypeEnum = SortTypeLastVisitedDescend;
             [self resetPackContent];
-            [button setTitle:@"Sorted by recently viewed first" forState:UIControlStateNormal];
+            [button setTitle:@"Sorted by recently viewed" forState:UIControlStateNormal];
             [self.swipeView reloadData];
             break;
             
