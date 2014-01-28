@@ -102,6 +102,8 @@
 
 - (void)viewDidLoad
 {
+    _startDate =[NSDate date];
+    
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     [self initialzeCardViews];
@@ -369,6 +371,14 @@
 }
 
 - (void) switchQuestionAnswerView {
+    
+    //加入这段代码的原因是为了防止误操作
+    NSDate*methodFinish =[NSDate date];
+    NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
+    if (executionTime <2.5) {
+        return;
+    }
+    
     if (_currentFlashCardView) {
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
