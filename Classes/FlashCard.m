@@ -873,6 +873,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Refresh
 
 - (void) refreshAll {
+    [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
@@ -894,6 +895,14 @@ extern BOOL isFromNewCreatedCard;
     [self adjustAllTextViewsToFitIfNecessary];
     
 
+}
+
+
+- (void) resetVerticalScrollViewOffset {
+    //reset offset
+    CGPoint offset = _verticalScrollView.contentOffset;
+    offset.y = 0;
+    [_verticalScrollView setContentOffset:offset animated:YES];
 }
 
 
@@ -2404,9 +2413,7 @@ extern BOOL isFromNewCreatedCard;
     _verticalScrollView.contentSize = size;
     
     //reset offset
-    CGPoint offset = _verticalScrollView.contentOffset;
-    offset.y = 0;
-    [_verticalScrollView setContentOffset:offset animated:YES];
+    [self resetVerticalScrollViewOffset];
 
     
     //step1:close keyboard and related view
