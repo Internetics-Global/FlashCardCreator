@@ -3020,7 +3020,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Add logo linkage relate
 
 - (void) editLogoLinkageURL:(id) sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                     message:[NSString stringWithFormat:NSLocalizedString(@"DIALOG_ENTER_VALID_URL",@"")
 ]
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")

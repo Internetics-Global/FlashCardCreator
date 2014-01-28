@@ -1144,7 +1144,7 @@ enum popover_enum {
     NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
     [za UnzipOpenFile:downloadedZipPackFileFixedPath];
     if( [za UnzipIsEncrypted]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                         message:@"Input a password"
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
