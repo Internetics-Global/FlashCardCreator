@@ -122,16 +122,48 @@
     _pageControl.defersCurrentPageDisplay = YES;
     
     [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
-    [_sortedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
-    _sortedButton.showsTouchWhenHighlighted = TRUE;
+    
+    
+    [_sortedByCreatedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
+    _sortedByCreatedButton.showsTouchWhenHighlighted = TRUE;
+    _sortedByCreatedButton.titleLabel.textColor = [UIColor whiteColor];
+    _sortedByCreatedButton.tag = SortTypeLastCreatedDescend;
+    _sortedByViewedButton.tag = SortTypeLastVisitedDescend;
+    
+    [_sortedByViewedButton addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventTouchDown];
+    _sortedByViewedButton.showsTouchWhenHighlighted = TRUE;
+    _sortedByViewedButton.titleLabel.textColor = [UIColor whiteColor];
+    
     switch (_sortTypeEnum) {
-        case SortTypeLastCreatedDescend:
-            [_sortedButton setTitle:@"Sorted by recently created" forState:UIControlStateNormal];
-            break;
+        case SortTypeLastCreatedDescend: {
             
-        case SortTypeLastVisitedDescend:
-            [_sortedButton setTitle:@"Sorted by recently viewed" forState:UIControlStateNormal];
+            NSString *str= @"recently created";
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(0, str.length)];
+            [_sortedByCreatedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
+            str= @"recently viewed";
+            attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:0] range:NSMakeRange(0, str.length)];
+            [_sortedByViewedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
             break;
+        }
+            
+        case SortTypeLastVisitedDescend: {
+            
+            NSString *str= @"recently created";
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:0] range:NSMakeRange(0, str.length)];
+            [_sortedByCreatedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
+            str= @"recently viewed";
+            attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(0, str.length)];
+            [_sortedByViewedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
+            break;
+        }
             
         default:
             break;
@@ -394,21 +426,44 @@
 }
 
 - (void) switchSort:(id)sender {
-    UIButton *button = (UIButton *) sender;
     
-    switch (_sortTypeEnum) {
-        case SortTypeLastVisitedDescend:
+    SortTypeEnum type = ((UIButton *)sender).tag;
+    
+    switch (type) {
+        case SortTypeLastCreatedDescend: {
             _sortTypeEnum = SortTypeLastCreatedDescend;
             [self resetPackContent];
-            [button setTitle:@"Sorted by recently created" forState:UIControlStateNormal];
+            
+            NSString *str= @"recently created";
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(0, str.length)];
+            [_sortedByCreatedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
+            str= @"recently viewed";
+            attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:0] range:NSMakeRange(0, str.length)];
+            [_sortedByViewedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+
             [self.swipeView reloadData];
             break;
-        case SortTypeLastCreatedDescend:
+        }
+        case SortTypeLastVisitedDescend: {
             _sortTypeEnum = SortTypeLastVisitedDescend;
             [self resetPackContent];
-            [button setTitle:@"Sorted by recently viewed" forState:UIControlStateNormal];
+            
+            NSString *str= @"recently created";
+            NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:0] range:NSMakeRange(0, str.length)];
+            [_sortedByCreatedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
+            str= @"recently viewed";
+            attrString = [[NSMutableAttributedString alloc] initWithString:str];
+            [attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:NSMakeRange(0, str.length)];
+            [_sortedByViewedButton setAttributedTitle:attrString forState:UIControlStateNormal];
+            
             [self.swipeView reloadData];
             break;
+        }
             
         default:
             break;

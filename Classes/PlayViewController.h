@@ -27,6 +27,8 @@
     int _indexCard;
     
     NSArray *_shuffledCardArray;
+    
+    NSDate *_startDate;
 }
 
 @property (strong, nonatomic) Pack *currentPack;
