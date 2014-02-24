@@ -114,7 +114,12 @@
 
 - (void)layoutView {
     _closeButton.backgroundColor = [UIColor clearColor];
-    [_closeButton setImage:[UIImage imageNamed:@"close_button.png"] forState:UIControlStateNormal];
+    if (isUserInterfaceIdiomPhone) {
+      [_closeButton setImage:[UIImage imageNamed:@"close_button.png"] forState:UIControlStateNormal];
+    } else {
+        [_closeButton setImage:[UIImage imageNamed:@"close_buttonBig.png"] forState:UIControlStateNormal];
+    }
+    
     _closeButton.titleLabel.text = nil;
     _closeButton.showsTouchWhenHighlighted = YES;
     [_closeButton addTarget:self action:@selector(closePlayView) forControlEvents:UIControlEventTouchDown];

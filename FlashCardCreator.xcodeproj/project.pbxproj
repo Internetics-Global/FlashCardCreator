@@ -183,6 +183,7 @@
 		881131AB1703CC8600C7D5A8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319B1703CA3600C7D5A8 /* Default.png */; };
 		881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319D1703CA3A00C7D5A8 /* Default@2x.png */; };
 		8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E8E418BB300800AFCF12 /* close_button@2x.png */; };
+		8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */; };
 		8839D2B51744B5B600338B45 /* templateScreenshot5_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */; };
 		8839D2B61744B5B600338B45 /* templateScreenshot5_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */; };
 		88491B351714522300833692 /* templateScreenshot0_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */; };
@@ -756,6 +757,7 @@
 		8811319D1703CA3A00C7D5A8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8811319F1703CA3E00C7D5A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8821E8E418BB300800AFCF12 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button@2x.png"; path = "Resources/close_button@2x.png"; sourceTree = "<group>"; };
+		8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_buttonBig@2x.png"; path = "Resources/close_buttonBig@2x.png"; sourceTree = "<group>"; };
 		8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer_iPad.png; path = Resources/templateScreenshot5_answer_iPad.png; sourceTree = "<group>"; };
 		8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer.png; path = Resources/templateScreenshot5_answer.png; sourceTree = "<group>"; };
 		88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot0_answer_iPad.png; path = Resources/templateScreenshot0_answer_iPad.png; sourceTree = "<group>"; };
@@ -1286,6 +1288,7 @@
 				2DD058F816E83FBD00F779BD /* redButton.png */,
 				88CA253517152EE700859BDC /* grayButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
+				8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */,
 				2DC1777916E4641200939E61 /* helping_button.png */,
 				2DC1777A16E4641200939E61 /* helping_button@2x.png */,
 				2D5FCBB816DD927800DB8628 /* add_pack_button.png */,
@@ -1981,6 +1984,7 @@
 				88491B361714522300833692 /* templateScreenshot0_answer.png in Resources */,
 				88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */,
 				88491B381714522300833692 /* templateScreenshot0_question.png in Resources */,
+				8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */,
 				88491B391714522300833692 /* templateScreenshot1_answer_iPad.png in Resources */,
 				88491B3A1714522300833692 /* templateScreenshot1_answer.png in Resources */,
 				88491B3B1714522300833692 /* templateScreenshot1_question_iPad.png in Resources */,
@@ -2253,7 +2257,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2275,7 +2279,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "221708E3-D0D3-4A42-822F-7FF2BA980385";
-				"PROVISIONING_PROFILE[sdk=*]" = "74FAD3C9-E3F2-4258-8E08-883BF10F7B37";
+				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2287,7 +2291,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2310,7 +2314,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "74FAD3C9-E3F2-4258-8E08-883BF10F7B37";
-				"PROVISIONING_PROFILE[sdk=*]" = "74FAD3C9-E3F2-4258-8E08-883BF10F7B37";
+				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

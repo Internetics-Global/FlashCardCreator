@@ -361,6 +361,10 @@ extern BOOL isFromNewCreatedCard;
     
     if (_cardSNText == nil) {
         CGPoint point = CGPointMake(30, kQuestionViewTopMarginForiPad+25);
+        if (self.isPlayingCard) {
+            point.x = (point.x) * kFlashCardViewProporation_iPhone;
+            point.y = (point.y) * kFlashCardViewProporation_iPhone;
+        }
         _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
         
     }
@@ -1399,11 +1403,11 @@ extern BOOL isFromNewCreatedCard;
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(1, 0, 210, 30);
             if (self.isPlayingCard) {
-//                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
             if (self.isPlayingCard) {
-//                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
             }
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
@@ -2905,97 +2909,97 @@ extern BOOL isFromNewCreatedCard;
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size12",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:12];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:12*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 12;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size18",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:18];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:18*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 18;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size24",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:24];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:24*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 24;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size28",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:28];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:28*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 28;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size32",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:32];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:32*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 32;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size36",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:36];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:36*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 36;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size40",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:40];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:40*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 40;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size45",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:45];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:45*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 45;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size50",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:50];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:50*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 50;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size55",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:55];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:55*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 55;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size60",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:60];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:60*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 60;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size80",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:80];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:80*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 80;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size100",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:100];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:100*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 100;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size160",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:160];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:160*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 160;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size260",nil)]) {
         responderTextView.font = [UIFont boldSystemFontOfSize:260];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:260*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 260;
     } else {
         responderTextView.font = [UIFont boldSystemFontOfSize:32];
-        if (self.isPlayingCard) {
+        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
             responderTextView.font =[UIFont boldSystemFontOfSize:32*kFlashCardViewProporation_iPhone];
         }
         selectFontSize = 32;
@@ -3416,7 +3420,7 @@ extern BOOL isFromNewCreatedCard;
     
     
     while ((textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize]))&&(textHeight >0)&&(font.pointSize >0)) {
-        textView.backgroundColor = [UIColor blueColor];
+        //textView.backgroundColor = [UIColor blueColor];
         font = textView.font;
         [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
         [textView layoutSubviews];
