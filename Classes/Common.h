@@ -23,4 +23,7 @@
 
 + (void) setSqliteVersion: (int) version;
 
+//同等比例放大缩小
++ (CGRect) getScaledViewRect:(UIView *) view withProportion:(float) scaleValue;
+
 @end

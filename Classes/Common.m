@@ -64,4 +64,15 @@
 }
 
 
++ (CGRect) getScaledViewRect:(UIView *) view withProportion:(float) scaleValue {
+    CGRect rect = view.frame;
+    rect.origin.x = rect.origin.x * scaleValue;
+    rect.origin.y = rect.origin.y * scaleValue;
+    rect.size.width = rect.size.width * scaleValue;
+    rect.size.height = rect.size.height * scaleValue;
+    return rect;
+}
+
+
+
 @end

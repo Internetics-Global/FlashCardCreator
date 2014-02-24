@@ -68,7 +68,11 @@ extern BOOL isFromNewCreatedCard;
 
 @implementation FlashCard
 
-- (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card
+- (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card  {
+    return [self initWithFrame:frame defaultPack:pack defaultCard:card isPlayingCard:NO];
+}
+
+- (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card isPlayingCard:(BOOL)isPlayingCard
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -91,6 +95,7 @@ extern BOOL isFromNewCreatedCard;
             NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
         }
         
+        self.isPlayingCard = isPlayingCard;
         self.currentPack = pack;
         self.currentCard = card;
         
@@ -446,6 +451,9 @@ extern BOOL isFromNewCreatedCard;
         _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
         _backgroundImageView.backgroundColor = [UIColor whiteColor];
         _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone);
+        if (self.isPlayingCard) {
+            _backgroundImageView.frame = [Common getScaledViewRect:_backgroundImageView withProportion:kFlashCardViewProporation_iPhone];
+        }
         _backgroundImageView.userInteractionEnabled = NO;
         _backgroundImageView.layer.masksToBounds = YES;
         _backgroundImageView.layer.cornerRadius = 15;
@@ -456,8 +464,14 @@ extern BOOL isFromNewCreatedCard;
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
         _questionTitle.frame = CGRectMake(40, 10, 200, 40);
+        if (self.isPlayingCard) {
+            _questionTitle.frame = [Common getScaledViewRect:_questionTitle withProportion:kFlashCardViewProporation_iPhone];
+        }
         _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _questionTitle.font =[UIFont systemFontOfSize:18];
+        if (self.isPlayingCard) {
+            _questionTitle.font =[UIFont systemFontOfSize:18*kFlashCardViewProporation_iPhone];
+        }
         _questionTitle.textAlignment = NSTextAlignmentLeft;
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.userInteractionEnabled = FALSE;
@@ -476,8 +490,14 @@ extern BOOL isFromNewCreatedCard;
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
         _answerTitle.frame = CGRectMake(40, 10, 200, 40);
+        if (self.isPlayingCard) {
+            _answerTitle.frame = [Common getScaledViewRect:_answerTitle withProportion:kFlashCardViewProporation_iPhone];
+        }
         _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _answerTitle.font =[UIFont systemFontOfSize:18];
+        if (self.isPlayingCard) {
+            _answerTitle.font =[UIFont systemFontOfSize:18*kFlashCardViewProporation_iPhone];
+        }
         _answerTitle.textAlignment = NSTextAlignmentLeft;
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.userInteractionEnabled = FALSE;
@@ -496,6 +516,9 @@ extern BOOL isFromNewCreatedCard;
     
     if (_verticalScrollView == nil) {
         _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 195)];
+        if (self.isPlayingCard) {
+            _verticalScrollView.frame = [Common getScaledViewRect:_verticalScrollView withProportion:kFlashCardViewProporation_iPhone];
+        }
         _verticalScrollView.contentSize = _verticalScrollView.frame.size;
         //_verticalScrollView.backgroundColor = [UIColor blueColor];
         _verticalScrollView.scrollEnabled = TRUE;
@@ -512,9 +535,15 @@ extern BOOL isFromNewCreatedCard;
         } else {
             _sidebarTitle.center = CGPointMake(25, 112);
         }
+        if (self.isPlayingCard) {
+            _sidebarTitle.frame = [Common getScaledViewRect:_sidebarTitle withProportion:kFlashCardViewProporation_iPhone];
+        }
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:12];
+        if (self.isPlayingCard) {
+            _sidebarTitle.font =[UIFont systemFontOfSize:12*kFlashCardViewProporation_iPhone];
+        }
         _sidebarTitle.textColor = [UIColor whiteColor];
         _sidebarTitle.delegate = self;
         _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
@@ -527,6 +556,9 @@ extern BOOL isFromNewCreatedCard;
     if (_cardSNText == nil) {
         CGPoint point = CGPointMake(15, kQuestionViewTopMarginForiPhone+15);
         _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
+        if (self.isPlayingCard) {
+            _cardSNText.frame = [Common getScaledViewRect:_cardSNText withProportion:kFlashCardViewProporation_iPhone];
+        }
         
     }
     
@@ -657,6 +689,9 @@ extern BOOL isFromNewCreatedCard;
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-25-2, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
+        if (self.isPlayingCard) {
+            _changeTemplateButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
+        }
         [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
@@ -666,6 +701,9 @@ extern BOOL isFromNewCreatedCard;
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
         _logoImage.frame = CGRectMake(330, 5, 64, 40);
+        if (self.isPlayingCard) {
+            _logoImage.frame = [Common getScaledViewRect:_logoImage withProportion:kFlashCardViewProporation_iPhone];
+        }
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE;
@@ -682,6 +720,9 @@ extern BOOL isFromNewCreatedCard;
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _logoLinkageButton.frame = CGRectMake(318, 24, 12, 12);
+        if (self.isPlayingCard) {
+            _logoLinkageButton.frame = [Common getScaledViewRect:_logoLinkageButton withProportion:kFlashCardViewProporation_iPhone];
+        }
         [_logoLinkageButton setBackgroundImage:[UIImage imageNamed:@"edit_link_button.png"] forState:UIControlStateNormal];
         [_logoLinkageButton addTarget:self action:@selector(editLogoLinkageURL:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:_logoLinkageButton];
@@ -690,6 +731,9 @@ extern BOOL isFromNewCreatedCard;
     if (_creatorText == nil) {
         UITextField *des = [[UITextField alloc] init];
         des.frame = CGRectMake(250, 15, 68, 15);
+        if (self.isPlayingCard) {
+            des.frame = [Common getScaledViewRect:des withProportion:kFlashCardViewProporation_iPhone];
+        }
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:8];
@@ -701,6 +745,9 @@ extern BOOL isFromNewCreatedCard;
         
         _creatorText = [[UITextField alloc] init];
         _creatorText.frame = CGRectMake(250, 25, 68, 15);
+        if (self.isPlayingCard) {
+            _creatorText.frame = [Common getScaledViewRect:_creatorText withProportion:kFlashCardViewProporation_iPhone];
+        }
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:8];
@@ -1328,6 +1375,9 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(1, 0, 210, 30);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1337,6 +1387,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(1, 35, 210, 150);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1348,6 +1401,9 @@ extern BOOL isFromNewCreatedCard;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             
             break;
         }
@@ -1356,6 +1412,9 @@ extern BOOL isFromNewCreatedCard;
             
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(1, 0, 210, 30);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1365,6 +1424,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(1, 33, 210, 126);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1374,6 +1436,9 @@ extern BOOL isFromNewCreatedCard;
             
             _subAnswer.hidden = FALSE;
             _subAnswer.frame = CGRectMake(1, 160, 210, 30);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subAnswer.font = [UIFont boldSystemFontOfSize:16];
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1383,6 +1448,9 @@ extern BOOL isFromNewCreatedCard;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             
             break;
         }
@@ -1390,6 +1458,9 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(1, 0, 210, 30);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1399,6 +1470,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(1, 35, 210, 155);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1410,6 +1484,9 @@ extern BOOL isFromNewCreatedCard;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(210, 30, 155, 155);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             
             break;
         }
@@ -1419,6 +1496,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(1, 5, 360, 185);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1438,6 +1518,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(1, 0, 210, 190);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1449,6 +1532,9 @@ extern BOOL isFromNewCreatedCard;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(210, 10, 155, 155);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
 
             
             break;
@@ -1460,6 +1546,9 @@ extern BOOL isFromNewCreatedCard;
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.frame = CGRectMake(1, 5, 360, 185);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
             _imageAnswer.hidden = FALSE;
             
             break;
@@ -1797,6 +1886,9 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(1, 5, 350, 39);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1806,6 +1898,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(1, 43, 350, 150);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1823,6 +1918,9 @@ extern BOOL isFromNewCreatedCard;
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(1, 5, 300, 33);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1832,6 +1930,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(1, 39, 350, 81);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1841,6 +1942,9 @@ extern BOOL isFromNewCreatedCard;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(1, 120, 350, 80);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1857,6 +1961,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(1, 25, 350, 100);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1866,6 +1973,9 @@ extern BOOL isFromNewCreatedCard;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(1, 140, 350, 52);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1883,6 +1993,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(1, 15, 350, 85);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1892,6 +2005,9 @@ extern BOOL isFromNewCreatedCard;
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(1, 103, 349, 85);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -1909,6 +2025,9 @@ extern BOOL isFromNewCreatedCard;
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(1, 5, 350, 190);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1932,6 +2051,9 @@ extern BOOL isFromNewCreatedCard;
             
             _imageQuestion.hidden = FALSE;
             _imageQuestion.frame = CGRectMake(1, 5, 360, 185);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
             
             break;
         }

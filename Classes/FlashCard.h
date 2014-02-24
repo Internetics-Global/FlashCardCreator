@@ -129,6 +129,7 @@ typedef enum{
 - (void) enableCardEdit;
 
 - (id) initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card;
+- (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card isPlayingCard:(BOOL)isPlayingCard;
 
 - (void) refreshAll;
 

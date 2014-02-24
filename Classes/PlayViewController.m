@@ -128,8 +128,8 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     if (isUserInterfaceIdiomPhone){
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-50, 20, 30, 30);
-        _scrollView.frame = CGRectMake(0, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
+        _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT); //全屏
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-50, 20, 30, 30);
         _scrollView.frame = CGRectMake(0, IPAD_UI_NAVIGATION_BAR_HEIGHT, IPAD_UI_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
@@ -297,23 +297,27 @@
     
     if (isUserInterfaceIdiomPhone) {
         
-        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2+IPHONE_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this is a constant value
-        _currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone) defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
-        _previousFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)
-                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
-        _nextFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPhone,kFlashCardViewHeight_PlayMode_iPhone)
-                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+        CGRect rect = CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPhone)/2,
+                                 (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2,
+                                 kFlashCardViewWidth_PlayMode_iPhone,
+                                 kFlashCardViewHeight_PlayMode_iPhone);
+        _currentFlashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
+//        _currentFlashCardView.backgroundColor = [UIColor redColor];
+        _previousFlashCardView = [[FlashCard alloc] initWithFrame:rect
+                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
+        _nextFlashCardView = [[FlashCard alloc] initWithFrame:rect
+                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
         
     } else {
         
         flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this
         
         _currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
-                                                 defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+                                                 defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
         _previousFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
-                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+                                                defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
         _nextFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
-                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard]];
+                                             defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
     }
     
     [[_currentFlashCardView layer] setShadowOffset:CGSizeMake(1, 1)];
