@@ -445,7 +445,7 @@ extern BOOL isFromNewCreatedCard;
         _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
         _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
         _backgroundImageView.backgroundColor = [UIColor whiteColor];
-        _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone-45);
+        _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone);
         _backgroundImageView.userInteractionEnabled = NO;
         _backgroundImageView.layer.masksToBounds = YES;
         _backgroundImageView.layer.cornerRadius = 15;
@@ -656,7 +656,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-25-2, kFlashCardViewHeight_Detail_iPhone-kQuestionViewButtomMarginForiPhone-22-10, 22, 20);
+        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-25-2, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
         [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
@@ -2611,7 +2611,7 @@ extern BOOL isFromNewCreatedCard;
     
     CGRect screenRect = self.bounds;
     if (isUserInterfaceIdiomPhone) {
-        screenRect.size.height = kFlashCardViewHeight_Detail_iPhone-45;
+        screenRect.size.height = kFlashCardViewHeight_Detail_iPhone;
     } else {
         screenRect.size.height = 550;    
     }
@@ -3323,8 +3323,8 @@ extern BOOL isFromNewCreatedCard;
     float flashCardYPositionInScrollView;
     FlashCard *tempCardView;
     if (isUserInterfaceIdiomPhone) {
-        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone)/2; //Since it's horizontal movement, so this is a constant value
-        tempCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
+        flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone + kFalshCardViewHeight_QASegment_iPhone)/2; //Since it's horizontal movement, so this is a constant value
+        tempCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone + kFalshCardViewHeight_QASegment_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
         
     } else {
         flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2; //Since it's horizontal movement, so this is a constant value

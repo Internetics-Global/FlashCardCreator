@@ -92,7 +92,8 @@
 #define kFlashCardViewWidth_Detail_iPad        800
 #define kFlashCardViewHeight_Detail_iPad       640     //NOT is the scroll view's height
 #define kFlashCardViewWidth_Detail_iPhone      ((480) - 80)
-#define kFlashCardViewHeight_Detail_iPhone     280     //NOT is the scroll view's height
+#define kFlashCardViewHeight_Detail_iPhone     (280 - kFalshCardViewHeight_QASegment_iPhone)     //NOT is the scroll view's height; don't include question/answer segment
+#define kFalshCardViewHeight_QASegment_iPhone  (45)
 
 #define kFlashCardViewWidth_PlayMode_iPad      800
 #define kFlashCardViewHeight_PlayMode_iPad     640     //NOT is the scroll view's height
