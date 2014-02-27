@@ -776,11 +776,9 @@ extern BOOL isFromNewCreatedCard;
     
     int val = 0;
     
-    if (val < 14) {
-        val = -(fontSize/2);
-    } else if (val < 40) {
-        val = -(fontSize/6) -1;
-    }else {
+    if (val < 40) {
+        val = -(fontSize/6) -1;    
+    } else {
         val = -(fontSize/7) + 2;
     }
     
@@ -3421,8 +3419,15 @@ extern BOOL isFromNewCreatedCard;
     BOOL outputFlag = FALSE;
     
     
-    while ((textHeight > frameHeight + fabsf([self setTextViewTopPadding:font.pointSize]))&&(textHeight >0)&&(font.pointSize >0)) {
-        //textView.backgroundColor = [UIColor blueColor];
+    int delta = 0;
+    if (font.pointSize < 13) {
+        delta = 10;
+    } else {
+        delta = fabsf([self setTextViewTopPadding:font.pointSize]);
+    }
+    
+    while ((textHeight > frameHeight + delta)&&(textHeight >0)&&(font.pointSize >0)) {
+//        textView.backgroundColor = [UIColor blueColor];
         font = textView.font;
         [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
         [textView layoutSubviews];
@@ -3433,7 +3438,7 @@ extern BOOL isFromNewCreatedCard;
     if (outputFlag == TRUE)
         NSLog(@"CardSN %d:Original text(%@) height:%f, final text height:%f, final font size is :%f",_currentCard.cardSN,textView.text,originalTextHeight, textView.contentSize.height, font.pointSize);
     
-    textView.contentOffset = CGPointMake(0, 3);
+    textView.contentOffset = CGPointMake(0, 0);
     
     
 }
