@@ -776,9 +776,11 @@ extern BOOL isFromNewCreatedCard;
     
     int val = 0;
     
-    if (val < 40) {
-        val = -(fontSize/6) -1;    
-    } else {
+    if (val < 14) {
+        val = -(fontSize/2);
+    } else if (val < 40) {
+        val = -(fontSize/6) -1;
+    }else {
         val = -(fontSize/7) + 2;
     }
     
@@ -3431,7 +3433,7 @@ extern BOOL isFromNewCreatedCard;
     if (outputFlag == TRUE)
         NSLog(@"CardSN %d:Original text(%@) height:%f, final text height:%f, final font size is :%f",_currentCard.cardSN,textView.text,originalTextHeight, textView.contentSize.height, font.pointSize);
     
-    textView.contentOffset = CGPointMake(0, 0);
+    textView.contentOffset = CGPointMake(0, 3);
     
     
 }
