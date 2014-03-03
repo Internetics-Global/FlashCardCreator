@@ -555,11 +555,12 @@ extern BOOL isFromNewCreatedCard;
     //Step3: Common
     if (_cardSNText == nil) {
         CGPoint point = CGPointMake(15, kQuestionViewTopMarginForiPhone+15);
-        _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
         if (self.isPlayingCard) {
-            _cardSNText.frame = [Common getScaledViewRect:_cardSNText withProportion:kFlashCardViewProporation_iPhone];
+            point.x = point.x * kFlashCardViewProporation_iPhone;
+            point.y = point.y * kFlashCardViewProporation_iPhone;
         }
-        
+        _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
+
     }
     
     
