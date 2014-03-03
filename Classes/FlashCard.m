@@ -177,7 +177,7 @@ extern BOOL isFromNewCreatedCard;
 
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 30, 400, 110);
+        _questionTitle.frame = CGRectMake(80, 20, 400, 110);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
@@ -197,7 +197,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 30, 400, 110);
+        _answerTitle.frame = CGRectMake(80, 20, 400, 110);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
@@ -397,7 +397,7 @@ extern BOOL isFromNewCreatedCard;
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(660, 10, 120, 120);
+        _logoImage.frame = CGRectMake(670, 10, 100, 100);
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor clearColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
