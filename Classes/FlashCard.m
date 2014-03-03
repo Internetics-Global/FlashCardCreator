@@ -544,9 +544,6 @@ extern BOOL isFromNewCreatedCard;
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:12];
-        if (self.isPlayingCard) {
-            _sidebarTitle.font =[UIFont systemFontOfSize:12*kFlashCardViewProporation_iPhone];
-        }
         _sidebarTitle.textColor = [UIColor whiteColor];
         _sidebarTitle.delegate = self;
         _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
@@ -1180,7 +1177,7 @@ extern BOOL isFromNewCreatedCard;
     //during creating a new card, we used default value
     _mainQuestion.font = [UIFont boldSystemFontOfSize:css.mainSize];
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _mainQuestion.font =[UIFont systemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        _mainQuestion.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
     }
     _mainSizeQuestion = css.mainSize;
     
@@ -1216,7 +1213,7 @@ extern BOOL isFromNewCreatedCard;
     //during creating a new card, we used default value
     _subQuestion.font = [UIFont boldSystemFontOfSize:css.subSize];
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subQuestion.font =[UIFont systemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        _subQuestion.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
     }
     _subSizeQuestion = css.subSize;
     
@@ -1291,7 +1288,7 @@ extern BOOL isFromNewCreatedCard;
     //during creating a new card, we used default value
     _mainAnswer.font = [UIFont boldSystemFontOfSize:css.mainSize];
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _mainAnswer.font =[UIFont systemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        _mainAnswer.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
     }
     _mainSizeAnswer = css.mainSize;
     
@@ -1327,7 +1324,7 @@ extern BOOL isFromNewCreatedCard;
     //during creating a new card, we used default value
     _subAnswer.font = [UIFont boldSystemFontOfSize:css.subSize];
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subAnswer.font =[UIFont systemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        _subAnswer.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
     }
     _subSizeAnswer = css.subSize;
     
@@ -1422,7 +1419,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1465,7 +1462,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1480,7 +1477,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _subAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _subAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1520,7 +1517,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1549,7 +1546,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1574,7 +1571,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1960,7 +1957,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -1998,7 +1995,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2013,7 +2010,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2035,7 +2032,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2050,7 +2047,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2073,7 +2070,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2088,7 +2085,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _subQuestion.font = [UIFont boldSystemFontOfSize:16];
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont systemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2111,7 +2108,7 @@ extern BOOL isFromNewCreatedCard;
             }
             _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont systemFontOfSize:14*kFlashCardViewProporation_iPhone];
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:14*kFlashCardViewProporation_iPhone];
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
