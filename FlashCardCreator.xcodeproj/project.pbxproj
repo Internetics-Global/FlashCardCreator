@@ -157,11 +157,11 @@
 		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
 		880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025F017C3297F00A485CE /* FMMoveTableViewCell.m */; };
 		880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800877F177AE9AA0051594B /* emotion_placeholder.png */; };
-		8805447B1843159200AFF2BC /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880544751843158F00AFF2BC /* libTestFlight.a */; };
-		8805447C184315AC00AFF2BC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880544761843159000AFF2BC /* README.md */; };
-		8805447D184315AC00AFF2BC /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880544771843159000AFF2BC /* release_notes.md */; };
 		8806405B1700043F00F9B76D /* change_template_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806405A1700043F00F9B76D /* change_template_button.png */; };
 		8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806407D170011DF00F9B76D /* setting_button@2x.png */; };
+		880AF42718C5A60E007F13DF /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880AF42118C5A60A007F13DF /* libTestFlight.a */; };
+		880AF42818C5A633007F13DF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42218C5A60B007F13DF /* README.md */; };
+		880AF42918C5A633007F13DF /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42318C5A60B007F13DF /* release_notes.md */; };
 		880E67201827205B0054DDD0 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E671F1827205B0054DDD0 /* Appsee.framework */; };
 		880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6723182720BF0054DDD0 /* CoreMedia.framework */; };
 		880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6721182720710054DDD0 /* AVFoundation.framework */; };
@@ -728,14 +728,14 @@
 		880025EF17C3297F00A485CE /* FMMoveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMMoveTableViewCell.h; path = Libraries/FMFramework/FMMoveTableViewCell.h; sourceTree = "<group>"; };
 		880025F017C3297F00A485CE /* FMMoveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMMoveTableViewCell.m; path = Libraries/FMFramework/FMMoveTableViewCell.m; sourceTree = "<group>"; };
 		8800877F177AE9AA0051594B /* emotion_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emotion_placeholder.png; path = Resources/emoticons/emotion_placeholder.png; sourceTree = "<group>"; };
-		880544751843158F00AFF2BC /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		880544761843159000AFF2BC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		880544771843159000AFF2BC /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		880544781843159100AFF2BC /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		880544791843159100AFF2BC /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		8805447A1843159200AFF2BC /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		8806405A1700043F00F9B76D /* change_template_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_template_button.png; path = Resources/change_template_button.png; sourceTree = "<group>"; };
 		8806407D170011DF00F9B76D /* setting_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_button@2x.png"; path = "Resources/setting_button@2x.png"; sourceTree = "<group>"; };
+		880AF42118C5A60A007F13DF /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		880AF42218C5A60B007F13DF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		880AF42318C5A60B007F13DF /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		880AF42418C5A60C007F13DF /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		880AF42518C5A60D007F13DF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		880AF42618C5A60D007F13DF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		880E671F1827205B0054DDD0 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appsee.framework; path = Libraries/Appsee.framework; sourceTree = "<group>"; };
 		880E6721182720710054DDD0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		880E6723182720BF0054DDD0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -835,7 +835,6 @@
 			files = (
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
-				8805447B1843159200AFF2BC /* libTestFlight.a in Frameworks */,
 				880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */,
 				88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */,
 				2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */,
@@ -852,6 +851,7 @@
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
 				2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */,
+				880AF42718C5A60E007F13DF /* libTestFlight.a in Frameworks */,
 				9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */,
 				2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */,
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
@@ -1175,7 +1175,7 @@
 		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				880544741843158F00AFF2BC /* TestFlightSDK2.0.2 */,
+				880AF42018C5A60A007F13DF /* TestFlightSDK3 */,
 				880E66FD182720460054DDD0 /* Appsee */,
 				880025CB17C3294F00A485CE /* FMFramework */,
 				88E739C31797C2DB004160F5 /* Amazon */,
@@ -1513,18 +1513,18 @@
 			name = FMFramework;
 			sourceTree = "<group>";
 		};
-		880544741843158F00AFF2BC /* TestFlightSDK2.0.2 */ = {
+		880AF42018C5A60A007F13DF /* TestFlightSDK3 */ = {
 			isa = PBXGroup;
 			children = (
-				880544751843158F00AFF2BC /* libTestFlight.a */,
-				880544761843159000AFF2BC /* README.md */,
-				880544771843159000AFF2BC /* release_notes.md */,
-				880544781843159100AFF2BC /* TestFlight+AsyncLogging.h */,
-				880544791843159100AFF2BC /* TestFlight+ManualSessions.h */,
-				8805447A1843159200AFF2BC /* TestFlight.h */,
+				880AF42118C5A60A007F13DF /* libTestFlight.a */,
+				880AF42218C5A60B007F13DF /* README.md */,
+				880AF42318C5A60B007F13DF /* release_notes.md */,
+				880AF42418C5A60C007F13DF /* TestFlight+AsyncLogging.h */,
+				880AF42518C5A60D007F13DF /* TestFlight+ManualSessions.h */,
+				880AF42618C5A60D007F13DF /* TestFlight.h */,
 			);
-			name = TestFlightSDK2.0.2;
-			path = Libraries/TestFlightSDK2.0.2;
+			name = TestFlightSDK3;
+			path = Libraries/TestFlightSDK3;
 			sourceTree = "<group>";
 		};
 		880E66FD182720460054DDD0 /* Appsee */ = {
@@ -1966,11 +1966,13 @@
 				881131A91703CC5800C7D5A8 /* Default-Landscape@2x~ipad.png in Resources */,
 				881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */,
 				88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */,
+				880AF42918C5A633007F13DF /* release_notes.md in Resources */,
 				881131AB1703CC8600C7D5A8 /* Default.png in Resources */,
 				881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */,
 				8810F481170B025B00D40562 /* help6.jpg in Resources */,
 				8810F482170B025B00D40562 /* help7.jpg in Resources */,
 				88EEEE69180E434F002AB9A1 /* play.png in Resources */,
+				880AF42818C5A633007F13DF /* README.md in Resources */,
 				881002F9180F801900FA0A52 /* play@2x.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
 				88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */,
@@ -1992,7 +1994,6 @@
 				88100320180FBDC200FA0A52 /* icon152x152iPad.png in Resources */,
 				88491B3D1714522300833692 /* templateScreenshot2_answer_iPad.png in Resources */,
 				88491B3E1714522300833692 /* templateScreenshot2_answer.png in Resources */,
-				8805447C184315AC00AFF2BC /* README.md in Resources */,
 				88491B3F1714522300833692 /* templateScreenshot2_question_iPad.png in Resources */,
 				88491B401714522300833692 /* templateScreenshot2_question.png in Resources */,
 				88491B411714522300833692 /* templateScreenshot3_answer_iPad.png in Resources */,
@@ -2004,7 +2005,6 @@
 				88491B461714522300833692 /* templateScreenshot4_answer.png in Resources */,
 				88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */,
 				88491B481714522300833692 /* templateScreenshot4_question.png in Resources */,
-				8805447D184315AC00AFF2BC /* release_notes.md in Resources */,
 				88CA253617152EE700859BDC /* grayButton.png in Resources */,
 				88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */,
 				8839D2B51744B5B600338B45 /* templateScreenshot5_answer_iPad.png in Resources */,
