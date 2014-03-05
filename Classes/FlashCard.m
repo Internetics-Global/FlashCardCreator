@@ -3246,7 +3246,6 @@ extern BOOL isFromNewCreatedCard;
     tag = textView.tag;
     
     [self adjustFontToFit:textView];
-    textView.contentOffset = CGPointMake(0, 0);
     
     //limit text within text box
     NSString *originalStr = textView.text;
