@@ -206,6 +206,7 @@
 		88491B461714522300833692 /* templateScreenshot4_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B321714522300833692 /* templateScreenshot4_answer.png */; };
 		88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B331714522300833692 /* templateScreenshot4_question_iPad.png */; };
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
+		8858064D18C9984D00490C33 /* upButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858064C18C9984C00490C33 /* upButton@2x.png */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
@@ -780,6 +781,7 @@
 		88491B321714522300833692 /* templateScreenshot4_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_answer.png; path = Resources/templateScreenshot4_answer.png; sourceTree = "<group>"; };
 		88491B331714522300833692 /* templateScreenshot4_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question_iPad.png; path = Resources/templateScreenshot4_question_iPad.png; sourceTree = "<group>"; };
 		88491B341714522300833692 /* templateScreenshot4_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot4_question.png; path = Resources/templateScreenshot4_question.png; sourceTree = "<group>"; };
+		8858064C18C9984C00490C33 /* upButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "upButton@2x.png"; path = "Resources/upButton@2x.png"; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
@@ -1285,6 +1287,7 @@
 		2DAAE19F16B8CE2300EA6D90 /* Customize */ = {
 			isa = PBXGroup;
 			children = (
+				8858064C18C9984C00490C33 /* upButton@2x.png */,
 				2DD058F816E83FBD00F779BD /* redButton.png */,
 				88CA253517152EE700859BDC /* grayButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
@@ -1951,6 +1954,7 @@
 				88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */,
 				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
 				2D1A054916EDED8800527311 /* template_color_purple.png in Resources */,
+				8858064D18C9984D00490C33 /* upButton@2x.png in Resources */,
 				2D1A054A16EDED8800527311 /* template_color_red.png in Resources */,
 				2D1A055116EE894800527311 /* template_background_change_button.png in Resources */,
 				2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */,
