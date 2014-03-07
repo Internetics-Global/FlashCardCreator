@@ -95,7 +95,7 @@
             [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                               message:@"packs downloaded before this version of FlashCardCreator are not support"
+                                               message:@"Packs downloaded before current version of FlashCardCreator are no more supported to share"
                                               delegate:nil cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                      otherButtonTitles:nil];
             [alert show];
