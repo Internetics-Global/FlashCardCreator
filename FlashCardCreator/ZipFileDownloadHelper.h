@@ -24,8 +24,9 @@
 
 @property (nonatomic,weak) id <ZipFileDownloadHelperDelegate> delegate;
 @property (copy, nonatomic) NSString *savedPath;
+@property (copy, nonatomic) NSString *downloadedURL;
 
-
++(instancetype)sharedInstance;
 - (NSString *) downloadZipFile:(NSString *)URLStr;
 + (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr;
 

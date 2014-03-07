@@ -98,7 +98,7 @@ enum popover_enum {
         _currentPack = [[Pack alloc] init];
         _currentCard = [[Card alloc] init];
         _indexCard = 0;
-        _zipFileDownloadHelp =[[ZipFileDownloadHelper alloc] init];
+        _zipFileDownloadHelper =[ZipFileDownloadHelper sharedInstance];
         
         
 
@@ -1022,8 +1022,8 @@ enum popover_enum {
     if (isAllowedToDownload) {
         [self showProgressIndicator:type withSource:from];
         NSString *downloadableDropboxURL = [ZipFileDownloadHelper convertToDropboxDownloadURL:urlStr];
-        [_zipFileDownloadHelp downloadZipFile:downloadableDropboxURL];
-        _zipFileDownloadHelp.delegate = self;
+        [_zipFileDownloadHelper downloadZipFile:downloadableDropboxURL];
+        _zipFileDownloadHelper.delegate = self;
     }  else {
         [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
     }
@@ -1271,11 +1271,25 @@ enum popover_enum {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
     [dict setObject:updateDate forKey:@"update_date"];
     [[NSUserDefaults standardUserDefaults] setObject:dict forKey:pack.packName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
+    //record download linkage
+    NSDictionary *downloadLinkageDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedDownloadLinkage"];
+    if (downloadLinkageDict == nil) {
+        downloadLinkageDict = [NSDictionary dictionary];
+    }
+    NSMutableDictionary *downloadLinkageMutableDict = [NSMutableDictionary dictionaryWithDictionary:downloadLinkageDict];
+    if (_zipFileDownloadHelper.downloadedURL == nil) {
+      _zipFileDownloadHelper.downloadedURL = @"";
+    }
+    [downloadLinkageMutableDict setObject:_zipFileDownloadHelper.downloadedURL forKey:[NSString stringWithFormat:@"%d",pack.packID]];
+    [[NSUserDefaults standardUserDefaults] setObject:downloadLinkageMutableDict forKey:@"savedDownloadLinkage"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    //step6. update amazon sinpleDB
     [self updateDownloadLimitCount];
     
-    //Step6: send notification
+    //Step7: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
     
 }

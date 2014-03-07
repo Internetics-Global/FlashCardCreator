@@ -25,7 +25,7 @@
     NSUInteger _indexCard;  //selected card index
     
     UIPopoverController *_packListPickerPopover;
-    ZipFileDownloadHelper *_zipFileDownloadHelp;
+    ZipFileDownloadHelper *_zipFileDownloadHelper;
     
     //progress indicator related
     MBProgressHUD *_HUD;

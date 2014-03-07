@@ -36,37 +36,74 @@
 #pragma mark -
 #pragma mark - Dropbox and Share related
 
+/**
+ *  when user clicks the "share the pack" button
+ *  and will do next:
+ *  1. set password and then upload
+ *  2. set max download number
+ *  3. share
+ *  if the current pack does not belong to current use, step1 and step2 will be ignored.
+ */
 - (void)shareAction
 {
-    //Step1: check whether need to upload pack again
-    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-    if (!dict) {
-        //do nothing
-    } else {
-        NSString *updateDate = [dict objectForKey:@"update_date"];
-        NSString *shareDate = [dict objectForKey:@"share_date"];
-        NSString *shareLink = [dict objectForKey:@"share_link"];
-        if ((updateDate != nil) && (shareDate != nil) & (shareLink != nil)) {
-            if ([[FileOperationHelper convertStringToNSDate:updateDate]
-                 compare:
-                 [FileOperationHelper convertStringToNSDate:shareDate]]
-                == NSOrderedAscending) {
-                NSLog(@"updateDate is earlier than shareDate");
-                [self shareAction:shareLink];
-                return;
+    if ([self checkPackEditable]) {
+        //Step1: check whether need to upload pack again
+        NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+        if (!dict) {
+            //do nothing
+        } else {
+            NSString *updateDate = [dict objectForKey:@"update_date"];
+            NSString *shareDate = [dict objectForKey:@"share_date"];
+            NSString *shareLink = [dict objectForKey:@"share_link"];
+            if ((updateDate != nil) && (shareDate != nil) & (shareLink != nil)) {
+                if ([[FileOperationHelper convertStringToNSDate:updateDate]
+                     compare:
+                     [FileOperationHelper convertStringToNSDate:shareDate]]
+                    == NSOrderedAscending) {
+                    NSLog(@"updateDate is earlier than shareDate");
+                    [self shareAction:shareLink];
+                    return;
+                }
             }
         }
-    }
-    
-    //Step2: do upload and share if not meet
-    if (![[DBSession sharedSession] isLinked]) {
-		[[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
+        
+        //Step2: do upload and share if not meet
+        if (![[DBSession sharedSession] isLinked]) {
+            [[DBSession sharedSession] linkFromController:[[UIApplication sharedApplication] keyWindow].rootViewController];
+        } else {
+            [self setPassword];
+        }
     } else {
-        [self setPassword];
+        NSDictionary *downloadLinkageDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedDownloadLinkage"];
+        NSString *linkage = [downloadLinkageDict objectForKey:[NSString stringWithFormat:@"%d",self.currentPack.packID]];
+        
+        NSString *finalLinkage = [linkage stringByReplacingOccurrencesOfString:@"https://dl" withString:@"fcc://www"];
+        finalLinkage = [finalLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
+        
+        if (finalLinkage.length > 0) {
+            NSString *redirectedStr =[self redirectURL:finalLinkage];
+            if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
+                return;
+            }
+            
+            NSString *finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
+            SHKItem *item = [SHKItem text:finalPostMessage];
+            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+            [SHK setRootViewController:self.baseViewController];
+            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                               message:@"packs downloaded before this version of FlashCardCreator are not support"
+                                              delegate:nil cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                     otherButtonTitles:nil];
+            [alert show];
+        }
+        
     }
     
 }
-
 
 - (void) setPassword {
     UIAlertView *alert;
@@ -86,6 +123,18 @@
     [alert textFieldAtIndex:0].text = @"";
     alert.delegate = self;
     [alert show];
+}
+
+- (BOOL) checkPackEditable {
+    BOOL result = NO;
+    Card *firstCard = [[self.currentPack cards] objectAtIndex:0];
+    if ([firstCard.creator isEqualToString:[OpenUDID value]]) {
+        result = YES;
+    } else {
+        result = NO;
+    }
+    
+    return result;
 }
 
 

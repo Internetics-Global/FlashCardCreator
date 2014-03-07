@@ -23,7 +23,19 @@
 	return self;
 }
 
++(instancetype)sharedInstance{
+    static id sharedInstance=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,^{
+        sharedInstance=[[self alloc]init];
+    });
+    return sharedInstance;
+}
+
 - (NSString *) downloadZipFile:(NSString *)URLStr {
+    
+    self.downloadedURL = URLStr;
+    
     //Every time before download, we need to clear it.
     [[NSFileManager defaultManager] removeItemAtPath:[FileOperationHelper downloadedPackFileDirectory] error:nil];
     
