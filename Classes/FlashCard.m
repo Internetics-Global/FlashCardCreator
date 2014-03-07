@@ -732,6 +732,9 @@ extern BOOL isFromNewCreatedCard;
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
         upImageView.frame = CGRectMake(394-10, 45-13.75, 10, 13.75);
+        if (self.isPlayingCard) {
+            upImageView.frame = [Common getScaledViewRect:upImageView withProportion:kFlashCardViewProporation_iPhone];
+        }
         upImageView.clipsToBounds = YES;
         upImageView.backgroundColor = [UIColor clearColor];
         upImageView.userInteractionEnabled = TRUE; //alway true
