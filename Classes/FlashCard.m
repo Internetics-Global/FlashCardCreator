@@ -177,7 +177,7 @@ extern BOOL isFromNewCreatedCard;
 
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 20, 400, 110);
+        _questionTitle.frame = CGRectMake(80, 30, 400, 110);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
@@ -197,7 +197,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 20, 400, 110);
+        _answerTitle.frame = CGRectMake(80, 30, 400, 110);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
@@ -951,9 +951,25 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Refresh
 
 - (void) refreshAll {
+    [self refreshAll:NO withIndexPlaying:-1];
+}
+
+/**
+ *  indexPlaying > = 0:仅仅用于play mode,或detail view中的左右滑动
+ */
+- (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
+    
+    //禁止执行：adjustAllTextViewsToFitIfNecessary
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        isDisableAutoResize = YES;
+        indexPlaying = -1;
+    }
+    
+    
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
+    
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
     if ([self checkCardEditable] == YES) {
@@ -968,9 +984,47 @@ extern BOOL isFromNewCreatedCard;
         _answerTitle.userInteractionEnabled = false;
     }
     
-    [self updateUITextViewPaddingTop];
     
-    [self adjustAllTextViewsToFitIfNecessary];
+    if (_segmentedControl.selectedSegmentIndex == 1) {
+        [self adjustAllTextViewsToFitIfNecessary];
+    } else {
+        if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+            //几种情况
+            //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
+            //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
+            if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
+                || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
+                
+                //[self updateUITextViewPaddingTop];
+                
+                BOOL isFontResized = [self adjustAllTextViewsToFitIfNecessary];
+                
+                if ((isFontResized)) {
+                    
+                    NSLog(@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN);
+
+                }
+            }
+        }
+    }
+    
+    if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
+        NSArray *myArray = [NSArray arrayWithObjects:
+                            [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
+                            [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
+                            [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
+    }
+    
+    if (self.tag == NEXT_FLASHCARDVIEW_TAG) {
+        NSArray *myArray = [NSArray arrayWithObjects:
+                            [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
+                            [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
+                            [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
+    }
+    
+    
     
 
 }
@@ -3410,58 +3464,125 @@ extern BOOL isFromNewCreatedCard;
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
-// only adjust font size if text height > frame's height
-- (void) adjustAllTextViewsToFitIfNecessary {
+/**
+ *  用于根据textview的frame，进行自动调节
+ *  返回true,表示执行了；false，表示没有任何调节
+ */
+- (BOOL) adjustAllTextViewsToFitIfNecessary {
+    BOOL result = NO;
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        [self adjustFontToFit:_subheadingQuestion];
-        [self adjustFontToFit:_mainQuestion];
-        [self adjustFontToFit:_subQuestion];
+        if ([self adjustFontToFit:_subheadingQuestion]){
+            result= YES;
+        }
+        if ([self adjustFontToFit:_mainQuestion]){
+            
+            result= YES;
+        }
+        if ([self adjustFontToFit:_subQuestion]){
+            result= YES;
+        }
     } else {
-        [self adjustFontToFit:_subheadingAnswer];
-        [self adjustFontToFit:_mainAnswer];
-        [self adjustFontToFit:_subAnswer];
+        if ([self adjustFontToFit:_subheadingAnswer]){
+           result= YES;
+        }
+        if ([self adjustFontToFit:_mainAnswer]){
+            result= YES;
+        }
+        if ([self adjustFontToFit:_subAnswer]){
+            result= YES;
+        }
     }
+    
+    _mainQuestion.backgroundColor = [UIColor orangeColor];
+    
+    return result;
+}
+
+/**
+ *  获取textview中文字高度，而不是frame的高度
+ */
+- (float) getTextSizeHeight:(UITextView *) textView{
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width-16,textView.frame.size.height); //左右边间距为8
+    CGSize stringSize;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByCharWrapping];
+    } else {
+        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
+    }
+    CGFloat textHeight = stringSize.height; //textView.contentSize.height不准确
+    return textHeight;
 }
 
 
-- (void) adjustFontToFit:(UITextView *) textView {
+- (BOOL) adjustFontToFit:(UITextView *) textView {
+    
+    BOOL result = NO;
     
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
-        return;
+        result = NO;
+        return result;
     }
     
-    if ((textView == NULL) || (textView.text.length ==0) || (textView.hidden == TRUE)) {
-        return;
+    if ((textView == NULL) || (textView.text.length ==0)) {
+        result = NO;
+        return result;
     }
     
+    [textView layoutSubviews]; //否则textHeight可能为<0
     CGFloat frameHeight = textView.frame.size.height;
-    CGFloat textHeight = textView.contentSize.height;
+    CGFloat textHeight = [self getTextSizeHeight:textView];
+    
     CGFloat originalTextHeight = textHeight;
-    UIFont  *font = textView.font;
     BOOL outputFlag = FALSE;
     
+    //it could be possible。实际情况中发生了，具体原因不明
+    while (textHeight <0) {
+        
+        NSLog(@"%s:......Fuck textHeight <0",__FUNCTION__);
+        
+        if (textView.font.pointSize <9) {
+            break;
+        }
     
-    int delta = 0;
-    if (font.pointSize < 13) {
-        delta = 10;
-    } else {
-        delta = fabsf([self setTextViewTopPadding:font.pointSize]);
-    }
-    
-    while ((textHeight > frameHeight + delta)&&(textHeight >0)&&(font.pointSize >0)) {
-//        textView.backgroundColor = [UIColor blueColor];
-        font = textView.font;
-        [textView setFont:[UIFont boldSystemFontOfSize:(font.pointSize -1)]];
+        [textView setFont:[UIFont boldSystemFontOfSize:(textView.font.pointSize -1)]];
         [textView layoutSubviews];
-        textHeight = textView.contentSize.height;
-        outputFlag = TRUE;
+        
+        textHeight = [self getTextSizeHeight:textView];
+        usleep(5000);
     }
     
-    if (outputFlag == TRUE)
-        NSLog(@"CardSN %d:Original text(%@) height:%f, final text height:%f, final font size is :%f",_currentCard.cardSN,textView.text,originalTextHeight, textView.contentSize.height, font.pointSize);
+    float orginalFontSize = textView.font.pointSize;
+    
+    //为了防止字体太小而设立
+    int gate;
+    if (_isPlayingCard) {
+        gate = 17;
+    } else {
+        gate = 15;
+    }
+    
+    while ((textHeight > frameHeight - frameHeight/5)&&(textHeight >0)&&(textView.font.pointSize >0)) {
+        outputFlag = TRUE;
+        result = YES;
+        
+        if (textView.font.pointSize <gate) {
+            //字体越小，size变化越明显
+            break;
+        }
+        [textView setFont:[UIFont boldSystemFontOfSize:(textView.font.pointSize -1)]];
+        [textView layoutSubviews];
+        usleep(5000);
+        textHeight = [self getTextSizeHeight:textView];
+        
+    }
+    
+    if (outputFlag) {
+        NSLog(@"CardSN %d:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize);
+    }
     
     
     
+    return result;
 }
 
 

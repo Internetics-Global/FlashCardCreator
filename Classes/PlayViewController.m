@@ -12,6 +12,9 @@
 #import "Card.h"
 #import "NSArray+Randomised.h"
 #import <CoreMotion/CoreMotion.h>
+#import "CSS.h"
+#import "Question.h"
+#import "Answer.h"
 
 @interface PlayViewController ()
 
@@ -32,10 +35,19 @@
                                                  selector:@selector(landscapeLeftRightOrientationChanged:)
                                                      name:UIDeviceOrientationDidChangeNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(previousCardNotification:)
+                                                     name:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(nextCardNotification:)
+                                                     name:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
+                                                   object:nil];
         
     }
     return self;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -49,7 +61,7 @@
     __weak PlayViewController *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
         [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+            //NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
@@ -150,6 +162,10 @@
         //Bubble sorting
         _shuffledCardArray = [[_currentPack cards] cardSNOrdered];
     }
+    _isResizedArray = [NSMutableArray array];
+    for (int i = 0;i<[_shuffledCardArray count];i++) {
+        _isResizedArray[i]= @"NO";
+    }
     
     [self showCurrentCardInScrollView:YES];
     
@@ -171,6 +187,7 @@
     [_scrollView setContentSize:CGSizeMake(([_shuffledCardArray count] * IPAD_UI_WIDTH), IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT)];
     
     //2. Set current
+    
     _currentFlashCardView.currentCard = _shuffledCardArray[_indexCard];
     _currentFlashCardView.currentPack = _currentPack;
     _currentFlashCardView.calledViewController = self;
@@ -181,9 +198,10 @@
     curXLoc += IPAD_UI_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentFlashCardView.frame = rect;
+    _currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     [_scrollView addSubview:_currentFlashCardView];
     
-    [_currentFlashCardView refreshAll];
+    [_currentFlashCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
     [_currentFlashCardView disableCardEdit];
     [_currentFlashCardView.segmentedControl setHidden:YES];
     
@@ -196,9 +214,10 @@
         _previousFlashCardView.calledViewController = nil;
         rect.origin.x = curXLoc -IPAD_UI_WIDTH;
         _previousFlashCardView.frame = rect;
+        _previousFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_scrollView addSubview:_previousFlashCardView];
         
-        [_previousFlashCardView refreshAll];
+        [_previousFlashCardView refreshAll:[_isResizedArray[_indexCard -1] boolValue] withIndexPlaying:_indexCard -1 ];
         [_previousFlashCardView disableCardEdit];
         [_previousFlashCardView.segmentedControl setHidden:YES];
     }
@@ -212,9 +231,10 @@
         _nextFlashCardView.calledViewController = nil;
         rect.origin.x = curXLoc +IPAD_UI_WIDTH;
         _nextFlashCardView.frame = rect;
+        _nextFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
         [_scrollView addSubview:_nextFlashCardView];
         
-        [_nextFlashCardView refreshAll];
+        [_nextFlashCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
         [_nextFlashCardView disableCardEdit];
         [_nextFlashCardView.segmentedControl setHidden:YES];
     }
@@ -249,9 +269,10 @@
     curXLoc += IPHONE_UI_WIDTH *_indexCard;
     rect.origin.x = curXLoc;
     _currentFlashCardView.frame = rect;
+    _currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     [_scrollView addSubview:_currentFlashCardView];
     
-    [_currentFlashCardView refreshAll];
+    [_currentFlashCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
     [_currentFlashCardView disableCardEdit];
     [_currentFlashCardView.segmentedControl setHidden:YES];
     
@@ -264,9 +285,10 @@
         _previousFlashCardView.calledViewController = nil;
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousFlashCardView.frame = rect;
+        _previousFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_scrollView addSubview:_previousFlashCardView];
         
-        [_previousFlashCardView refreshAll];
+        [_previousFlashCardView refreshAll:[_isResizedArray[_indexCard-1] boolValue] withIndexPlaying:_indexCard-1];
         [_previousFlashCardView disableCardEdit];
         [_previousFlashCardView.segmentedControl setHidden:YES];
     }
@@ -280,9 +302,10 @@
         _nextFlashCardView.calledViewController = nil;
         rect.origin.x = curXLoc +IPHONE_UI_WIDTH;
         _nextFlashCardView.frame = rect;
+        _nextFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
         [_scrollView addSubview:_nextFlashCardView];
         
-        [_nextFlashCardView refreshAll];
+        [_nextFlashCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
         [_nextFlashCardView disableCardEdit];
         [_nextFlashCardView.segmentedControl setHidden:YES];
     }
@@ -336,7 +359,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    NSLog (@"current page is :%d", page);
+    //NSLog (@"current page is :%d", page);
     
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
         _scrollView.userInteractionEnabled = FALSE; // avoid blank pages.
@@ -357,6 +380,7 @@
 }
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
+    
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
@@ -444,6 +468,57 @@
     return UIInterfaceOrientationMaskLandscape;
 }
 
+
+#pragma mark –  PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION and NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION
+
+-(void) previousCardNotification:(NSNotification *)notification {
+    
+    NSArray *myArray = [notification object];
+    
+    if (_indexCard >0) {
+        
+        if ([_isResizedArray[_indexCard - 1] boolValue] == YES) {
+            return;
+        }
+        
+        Card *card = _shuffledCardArray[_indexCard - 1];
+        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone;
+        
+        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        
+        _isResizedArray[_indexCard - 1] = @YES;
+        
+    }
+    
+    
+}
+
+-(void) nextCardNotification:(NSNotification *)notification {
+    
+    NSArray *myArray = [notification object];
+    
+    if (_indexCard < [_shuffledCardArray count] - 1) {
+        
+        if ([_isResizedArray[_indexCard + 1] boolValue] == YES) {
+            return;
+        }
+        
+        Card *card = _shuffledCardArray[_indexCard + 1];
+        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone;
+        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        
+        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        
+        _isResizedArray[_indexCard + 1] = @YES;
+    }
+    
+}
+
 #pragma mark -
 #pragma mark - Memory Management
 // will not be called in iOS 6
@@ -470,6 +545,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"%s",__FUNCTION__);
 }
 
 

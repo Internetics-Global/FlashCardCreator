@@ -48,6 +48,8 @@
     
     DropboxSharekitHelper *_shareHelper;
     
+    NSMutableArray *_isResizedArray; //用于判断是否已经被autoresize
+    
 }
 
 @property (strong, nonatomic) id detailItem;

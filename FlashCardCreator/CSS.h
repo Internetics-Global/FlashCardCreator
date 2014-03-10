@@ -11,15 +11,15 @@
 @interface CSS : NSObject {
     NSInteger _cssID;
     
-    NSInteger _subheadingSize;
+    float _subheadingSize;
 	NSString *_subheadingColor;
     NSString *_subheadingAlign;
     
-    NSInteger _mainSize;
+    float _mainSize;
 	NSString *_mainColor;
     NSString *_mainAlign;
 
-    NSInteger _subSize;
+    float _subSize;
 	NSString *_subColor;
     NSString *_subAlign;
     
@@ -27,15 +27,15 @@
 
 @property (nonatomic, assign) NSInteger cssID;
 
-@property (nonatomic, assign) NSInteger subheadingSize;
+@property (nonatomic, assign) float subheadingSize;
 @property (nonatomic, copy) NSString *subheadingColor;
 @property (nonatomic, copy) NSString *subheadingAlign;
 
-@property (nonatomic, assign) NSInteger mainSize;
+@property (nonatomic, assign) float mainSize;
 @property (nonatomic, copy) NSString *mainColor;
 @property (nonatomic, copy) NSString *mainAlign;
 
-@property (nonatomic, assign) NSInteger subSize;
+@property (nonatomic, assign) float subSize;
 @property (nonatomic, copy) NSString *subColor;
 @property (nonatomic, copy) NSString *subAlign;
 

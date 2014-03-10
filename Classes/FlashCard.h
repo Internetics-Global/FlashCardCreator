@@ -133,6 +133,9 @@ typedef enum{
 
 - (void) refreshAll;
 
+
+- (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying;
+
 - (void) saveEdittedCard;
 
 - (void)segmentAction:(id)sender;

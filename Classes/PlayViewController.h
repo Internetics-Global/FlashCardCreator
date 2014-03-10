@@ -27,6 +27,7 @@
     int _indexCard;
     
     NSArray *_shuffledCardArray;
+    NSMutableArray *_isResizedArray; //用于判断是否已经被autoresize
     
     NSDate *_startDate;
 }

@@ -12,6 +12,9 @@
 #import "Card.h"
 #import "User.h"
 #import "Pack.h"
+#import "Question.h"
+#import "Answer.h"
+#import "CSS.h"
 #import "Reachability.h"
 #import "PlayViewController.h"
 #import "FCCBarButton.h"
@@ -57,6 +60,15 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(previousCardNotification:)
+                                                     name:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(nextCardNotification:)
+                                                     name:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
+                                                   object:nil];
     }
     return self;
 }
@@ -232,7 +244,7 @@ enum popover_enum {
     _currentCardView.frame = rect;
     [_scrollView addSubview:_currentCardView];
 
-    [_currentCardView refreshAll];
+    [_currentCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
     
     //3. Set previous
     _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
@@ -244,7 +256,7 @@ enum popover_enum {
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
         [_scrollView addSubview:_previousCardView]; 
-        [_previousCardView refreshAll];
+        [_previousCardView refreshAll:[_isResizedArray[_indexCard-1] boolValue] withIndexPlaying:_indexCard-1];
     }
     
     //5. Set next
@@ -258,7 +270,7 @@ enum popover_enum {
         _nextCardView.frame = rect;
         [_scrollView addSubview:_nextCardView]; 
         
-        [_nextCardView refreshAll];
+        [_nextCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
     }
 
 }
@@ -290,7 +302,8 @@ enum popover_enum {
     if (_currentCardView.superview == nil) {
         [_scrollView addSubview:_currentCardView];    
     }
-    [_currentCardView refreshAll];
+    
+    [_currentCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
 
     
     //3. Set previous
@@ -304,7 +317,7 @@ enum popover_enum {
         if (_previousCardView.superview == nil) {
             [_scrollView addSubview:_previousCardView];    
         }
-        [_previousCardView refreshAll];
+        [_previousCardView refreshAll:[_isResizedArray[_indexCard-1] boolValue] withIndexPlaying:_indexCard-1];
     }
     
     //5. Set next
@@ -318,7 +331,7 @@ enum popover_enum {
         if (_nextCardView.superview == nil) {
             [_scrollView addSubview:_nextCardView];
         }
-        [_nextCardView refreshAll];
+        [_nextCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
     }
 
 }
@@ -530,6 +543,7 @@ enum popover_enum {
 }
 
 - (void) selectedPackNotification:(NSNotification *) notification {
+    _isResizedArray = nil;
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
 }
@@ -703,6 +717,80 @@ enum popover_enum {
     self.settingPopoverController = nil;
     self.helpPopoverController = nil;
 }
+
+#pragma mark –  PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION and NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION
+
+-(void) previousCardNotification:(NSNotification *)notification {
+    
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        return;
+    }
+    
+    if (_isResizedArray == nil) {
+        _isResizedArray = [NSMutableArray array];
+        for (int i = 0;i<[[_currentPack cards] count];i++) {
+            _isResizedArray[i]= @"NO";
+        }
+    }
+    
+    
+    NSArray *myArray = [notification object];
+    
+    if (_indexCard >0) {
+        
+        if ([_isResizedArray[_indexCard - 1] boolValue] == YES) {
+            return;
+        }
+        
+        Card *card = [_currentPack cards][_indexCard - 1];
+        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        
+        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        
+        _isResizedArray[_indexCard - 1] = @YES;
+        
+    }
+    
+    
+}
+
+-(void) nextCardNotification:(NSNotification *)notification {
+    
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        return;
+    }
+    
+    if (_isResizedArray == nil) {
+        _isResizedArray = [NSMutableArray array];
+        for (int i = 0;i<[[_currentPack cards] count];i++) {
+            _isResizedArray[i]= @"NO";
+        }
+    }
+    
+    NSArray *myArray = [notification object];
+    
+    if (_indexCard < [[_currentPack cards] count] - 1) {
+        
+        if ([_isResizedArray[_indexCard + 1] boolValue] == YES) {
+            return;
+        }
+        
+        Card *card = [_currentPack cards][_indexCard + 1];
+        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        
+        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        
+        _isResizedArray[_indexCard + 1] = @YES;
+    }
+    
+}
+
 
 
 @end
