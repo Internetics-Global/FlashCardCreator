@@ -959,13 +959,6 @@ extern BOOL isFromNewCreatedCard;
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     
-    //禁止执行：adjustAllTextViewsToFitIfNecessary
-    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
-        isDisableAutoResize = YES;
-        indexPlaying = -1;
-    }
-    
-    
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
@@ -989,13 +982,12 @@ extern BOOL isFromNewCreatedCard;
         [self adjustAllTextViewsToFitIfNecessary];
     } else {
         if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+            //当不可编辑时，我们将限制adjustAllTextViewsToFitIfNecessary执行。主要原因时这时我们将通过前后页来预加载，而非当前页执行adjustAllTextViewsToFitIfNecessary
             //几种情况
             //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
             //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
             if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
                 || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
-                
-                //[self updateUITextViewPaddingTop];
                 
                 BOOL isFontResized = [self adjustAllTextViewsToFitIfNecessary];
                 
@@ -1005,24 +997,32 @@ extern BOOL isFromNewCreatedCard;
 
                 }
             }
+        } else {
+            [self adjustAllTextViewsToFitIfNecessary];
         }
     }
     
-    if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
-        NSArray *myArray = [NSArray arrayWithObjects:
-                            [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
-                            [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
-                            [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
+    //当可编辑时，我们不进行自动autoresize的notification
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+        
+        if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
+            NSArray *myArray = [NSArray arrayWithObjects:
+                                [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
+                                [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
+                                [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
+        }
+        
+        if (self.tag == NEXT_FLASHCARDVIEW_TAG) {
+            NSArray *myArray = [NSArray arrayWithObjects:
+                                [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
+                                [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
+                                [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
+        }
     }
     
-    if (self.tag == NEXT_FLASHCARDVIEW_TAG) {
-        NSArray *myArray = [NSArray arrayWithObjects:
-                            [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
-                            [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
-                            [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
-    }
+    
     
     
     
@@ -1440,6 +1440,19 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
 
+/**
+ *  规定，所有UITextView默认（正常）contentSize = 0
+ */
+- (void) resetAllUITextViewContentOffset {
+    _mainQuestion.contentOffset = CGPointZero;
+    _subheadingQuestion.contentOffset = CGPointZero;
+    _subQuestion.contentOffset = CGPointZero;
+    
+    _mainAnswer.contentOffset = CGPointZero;
+    _subheadingAnswer.contentOffset = CGPointZero;
+    _subAnswer.contentOffset = CGPointZero;
+}
+
 - (void) updateQuestionOrAnswerTemplate {
     if (isUserInterfaceIdiomPhone) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -1455,6 +1468,9 @@ extern BOOL isFromNewCreatedCard;
             [self updateAnswerViewTemplateForiPad];
         }
     }
+    
+    //之所以加上这个，主要是在.frame 时，contentOffset会莫名其妙的改变
+    [self resetAllUITextViewContentOffset];
 }
 
 - (void) updateQuestionAndAnswerTemplate {
@@ -1466,6 +1482,9 @@ extern BOOL isFromNewCreatedCard;
         [self updateQuestionViewTemplateForiPad];
         [self updateAnswerViewTemplateForiPad];
     }
+    
+    //之所以加上这个，主要是在.frame 时，contentOffset会莫名其妙的改变
+    [self resetAllUITextViewContentOffset];
 }
 
 //postion part which is included in three main parts: CSS, template(position) and content
@@ -3492,8 +3511,7 @@ extern BOOL isFromNewCreatedCard;
             result= YES;
         }
     }
-    
-    _mainQuestion.backgroundColor = [UIColor orangeColor];
+
     
     return result;
 }
