@@ -1008,7 +1008,9 @@ extern BOOL isFromNewCreatedCard;
     }
     
     //当可编辑时，我们不进行自动autoresize的notification
-    if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+    //当为CURRENT_FLASHCARDVIEW_TAG，我们也不作处理
+    if (([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE)
+             && (self.tag != CURRENT_FLASHCARDVIEW_TAG)){
         
         if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
             NSArray *myArray = [NSArray arrayWithObjects:
@@ -3583,9 +3585,9 @@ extern BOOL isFromNewCreatedCard;
     //为了防止字体太小而设立
     int gate;
     if (_isPlayingCard) {
-        gate = 17;
+        gate = 12;
     } else {
-        gate = 15;
+        gate = 10;
     }
     
     //确保top margin和bottom margin足够，所以用一个经验值代替frameHeight/5

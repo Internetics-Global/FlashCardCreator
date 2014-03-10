@@ -471,6 +471,11 @@
 
 #pragma mark –  PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION and NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION
 
+/**
+ *  DetailViewController也有非常类似的逻辑
+ *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
+ *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
+ */
 -(void) previousCardNotification:(NSNotification *)notification {
     
     NSArray *myArray = [notification object];
@@ -496,6 +501,11 @@
     
 }
 
+/**
+ *  DetailViewController也有非常类似的逻辑
+ *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
+ *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
+ */
 -(void) nextCardNotification:(NSNotification *)notification {
     
     NSArray *myArray = [notification object];

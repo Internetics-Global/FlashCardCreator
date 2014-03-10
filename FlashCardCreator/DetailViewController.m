@@ -720,6 +720,11 @@ enum popover_enum {
 
 #pragma mark –  PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION and NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION
 
+/**
+ *  PlayViewController也有类似的逻辑
+ *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
+ *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
+ */
 -(void) previousCardNotification:(NSNotification *)notification {
     
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
@@ -743,9 +748,10 @@ enum popover_enum {
         }
         
         Card *card = [_currentPack cards][_indexCard - 1];
-        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        //与play mode不同的是，这里我们不需要加入：kFlashCardViewProporation_iPhone
+        card.question.css.subheadingSize = [myArray[0] floatValue];
+        card.question.css.mainSize = [myArray[1] floatValue] ;
+        card.question.css.subSize = [myArray[2] floatValue] ;
         
         NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
@@ -757,6 +763,11 @@ enum popover_enum {
     
 }
 
+/** 
+ *  PlayViewController也有类似的逻辑
+ *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
+ *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
+ */
 -(void) nextCardNotification:(NSNotification *)notification {
     
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
@@ -779,9 +790,10 @@ enum popover_enum {
         }
         
         Card *card = [_currentPack cards][_indexCard + 1];
-        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        //与play mode不同的是，这里我们不需要加入：kFlashCardViewProporation_iPhone
+        card.question.css.subheadingSize = [myArray[0] floatValue] ;
+        card.question.css.mainSize = [myArray[1] floatValue] ;
+        card.question.css.subSize = [myArray[2] floatValue] ;
         
         NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
