@@ -487,9 +487,16 @@
         }
         
         Card *card = _shuffledCardArray[_indexCard - 1];
-        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone;
+        if (isUserInterfaceIdiomPhone) {
+            //仅适用iPhone
+            card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone ;
+            card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+            card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone;
+        } else {
+            card.question.css.subheadingSize = [myArray[0] floatValue] ;
+            card.question.css.mainSize = [myArray[1] floatValue] ;
+            card.question.css.subSize = [myArray[2] floatValue];
+        }
         
         NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
@@ -517,9 +524,15 @@
         }
         
         Card *card = _shuffledCardArray[_indexCard + 1];
-        card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone;
-        card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
-        card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        if (isUserInterfaceIdiomPhone) {
+            card.question.css.subheadingSize = [myArray[0] floatValue]/kFlashCardViewProporation_iPhone;
+            card.question.css.mainSize = [myArray[1] floatValue]/kFlashCardViewProporation_iPhone ;
+            card.question.css.subSize = [myArray[2] floatValue]/kFlashCardViewProporation_iPhone ;
+        } else {
+            card.question.css.subheadingSize = [myArray[0] floatValue];
+            card.question.css.mainSize = [myArray[1] floatValue] ;
+            card.question.css.subSize = [myArray[2] floatValue] ;
+        }
         
         NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
