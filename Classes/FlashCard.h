@@ -132,8 +132,6 @@ typedef enum{
 - (id)initWithFrame:(CGRect)frame defaultPack:(Pack *)pack defaultCard:(Card *) card isPlayingCard:(BOOL)isPlayingCard;
 
 - (void) refreshAll;
-
-
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying;
 
 - (void) saveEdittedCard;

@@ -950,12 +950,17 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Refresh
 
+
 - (void) refreshAll {
     [self refreshAll:NO withIndexPlaying:-1];
 }
 
 /**
- *  indexPlaying > = 0:仅仅用于play mode,或detail view中的左右滑动
+ *  刷新操作，考虑：
+ *  1. play mode和 edit mode下的scroll view
+ *  2. 卡片可编辑，或不可编辑
+ *  @param isDisableAutoResize 如果为NO，满足下面的条件执行adjustAllTextViewsToFitIfNecessary
+ *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行adjustAllTextViewsToFitIfNecessary
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     
@@ -3532,10 +3537,14 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
+/**
+ *  当字体太大时，自动调整font size以适合textView frame]。
+ */
 - (BOOL) adjustFontToFit:(UITextView *) textView {
     
     BOOL result = NO;
     
+    //we don't do this in edit mode
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         result = NO;
         return result;
@@ -3579,6 +3588,7 @@ extern BOOL isFromNewCreatedCard;
         gate = 15;
     }
     
+    //确保top margin和bottom margin足够，所以用一个经验值代替frameHeight/5
     while ((textHeight > frameHeight - frameHeight/5)&&(textHeight >0)&&(textView.font.pointSize >0)) {
         outputFlag = TRUE;
         result = YES;
