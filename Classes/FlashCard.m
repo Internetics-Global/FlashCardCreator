@@ -177,7 +177,7 @@ extern BOOL isFromNewCreatedCard;
 
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 30, 400, 110);
+        _questionTitle.frame = CGRectMake(80, 60, 400, 52);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
@@ -197,7 +197,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 30, 400, 110);
+        _answerTitle.frame = CGRectMake(80, 60, 400, 52);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
@@ -414,9 +414,8 @@ extern BOOL isFromNewCreatedCard;
         upImageView.frame = CGRectMake(770-15, 110-18.75, 15, 18.75);
         upImageView.clipsToBounds = YES;
         upImageView.backgroundColor = [UIColor clearColor];
-        upImageView.userInteractionEnabled = TRUE; //alway true
+        upImageView.userInteractionEnabled = NO;
         [self addSubview:upImageView];
-        [upImageView addGestureRecognizer:logoSingeTap];
 
     }
     
@@ -477,7 +476,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(40, 17, 200, 40);
+        _questionTitle.frame = CGRectMake(40, 15, 200, 23);
         if (self.isPlayingCard) {
             _questionTitle.frame = [Common getScaledViewRect:_questionTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -503,7 +502,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(40, 17, 200, 40);
+        _answerTitle.frame = CGRectMake(40, 15, 200, 23);
         if (self.isPlayingCard) {
             _answerTitle.frame = [Common getScaledViewRect:_answerTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -737,9 +736,8 @@ extern BOOL isFromNewCreatedCard;
         }
         upImageView.clipsToBounds = YES;
         upImageView.backgroundColor = [UIColor clearColor];
-        upImageView.userInteractionEnabled = TRUE; //alway true
+        upImageView.userInteractionEnabled = NO;
         [self addSubview:upImageView];
-        [upImageView addGestureRecognizer:logoSingeTap];
     }
     
     if (_logoLinkageButton == nil) {
