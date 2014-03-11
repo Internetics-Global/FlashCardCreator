@@ -477,7 +477,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(40, 10, 200, 40);
+        _questionTitle.frame = CGRectMake(40, 17, 200, 40);
         if (self.isPlayingCard) {
             _questionTitle.frame = [Common getScaledViewRect:_questionTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -503,7 +503,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(40, 10, 200, 40);
+        _answerTitle.frame = CGRectMake(40, 17, 200, 40);
         if (self.isPlayingCard) {
             _answerTitle.frame = [Common getScaledViewRect:_answerTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -3540,7 +3540,11 @@ extern BOOL isFromNewCreatedCard;
 
 
 /**
- *  当字体太大时，自动调整font size以适合textView frame]。
+ *  当字体太大时，自动调整font size以适合textView frame]。同时为了不让字体过小，也设置了下限
+ *  有几个前提条件（同时满足下）触发这个方法
+ *  1. 必须是不可编辑的卡片
+ *  2. textview必须有内容
+ *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整
  */
 - (BOOL) adjustFontToFit:(UITextView *) textView {
     
@@ -3846,6 +3850,8 @@ extern BOOL isFromNewCreatedCard;
     _imagePickerController = nil;
     _imagePickerPopover = nil;
     _selectTemplatePopoverController = nil;
+    
+    NSLog(@"%s",__FUNCTION__);
 }
 
 
