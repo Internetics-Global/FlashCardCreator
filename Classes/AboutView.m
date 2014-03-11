@@ -42,7 +42,7 @@
 		linkLabel.textColor = [UIColor colorWithRed:0.9 green:0.25 blue:0.59 alpha:1.0];
 		linkLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
 		linkButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		linkButton.frame = CGRectMake(0, (textView.frame.origin.y + textView.frame.size.height + 20), 300, 20);
+		linkButton.frame = CGRectMake(0, (textView.frame.origin.y + textView.frame.size.height + 10), 300, 20);
 		[linkButton addSubview:linkLabel];
 		[self addSubview:linkButton];
         
@@ -54,7 +54,7 @@
 		verionLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:verionLable];
         
-        UILabel *buildLable = [[UILabel alloc] initWithFrame:CGRectMake(0, (verionLable.frame.origin.y + verionLable.frame.size.height + 20), width, 20)];
+        UILabel *buildLable = [[UILabel alloc] initWithFrame:CGRectMake(0, (verionLable.frame.origin.y + verionLable.frame.size.height + 10), width, 20)];
 		buildLable.backgroundColor = [UIColor clearColor];
 		buildLable.text = [NSString stringWithFormat:@"Build: %@",[Common build]];
         buildLable.textAlignment = UITextAlignmentCenter;
@@ -62,7 +62,7 @@
 		buildLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:buildLable];
         
-        UILabel *sqliteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (buildLable.frame.origin.y + verionLable.frame.size.height + 20), width, 20)];
+        UILabel *sqliteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (buildLable.frame.origin.y + verionLable.frame.size.height + 10), width, 20)];
 		sqliteLabel.backgroundColor = [UIColor clearColor];
 		sqliteLabel.text = [NSString stringWithFormat:@"SQlite: %d",[Common sqliteVersion]];
         sqliteLabel.textAlignment = UITextAlignmentCenter;

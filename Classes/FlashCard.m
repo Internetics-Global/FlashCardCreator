@@ -3542,7 +3542,7 @@ extern BOOL isFromNewCreatedCard;
  *  有几个前提条件（同时满足下）触发这个方法
  *  1. 必须是不可编辑的卡片
  *  2. textview必须有内容
- *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整
+ *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整，而是默认为10号字体
  */
 - (BOOL) adjustFontToFit:(UITextView *) textView {
     
@@ -3571,7 +3571,7 @@ extern BOOL isFromNewCreatedCard;
         
         NSLog(@"%s:......Fuck textHeight <0",__FUNCTION__);
         
-        if (textView.font.pointSize <9) {
+        if (textView.font.pointSize <10) {
             break;
         }
     
@@ -3580,6 +3580,11 @@ extern BOOL isFromNewCreatedCard;
         
         textHeight = [self getTextSizeHeight:textView];
         usleep(5000);
+    }
+    
+    //设定最小字体
+    if (textView.font.pointSize < 10) {
+        [textView setFont:[UIFont boldSystemFontOfSize:(10)]];
     }
     
     float orginalFontSize = textView.font.pointSize;

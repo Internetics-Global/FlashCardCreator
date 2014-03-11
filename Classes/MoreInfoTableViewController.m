@@ -33,7 +33,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     if (isUserInterfaceIdiomPhone) {
         UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
         self.navigationItem.leftBarButtonItem = closeButton;
@@ -51,7 +51,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20;
+    return 5;
 }
 
 
