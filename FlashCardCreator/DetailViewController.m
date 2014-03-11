@@ -106,6 +106,16 @@ enum popover_enum {
     [[_currentCardView layer] setShadowOpacity:0.5];
     [[_currentCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
     
+    [[_previousCardView layer] setShadowOffset:CGSizeMake(1, 1)];
+    [[_previousCardView layer] setShadowRadius:3];
+    [[_previousCardView layer] setShadowOpacity:0.5];
+    [[_previousCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
+    
+    [[_nextCardView layer] setShadowOffset:CGSizeMake(1, 1)];
+    [[_nextCardView layer] setShadowRadius:3];
+    [[_nextCardView layer] setShadowOpacity:0.5];
+    [[_nextCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
+    
     if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
        //do nothing
     } else {
