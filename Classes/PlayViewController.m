@@ -478,6 +478,11 @@
  */
 -(void) previousCardNotification:(NSNotification *)notification {
     
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        return;
+    }
+
+
     NSArray *myArray = [notification object];
     
     if (_indexCard >0) {
@@ -514,6 +519,10 @@
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) nextCardNotification:(NSNotification *)notification {
+
+    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        return;
+    }
     
     NSArray *myArray = [notification object];
     

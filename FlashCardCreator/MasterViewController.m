@@ -498,6 +498,11 @@ enum popover_enum {
     
     [self.tableView reloadData];
     
+    //每次选择新的pack都需要初始化
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        self.detailViewController.isResizedArray = nil;
+    }
+    
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
