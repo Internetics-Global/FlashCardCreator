@@ -48,6 +48,12 @@
     
     DropboxSharekitHelper *_shareHelper;
     
+    /**
+     *  General pack info (like pack image and no of cards) on the right.
+     *  Only applicable for iPad (on iPad, we have the similar logic on the master view)
+     */
+    UIView        *_rightPackView;
+    
 }
 
 @property (strong, nonatomic) id detailItem;
@@ -68,5 +74,8 @@
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment;
 
 - (void)shareButtonClicked:(id) sender;
+
+- (void) showPackInfoView;
+- (void) hidePackInfoView;
 
 @end

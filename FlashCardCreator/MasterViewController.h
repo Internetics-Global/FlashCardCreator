@@ -35,7 +35,14 @@
     
     UIButton *_addCardButton;
     UIView *_addCardButtonBackground;
+    
+    /**
+     *  General pack info (like pack image and no of cards) on the right.
+     *  Only applicable for iPhone (on iPad, we have the similar logic on the detail view)
+     */
     UIView *_rightPackView;
+    
+    
     UIImageView *_rightPackImage;
     UILabel *_rightPackCardNo;
     UIBarButtonItem *_selectPackButton;

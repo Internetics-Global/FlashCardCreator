@@ -195,6 +195,20 @@ enum popover_enum {
 }
 
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
+        //show pack info rather than first card
+        if (isUserInterfaceIdiomPhone == FALSE) {
+            [self showPackInfoView];
+        }
+    } else {
+        
+    }
+}
+
+
 #pragma mark -
 #pragma mark - Layout 
 
@@ -811,6 +825,79 @@ enum popover_enum {
         _isResizedArray[_indexCard + 1] = @YES;
     }
     
+}
+
+
+/**
+ *  Only applicable for iPad
+ *  call this when:
+ *  1. select any card in the left card list view
+ */
+- (void) hidePackInfoView {
+    if (_rightPackView) {
+        [_rightPackView removeFromSuperview];
+        _rightPackView = nil;
+    }
+    
+}
+
+
+/**
+ *  Only applicable for iPad
+ *  call this when:
+ *  1. start up app
+ *  2. finishing creating a new pack
+ *  3. selecting an existing pack
+ */
+- (void) showPackInfoView {
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        
+        [_rightPackView removeFromSuperview];
+        _rightPackView = nil;
+        
+        _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+        _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _rightPackView.backgroundColor = [UIColor blackColor];
+        
+        
+        UIImageView *rightPackImageView = [[UIImageView alloc] init];
+        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 130, 400, 400);
+        rightPackImageView.autoresizingMask = UIViewAutoresizingNone;
+        rightPackImageView.layer.cornerRadius = 5;
+        rightPackImageView.layer.masksToBounds = TRUE;
+        rightPackImageView.layer.opacity = 0.85;
+        rightPackImageView.backgroundColor = [UIColor clearColor];
+        [_rightPackView addSubview:rightPackImageView];
+        
+        NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
+        if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
+            rightPackImageView.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+        } else {
+            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+            rightPackImageView.image = [UIImage imageWithContentsOfFile:path];
+        }
+        
+        rightPackImageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        UILabel *rightPackCardNo = [[UILabel alloc] init];
+        rightPackCardNo.textColor = [UIColor whiteColor];
+        rightPackCardNo.autoresizingMask =  UIViewAutoresizingNone;
+        rightPackCardNo.backgroundColor = [UIColor clearColor];
+        rightPackCardNo.textAlignment = UITextAlignmentCenter;
+        rightPackCardNo.font = [UIFont systemFontOfSize: 24];
+        CGRect rect = rightPackImageView. frame;
+        rect.origin.y = rect.origin.y +rect.size.height+16;
+        rect.size.height = 25;
+        rightPackCardNo.frame = rect;
+        [_rightPackView addSubview:rightPackCardNo];
+        
+        [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+        
+        [self.view addSubview:_rightPackView];
+        
+        [self.view bringSubviewToFront:_rightPackView];
+        
+    }
 }
 
 
