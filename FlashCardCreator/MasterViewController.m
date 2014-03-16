@@ -76,7 +76,7 @@ enum popover_enum {
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewAfterParseDownloadPackFinishNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPackNotification:) name:DOWNLOAD_PACK_NOTIFICATION object:nil];
         
@@ -504,15 +504,15 @@ enum popover_enum {
     }
     
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
-        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        self.detailViewController.currentPack = _currentPack;
+        [self.detailViewController showPackInfoView];
     } else if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count == 0)) {
         self.detailViewController.title = @"";
         self.detailViewController.currentCard = nil;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = 0;
         [self.detailViewController showCurrentCardInScrollView:YES];
+        
     }
     
 }
@@ -561,7 +561,7 @@ enum popover_enum {
         self.title = _currentPack.packName;
     } else {
         self.detailViewController.title = _currentPack.packName;
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        [self.detailViewController showPackInfoView];
     }
 }
 
@@ -678,7 +678,7 @@ enum popover_enum {
 #pragma mark -
 #pragma mark - Update UI
 
-- (void) updateMasterDetailViewNotification:(NSNotification *) notification {
+- (void) updateMasterDetailViewAfterParseDownloadPackFinishNotification:(NSNotification *) notification {
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
     
@@ -701,7 +701,8 @@ enum popover_enum {
         
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        [self.detailViewController showPackInfoView];
+        //[self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
     
 }
@@ -804,6 +805,7 @@ enum popover_enum {
             self.detailViewController.currentCard = _currentCard;
             self.detailViewController.currentPack = _currentPack;
             self.detailViewController.indexCard = _indexCard;
+            [self.detailViewController hidePackInfoView];
             [self.detailViewController showCurrentCardInScrollView:YES];
         }
     }
