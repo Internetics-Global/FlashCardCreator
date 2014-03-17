@@ -198,14 +198,18 @@ enum popover_enum {
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
-        //show pack info rather than first card
-        if (isUserInterfaceIdiomPhone == FALSE) {
-            [self showPackInfoView];
-        }
-    } else {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         
-    }
+        if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
+            //show pack info rather than first card
+            if (isUserInterfaceIdiomPhone == FALSE) {
+                [self showPackInfoView];
+            }
+        }
+        
+    });
+
 }
 
 
