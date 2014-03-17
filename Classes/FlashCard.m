@@ -1708,6 +1708,84 @@ extern BOOL isFromNewCreatedCard;
             break;
         }
             
+        case 6:
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(1, 15, 350, 85);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(1, 103, 349, 85);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _subAnswer.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+            
+        case 7:
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(1, 15, 350, 85);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(1, 103, 349, 85);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _subAnswer.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+            
         default:
         {
             NSLog(@"%s:No template is selected",__FUNCTION__);
@@ -1861,6 +1939,60 @@ extern BOOL isFromNewCreatedCard;
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(10, 20, 700, 410);
             
+            break;
+        }
+        
+        case 6:
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:42];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 42;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
+            _subAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 34;
+            
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+            
+        case 7:
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
+            _mainAnswer.font = [UIFont boldSystemFontOfSize:42];
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 42;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
+            _subAnswer.font = [UIFont boldSystemFontOfSize:34];
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 34;
+            
+            
+            _imageAnswer.hidden = TRUE;
             break;
         }
             
@@ -2019,6 +2151,56 @@ extern BOOL isFromNewCreatedCard;
             
             _imageQuestion.hidden = FALSE;
             _imageQuestion.frame = CGRectMake(10, 20, 700, 410);
+            break;
+        }
+            
+        case 6:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:42];
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 42;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(10, 75, 360, 355);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:34];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 34;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
+            
+            break;
+        }
+            
+        case 7:
+        {
+            _subheadingQuestion.hidden = TRUE;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(10, 10, 360, 420);
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:34];
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 34;
+            
+            _subQuestion.hidden = YES;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
+            
+            
             break;
         }
             
@@ -2238,6 +2420,80 @@ extern BOOL isFromNewCreatedCard;
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
+            
+            break;
+        }
+            
+        case 6:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(1, 0, 210, 30);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
+            if (self.isPlayingCard) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+            }
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 20;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(1, 35, 210, 155);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(210, 30, 155, 155);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            break;
+        }
+            
+        case 7:
+        {
+            _subheadingQuestion.hidden = TRUE;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(1, 0, 210, 190);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+            if (self.isPlayingCard) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(210, 10, 155, 155);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
             
             break;
         }
