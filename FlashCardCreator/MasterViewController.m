@@ -233,7 +233,10 @@ enum popover_enum {
             [_rightPackView addSubview:_rightPackCardNo];
         }
         
-        [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+        if (_rightPackImage != nil) {
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];    
+        }
+        
         
         [self.navigationController.view insertSubview:_rightPackView atIndex:0];
         [self.navigationController.view bringSubviewToFront:_rightPackView];
@@ -889,7 +892,10 @@ enum popover_enum {
         }
     } else {
         //Update right pack info
-        [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+        if (_rightPackImage.image != nil) {
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+        }
+        
     }
     
 }
@@ -1435,14 +1441,14 @@ enum popover_enum {
             
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
                 NSLog(@"You are using iPad and pack was made on iPhone");
-                [assembledCard question].css.subheadingSize = subheadingSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = mainSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = subSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
+                [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
+                [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
                 NSLog(@"You are using iPhone and pack was made on iPad");
-                [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = subSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPhone and pack was made on non-iOS platform");
@@ -1581,13 +1587,13 @@ enum popover_enum {
             }
             
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
-                [assembledCard answer].css.subheadingSize = subheadingSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = mainSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = subSize / FONT_FACTOR_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
+                [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
+                [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = subSize * FONT_FACTOR_BETWEEN_IPAD_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 NSLog(@"You are using iPhone and pack was made on non-iOS platform");

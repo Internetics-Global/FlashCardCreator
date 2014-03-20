@@ -3781,13 +3781,20 @@ extern BOOL isFromNewCreatedCard;
  *  获取textview中文字高度，而不是frame的高度
  */
 - (float) getTextSizeHeight:(UITextView *) textView{
-    CGSize tallerSize = CGSizeMake(textView.frame.size.width-16,textView.frame.size.height); //左右边间距为8
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width-16,999); //左右边间距为8,还要注意，高度要足够，否则会错误
     CGSize stringSize;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByCharWrapping];
+        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
+//        CGRect frame = [textView.text boundingRectWithSize:tallerSize
+//                                          options:(NSStringDrawingUsesFontLeading)
+//                                       attributes:@{NSFontAttributeName:[textView font]}
+//                                          context:nil]; //经过测试，这个不靠谱
+//        stringSize = frame.size;
     } else {
         stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
     }
+    
+    
     CGFloat textHeight = stringSize.height; //textView.contentSize.height不准确
     return textHeight;
 }

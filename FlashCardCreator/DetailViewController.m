@@ -895,7 +895,10 @@ enum popover_enum {
         rightPackCardNo.frame = rect;
         [_rightPackView addSubview:rightPackCardNo];
         
-        [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+        if (rightPackImageView.image != nil) {
+            [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+        }
+        
         
         [self.view addSubview:_rightPackView];
         
