@@ -121,7 +121,7 @@
 #define OTHER_FLASHCARDVIEW_TAG                114
 
 #define FONT_FACTOR_FROM_IPAD_TO_IPHONE     0.55 //这个数字越大，表示：在iPhone上查看在iPad上制作的pack时，字体会更大；在iPad上查看iPhone制作的pack时，字体会更小
-#define FONT_FACTOR_FROM_IPHONE_TO_IPAD     2.4 
+#define FONT_FACTOR_FROM_IPHONE_TO_IPAD     2.2 
 #define FONT_OFFSET_BETWEEN_IPAD_IPHONE     2
 
 #define CSS_EMOTION_VIEW_HEIGHT_IPHONE         162   
