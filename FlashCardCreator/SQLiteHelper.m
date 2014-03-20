@@ -75,6 +75,9 @@
     
 }
 
+/**
+ *  只检查表是否存在，而不检查字段的一致性
+ */
 + (void) verifyDatabase{
 	if (![SQLiteHelper tableExists:@"Users_Tables"]) {
 		sqlite3_stmt *createUsers = [SQLiteHelper prepareStatementForQuery:@"create table Users_Tables (user_id integer, nick_name text);"];

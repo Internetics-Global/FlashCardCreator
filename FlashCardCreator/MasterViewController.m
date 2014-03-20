@@ -1183,7 +1183,7 @@ enum popover_enum {
 }
 
 /**
- *  下载完后，将内容映射到pack中,并同时写入数据库
+ *  unzip pack, then save
  */
 - (void) assemblePack {
     
@@ -1321,7 +1321,7 @@ enum popover_enum {
 }
 
 /**
- *  下载完后，将对应card内容映射到card中,并同时写入数据库
+ *  unzipCard, save it then
  */
 - (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath platform:(NSString *)packPlatformStr {
     

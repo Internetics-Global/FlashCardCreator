@@ -3760,7 +3760,9 @@ extern BOOL isFromNewCreatedCard;
 }
 
 /**
- *  用于根据textview的frame，进行自动调节
+ *  用于根据textview的frame，进行自动调节:
+ *  1. 如果字体太小导致行数不一致，则进行字体增加措施，是的行数一致
+ *  2. 如果字体太大，导致无法显示，则缩小字体
  *  返回true,表示执行了；false，表示没有任何调节
  */
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
@@ -3866,7 +3868,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 /**
- *  获取textview中文字高度，而不是frame的高度
+ *  获取textview中文字高度，而不是frame的高度，这是迄今位置，最靠谱的做法
  */
 - (float) getTextSizeHeight:(UITextView *) textView{
     CGSize tallerSize = CGSizeMake(textView.frame.size.width-16,999); //左右边间距为8,还要注意，高度要足够，否则会错误
