@@ -1182,6 +1182,9 @@ enum popover_enum {
     
 }
 
+/**
+ *  下载完后，将内容映射到pack中,并同时写入数据库
+ */
 - (void) assemblePack {
     
     NSString *packPlatformStr;
@@ -1317,6 +1320,9 @@ enum popover_enum {
     });
 }
 
+/**
+ *  下载完后，将对应card内容映射到card中,并同时写入数据库
+ */
 - (Card *) unzipFileThenAssembleCard:(NSString *) zippedFilePath platform:(NSString *)packPlatformStr {
     
     NSError *error = nil;
@@ -1419,6 +1425,10 @@ enum popover_enum {
             [assembledCard question].css.mainColor = questionDict[@"main_color"];
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
+            
+            [assembledCard question].lineNoSubheading = [questionDict[@"line_number_subheading"] integerValue];
+            [assembledCard question].lineNoMain = [questionDict[@"line_number_main"] integerValue];
+            [assembledCard question].lineNoSub = [questionDict[@"line_number_sub"] integerValue];
         
             
             //Deal with font size difference between iPhone and iPad
@@ -1567,6 +1577,10 @@ enum popover_enum {
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
+            
+            [assembledCard answer].lineNoSubheading = [answerDict[@"line_number_subheading"] integerValue];
+            [assembledCard answer].lineNoMain = [answerDict[@"line_number_main"] integerValue];
+            [assembledCard answer].lineNoSub = [answerDict[@"line_number_sub"] integerValue];
             
             //Deal with font size difference between iPhone and iPad
             int subheadingSize = [answerDict[@"subheading_size"] integerValue];;

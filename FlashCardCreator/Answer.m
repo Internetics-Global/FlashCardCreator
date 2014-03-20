@@ -55,6 +55,10 @@
     _logoFullPath= [dataDict valueForKey:@"logo"];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
     
+    _lineNoSubheading = [[dataDict valueForKey:@"line_number_subheading"] intValue];
+    _lineNoMain = [[dataDict valueForKey:@"line_number_main"] intValue];
+    _lineNoSub = [[dataDict valueForKey:@"line_number_sub"] intValue];
+    
     if ([[dataDict allKeys] containsObject:@"css"]) {
         NSDictionary *cssArray = (NSDictionary *)[dataDict valueForKey:@"css"];
         self.css = [[CSS alloc] initWithDictionary:cssArray];
@@ -86,7 +90,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", css_id=%d, template_id=%d WHERE card_id=%d", _answerID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d WHERE card_id=%d", _answerID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID, _lineNoSubheading,_lineNoMain, _lineNoSub,_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -100,7 +104,7 @@
 		_answerID = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
 	}
 
-    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id, template_id) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d, %d)", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID];
+    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id, template_id,line_number_subheading,line_number_main,line_number_sub) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d, %d, %d, %d, %d)", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID,_lineNoSubheading,_lineNoMain, _lineNoSub];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -156,6 +160,10 @@
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"logo"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"css_id"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"template_id"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"line_number_subheading"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"line_number_main"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"line_number_sub"];
+        
         [answerDict setValue:[CSS cssForCSSID:[[answerDict valueForKey:@"css_id"] intValue]] forKey:@"css"];
 	}
 	sqlite3_finalize(queryStatement);

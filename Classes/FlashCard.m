@@ -92,7 +92,7 @@ extern BOOL isFromNewCreatedCard;
                                                      name:UIKeyboardWillShowNotification object:nil];
         
         if ((card == nil) || (pack == nil)) {
-            NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
+            //NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
         }
         
         self.isPlayingCard = isPlayingCard;
@@ -1204,8 +1204,23 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
     
+    _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
+    _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
+    _currentCard.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
+    
+    _currentCard.answer.lineNoSubheading = [self lineNumberWithUITextView:_subheadingAnswer];
+    _currentCard.answer.lineNoMain = [self lineNumberWithUITextView:_mainAnswer];
+    _currentCard.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
+    
     _currentPack.creatorNickName = _creatorText.text;
     _currentPack.sidebarTitle = _sidebarTitle.text;
+}
+
+- (int) lineNumberWithUITextView:(UITextView *) textView
+{
+    int numLines = [self getTextSizeHeight:textView] / textView.font.lineHeight;
+    
+    return numLines;
 }
 
 
@@ -3750,7 +3765,46 @@ extern BOOL isFromNewCreatedCard;
  */
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
     BOOL result = NO;
+    
+    int i = 0;
+    int kMax = 40;
+    int lineNumber;
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
+        
+        if (1) { //we can disable this function
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
+            while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
+                [_subheadingQuestion setFont:[UIFont boldSystemFontOfSize:(_subheadingQuestion.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
+                NSLog(@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber);
+                i++;
+                usleep(5000);
+            }
+            
+            i = 0;
+            
+            lineNumber = [self lineNumberWithUITextView:_mainQuestion];
+            while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_mainQuestion setFont:[UIFont boldSystemFontOfSize:(_mainQuestion.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_mainQuestion];
+                NSLog(@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber);
+                i++;
+                usleep(5000);
+            }
+            
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subQuestion];
+            while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subQuestion setFont:[UIFont boldSystemFontOfSize:(_subQuestion.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_subQuestion];
+                NSLog(@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber);
+                i++;
+                usleep(5000);
+            }
+        }
+        
         if ([self adjustFontToFit:_subheadingQuestion]){
             result= YES;
         }
@@ -3762,6 +3816,40 @@ extern BOOL isFromNewCreatedCard;
             result= YES;
         }
     } else {
+        
+        if (1) { //we can disable this function
+            
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
+            while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subheadingAnswer setFont:[UIFont boldSystemFontOfSize:(_subheadingAnswer.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
+                NSLog(@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber);
+                i++;
+                usleep(5000);
+            }
+            
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_mainAnswer];
+            while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_mainAnswer setFont:[UIFont boldSystemFontOfSize:(_mainAnswer.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_mainAnswer];
+                NSLog(@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber);
+                i++;
+                usleep(5000);
+            }
+            
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subAnswer];
+            while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subAnswer setFont:[UIFont boldSystemFontOfSize:(_subAnswer.font.pointSize *1.1)]];
+                lineNumber = [self lineNumberWithUITextView:_subAnswer];
+                NSLog(@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber);
+                i++;
+                usleep(5000);
+            }
+        }
+        
         if ([self adjustFontToFit:_subheadingAnswer]){
            result= YES;
         }
@@ -3785,11 +3873,6 @@ extern BOOL isFromNewCreatedCard;
     CGSize stringSize;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
-//        CGRect frame = [textView.text boundingRectWithSize:tallerSize
-//                                          options:(NSStringDrawingUsesFontLeading)
-//                                       attributes:@{NSFontAttributeName:[textView font]}
-//                                          context:nil]; //经过测试，这个不靠谱
-//        stringSize = frame.size;
     } else {
         stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
     }

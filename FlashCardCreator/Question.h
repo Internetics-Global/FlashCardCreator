@@ -23,6 +23,10 @@
     NSString *_logoURLLinkage;
     NSInteger _templateID;
     
+    NSInteger _lineNoSubheading;
+    NSInteger _lineNoMain;
+    NSInteger _lineNoSub;
+    
     CSS *_css;
 }
 
@@ -37,6 +41,10 @@
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
 @property (nonatomic, assign) NSInteger templateID;
+
+@property (assign, nonatomic) NSInteger lineNoSubheading;
+@property (assign, nonatomic) NSInteger lineNoMain;
+@property (assign, nonatomic) NSInteger lineNoSub;
 
 @property (strong, nonatomic) CSS *css;
 

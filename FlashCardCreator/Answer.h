@@ -23,6 +23,10 @@
     NSInteger _templateID;
     
     CSS *_css;
+
+    NSInteger _lineNoSubheading;
+    NSInteger _lineNoMain;
+    NSInteger _lineNoSub;
 }
 
 @property (nonatomic, assign) NSInteger answerID;
@@ -35,6 +39,10 @@
 @property (nonatomic, copy) NSString *imageFullPath;
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, assign) NSInteger templateID;
+
+@property (assign, nonatomic) NSInteger lineNoSubheading;
+@property (assign, nonatomic) NSInteger lineNoMain;
+@property (assign, nonatomic) NSInteger lineNoSub;
 
 @property (strong, nonatomic) CSS *css;
 
