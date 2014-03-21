@@ -53,16 +53,29 @@
 }
 
 
-+ (int) sqliteVersion {
+/**
+ *  当前app所用的版本
+ */
++ (int) currentInstalledSqliteVersion {
     int currentVersion = [[NSUserDefaults standardUserDefaults] integerForKey:@"SQLiteVersion"];
     return currentVersion;
 }
 
-+ (void) setSqliteVersion: (int) version {
++ (void) setCurrentInstalledSqliteVersion: (int) version {
     [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"SQLiteVersion"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+/**
+ *  即将升级的新版本
+ */
++ (int) newUpdatingSqliteVersion {
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SQLiteVersion" ofType:@"plist"]];
+    double newVersion = [[dict valueForKeyPath:@"SQLiteVersion"] doubleValue];
+    NSAssert(newVersion == (int)newVersion, @"SQLiteVersion must be integer");
+    
+    return (int)newVersion;
+}
 
 + (CGRect) getScaledViewRect:(UIView *) view withProportion:(float) scaleValue {
     CGRect rect = view.frame;

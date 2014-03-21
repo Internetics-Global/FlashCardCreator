@@ -116,7 +116,27 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Question_Tables (question_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
-	}
+	} else {
+        if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
+            //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
+            NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_subheading integer "];
+            sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+            
+            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_main integer "];
+            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+            
+            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_sub integer "];
+            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+        }
+    }
+    
+    
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer);"];
 		sqlite3_step(createNotes);
@@ -125,7 +145,26 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Answer_Tables (answer_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
-	}
+	} else {
+        if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
+            //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
+            NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_subheading integer "];
+            sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+            
+            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_main integer "];
+            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+            
+            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_sub integer "];
+            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+            sqlite3_step(queryStatement);
+            sqlite3_finalize(queryStatement);
+        }
+    
+    }
     
     if (![SQLiteHelper tableExists:@"CSS_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text);"];
@@ -136,6 +175,12 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
 	}
+    
+    
+    if ([Common currentInstalledSqliteVersion] != [Common newUpdatingSqliteVersion]) {
+        [Common setCurrentInstalledSqliteVersion:[Common newUpdatingSqliteVersion]];
+    }
+    
     
 }
 

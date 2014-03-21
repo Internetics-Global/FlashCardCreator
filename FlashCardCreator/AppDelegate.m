@@ -39,7 +39,6 @@ BOOL _isDownloadingSamplePack;
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
     //1. check database
-    [self checkSQLiteVersion];
     [SQLiteHelper verifyDatabase];
     
     //move old files
@@ -266,16 +265,6 @@ BOOL _isDownloadingSamplePack;
     return nil;
 }
 
-- (void) checkSQLiteVersion {
-    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SQLiteVersion" ofType:@"plist"]];
-    int newVersion = [[dict valueForKeyPath:@"SQLiteVersion"] integerValue];
-    
-    if ((newVersion > [Common sqliteVersion]) && ([Common sqliteVersion] != 0)) {
-        [Common alertViewCommon:@"Unintalling old version is necessary before installing new"];
-    }
-    
-    [Common setSqliteVersion:newVersion];
-}
 
 #pragma mark -
 #pragma mark - Notification

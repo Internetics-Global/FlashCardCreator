@@ -64,7 +64,7 @@
         
         UILabel *sqliteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (buildLable.frame.origin.y + verionLable.frame.size.height + 10), width, 20)];
 		sqliteLabel.backgroundColor = [UIColor clearColor];
-		sqliteLabel.text = [NSString stringWithFormat:@"SQlite: %d",[Common sqliteVersion]];
+		sqliteLabel.text = [NSString stringWithFormat:@"SQlite: %d",[Common currentInstalledSqliteVersion]];
         sqliteLabel.textAlignment = UITextAlignmentCenter;
 		sqliteLabel.textColor = [UIColor whiteColor];
 		sqliteLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];

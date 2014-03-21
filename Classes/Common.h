@@ -19,9 +19,11 @@
 
 + (NSString *) build;
 
-+ (int) sqliteVersion;
++ (int) currentInstalledSqliteVersion;
 
-+ (void) setSqliteVersion: (int) version;
++ (void) setCurrentInstalledSqliteVersion: (int) version;
+
++ (int) newUpdatingSqliteVersion;
 
 //同等比例放大缩小
 + (CGRect) getScaledViewRect:(UIView *) view withProportion:(float) scaleValue;
