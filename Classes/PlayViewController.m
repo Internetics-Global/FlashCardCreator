@@ -446,7 +446,14 @@
     [recognizerDown setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [_currentFlashCardView addGestureRecognizer:recognizerDown];
     
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDownAction:)];
+    [_currentFlashCardView addGestureRecognizer:tapGestureRecognizer];
     
+    
+}
+
+- (void)tapDownAction:(UITapGestureRecognizer *)sender {
+    [self switchQuestionAnswerView];
 }
 
 - (void)gestureUpAction:(UITapGestureRecognizer *)sender {
