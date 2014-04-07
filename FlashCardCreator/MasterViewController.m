@@ -179,12 +179,12 @@ enum popover_enum {
             
         } else {
             
-            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, IPAD_UI_MASTER_WIDTH, 100)];
+            _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, IPAD_UI_MASTER_WIDTH, 70)];
             _addCardButtonBackground.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"add_card_background.png"]];
-            _addCardButtonBackground.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-50);
+            _addCardButtonBackground.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-35);
             
-            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-            _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-50);
+            _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+            _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-35);
         }
         
         [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
