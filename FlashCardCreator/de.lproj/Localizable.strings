@@ -59,6 +59,7 @@
 "ToolbarItem_Align_Left" = "Left";
 "ToolbarItem_Align_Center" = "Center";
 "ToolbarItem_Align_Right" = "rechts";
+"ToolbarItem_Align_Justify"        = "Justify";
 
 "ToolbarItem_Size12"        = " 12 ";
 "ToolbarItem_Size18"        = " 18 ";

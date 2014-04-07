@@ -60,6 +60,7 @@
 "ToolbarItem_Align_Left"        = "左对齐";
 "ToolbarItem_Align_Center"        = "居中";
 "ToolbarItem_Align_Right"        = "右对齐";
+"ToolbarItem_Align_Justify"        = "Justify";
 
 "ToolbarItem_Size12"        = " 12 ";
 "ToolbarItem_Size18"        = " 18 ";

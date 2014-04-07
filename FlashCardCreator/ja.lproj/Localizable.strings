@@ -59,6 +59,7 @@
 "ToolbarItem_Align_Left" = "左";
 "ToolbarItem_Align_Center" = "センター";
 "ToolbarItem_Align_Right" ="右";
+"ToolbarItem_Align_Justify"        = "Justify";
 
 "ToolbarItem_Size12"        = " 12 ";
 "ToolbarItem_Size18"        = " 18 ";

@@ -1270,6 +1270,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.subheadingAlign isEqualToString:@"Right"]) {
         _subheadingQuestion.textAlignment = NSTextAlignmentRight;
         _subheadingAlignQuestion = @"Right";
+    }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
+        _subheadingQuestion.textAlignment = NSTextAlignmentJustified;
+        _subheadingAlignQuestion = @"Justify";
     }
     
     //2. main
@@ -1306,6 +1309,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.mainAlign isEqualToString:@"Right"]) {
         _mainQuestion.textAlignment = NSTextAlignmentRight;
         _mainAlignQuestion = @"Right";
+    }else if ([css.mainAlign isEqualToString:@"Justify"]) {
+        _mainQuestion.textAlignment = NSTextAlignmentJustified;
+        _mainAlignQuestion = @"Justify";
     }
     
     //3. sub
@@ -1342,6 +1348,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.subAlign isEqualToString:@"Right"]) {
         _subQuestion.textAlignment = NSTextAlignmentRight;
         _subAlignQuestion = @"Right";
+    }else if ([css.subAlign isEqualToString:@"Justify"]) {
+        _subQuestion.textAlignment = NSTextAlignmentJustified;
+        _subAlignQuestion = @"Justify";
     }
     
     
@@ -1381,6 +1390,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.subheadingAlign isEqualToString:@"Right"]) {
         _subheadingAnswer.textAlignment = NSTextAlignmentRight;
         _subheadingAlignAnswer = @"Right";
+    }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
+        _subheadingAnswer.textAlignment = NSTextAlignmentJustified;
+        _subheadingAlignAnswer = @"Justify";
     }
     
     //2. main
@@ -1417,6 +1429,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.mainAlign isEqualToString:@"Right"]) {
         _mainAnswer.textAlignment = NSTextAlignmentRight;
         _mainAlignAnswer = @"Right";
+    }else if ([css.mainAlign isEqualToString:@"Justify"]) {
+        _mainAnswer.textAlignment = NSTextAlignmentJustified;
+        _mainAlignAnswer = @"Justify";
     }
     
     //3. sub
@@ -1453,6 +1468,9 @@ extern BOOL isFromNewCreatedCard;
     }else if ([css.subAlign isEqualToString:@"Right"]) {
         _subAnswer.textAlignment = NSTextAlignmentRight;
         _subAlignAnswer = @"Right";
+    }else if ([css.subAlign isEqualToString:@"Justify"]) {
+        _subAnswer.textAlignment = NSTextAlignmentJustified;
+        _subAlignAnswer = @"Justify";
     }
 }
 
@@ -2870,8 +2888,10 @@ extern BOOL isFromNewCreatedCard;
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Right",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
     
+    UIBarButtonItem *justifyButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Justify",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    
     if (_alignArray == nil) {
-        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,nil];
+        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,justifyButton,nil];
     }
     
 }
@@ -3412,6 +3432,9 @@ extern BOOL isFromNewCreatedCard;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Right",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentRight;
         selectAlignStr = @"Right";
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Justify",nil)]) {
+        responderTextView.textAlignment = NSTextAlignmentJustified;
+        selectAlignStr = @"Justify";
     }
     responderTextView.selectedRange = range;  // to restore cursor position
     
@@ -3427,7 +3450,8 @@ extern BOOL isFromNewCreatedCard;
         _mainAlignAnswer = selectAlignStr;
     } else if (responderTextView.tag == kTagSubAnswer) {
         _subAlignAnswer = selectAlignStr;
-    } 
+    }
+    
     
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
