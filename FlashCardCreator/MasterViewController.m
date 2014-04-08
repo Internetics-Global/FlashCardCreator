@@ -1450,7 +1450,21 @@ enum popover_enum {
             [assembledCard question].lineNoSubheading = [questionDict[@"line_number_subheading"] integerValue];
             [assembledCard question].lineNoMain = [questionDict[@"line_number_main"] integerValue];
             [assembledCard question].lineNoSub = [questionDict[@"line_number_sub"] integerValue];
-        
+            
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            if ([questionDict[@"movie"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard question].movieFullPath = newFileName;
+                }
+            }   else {
+                [assembledCard question].movieFullPath = @"";
+            }
+            
             
             //Deal with font size difference between iPhone and iPad
             int subheadingSize = [questionDict[@"subheading_size"] integerValue];;
@@ -1615,6 +1629,19 @@ enum popover_enum {
             [assembledCard answer].lineNoSubheading = [answerDict[@"line_number_subheading"] integerValue];
             [assembledCard answer].lineNoMain = [answerDict[@"line_number_main"] integerValue];
             [assembledCard answer].lineNoSub = [answerDict[@"line_number_sub"] integerValue];
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            if ([answerDict[@"movie"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].movieFullPath = newFileName;
+                }
+            }   else {
+                [assembledCard answer].movieFullPath = @"";
+            }
             
             //Deal with font size difference between iPhone and iPad
             int subheadingSize = [answerDict[@"subheading_size"] integerValue];;

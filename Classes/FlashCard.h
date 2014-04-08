@@ -11,6 +11,8 @@
 #import "EmoticonSelectionViewController.h"
 #import "SimpleWebBrowserController.h"
 
+#import <MediaPlayer/MediaPlayer.h>
+
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
     kReasonLogoImageChangeEnum = 1,
@@ -55,9 +57,13 @@ typedef enum{
     UITextField  *_sidebarTitle;
     UITextField   *_creatorText;
     
-    NSString     *_questionImageFullPath;
-    NSString     *_answerImageFullPath;
+    NSString     *_questionMovieFullPath;
+    NSString     *_answerMovieFullPath;
+    
+    NSString     *_questionImageFullPath; //如果播放的是mov，则是Mov的thumbnail
+    NSString     *_answerImageFullPath; //如果播放的是mov，则是Mov的thumbnail
     UIScrollView *_verticalScrollView;
+    
     
     UITextView   *_subheadingQuestion;
     UITextView   *_mainQuestion;
@@ -120,7 +126,6 @@ typedef enum{
     //when use, please use together
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
-    
 }
 
 @property (nonatomic, strong) Card *currentCard;

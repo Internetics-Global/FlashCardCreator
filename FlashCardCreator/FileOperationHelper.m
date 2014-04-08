@@ -163,6 +163,25 @@
     return ([path stringByAppendingPathComponent:uid]);
 }
 
+
+/**
+ *	an unique name will be generated and will be under directory of "Images"
+ *
+ */
++ (NSString *) generateUniqueMovFilePathUnderImagesFolder {
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", path);
+        }
+    }
+    
+    
+    NSString *uid = [NSString stringWithFormat:@"%d%d.mov", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    return ([path stringByAppendingPathComponent:uid]);
+}
+
 #pragma mark -
 #pragma mark - Zip action
 
@@ -257,7 +276,8 @@
     NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo", card.question.logoURLLinkage,@"logo_url",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",card.templateBackgroundName,@"template_background",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.question.templateID],@"template_id",card.question.css.subheadingAlign,@"subheading_align",card.question.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subheadingSize],@"subheading_size",card.question.css.mainAlign,@"main_align",card.question.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.question.css.mainSize],@"main_size",card.question.css.subAlign,@"sub_align",card.question.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.question.lineNoSubheading],@"line_number_subheading",
                 [NSString stringWithFormat:@"%d",card.question.lineNoMain],@"line_number_main",
-                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent],@"background_image",nil];
+                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent],@"background_image",
+                                  [card.question.movieFullPath lastPathComponent],@"movie",nil];
     
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {
@@ -270,7 +290,8 @@
     NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.logoFullPath lastPathComponent],@"logo",[NSString stringWithFormat:@"%d",card.answer.templateID],@"template_id", card.answer.css.subheadingAlign,@"subheading_align",card.answer.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subheadingSize],@"subheading_size",card.answer.css.mainAlign,@"main_align",card.answer.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.mainSize],@"main_size",card.answer.css.subAlign,@"sub_align",card.answer.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.answer.lineNoSubheading],@"line_number_subheading",
             [NSString stringWithFormat:@"%d",card.answer.lineNoMain],@"line_number_main",
-                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent],@"background_image",nil];
+                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent],@"background_image",
+                               [card.answer.movieFullPath lastPathComponent],@"movie",nil];
     
     NSData *jsonAnswerData = [NSJSONSerialization dataWithJSONObject:anserDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonAnswerData length] >0) && (error == nil)) {
@@ -295,6 +316,14 @@
     
     if ([card.answer.backgroundImageFullPath lastPathComponent].length > 0) {
         [zipFile addFileToZip:card.answer.backgroundImageFullPath newname:[card.answer.backgroundImageFullPath lastPathComponent]];
+    }
+    
+    if ([card.answer.movieFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.answer.movieFullPath newname:[card.answer.movieFullPath lastPathComponent]];
+    }
+    
+    if ([card.question.movieFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.question.movieFullPath newname:[card.question.movieFullPath lastPathComponent]];
     }
     
     [zipFile addFileToZip:[cardAssembleDir stringByAppendingPathComponent:@"answerTextContent.json"] newname:@"answerTextContent.json"];

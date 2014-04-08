@@ -19,6 +19,8 @@
     NSString *_main;
     NSString *_sub;
     NSString *_imageFullPath;
+    NSString *_movieFullPath;
+    
     NSString *_logoFullPath;
     NSString *_logoURLLinkage;
     NSInteger _templateID;
@@ -39,7 +41,10 @@
 @property (nonatomic, copy) NSString *subheading;
 @property (nonatomic, copy) NSString *main;
 @property (nonatomic, copy) NSString *sub;
+
 @property (nonatomic, copy) NSString *imageFullPath;
+@property (nonatomic, copy) NSString *movieFullPath;
+
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
 @property (nonatomic, assign) NSInteger templateID;
