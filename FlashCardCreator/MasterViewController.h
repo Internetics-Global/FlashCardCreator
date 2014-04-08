@@ -52,6 +52,7 @@
     //for Amazon simpleDB
     NSString *_amazonSimpleDBItemName;
     int       _currentDownloadCount;
+    int       _maxDownloadCount;
     
     DropboxSharekitHelper *_shareHelper;
     

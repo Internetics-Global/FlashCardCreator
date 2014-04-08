@@ -21,6 +21,11 @@
     int       _lastVisitDate;
     int       _createDate;
     NSMutableArray *_cards;
+    
+    /**
+     *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）
+     */
+    BOOL     _isAllowShare;
 }
 
 @property (nonatomic, assign) NSInteger packID;
@@ -35,6 +40,8 @@
 @property (nonatomic, copy) NSString *creatorNickName;
 @property (assign, nonatomic) int createDate;
 @property (assign, nonatomic) int lastVisitDate;
+
+@property (nonatomic, assign) BOOL isAllowShare;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;

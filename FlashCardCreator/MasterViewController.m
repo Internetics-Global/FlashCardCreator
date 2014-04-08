@@ -1052,9 +1052,9 @@ enum popover_enum {
     NSMutableDictionary *dict = [AmazonClientManager fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
     
     _currentDownloadCount = [[dict objectForKey:@"currentNo"] integerValue];
-    int maxNo = [[dict objectForKey:@"maxNo"] integerValue];
+    _maxDownloadCount = [[dict objectForKey:@"maxNo"] integerValue];
     
-    if ((_currentDownloadCount < maxNo)  || (maxNo == 0)) {  //maxNo = 0 means no record in AmazonSDB
+    if ((_currentDownloadCount < _maxDownloadCount)  || (_maxDownloadCount == 0)) {  //maxNo = 0 means no record in AmazonSDB
         result = TRUE;
     } else {
         result = FALSE;
@@ -1305,7 +1305,14 @@ enum popover_enum {
     //step6. update amazon sinpleDB
     [self updateDownloadLimitCount];
     
-    //Step7: send notification
+    //Step7:
+    if ((![pack.creator isEqualToString:[OpenUDID value]])&&(_maxDownloadCount == 1)) {
+        pack.isAllowShare = NO;
+    } else {
+        pack.isAllowShare = YES;
+    }
+    
+    //Step8: send notification
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:pack];
     
 }
@@ -1811,12 +1818,19 @@ enum popover_enum {
                 break;
             }
             case 1: {
-                if ((_currentPack) && (_currentCard)) {
-                    _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                    [_shareHelper shareAction];
+                
+                if (_currentPack.isAllowShare) {
+                    if ((_currentPack) && (_currentCard)) {
+                        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        [_shareHelper shareAction];
+                    } else {
+                        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                    }
                 } else {
-                    NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
                 }
+
                 break;
             }
             default:

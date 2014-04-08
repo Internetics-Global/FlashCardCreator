@@ -25,6 +25,8 @@
 @synthesize creator = _creator;
 @synthesize creatorNickName = _creatorNickName;
 
+@synthesize isAllowShare = _isAllowShare;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -35,6 +37,8 @@
     _cards = [[NSMutableArray alloc] init];
     
     _coverImageURL = @"";
+    
+    _isAllowShare = YES;
     
 	return self;
 }

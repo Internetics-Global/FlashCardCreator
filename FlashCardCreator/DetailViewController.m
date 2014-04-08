@@ -613,12 +613,20 @@ enum popover_enum {
                 break;
             }
             case 1: {
-                if ((_currentPack) && (_currentCard)) {
-                    _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                    [_shareHelper shareAction];
+                
+                if (_currentPack.isAllowShare) {
+                    if ((_currentPack) && (_currentCard)) {
+                        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        [_shareHelper shareAction];
+                    } else {
+                        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                    }
                 } else {
-                    NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
                 }
+                
+                
                 break;
             }   
             default:
