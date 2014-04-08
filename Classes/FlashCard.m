@@ -924,7 +924,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     [_logoImage addGestureRecognizer:logoSingeTap];
     
     if ([_currentCard.question.movieFullPath hasSuffix:@".mov"]) {
-        //allow to play video
+        //allow to play movie
       _imageQuestion.userInteractionEnabled        = YES;
     } else {
         _imageQuestion.userInteractionEnabled        = FALSE;
@@ -3187,14 +3187,16 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
 - (void) selectFromImageLibraryByBackgroundSelectButton:(UITapGestureRecognizer *)sender {
     _typeImageSelector = Type_Image_Selector_Background;
     
-    [self selectFromImageLibrary:sender withPopoverArrowUp:NO  supportVideo:NO];
+    [self selectFromImageLibrary:sender withPopoverArrowUp:NO  supportMov:NO];
 }
+
+
 
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
     
     _typeImageSelector = Type_Image_Selector_Logo;
     
-    [self selectFromImageLibrary:sender withPopoverArrowUp:YES  supportVideo:NO];
+    [self selectFromImageLibrary:sender withPopoverArrowUp:YES  supportMov:NO];
     
     
 }
@@ -3206,27 +3208,30 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if ([_currentCard.question.movieFullPath hasSuffix:@".mov"]) {
                 
-                [self playVideo:_currentCard.question.movieFullPath];
+                [self playMovie:_currentCard.question.movieFullPath];
                 
             }
             
         } else {
             if ([_currentCard.answer.movieFullPath hasSuffix:@".mov"]) {
-              [self playVideo:_currentCard.answer.movieFullPath];
+              [self playMovie:_currentCard.answer.movieFullPath];
             }
         }
         
     } else {
         _typeImageSelector = Type_Image_Selector_Image;
         
-        [self selectFromImageLibrary:sender withPopoverArrowUp:YES supportVideo:YES];
+        [self selectFromImageLibrary:sender withPopoverArrowUp:YES supportMov:YES];
     }
     
     
     
 }
 
-- (void) playVideo:(NSString *) urlStr {
+/**
+ *  Play movie/video
+ */
+- (void) playMovie:(NSString *) urlStr {
     
 
     MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
@@ -3249,7 +3254,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
  *  @param sender    必须是UITapGestureRecognizer
  *  @param isArrowUp _imagePickerPopover剪头方向
  */
-- (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp supportVideo:(BOOL) isSupportVideo {
+- (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
     
     NSParameterAssert([sender isKindOfClass:[UITapGestureRecognizer class]]);
     
@@ -3259,7 +3264,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    if (isSupportVideo) {
+    if (isSupportMovie) {
       _imagePickerController.mediaTypes = [NSArray arrayWithObjects:(NSString *) kUTTypeMovie, (NSString *) kUTTypeImage,nil];
     }
     _imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
@@ -3299,9 +3304,9 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         
         
         
-        NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
-        NSLog(@"found a video %@", videoURL);
-        NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
+        NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSLog(@"found a movie %@", movieURL);
+        NSData *movieData = [NSData dataWithContentsOfURL:movieURL];
         
         
         //save movie info
@@ -3310,7 +3315,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
                   || (_questionImageFullPath.length == 0)){
                 _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
             }
-            [videoData writeToFile:_questionMovieFullPath atomically:YES];
+            [movieData writeToFile:_questionMovieFullPath atomically:YES];
             
 
         } else {
@@ -3318,7 +3323,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
                    || (_answerMovieFullPath.length == 0)){
                 _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
             }
-            [videoData writeToFile:_answerMovieFullPath atomically:YES];
+            [movieData writeToFile:_answerMovieFullPath atomically:YES];
         }
         
         //save thumbnail info
