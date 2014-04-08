@@ -108,8 +108,10 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
 	}
+    
+    
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -118,27 +120,18 @@
 		sqlite3_finalize(createIndex);
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
-            //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
-            NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_subheading integer "];
-            sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
-            
-            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_main integer "];
-            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
-            
-            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_sub integer "];
-            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
+            [self AddFieldForQuestionFrom1To2];
+        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
+            [self AddFieldForQuestionFrom2To3];
+        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
+            [self AddFieldForQuestionFrom1To2];
+            [self AddFieldForQuestionFrom2To3];
         }
     }
     
     
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -147,21 +140,12 @@
 		sqlite3_finalize(createIndex);
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
-            //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
-            NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_subheading integer "];
-            sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
-            
-            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_main integer "];
-            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
-            
-            query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_sub integer "];
-            queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-            sqlite3_step(queryStatement);
-            sqlite3_finalize(queryStatement);
+            [self AddFieldForAnswerFrom1To2];
+        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
+            [self AddFieldForAnswerFrom2To3];
+        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
+            [self AddFieldForAnswerFrom1To2];
+            [self AddFieldForAnswerFrom2To3];
         }
     
     }
@@ -183,6 +167,66 @@
     
     
 }
+
++ (void) AddFieldForQuestionFrom1To2 {
+    //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_subheading integer "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_main integer "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_sub integer "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+}
+
+
++ (void) AddFieldForAnswerFrom1To2 {
+    //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_subheading integer "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_main integer "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_sub integer "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+}
+
++ (void) AddFieldForQuestionFrom2To3 {
+
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN background_image text "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+
+}
+
+
++ (void) AddFieldForAnswerFrom2To3 {
+
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN background_image text "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+
+    
+}
+
+
 
 + (BOOL)booleanForInt:(NSInteger)integer{
 	if (integer > 0) {

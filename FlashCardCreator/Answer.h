@@ -27,6 +27,8 @@
     NSInteger _lineNoSubheading;
     NSInteger _lineNoMain;
     NSInteger _lineNoSub;
+    
+    NSString *_backgroundImageFullPath;
 }
 
 @property (nonatomic, assign) NSInteger answerID;
@@ -45,6 +47,8 @@
 @property (assign, nonatomic) NSInteger lineNoSub;
 
 @property (strong, nonatomic) CSS *css;
+
+@property (copy, nonatomic) NSString *backgroundImageFullPath;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;

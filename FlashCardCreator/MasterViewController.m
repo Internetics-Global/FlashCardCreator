@@ -1410,6 +1410,20 @@ enum popover_enum {
                 assembledCard.coverImageURL = @"";
             }
             
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([questionDict[@"background_image"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"background_image"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    assembledCard.question.backgroundImageFullPath = newFileName;
+                }
+            }   else {
+                assembledCard.question.backgroundImageFullPath = @"";
+            }
+            
+            
             assembledCard.templateBackgroundName = questionDict[@"template_background"];
             if (assembledCard.templateBackgroundName.length ==0) {
                 //compatibility with previous version
@@ -1567,6 +1581,19 @@ enum popover_enum {
                 }
             } else {
                 [assembledCard answer].logoFullPath = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([answerDict[@"background_image"] length] >0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"background_image"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].backgroundImageFullPath = newFileName;
+                }
+            } else {
+                [assembledCard answer].backgroundImageFullPath = @"";
             }
             
             assembledCard.answer.templateID = [answerDict[@"template_id"] intValue];

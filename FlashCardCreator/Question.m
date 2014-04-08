@@ -25,6 +25,8 @@
 @synthesize css = _css;
 @synthesize templateID = _templateID;
 
+@synthesize backgroundImageFullPath = _backgroundImageFullPath;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -39,6 +41,8 @@
     
     _imageFullPath = @"";
     _logoFullPath = @"";
+    
+    _backgroundImageFullPath = @"";
     
 	return self;
 }
@@ -61,6 +65,8 @@
     _lineNoSubheading = [[dataDict valueForKey:@"line_number_subheading"] intValue];
     _lineNoMain = [[dataDict valueForKey:@"line_number_main"] intValue];
     _lineNoSub = [[dataDict valueForKey:@"line_number_sub"] intValue];
+    
+    _backgroundImageFullPath= [dataDict valueForKey:@"background_image"];
     
     if ([[dataDict allKeys] containsObject:@"css"]) {
         NSDictionary *cssArray = (NSDictionary *)[dataDict valueForKey:@"css"];
@@ -94,28 +100,34 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d WHERE card_id=%d", _questionID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID,_templateID, _lineNoSubheading,_lineNoMain, _lineNoSub, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID,_templateID, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 3, [_subheading UTF8String], -1, SQLITE_TRANSIENT);
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-    
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+
+    }
 }
 
 -(void)insert{
 	if (_questionID == -1) {
 		_questionID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id,template_id,line_number_subheading,line_number_main,line_number_sub) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d)", _questionID, _cardID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_lineNoSubheading,_lineNoMain, _lineNoSub];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id,template_id,line_number_subheading,line_number_main,line_number_sub,background_image) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, \"%@\")", _questionID, _cardID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 3, [_subheading UTF8String], -1, SQLITE_TRANSIENT);
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
-    
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        
+    }
 }
 
 -(void)destroy {
@@ -153,6 +165,17 @@
             }
         }
     }
+    
+    error = nil;
+    if (self.backgroundImageFullPath.length >0) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.backgroundImageFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of answer backgroundImageFullPath"];
+                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+            }
+        }
+    }
 }
 
 
@@ -175,6 +198,7 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"line_number_subheading"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"line_number_main"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"line_number_sub"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"background_image"];
         
         
         [questionDict setValue:[CSS cssForCSSID:[[questionDict valueForKey:@"css_id"] intValue]] forKey:@"css"];

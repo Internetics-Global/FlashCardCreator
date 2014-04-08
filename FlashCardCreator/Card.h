@@ -23,6 +23,7 @@
     Answer *_answer;
     
     
+    
 }
 
 @property (nonatomic, assign) NSInteger cardID;

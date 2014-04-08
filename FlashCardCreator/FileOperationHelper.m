@@ -257,7 +257,7 @@
     NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo", card.question.logoURLLinkage,@"logo_url",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",card.templateBackgroundName,@"template_background",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.question.templateID],@"template_id",card.question.css.subheadingAlign,@"subheading_align",card.question.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subheadingSize],@"subheading_size",card.question.css.mainAlign,@"main_align",card.question.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.question.css.mainSize],@"main_size",card.question.css.subAlign,@"sub_align",card.question.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.question.lineNoSubheading],@"line_number_subheading",
                 [NSString stringWithFormat:@"%d",card.question.lineNoMain],@"line_number_main",
-                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",nil];
+                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent],@"background_image",nil];
     
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {
@@ -270,7 +270,7 @@
     NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.logoFullPath lastPathComponent],@"logo",[NSString stringWithFormat:@"%d",card.answer.templateID],@"template_id", card.answer.css.subheadingAlign,@"subheading_align",card.answer.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subheadingSize],@"subheading_size",card.answer.css.mainAlign,@"main_align",card.answer.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.mainSize],@"main_size",card.answer.css.subAlign,@"sub_align",card.answer.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.answer.lineNoSubheading],@"line_number_subheading",
             [NSString stringWithFormat:@"%d",card.answer.lineNoMain],@"line_number_main",
-                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",nil];
+                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent],@"background_image",nil];
     
     NSData *jsonAnswerData = [NSJSONSerialization dataWithJSONObject:anserDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonAnswerData length] >0) && (error == nil)) {
@@ -292,6 +292,11 @@
     if ([card.answer.imageFullPath lastPathComponent].length > 0) {
         [zipFile addFileToZip:card.answer.imageFullPath newname:[card.answer.imageFullPath lastPathComponent]];
     }
+    
+    if ([card.answer.backgroundImageFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.answer.backgroundImageFullPath newname:[card.answer.backgroundImageFullPath lastPathComponent]];
+    }
+    
     [zipFile addFileToZip:[cardAssembleDir stringByAppendingPathComponent:@"answerTextContent.json"] newname:@"answerTextContent.json"];
     
     if ([card.question.logoFullPath lastPathComponent].length > 0) {
@@ -300,6 +305,10 @@
     
     if ([card.question.imageFullPath lastPathComponent].length >0) {
         [zipFile addFileToZip:card.question.imageFullPath newname:[card.question.imageFullPath lastPathComponent]];
+    }
+    
+    if ([card.question.backgroundImageFullPath lastPathComponent].length > 0) {
+        [zipFile addFileToZip:card.question.backgroundImageFullPath newname:[card.question.backgroundImageFullPath lastPathComponent]];
     }
     
     [zipFile addFileToZip:[cardAssembleDir stringByAppendingPathComponent:@"questionTextContent.json"] newname:@"questionTextContent.json"];

@@ -33,10 +33,21 @@ typedef enum{
 
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate> {
     JSBadgeView *_cardSNText;
-    UIButton *_changeTemplateButton;
     
-    UIImageView  *_backgroundImageView;
-    NSString     *_backgroundImageName;
+    
+    //background related
+    UIButton     *_backgroundImageSelectButton;
+    UIImageView  *_questionBackgroundImageView;
+    UIImageView  *_answerBackgroundImageView;
+    NSString     *_questionBackgroundImageFullPath;
+    NSString     *_answerBackgroundImageFullPath;
+    
+    //template related
+    UIButton     *_changeTemplateButton;
+    UIImageView  *_templateBackgroundImageView;
+    NSString     *_templateBackgroundImageName;
+    
+    
     UIImageView  *_logoImage;
     NSString     *_logoImageFullPath;
     NSString     *_logoLinkURL;
@@ -79,7 +90,6 @@ typedef enum{
     NSMutableDictionary *_qDict;
     NSMutableDictionary *_aDict;
     
-    BOOL    _isLogoImageViewClicked;
     BOOL    _keyboardShown;
     BOOL    _isAllCardsLogoNeedToBeUpdate;
     BOOL    _dismissKeyboardFromEmotionSwitch;

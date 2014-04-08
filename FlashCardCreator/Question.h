@@ -27,6 +27,8 @@
     NSInteger _lineNoMain;
     NSInteger _lineNoSub;
     
+    NSString *_backgroundImageFullPath;
+    
     CSS *_css;
 }
 
@@ -45,6 +47,8 @@
 @property (assign, nonatomic) NSInteger lineNoSubheading;
 @property (assign, nonatomic) NSInteger lineNoMain;
 @property (assign, nonatomic) NSInteger lineNoSub;
+
+@property (copy, nonatomic) NSString *backgroundImageFullPath;
 
 @property (strong, nonatomic) CSS *css;
 

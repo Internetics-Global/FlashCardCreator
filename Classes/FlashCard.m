@@ -61,7 +61,16 @@ extern BOOL isFromNewCreatedCard;
 
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
-@interface FlashCard ()
+typedef NS_ENUM(NSInteger, Type_Image_Selector) {
+    Type_Image_Selector_Logo      = 0, //when clicking the logo
+    Type_Image_Selector_Image       = 1,//when clicking the image from card
+    Type_Image_Selector_Background   = 2, //when trying to change card's background image (not template)
+    Type_Image_Selector_Unkown    = -1,
+};
+
+@interface FlashCard () {
+    Type_Image_Selector    _typeImageSelector;
+}
 
 
 @end
@@ -121,9 +130,12 @@ extern BOOL isFromNewCreatedCard;
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
     _doneButtonPressed = NO;
-    _backgroundImageName = @"card_background_blue.png";
+    _templateBackgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
     _logoImageFullPath = @"";
+    
+    _questionBackgroundImageFullPath = @"";
+    _answerBackgroundImageFullPath = @"";
     
     _subheadingSizeQuestion = 40;
     _subheadingColorQuestion = @"Black";
@@ -163,15 +175,41 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) loadQuestionAnswerViewForiPad {
     
-    if (_backgroundImageView == nil) {
-        _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
-        _backgroundImageView.contentMode = UIViewContentModeScaleToFill;
-        _backgroundImageView.frame = CGRectMake(0, 0, 800, 550);
-        _backgroundImageView.backgroundColor = [UIColor whiteColor];
-        _backgroundImageView.userInteractionEnabled = NO;
-        _backgroundImageView.layer.masksToBounds = YES;
-        _backgroundImageView.layer.cornerRadius = 35;
-        [self addSubview:_backgroundImageView];
+    if (_templateBackgroundImageView == nil) {
+        _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        _templateBackgroundImageView.contentMode = UIViewContentModeScaleToFill;
+        _templateBackgroundImageView.frame = CGRectMake(0, 0, 800, 550);
+        _templateBackgroundImageView.backgroundColor = [UIColor clearColor];
+        _templateBackgroundImageView.userInteractionEnabled = NO;
+        _templateBackgroundImageView.layer.masksToBounds = YES;
+        _templateBackgroundImageView.layer.cornerRadius = 35;
+        [self addSubview:_templateBackgroundImageView];
+    }
+    
+    if (_questionBackgroundImageView == nil) {
+        _questionBackgroundImageView = [[UIImageView alloc] init];
+        _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _questionBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
+        _questionBackgroundImageView.userInteractionEnabled = NO;
+        _questionBackgroundImageView.layer.masksToBounds = YES;
+        _questionBackgroundImageView.layer.cornerRadius = 35;
+        [self addSubview:_questionBackgroundImageView];
+        [self bringSubviewToFront:_templateBackgroundImageView];
+    }
+    
+    if (_answerBackgroundImageView == nil) {
+        _answerBackgroundImageView = [[UIImageView alloc] init];
+        _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _answerBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
+        _answerBackgroundImageView.userInteractionEnabled = NO;
+        _answerBackgroundImageView.layer.masksToBounds = YES;
+        _answerBackgroundImageView.layer.cornerRadius = 35;
+        [self addSubview:_answerBackgroundImageView];
+        [self bringSubviewToFront:_templateBackgroundImageView];
     }
     
 
@@ -372,9 +410,21 @@ extern BOOL isFromNewCreatedCard;
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-45-5, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
         [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    if (_backgroundImageSelectButton == nil) {
+        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
+        _backgroundImageSelectButton.frame = CGRectMake(66, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
+        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_background_button"] forState:UIControlStateNormal];
+        [self addSubview:_backgroundImageSelectButton];
+        //[_backgroundImageSelectButton addTarget:self action:@selector(changeBackgroundImageButtonClick:) forControlEvents:UIControlEventTouchDown];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
     }
     
     if (_segmentedControl == nil) {
@@ -459,18 +509,44 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) loadQuestionAnswerViewForiPhone {
     
-    if (_backgroundImageView == nil) {
-        _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_backgroundImageName]];
-        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _backgroundImageView.backgroundColor = [UIColor whiteColor];
-        _backgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone);
+    if (_templateBackgroundImageView == nil) {
+        _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        _templateBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _templateBackgroundImageView.backgroundColor = [UIColor whiteColor];
+        _templateBackgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone);
         if (self.isPlayingCard) {
-            _backgroundImageView.frame = [Common getScaledViewRect:_backgroundImageView withProportion:kFlashCardViewProporation_iPhone];
+            _templateBackgroundImageView.frame = [Common getScaledViewRect:_templateBackgroundImageView withProportion:kFlashCardViewProporation_iPhone];
         }
-        _backgroundImageView.userInteractionEnabled = NO;
-        _backgroundImageView.layer.masksToBounds = YES;
-        _backgroundImageView.layer.cornerRadius = 15;
-        [self addSubview:_backgroundImageView];
+        _templateBackgroundImageView.userInteractionEnabled = NO;
+        _templateBackgroundImageView.layer.masksToBounds = YES;
+        _templateBackgroundImageView.layer.cornerRadius = 15;
+        [self addSubview:_templateBackgroundImageView];
+    }
+    
+    if (_questionBackgroundImageView == nil) {
+        _questionBackgroundImageView = [[UIImageView alloc] init];
+        _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _questionBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
+        _questionBackgroundImageView.userInteractionEnabled = NO;
+        _questionBackgroundImageView.layer.masksToBounds = YES;
+        _questionBackgroundImageView.layer.cornerRadius = 15;
+        [self addSubview:_questionBackgroundImageView];
+        [self bringSubviewToFront:_templateBackgroundImageView];
+    }
+    
+    if (_answerBackgroundImageView == nil) {
+        _answerBackgroundImageView = [[UIImageView alloc] init];
+        _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _answerBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
+        _answerBackgroundImageView.userInteractionEnabled = NO;
+        _answerBackgroundImageView.layer.masksToBounds = YES;
+        _answerBackgroundImageView.layer.cornerRadius = 15;
+        [self addSubview:_answerBackgroundImageView];
+        [self bringSubviewToFront:_templateBackgroundImageView];
     }
     
     
@@ -699,6 +775,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
         _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-25-2, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
         if (self.isPlayingCard) {
             _changeTemplateButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
@@ -706,6 +783,20 @@ extern BOOL isFromNewCreatedCard;
         [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
         [self addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    if (_backgroundImageSelectButton == nil) {
+        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
+        _backgroundImageSelectButton.frame = CGRectMake(30, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
+        if (self.isPlayingCard) {
+            _backgroundImageSelectButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
+        }
+        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_background_button"] forState:UIControlStateNormal];
+        [self addSubview:_backgroundImageSelectButton];
+        //[_backgroundImageSelectButton addTarget:self action:@selector(changeBackgroundImageButtonClick::) forControlEvents:UIControlEventTouchDown];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
     }
     
     if (_logoImage == nil){
@@ -1065,8 +1156,17 @@ extern BOOL isFromNewCreatedCard;
     } else {
         _sidebarTitle.text = _currentPack.sidebarTitle;
     }
-    _backgroundImageName = _currentCard.templateBackgroundName;
-    _backgroundImageView.image = [UIImage imageNamed:_backgroundImageName];
+    _templateBackgroundImageName = _currentCard.templateBackgroundName;
+    _templateBackgroundImageView.image = [UIImage imageNamed:_templateBackgroundImageName];
+    
+    
+    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
+    UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
+    if (imageTemp) {
+        _questionBackgroundImageView.image = imageTemp;
+    } else {
+        //do nothing
+    }
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
@@ -1091,6 +1191,14 @@ extern BOOL isFromNewCreatedCard;
     } else {
         NSLog(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+    }
+    
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
+    imageTemp = [UIImage imageWithContentsOfFile:path];
+    if (imageTemp) {
+        _answerBackgroundImageView.image = imageTemp;
+    } else {
+        //do nothing
     }
     
     _answerTitle.text = _currentCard.answer.title;
@@ -1122,6 +1230,15 @@ extern BOOL isFromNewCreatedCard;
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
+    
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
+    imageTemp = [UIImage imageWithContentsOfFile:path];
+    if (imageTemp) {
+        _questionBackgroundImageView.image = imageTemp;
+    } else {
+        //do nothing
+    }
+    
     _questionTitle.text = _currentCard.question.title;
     
     _subheadingQuestion.text = _currentCard.question.subheading;
@@ -1148,6 +1265,9 @@ extern BOOL isFromNewCreatedCard;
         _questionTitle.hidden = NO;
         _answerTitle.hidden = YES;
         
+        _questionBackgroundImageView.hidden = NO;
+        _answerBackgroundImageView.hidden = YES;
+        
         
     } else {
         _imageQuestion.hidden = YES;
@@ -1162,6 +1282,9 @@ extern BOOL isFromNewCreatedCard;
         
         _questionTitle.hidden = YES;
         _answerTitle.hidden = NO;
+        
+        _questionBackgroundImageView.hidden = YES;
+        _answerBackgroundImageView.hidden = NO;
     }
 }
 
@@ -1178,6 +1301,8 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.answer.sub = _subAnswer.text;
     _currentCard.answer.imageFullPath = _answerImageFullPath;
     
+    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+    
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
     _currentCard.answer.css.subheadingSize = _subheadingSizeAnswer;
@@ -1193,6 +1318,8 @@ extern BOOL isFromNewCreatedCard;
     _currentCard.question.main = _mainQuestion.text;
     _currentCard.question.sub = _subQuestion.text;
     _currentCard.question.imageFullPath = _questionImageFullPath;
+    
+    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
     
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
@@ -3036,43 +3163,39 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - UIImagePickerController related
 
+- (void) selectFromImageLibraryByBackgroundSelectButton:(UITapGestureRecognizer *)sender {
+    _typeImageSelector = Type_Image_Selector_Background;
+    
+    [self selectFromImageLibrary:sender withPopoverArrowUp:NO];
+}
+
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
     
-    _isLogoImageViewClicked = YES;
+    _typeImageSelector = Type_Image_Selector_Logo;
     
-    if (_imagePickerController != nil) {
-        _imagePickerPopover = nil;
-    }
-    
-    _imagePickerController = [[UIImagePickerController alloc] init];
-    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    _imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
-    _imagePickerController.contentSizeForViewInPopover = CGSizeMake(320, 400);
-    _imagePickerController.delegate = self;
-    
-    if (isUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
-    } else {
-        CGPoint point = [sender locationInView:self];
-        CGRect rect = CGRectMake(point.x, point.y, 50, 50);
-        
-        if (_imagePickerPopover != nil) {
-            [_imagePickerPopover dismissPopoverAnimated:YES];
-            _imagePickerPopover=nil;
-        }
-        
-        _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
-        _imagePickerPopover.delegate = self;
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-    }
-    
+    [self selectFromImageLibrary:sender withPopoverArrowUp:YES];
     
     
 }
 
 - (void)selectFromImageLibraryByImage:(UITapGestureRecognizer *)sender {
     
-    _isLogoImageViewClicked = NO;
+    _typeImageSelector = Type_Image_Selector_Image;
+    
+    [self selectFromImageLibrary:sender withPopoverArrowUp:YES];
+    
+}
+
+
+/**
+ *  Common function for select image from library
+ *
+ *  @param sender    必须是UITapGestureRecognizer
+ *  @param isArrowUp _imagePickerPopover剪头方向
+ */
+- (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp {
+    
+    NSParameterAssert([sender isKindOfClass:[UITapGestureRecognizer class]]);
     
     if (_imagePickerController != nil) {
         _imagePickerPopover = nil;
@@ -3097,10 +3220,17 @@ extern BOOL isFromNewCreatedCard;
         
         _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
         _imagePickerPopover.delegate = self;
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        if (isArrowUp) {
+          [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        } else {
+            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+        }
+        
     }
     
 }
+
+
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
@@ -3116,9 +3246,9 @@ extern BOOL isFromNewCreatedCard;
         _imagePickerPopover = nil;
     }
     
-    _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-    
-    if (_isLogoImageViewClicked) {
+    if (_typeImageSelector == Type_Image_Selector_Logo) {
+        
+        _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
         if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
             _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
@@ -3145,7 +3275,7 @@ extern BOOL isFromNewCreatedCard;
             [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
         }
         
-    } else {
+    } else if (_typeImageSelector == Type_Image_Selector_Image) {
         
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
@@ -3171,6 +3301,36 @@ extern BOOL isFromNewCreatedCard;
                 _currentCard.question.imageFullPath = _questionImageFullPath;
             } else {
                 _currentCard.answer.imageFullPath = _answerImageFullPath;
+            }
+        } else {
+            [self saveEdittedCard];
+        }
+    } else if (_typeImageSelector == Type_Image_Selector_Background) {
+        
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (([_questionBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                || ([_questionBackgroundImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
+                || ((_questionBackgroundImageFullPath.length == 0))) {
+                _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            }
+            [imageData writeToFile:_questionBackgroundImageFullPath atomically:YES];
+            _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
+        } else {
+            if (([_answerBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                || ([_answerBackgroundImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
+                || ((_answerBackgroundImageFullPath.length == 0))) {
+                _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            }
+            [imageData writeToFile:_answerBackgroundImageFullPath atomically:YES];
+            _answerBackgroundImageView.image = [UIImage imageWithData:imageData];
+        }
+        
+        if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+            //we will save until after we press the save button
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+            } else {
+                _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
             }
         } else {
             [self saveEdittedCard];
@@ -4008,7 +4168,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    _currentCard.templateBackgroundName = _backgroundImageName;
+    _currentCard.templateBackgroundName = _templateBackgroundImageName;
     
     _currentCard.packID = _currentPack.packID;
     
