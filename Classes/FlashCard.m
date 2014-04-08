@@ -947,6 +947,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     _sidebarTitle.userInteractionEnabled = FALSE;
     
     _changeTemplateButton.hidden = TRUE;
+    _backgroundImageSelectButton.hidden = TRUE;
     
     if (_isPlayingCard) {
         _creatorText.userInteractionEnabled = TRUE;
@@ -1026,6 +1027,8 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
     _changeTemplateButton.hidden = FALSE;
     _changeTemplateButton.userInteractionEnabled = YES;
+    
+    _backgroundImageSelectButton.hidden = NO;
     
     _questionTitle.userInteractionEnabled = YES;
     _answerTitle.userInteractionEnabled = YES;
@@ -1198,7 +1201,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (imageTemp) {
         _answerBackgroundImageView.image = imageTemp;
     } else {
-        //do nothing
+        _answerBackgroundImageView.image = nil;
     }
     
     _answerTitle.text = _currentCard.answer.title;
@@ -1236,7 +1239,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (imageTemp) {
         _questionBackgroundImageView.image = imageTemp;
     } else {
-        //do nothing
+        _questionBackgroundImageView.image = nil;
     }
     
     _questionTitle.text = _currentCard.question.title;
