@@ -57,6 +57,7 @@ typedef enum{
     UITextField  *_sidebarTitle;
     UITextField   *_creatorText;
     
+    //movie played related
     NSString     *_questionMovieFullPath;
     NSString     *_answerMovieFullPath;
     

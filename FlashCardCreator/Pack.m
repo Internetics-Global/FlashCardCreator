@@ -115,8 +115,13 @@
 -(void)update{
 	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
+    
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        
+    }
 }
 
 -(void)insert{
@@ -126,8 +131,13 @@
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
+    
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        
+    }
 	
 }
 

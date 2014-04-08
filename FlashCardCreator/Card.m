@@ -88,8 +88,12 @@
 -(void)update{
 	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        
+    }
 }
 
 -(void)insert{
@@ -98,8 +102,12 @@
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-	sqlite3_step(queryStatement);
+	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
+    if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
+        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        
+    }
 }
 
 -(void)destroy{

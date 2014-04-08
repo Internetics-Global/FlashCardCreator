@@ -88,6 +88,8 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
+        NSLog(@"%s:Create Users_Tables",__FUNCTION__);
+        
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
@@ -98,6 +100,8 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Packs_Tables (pack_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
+        
+        NSLog(@"%s:Create Packs_Tables",__FUNCTION__);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer);"];
@@ -107,6 +111,8 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Cards_Tables (card_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
+        
+        NSLog(@"%s:Create Cards_Tables",__FUNCTION__);
 	}
     
     
@@ -118,6 +124,9 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Question_Tables (question_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
+        
+        NSLog(@"%s:Create Question_Tables",__FUNCTION__);
+        
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
             [self AddFieldForQuestionFrom1To2];
@@ -138,6 +147,9 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on Answer_Tables (answer_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
+        
+        NSLog(@"%s:Create Answer_Tables",__FUNCTION__);
+        
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
             [self AddFieldForAnswerFrom1To2];
@@ -158,6 +170,8 @@
         sqlite3_stmt *createIndex = [SQLiteHelper prepareStatementForQuery:@"create index if not exists IA on CSS_Tables (css_id);"];
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
+        
+        NSLog(@"%s:Create CSS_Tables",__FUNCTION__);
 	}
     
     
@@ -184,6 +198,8 @@
     queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
+    
+    NSLog(@"%s",__FUNCTION__);
 }
 
 
@@ -204,6 +220,8 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
+    NSLog(@"%s",__FUNCTION__);
+    
 }
 
 + (void) AddFieldForQuestionFrom2To3 {
@@ -217,6 +235,8 @@
     queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
+    
+    NSLog(@"%s",__FUNCTION__);
 
 }
 
@@ -232,6 +252,8 @@
     queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
+    
+    NSLog(@"%s",__FUNCTION__);
 
     
 }
