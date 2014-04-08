@@ -419,7 +419,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (_backgroundImageSelectButton == nil) {
         _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(66, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
+        _backgroundImageSelectButton.frame = CGRectMake(15, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
         [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_background_button"] forState:UIControlStateNormal];
         [self addSubview:_backgroundImageSelectButton];
         //[_backgroundImageSelectButton addTarget:self action:@selector(changeBackgroundImageButtonClick:) forControlEvents:UIControlEventTouchDown];
@@ -788,7 +788,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (_backgroundImageSelectButton == nil) {
         _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(30, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
+        _backgroundImageSelectButton.frame = CGRectMake(10, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
         if (self.isPlayingCard) {
             _backgroundImageSelectButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
         }

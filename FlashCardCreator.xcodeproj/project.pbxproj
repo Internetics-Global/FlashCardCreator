@@ -624,8 +624,8 @@
 		2D5C187216D1A74800E1E785 /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rightArrow@2x.png"; path = "Resources/rightArrow@2x.png"; sourceTree = "<group>"; };
 		2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SelectedCellBackground.png; path = Resources/SelectedCellBackground.png; sourceTree = "<group>"; };
 		2D5C188A16D1A77200E1E785 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Libraries/SDWebImage.framework; sourceTree = "<group>"; };
-		2D5C188C16D1A77D00E1E785 /* MySHKConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MySHKConfigurator.h; path = Classes/MySHKConfigurator.h; sourceTree = "<group>"; };
-		2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MySHKConfigurator.m; path = Classes/MySHKConfigurator.m; sourceTree = "<group>"; };
+		2D5C188C16D1A77D00E1E785 /* MySHKConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MySHKConfigurator.h; path = ../Classes/MySHKConfigurator.h; sourceTree = "<group>"; };
+		2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MySHKConfigurator.m; path = ../Classes/MySHKConfigurator.m; sourceTree = "<group>"; };
 		2D5C188F16D1A7B700E1E785 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardCell.h; path = Classes/CardCell.h; sourceTree = "<group>"; };
 		2D5C189016D1A7B700E1E785 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardCell.m; path = Classes/CardCell.m; sourceTree = "<group>"; };
 		2D5C189216D1A86300E1E785 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreInfoTableViewController.h; path = Classes/MoreInfoTableViewController.h; sourceTree = "<group>"; };
@@ -708,12 +708,12 @@
 		2DCE0B1516798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DCE0B1716798E04007A8CAD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2DCE0B1916798E04007A8CAD /* FlashCardCreator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FlashCardCreator-Prefix.pch"; sourceTree = "<group>"; };
-		2DCE0B1A16798E04007A8CAD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FlashCardCreator/AppDelegate.h; sourceTree = "<group>"; };
-		2DCE0B1B16798E04007A8CAD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FlashCardCreator/AppDelegate.m; sourceTree = "<group>"; };
-		2DCE0B2316798E04007A8CAD /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MasterViewController.h; path = FlashCardCreator/MasterViewController.h; sourceTree = "<group>"; };
-		2DCE0B2416798E04007A8CAD /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MasterViewController.m; path = FlashCardCreator/MasterViewController.m; sourceTree = "<group>"; };
-		2DCE0B2616798E04007A8CAD /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DetailViewController.h; path = FlashCardCreator/DetailViewController.h; sourceTree = "<group>"; };
-		2DCE0B2716798E04007A8CAD /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DetailViewController.m; path = FlashCardCreator/DetailViewController.m; sourceTree = "<group>"; };
+		2DCE0B1A16798E04007A8CAD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2DCE0B1B16798E04007A8CAD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2DCE0B2316798E04007A8CAD /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		2DCE0B2416798E04007A8CAD /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		2DCE0B2616798E04007A8CAD /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		2DCE0B2716798E04007A8CAD /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		2DCE0B2A16798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPhone.xib; sourceTree = "<group>"; };
 		2DCE0B2D16798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
 		2DCE0B3016798E04007A8CAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
@@ -908,7 +908,7 @@
 			name = CreatePack;
 			sourceTree = "<group>";
 		};
-		2D09AF9816A52C5000B1C0C9 /* Splash_Icon */ = {
+		2D09AF9816A52C5000B1C0C9 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
 				8810031F180FBDC200FA0A52 /* icon152x152iPad.png */,
@@ -924,7 +924,7 @@
 				881131911703C9F800C7D5A8 /* icon114x114iPhoneHiRes.png */,
 				8811318F1703C9EF00C7D5A8 /* icon57x57iPhoneLowRes.png */,
 			);
-			name = Splash_Icon;
+			name = Splash;
 			sourceTree = "<group>";
 		};
 		2D1A051F16EDEAD300527311 /* PopupListComponent */ = {
@@ -988,7 +988,7 @@
 			name = SelectTemplate;
 			sourceTree = "<group>";
 		};
-		2D26346416C2080D001A024D /* Template Screenshot */ = {
+		2D26346416C2080D001A024D /* Template Cell */ = {
 			isa = PBXGroup;
 			children = (
 				887BD94118D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png */,
@@ -1024,7 +1024,7 @@
 				88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */,
 				88F68575177048780083AF7B /* templateScreenshot5_question.png */,
 			);
-			name = "Template Screenshot";
+			name = "Template Cell";
 			sourceTree = "<group>";
 		};
 		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
@@ -1161,13 +1161,14 @@
 		2D5F3D081679EFA8009D2ADC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				88BC6BAD17764CD8006DEF79 /* emotions */,
+				883567F018F3F75600A988AA /* Placeholders */,
+				883567EF18F3F70F00A988AA /* Templates */,
+				88BC6BAD17764CD8006DEF79 /* Symbols */,
 				2D1A054016EDEB8600527311 /* Template Colors */,
-				2DC177A816E46A6500939E61 /* help */,
-				2D26346416C2080D001A024D /* Template Screenshot */,
-				2DAAE19F16B8CE2300EA6D90 /* Customize */,
-				2D09AF9816A52C5000B1C0C9 /* Splash_Icon */,
-				2DC554E4169D425A00251C1B /* Others */,
+				2DC177A816E46A6500939E61 /* Introduction */,
+				2D26346416C2080D001A024D /* Template Cell */,
+				2DAAE19F16B8CE2300EA6D90 /* Buttons */,
+				2D09AF9816A52C5000B1C0C9 /* Splash */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1224,7 +1225,6 @@
 			children = (
 				2D26343F16C2066D001A024D /* SelectTemplate */,
 				2D4E4EB616B2768100E75257 /* Play */,
-				2D2A1B13169BA2AF00175D14 /* Utilities */,
 				2DBD6DD7169BCE2900962A80 /* Card */,
 				2DC0629216802C6000F2EA07 /* PackList */,
 				2D09AF1316A5046900B1C0C9 /* CreatePack */,
@@ -1232,6 +1232,7 @@
 				2D3E9D0E167D954F0053FA31 /* Custom UIs */,
 				2D5F3D58167D5590009D2ADC /* Settings */,
 				2D5F3CEF1679D256009D2ADC /* Data */,
+				2D2A1B13169BA2AF00175D14 /* Utilities */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1310,7 +1311,7 @@
 			name = MGSplitViewController;
 			sourceTree = "<group>";
 		};
-		2DAAE19F16B8CE2300EA6D90 /* Customize */ = {
+		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				8858064C18C9984C00490C33 /* upButton@2x.png */,
@@ -1329,6 +1330,8 @@
 				2D1A054E16EE894700527311 /* change_template_background_button@2x.png */,
 				2D5FCBC016DD927800DB8628 /* play_button.png */,
 				2D5FCBC216DD927800DB8628 /* play_button@2x.png */,
+				88EEEE67180E434F002AB9A1 /* play.png */,
+				881002F8180F801900FA0A52 /* play@2x.png */,
 				2D5FCBC416DD927800DB8628 /* plus_button.png */,
 				2D5FCBC616DD927800DB8628 /* plus_button@2x.png */,
 				2D5FCBC916DD927800DB8628 /* setting_button.png */,
@@ -1342,8 +1345,24 @@
 				8806405A1700043F00F9B76D /* change_template_button.png */,
 				8867CAE217935279007298EF /* bar_button_black.png */,
 				8867CABF179351BE007298EF /* bar_button_black@2X.png */,
+				8821E8E418BB300800AFCF12 /* close_button@2x.png */,
+				88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */,
+				88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */,
+				88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */,
+				88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */,
+				88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */,
+				88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */,
+				883567EA18F36BDD00A988AA /* change_background_button@2x.png */,
+				2DE809C516DF679200B7959A /* selected_table_cell.png */,
+				2DE809C616DF679300B7959A /* selected_table_cell@2x.png */,
+				2D5C186A16D1A74800E1E785 /* leftArrow.png */,
+				2D5C186B16D1A74800E1E785 /* leftArrow@2x.png */,
+				2D5C187116D1A74800E1E785 /* rightArrow.png */,
+				2D5C187216D1A74800E1E785 /* rightArrow@2x.png */,
+				88AC48281724BE3B0054DDCD /* add_card_background.png */,
+				2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */,
 			);
-			name = Customize;
+			name = Buttons;
 			sourceTree = "<group>";
 		};
 		2DBD6DD7169BCE2900962A80 /* Card */ = {
@@ -1384,7 +1403,7 @@
 			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		2DC177A816E46A6500939E61 /* help */ = {
+		2DC177A816E46A6500939E61 /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
 				88BC795F170D419A00EFBFCE /* help1_iphone.jpg */,
@@ -1402,68 +1421,19 @@
 				8810F47F170B025B00D40562 /* help6.jpg */,
 				8810F480170B025B00D40562 /* help7.jpg */,
 			);
-			name = help;
-			sourceTree = "<group>";
-		};
-		2DC554E4169D425A00251C1B /* Others */ = {
-			isa = PBXGroup;
-			children = (
-				8821E8E418BB300800AFCF12 /* close_button@2x.png */,
-				88EEEE67180E434F002AB9A1 /* play.png */,
-				881002F8180F801900FA0A52 /* play@2x.png */,
-				88EEEE3B180E26E0002AB9A1 /* create_new_pack.png */,
-				88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */,
-				88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */,
-				88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */,
-				88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */,
-				88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */,
-				883567EA18F36BDD00A988AA /* change_background_button@2x.png */,
-				2D1A051D16EDE38200527311 /* card_sidebar_blue.png */,
-				2D1A051316EDDF1D00527311 /* card_background_red.png */,
-				2D1A051416EDDF1D00527311 /* card_background_purple.png */,
-				2D1A051516EDDF1D00527311 /* card_background_gray.png */,
-				2D1A051616EDDF1D00527311 /* card_background_coffee.png */,
-				2D1A051716EDDF1D00527311 /* card_background_blue.png */,
-				2DE809C516DF679200B7959A /* selected_table_cell.png */,
-				2DE809C616DF679300B7959A /* selected_table_cell@2x.png */,
-				88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */,
-				88F68599177049ED0083AF7B /* question_placeholder_content.jpg */,
-				2D6A55C216D813E6002D1489 /* answer_placeholder_content.jpg */,
-				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
-				885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */,
-				2D5C186A16D1A74800E1E785 /* leftArrow.png */,
-				2D5C186B16D1A74800E1E785 /* leftArrow@2x.png */,
-				2D5C187116D1A74800E1E785 /* rightArrow.png */,
-				88AC48281724BE3B0054DDCD /* add_card_background.png */,
-				2D5C187216D1A74800E1E785 /* rightArrow@2x.png */,
-				2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */,
-			);
-			name = Others;
+			name = Introduction;
 			sourceTree = "<group>";
 		};
 		2DCE0AFC16798E04007A8CAD = {
 			isa = PBXGroup;
 			children = (
-				88F47F651793FBE200EE068F /* Media.xcassets */,
-				2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */,
-				2D5F3D4F167B5365009D2ADC /* Libraries */,
-				2D5F3D56167D557C009D2ADC /* Classes */,
 				2DCE0B1216798E04007A8CAD /* Apps */,
+				2D5F3D56167D557C009D2ADC /* Classes */,
+				2D5F3D4F167B5365009D2ADC /* Libraries */,
 				2D5F3D081679EFA8009D2ADC /* Resources */,
-				2DCE0B1A16798E04007A8CAD /* AppDelegate.h */,
-				2DCE0B1B16798E04007A8CAD /* AppDelegate.m */,
-				2DCE0B2416798E04007A8CAD /* MasterViewController.m */,
-				2DCE0B2316798E04007A8CAD /* MasterViewController.h */,
-				2DCE0B2616798E04007A8CAD /* DetailViewController.h */,
-				2DCE0B2716798E04007A8CAD /* DetailViewController.m */,
-				2DCE0B2916798E04007A8CAD /* MasterViewController_iPhone.xib */,
-				2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */,
-				2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */,
-				2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */,
-				2D5C188C16D1A77D00E1E785 /* MySHKConfigurator.h */,
-				2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */,
 				2DCE0B0A16798E04007A8CAD /* Frameworks */,
 				2DCE0B0816798E04007A8CAD /* Products */,
+				88F47F651793FBE200EE068F /* Media.xcassets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1478,6 +1448,7 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */,
 				9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */,
 				9A7E451218274AB900A05C05 /* DropboxSDK.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
@@ -1512,6 +1483,18 @@
 		2DCE0B1216798E04007A8CAD /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				2DCE0B1A16798E04007A8CAD /* AppDelegate.h */,
+				2DCE0B1B16798E04007A8CAD /* AppDelegate.m */,
+				2DCE0B2416798E04007A8CAD /* MasterViewController.m */,
+				2DCE0B2316798E04007A8CAD /* MasterViewController.h */,
+				2DCE0B2616798E04007A8CAD /* DetailViewController.h */,
+				2DCE0B2716798E04007A8CAD /* DetailViewController.m */,
+				2DCE0B2916798E04007A8CAD /* MasterViewController_iPhone.xib */,
+				2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */,
+				2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */,
+				2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */,
+				2D5C188C16D1A77D00E1E785 /* MySHKConfigurator.h */,
+				2D5C188D16D1A77D00E1E785 /* MySHKConfigurator.m */,
 				88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */,
 				2DCE0B1316798E04007A8CAD /* FlashCardCreator-Info.plist */,
 				2DCE0B1416798E04007A8CAD /* InfoPlist.strings */,
@@ -1565,6 +1548,31 @@
 			name = Appsee;
 			sourceTree = "<group>";
 		};
+		883567EF18F3F70F00A988AA /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				2D1A051D16EDE38200527311 /* card_sidebar_blue.png */,
+				2D1A051316EDDF1D00527311 /* card_background_red.png */,
+				2D1A051416EDDF1D00527311 /* card_background_purple.png */,
+				2D1A051516EDDF1D00527311 /* card_background_gray.png */,
+				2D1A051616EDDF1D00527311 /* card_background_coffee.png */,
+				2D1A051716EDDF1D00527311 /* card_background_blue.png */,
+			);
+			name = Templates;
+			sourceTree = "<group>";
+		};
+		883567F018F3F75600A988AA /* Placeholders */ = {
+			isa = PBXGroup;
+			children = (
+				88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */,
+				88F68599177049ED0083AF7B /* question_placeholder_content.jpg */,
+				2D6A55C216D813E6002D1489 /* answer_placeholder_content.jpg */,
+				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
+				885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */,
+			);
+			name = Placeholders;
+			sourceTree = "<group>";
+		};
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1584,13 +1592,13 @@
 			name = Emotion;
 			sourceTree = "<group>";
 		};
-		88BC6BAD17764CD8006DEF79 /* emotions */ = {
+		88BC6BAD17764CD8006DEF79 /* Symbols */ = {
 			isa = PBXGroup;
 			children = (
 				8800877F177AE9AA0051594B /* emotion_placeholder.png */,
 				88D04E4B178D39170058A0D9 /* emotions.txt */,
 			);
-			name = emotions;
+			name = Symbols;
 			sourceTree = "<group>";
 		};
 		88E739C31797C2DB004160F5 /* Amazon */ = {
@@ -2205,7 +2213,6 @@
 				2DCE0B2A16798E04007A8CAD /* en */,
 			);
 			name = MasterViewController_iPhone.xib;
-			path = FlashCardCreator;
 			sourceTree = "<group>";
 		};
 		2DCE0B2C16798E04007A8CAD /* MasterViewController_iPad.xib */ = {
@@ -2214,7 +2221,6 @@
 				2DCE0B2D16798E04007A8CAD /* en */,
 			);
 			name = MasterViewController_iPad.xib;
-			path = FlashCardCreator;
 			sourceTree = "<group>";
 		};
 		2DCE0B2F16798E04007A8CAD /* DetailViewController_iPhone.xib */ = {
@@ -2223,7 +2229,6 @@
 				2DCE0B3016798E04007A8CAD /* en */,
 			);
 			name = DetailViewController_iPhone.xib;
-			path = FlashCardCreator;
 			sourceTree = "<group>";
 		};
 		2DCE0B3216798E04007A8CAD /* DetailViewController_iPad.xib */ = {
@@ -2232,7 +2237,6 @@
 				2DCE0B3316798E04007A8CAD /* en */,
 			);
 			name = DetailViewController_iPad.xib;
-			path = FlashCardCreator;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2301,7 +2305,7 @@
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2323,7 +2327,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "D47C8D72-9E43-492F-86C6-A8D599232629";
-				"PROVISIONING_PROFILE[sdk=*]" = "EDA5AC5E-3CD0-4BAB-9CEC-ABD09302C502";
+				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2339,7 +2343,7 @@
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2362,7 +2366,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "D47C8D72-9E43-492F-86C6-A8D599232629";
-				"PROVISIONING_PROFILE[sdk=*]" = "EDA5AC5E-3CD0-4BAB-9CEC-ABD09302C502";
+				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
