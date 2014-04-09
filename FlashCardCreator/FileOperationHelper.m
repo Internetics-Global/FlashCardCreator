@@ -178,7 +178,7 @@
     }
     
     
-    NSString *uid = [NSString stringWithFormat:@"%d%d.mov", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    NSString *uid = [NSString stringWithFormat:@"%d%d.3gp", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
     return ([path stringByAppendingPathComponent:uid]);
 }
 

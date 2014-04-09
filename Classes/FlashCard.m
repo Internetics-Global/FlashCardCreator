@@ -29,6 +29,7 @@
 #import "EmoticonHelper.h"
 #import "Emoticon.h"
 #import "Common.h"
+#import <AVFoundation/AVFoundation.h>
 
 extern BOOL isFromNewCreatedCard;
 
@@ -923,7 +924,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if ([_currentCard.question.movieFullPath hasSuffix:@".mov"]) {
+    if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
         //allow to play movie
       _imageQuestion.userInteractionEnabled        = YES;
     } else {
@@ -938,7 +939,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     _subheadingQuestion.userInteractionEnabled   = FALSE;
     _subheadingQuestion.layer.borderWidth = 0;
     
-    if ([_currentCard.answer.movieFullPath hasSuffix:@".mov"]) {
+    if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
       _imageAnswer.userInteractionEnabled        = YES;
     } else {
       _imageAnswer.userInteractionEnabled        = FALSE;
@@ -3206,14 +3207,14 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (_isPlayingCard) {
         
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            if ([_currentCard.question.movieFullPath hasSuffix:@".mov"]) {
+            if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
                 
                 [self playMovie:_currentCard.question.movieFullPath];
                 
             }
             
         } else {
-            if ([_currentCard.answer.movieFullPath hasSuffix:@".mov"]) {
+            if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
               [self playMovie:_currentCard.answer.movieFullPath];
             }
         }
@@ -3306,25 +3307,42 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         
         NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
         NSLog(@"found a movie %@", movieURL);
-        NSData *movieData = [NSData dataWithContentsOfURL:movieURL];
         
         
         //save movie info
+        NSString *destPath;
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            if (([_questionMovieFullPath rangeOfString:@".mov"].location == NSNotFound)
+            if (([_questionMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
                   || (_questionImageFullPath.length == 0)){
                 _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _questionMovieFullPath;
             }
-            [movieData writeToFile:_questionMovieFullPath atomically:YES];
             
 
         } else {
-            if (([_answerMovieFullPath rangeOfString:@".mov"].location == NSNotFound)
+            if (([_answerMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
                    || (_answerMovieFullPath.length == 0)){
                 _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _answerMovieFullPath;
             }
-            [movieData writeToFile:_answerMovieFullPath atomically:YES];
         }
+        
+        if (destPath) {
+            AVAsset *video = [AVAsset assetWithURL:movieURL];
+            AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:video presetName:AVAssetExportPresetPassthrough];
+            exportSession.shouldOptimizeForNetworkUse = YES;
+            exportSession.outputFileType = AVFileType3GPP;
+            exportSession.outputURL = [NSURL fileURLWithPath:destPath];
+            [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                
+                //check file size for test purpose
+                NSDictionary *fileDictionary = [[NSFileManager defaultManager] fileAttributesAtPath:destPath traverseLink:YES];
+                long fileSize = [fileDictionary fileSize];
+                NSLog(@"%s:Done and converted 3gp size is:%ld",__FUNCTION__,fileSize);
+                
+            }];
+        }
+        
         
         //save thumbnail info
         
