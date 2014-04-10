@@ -273,6 +273,14 @@
     }
     
     //step : build questionTextContent.json
+    if (checkNullOrEmptyOrNullStr(card.question.backgroundImageFullPath)) {
+        card.question.backgroundImageFullPath = @"";
+    }
+    
+    if (checkNullOrEmptyOrNullStr(card.question.movieFullPath)) {
+        card.question.movieFullPath = @"";
+    }
+    
     NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent],@"image",[card.question.logoFullPath lastPathComponent],@"logo", card.question.logoURLLinkage,@"logo_url",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",card.templateBackgroundName,@"template_background",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.question.templateID],@"template_id",card.question.css.subheadingAlign,@"subheading_align",card.question.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subheadingSize],@"subheading_size",card.question.css.mainAlign,@"main_align",card.question.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.question.css.mainSize],@"main_size",card.question.css.subAlign,@"sub_align",card.question.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.question.lineNoSubheading],@"line_number_subheading",
                 [NSString stringWithFormat:@"%d",card.question.lineNoMain],@"line_number_main",
@@ -287,6 +295,14 @@
     }
     
     //step 3: build answerTextContent.json
+    if (checkNullOrEmptyOrNullStr(card.answer.backgroundImageFullPath)) {
+        card.answer.backgroundImageFullPath = @"";
+    }
+    
+    if (checkNullOrEmptyOrNullStr(card.answer.movieFullPath)) {
+        card.answer.movieFullPath = @"";
+    }
+    
     NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.logoFullPath lastPathComponent],@"logo",[NSString stringWithFormat:@"%d",card.answer.templateID],@"template_id", card.answer.css.subheadingAlign,@"subheading_align",card.answer.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subheadingSize],@"subheading_size",card.answer.css.mainAlign,@"main_align",card.answer.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.mainSize],@"main_size",card.answer.css.subAlign,@"sub_align",card.answer.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.answer.lineNoSubheading],@"line_number_subheading",
             [NSString stringWithFormat:@"%d",card.answer.lineNoMain],@"line_number_main",
@@ -367,7 +383,7 @@
 
 + (NSDate *)convertStringToNSDate:(NSString *) str {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *dateFromString = [[NSDate alloc] init];
     dateFromString = [dateFormatter dateFromString:str];
     return dateFromString;

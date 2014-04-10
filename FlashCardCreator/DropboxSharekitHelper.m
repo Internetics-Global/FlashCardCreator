@@ -56,10 +56,10 @@
             NSString *shareDate = [dict objectForKey:@"share_date"];
             NSString *shareLink = [dict objectForKey:@"share_link"];
             if ((updateDate != nil) && (shareDate != nil) & (shareLink != nil)) {
-                if ([[FileOperationHelper convertStringToNSDate:updateDate]
-                     compare:
-                     [FileOperationHelper convertStringToNSDate:shareDate]]
-                    == NSOrderedAscending) {
+                int update = [[FileOperationHelper convertStringToNSDate:updateDate] timeIntervalSince1970];
+                int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
+                
+                if (update < share) {
                     NSLog(@"updateDate is earlier than shareDate");
                     [self shareAction:shareLink];
                     return;

@@ -1183,6 +1183,9 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         //do nothing
     }
     
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
+    _questionMovieFullPath = path;
+    
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
     NSString *logoFullPath = _currentCard.question.logoFullPath;
@@ -1217,11 +1220,16 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _answerBackgroundImageView.image = nil;
     }
     
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
+    _answerMovieFullPath = path;
+    
     _answerTitle.text = _currentCard.answer.title;
 
     _subheadingAnswer.text = _currentCard.answer.subheading;
     _mainAnswer.text =_currentCard.answer.main;
     _subAnswer.text =_currentCard.answer.sub;
+    
+    
     
 }
 
@@ -3420,6 +3428,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         } else {
             [self saveEdittedCard];
         }
+        
     
     
     } else if ([mediaType isEqualToString:@"public.image"]) {

@@ -77,6 +77,13 @@
         _backgroundImageFullPath = @"";
     }
     
+    _movieFullPath= [dataDict valueForKey:@"movie"];
+    if (_movieFullPath.length == 0) {
+        _movieFullPath = @"";
+    } else {
+        NSLog(@"%s",__FUNCTION__);
+    }
+    
     if ([[dataDict allKeys] containsObject:@"css"]) {
         NSDictionary *cssArray = (NSDictionary *)[dataDict valueForKey:@"css"];
         self.css = [[CSS alloc] initWithDictionary:cssArray];
