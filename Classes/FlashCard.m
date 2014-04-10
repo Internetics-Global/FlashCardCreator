@@ -3220,9 +3220,27 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         }
         
     } else {
-        _typeImageSelector = Type_Image_Selector_Image;
         
-        [self selectFromImageLibrary:sender withPopoverArrowUp:YES supportMov:YES];
+        if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+            _typeImageSelector = Type_Image_Selector_Image;
+            [self selectFromImageLibrary:sender withPopoverArrowUp:YES supportMov:YES];
+        } else {
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
+                    
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
+                    
+                }
+                
+            } else {
+                if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+            }
+        }
+        
     }
     
     
