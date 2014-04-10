@@ -3308,6 +3308,16 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
         NSLog(@"found a movie %@", movieURL);
         
+        //check video lenght
+        AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:movieURL options:nil];
+        CMTime duration = sourceAsset.duration;
+        float seconds = CMTimeGetSeconds(duration);
+        if (seconds > 30) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
         
         //save movie info
         NSString *destPath;
