@@ -3313,7 +3313,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         NSString *destPath;
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (([_questionMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
-                  || (_questionImageFullPath.length == 0)){
+                  || (_questionMovieFullPath.length == 0)){
                 _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                 destPath = _questionMovieFullPath;
             }
