@@ -182,6 +182,8 @@
 		881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 881131971703CA1400C7D5A8 /* Default-Landscape~ipad.png */; };
 		881131AB1703CC8600C7D5A8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319B1703CA3600C7D5A8 /* Default.png */; };
 		881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319D1703CA3A00C7D5A8 /* Default@2x.png */; };
+		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
+		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E8E418BB300800AFCF12 /* close_button@2x.png */; };
 		8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */; };
 		883567EB18F36BDD00A988AA /* change_background_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883567EA18F36BDD00A988AA /* change_background_button@2x.png */; };
@@ -766,6 +768,9 @@
 		8811319B1703CA3600C7D5A8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8811319D1703CA3A00C7D5A8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8811319F1703CA3E00C7D5A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
+		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
+		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
 		8821E8E418BB300800AFCF12 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button@2x.png"; path = "Resources/close_button@2x.png"; sourceTree = "<group>"; };
 		8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_buttonBig@2x.png"; path = "Resources/close_buttonBig@2x.png"; sourceTree = "<group>"; };
 		883567EA18F36BDD00A988AA /* change_background_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_background_button@2x.png"; path = "Resources/change_background_button@2x.png"; sourceTree = "<group>"; };
@@ -1223,6 +1228,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				881E9E6F18F7AF1B00ECC523 /* SoundRecord */,
 				2D26343F16C2066D001A024D /* SelectTemplate */,
 				2D4E4EB616B2768100E75257 /* Play */,
 				2DBD6DD7169BCE2900962A80 /* Card */,
@@ -1546,6 +1552,16 @@
 				880E671F1827205B0054DDD0 /* Appsee.framework */,
 			);
 			name = Appsee;
+			sourceTree = "<group>";
+		};
+		881E9E6F18F7AF1B00ECC523 /* SoundRecord */ = {
+			isa = PBXGroup;
+			children = (
+				881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */,
+				881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */,
+				881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */,
+			);
+			name = SoundRecord;
 			sourceTree = "<group>";
 		};
 		883567EF18F3F70F00A988AA /* Templates */ = {
@@ -2031,6 +2047,7 @@
 				88491B351714522300833692 /* templateScreenshot0_answer_iPad.png in Resources */,
 				88491B361714522300833692 /* templateScreenshot0_answer.png in Resources */,
 				88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */,
+				881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */,
 				88491B381714522300833692 /* templateScreenshot0_question.png in Resources */,
 				8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */,
 				88491B391714522300833692 /* templateScreenshot1_answer_iPad.png in Resources */,
@@ -2116,6 +2133,7 @@
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
+				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
 				2D5C17E016D1A56A00E1E785 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
@@ -2315,7 +2333,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",
@@ -2354,7 +2372,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",

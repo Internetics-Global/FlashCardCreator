@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateSoundViewController">
+            <connections>
+                <outlet property="alertLabel" destination="MDu-vj-lO5" id="MSj-Bx-txL"/>
+                <outlet property="playButton" destination="4CF-8G-CwC" id="ds4-yh-Oxc"/>
+                <outlet property="saveButton" destination="Jsj-5s-3J3" id="RlM-fA-p97"/>
+                <outlet property="startButton" destination="Up7-uh-RyH" id="Uxk-Dt-bfn"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Up7-uh-RyH">
+                    <rect key="frame" x="239" y="115" width="90" height="90"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="b3m-WB-oLf"/>
+                        <constraint firstAttribute="width" constant="90" id="jQV-fG-LHx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="Record">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="startButtonClicked:" destination="-1" eventType="touchUpInside" id="F1v-xL-nUw"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="460" translatesAutoresizingMaskIntoConstraints="NO" id="MDu-vj-lO5">
+                    <rect key="frame" x="54" y="203" width="460" height="84"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="84" id="ASB-EB-sW3"/>
+                        <constraint firstAttribute="width" constant="460" id="Kz8-Wc-hpC"/>
+                    </constraints>
+                    <string key="text">When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CF-8G-CwC">
+                    <rect key="frame" x="20" y="267" width="60" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="7UC-lW-GkM"/>
+                        <constraint firstAttribute="width" constant="60" id="8JM-wb-nOG"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="I43-no-QIK"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="s5k-0H-Rph"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <state key="normal" title="Play">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="playButtonClicked:" destination="-1" eventType="touchUpInside" id="goQ-gH-dP4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jsj-5s-3J3">
+                    <rect key="frame" x="486" y="267" width="62" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="6FG-1u-Ukd"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="KSL-lB-hXo"/>
+                        <constraint firstAttribute="width" constant="62" id="Wpt-wW-I5t"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Save">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="saveButtonClicked:" destination="-1" eventType="touchUpInside" id="lfN-FO-e7D"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Jsj-5s-3J3" secondAttribute="bottom" constant="20" id="42f-wj-eLm"/>
+                <constraint firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" id="9BV-Nz-TJ7"/>
+                <constraint firstItem="4CF-8G-CwC" firstAttribute="baseline" secondItem="Jsj-5s-3J3" secondAttribute="baseline" id="ARh-ck-B7i"/>
+                <constraint firstItem="4CF-8G-CwC" firstAttribute="top" secondItem="Jsj-5s-3J3" secondAttribute="top" id="DuZ-E8-Gcr"/>
+                <constraint firstItem="Up7-uh-RyH" firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" id="HMi-j7-4vc"/>
+                <constraint firstItem="MDu-vj-lO5" firstAttribute="top" secondItem="Up7-uh-RyH" secondAttribute="bottom" constant="-2" id="Qvg-RF-3em"/>
+                <constraint firstItem="MDu-vj-lO5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="54" id="XZ8-6n-tGf"/>
+                <constraint firstAttribute="trailing" secondItem="Jsj-5s-3J3" secondAttribute="trailing" constant="20" id="aF7-Oj-ycB"/>
+                <constraint firstAttribute="centerX" secondItem="Up7-uh-RyH" secondAttribute="centerX" id="i6i-RI-At4"/>
+                <constraint firstAttribute="bottom" secondItem="4CF-8G-CwC" secondAttribute="bottom" constant="20" id="qGM-fT-pqB"/>
+                <constraint firstItem="4CF-8G-CwC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="qZH-Lc-vat"/>
+                <constraint firstAttribute="centerY" secondItem="Up7-uh-RyH" secondAttribute="centerY" id="qwu-sV-dWp"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

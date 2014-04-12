@@ -13,6 +13,8 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
     kReasonLogoImageChangeEnum = 1,
@@ -33,9 +35,12 @@ typedef enum{
 @class MBProgressHUD;
 @class JSBadgeView;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate> {
     JSBadgeView *_cardSNText;
     
+    //sound record related
+    NSString     *_questionRecordedSoundFullPath;
+    NSString     *_answerRecordedSoundFullPath;
     
     //background related
     UIButton     *_backgroundImageSelectButton;
@@ -131,7 +136,7 @@ typedef enum{
 
 @property (nonatomic, strong) Card *currentCard;
 @property (nonatomic, strong) Pack *currentPack;
-@property (nonatomic, assign) BOOL isQuestionShowing;
+
 @property (nonatomic, assign) BOOL isPlayingCard;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 

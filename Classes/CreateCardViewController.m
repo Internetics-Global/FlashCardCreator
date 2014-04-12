@@ -104,12 +104,10 @@ BOOL isFromNewCreatedCard = NO;
         if (isUserInterfaceIdiomPhone) {
             flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone - kFalshCardViewHeight_QASegment_iPhone)/2;
             _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone + kFalshCardViewHeight_QASegment_iPhone) defaultPack:_currentPack defaultCard:_newCard];
-            _newCardView.isQuestionShowing = YES;
             
         } else {
             flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2;
             _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad) defaultPack:_currentPack defaultCard:_newCard];
-            _newCardView.isQuestionShowing = YES;
         }
         
         //Step3: Response (这个非常重要)

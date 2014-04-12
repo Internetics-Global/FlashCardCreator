@@ -32,6 +32,8 @@
     NSInteger _lineNoSub;
     
     NSString *_backgroundImageFullPath;
+    
+    NSString *_recordedSoundFullPath;
 }
 
 @property (nonatomic, assign) NSInteger answerID;
@@ -55,6 +57,8 @@
 @property (strong, nonatomic) CSS *css;
 
 @property (copy, nonatomic) NSString *backgroundImageFullPath;
+
+@property (copy, nonatomic) NSString *recordedSoundFullPath;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;

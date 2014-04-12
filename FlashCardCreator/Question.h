@@ -31,6 +31,8 @@
     
     NSString *_backgroundImageFullPath;
     
+    NSString *_recordedSoundFullPath;
+    
     CSS *_css;
 }
 
@@ -54,6 +56,8 @@
 @property (assign, nonatomic) NSInteger lineNoSub;
 
 @property (copy, nonatomic) NSString *backgroundImageFullPath;
+
+@property (copy, nonatomic) NSString *recordedSoundFullPath;
 
 @property (strong, nonatomic) CSS *css;
 

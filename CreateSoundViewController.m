@@ -1,0 +1,232 @@
+//
+//  CreateSoundViewController.m
+//  NoiseMeter
+//
+//  Created by Bourne Wang on 14-2-13.
+//  Copyright (c) 2014年 Internetics Pty Ltd. All rights reserved.
+//
+
+#import "CreateSoundViewController.h"
+#import "FileOperationHelper.h"
+#import "Card.h"
+
+@interface CreateSoundViewController () {
+    AVAudioRecorder    *_recorder;
+    AVAudioPlayer      *_player;
+}
+
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *startButton;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *playButton;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *saveButton;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *alertLabel;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *dismissButton;
+
+@end
+
+@implementation CreateSoundViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+
+    self.view.backgroundColor = [UIColor colorWithRed:102.0/255 green:102.0/255 blue:102.0/255 alpha:1];
+    
+
+    
+    _playButton.hidden = YES;
+    _saveButton.hidden = YES;
+    
+    _startButton.layer.cornerRadius =45;
+    _startButton.layer.shadowColor = [[UIColor redColor] CGColor];
+    _startButton.layer.shadowOpacity = 1.0f;
+    _startButton.layer.shadowRadius = 10.0f;
+    
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    
+    self.navigationItem.leftBarButtonItem = closeButton;
+    
+    [self setupRecord];
+    
+
+}
+
+- (void) setupRecord {
+    NSDictionary *recorderSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                         [NSNumber numberWithInt:kAudioFormatMPEG4AAC],AVFormatIDKey,
+                         [NSNumber numberWithInt:44100],AVSampleRateKey,
+                         [NSNumber numberWithInt:1],AVNumberOfChannelsKey,
+                         [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,
+                         [NSNumber numberWithBool:NO],AVLinearPCMIsBigEndianKey,
+                         [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
+                         nil];
+    _recorder = [[AVAudioRecorder alloc] initWithURL:[self tempRecordedFilePath]  settings:recorderSettings error:nil];
+    _recorder.delegate = self;
+    _recorder.meteringEnabled = YES;
+    
+    NSError *error;
+    BOOL success = FALSE;
+    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+    if (!success)  {
+        NSLog(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
+    }
+}
+
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)startButtonClicked:(id)sender {
+    
+    [_recorder record];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        _playButton.hidden = YES;
+        _saveButton.hidden = YES;
+        
+        //[[NMDecibelLogger defaultLogger] startLogging];
+        
+        NSDate*start =[NSDate date];
+        while (1) {
+            usleep(10000);
+            NSDate* methodFinish =[NSDate date];
+            NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
+            if (executionTime > 5) {
+                NSLog(@"%s:finish recording a new customized alarm sound",__FUNCTION__);
+                break;
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",5.0 - executionTime]];
+                [_startButton setTitle:@"Recording" forState:UIControlStateNormal];
+            });
+        }
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            usleep(200000);
+            [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
+            [_startButton setTitle:@"Record" forState:UIControlStateNormal];
+            
+            _playButton.hidden = NO;
+            _saveButton.hidden = NO;
+        });
+        
+
+        [_recorder stop];
+        
+        
+    });
+    
+}
+
+
+- (IBAction)playButtonClicked:(id)sender {
+    
+    NSError *error;
+    //不能声明为局部变量，否则无法播放
+    _player = [[AVAudioPlayer alloc] initWithContentsOfURL:[self tempRecordedFilePath]
+                                                                   error:&error];
+    _player.delegate = self;
+    _player.numberOfLoops = 0;
+    [_player prepareToPlay];
+    
+    if (_player == nil)
+		NSLog(@"%s:%@",__FUNCTION__,[error description]);
+	else
+		[_player play];
+    
+}
+
+- (IBAction)closeButtonClicked:(id)sender {
+    [self dismiss];
+}
+
+- (IBAction)saveButtonClicked:(id)sender {
+    
+    if ([_player isPlaying]) {
+        [_player stop];
+    }
+    
+    NSString *saveTo = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];;
+    if (_isOnQuestion) {
+        if (_card.question.recordedSoundFullPath.length == 0) {
+            _card.question.recordedSoundFullPath = saveTo;
+        }  else {
+            saveTo = _card.question.recordedSoundFullPath;
+        }
+    } else {
+        if (_card.answer.recordedSoundFullPath.length == 0) {
+            _card.answer.recordedSoundFullPath = saveTo;
+        } else {
+            saveTo = _card.answer.recordedSoundFullPath;
+        }
+    }
+    
+    NSError *error;
+    [[NSFileManager defaultManager] moveItemAtPath:[self tempRecordedPathString]
+                                            toPath:saveTo
+                                             error:&error];
+    if (error) {
+        NSLog(@"%s:%@",__FUNCTION__,[error localizedDescription]);
+    }
+    
+    [_card save];
+    [self dismiss];
+    
+    
+    
+}
+
+- (void) dismiss {
+
+  [self dismissModalViewControllerAnimated:YES];
+    
+}
+
+- (NSURL *) tempRecordedFilePath {
+    NSURL *url = [NSURL fileURLWithPath:[self tempRecordedPathString]];
+    return url;
+}
+
+- (NSString *) tempRecordedPathString {
+    NSString *url = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmp.aac"];
+    return url;
+}
+
+#pragma mark – AVAudioRecorderDelegate
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag {
+  NSLog(@"%s",__FUNCTION__);
+}
+
+/* if an error occurs while encoding it will be reported to the delegate. */
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error {
+  NSLog(@"%s",__FUNCTION__);
+}
+
+#pragma mark – AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    NSLog(@"%s",__FUNCTION__);
+    _player = nil;
+    
+    
+}
+
+@end

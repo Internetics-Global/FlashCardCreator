@@ -31,6 +31,8 @@
 #import "Common.h"
 #import <AVFoundation/AVFoundation.h>
 
+#import "CreateSoundViewController.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 150.0
@@ -71,7 +73,10 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
 
 @interface FlashCard () {
     Type_Image_Selector    _typeImageSelector;
+    AVAudioPlayer          *_audioPlayer;
 }
+
+@property (strong, nonatomic) UIButton *soundButton;
 
 
 @end
@@ -234,24 +239,36 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         [self addSubview:_questionTitle];
     }
     
-    if (_answerTitle == nil) {
-        _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 60, 400, 52);
-        _answerTitle.backgroundColor = [UIColor clearColor];
-        _answerTitle.font =[UIFont systemFontOfSize:40];
-        _answerTitle.textAlignment = NSTextAlignmentLeft;
-        _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-        _answerTitle.userInteractionEnabled = FALSE;
-        _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 1.0f;
-        _answerTitle.layer.shadowRadius = 3.5f;
-        _answerTitle.textColor = [UIColor redColor];
-        _answerTitle.delegate = self;
-        _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
-        _answerTitle.returnKeyType = UIReturnKeyDone;
-        _answerTitle.tag = kTagTitleAnser;
-        [self addSubview:_answerTitle];
+    if (_questionTitle == nil) {
+        _questionTitle = [[UITextField alloc]init];
+        _questionTitle.frame = CGRectMake(80, 60, 400, 52);
+        _questionTitle.backgroundColor = [UIColor clearColor];
+        _questionTitle.font =[UIFont systemFontOfSize:40];
+        _questionTitle.textAlignment = NSTextAlignmentLeft;
+        _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _questionTitle.userInteractionEnabled = FALSE;
+        _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowRadius = 3.5f;
+        _questionTitle.textColor = [UIColor blueColor];
+        _questionTitle.delegate = self;
+        _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _questionTitle.returnKeyType = UIReturnKeyDone;
+        _questionTitle.tag = kTagTitleQuestion;
+        [self addSubview:_questionTitle];
+    }
+    
+    //TODO: need to implement iPhone too
+    if (_soundButton == nil) {
+        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _soundButton.frame = CGRectMake(80, 30, 80, 30);
+        [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
+        [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
+        [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_soundButton addTarget:self action:@selector(soundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        _soundButton.backgroundColor = [UIColor orangeColor];
+        [self addSubview:_soundButton];
     }
     
     if (_verticalScrollView == nil) {
@@ -1186,6 +1203,9 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
     _questionMovieFullPath = path;
     
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
+    _questionRecordedSoundFullPath = path;
+    
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
     NSString *logoFullPath = _currentCard.question.logoFullPath;
@@ -1222,6 +1242,9 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
     _answerMovieFullPath = path;
+    
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
+    _answerRecordedSoundFullPath = path;
     
     _answerTitle.text = _currentCard.answer.title;
 
@@ -1331,6 +1354,8 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
     _currentCard.answer.movieFullPath = _answerMovieFullPath;
     
+    _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
+    
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
     _currentCard.answer.css.subheadingSize = _subheadingSizeAnswer;
@@ -1350,6 +1375,8 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
     
     _currentCard.question.movieFullPath = _questionMovieFullPath;
+    
+    _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
     
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
@@ -4433,6 +4460,56 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
 }
 
+- (void) soundButtonClicked:(id)sender {
+    
+    if (_isPlayingCard) {
+        //play sound
+        
+        NSError *error;
+        //不能声明为局部变量，否则无法播放
+        NSURL *audioURL;
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
+        } else {
+            audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
+        }
+        
+        if (audioURL) {
+            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];
+            
+            _audioPlayer.numberOfLoops = 0;
+            _audioPlayer.delegate = self;
+            [_audioPlayer prepareToPlay];
+            
+            if (_audioPlayer == nil)
+                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+            else
+                [_audioPlayer play];
+        } else {
+            NSLog(@"%s:can not find the audio file",__FUNCTION__);
+        }
+        
+        
+        
+    } else {
+        
+        if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+            
+            CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
+            createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
+            createSoundViewController.card = _currentCard;
+            UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
+            navController.modalPresentationStyle = UIModalPresentationFormSheet;
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
+            
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Audio play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }
+    
+}
+
 
 - (void) changeTemplateButtonClick:(id)sender {
     
@@ -4580,6 +4657,12 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
     range.location = location + 1;
     [_lastBecomeFirstRespondTextView setSelectedRange:range];
+}
+
+#pragma mark – AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    player = nil;
 }
 
 

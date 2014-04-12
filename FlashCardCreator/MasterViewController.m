@@ -1466,6 +1466,20 @@ enum popover_enum {
             }
             
             
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];
+            if ([questionDict[@"audio"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"audio"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard question].recordedSoundFullPath = newFileName;
+                }
+            }   else {
+                [assembledCard question].recordedSoundFullPath = @"";
+            }
+            
+            
             //Deal with font size difference between iPhone and iPad
             int subheadingSize = [questionDict[@"subheading_size"] integerValue];;
             int mainSize = [questionDict[@"main_size"] integerValue];
@@ -1641,6 +1655,19 @@ enum popover_enum {
                 }
             }   else {
                 [assembledCard answer].movieFullPath = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];
+            if ([answerDict[@"audio"] length] > 0) {
+                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"audio"]] toPath:newFileName error:&error];
+                if (error) {
+                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].recordedSoundFullPath = newFileName;
+                }
+            }   else {
+                [assembledCard answer].recordedSoundFullPath = @"";
             }
             
             //Deal with font size difference between iPhone and iPad

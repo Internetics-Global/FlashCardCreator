@@ -27,6 +27,7 @@
 
 + (NSString *)unzippedPackInfoJsonFilePath;
 
++ (NSString *) generateUniqueAudioFilePathUnderImagesFolder;
 + (NSString *) generateUniqueJPEGImageFilePathUnderImagesFolder;
 + (NSString *) generateUniqueMovFilePathUnderImagesFolder;
 + (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password;
