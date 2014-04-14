@@ -14,7 +14,7 @@
     float _subheadingSize;
 	NSString *_subheadingColor;
     NSString *_subheadingAlign;
-    NSString *_subHeadingFont;
+    NSString *_subheadingFont;
     
     float _mainSize;
 	NSString *_mainColor;

@@ -38,7 +38,7 @@
     
     _subheadingAlign = @"Center";
     _subheadingColor = @"Black";
-    _subHeadingFont = @"";
+    _subheadingFont = @"";
     
     _mainAlign = @"Center";
     _mainColor = @"Black";
@@ -70,7 +70,7 @@
     _subheadingSize = [[dataDict valueForKey:@"subheading_size"] intValue];
     _subheadingAlign = [dataDict valueForKey:@"subheading_align"];
     _subheadingColor= [dataDict valueForKey:@"subheading_color"];
-    _subHeadingFont= [dataDict valueForKey:@"subheading_font"];
+    _subheadingFont= [dataDict valueForKey:@"subheading_font"];
     
     _mainSize = [[dataDict valueForKey:@"main_size"] intValue];
     _mainAlign = [dataDict valueForKey:@"main_align"];
@@ -101,7 +101,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subHeadingFont,_mainFont,_subFont, _cssID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont, _cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -115,7 +115,7 @@
 	if (_cssID == -1) {
 		_cssID = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color,subheading_font,main_font,sub_font) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subHeadingFont,_mainFont,_subFont];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color,subheading_font,main_font,sub_font) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
