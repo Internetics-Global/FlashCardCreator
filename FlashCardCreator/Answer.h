@@ -20,6 +20,7 @@
     NSString *_sub;
     
     NSString *_imageFullPath;
+    //youtube linkage or an local url
     NSString *_movieFullPath;
     
     NSString *_logoFullPath;  //we don't use this field

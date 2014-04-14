@@ -7,6 +7,7 @@
 //
 
 #import "Common.h"
+#import "RequestUtils.h"
 
 @implementation Common
 
@@ -84,6 +85,52 @@
     rect.size.width = rect.size.width * scaleValue;
     rect.size.height = rect.size.height * scaleValue;
     return rect;
+}
+
+
++ (BOOL) validateUrl: (NSString *) str {
+    NSString *urlRegEx =
+    @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    return [urlTest evaluateWithObject:str];
+}
+
++ (NSArray *) allAvailableFonts {
+    
+    NSMutableArray *fontNames = [[NSMutableArray alloc] init];
+    NSArray *fontFamilyNames = [UIFont familyNames];
+
+    for (NSString *familyName in fontFamilyNames)
+    {
+        NSLog(@"Font Family Name = %@", familyName);
+        NSArray *names = [UIFont fontNamesForFamilyName:familyName];
+        NSLog(@"Font Names = %@", fontNames);
+        [fontNames addObjectsFromArray:names];
+    }
+    
+    return fontFamilyNames;
+
+}
+
++ (BOOL) isValidYoutubeLinkage:(NSString *) str {
+    return [str hasPrefix:@"http://www.youtube.com/watch"];
+}
+
+/**
+ *  must be like this: http://www.youtube.com/watch?v=gzsrooteAZw
+ */
++ (NSString *) youtubeIDFromURL:(NSString *) str {
+    NSDictionary *param =  [str URLQueryParameters];
+    NSString *idStr = [param objectForKey:@"v"];
+    return idStr;
+}
+
+/**
+ *  Support to directly play in the app
+ */
++ (NSString *) embeddedYoutubeURL:(NSString *) str {
+    NSString *finalStr = [NSString stringWithFormat:@"http://www.youtube.com/embed/%@",[self youtubeIDFromURL:str]];
+    return finalStr;
 }
 
 

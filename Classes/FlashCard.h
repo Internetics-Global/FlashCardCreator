@@ -15,6 +15,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import "PopupListComponent.h"
+
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
     kReasonLogoImageChangeEnum = 1,
@@ -35,7 +37,7 @@ typedef enum{
 @class MBProgressHUD;
 @class JSBadgeView;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopupListComponentDelegate> {
     JSBadgeView *_cardSNText;
     
     //sound record related
@@ -63,7 +65,9 @@ typedef enum{
     UITextField   *_creatorText;
     
     //movie played related
+    //youtube linkage or an local url
     NSString     *_questionMovieFullPath;
+    //youtube linkage or an local url
     NSString     *_answerMovieFullPath;
     
     NSString     *_questionImageFullPath; //如果播放的是mov，则是Mov的thumbnail
@@ -132,6 +136,9 @@ typedef enum{
     //when use, please use together
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
+    
+    //show "youtube url input dialog" or image/video library
+    PopupListComponent *_popupList;
 }
 
 @property (nonatomic, strong) Card *currentCard;

@@ -28,4 +28,13 @@
 //同等比例放大缩小
 + (CGRect) getScaledViewRect:(UIView *) view withProportion:(float) scaleValue;
 
++ (NSArray *) allAvailableFonts;
+
++ (BOOL) validateUrl: (NSString *) str;
+
++ (BOOL) isValidYoutubeLinkage:(NSString *) str;
++ (NSString *) youtubeIDFromURL:(NSString *) str;
+
++ (NSString *) embeddedYoutubeURL:(NSString *) str;
+
 @end

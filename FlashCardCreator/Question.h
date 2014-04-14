@@ -45,6 +45,7 @@
 @property (nonatomic, copy) NSString *sub;
 
 @property (nonatomic, copy) NSString *imageFullPath;
+//youtube linkage or an local url
 @property (nonatomic, copy) NSString *movieFullPath;
 
 @property (nonatomic, copy) NSString *logoFullPath;

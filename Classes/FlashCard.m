@@ -71,6 +71,12 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     Type_Image_Selector_Unkown    = -1,
 };
 
+typedef NS_ENUM(NSInteger, Type_AlertView) {
+    Type_AlertView_Unkown      = -1,
+    Type_AlertView_LogoURL       = 0,
+    Type_AlertView_VideoURL   = 1,
+};
+
 @interface FlashCard () {
     Type_Image_Selector    _typeImageSelector;
     AVAudioPlayer          *_audioPlayer;
@@ -259,7 +265,6 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         [self addSubview:_questionTitle];
     }
     
-    //TODO: need to implement iPhone too
     if (_soundButton == nil) {
         _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _soundButton.frame = CGRectMake(80, 30, 80, 30);
@@ -290,7 +295,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _imageQuestion.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageQuestion];
         
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
         [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
@@ -344,7 +349,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _imageAnswer.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageAnswer];
         
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
         [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     
@@ -620,6 +625,17 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         [self addSubview:_answerTitle];
     }
     
+    if (_soundButton == nil) {
+        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _soundButton.frame = CGRectMake(50, 5, 80, 30);
+        [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
+        [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
+        [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_soundButton addTarget:self action:@selector(soundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        _soundButton.backgroundColor = [UIColor orangeColor];
+        [self addSubview:_soundButton];
+    }
+    
     
     if (_verticalScrollView == nil) {
         _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 40, 370, 195)];
@@ -679,7 +695,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _imageQuestion.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageQuestion];
         
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
         [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
@@ -731,7 +747,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _imageAnswer.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageAnswer];
         
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByImage:)];
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
         [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     _imageAnswer.hidden = YES;
@@ -941,7 +957,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
+    if (_currentCard.question.movieFullPath.length > 0) {
         //allow to play movie
       _imageQuestion.userInteractionEnabled        = YES;
     } else {
@@ -956,7 +972,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     _subheadingQuestion.userInteractionEnabled   = FALSE;
     _subheadingQuestion.layer.borderWidth = 0;
     
-    if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
+    if (_currentCard.answer.movieFullPath.length > 0) {
       _imageAnswer.userInteractionEnabled        = YES;
     } else {
       _imageAnswer.userInteractionEnabled        = FALSE;
@@ -3237,67 +3253,113 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
 }
 
-- (void)selectFromImageLibraryByImage:(UITapGestureRecognizer *)sender {
+- (void)imageViewTapped:(UITapGestureRecognizer *)sender {
     
     if (_isPlayingCard) {
         
         if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (_currentCard.question.movieFullPath.length > 0) {
+                
+                [self playVideo:_currentCard.question.movieFullPath];
+                
+            }
+            
+        } else {
+            if (_currentCard.answer.movieFullPath.length > 0) {
+                [self playVideo:_currentCard.answer.movieFullPath];
+            }
+        }
+        
+        return;
+        
+    }
+    
+    UIImageView *pickerImageView;
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        pickerImageView = _imageQuestion;
+    } else {
+        pickerImageView = _imageAnswer;
+    }
+    
+    _popupList = [[PopupListComponent alloc] init];
+    NSArray* listItems = [NSArray arrayWithObjects:
+                          [[PopupListComponentItem alloc] initWithCaption:@"Insert from youtube linkage" image:nil
+                                                                   itemId:0 showCaption:YES],
+                          [[PopupListComponentItem alloc] initWithCaption:@"Select from image/video library"  image:nil
+                                                                   itemId:1 showCaption:YES],
+                          nil];
+    
+    _popupList.imagePaddingHorizontal = 5;
+    if (isUserInterfaceIdiomPhone) {
+        _popupList.font = [UIFont systemFontOfSize:12];
+    } else {
+        _popupList.font = [UIFont systemFontOfSize:14];
+    }
+    _popupList.imagePaddingVertical = 2;
+    _popupList.textPaddingHorizontal = 5;
+    _popupList.alignment = UIControlContentHorizontalAlignmentLeft;
+    [_popupList showAnchoredTo:pickerImageView inView:self withItems:listItems withDelegate:self];
+
+}
+
+- (void)selectImageOrVideoFromLibrary{
+    
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+        _typeImageSelector = Type_Image_Selector_Image;
+        [self selectFromImageLibrary:nil withPopoverArrowUp:YES supportMov:YES];
+    } else {
+        if (_segmentedControl.selectedSegmentIndex == 0) {
             if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
                 
-                [self playMovie:_currentCard.question.movieFullPath];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
                 
             }
             
         } else {
             if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
-              [self playMovie:_currentCard.answer.movieFullPath];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
             }
         }
-        
-    } else {
-        
-        if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-            _typeImageSelector = Type_Image_Selector_Image;
-            [self selectFromImageLibrary:sender withPopoverArrowUp:YES supportMov:YES];
-        } else {
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
-                    
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alertView show];
-                    
-                }
-                
-            } else {
-                if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alertView show];
-                }
-            }
-        }
-        
     }
-    
-    
     
 }
 
 /**
  *  Play movie/video
  */
-- (void) playMovie:(NSString *) urlStr {
+- (void) playVideo:(NSString *) urlStr {
     
-
-    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
-    [[playerViewController moviePlayer] play];
-    
-    if (_calledViewController) {
-        //means this is called from play mode
-        //iPad
-        [_calledViewController presentModalViewController:playerViewController animated:YES];
+    if ([Common isValidYoutubeLinkage:urlStr]) {
+        //http://www.youtube.com/watch?v=gzsrooteAZw
+        NSString *finalURLStr = [Common embeddedYoutubeURL:urlStr];
+        SimpleWebBrowserController *playerViewController = [[SimpleWebBrowserController alloc] initWithURL:[NSURL URLWithString:finalURLStr]];
+        playerViewController.hidesToolbar = NO;
+        
+        if (_calledViewController) {
+            //means this is called from play mode
+            //iPad
+            [_calledViewController presentModalViewController:playerViewController animated:YES];
+        } else {
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+        }
+        
     } else {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+        
+        MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
+        [[playerViewController moviePlayer] play];
+        
+        if (_calledViewController) {
+            //means this is called from play mode
+            //iPad
+            [_calledViewController presentModalViewController:playerViewController animated:YES];
+        } else {
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+        }
+
     }
+
 
 }
 
@@ -3309,8 +3371,6 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
  *  @param isArrowUp _imagePickerPopover剪头方向
  */
 - (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
-    
-    NSParameterAssert([sender isKindOfClass:[UITapGestureRecognizer class]]);
     
     if (_imagePickerController != nil) {
         _imagePickerPopover = nil;
@@ -3328,7 +3388,16 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     if (isUserInterfaceIdiomPhone) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
-        CGPoint point = [sender locationInView:self];
+        CGPoint point;
+        if (sender == nil) {
+            if (self.segmentedControl.selectedSegmentIndex == 0) {
+                point = _imageQuestion.center;
+            } else {
+                point = _imageAnswer.center;
+            }
+        }else {
+          point = [sender locationInView:self];
+        }
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
         if (_imagePickerPopover != nil) {
@@ -3408,39 +3477,7 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         
         
         //save thumbnail info
-        
-        MPMoviePlayerController *theMovie = [[MPMoviePlayerController alloc] initWithContentURL:[info objectForKey:@"UIImagePickerControllerMediaURL"]];
-        theMovie.view.frame = picker.view.bounds;
-        theMovie.controlStyle = MPMovieControlStyleNone;
-        theMovie.shouldAutoplay=NO;
-        UIImage *thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
-        
-        UIImage *playImage = [UIImage imageNamed:@"play.png"];
-        
-        UIGraphicsBeginImageContext(thumbnail.size);
-        [thumbnail drawInRect:CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height)];
-
-        [playImage drawInRect:CGRectMake(thumbnail.size.width *0.4, thumbnail.size.height *0.4, thumbnail.size.width *0.2, thumbnail.size.width *0.2)];
-        UIImage *compositeThumbNail = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        if (_segmentedControl.selectedSegmentIndex == 0) {
-            if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
-                || ((_questionImageFullPath.length == 0))) {
-                _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-            }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_questionImageFullPath atomically:YES];
-            _imageQuestion.image = compositeThumbNail;
-        } else {
-            if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
-                || ((_answerImageFullPath.length == 0))) {
-                _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-            }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_answerImageFullPath atomically:YES];
-            _imageAnswer.image = compositeThumbNail;
-        }
+        [self thumbnailImageFromURL:[info objectForKey:@"UIImagePickerControllerMediaURL"]];
         
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -4081,24 +4118,12 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
         _logoLinkURL = ((Card *)[_currentPack cards][0]).question.logoURLLinkage;
     }
     [alert textFieldAtIndex:0].text = _logoLinkURL;
+    alert.tag = Type_AlertView_LogoURL;
     alert.delegate = self;
     [alert show];
 }
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex ==1) {
-        NSString *temp = [alertView textFieldAtIndex:0].text;
-        
-        if (![temp isEqualToString:_logoLinkURL]) {
-            _logoLinkURL = temp;
-            _currentCard.question.logoURLLinkage = temp;
-            
-            [self updatelogoURLForAllCards:temp];
-            
-        }
-    }
-}
 
 - (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
     
@@ -4460,6 +4485,11 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
 }
 
+/**
+ *  Record or play
+ *
+ *  @param sender <#sender description#>
+ */
 - (void) soundButtonClicked:(id)sender {
     
     if (_isPlayingCard) {
@@ -4569,6 +4599,57 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     
 }
 
+/**
+ *  Get thumbnail image from an URL
+ *
+ *  @param url youtube url or local video library
+ */
+- (void) thumbnailImageFromURL:(NSURL *) url {
+    
+    UIImageView *pickerImageView;
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        pickerImageView = _imageQuestion;
+    } else {
+        pickerImageView = _imageAnswer;
+    }
+    
+    MPMoviePlayerController *theMovie = [[MPMoviePlayerController alloc] initWithContentURL:url];
+    theMovie.view.frame = pickerImageView.bounds;
+    theMovie.controlStyle = MPMovieControlStyleNone;
+    theMovie.shouldAutoplay=NO;
+    UIImage *thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
+    if (thumbnail == nil) {
+        thumbnail = [UIImage imageNamed:@"video_default"];
+    }
+    
+    UIImage *playImage = [UIImage imageNamed:@"play.png"];
+    
+    UIGraphicsBeginImageContext(thumbnail.size);
+    [thumbnail drawInRect:CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height)];
+    
+    [playImage drawInRect:CGRectMake(thumbnail.size.width *0.4, thumbnail.size.height *0.4, thumbnail.size.width *0.2, thumbnail.size.width *0.2)];
+    UIImage *compositeThumbNail = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+            || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
+            || ((_questionImageFullPath.length == 0))) {
+            _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+        }
+        [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_questionImageFullPath atomically:YES];
+        _imageQuestion.image = compositeThumbNail;
+    } else {
+        if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+            || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
+            || ((_answerImageFullPath.length == 0))) {
+            _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+        }
+        [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_answerImageFullPath atomically:YES];
+        _imageAnswer.image = compositeThumbNail;
+    }
+}
+
 #pragma mark – UIPopoverControllerDelegate
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     [popoverController dismissPopoverAnimated:YES];
@@ -4663,6 +4744,97 @@ typedef NS_ENUM(NSInteger, Type_Image_Selector) {
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     player = nil;
+}
+
+#pragma mark – UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (alertView.tag) {
+        case Type_AlertView_LogoURL:
+            if (buttonIndex ==1) {
+                NSString *temp = [alertView textFieldAtIndex:0].text;
+                
+                if (![temp isEqualToString:_logoLinkURL]) {
+                    _logoLinkURL = temp;
+                    _currentCard.question.logoURLLinkage = temp;
+                    
+                    [self updatelogoURLForAllCards:temp];
+                    
+                }
+            }
+            break;
+        case Type_AlertView_VideoURL:
+            if (buttonIndex ==0) {
+                NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
+                if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
+                   NSLog(@"%s:unvalid url adress",__FUNCTION__);
+                } else {
+                    
+                    [self thumbnailImageFromURL:[NSURL URLWithString:[Common embeddedYoutubeURL:youtbueLinkage]]];
+                    
+                    if (self.segmentedControl.selectedSegmentIndex == 0) {
+                        _questionMovieFullPath = youtbueLinkage;
+                        
+                    } else {
+                        _answerMovieFullPath = youtbueLinkage;
+                    }
+                    
+                    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                        //we will save until after we press the save button
+                        if (_segmentedControl.selectedSegmentIndex == 0) {
+                            _currentCard.question.imageFullPath = _questionImageFullPath;
+                            _currentCard.question.movieFullPath = _questionMovieFullPath;
+                        } else {
+                            _currentCard.answer.imageFullPath = _answerImageFullPath;
+                            _currentCard.answer.movieFullPath = _answerMovieFullPath;
+                        }
+                    } else {
+                        [self saveEdittedCard];
+                    }
+                }
+                
+                
+                
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+#pragma mark -
+#pragma mark - PopupListComponentDelegate delegate
+- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [sender hide];
+        _popupList = nil;
+    });
+    
+    if (itemId == 1) {
+        [self selectImageOrVideoFromLibrary];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input youtube url linkage"
+                                                        message:nil
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        alert.tag = Type_AlertView_VideoURL;
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
+        alert.delegate = self;
+        [alert show];
+    }
+}
+
+
+- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
+{
+    NSLog(@"Popup cancelled");
+    
+    _popupList = nil;
 }
 
 
