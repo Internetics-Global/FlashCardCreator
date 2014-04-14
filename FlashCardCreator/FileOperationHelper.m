@@ -303,7 +303,10 @@
                 [NSString stringWithFormat:@"%d",card.question.lineNoMain],@"line_number_main",
                         [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent],@"background_image",
                                   [card.question.movieFullPath lastPathComponent],@"movie",
-                                      [card.question.recordedSoundFullPath lastPathComponent],@"audio",nil];
+                                      [card.question.recordedSoundFullPath lastPathComponent],@"audio",
+                                        card.question.css.subheadingFont,@"subheading_font",
+                                        card.question.css.mainFont,@"main_font",
+                                        card.question.css.subFont,@"sub_font",nil];
     
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {
@@ -330,7 +333,10 @@
             [NSString stringWithFormat:@"%d",card.answer.lineNoMain],@"line_number_main",
                     [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent],@"background_image",
                                [card.answer.movieFullPath lastPathComponent],@"movie",
-                                   [card.answer.recordedSoundFullPath lastPathComponent],@"audio",nil];
+                                   [card.answer.recordedSoundFullPath lastPathComponent],@"audio",
+                                      card.answer.css.subheadingFont,@"subheading_font",
+                                      card.answer.css.mainFont,@"main_font",
+                                      card.answer.css.subFont,@"sub_font",nil];
     
     NSData *jsonAnswerData = [NSJSONSerialization dataWithJSONObject:anserDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonAnswerData length] >0) && (error == nil)) {

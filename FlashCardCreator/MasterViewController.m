@@ -1447,6 +1447,10 @@ enum popover_enum {
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
             
+            [assembledCard question].css.subheadingFont = questionDict[@"subheading_font"];
+            [assembledCard question].css.mainFont = questionDict[@"main_font"];
+            [assembledCard question].css.subFont = questionDict[@"sub_font"];
+            
             [assembledCard question].lineNoSubheading = [questionDict[@"line_number_subheading"] integerValue];
             [assembledCard question].lineNoMain = [questionDict[@"line_number_main"] integerValue];
             [assembledCard question].lineNoSub = [questionDict[@"line_number_sub"] integerValue];
@@ -1639,6 +1643,10 @@ enum popover_enum {
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
+            
+            [assembledCard answer].css.subheadingFont = answerDict[@"subheading_font"];
+            [assembledCard answer].css.mainFont = answerDict[@"main_font"];
+            [assembledCard answer].css.subFont = answerDict[@"sub_font"];
             
             [assembledCard answer].lineNoSubheading = [answerDict[@"line_number_subheading"] integerValue];
             [assembledCard answer].lineNoMain = [answerDict[@"line_number_main"] integerValue];

@@ -44,6 +44,10 @@ typedef enum{
     NSString     *_questionRecordedSoundFullPath;
     NSString     *_answerRecordedSoundFullPath;
     
+    //font
+    NSString     *_questionFontType;
+    NSString     *_answerFontType;
+    
     //background related
     UIButton     *_backgroundImageSelectButton;
     UIImageView  *_questionBackgroundImageView;
@@ -102,6 +106,14 @@ typedef enum{
     NSInteger    _subSizeAnswer;
 	NSString     *_subColorAnswer;
     NSString     *_subAlignAnswer;
+    
+    NSString     *_subheadingFontAnswer;
+    NSString     *_subheadingFontQuestion;
+    NSString     *_mainFontAnswer;
+    NSString     *_mainFontQuestion;
+    NSString     *_subFontAnswer;
+    NSString     *_subFontQuestion;
+    
     
     NSMutableDictionary *_qDict;
     NSMutableDictionary *_aDict;

@@ -171,6 +171,16 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _keyboardShown = FALSE;
     
+    _questionFontType = @"";
+    _answerFontType = @"";
+    
+    _subheadingFontAnswer = @"";
+    _subheadingFontQuestion = @"";
+    _mainFontAnswer = @"";
+    _mainFontQuestion = @"";
+    _subFontAnswer = @"";
+    _subFontQuestion = @"";
+    
     [self setUpInputView];
     [self setUpInputAccessoryView];
     
@@ -302,7 +312,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_subheadingQuestion == nil) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
-        _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_subheadingFontQuestion.length == 0) {
+          _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+          _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:28];
+        }
+        
         _subheadingQuestion.userInteractionEnabled = FALSE;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
@@ -315,7 +331,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_mainQuestion == nil) {
         _mainQuestion = [[UITextView alloc]init];
         _mainQuestion.tag = kTagMainQuestion;
-        _mainQuestion.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_mainFontQuestion.length == 0) {
+            _mainQuestion.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+            _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:28];
+        }
+        
         _mainQuestion.userInteractionEnabled = FALSE;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
@@ -329,7 +351,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_subQuestion == nil) {
         _subQuestion = [[UITextView alloc]init];
         _subQuestion.tag = kTagSubQuestion;
-        _subQuestion.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_subFontQuestion.length == 0) {
+          _subQuestion.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+          _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:28];
+        }
+        
         _subQuestion.userInteractionEnabled = FALSE;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
@@ -358,7 +386,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_subheadingAnswer == nil) {
         _subheadingAnswer = [[UITextView alloc]init];
         _subheadingAnswer.tag = kTagSubheadingAnswer;
-        _subheadingAnswer.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_subheadingFontAnswer.length == 0) {
+            _subheadingAnswer.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+            _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:28];
+        }
+        
         _subheadingAnswer.userInteractionEnabled = FALSE;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
@@ -372,7 +406,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_mainAnswer == nil) {
         _mainAnswer = [[UITextView alloc]init];
         _mainAnswer.tag = kTagMainAnswer;
-        _mainAnswer.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_mainFontAnswer.length == 0) {
+            _mainAnswer.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+            _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:28];
+        }
+        
         _mainAnswer.userInteractionEnabled = FALSE;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _mainAnswer.returnKeyType = UIReturnKeyDefault;
@@ -387,7 +427,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_subAnswer == nil) {
         _subAnswer = [[UITextView alloc]init];
         _subAnswer.tag = kTagSubAnswer;
-        _subAnswer.font =[UIFont boldSystemFontOfSize:28];
+        
+        if (_subFontAnswer.length == 0) {
+            _subAnswer.font =[UIFont boldSystemFontOfSize:28];
+        } else {
+            _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:28];
+        }
+        
         _subAnswer.userInteractionEnabled = FALSE;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
@@ -1268,7 +1314,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _mainAnswer.text =_currentCard.answer.main;
     _subAnswer.text =_currentCard.answer.sub;
     
-    
+    _subheadingFontAnswer = _currentCard.answer.css.subheadingFont;
+    _mainFontAnswer = _currentCard.answer.css.mainFont;
+    _subFontAnswer = _currentCard.answer.css.subFont;
     
 }
 
@@ -1309,6 +1357,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
     _subQuestion.text =_currentCard.question.sub;
+    
+    _subheadingFontQuestion = _currentCard.question.css.subheadingFont;
+    _mainFontQuestion = _currentCard.question.css.mainFont;
+    _subFontQuestion = _currentCard.question.css.subFont;
 }
 
 
@@ -1382,6 +1434,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _currentCard.answer.css.subColor = _subColorAnswer;
     _currentCard.answer.css.subSize = _subSizeAnswer;
     
+    _currentCard.answer.css.subheadingFont = _subheadingFontAnswer;
+    _currentCard.answer.css.mainFont = _mainFontAnswer;
+    _currentCard.answer.css.subFont = _subFontAnswer;
+    
     _currentCard.question.title = _questionTitle.text;
     _currentCard.question.subheading = _subheadingQuestion.text;
     _currentCard.question.main = _mainQuestion.text;
@@ -1403,6 +1459,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _currentCard.question.css.subAlign = _subAlignQuestion;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
+    
+    _currentCard.question.css.subheadingFont = _subheadingFontQuestion;
+    _currentCard.question.css.mainFont = _mainFontQuestion;
+    _currentCard.question.css.subFont = _subFontQuestion;
     
     _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
     _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
@@ -1438,9 +1498,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     CSS *css = _currentCard.question.css;
     //1. subheading
     //during creating a new card, we used default value
-    _subheadingQuestion.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
+    
+    if (_subheadingFontQuestion.length == 0) {
+        _subheadingQuestion.font =[UIFont boldSystemFontOfSize:css.subheadingSize];
+    } else {
+        _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:css.subheadingSize];
+    }
+    
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subheadingQuestion.font =[UIFont boldSystemFontOfSize:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        if (_subheadingFontQuestion.length == 0) {
+            _subheadingQuestion.font =[UIFont boldSystemFontOfSize:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _subheadingSizeQuestion = css.subheadingSize;
     
@@ -1477,9 +1547,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     //2. main
     //during creating a new card, we used default value
-    _mainQuestion.font = [UIFont boldSystemFontOfSize:css.mainSize];
+    if (_mainFontQuestion.length == 0) {
+        _mainQuestion.font =[UIFont boldSystemFontOfSize:css.mainSize];
+    } else {
+        _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:css.mainSize];
+    }
+    
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _mainQuestion.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        if (_mainFontQuestion.length == 0) {
+            _mainQuestion.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:css.mainSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _mainSizeQuestion = css.mainSize;
     
@@ -1514,11 +1593,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _mainAlignQuestion = @"Justify";
     }
     
+    
+    
     //3. sub
     //during creating a new card, we used default value
-    _subQuestion.font = [UIFont boldSystemFontOfSize:css.subSize];
+    if (_subFontQuestion.length == 0) {
+        _subQuestion.font =[UIFont boldSystemFontOfSize:css.subSize];
+    } else {
+        _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:css.subSize];
+    }
+    
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subQuestion.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        if (_subFontQuestion.length == 0) {
+            _subQuestion.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:css.subSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _subSizeQuestion = css.subSize;
     
@@ -1558,9 +1648,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     css= _currentCard.answer.css;
     //1. subheading
     //during creating a new card, we used default value
-    _subheadingAnswer.font = [UIFont boldSystemFontOfSize:css.subheadingSize];
+    if (_subheadingFontAnswer.length == 0) {
+        _subheadingAnswer.font =[UIFont boldSystemFontOfSize:css.subheadingSize];
+    } else {
+        _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:css.subheadingSize];
+    }
+    
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subheadingAnswer.font =[UIFont boldSystemFontOfSize:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        if (_subheadingFontAnswer.length == 0) {
+            _subheadingAnswer.font =[UIFont boldSystemFontOfSize:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:css.subheadingSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _subheadingSizeAnswer = css.subheadingSize;
     
@@ -1597,9 +1696,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     //2. main
     //during creating a new card, we used default value
-    _mainAnswer.font = [UIFont boldSystemFontOfSize:css.mainSize];
+    if (_mainFontAnswer.length == 0) {
+        _mainAnswer.font =[UIFont boldSystemFontOfSize:css.mainSize];
+    } else {
+        _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:css.mainSize];
+    }
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _mainAnswer.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        if (_mainFontAnswer.length == 0) {
+            _mainAnswer.font =[UIFont boldSystemFontOfSize:css.mainSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:css.mainSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _mainSizeAnswer = css.mainSize;
     
@@ -1636,9 +1743,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     //3. sub
     //during creating a new card, we used default value
-    _subAnswer.font = [UIFont boldSystemFontOfSize:css.subSize];
+    if (_subFontAnswer.length == 0) {
+        _subAnswer.font =[UIFont boldSystemFontOfSize:css.subSize];
+    } else {
+        _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:css.subSize];
+    }
     if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-        _subAnswer.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        if (_subFontAnswer.length == 0) {
+            _subAnswer.font =[UIFont boldSystemFontOfSize:css.subSize*kFlashCardViewProporation_iPhone];
+        } else {
+            _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:css.subSize*kFlashCardViewProporation_iPhone];
+        }
     }
     _subSizeAnswer = css.subSize;
     
@@ -1738,9 +1853,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
+
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1753,9 +1877,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1781,9 +1914,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1796,9 +1938,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1811,9 +1962,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1836,9 +1996,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:20];
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1851,9 +2019,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1880,9 +2057,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1905,9 +2091,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1950,9 +2145,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+                
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -1965,9 +2170,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -1989,9 +2203,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
@@ -2004,9 +2228,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subAnswer.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
             if (self.isPlayingCard) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
@@ -2037,7 +2271,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(10, 10, 360, 80);
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:34];
+            }
+            
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
             _subheadingAlignAnswer = @"Center";
@@ -2046,7 +2286,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 100, 360, 320);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:30];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:30];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:30];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
@@ -2065,7 +2311,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(10, 10, 700, 60);
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:42];
+            }
+            
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
@@ -2074,7 +2326,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 75, 360, 295);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:38];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:38];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
@@ -2083,7 +2341,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subAnswer.hidden = FALSE;
             _subAnswer.frame = CGRectMake(10, 380, 360, 50);
-            _subAnswer.font = [UIFont boldSystemFontOfSize:38];
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:38];
+            }
+            
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
@@ -2099,7 +2363,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
-            _subheadingAnswer.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:42];
+            }
+            
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
@@ -2108,7 +2378,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 75, 360, 355);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
@@ -2128,7 +2404,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 10, 700, 420);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
@@ -2147,7 +2429,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 10, 360, 420);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
@@ -2181,7 +2469,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
@@ -2190,7 +2484,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subAnswer.hidden = FALSE;
             _subAnswer.frame = CGRectMake(10, 230, 700, 190);
-            _subAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
+            }
+            
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
@@ -2208,7 +2508,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainAnswer.hidden = FALSE;
             _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
-            _mainAnswer.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
+            }
+            
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
@@ -2217,7 +2523,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subAnswer.hidden = FALSE;
             _subAnswer.frame = CGRectMake(10, 230, 700, 190);
-            _subAnswer.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
+            }
+            
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
@@ -2249,7 +2561,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(10, 20, 700, 50);
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:30];
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:30];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:30];
+            }
+            
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
@@ -2258,7 +2576,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 75, 700, 350);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:38];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
@@ -2275,7 +2599,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(10, 20, 500, 50);
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:34];
+            }
+            
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
@@ -2284,7 +2614,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 75, 700, 180);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:38];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:38];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
@@ -2293,7 +2629,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(10, 260, 700, 160);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:30];
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:30];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:30];
+            }
+            
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
@@ -2309,7 +2651,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 30, 700, 280);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:42];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
@@ -2318,7 +2666,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(10, 320, 700, 100);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:34];
+            }
+            
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
@@ -2335,7 +2689,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 20, 700, 200);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:42];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
@@ -2344,7 +2704,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _subQuestion.hidden = FALSE;
             _subQuestion.frame = CGRectMake(10, 230, 700, 190);
-            _subQuestion.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:34];
+            }
+            
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Left";
@@ -2361,7 +2727,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 40, 700, 380);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:42];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
@@ -2391,7 +2763,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         {
             _subheadingQuestion.hidden = FALSE;
             _subheadingQuestion.frame = CGRectMake(10, 10, 360, 60);
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:42];
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:42];
+            }
+            
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
@@ -2400,7 +2778,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 75, 360, 355);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:34];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
             _mainAlignQuestion = @"Left";
@@ -2421,7 +2805,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             _mainQuestion.hidden = FALSE;
             _mainQuestion.frame = CGRectMake(10, 10, 360, 420);
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:34];
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:34];
+            }
+            
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
             _mainAlignQuestion = @"Left";
@@ -2458,9 +2848,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
+            
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2473,9 +2873,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2496,9 +2905,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
+
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2511,9 +2929,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2526,9 +2953,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2548,9 +2984,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2563,9 +3008,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2586,9 +3040,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2601,9 +3064,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2624,9 +3096,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:14];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:14];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:14];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:14*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:14*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:14*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -2664,9 +3145,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _subheadingQuestion.font = [UIFont boldSystemFontOfSize:20];
+
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
             if (self.isPlayingCard) {
-                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
             }
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2679,9 +3169,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
@@ -2709,9 +3208,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-            _mainQuestion.font = [UIFont boldSystemFontOfSize:16];
+
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
             if (self.isPlayingCard) {
-                _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
             }
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
@@ -3073,7 +3582,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_fontTypeArray == nil) {
         _fontTypeArray = [NSMutableArray arrayWithObject:backButton];
         
-        NSArray *fontArray = [Common allAvailableFonts];
+        NSArray *fontArray = [Common recommendedFonts];
         for (NSString *fontName in fontArray) {
             UIBarButtonItem *fontBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:fontName style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontType:)];
             [_fontTypeArray addObject:fontBarButtonItem];
@@ -3690,6 +4199,15 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) fontTypeAction {
+    
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
+    if ([Common isSymbolIncluded:responderTextView.text]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    
+    
     [_keyboardTopView setItems:_fontTypeArray animated:TRUE];
 }
 
@@ -3706,6 +4224,14 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) fontTypeActionForInputView {
+    
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
+    if ([Common isSymbolIncluded:responderTextView.text]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    
     [_keyboardTopViewForInputView setItems:_fontTypeArray animated:TRUE];
 }
 
@@ -3747,6 +4273,33 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) changeFontType:(id) sender{
+    
+    NSString *title = ((UIBarButtonItem *) sender).title;
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
+    
+    CGFloat size = responderTextView.font.pointSize;
+    
+    if ([[title lowercaseString] isEqualToString:@"default"]) {
+        [responderTextView setFont:[UIFont boldSystemFontOfSize:size]];
+        title = @"";//default value
+    } else {
+        [responderTextView setFont:[UIFont fontWithName:title size:size]];
+    }
+    
+    if (responderTextView.tag == kTagSubheadingQuestion){
+        _subheadingFontQuestion= title;
+    } else if (responderTextView.tag == kTagMainQuestion) {
+        _mainFontQuestion = title;
+    } else if (responderTextView.tag == kTagSubQuestion) {
+        _subFontQuestion = title;
+    } else if (responderTextView.tag == kTagSubheadingAnswer) {
+        _subheadingFontAnswer = title;
+    } else if (responderTextView.tag == kTagMainAnswer) {
+        _mainFontAnswer = title;
+    } else if (responderTextView.tag == kTagSubAnswer) {
+        _subFontAnswer = title;
+    }
+    
 }
 
 
@@ -3759,99 +4312,99 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size12",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:12];
+        [responderTextView setFont:[responderTextView.font fontWithSize:12]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:12*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:12*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 12;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size18",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:18];
+        [responderTextView setFont:[responderTextView.font fontWithSize:18]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:18*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:18*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 18;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size24",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:24];
+        [responderTextView setFont:[responderTextView.font fontWithSize:24]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:24*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:24*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 24;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size28",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:28];
+        [responderTextView setFont:[responderTextView.font fontWithSize:28]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:28*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:28*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 28;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size32",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:32];
+        [responderTextView setFont:[responderTextView.font fontWithSize:32]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:32*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:32*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 32;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size36",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:36];
+        [responderTextView setFont:[responderTextView.font fontWithSize:36]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:36*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:36*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 36;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size40",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:40];
+        [responderTextView setFont:[responderTextView.font fontWithSize:40]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:40*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:40*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 40;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size45",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:45];
+        [responderTextView setFont:[responderTextView.font fontWithSize:45]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:45*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:45*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 45;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size50",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:50];
+        [responderTextView setFont:[responderTextView.font fontWithSize:50]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:50*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:50*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 50;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size55",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:55];
+        [responderTextView setFont:[responderTextView.font fontWithSize:55]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:55*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:55*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 55;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size60",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:60];
+        [responderTextView setFont:[responderTextView.font fontWithSize:60]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:60*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:60*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 60;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size80",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:80];
+        [responderTextView setFont:[responderTextView.font fontWithSize:80]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:80*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:80*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 80;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size100",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:100];
+        [responderTextView setFont:[responderTextView.font fontWithSize:100]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:100*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:100*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 100;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size160",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:160];
+        [responderTextView setFont:[responderTextView.font fontWithSize:160]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:160*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:160*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 160;
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size260",nil)]) {
-        responderTextView.font = [UIFont boldSystemFontOfSize:260];
+        [responderTextView setFont:[responderTextView.font fontWithSize:260]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:260*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:260*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 260;
     } else {
-        responderTextView.font = [UIFont boldSystemFontOfSize:32];
+        [responderTextView setFont:[responderTextView.font fontWithSize:32]];
         if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            responderTextView.font =[UIFont boldSystemFontOfSize:32*kFlashCardViewProporation_iPhone];
+            [responderTextView setFont:[responderTextView.font fontWithSize:32*kFlashCardViewProporation_iPhone]];
         }
         selectFontSize = 32;
     }
@@ -4250,7 +4803,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
-                [_subheadingQuestion setFont:[UIFont boldSystemFontOfSize:(_subheadingQuestion.font.pointSize *1.1)]];
+                [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
                 NSLog(@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber);
                 i++;
@@ -4261,7 +4814,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
             lineNumber = [self lineNumberWithUITextView:_mainQuestion];
             while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_mainQuestion setFont:[UIFont boldSystemFontOfSize:(_mainQuestion.font.pointSize *1.1)]];
+                [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainQuestion];
                 NSLog(@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber);
                 i++;
@@ -4271,7 +4824,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subQuestion];
             while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subQuestion setFont:[UIFont boldSystemFontOfSize:(_subQuestion.font.pointSize *1.1)]];
+                [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subQuestion];
                 NSLog(@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber);
                 i++;
@@ -4296,7 +4849,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
             while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subheadingAnswer setFont:[UIFont boldSystemFontOfSize:(_subheadingAnswer.font.pointSize *1.1)]];
+                [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
                 NSLog(@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber);
                 i++;
@@ -4306,7 +4859,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_mainAnswer];
             while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_mainAnswer setFont:[UIFont boldSystemFontOfSize:(_mainAnswer.font.pointSize *1.1)]];
+                [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainAnswer];
                 NSLog(@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber);
                 i++;
@@ -4316,7 +4869,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subAnswer];
             while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subAnswer setFont:[UIFont boldSystemFontOfSize:(_subAnswer.font.pointSize *1.1)]];
+                [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subAnswer];
                 NSLog(@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber);
                 i++;
@@ -4395,7 +4948,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             break;
         }
     
-        [textView setFont:[UIFont boldSystemFontOfSize:(textView.font.pointSize -1)]];
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize -1)]];
         [textView layoutSubviews];
         
         textHeight = [self getTextSizeHeight:textView];
@@ -4404,7 +4957,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     //设定最小字体
     if (textView.font.pointSize < 10) {
-        [textView setFont:[UIFont boldSystemFontOfSize:(10)]];
+        [textView setFont:[textView.font fontWithSize:(10)]];
     }
     
     float orginalFontSize = textView.font.pointSize;
@@ -4426,7 +4979,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             //字体越小，size变化越明显
             break;
         }
-        [textView setFont:[UIFont boldSystemFontOfSize:(textView.font.pointSize -1)]];
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize -1)]];
         [textView layoutSubviews];
         usleep(5000);
         textHeight = [self getTextSizeHeight:textView];

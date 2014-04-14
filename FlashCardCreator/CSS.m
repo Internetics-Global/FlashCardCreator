@@ -16,14 +16,17 @@
 @synthesize subheadingAlign = _subheadingAlign;
 @synthesize subheadingColor = _subheadingColor;
 @synthesize subheadingSize = _subheadingSize;
+@synthesize subheadingFont = _subheadingFont;
 
 @synthesize mainAlign = _mainAlign;
 @synthesize mainColor = _mainColor;
 @synthesize mainSize = _mainSize;
+@synthesize mainFont = _mainFont;
 
 @synthesize subAlign = _subAlign;
 @synthesize subColor = _subColor;
 @synthesize subSize = _subSize;
+@synthesize subFont = _subFont;
 
 
 #pragma mark -
@@ -35,12 +38,15 @@
     
     _subheadingAlign = @"Center";
     _subheadingColor = @"Black";
+    _subHeadingFont = @"";
     
     _mainAlign = @"Center";
     _mainColor = @"Black";
+    _mainFont = @"";
     
     _subAlign = @"Center";
     _subColor = @"Black";
+    _subFont = @"";
     
     if (isUserInterfaceIdiomPhone) {
         _subheadingSize = 14;
@@ -64,14 +70,17 @@
     _subheadingSize = [[dataDict valueForKey:@"subheading_size"] intValue];
     _subheadingAlign = [dataDict valueForKey:@"subheading_align"];
     _subheadingColor= [dataDict valueForKey:@"subheading_color"];
+    _subHeadingFont= [dataDict valueForKey:@"subheading_font"];
     
     _mainSize = [[dataDict valueForKey:@"main_size"] intValue];
     _mainAlign = [dataDict valueForKey:@"main_align"];
     _mainColor= [dataDict valueForKey:@"main_color"];
+    _mainFont= [dataDict valueForKey:@"main_font"];
     
     _subSize = [[dataDict valueForKey:@"sub_size"] intValue];
     _subAlign = [dataDict valueForKey:@"sub_align"];
     _subColor= [dataDict valueForKey:@"sub_color"];
+    _subFont= [dataDict valueForKey:@"sub_font"];
     
 	return self;
 }
@@ -92,7 +101,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor, _cssID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subHeadingFont,_mainFont,_subFont, _cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -106,7 +115,7 @@
 	if (_cssID == -1) {
 		_cssID = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color,subheading_font,main_font,sub_font) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subHeadingFont,_mainFont,_subFont];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -140,6 +149,10 @@
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"sub_size"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"sub_align"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"sub_color"];
+        
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"subheading_font"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"main_font"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"sub_font"];
 	}
 	sqlite3_finalize(queryStatement);
 	return cssDict;

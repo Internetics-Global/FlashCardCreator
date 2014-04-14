@@ -34,8 +34,6 @@
     NSString *_recordedSoundFullPath;
     
     CSS *_css;
-    
-    NSString *_fontType;
 }
 
 @property (nonatomic, assign) NSInteger questionID;
@@ -61,8 +59,6 @@
 @property (copy, nonatomic) NSString *backgroundImageFullPath;
 
 @property (copy, nonatomic) NSString *recordedSoundFullPath;
-
-@property (copy, nonatomic) NSString *fontType;
 
 @property (strong, nonatomic) CSS *css;
 

@@ -98,9 +98,12 @@
     return [urlTest evaluateWithObject:str];
 }
 
+/**
+ *  第一个必须是default
+ */
 + (NSArray *) recommendedFonts {
     
-    NSMutableArray *fontNames = [[NSMutableArray alloc] init];
+    NSMutableArray *fontNames = [[NSMutableArray alloc] initWithObjects:@"Default",@"Arial-BoldMT",@"Arial-BoldItalicMT",@"Arial-ItalicMT",@"Chalkduster",@"Courier",@"Courier-Bold",@"DamascusBold",@"Helvetica-Bold", nil];
     return fontNames;
     
 }
@@ -147,6 +150,11 @@
  *  判断是否有symobl包含在str中，当前的方法是一种非有效做法，期待更好的方案
  */
 + (BOOL) isSymbolIncluded:(NSString *)str {
+    
+    if (str.length == 0) {
+        return NO;
+    }
+    
     for (Emoticon *emotion in [EmoticonHelper defaultEmoticons]) {
         if ([str rangeOfString:emotion.code].location == NSNotFound) {
             
