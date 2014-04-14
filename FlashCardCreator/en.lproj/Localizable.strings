@@ -59,6 +59,7 @@
 "Keyboard_No_Needed" = "Not needed";
 "Keyboard_Delete" = "Delete";
 
+"ToolbarItem_Font"        = "Font";
 "ToolbarItem_Align"        = "Align";
 "ToolbarItem_Size"         = "Size";
 "ToolbarItem_Color"        = "Color";

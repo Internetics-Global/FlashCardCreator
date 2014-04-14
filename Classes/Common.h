@@ -37,4 +37,8 @@
 
 + (NSString *) embeddedYoutubeURL:(NSString *) str;
 
++ (NSArray *) recommendedFonts;
+
++ (BOOL) isSymbolIncluded:(NSString *)str;
+
 @end

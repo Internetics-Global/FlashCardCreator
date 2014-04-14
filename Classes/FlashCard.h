@@ -113,6 +113,7 @@ typedef enum{
     BOOL    _doneButtonPressed;
     
     //keyboard related
+    NSMutableArray                     *_fontTypeArray;
     NSArray                            *_fontSizeArray;
     NSArray                            *_colorArray;
     NSArray                            *_alignArray;

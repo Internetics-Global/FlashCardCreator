@@ -2889,6 +2889,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 // For keyboard input view (top parts)
 - (void) setInputViewTopViewItems  {
     
+    UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeActionForInputView)];
+    
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownActionForInputView)];
     
     
@@ -2940,10 +2942,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
         
-        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
+        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButtonForInputView,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
         
     } else {
-        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
+        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
     }
     
     
@@ -2955,6 +2957,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 // For keyboard input accessary view
 - (void) setInputAccessoryViewItems  {
+    
+    UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeAction)];
     
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
     
@@ -3006,10 +3010,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [closeButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
         
         UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
+        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButton,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
         
     } else {
-        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,_emotionButton,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
+        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButton,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
     }
     
     
@@ -3062,6 +3066,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize80,nil];
         } else {
             _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize60, fontSize80, fontSize100, fontSize160,fontSize260,nil];
+        }
+        
+    }
+    
+    if (_fontTypeArray == nil) {
+        _fontTypeArray = [NSMutableArray arrayWithObject:backButton];
+        
+        NSArray *fontArray = [Common allAvailableFonts];
+        for (NSString *fontName in fontArray) {
+            UIBarButtonItem *fontBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:fontName style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontType:)];
+            [_fontTypeArray addObject:fontBarButtonItem];
         }
         
     }
@@ -3673,6 +3688,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - Text edit function
 
+
+- (void) fontTypeAction {
+    [_keyboardTopView setItems:_fontTypeArray animated:TRUE];
+}
+
 - (void) sizeUpDownAction {
     [_keyboardTopView setItems:_fontSizeArray animated:TRUE];
 }
@@ -3683,6 +3703,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 - (void) alignAction {
     [_keyboardTopView setItems:_alignArray animated:TRUE];
+}
+
+- (void) fontTypeActionForInputView {
+    [_keyboardTopViewForInputView setItems:_fontTypeArray animated:TRUE];
 }
 
 - (void) sizeUpDownActionForInputView {
@@ -3721,6 +3745,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     
 }
+
+- (void) changeFontType:(id) sender{
+}
+
 
 - (void) changeFontSize:(id) sender{
     

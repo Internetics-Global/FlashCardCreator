@@ -117,7 +117,7 @@
     
     
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text, movie text, audio text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text, movie text, audio text,font text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -140,7 +140,7 @@
     
     
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text,movie text, audio text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text,movie text, audio text,font text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -220,6 +220,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
+    
     NSLog(@"%s",__FUNCTION__);
     
 }
@@ -237,6 +238,11 @@
     sqlite3_finalize(queryStatement);
     
     query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN audio text "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN font text "];
     queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
@@ -259,6 +265,11 @@
     sqlite3_finalize(queryStatement);
     
     query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN audio text "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN font text "];
     queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);

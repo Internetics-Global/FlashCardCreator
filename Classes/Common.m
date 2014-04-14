@@ -9,6 +9,9 @@
 #import "Common.h"
 #import "RequestUtils.h"
 
+#import "EmoticonHelper.h"
+#import "Emoticon.h"
+
 @implementation Common
 
 + (void)alertViewCommon:(NSString *) msg {
@@ -95,6 +98,13 @@
     return [urlTest evaluateWithObject:str];
 }
 
++ (NSArray *) recommendedFonts {
+    
+    NSMutableArray *fontNames = [[NSMutableArray alloc] init];
+    return fontNames;
+    
+}
+
 + (NSArray *) allAvailableFonts {
     
     NSMutableArray *fontNames = [[NSMutableArray alloc] init];
@@ -133,6 +143,21 @@
     return finalStr;
 }
 
+/**
+ *  判断是否有symobl包含在str中，当前的方法是一种非有效做法，期待更好的方案
+ */
++ (BOOL) isSymbolIncluded:(NSString *)str {
+    for (Emoticon *emotion in [EmoticonHelper defaultEmoticons]) {
+        if ([str rangeOfString:emotion.code].location == NSNotFound) {
+            
+        } else {
+            return YES;
+        }
+    }
+    
+    return NO;
+    
+}
 
 
 @end
