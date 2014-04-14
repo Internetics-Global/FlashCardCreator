@@ -100,20 +100,20 @@
         _playButton.hidden = YES;
         _saveButton.hidden = YES;
         
-        //[[NMDecibelLogger defaultLogger] startLogging];
+        usleep(500000);
         
         NSDate*start =[NSDate date];
         while (1) {
             usleep(10000);
             NSDate* methodFinish =[NSDate date];
             NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
-            if (executionTime > 5) {
-                NSLog(@"%s:finish recording a new customized alarm sound",__FUNCTION__);
+            if (executionTime > 10) {
+                NSLog(@"%s:finish recording a new customized sound",__FUNCTION__);
                 break;
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",5.0 - executionTime]];
+                [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",10.0 - executionTime]];
                 [_startButton setTitle:@"Recording" forState:UIControlStateNormal];
             });
         }
@@ -180,6 +180,7 @@
     }
     
     NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:saveTo error:&error];
     [[NSFileManager defaultManager] moveItemAtPath:[self tempRecordedPathString]
                                             toPath:saveTo
                                              error:&error];
@@ -226,6 +227,13 @@
     NSLog(@"%s",__FUNCTION__);
     _player = nil;
     
+    
+}
+
+- (void)dealloc {
+    
+    _player = nil;
+    _recorder = nil;
     
 }
 
