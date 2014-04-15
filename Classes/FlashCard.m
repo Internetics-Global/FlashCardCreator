@@ -1454,7 +1454,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 	[self refreshAll];
 }
 
-- (void) doQuestionAndAnswerData {
+/**
+ *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
+ */
+- (void) commitQuestionAndAnswerData {
     _currentCard.answer.title = _answerTitle.text;
     _currentCard.answer.subheading = _subheadingAnswer.text;
     _currentCard.answer.main = _mainAnswer.text;
@@ -3426,7 +3429,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
-            [self doQuestionAndAnswerData];
+            [self commitQuestionAndAnswerData];
             [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
         } else {
             [self saveEdittedCard];
@@ -3849,19 +3852,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _popupList = [[PopupListComponent alloc] init];
     NSArray* listItems = [NSArray arrayWithObjects:
-                          [[PopupListComponentItem alloc] initWithCaption:@"Insert from youtube linkage" image:nil
+                          [[PopupListComponentItem alloc] initWithCaption:@"Insert Youtube linkage" image:nil
                                                                    itemId:0 showCaption:YES],
-                          [[PopupListComponentItem alloc] initWithCaption:@"Select from image/video library"  image:nil
+                          [[PopupListComponentItem alloc] initWithCaption:@"Select from library"  image:nil
                                                                    itemId:1 showCaption:YES],
                           nil];
     
     _popupList.imagePaddingHorizontal = 5;
     if (isUserInterfaceIdiomPhone) {
-        _popupList.font = [UIFont systemFontOfSize:12];
-    } else {
         _popupList.font = [UIFont systemFontOfSize:14];
+    } else {
+        _popupList.font = [UIFont systemFontOfSize:16];
     }
-    _popupList.imagePaddingVertical = 2;
+    _popupList.imagePaddingVertical = 10;
     _popupList.textPaddingHorizontal = 5;
     _popupList.alignment = UIControlContentHorizontalAlignmentLeft;
     [_popupList showAnchoredTo:pickerImageView inView:self withItems:listItems withDelegate:self];
@@ -3890,6 +3893,35 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         }
     }
     
+}
+
+- (void) playAudio {
+    NSError *error;
+    //不能声明为局部变量，否则无法播放
+    NSURL *audioURL;
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
+    } else {
+        audioURL = [NSURL fileURLWithPath:_currentCard.answer.recordedSoundFullPath];
+    }
+    
+    if (audioURL) {
+        _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];
+        
+        _audioPlayer.numberOfLoops = 0;
+        _audioPlayer.delegate = self;
+        [_audioPlayer prepareToPlay];
+        
+        if (_audioPlayer == nil)
+            NSLog(@"%s:%@",__FUNCTION__,[error description]);
+        else
+            [_audioPlayer play];
+    } else {
+        NSLog(@"%s:can not find the audio file",__FUNCTION__);
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 /**
@@ -4592,7 +4624,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         //we will save until after we press the save button
-        [self doQuestionAndAnswerData];
+        [self commitQuestionAndAnswerData];
     } else {
         //[self saveEdittedCard];
         
@@ -4751,7 +4783,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 - (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
     
     NSString *str = _currentCard.question.logoURLLinkage;
-    if ([str hasPrefix:@"http://"]) {
+    if ([Common validateUrl:str] && [str hasPrefix:@"http://www."] && str.length > 12) {
         
         NSURL *url = [NSURL URLWithString:_currentCard.question.logoURLLinkage];
         SimpleWebBrowserController *webViewController = [[SimpleWebBrowserController alloc] initWithURL:url];
@@ -5055,7 +5087,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _currentCard.packID = _currentPack.packID;
     
-    [self doQuestionAndAnswerData];
+    [self commitQuestionAndAnswerData];
     
     //在操作后，我们不需要返回之前的现场，因为我们是在new card save操作(窗口将被关闭）
     if ((self.tag == NEW_FLASHCARDVIEW_TAG) && (_segmentedControl.selectedSegmentIndex == 1)) {
@@ -5108,6 +5140,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
 }
 
+
 /**
  *  Record or play
  *
@@ -5117,35 +5150,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     if (_isPlayingCard) {
         //play sound
-        
-        NSError *error;
-        //不能声明为局部变量，否则无法播放
-        NSURL *audioURL;
-        if (_segmentedControl.selectedSegmentIndex == 0) {
-            audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
-        } else {
-            audioURL = [NSURL fileURLWithPath:_currentCard.answer.recordedSoundFullPath];
-        }
-        
-        if (audioURL) {
-            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];
-            
-            _audioPlayer.numberOfLoops = 0;
-            _audioPlayer.delegate = self;
-            [_audioPlayer prepareToPlay];
-            
-            if (_audioPlayer == nil)
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
-            else
-                [_audioPlayer play];
-        } else {
-            NSLog(@"%s:can not find the audio file",__FUNCTION__);
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-        }
-        
-        
+        [self playAudio];
         
     } else {
         
@@ -5220,7 +5225,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self saveEdittedCard];
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     } else {
-        [self doQuestionAndAnswerData];
+        [self commitQuestionAndAnswerData];
     }
     
 }
@@ -5444,7 +5449,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (itemId == 1) {
         [self selectImageOrVideoFromLibrary];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input youtube url linkage"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input youtube url"
                                                         message:nil
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
