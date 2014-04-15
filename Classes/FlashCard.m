@@ -1304,6 +1304,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _answerImageFullPath = path;
         _imageAnswer.image = imageTemp;
     } else {
+        _answerImageFullPath = @"";
         NSLog(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
@@ -1314,17 +1315,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _answerBackgroundImageFullPath = path;
         _answerBackgroundImageView.image = imageTemp;
     } else {
+        _answerBackgroundImageFullPath = @"";
         _answerBackgroundImageView.image = nil;
     }
     
     if (_currentCard.answer.movieFullPath.length > 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
         _answerMovieFullPath = path;
+    } else {
+        _answerMovieFullPath = @"";
     }
     
     if (_currentCard.answer.recordedSoundFullPath.length > 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
         _answerRecordedSoundFullPath = path;
+    } else {
+        _answerRecordedSoundFullPath = @"";
     }
     
     
@@ -1348,6 +1354,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionImageFullPath = path;
         _imageQuestion.image = imageTemp;
     } else {
+        _questionImageFullPath = @"";
         NSLog(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
     }
@@ -1358,6 +1365,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _logoImageFullPath = path;
         _logoImage.image = imageTemp;
     } else {
+        _logoImageFullPath = @"";
         NSLog(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
@@ -1369,7 +1377,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionBackgroundImageFullPath = path;
         _questionBackgroundImageView.image = imageTemp;
     } else {
+        _questionBackgroundImageFullPath = @"";
         _questionBackgroundImageView.image = nil;
+    }
+    
+    if (_currentCard.question.movieFullPath.length > 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
+        _questionMovieFullPath = path;
+    } else {
+        _questionMovieFullPath = @"";
+    }
+    
+    if (_currentCard.question.recordedSoundFullPath.length > 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
+        _questionRecordedSoundFullPath = path;
+    } else {
+        _questionRecordedSoundFullPath = @"";
     }
     
     _questionTitle.text = _currentCard.question.title;
@@ -5101,7 +5124,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
         } else {
-            audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
+            audioURL = [NSURL fileURLWithPath:_currentCard.answer.recordedSoundFullPath];
         }
         
         if (audioURL) {
@@ -5217,7 +5240,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     MPMoviePlayerController *theMovie = [[MPMoviePlayerController alloc] initWithContentURL:url];
-    theMovie.view.frame = pickerImageView.bounds;
+    theMovie.view.frame = CGRectMake(0, 0, CGRectGetWidth(pickerImageView.frame) * 2, CGRectGetHeight(pickerImageView.frame) * 2);
     theMovie.controlStyle = MPMovieControlStyleNone;
     theMovie.shouldAutoplay=NO;
     UIImage *thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
@@ -5371,6 +5394,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
                    NSLog(@"%s:unvalid url adress",__FUNCTION__);
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid youtube url, must be similar like http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
                 } else {
                     
                     [self thumbnailImageFromURL:[NSURL URLWithString:[Common embeddedYoutubeURL:youtbueLinkage]]];
