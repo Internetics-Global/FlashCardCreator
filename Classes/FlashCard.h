@@ -44,20 +44,16 @@ typedef enum{
     NSString     *_questionRecordedSoundFullPath;
     NSString     *_answerRecordedSoundFullPath;
     
-    //font
-    NSString     *_questionFontType;
-    NSString     *_answerFontType;
-    
     //background related
     UIButton     *_backgroundImageSelectButton;
-    UIImageView  *_questionBackgroundImageView;
-    UIImageView  *_answerBackgroundImageView;
+    UIImageView  *_questionBackgroundImageView; //允许随便从library选择
+    UIImageView  *_answerBackgroundImageView;//允许随便从library选择
     NSString     *_questionBackgroundImageFullPath;
     NSString     *_answerBackgroundImageFullPath;
     
     //template related
     UIButton     *_changeTemplateButton;
-    UIImageView  *_templateBackgroundImageView;
+    UIImageView  *_templateBackgroundImageView; //存在于NSBundle,不允许随便从library选择
     NSString     *_templateBackgroundImageName;
     
     
@@ -69,13 +65,13 @@ typedef enum{
     UITextField   *_creatorText;
     
     //movie played related
-    //youtube linkage or an local url
-    NSString     *_questionMovieFullPath;
-    //youtube linkage or an local url
-    NSString     *_answerMovieFullPath;
+    NSString     *_questionMovieFullPath;//youtube linkage or an local url
+    NSString     *_answerMovieFullPath; //youtube linkage or an local url
     
+    //image or thubmnail(video)
     NSString     *_questionImageFullPath; //如果播放的是mov，则是Mov的thumbnail
     NSString     *_answerImageFullPath; //如果播放的是mov，则是Mov的thumbnail
+    
     UIScrollView *_verticalScrollView;
     
     

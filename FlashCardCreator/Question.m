@@ -85,10 +85,6 @@
         _backgroundImageFullPath = @"";
     }
     
-    _movieFullPath= [dataDict valueForKey:@"movie"];
-    if (_movieFullPath.length == 0) {
-        _movieFullPath = @"";
-    }
     
     _recordedSoundFullPath= [dataDict valueForKey:@"audio"];
     if (_recordedSoundFullPath.length == 0) {
@@ -199,7 +195,7 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.backgroundImageFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
-                [Common alertViewCommon:@"Error when removing file of answer backgroundImageFullPath"];
+                [Common alertViewCommon:@"Error when removing file of question backgroundImageFullPath"];
                 NSLog(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
@@ -210,7 +206,18 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.movieFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
-                [Common alertViewCommon:@"Error when removing file of answer movieFullPath"];
+                [Common alertViewCommon:@"Error when removing file of question movieFullPath"];
+                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+            }
+        }
+    }
+    
+    error = nil;
+    if (self.recordedSoundFullPath.length >0) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.recordedSoundFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of question recordedSoundFullPath"];
                 NSLog(@"%s:%@",__FUNCTION__,[error description]);
             }
         }

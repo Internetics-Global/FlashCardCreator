@@ -33,6 +33,7 @@
 + (BOOL) validateUrl: (NSString *) str;
 
 + (BOOL) isValidYoutubeLinkage:(NSString *) str;
+
 + (NSString *) youtubeIDFromURL:(NSString *) str;
 
 + (NSString *) embeddedYoutubeURL:(NSString *) str;

@@ -146,9 +146,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _logoLinkURL = @"http://www.";
     _logoImageFullPath = @"";
     
-    _questionBackgroundImageFullPath = @"";
-    _answerBackgroundImageFullPath = @"";
-    
     _subheadingSizeQuestion = 40;
     _subheadingColorQuestion = @"Black";
     _subheadingAlignQuestion = @"Right";
@@ -171,9 +168,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _keyboardShown = FALSE;
     
-    _questionFontType = @"";
-    _answerFontType = @"";
+    //background image
+    _questionBackgroundImageFullPath = @"";
+    _answerBackgroundImageFullPath = @"";
     
+    //movie or video
+    _answerMovieFullPath = @"";
+    _questionMovieFullPath = @"";
+    
+    //audio
+    _answerRecordedSoundFullPath = @"";
+    _questionRecordedSoundFullPath = @"";
+    
+    //font
     _subheadingFontAnswer = @"";
     _subheadingFontQuestion = @"";
     _mainFontAnswer = @"";
@@ -234,7 +241,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
     
-
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
         _questionTitle.frame = CGRectMake(80, 60, 400, 52);
@@ -255,25 +261,28 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self addSubview:_questionTitle];
     }
     
-    if (_questionTitle == nil) {
-        _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 60, 400, 52);
-        _questionTitle.backgroundColor = [UIColor clearColor];
-        _questionTitle.font =[UIFont systemFontOfSize:40];
-        _questionTitle.textAlignment = NSTextAlignmentLeft;
-        _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
-        _questionTitle.userInteractionEnabled = FALSE;
-        _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 1.0f;
-        _questionTitle.layer.shadowRadius = 3.5f;
-        _questionTitle.textColor = [UIColor blueColor];
-        _questionTitle.delegate = self;
-        _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
-        _questionTitle.returnKeyType = UIReturnKeyDone;
-        _questionTitle.tag = kTagTitleQuestion;
-        [self addSubview:_questionTitle];
+
+    if (_answerTitle == nil) {
+        _answerTitle = [[UITextField alloc]init];
+        _answerTitle.frame = CGRectMake(80, 60, 400, 52);
+        _answerTitle.backgroundColor = [UIColor clearColor];
+        _answerTitle.font =[UIFont systemFontOfSize:40];
+        _answerTitle.textAlignment = NSTextAlignmentLeft;
+        _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
+        _answerTitle.userInteractionEnabled = FALSE;
+        _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
+        _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
+        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowRadius = 3.5f;
+        _answerTitle.textColor = [UIColor redColor];
+        _answerTitle.delegate = self;
+        _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
+        _answerTitle.returnKeyType = UIReturnKeyDone;
+        _answerTitle.tag = kTagTitleAnser;
+        [self addSubview:_answerTitle];
     }
+    
+    
     
     if (_soundButton == nil) {
         _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -281,7 +290,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
         [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
         [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_soundButton addTarget:self action:@selector(soundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor orangeColor];
         [self addSubview:_soundButton];
     }
@@ -677,7 +686,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
         [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
         [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_soundButton addTarget:self action:@selector(soundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor orangeColor];
         [self addSubview:_soundButton];
     }
@@ -1163,6 +1172,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         _questionTitle.userInteractionEnabled = false;
         _answerTitle.userInteractionEnabled = false;
+        _soundButton.hidden = YES;
     }
     
     
@@ -1262,11 +1272,16 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         //do nothing
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
-    _questionMovieFullPath = path;
+    if (_currentCard.question.movieFullPath.length >0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
+        _questionMovieFullPath = path;
+    }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
-    _questionRecordedSoundFullPath = path;
+    if (_currentCard.question.recordedSoundFullPath.length > 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
+        _questionRecordedSoundFullPath = path;
+    }
+    
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
@@ -1285,8 +1300,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
-    _answerImageFullPath = path;
     if (imageTemp) {
+        _answerImageFullPath = path;
         _imageAnswer.image = imageTemp;
     } else {
         NSLog(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
@@ -1295,18 +1310,23 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
     imageTemp = [UIImage imageWithContentsOfFile:path];
-    _answerBackgroundImageFullPath = path;
     if (imageTemp) {
+        _answerBackgroundImageFullPath = path;
         _answerBackgroundImageView.image = imageTemp;
     } else {
         _answerBackgroundImageView.image = nil;
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
-    _answerMovieFullPath = path;
+    if (_currentCard.answer.movieFullPath.length > 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
+        _answerMovieFullPath = path;
+    }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
-    _answerRecordedSoundFullPath = path;
+    if (_currentCard.answer.recordedSoundFullPath.length > 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
+        _answerRecordedSoundFullPath = path;
+    }
+    
     
     _answerTitle.text = _currentCard.answer.title;
 
@@ -1324,8 +1344,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
-    _questionImageFullPath = path;
     if (imageTemp) {
+        _questionImageFullPath = path;
         _imageQuestion.image = imageTemp;
     } else {
         NSLog(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
@@ -1334,8 +1354,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
     imageTemp = [UIImage imageWithContentsOfFile:path];
-    _logoImageFullPath = path;
     if (imageTemp) {
+        _logoImageFullPath = path;
         _logoImage.image = imageTemp;
     } else {
         NSLog(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
@@ -1345,8 +1365,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
     imageTemp = [UIImage imageWithContentsOfFile:path];
-    _questionBackgroundImageFullPath = path;
     if (imageTemp) {
+        _questionBackgroundImageFullPath = path;
         _questionBackgroundImageView.image = imageTemp;
     } else {
         _questionBackgroundImageView.image = nil;
@@ -1423,6 +1443,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _currentCard.answer.movieFullPath = _answerMovieFullPath;
     
     _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
+    _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
     
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
@@ -1447,8 +1468,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
     
     _currentCard.question.movieFullPath = _questionMovieFullPath;
-    
-    _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
     
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
@@ -5071,7 +5090,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *
  *  @param sender <#sender description#>
  */
-- (void) soundButtonClicked:(id)sender {
+- (void) soundRecordButtonClicked:(id)sender {
     
     if (_isPlayingCard) {
         //play sound
@@ -5098,6 +5117,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 [_audioPlayer play];
         } else {
             NSLog(@"%s:can not find the audio file",__FUNCTION__);
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
         }
         
         
@@ -5429,6 +5451,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _imagePickerController = nil;
     _imagePickerPopover = nil;
     _selectTemplatePopoverController = nil;
+    
+    _audioPlayer = nil;
     
     NSLog(@"%s",__FUNCTION__);
 }

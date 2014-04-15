@@ -99,7 +99,7 @@
 }
 
 /**
- *  第一个必须是default
+ *  由于可获得的字体有几百个，我们手动选择其中几个。第一个必须是default
  */
 + (NSArray *) recommendedFonts {
     
@@ -108,6 +108,9 @@
     
 }
 
+/**
+ *  All avaiable fonts on device
+ */
 + (NSArray *) allAvailableFonts {
     
     NSMutableArray *fontNames = [[NSMutableArray alloc] init];
@@ -147,6 +150,7 @@
 }
 
 /**
+ *  由于不是所有字体都支持unicode(特别是在interchangeability中），所以需要通过这个方法判断
  *  判断是否有symobl包含在str中，当前的方法是一种非有效做法，期待更好的方案
  */
 + (BOOL) isSymbolIncluded:(NSString *)str {

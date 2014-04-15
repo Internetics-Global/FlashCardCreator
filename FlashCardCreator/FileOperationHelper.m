@@ -145,6 +145,9 @@
 #pragma mark -
 #pragma mark - Generate unique file name
 
+/**
+ *  Must be .aac format
+ */
 + (NSString *) generateUniqueAudioFilePathUnderImagesFolder {
     NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
@@ -178,7 +181,7 @@
 
 
 /**
- *	an unique name will be generated and will be under directory of "Images"
+ *	must be .3gp format
  *
  */
 + (NSString *) generateUniqueMovFilePathUnderImagesFolder {

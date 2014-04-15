@@ -62,19 +62,24 @@
 }
 
 - (void) setupRecord {
-    NSDictionary *recorderSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                         [NSNumber numberWithInt:kAudioFormatMPEG4AAC],AVFormatIDKey,
-                         [NSNumber numberWithInt:44100],AVSampleRateKey,
-                         [NSNumber numberWithInt:1],AVNumberOfChannelsKey,
-                         [NSNumber numberWithInt:16],AVLinearPCMBitDepthKey,
-                         [NSNumber numberWithBool:NO],AVLinearPCMIsBigEndianKey,
-                         [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
-                         nil];
-    _recorder = [[AVAudioRecorder alloc] initWithURL:[self tempRecordedFilePath]  settings:recorderSettings error:nil];
-    _recorder.delegate = self;
-    _recorder.meteringEnabled = YES;
     
     NSError *error;
+    //这个为必须的，否则无法
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    
+    // Initiate and prepare the recorder
+    _recorder = [[AVAudioRecorder alloc] initWithURL:[self tempRecordedFilePath] settings:recordSetting error:NULL];
+    _recorder.delegate = self;
+    _recorder.meteringEnabled = YES;
+    [_recorder prepareToRecord];
+    
+    
     BOOL success = FALSE;
     success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
     if (!success)  {
