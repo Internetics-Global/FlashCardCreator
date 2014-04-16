@@ -33,6 +33,8 @@
 
 #import "CreateSoundViewController.h"
 
+#import "OpenUDID.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 150.0
@@ -4333,6 +4335,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _lastBecomeFirstRespondTextView.inputAccessoryView = nil;
         _lastBecomeFirstRespondTextView.inputView = _keyboardInputBaseView;
     } else {
+        
+        if ((_lastBecomeFirstRespondTextView.text.length == 0)
+            || ([_lastBecomeFirstRespondTextView.font.fontName.lowercaseString isEqualToString:@"default"])) {
+            //do nothing
+            
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Symbol could possibly not be supported by selected font, please check" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+
+        
         _isUITextViewFocused = TRUE;
         [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
@@ -4345,6 +4358,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     
 }
+
 
 - (void) changeFontType:(id) sender{
     
