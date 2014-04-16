@@ -34,6 +34,7 @@
 #import "CreateSoundViewController.h"
 
 #import "OpenUDID.h"
+#import "Common.h"
 
 extern BOOL isFromNewCreatedCard;
 
@@ -4328,6 +4329,16 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     if (_lastBecomeFirstRespondTextView.inputView == nil) {
+        
+        if ((_lastBecomeFirstRespondTextView.text.length == 0)
+            || [Common isIncludedInRecommendedFonts:_lastBecomeFirstRespondTextView.font.fontName] == FALSE) {
+            //do nothing
+            
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Symbol could possibly not be supported by selected font,when considering to be used on Android platform" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+        
         [_emotionButtonForInputView setTitle:NSLocalizedString(@"ToolbarItem_Keyboard",nil)];
         _dismissKeyboardFromEmotionSwitch = TRUE;
         _isUITextViewFocused = FALSE;
@@ -4336,16 +4347,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _lastBecomeFirstRespondTextView.inputView = _keyboardInputBaseView;
     } else {
         
-        if ((_lastBecomeFirstRespondTextView.text.length == 0)
-            || ([_lastBecomeFirstRespondTextView.font.fontName.lowercaseString isEqualToString:@"default"])) {
-            //do nothing
-            
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Symbol could possibly not be supported by selected font, please check" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-        }
-
-        
+    
         _isUITextViewFocused = TRUE;
         [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;

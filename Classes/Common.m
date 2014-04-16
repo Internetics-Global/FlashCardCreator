@@ -108,6 +108,16 @@
     
 }
 
++ (BOOL) isIncludedInRecommendedFonts:(NSString *) fontName {
+    for (NSString *str in [self recommendedFonts]) {
+        if ([str isEqualToString:fontName]) {
+            return TRUE;
+        }
+    }
+    
+    return FALSE;
+}
+
 /**
  *  All avaiable fonts on device
  */

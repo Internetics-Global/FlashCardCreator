@@ -41,5 +41,6 @@
 + (NSArray *) recommendedFonts;
 
 + (BOOL) isSymbolIncluded:(NSString *)str;
++ (BOOL) isIncludedInRecommendedFonts:(NSString *) fontName;
 
 @end
