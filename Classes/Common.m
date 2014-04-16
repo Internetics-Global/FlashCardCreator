@@ -103,7 +103,7 @@
  */
 + (NSArray *) recommendedFonts {
     
-    NSMutableArray *fontNames = [[NSMutableArray alloc] initWithObjects:@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier-Bold"@"Helvetica-Bold", nil];
+    NSMutableArray *fontNames = [[NSMutableArray alloc] initWithObjects:@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus", nil];
     return fontNames;
     
 }
