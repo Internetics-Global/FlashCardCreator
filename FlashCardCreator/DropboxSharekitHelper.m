@@ -13,6 +13,8 @@
 #import "SHKItem.h"
 #import "SHK.h"
 #import "AmazonClientManager.h"
+#import "Common.h"
+#import "OpenUDID.h"
 
 @implementation DropboxSharekitHelper
 

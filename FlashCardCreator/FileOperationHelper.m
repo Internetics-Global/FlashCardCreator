@@ -14,6 +14,8 @@
 #import "Answer.h"
 #import "CSS.h"
 #import <sys/xattr.h>
+#import "Common.h"
+#import "OpenUDID.h"
 
 @implementation FileOperationHelper
 
@@ -366,7 +368,8 @@
         [zipFile addFileToZip:card.answer.backgroundImageFullPath newname:[card.answer.backgroundImageFullPath lastPathComponent]];
     }
     
-    if ([card.answer.movieFullPath lastPathComponent].length > 0) {
+    if (([card.answer.movieFullPath lastPathComponent].length > 0)
+          && ([card.answer.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
         [zipFile addFileToZip:card.answer.movieFullPath newname:[card.answer.movieFullPath lastPathComponent]];
     }
     
@@ -374,7 +377,8 @@
         [zipFile addFileToZip:card.answer.recordedSoundFullPath newname:[card.answer.recordedSoundFullPath lastPathComponent]];
     }
     
-    if ([card.question.movieFullPath lastPathComponent].length > 0) {
+    if (([card.question.movieFullPath lastPathComponent].length > 0)
+          && ([card.answer.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
         [zipFile addFileToZip:card.question.movieFullPath newname:[card.question.movieFullPath lastPathComponent]];
     }
     

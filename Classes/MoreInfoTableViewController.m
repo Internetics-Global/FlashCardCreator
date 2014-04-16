@@ -10,6 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
+#import "Common.h"
 
 BOOL isLoggingDropboxInSettingView = NO;
 

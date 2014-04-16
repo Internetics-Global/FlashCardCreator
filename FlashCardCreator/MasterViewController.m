@@ -38,6 +38,8 @@
 #import "AmazonClientManager.h"
 #import "SimpleWebBrowserController.h"
 #import "AppDelegate.h"
+#import "OpenUDID.h"
+#import "Common.h"
 
 extern BOOL _isDownloadingSamplePack;
 

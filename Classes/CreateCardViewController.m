@@ -23,6 +23,8 @@
 #import "AppDelegate.h"
 #import "MasterViewController.h"
 #import "UIImage+Scale.h"
+#import "OpenUDID.h"
+#import "Common.h"
 
 BOOL isFromNewCreatedCard = NO;
 

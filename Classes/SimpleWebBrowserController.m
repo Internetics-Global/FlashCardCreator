@@ -8,7 +8,7 @@
 
 #import "SimpleWebBrowserController.h"
 #import "MBProgressHUD.h"
-
+#import "Common.h"
 
 @implementation SimpleWebBrowserController
 

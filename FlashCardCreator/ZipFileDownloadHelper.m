@@ -12,6 +12,7 @@
 #import "Pack.h"
 #import "Card.h"
 #import "FileOperationHelper.h"
+#import "Common.h"
 
 @implementation ZipFileDownloadHelper
 

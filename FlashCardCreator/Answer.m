@@ -9,6 +9,7 @@
 #import "Answer.h"
 #import "SQLiteHelper.h"
 #import "CSS.h"
+#import "Common.h"
 
 @implementation Answer
 

@@ -22,6 +22,8 @@
 #import "HelpViewController.h"
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
+#import "Common.h"
+#import "OpenUDID.h"
 
 enum template_color_enum {
     template_color_enum_blue = 1,

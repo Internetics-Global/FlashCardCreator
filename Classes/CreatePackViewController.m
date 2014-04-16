@@ -12,6 +12,8 @@
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
 #import "PackListViewController.h"
+#import "OpenUDID.h"
+#import "Common.h"
 
 @interface CreatePackViewController ()
 
