@@ -1225,7 +1225,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         }
     }
     
-    
+
     
     
     
@@ -1835,6 +1835,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subAnswer.textAlignment = NSTextAlignmentJustified;
         _subAlignAnswer = @"Justify";
     }
+    
+    [self setNeedsDisplay];
 }
 
 
@@ -3827,6 +3829,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 - (void)imageViewTapped:(UITapGestureRecognizer *)sender {
     
+    //1. play mode
     if (_isPlayingCard) {
         
         if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -3844,6 +3847,19 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         return;
         
+    }
+    
+    //2. edit mode, and have video, but not own the pack
+    NSString *targetStr;
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        targetStr = _currentCard.question.movieFullPath;
+    } else {
+        targetStr = _currentCard.answer.movieFullPath;
+    }
+    if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only available in play mode" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
     }
     
     UIImageView *pickerImageView;

@@ -1461,13 +1461,21 @@ enum popover_enum {
             error = nil;
             newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
             if ([questionDict[@"movie"] length] > 0) {
-                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie"]] toPath:newFileName error:&error];
-                if (error) {
-                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                
+                if ([Common isValidYoutubeLinkage:questionDict[@"movie"]]) {
+                    [assembledCard question].movieFullPath = questionDict[@"movie"];
                 } else {
-                    [assembledCard question].movieFullPath = newFileName;
+                    
+                    [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie"]] toPath:newFileName error:&error];
+                    if (error) {
+                        NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    } else {
+                        [assembledCard question].movieFullPath = newFileName;
+                    }
+                    
                 }
-            }   else {
+                
+            }  else {
                 [assembledCard question].movieFullPath = @"";
             }
             
@@ -1657,12 +1665,19 @@ enum popover_enum {
             error = nil;
             newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
             if ([answerDict[@"movie"] length] > 0) {
-                [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
-                if (error) {
-                    NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                //youtube link
+                if ([Common isValidYoutubeLinkage:answerDict[@"movie"]]) {
+                  [assembledCard answer].movieFullPath = answerDict[@"movie"];
                 } else {
-                    [assembledCard answer].movieFullPath = newFileName;
+                    //with video file locally
+                    [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
+                    if (error) {
+                        NSLog(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    } else {
+                        [assembledCard answer].movieFullPath = newFileName;
+                    }
                 }
+                
             }   else {
                 [assembledCard answer].movieFullPath = @"";
             }

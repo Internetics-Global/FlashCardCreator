@@ -139,7 +139,10 @@
 }
 
 + (BOOL) isValidYoutubeLinkage:(NSString *) str {
-    return [str hasPrefix:@"http://www.youtube.com/watch"];
+    return ([str hasPrefix:@"http://www.youtube.com/"]
+               || [str hasPrefix:@"http://m.youtube.com/"]
+                   || [str hasPrefix:@"https://www.youtube.com/"]
+                       || [str hasPrefix:@"https://m.youtube.com/"]);
 }
 
 /**
