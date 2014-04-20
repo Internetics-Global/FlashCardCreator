@@ -1481,7 +1481,11 @@ enum popover_enum {
             
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];
+            if ([questionDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) { //Android的格式
+              newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
+            } else if ([questionDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) { //iOS的格式
+              newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
+            }
             if ([questionDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1683,7 +1687,11 @@ enum popover_enum {
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];
+            if ([answerDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) { //Android的格式
+                newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
+            } else if ([answerDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) { //iOS的格式
+                newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
+            }
             if ([answerDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {

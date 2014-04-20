@@ -3932,11 +3932,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_audioPlayer prepareToPlay];
         
         if (_audioPlayer == nil)
-            NSLog(@"%s:%@",__FUNCTION__,[error description]);
+            NSLog(@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL);
         else
             [_audioPlayer play];
     } else {
-        NSLog(@"%s:can not find the audio file",__FUNCTION__);
+        NSLog(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];

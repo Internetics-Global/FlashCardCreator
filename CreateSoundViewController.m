@@ -169,7 +169,7 @@
         [_player stop];
     }
     
-    NSString *saveTo = [FileOperationHelper generateUniqueAudioFilePathUnderImagesFolder];;
+    NSString *saveTo = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];;
     if (_isOnQuestion) {
         if (_card.question.recordedSoundFullPath.length == 0) {
             _card.question.recordedSoundFullPath = saveTo;

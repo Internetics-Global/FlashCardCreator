@@ -148,9 +148,9 @@
 #pragma mark - Generate unique file name
 
 /**
- *  Must be .aac format
+ *  Must be .aac format。
  */
-+ (NSString *) generateUniqueAudioFilePathUnderImagesFolder {
++ (NSString *) generateUniqueAudioAACFilePathUnderImagesFolder {
     NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -160,6 +160,22 @@
     }
     
     NSString *uid = [NSString stringWithFormat:@"%d%d.aac", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    return ([path stringByAppendingPathComponent:uid]);
+}
+
+/**
+ *  Must be .3GP format。
+ */
++ (NSString *) generateUniqueAudio3GPFilePathUnderImagesFolder {
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create directory at %@", path);
+        }
+    }
+    
+    NSString *uid = [NSString stringWithFormat:@"%d%d.3gp", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
     return ([path stringByAppendingPathComponent:uid]);
 }
 
