@@ -196,6 +196,14 @@
     [_card save];
     [self dismiss];
     
+    //update_date info
+    NSString *updateDate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_pack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:updateDate forKey:@"update_date"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_pack.packName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     
 }

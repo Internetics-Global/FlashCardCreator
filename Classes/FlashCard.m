@@ -5191,6 +5191,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
             createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
             createSoundViewController.card = _currentCard;
+            createSoundViewController.pack = _currentPack;
             UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
