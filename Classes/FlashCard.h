@@ -41,7 +41,14 @@ typedef enum{
     JSBadgeView *_cardSNText;
     
     //sound record related
+    /**
+     *  需要非常清楚的是，有两种情况，一种是youtube，一种是本地链接，这两种情况在interchangeability中非常不一样，前者可以直接赋值，后者需要记性lastPathComponent处理
+     */
     NSString     *_questionRecordedSoundFullPath;
+    
+    /**
+     *  需要非常清楚的是，有两种情况，一种是youtube，一种是本地链接，这两种情况在interchangeability中非常不一样，前者可以直接赋值，后者需要记性lastPathComponent处理
+    */
     NSString     *_answerRecordedSoundFullPath;
     
     //background related

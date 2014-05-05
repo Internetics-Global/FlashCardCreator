@@ -880,7 +880,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_backgroundImageSelectButton == nil) {
         _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(10, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
+        _backgroundImageSelectButton.frame = CGRectMake(5, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
         if (self.isPlayingCard) {
             _backgroundImageSelectButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -913,7 +913,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         UIImageView *upImageView = [[UIImageView  alloc] init];
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(390-10, 45-13.75, 10, 13.75);
+        upImageView.frame = CGRectMake(380-10, 45-13.75, 10, 13.75);
         if (self.isPlayingCard) {
             upImageView.frame = [Common getScaledViewRect:upImageView withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1290,6 +1290,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionRecordedSoundFullPath = path;
     }
     
+    //是否显示soundButton的逻辑
     if (_segmentedControl.selectedSegmentIndex == 0) {
         if (((_currentCard.question.recordedSoundFullPath.length > 0) && (_isPlayingCard))
             || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
@@ -1343,6 +1344,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _answerBackgroundImageView.image = nil;
     }
     
+    //两种情况，普通youtube，另外一种，本地创建
     if (_currentCard.answer.movieFullPath.length > 0) {
         if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
           _answerMovieFullPath = _currentCard.answer.movieFullPath;
@@ -1411,6 +1413,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionBackgroundImageView.image = nil;
     }
     
+    //两种情况，普通youtube，另外一种，本地创建
     if (_currentCard.question.movieFullPath.length > 0) {
         if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
             _questionMovieFullPath = _currentCard.question.movieFullPath;

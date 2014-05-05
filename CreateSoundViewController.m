@@ -52,7 +52,7 @@
     _startButton.layer.shadowOpacity = 1.0f;
     _startButton.layer.shadowRadius = 10.0f;
     
-    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
     
     self.navigationItem.leftBarButtonItem = closeButton;
     

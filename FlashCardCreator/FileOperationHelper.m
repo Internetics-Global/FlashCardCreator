@@ -320,6 +320,7 @@
         card.question.recordedSoundFullPath = @"";
     }
     
+    //两种情况，普通youtube，另外一种，本地创建
     NSString *movieFinalPathQuestion;
     if ([Common isValidYoutubeLinkage:card.question.movieFullPath]){
         //it's youtube link
@@ -359,6 +360,7 @@
         card.answer.recordedSoundFullPath = @"";
     }
     
+    //两种情况，普通youtube，另外一种，本地创建
     NSString *movieFinalPathAnswer;
     if ([Common isValidYoutubeLinkage:card.answer.movieFullPath]){
         //it's youtube link
