@@ -1285,6 +1285,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionRecordedSoundFullPath = path;
     }
     
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        if (((_currentCard.question.recordedSoundFullPath.length > 0) && (_isPlayingCard))
+            || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
+            self.soundButton.hidden= NO;
+        } else {
+            self.soundButton.hidden= YES;
+        }
+    } else {
+        if (((_currentCard.answer.recordedSoundFullPath.length > 0) && (_isPlayingCard))
+            || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
+            self.soundButton.hidden= NO;
+        } else {
+            self.soundButton.hidden= YES;
+        }
+    }
+    
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     
@@ -1335,6 +1351,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     } else {
         _answerRecordedSoundFullPath = @"";
     }
+
     
     
     _answerTitle.text = _currentCard.answer.title;
@@ -1397,6 +1414,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     } else {
         _questionRecordedSoundFullPath = @"";
     }
+    
     
     _questionTitle.text = _currentCard.question.title;
     
