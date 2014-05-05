@@ -542,7 +542,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         UIImageView *upImageView = [[UIImageView  alloc] init];
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(770-15, 110-18.75, 15, 18.75);
+        upImageView.frame = CGRectMake(765-15, 105-18.75, 15, 18.75);
         upImageView.clipsToBounds = YES;
         upImageView.backgroundColor = [UIColor clearColor];
         upImageView.userInteractionEnabled = NO;
@@ -913,7 +913,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         UIImageView *upImageView = [[UIImageView  alloc] init];
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(394-10, 45-13.75, 10, 13.75);
+        upImageView.frame = CGRectMake(390-10, 45-13.75, 10, 13.75);
         if (self.isPlayingCard) {
             upImageView.frame = [Common getScaledViewRect:upImageView withProportion:kFlashCardViewProporation_iPhone];
         }
