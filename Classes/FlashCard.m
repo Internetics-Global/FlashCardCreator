@@ -1276,8 +1276,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (_currentCard.question.movieFullPath.length >0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
-        _questionMovieFullPath = path;
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
+          _questionMovieFullPath = _currentCard.question.movieFullPath;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
+            _questionMovieFullPath = path;
+        }
+        
     }
     
     if (_currentCard.question.recordedSoundFullPath.length > 0) {
@@ -1339,8 +1344,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (_currentCard.answer.movieFullPath.length > 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
+        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
+          _answerMovieFullPath = _currentCard.answer.movieFullPath;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
         _answerMovieFullPath = path;
+        }
+        
     } else {
         _answerMovieFullPath = @"";
     }
@@ -1402,8 +1412,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (_currentCard.question.movieFullPath.length > 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
-        _questionMovieFullPath = path;
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
+            _questionMovieFullPath = _currentCard.question.movieFullPath;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
+            _questionMovieFullPath = path;
+        }
+        
     } else {
         _questionMovieFullPath = @"";
     }
