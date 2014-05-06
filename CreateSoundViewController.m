@@ -10,9 +10,18 @@
 #import "FileOperationHelper.h"
 #import "Card.h"
 
+typedef NS_ENUM(NSInteger, Enum_Status_Record) {
+    Enum_Status_Record_Unknow      = -1,
+    Enum_Status_Record_Recording       = 1,
+    Enum_Status_Record_Normal   = 2,
+    Enum_Status_Record_Stop    = 3,
+};
+
 @interface CreateSoundViewController () {
     AVAudioRecorder    *_recorder;
     AVAudioPlayer      *_player;
+    
+    Enum_Status_Record                _recordStatus;
 }
 
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *startButton;
@@ -42,7 +51,7 @@
 
     self.view.backgroundColor = [UIColor colorWithRed:102.0/255 green:102.0/255 blue:102.0/255 alpha:1];
     
-
+    _recordStatus = Enum_Status_Record_Normal;
     
     _playButton.hidden = YES;
     _saveButton.hidden = YES;
@@ -98,46 +107,78 @@
 
 - (IBAction)startButtonClicked:(id)sender {
     
-    [_recorder record];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    switch (_recordStatus) {
+        case Enum_Status_Record_Normal: {
+            
+            _recordStatus = Enum_Status_Record_Recording;
+            
+            [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
+            
+            [_recorder record];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                _playButton.hidden = YES;
+                _saveButton.hidden = YES;
+                
+                usleep(500000);
+                
+                NSDate*start =[NSDate date];
+                while (_recordStatus == Enum_Status_Record_Recording) {
+                    usleep(10000);
+                    NSDate* methodFinish =[NSDate date];
+                    NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
+                    if (executionTime > 10) {
+                        NSLog(@"%s:finish recording a new customized sound",__FUNCTION__);
+                        break;
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",10.0 - executionTime]];
+                    
+                    });
+                }
+                
+                usleep(200000);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
+                    [_startButton setTitle:@"Record" forState:UIControlStateNormal];
+                    
+                    _playButton.hidden = NO;
+                    _saveButton.hidden = NO;
+                });
+                
+                
+                [_recorder stop];
+                
+                
+            });
+
+        }
+            break;
         
-        _playButton.hidden = YES;
-        _saveButton.hidden = YES;
-        
-        usleep(500000);
-        
-        NSDate*start =[NSDate date];
-        while (1) {
-            usleep(10000);
-            NSDate* methodFinish =[NSDate date];
-            NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
-            if (executionTime > 10) {
-                NSLog(@"%s:finish recording a new customized sound",__FUNCTION__);
-                break;
-            }
+        case Enum_Status_Record_Recording: {
+            _recordStatus = Enum_Status_Record_Stop;
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",10.0 - executionTime]];
-                [_startButton setTitle:@"Recording" forState:UIControlStateNormal];
+                [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
+                [_startButton setTitle:@"Record" forState:UIControlStateNormal];
+                
+                _playButton.hidden = NO;
+                _saveButton.hidden = NO;
             });
-        }
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            usleep(200000);
-            [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
-            [_startButton setTitle:@"Record" forState:UIControlStateNormal];
             
-            _playButton.hidden = NO;
-            _saveButton.hidden = NO;
-        });
-        
-
-        [_recorder stop];
-        
-        
-    });
+            usleep(200000);
+            
+            [_recorder stop];
+            
+            _recordStatus = Enum_Status_Record_Normal;
+            
+        }
+            
+        default:
+            break;
+    }
     
 }
 
