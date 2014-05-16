@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
 #import "MBProgressHUD.h"
-#import "PopupListComponent.h"
+
+#import "PopoverView.h"
 
 @class FlashCardView;
 @class QuestionView;
@@ -19,7 +20,8 @@
 @class FlashCard;
 @class DropboxSharekitHelper;
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopupListComponentDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
+
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopoverViewDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;
@@ -40,9 +42,6 @@
     UIBarButtonItem *_templateBackgroundSelectButton;
     UIBarButtonItem *_settingButton;
     UIBarButtonItem *_helpButton;
-    
-    PopupListComponent *_templateBackgroundSelectPopup;
-    PopupListComponent *_shareSelectPopup;
     
     MBProgressHUD *_HUD;
     
@@ -65,9 +64,6 @@
 @property (nonatomic, strong) UIPopoverController *masterPopoverController;
 @property (nonatomic, strong) UIPopoverController *settingPopoverController;
 @property (nonatomic, strong) UIPopoverController *helpPopoverController;
-
-@property (nonatomic, strong) PopupListComponent *templateBackgroundSelectPopup;
-@property (nonatomic, strong) PopupListComponent *shareSelectPopup;
 
 @property (strong, nonatomic) NSMutableArray *isResizedArray; //用于判断是否已经被autoresize
 

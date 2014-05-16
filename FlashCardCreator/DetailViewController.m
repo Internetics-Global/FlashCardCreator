@@ -26,11 +26,11 @@
 #import "OpenUDID.h"
 
 enum template_color_enum {
-    template_color_enum_blue = 1,
-    template_color_enum_coffee = 2,
-    template_color_enum_gray = 3,
-    template_color_enum_purple = 4,
-    template_color_enum_red = 5
+    template_color_enum_blue = 0,
+    template_color_enum_coffee = 1,
+    template_color_enum_gray = 2,
+    template_color_enum_purple = 3,
+    template_color_enum_red = 4
     };
 
 enum popover_enum {
@@ -48,9 +48,6 @@ enum popover_enum {
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize settingPopoverController = _settingPopoverController;
 @synthesize helpPopoverController = _helpPopoverController;
-
-@synthesize templateBackgroundSelectPopup  = _templateBackgroundSelectPopup;
-@synthesize shareSelectPopup  = _shareSelectPopup;
 
 #pragma mark -
 #pragma mark Life cycle
@@ -78,7 +75,6 @@ enum popover_enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:134.0/255 green:134.0/255 blue:149.0/255 alpha:1];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [self.navigationController.navigationBar setTranslucent:FALSE];
@@ -371,40 +367,20 @@ enum popover_enum {
 
 - (void)shareButtonClicked:(id) sender {
     
-    if (self.templateBackgroundSelectPopup) {
-        [self.templateBackgroundSelectPopup hide];
-    }
-    
-    if (self.shareSelectPopup) {
-        [self.shareSelectPopup hide];
-    }
-    
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
         [_helpPopoverController dismissPopoverAnimated:YES];
     }
     
-    PopupListComponent *popupList = [[PopupListComponent alloc] init];
-    NSArray* listItems = [NSArray arrayWithObjects:
-                 [[PopupListComponentItem alloc] initWithCaption:@"Install from code" image:nil
-                                                          itemId:0 showCaption:YES],
-                 [[PopupListComponentItem alloc] initWithCaption:@"Share the pack"  image:nil
-                                                          itemId:1 showCaption:YES],
-                 nil];
     
-    popupList.imagePaddingHorizontal = 5;
-    if (isUserInterfaceIdiomPhone) {
-        popupList.font = [UIFont systemFontOfSize:12];
-    } else {
-        popupList.font = [UIFont systemFontOfSize:14];
-    }
-    popupList.tag = popover_enum_share;
-    popupList.imagePaddingVertical = 2;
-    popupList.textPaddingHorizontal = 5;
-    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
-    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
+    PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                  inView:self.navigationController.view
+                               withTitle:@"Please select"
+                         withStringArray:[NSArray arrayWithObjects:@"Install from the code", @"Share the pack", nil]
+                                delegate:self];
+    shareSelectPopupPopoverView.tag = popover_enum_share;
     
-    self.shareSelectPopup = popupList;
+    
     
 }
 
@@ -428,44 +404,14 @@ enum popover_enum {
 }
 
 - (void) selectCardBackgroundTemplate:(id) sender {
-    if (self.templateBackgroundSelectPopup) {
-        [self.templateBackgroundSelectPopup hide];
-    }
-    
-    if (self.shareSelectPopup) {
-        [self.shareSelectPopup hide];
-    }
-    
-    PopupListComponent *popupList = [[PopupListComponent alloc] init];
-    NSArray* listItems = nil;
-    listItems = [NSArray arrayWithObjects:
-                 [[PopupListComponentItem alloc] initWithCaption:@"Blue" image:[UIImage imageNamed:@"template_color_blue.png"]
-                                                          itemId:template_color_enum_blue showCaption:YES],
-                 [[PopupListComponentItem alloc] initWithCaption:@"Coffee"  image:[UIImage imageNamed:@"template_color_coffee.png"]
-                                                          itemId:template_color_enum_coffee showCaption:YES],
-                 [[PopupListComponentItem alloc] initWithCaption:@"Gray"  image:[UIImage imageNamed:@"template_color_gray.png"]
-                                                          itemId:template_color_enum_gray showCaption:YES],
-                 [[PopupListComponentItem alloc] initWithCaption:@"Purple"  image:[UIImage imageNamed:@"template_color_purple.png"]
-                                                          itemId:template_color_enum_purple showCaption:YES],
-                 [[PopupListComponentItem alloc] initWithCaption:@"Red"  image:[UIImage imageNamed:@"template_color_red.png"]
-                                                          itemId:template_color_enum_red showCaption:YES],
-                 nil];
     
     
-    popupList.imagePaddingHorizontal = 5;
-    if (isUserInterfaceIdiomPhone) {
-        popupList.font = [UIFont systemFontOfSize:12];
-    } else {
-        popupList.font = [UIFont systemFontOfSize:14];
-    }
-    popupList.imagePaddingVertical = 2;
-    popupList.textPaddingHorizontal = 5;
-    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
-    popupList.tag = popover_enum_template_select;
-
-    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
-    
-    self.templateBackgroundSelectPopup = popupList;
+    PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                                                        inView:self.navigationController.view
+                                                                     withTitle:@"Please select"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Blue", @"Coffee",@"Gray",@"Purple",@"Red", nil]
+                                                                      delegate:self];
+    templateBackgroundSelectPopoverView.tag = popover_enum_template_select;
 }
 
 - (void)moreButtonClicked:(id) sender
@@ -586,22 +532,20 @@ enum popover_enum {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
-#pragma mark -
-#pragma mark - PopupListComponentDelegate delegate
-- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
+#pragma mark - PopoverViewDelegate Methods
+
+- (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
-    //Step1: close popover window
-    self.templateBackgroundSelectPopup = nil;
-    self.shareSelectPopup = nil;
-    
-    
-    //Step2: Check exception
+    dispatch_async(dispatch_get_main_queue(), ^{
+       [popoverView dismiss];
+    });
+
     if ([_currentPack cards].count == 0) {
         return;
     }
     
-    if (sender.tag == popover_enum_share) {
-        switch (itemId) {
+    if (popoverView.tag == popover_enum_share) {
+        switch (index) {
             case 0: {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
                                                                 message:nil
@@ -630,7 +574,7 @@ enum popover_enum {
                 
                 
                 break;
-            }   
+            }
             default:
                 break;
         }
@@ -645,7 +589,7 @@ enum popover_enum {
         
         //Step3: Get the selected info
         NSString *templateBackgroundName;
-        switch (itemId) {
+        switch (index) {
             case template_color_enum_coffee:
                 templateBackgroundName = @"card_background_coffee.png";
                 break;
@@ -680,6 +624,7 @@ enum popover_enum {
     
 }
 
+
 - (void) execTemplateBackgroundChangeTask:(NSString *)templateBackgroundName {
     //Step4: Change all cards card template background, screenshot them, and save them
     [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum withStringVal:templateBackgroundName];
@@ -692,12 +637,6 @@ enum popover_enum {
     _HUD = nil;
 }
 
-- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
-{
-    NSLog(@"Popup cancelled");
-    self.templateBackgroundSelectPopup = nil;
-    self.shareSelectPopup = nil;
-}
 
 #pragma mark -
 #pragma mark - Memory Management

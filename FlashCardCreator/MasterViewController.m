@@ -124,19 +124,23 @@ enum popover_enum {
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view insertSubview:self.tableView atIndex:0];
 
-    _selectPackButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Packs",@"") style:UIBarButtonSystemItemBookmarks target:self action:@selector(selectAvailablePacks:)];
+    _selectPackButton = [[UIBarButtonItem alloc]
+                         initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"packs_button.png"] target:self action:@selector(selectAvailablePacks:)]];
     
-    
-    UIBarButtonItem *newPackButton = [[UIBarButtonItem alloc]
+    UIBarButtonItem *newPackBarButtonItem = [[UIBarButtonItem alloc]
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)]];
     
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit",@"") style:UIBarButtonItemStylePlain target:self action:@selector(editButtonClicked:)];
     
-    self.navigationItem.leftBarButtonItems = @[_selectPackButton,editButton, newPackButton];
+    UIButton * editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    editButton.tag = 0;
+    UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
+    
+    
+    self.navigationItem.leftBarButtonItems = @[_selectPackButton,editBarButtonItem, newPackBarButtonItem];
     if (isUserInterfaceIdiomPhone) {
         
         UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
@@ -189,6 +193,8 @@ enum popover_enum {
             _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-35);
         }
         
+        _addCardButtonBackground.hidden = YES;
+        
         [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
         _addCardButton.showsTouchWhenHighlighted = YES;
         [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
@@ -199,7 +205,6 @@ enum popover_enum {
         
         if (_rightPackView == nil) {
             _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH-150-100, IPHONE_UI_HEIGHT)];
-            _rightPackView.backgroundColor = [UIColor blackColor];
         }
         
         if (_rightPackImage == nil) {
@@ -226,7 +231,7 @@ enum popover_enum {
             _rightPackCardNo = [[UILabel alloc] init];
             _rightPackCardNo.textColor = [UIColor whiteColor];
             _rightPackCardNo.backgroundColor = [UIColor clearColor];
-            _rightPackCardNo.textAlignment = UITextAlignmentCenter;
+            _rightPackCardNo.textAlignment = NSTextAlignmentCenter;
             _rightPackCardNo.font = [UIFont systemFontOfSize: 14];
             CGRect rect = _rightPackImage. frame;
             rect.origin.y = rect.origin.y +rect.size.height+16;
@@ -399,32 +404,13 @@ enum popover_enum {
 }
 
 - (void)shareButtonClicked:(id) sender {
-    
-    if (self.shareSelectPopup) {
-        [self.shareSelectPopup hide];
-    }
-    
-    PopupListComponent *popupList = [[PopupListComponent alloc] init];
-    NSArray* listItems = [NSArray arrayWithObjects:
-                          [[PopupListComponentItem alloc] initWithCaption:@"Install from Code" image:nil
-                                                                   itemId:0 showCaption:YES],
-                          [[PopupListComponentItem alloc] initWithCaption:@"Share the pack"  image:nil
-                                                                   itemId:1 showCaption:YES],
-                          nil];
-    
-    popupList.imagePaddingHorizontal = 5;
-    if (isUserInterfaceIdiomPhone) {
-        popupList.font = [UIFont systemFontOfSize:12];
-    } else {
-        popupList.font = [UIFont systemFontOfSize:14];
-    }
-    popupList.tag = popover_enum_share;
-    popupList.imagePaddingVertical = 2;
-    popupList.textPaddingHorizontal = 5;
-    popupList.alignment = UIControlContentHorizontalAlignmentLeft;
-    [popupList showAnchoredTo:sender inView:self.navigationController.view withItems:listItems withDelegate:self];
-    
-    self.shareSelectPopup = popupList;
+
+    PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                                                        inView:self.navigationController.view
+                                                                     withTitle:@"Please select"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Install from the code", @"Share the pack", nil]
+                                                                      delegate:self];
+    shareSelectPopupPopoverView.tag = popover_enum_share;
 
     
 }
@@ -450,12 +436,14 @@ enum popover_enum {
         return;
     }
     
-    if ([((UIBarButtonItem *) sender).title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
+    if (((UIButton *)sender).tag == 0) {
         self.tableView.editing = TRUE;
-        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Done", @"");
+        [((UIButton *)sender) setImage:[UIImage imageNamed:@"done_button"] forState:UIControlStateNormal];
+        ((UIButton *)sender).tag = 1;
     } else {
         self.tableView.editing = FALSE;
-        ((UIBarButtonItem *) sender).title = NSLocalizedString(@"NavigationBarItem_Edit", @"");
+        ((UIButton *)sender).tag = 0;
+        [((UIButton *)sender) setImage:[UIImage imageNamed:@"edit_button"] forState:UIControlStateNormal];
         
         if (!isUserInterfaceIdiomPhone) {
             if ([[_currentPack cards]count] >0) {
@@ -745,10 +733,9 @@ enum popover_enum {
         UIImageView *backgroundView = [[UIImageView alloc] init];
         backgroundView.layer.opacity = 0.8;
         backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];
-        backgroundView.layer.cornerRadius = 0;
+        backgroundView.layer.cornerRadius = 5;
         backgroundView.layer.masksToBounds = YES;
         cell.selectedBackgroundView = backgroundView;
-        cell.backgroundColor = [UIColor clearColor];
 	}
     
     
@@ -779,6 +766,9 @@ enum popover_enum {
     if (_indexCard == indexPath.row) {
         [cell setSelected:YES animated:YES];
     }
+    
+    cell.backgroundColor = [UIColor clearColor];
+    
 
     return cell;
 
@@ -1883,14 +1873,14 @@ enum popover_enum {
 }
 
 
-#pragma mark -
-#pragma mark - PopupListComponentDelegate delegate
-- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId
+- (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
-    self.shareSelectPopup = nil;
     
-    if (sender.tag == popover_enum_share) {
-        switch (itemId) {
+    [popoverView dismiss];
+    
+    
+    if (popoverView.tag == popover_enum_share) {
+        switch (index) {
             case 0: {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
                                                                 message:nil
@@ -1917,7 +1907,7 @@ enum popover_enum {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alertView show];
                 }
-
+                
                 break;
             }
             default:
@@ -1930,12 +1920,6 @@ enum popover_enum {
     
 }
 
-
-- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
-{
-    NSLog(@"Popup cancelled");
-    self.shareSelectPopup = nil;
-}
 
 
 @end

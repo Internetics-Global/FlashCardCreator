@@ -38,15 +38,15 @@
 
 extern BOOL isFromNewCreatedCard;
 
-#define kSegmentLeftMarginForiPad 150.0
+#define kSegmentLeftMarginForiPad 0.0
 #define kSegmentHeightForiPad 44.0
 #define kSegmentButtomMarginForiPad 10.0
 #define kQuestionViewTopMarginForiPad 10.0
 #define kQuestionViewButtomMarginForiPad 80.0
 #define kQuestionViewCornerRadiusForiPad 20.0
 
-#define kSegmentLeftMarginForiPhone 60.0
-#define kSegmentHeightForiPhone 22.0
+#define kSegmentLeftMarginForiPhone 0.0
+#define kSegmentHeightForiPhone 28.0
 #define kSegmentButtomMarginForiPhone 10.0
 #define kQuestionViewTopMarginForiPhone 5.0
 #define kQuestionViewButtomMarginForiPhone 40.0
@@ -287,16 +287,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     
     
-    if (_soundButton == nil) {
-        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _soundButton.frame = CGRectMake(80, 30, 80, 30);
-        [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
-        [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
-        [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        _soundButton.backgroundColor = [UIColor orangeColor];
-        [self addSubview:_soundButton];
-    }
+    
     
     if (_verticalScrollView == nil) {
         _verticalScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 110, 740, 440)];
@@ -488,26 +479,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
     }
     
-    if (_changeTemplateButton == nil) {
-        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPad-45-5, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
-        _changeTemplateButton.showsTouchWhenHighlighted = YES;
-        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
-        [self addSubview:_changeTemplateButton];
-        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
-    }
-    
-    if (_backgroundImageSelectButton == nil) {
-        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(15, kFlashCardViewHeight_Detail_iPad-kQuestionViewButtomMarginForiPad-60, 40, 40);
-        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_background_button"] forState:UIControlStateNormal];
-        [self addSubview:_backgroundImageSelectButton];
-        //[_backgroundImageSelectButton addTarget:self action:@selector(changeBackgroundImageButtonClick:) forControlEvents:UIControlEventTouchDown];
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
-        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
-    }
-    
     if (_segmentedControl == nil) {
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:
                              @[NSLocalizedString(@"ToolbarItem_Question",nil),
@@ -516,7 +487,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                                   self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
-                                  self.bounds.size.width-2*kSegmentLeftMarginForiPad,
+                                  300,
                                   kSegmentHeightForiPad);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
@@ -524,6 +495,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _segmentedControl.selectedSegmentIndex = 0;
         [self addSubview:_segmentedControl];
     }
+    
     
     if (_logoImage == nil) {
         _logoImage = [[UIImageView  alloc] init];
@@ -584,6 +556,55 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _creatorText.tag = kTagCreator;
         [self addSubview:_creatorText];
     }
+    
+    //------- begin _functionAreaView
+    if (_functionAreaView == nil) {
+        _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
+        _functionAreaView.backgroundColor = [UIColor whiteColor];
+        _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
+        _functionAreaView.layer.borderWidth = 1;
+        [self addSubview:_functionAreaView];
+    }
+    
+    if (_soundButton == nil) {
+        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _soundButton.frame = CGRectMake(110, 8, 24, 24);
+        [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
+        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        _soundButton.backgroundColor = [UIColor clearColor];
+        [_functionAreaView addSubview:_soundButton];
+    }
+    
+    if (_backgroundImageSelectButton == nil) {
+        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
+        _backgroundImageSelectButton.frame = CGRectMake(60, 8, 24, 24);
+        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
+        [_functionAreaView addSubview:_backgroundImageSelectButton];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
+    }
+    
+    
+    if (_changeTemplateButton == nil) {
+        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _changeTemplateButton.frame = CGRectMake(10, 8, 24, 24);
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
+        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
+        [_functionAreaView addSubview:_changeTemplateButton];
+        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    if (_isPlayingCard) {
+        _backgroundImageSelectButton.hidden = YES;
+        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
+        _changeTemplateButton.hidden = YES;
+        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
+        _soundButton.frame = CGRectMake(13, 8, 24, 24);
+        
+    }
+    
+    //------- end _functionAreaView
 
 }
 
@@ -683,16 +704,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self addSubview:_answerTitle];
     }
     
-    if (_soundButton == nil) {
-        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _soundButton.frame = CGRectMake(50, 5, 80, 30);
-        [_soundButton titleLabel].font = [UIFont systemFontOfSize:12];
-        [_soundButton setTitle:@"Play/Record" forState:UIControlStateNormal];
-        [_soundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        _soundButton.backgroundColor = [UIColor orangeColor];
-        [self addSubview:_soundButton];
-    }
     
     
     if (_verticalScrollView == nil) {
@@ -729,6 +740,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _sidebarTitle.tag = kTagSidebar;
         [self addSubview:_sidebarTitle];
     }
+    
+    
     
     //Step3: Common
     if (_cardSNText == nil) {
@@ -856,7 +869,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
                                   self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
-                                  self.bounds.size.width-2*kSegmentLeftMarginForiPhone,
+                                  200,
                                   kSegmentHeightForiPhone);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
@@ -865,31 +878,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self addSubview:_segmentedControl];
     }
     
-    if (_changeTemplateButton == nil) {
-        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.showsTouchWhenHighlighted = YES;
-        _changeTemplateButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone-25-2, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
-        if (self.isPlayingCard) {
-            _changeTemplateButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
-        }
-        [_changeTemplateButton setBackgroundImage:[UIImage imageNamed:@"change_template_button.png"] forState:UIControlStateNormal];
-        [self addSubview:_changeTemplateButton];
-        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
-    }
+
     
-    if (_backgroundImageSelectButton == nil) {
-        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(5, kFlashCardViewHeight_Detail_iPhone-22-5, 22, 20);
-        if (self.isPlayingCard) {
-            _backgroundImageSelectButton.frame = [Common getScaledViewRect:_changeTemplateButton withProportion:kFlashCardViewProporation_iPhone];
-        }
-        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_background_button"] forState:UIControlStateNormal];
-        [self addSubview:_backgroundImageSelectButton];
-        //[_backgroundImageSelectButton addTarget:self action:@selector(changeBackgroundImageButtonClick::) forControlEvents:UIControlEventTouchDown];
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
-        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
-    }
     
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
@@ -971,6 +961,55 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _creatorText.tag = kTagCreator;
         [self addSubview:_creatorText];
     }
+    
+    //------- begin _functionAreaView
+    if (_functionAreaView == nil) {
+        _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
+        _functionAreaView.backgroundColor = [UIColor whiteColor];
+        _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
+        _functionAreaView.layer.borderWidth = 1;
+        [self addSubview:_functionAreaView];
+    }
+    
+    if (_soundButton == nil) {
+        _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _soundButton.frame = CGRectMake(110, 4, 20, 20);
+        [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
+        [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        _soundButton.backgroundColor = [UIColor clearColor];
+        [_functionAreaView addSubview:_soundButton];
+    }
+    
+    if (_backgroundImageSelectButton == nil) {
+        _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
+        _backgroundImageSelectButton.frame = CGRectMake(60, 4, 20, 20);
+        [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
+        [_functionAreaView addSubview:_backgroundImageSelectButton];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
+    }
+    
+    
+    if (_changeTemplateButton == nil) {
+        _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _changeTemplateButton.frame = CGRectMake(10, 4, 20, 20);
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
+        [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
+        [_functionAreaView addSubview:_changeTemplateButton];
+        [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    if (_isPlayingCard) {
+        _backgroundImageSelectButton.hidden = YES;
+        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
+        _changeTemplateButton.hidden = YES;
+        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
+        _soundButton.frame = CGRectMake(13, 8, 24, 24);
+        
+    }
+    
+    //------- end _functionAreaView
     
     
 }
@@ -1175,7 +1214,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         _questionTitle.userInteractionEnabled = false;
         _answerTitle.userInteractionEnabled = false;
-        _soundButton.hidden = YES;
+        _functionAreaView.hidden = YES;
     }
     
     
@@ -1294,15 +1333,17 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_segmentedControl.selectedSegmentIndex == 0) {
         if (((_currentCard.question.recordedSoundFullPath.length > 0) && (_isPlayingCard))
             || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
-            self.soundButton.hidden= NO;
+            self.functionAreaView.hidden = NO;
         } else {
+            //TODO: XXX
             self.soundButton.hidden= YES;
         }
     } else {
         if (((_currentCard.answer.recordedSoundFullPath.length > 0) && (_isPlayingCard))
             || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
-            self.soundButton.hidden= NO;
+            self.functionAreaView.hidden = NO;
         } else {
+            //TODO: XXX
             self.soundButton.hidden= YES;
         }
     }

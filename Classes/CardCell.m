@@ -43,7 +43,6 @@
     
     UIView *contentView =
     [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
-    contentView.backgroundColor = [UIColor blackColor];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:contentView];
     
@@ -52,7 +51,7 @@
     _indexLabel.textColor = [UIColor grayColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
     _indexLabel.backgroundColor = [UIColor clearColor];
-    _indexLabel.textAlignment = UITextAlignmentCenter;
+    _indexLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
     _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 100, kCellSizeHeight_iPhone-20)];
@@ -65,7 +64,6 @@
     
     UIView *contentView =
     [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
-    contentView.backgroundColor = [UIColor blackColor];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.contentView addSubview:contentView];
     
@@ -74,7 +72,7 @@
     _indexLabel.textColor = [UIColor grayColor];
     _indexLabel.font = [UIFont systemFontOfSize:17];
     _indexLabel.backgroundColor = [UIColor clearColor];
-    _indexLabel.textAlignment = UITextAlignmentCenter;
+    _indexLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_indexLabel];
     
     _cellImageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, (kCellSizeWidth-40), (kCellSizeHeight_iPad-26))];

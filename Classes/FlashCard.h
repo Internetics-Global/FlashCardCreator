@@ -163,6 +163,8 @@ typedef enum{
 @property (nonatomic, assign) BOOL isPlayingCard;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 
+@property (nonatomic, strong) UIView *functionAreaView;
+
 @property (nonatomic, strong) UITextField   *questionTitle;
 @property (nonatomic, strong) UITextField   *answerTitle;
 

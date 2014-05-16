@@ -500,6 +500,8 @@
     [super viewDidLoad];
     
     self.view.hidden = TRUE;
+    
+    self.view.backgroundColor = [UIColor blackColor];
 }
 
 
