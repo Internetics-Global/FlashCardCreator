@@ -14,8 +14,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import <AVFoundation/AVFoundation.h>
-
-#import "PopupListComponent.h"
+#import "PopoverView.h"
 
 typedef enum RescreenshotReason {
     kReasonTemplateBackgroundChangeEnum = 0,
@@ -37,7 +36,7 @@ typedef enum{
 @class MBProgressHUD;
 @class JSBadgeView;
 
-@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopupListComponentDelegate> {
+@interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopoverViewDelegate> {
     JSBadgeView *_cardSNText;
     
     //sound record related
@@ -152,9 +151,6 @@ typedef enum{
     //when use, please use together
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
-    
-    //show "youtube url input dialog" or image/video library
-    PopupListComponent *_popupList;
 }
 
 @property (nonatomic, strong) Card *currentCard;

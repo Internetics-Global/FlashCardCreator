@@ -3946,24 +3946,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         pickerImageView = _imageAnswer;
     }
     
-    _popupList = [[PopupListComponent alloc] init];
-    NSArray* listItems = [NSArray arrayWithObjects:
-                          [[PopupListComponentItem alloc] initWithCaption:@"Insert Youtube linkage" image:nil
-                                                                   itemId:0 showCaption:YES],
-                          [[PopupListComponentItem alloc] initWithCaption:@"Select from library"  image:nil
-                                                                   itemId:1 showCaption:YES],
-                          nil];
-    
-    _popupList.imagePaddingHorizontal = 5;
-    if (isUserInterfaceIdiomPhone) {
-        _popupList.font = [UIFont systemFontOfSize:14];
-    } else {
-        _popupList.font = [UIFont systemFontOfSize:16];
-    }
-    _popupList.imagePaddingVertical = 10;
-    _popupList.textPaddingHorizontal = 5;
-    _popupList.alignment = UIControlContentHorizontalAlignmentLeft;
-    [_popupList showAnchoredTo:pickerImageView inView:self withItems:listItems withDelegate:self];
+    [PopoverView showPopoverAtPoint:pickerImageView.center
+                                                                        inView:self
+                                                                     withTitle:@"Please select"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Insert Youtube linkage", @"Select from library", nil]
+                                                                      delegate:self];
 
 }
 
@@ -5295,18 +5282,18 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             _selectTemplatePopoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
             _selectTemplatePopoverController.delegate = self;
             _selectTemplatePopoverController.popoverContentSize = CGSizeMake(250, 95*5);
-            [_selectTemplatePopoverController presentPopoverFromRect:((UIButton *) sender).frame inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-        } else {
-            [_selectTemplatePopoverController dismissPopoverAnimated:YES];
-            _selectTemplatePopoverController = nil;
         }
+        
+        CGPoint point = [sender convertPoint:CGPointMake(0, 0) toView:nil];
+        CGRect rect = CGRectMake(point.x, point.y, 24, 24);
+        
+        [_selectTemplatePopoverController presentPopoverFromRect:rect inView:[UIApplication sharedApplication].keyWindow permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
         
     }
 }
 
 - (void) dismissSelectTemplatePopoverController {
     [_selectTemplatePopoverController dismissPopoverAnimated:YES];
-    _selectTemplatePopoverController = nil;
     
 }
 
@@ -5545,18 +5532,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
 }
 
+#pragma mark – PopoverviewDelegate
 
-
-#pragma mark -
-#pragma mark - PopupListComponentDelegate delegate
-- (void) popupListcomponent:(PopupListComponent *)sender choseItemWithId:(int)itemId {
+- (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
+{
+    [popoverView dismiss];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [sender hide];
-        _popupList = nil;
-    });
-    
-    if (itemId == 1) {
+    if (index == 1) {
         [self selectImageOrVideoFromLibrary];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input youtube url"
@@ -5572,13 +5554,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
 }
 
-
-- (void) popupListcompoentDidCancel:(PopupListComponent *)sender
-{
-    NSLog(@"Popup cancelled");
-    
-    _popupList = nil;
-}
 
 
 

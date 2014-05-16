@@ -35,6 +35,8 @@
 //Release operation
 #define FCC_RELEASE_SAFELY(var) { [var release]; var = nil; }
 
+#define APP_DELEGATE ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
 //Notification
 #define PLAY_NOTIFICATION @"PLAY_NOTIFICATION"
 #define PACK_ADDED_TO_USER_NOTIFICATION @"PACK_ADDED_TO_USER_NOTIFICATION"

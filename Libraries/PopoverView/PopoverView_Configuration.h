@@ -56,16 +56,16 @@
 #define kShowDividersBetweenViews NO
 
 //color for the divider fill
-#define kDividerColor [UIColor colorWithRed:0.329 green:0.341 blue:0.353 alpha:0.15f]
+#define kDividerColor [UIColor whiteColor]
 
 
 // BACKGROUND GRADIENT
 
 //bottom color white in gradient bg
-#define kGradientBottomColor [UIColor colorWithRed:0.98f green:0.98f blue:0.98f alpha:kBoxAlpha]
+#define kGradientBottomColor [UIColor colorWithRed:63/255.0 green:63/255.0 blue:63/255.0 alpha:kBoxAlpha]
 
 //top color white value in gradient bg
-#define kGradientTopColor [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:kBoxAlpha]
+#define kGradientTopColor [UIColor colorWithRed:63/255.0 green:63/255.0 blue:63/255.0 alpha:kBoxAlpha]
 
 
 // TITLE GRADIENT
@@ -74,10 +74,10 @@
 #define kDrawTitleGradient YES
 
 //bottom color white value in title gradient bg
-#define kGradientTitleBottomColor [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:kBoxAlpha]
+#define kGradientTitleBottomColor [UIColor colorWithRed:63/255.0 green:63/255.0 blue:63/255.0 alpha:kBoxAlpha]
 
 //top color white value in title gradient bg
-#define kGradientTitleTopColor [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:kBoxAlpha]
+#define kGradientTitleTopColor [UIColor colorWithRed:63/255.0 green:63/255.0 blue:63/255.0 alpha:kBoxAlpha]
 
 
 // FONTS
@@ -86,7 +86,7 @@
 #define kTextFont [UIFont fontWithName:@"HelveticaNeue" size:16.f]
 
 //normal text color
-#define kTextColor [UIColor colorWithRed:0.329 green:0.341 blue:0.353 alpha:1]
+#define kTextColor [UIColor whiteColor]
 // highlighted text color
 #define kTextHighlightColor [UIColor colorWithRed:0.098 green:0.102 blue:0.106 alpha:1.000]
 
@@ -97,7 +97,7 @@
 #define kTitleFont [UIFont fontWithName:@"HelveticaNeue-Bold" size:16.f]
 
 //title text color
-#define kTitleColor [UIColor colorWithRed:0.329 green:0.341 blue:0.353 alpha:1]
+#define kTitleColor [UIColor lightGrayColor]
 
 
 // BORDER

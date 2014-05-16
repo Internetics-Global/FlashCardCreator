@@ -1872,6 +1872,7 @@ enum popover_enum {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark – PopoverviewDelegate
 
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
