@@ -50,9 +50,6 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     
     self.title = @"Record Sound";
     
-
-    self.view.backgroundColor = [UIColor colorWithRed:102.0/255 green:102.0/255 blue:102.0/255 alpha:1];
-    
     _recordStatus = Enum_Status_Record_Normal;
     
     _playButton.hidden = YES;
