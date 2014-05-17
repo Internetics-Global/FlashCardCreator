@@ -25,6 +25,7 @@
 #import "UIImage+Scale.h"
 #import "OpenUDID.h"
 #import "Common.h"
+#import "FCCBarButton.h"
 
 BOOL isFromNewCreatedCard = NO;
 
@@ -41,21 +42,10 @@ BOOL isFromNewCreatedCard = NO;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        if (isUserInterfaceIdiomPhone) {
-            customButton.bounds = CGRectMake(0, 0, 48, 40);
-        } else {
-            customButton.bounds = CGRectMake(0, 0, 60, 50);
-        }
-        [customButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
-        [customButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-        [customButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
-        [customButton addTarget:self action:@selector(saveAndCloseCreateCardView) forControlEvents:UIControlEventTouchDown];
-
-        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithCustomView:customButton];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"save_button"] target:self action:@selector(saveAndCloseCreateCardView)]];
         
-        self.navigationItem.rightBarButtonItem = saveButton;
+        
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
         self.navigationItem.leftBarButtonItem = backButton;
         

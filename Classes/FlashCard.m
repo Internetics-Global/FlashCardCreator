@@ -514,7 +514,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         UIImageView *upImageView = [[UIImageView  alloc] init];
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(765-15, 105-18.75, 15, 18.75);
+        upImageView.frame = CGRectMake(720-7, 110-18.75-5, 15, 18.75);
         upImageView.clipsToBounds = YES;
         upImageView.backgroundColor = [UIColor clearColor];
         upImageView.userInteractionEnabled = NO;
@@ -596,9 +596,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (_isPlayingCard) {
+        _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
         [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
-        _changeTemplateButton.hidden = YES;
         _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
         _soundButton.frame = CGRectMake(13, 8, 24, 24);
         
@@ -903,7 +903,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         UIImageView *upImageView = [[UIImageView  alloc] init];
         [upImageView setImage:[UIImage imageNamed:@"upButton"]];
         upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(380-10, 45-13.75, 10, 13.75);
+        upImageView.frame = CGRectMake(394-5, 45-13.75-5, 10, 13.75);
         if (self.isPlayingCard) {
             upImageView.frame = [Common getScaledViewRect:upImageView withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1001,9 +1001,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (_isPlayingCard) {
-        _backgroundImageSelectButton.hidden = YES;
         [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
         _changeTemplateButton.hidden = YES;
+        _backgroundImageSelectButton.hidden = YES;
         _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
         _soundButton.frame = CGRectMake(13, 8, 24, 24);
         
@@ -1088,9 +1088,6 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _sidebarTitle.userInteractionEnabled = FALSE;
     
-    _changeTemplateButton.hidden = TRUE;
-    _backgroundImageSelectButton.hidden = TRUE;
-    
     if (_isPlayingCard) {
         _creatorText.userInteractionEnabled = TRUE;
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
@@ -1167,10 +1164,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subheadingAnswer.layer.borderWidth = 3;
     }
     
-    _changeTemplateButton.hidden = FALSE;
     _changeTemplateButton.userInteractionEnabled = YES;
-    
-    _backgroundImageSelectButton.hidden = NO;
     
     _questionTitle.userInteractionEnabled = YES;
     _answerTitle.userInteractionEnabled = YES;
@@ -1331,20 +1325,26 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     //是否显示soundButton的逻辑
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        if (((_currentCard.question.recordedSoundFullPath.length > 0) && (_isPlayingCard))
-            || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
-            self.functionAreaView.hidden = NO;
+        
+        if (_isPlayingCard) {
+            if (_currentCard.question.recordedSoundFullPath.length > 0) {
+                self.functionAreaView.hidden = NO;
+            } else {
+                self.functionAreaView.hidden = YES;
+            }
         } else {
-            //TODO: XXX
-            self.soundButton.hidden= YES;
+           self.functionAreaView.hidden = NO;
         }
+        
     } else {
-        if (((_currentCard.answer.recordedSoundFullPath.length > 0) && (_isPlayingCard))
-            || ((_isPlayingCard == NO) && ([self checkCardEditable]))) {
-            self.functionAreaView.hidden = NO;
+        if (_isPlayingCard) {
+            if (_currentCard.answer.recordedSoundFullPath.length > 0) {
+                self.functionAreaView.hidden = NO;
+            } else {
+                self.functionAreaView.hidden = YES;
+            }
         } else {
-            //TODO: XXX
-            self.soundButton.hidden= YES;
+            self.functionAreaView.hidden = NO;
         }
     }
     
@@ -3888,8 +3888,16 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - UIImagePickerController related
 
 - (void) selectFromImageLibraryByBackgroundSelectButton:(UITapGestureRecognizer *)sender {
-    _typeImageSelector = Type_Image_Selector_Background;
     
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
+    
+    _typeImageSelector = Type_Image_Selector_Background;
     [self selectFromImageLibrary:sender withPopoverArrowUp:NO  supportMov:NO];
 }
 
@@ -5270,6 +5278,15 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) changeTemplateButtonClick:(id)sender {
+    
+    
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
     
     SelectTemplateTableViewController *selectTemplateTableViewController = [[SelectTemplateTableViewController alloc] initWithStyle:UITableViewStylePlain];
     selectTemplateTableViewController.isQuestionShowing = (_segmentedControl.selectedSegmentIndex == 0)?YES:NO;
