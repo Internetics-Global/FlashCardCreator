@@ -573,7 +573,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor clearColor];
         _soundButton.showsTouchWhenHighlighted = YES;
-        [_soundButton addSubview:_soundButton];
+        [_functionAreaView addSubview:_soundButton];
     }
     
     if (_backgroundImageSelectButton == nil) {

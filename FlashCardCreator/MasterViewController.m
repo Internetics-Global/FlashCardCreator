@@ -313,6 +313,9 @@ enum popover_enum {
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
             _packListPickerPopover.popoverContentSize = CGSizeMake(950, 345);
+            if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+                _packListPickerPopover.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:1];
+            }
         }
         
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];

@@ -349,20 +349,6 @@
                                              defaultPack:_currentPack defaultCard:_shuffledCardArray[_indexCard] isPlayingCard:YES];
     }
     
-    [[_currentFlashCardView layer] setShadowOffset:CGSizeMake(1, 1)];
-    [[_currentFlashCardView layer] setShadowRadius:3];
-    [[_currentFlashCardView layer] setShadowOpacity:0.5];
-    [[_currentFlashCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
-    
-    [[_previousFlashCardView layer] setShadowOffset:CGSizeMake(1, 1)];
-    [[_previousFlashCardView layer] setShadowRadius:3];
-    [[_previousFlashCardView layer] setShadowOpacity:0.5];
-    [[_previousFlashCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
-    
-    [[_nextFlashCardView layer] setShadowOffset:CGSizeMake(1, 1)];
-    [[_nextFlashCardView layer] setShadowRadius:3];
-    [[_nextFlashCardView layer] setShadowOpacity:0.5];
-    [[_nextFlashCardView layer] setShadowColor:[UIColor whiteColor].CGColor];
 }
 
 #pragma mark -

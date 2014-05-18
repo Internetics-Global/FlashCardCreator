@@ -384,6 +384,9 @@ enum popover_enum {
     if (_helpPopoverController == nil) {
         _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
         _helpPopoverController.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _helpPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:1];
+        }
     }
     _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
     [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
@@ -419,6 +422,9 @@ enum popover_enum {
     if (_settingPopoverController == nil) {
         _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
         _settingPopoverController.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _settingPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:1];
+        }
     }
     
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 480);
