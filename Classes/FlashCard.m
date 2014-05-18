@@ -572,7 +572,8 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
         [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor clearColor];
-        [_functionAreaView addSubview:_soundButton];
+        _soundButton.showsTouchWhenHighlighted = YES;
+        [_soundButton addSubview:_soundButton];
     }
     
     if (_backgroundImageSelectButton == nil) {
@@ -583,6 +584,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_functionAreaView addSubview:_backgroundImageSelectButton];
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
         [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
     }
     
     
@@ -593,9 +595,14 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
     }
     
     if (_isPlayingCard) {
+        
+        _functionAreaView.backgroundColor = [UIColor clearColor];
+        _functionAreaView.layer.borderWidth = 0;
+        
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
         [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
@@ -978,6 +985,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor clearColor];
         [_functionAreaView addSubview:_soundButton];
+        _soundButton.showsTouchWhenHighlighted = YES;
     }
     
     if (_backgroundImageSelectButton == nil) {
@@ -988,6 +996,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_functionAreaView addSubview:_backgroundImageSelectButton];
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
         [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
+        _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
     }
     
     
@@ -998,9 +1007,14 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_changeTemplateButton];
         [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
+        _changeTemplateButton.showsTouchWhenHighlighted = YES;
     }
     
     if (_isPlayingCard) {
+        
+        _functionAreaView.backgroundColor = [UIColor clearColor];
+        _functionAreaView.layer.borderWidth = 0;
+        
         [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;

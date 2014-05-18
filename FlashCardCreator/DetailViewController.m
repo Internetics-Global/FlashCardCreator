@@ -391,6 +391,14 @@ enum popover_enum {
 
 - (void) selectCardBackgroundTemplate:(id) sender {
     
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
+    
     
     PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
