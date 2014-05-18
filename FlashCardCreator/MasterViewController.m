@@ -193,7 +193,7 @@ enum popover_enum {
             _addCardButton.center = CGPointMake(IPAD_UI_MASTER_WIDTH/2,IPAD_UI_HEIGHT-35);
         }
         
-        _addCardButtonBackground.hidden = YES;
+        _addCardButtonBackground.hidden = NO;
         
         [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
         _addCardButton.showsTouchWhenHighlighted = YES;

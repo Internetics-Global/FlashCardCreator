@@ -236,6 +236,7 @@
 		887BD94C18D66DDE00E4DA21 /* templateScreenshot7_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */; };
 		887BD97018D6710500E4DA21 /* templateScreenshot7_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD96E18D6710500E4DA21 /* templateScreenshot7_answer_iPad.png */; };
 		887BD97118D6710500E4DA21 /* templateScreenshot7_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD96F18D6710500E4DA21 /* templateScreenshot7_answer.png */; };
+		88A06F931928B70800C0EEF7 /* add_pack_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A06F921928B70800C0EEF7 /* add_pack_button.png */; };
 		88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* AmazonClientManager.m */; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
 		88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */; };
@@ -839,6 +840,7 @@
 		887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question.png; path = Resources/templateScreenshot7_question.png; sourceTree = "<group>"; };
 		887BD96E18D6710500E4DA21 /* templateScreenshot7_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_answer_iPad.png; path = Resources/templateScreenshot7_answer_iPad.png; sourceTree = "<group>"; };
 		887BD96F18D6710500E4DA21 /* templateScreenshot7_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_answer.png; path = Resources/templateScreenshot7_answer.png; sourceTree = "<group>"; };
+		88A06F921928B70800C0EEF7 /* add_pack_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_pack_button.png; path = Resources/add_pack_button.png; sourceTree = "<group>"; };
 		88A175271797C3BD00FE778C /* AmazonClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonClientManager.h; sourceTree = "<group>"; };
 		88A175281797C3BD00FE778C /* AmazonClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonClientManager.m; sourceTree = "<group>"; };
 		88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_highlight.png; path = Resources/uibarbuttonitem_highlight.png; sourceTree = "<group>"; };
@@ -1352,6 +1354,7 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				88A06F921928B70800C0EEF7 /* add_pack_button.png */,
 				885C3DDB192804F20090F63C /* helping_button@2x.png */,
 				885C3DD9192782AB0090F63C /* edit_link_button@2x.png */,
 				885C3DD51927818E0090F63C /* save_button.png */,
@@ -2149,6 +2152,7 @@
 				880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */,
 				885C3DCC19261F6E0090F63C /* change_card_layout_template@2x.png in Resources */,
 				88D04E4C178D39170058A0D9 /* emotions.txt in Resources */,
+				88A06F931928B70800C0EEF7 /* add_pack_button.png in Resources */,
 				88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */,
 				88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */,
 				88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */,
