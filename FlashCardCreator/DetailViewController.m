@@ -405,7 +405,7 @@ enum popover_enum {
     
     PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
-                                                                     withTitle:@"Please select"
+                                                                     withTitle:@"Color select"
                                                                withStringArray:[NSArray arrayWithObjects:@"Blue", @"Coffee",@"Gray",@"Purple",@"Red", nil]
                                                                       delegate:self];
     templateBackgroundSelectPopoverView.tag = popover_enum_template_select;

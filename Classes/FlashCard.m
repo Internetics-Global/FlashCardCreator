@@ -3970,7 +3970,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     [PopoverView showPopoverAtPoint:pickerImageView.center
                                                                         inView:self
-                                                                     withTitle:@"Please select"
+                                                                     withTitle:@"Image/video select"
                                                                withStringArray:[NSArray arrayWithObjects:@"Insert Youtube linkage", @"Select from library", nil]
                                                                       delegate:self];
 
