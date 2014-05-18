@@ -42,6 +42,10 @@ BOOL isLoggingDropboxInSettingView = NO;
     
     self.tableView.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
+        [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
