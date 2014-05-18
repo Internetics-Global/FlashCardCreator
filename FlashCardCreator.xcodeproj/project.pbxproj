@@ -181,6 +181,7 @@
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E8E418BB300800AFCF12 /* close_button@2x.png */; };
 		8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */; };
+		8825CC221928C50800B21E60 /* close2_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8825CC211928C50800B21E60 /* close2_button@2x.png */; };
 		8839D2B51744B5B600338B45 /* templateScreenshot5_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */; };
 		8839D2B61744B5B600338B45 /* templateScreenshot5_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */; };
 		88491B351714522300833692 /* templateScreenshot0_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */; };
@@ -781,6 +782,7 @@
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
 		8821E8E418BB300800AFCF12 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button@2x.png"; path = "Resources/close_button@2x.png"; sourceTree = "<group>"; };
 		8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_buttonBig@2x.png"; path = "Resources/close_buttonBig@2x.png"; sourceTree = "<group>"; };
+		8825CC211928C50800B21E60 /* close2_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close2_button@2x.png"; path = "Resources/close2_button@2x.png"; sourceTree = "<group>"; };
 		8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer_iPad.png; path = Resources/templateScreenshot5_answer_iPad.png; sourceTree = "<group>"; };
 		8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer.png; path = Resources/templateScreenshot5_answer.png; sourceTree = "<group>"; };
 		88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot0_answer_iPad.png; path = Resources/templateScreenshot0_answer_iPad.png; sourceTree = "<group>"; };
@@ -1373,6 +1375,7 @@
 				88CA253517152EE700859BDC /* grayButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
 				8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */,
+				8825CC211928C50800B21E60 /* close2_button@2x.png */,
 				2D5FCBBA16DD927800DB8628 /* add_pack_button@2x.png */,
 				2D5FCBBC16DD927800DB8628 /* background_navigationbar.png */,
 				2D5FCBBE16DD927800DB8628 /* background_navigationbar@2x.png */,
@@ -2135,6 +2138,7 @@
 				88491B401714522300833692 /* templateScreenshot2_question.png in Resources */,
 				884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */,
 				885C3D981925C8DE0090F63C /* add_pack_button@2x.png in Resources */,
+				8825CC221928C50800B21E60 /* close2_button@2x.png in Resources */,
 				88491B411714522300833692 /* templateScreenshot3_answer_iPad.png in Resources */,
 				88491B421714522300833692 /* templateScreenshot3_answer.png in Resources */,
 				88491B431714522300833692 /* templateScreenshot3_question_iPad.png in Resources */,

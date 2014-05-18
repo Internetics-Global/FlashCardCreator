@@ -14,6 +14,7 @@
 #import "PackListViewController.h"
 #import "OpenUDID.h"
 #import "Common.h"
+#import "FCCBarButton.h"
 
 @interface CreatePackViewController ()
 
@@ -26,8 +27,12 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeCreatePackView)];
-        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAndCloseCreatePackView)];
+        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
+                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(closeCreatePackView)]];
+        
+        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"save_button"] target:self action:@selector(saveAndCloseCreatePackView)]];
+        
         self.navigationItem.leftBarButtonItem = closeButton;
         self.navigationItem.rightBarButtonItem = saveButton;
         
@@ -75,8 +80,6 @@
     _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
     _packNameText.borderStyle = UITextBorderStyleNone;
-    _packNameText.layer.cornerRadius = 5;
-    _packNameText.layer.masksToBounds = YES;
     [_packNameText setClearsOnBeginEditing:YES];
     _packNameText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_packNameText];
@@ -92,8 +95,6 @@
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
     _sidebarTitle.borderStyle = UITextBorderStyleNone;
-    _sidebarTitle.layer.cornerRadius = 5;
-    _sidebarTitle.layer.masksToBounds = YES;
     [_sidebarTitle setClearsOnBeginEditing:YES];
     _sidebarTitle.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_sidebarTitle];
@@ -109,8 +110,6 @@
     _creatorText.font = [UIFont systemFontOfSize:14];
     _creatorText.delegate = self;
     _creatorText.borderStyle = UITextBorderStyleNone;
-    _creatorText.layer.cornerRadius = 5;
-    _creatorText.layer.masksToBounds = YES;
     [_creatorText setClearsOnBeginEditing:YES];
     _creatorText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_creatorText];

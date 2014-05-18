@@ -45,9 +45,10 @@ BOOL isFromNewCreatedCard = NO;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"save_button"] target:self action:@selector(saveAndCloseCreateCardView)]];
         
+
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                 initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(backAndPopCreateCardView)]];
         
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backAndPopCreateCardView)];
-        self.navigationItem.leftBarButtonItem = backButton;
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.backgroundColor = [UIColor clearColor];
