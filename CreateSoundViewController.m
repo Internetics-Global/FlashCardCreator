@@ -9,6 +9,7 @@
 #import "CreateSoundViewController.h"
 #import "FileOperationHelper.h"
 #import "Card.h"
+#import "FCCBarButton.h"
 
 typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     Enum_Status_Record_Unknow      = -1,
@@ -60,9 +61,8 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     _startButton.layer.shadowOpacity = 1.0f;
     _startButton.layer.shadowRadius = 10.0f;
     
-    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
-    
-    self.navigationItem.leftBarButtonItem = closeButton;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(dismiss)]];
     
     [self setupRecord];
     
