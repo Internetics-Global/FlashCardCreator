@@ -76,13 +76,17 @@
                                                         action:@selector(forwardButtonClicked:)];
         forwardButton.enabled = NO;
         
-        refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                      target:self
-                                                                      action:@selector(refreshButtonClicked:)];
+        refreshButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"refresh2.png"]
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(refreshButtonClicked:)];
         
-        closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                    target:self
-                                                                    action:@selector(closeButtonClicked:)];
+        
+        closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close2_button.png"]
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(closeButtonClicked:)];
+        
         
         bar.items = [NSArray arrayWithObjects:
                      backButton,

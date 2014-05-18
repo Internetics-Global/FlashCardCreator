@@ -182,6 +182,8 @@
 		8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E8E418BB300800AFCF12 /* close_button@2x.png */; };
 		8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */; };
 		8825CC221928C50800B21E60 /* close2_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8825CC211928C50800B21E60 /* close2_button@2x.png */; };
+		8825CC461928CA8000B21E60 /* refresh2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8825CC441928CA8000B21E60 /* refresh2.png */; };
+		8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8825CC451928CA8000B21E60 /* refresh2@2x.png */; };
 		8839D2B51744B5B600338B45 /* templateScreenshot5_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */; };
 		8839D2B61744B5B600338B45 /* templateScreenshot5_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */; };
 		88491B351714522300833692 /* templateScreenshot0_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */; };
@@ -783,6 +785,8 @@
 		8821E8E418BB300800AFCF12 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button@2x.png"; path = "Resources/close_button@2x.png"; sourceTree = "<group>"; };
 		8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_buttonBig@2x.png"; path = "Resources/close_buttonBig@2x.png"; sourceTree = "<group>"; };
 		8825CC211928C50800B21E60 /* close2_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close2_button@2x.png"; path = "Resources/close2_button@2x.png"; sourceTree = "<group>"; };
+		8825CC441928CA8000B21E60 /* refresh2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh2.png; path = Resources/refresh2.png; sourceTree = "<group>"; };
+		8825CC451928CA8000B21E60 /* refresh2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "refresh2@2x.png"; path = "Resources/refresh2@2x.png"; sourceTree = "<group>"; };
 		8839D2B31744B5B600338B45 /* templateScreenshot5_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer_iPad.png; path = Resources/templateScreenshot5_answer_iPad.png; sourceTree = "<group>"; };
 		8839D2B41744B5B600338B45 /* templateScreenshot5_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_answer.png; path = Resources/templateScreenshot5_answer.png; sourceTree = "<group>"; };
 		88491B211714522300833692 /* templateScreenshot0_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot0_answer_iPad.png; path = Resources/templateScreenshot0_answer_iPad.png; sourceTree = "<group>"; };
@@ -1396,6 +1400,8 @@
 				2DD058FF16E8453E00F779BD /* segment_seperator.png */,
 				2DD0590016E8453E00F779BD /* segment_unselected.png */,
 				2DD0590616E8597100F779BD /* edit_link_button.png */,
+				8825CC441928CA8000B21E60 /* refresh2.png */,
+				8825CC451928CA8000B21E60 /* refresh2@2x.png */,
 				8867CAE217935279007298EF /* bar_button_black.png */,
 				8867CABF179351BE007298EF /* bar_button_black@2X.png */,
 				8821E8E418BB300800AFCF12 /* close_button@2x.png */,
@@ -2035,6 +2041,7 @@
 				8810031E180FBD8A00FA0A52 /* icon76x76iPad.png in Resources */,
 				2D5FCBE416DD927800DB8628 /* share_button.png in Resources */,
 				2D5FCBE616DD927800DB8628 /* share_button@2x.png in Resources */,
+				8825CC461928CA8000B21E60 /* refresh2.png in Resources */,
 				2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */,
 				2DE809C816DF679300B7959A /* selected_table_cell@2x.png in Resources */,
 				8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */,
@@ -2047,6 +2054,7 @@
 				2DC177B116E46AA800939E61 /* help4.jpg in Resources */,
 				2DC177B216E46AA800939E61 /* help5.jpg in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
+				8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */,
 				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
 				887BD94B18D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png in Resources */,
 				2DD0590116E8453E00F779BD /* segment_selected.png in Resources */,
