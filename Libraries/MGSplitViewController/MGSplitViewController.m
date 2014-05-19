@@ -444,6 +444,10 @@
 		leadingCorners = [_cornerViews objectAtIndex:0];
 		trailingCorners = [_cornerViews objectAtIndex:1];
 	}
+    
+    //ccaa comment
+    leadingCorners.hidden = YES;
+    trailingCorners.hidden = YES;
 	
 	// Configure and layout the corner-views.
 	leadingCorners.cornersPosition = (_vertical) ? MGCornersPositionLeadingVertical : MGCornersPositionLeadingHorizontal;
