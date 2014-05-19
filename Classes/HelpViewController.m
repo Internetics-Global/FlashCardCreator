@@ -23,7 +23,9 @@
         self.automaticallyAdjustsScrollViewInsets = FALSE;
         self.edgesForExtendedLayout = UIRectEdgeNone;
     } else {
-        [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        if (isUserInterfaceIdiomPhone == FALSE) {
+            [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        }
     }
     
 }

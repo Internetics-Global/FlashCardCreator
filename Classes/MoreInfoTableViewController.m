@@ -39,12 +39,18 @@ BOOL isLoggingDropboxInSettingView = NO;
         UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
         self.navigationItem.leftBarButtonItem = closeButton;
     }
+
     
     self.tableView.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorColor = [UIColor colorWithRed:67.0/255 green:67.0/255 blue:67.0/255 alpha:0.95];
     
     if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-        [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+        if (isUserInterfaceIdiomPhone == FALSE) {
+            if (isUserInterfaceIdiomPhone == FALSE) {
+                [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+            }
+        }
     }
 }
 
@@ -56,8 +62,18 @@ BOOL isLoggingDropboxInSettingView = NO;
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 5;
+    return 0.1;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 2) {
+        return 0.2;
+    } else {
+        return 0.1;
+    }
+}
+
+
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -168,6 +184,7 @@ BOOL isLoggingDropboxInSettingView = NO;
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
     }
+    
         
     return cell;
 }

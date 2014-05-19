@@ -5313,6 +5313,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             _selectTemplatePopoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
             _selectTemplatePopoverController.delegate = self;
             _selectTemplatePopoverController.popoverContentSize = CGSizeMake(250, 95*5);
+            if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+                _selectTemplatePopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:1];
+            }
         }
         
         CGPoint point = [sender convertPoint:CGPointMake(0, 0) toView:nil];

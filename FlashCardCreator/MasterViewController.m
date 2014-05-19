@@ -735,7 +735,7 @@ enum popover_enum {
 		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] init];
         backgroundView.layer.opacity = 0.8;
-        backgroundView.backgroundColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.8];
+        backgroundView.backgroundColor = [UIColor colorWithRed:127.0/255 green:134.0/255 blue:164.0/255 alpha:0.8];
         backgroundView.layer.cornerRadius = 5;
         backgroundView.layer.masksToBounds = YES;
         cell.selectedBackgroundView = backgroundView;
