@@ -32,7 +32,6 @@
 		2D1A054916EDED8800527311 /* template_color_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054416EDED8800527311 /* template_color_purple.png */; };
 		2D1A054A16EDED8800527311 /* template_color_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054516EDED8800527311 /* template_color_red.png */; };
 		2D1A055116EE894800527311 /* template_background_change_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054D16EE894600527311 /* template_background_change_button.png */; };
-		2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A054E16EE894700527311 /* change_template_background_button@2x.png */; };
 		2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2E33A616F2C6F600489286 /* FlashCard.m */; };
 		2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D37280D16DDCBA00068DE31 /* CoreMotion.framework */; };
 		2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17B916D1A53600E1E785 /* MGSplitCornersView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -220,8 +219,6 @@
 		885C3DC4192619150090F63C /* create_card_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DC3192619150090F63C /* create_card_background.jpg */; };
 		885C3DC6192619FB0090F63C /* background2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DC5192619FB0090F63C /* background2@2x.png */; };
 		885C3DC819261D710090F63C /* record_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DC719261D710090F63C /* record_button@2x.png */; };
-		885C3DCA19261E8D0090F63C /* change_card_background_image_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DC919261E8D0090F63C /* change_card_background_image_button@2x.png */; };
-		885C3DCC19261F6E0090F63C /* change_card_layout_template@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DCB19261F6E0090F63C /* change_card_layout_template@2x.png */; };
 		885C3DCE1926217A0090F63C /* play_recorded_sound_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DCD1926217A0090F63C /* play_recorded_sound_button@2x.png */; };
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C3DD71927818E0090F63C /* save_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DD51927818E0090F63C /* save_button.png */; };
@@ -234,6 +231,13 @@
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
 		88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */; };
+		887A45B71929E36B007C94FB /* change_card_background_image_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B31929E36B007C94FB /* change_card_background_image_button.png */; };
+		887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */; };
+		887A45B91929E36B007C94FB /* change_card_layout_template.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B51929E36B007C94FB /* change_card_layout_template.png */; };
+		887A45BA1929E36B007C94FB /* change_card_layout_template@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B61929E36B007C94FB /* change_card_layout_template@2x.png */; };
+		887A45DD1929E574007C94FB /* helping_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45DC1929E574007C94FB /* helping_button.png */; };
+		887A45DF1929E9DB007C94FB /* packs_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45DE1929E9DB007C94FB /* packs_button.png */; };
+		887A45E11929EB29007C94FB /* edit_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45E01929EB29007C94FB /* edit_button.png */; };
 		887BD94718D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94118D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png */; };
 		887BD94818D66DDE00E4DA21 /* templateScreenshot6_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94218D66DDE00E4DA21 /* templateScreenshot6_answer.png */; };
 		887BD94918D66DDE00E4DA21 /* templateScreenshot6_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94318D66DDE00E4DA21 /* templateScreenshot6_question_iPad.png */; };
@@ -562,7 +566,6 @@
 		2D1A054416EDED8800527311 /* template_color_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_purple.png; path = Resources/template_color_purple.png; sourceTree = "<group>"; };
 		2D1A054516EDED8800527311 /* template_color_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_color_red.png; path = Resources/template_color_red.png; sourceTree = "<group>"; };
 		2D1A054D16EE894600527311 /* template_background_change_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = template_background_change_button.png; path = Resources/template_background_change_button.png; sourceTree = "<group>"; };
-		2D1A054E16EE894700527311 /* change_template_background_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_template_background_button@2x.png"; path = "Resources/change_template_background_button@2x.png"; sourceTree = "<group>"; };
 		2D2E33A516F2C6F600489286 /* FlashCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashCard.h; path = Classes/FlashCard.h; sourceTree = "<group>"; };
 		2D2E33A616F2C6F600489286 /* FlashCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlashCard.m; path = Classes/FlashCard.m; sourceTree = "<group>"; };
 		2D37280D16DDCBA00068DE31 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -827,8 +830,6 @@
 		885C3DC3192619150090F63C /* create_card_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = create_card_background.jpg; sourceTree = "<group>"; };
 		885C3DC5192619FB0090F63C /* background2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background2@2x.png"; sourceTree = "<group>"; };
 		885C3DC719261D710090F63C /* record_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "record_button@2x.png"; sourceTree = "<group>"; };
-		885C3DC919261E8D0090F63C /* change_card_background_image_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change_card_background_image_button@2x.png"; sourceTree = "<group>"; };
-		885C3DCB19261F6E0090F63C /* change_card_layout_template@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "change_card_layout_template@2x.png"; sourceTree = "<group>"; };
 		885C3DCD1926217A0090F63C /* play_recorded_sound_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_recorded_sound_button@2x.png"; sourceTree = "<group>"; };
 		885C3DD01926281C0090F63C /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
 		885C3DD11926281C0090F63C /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
@@ -844,6 +845,13 @@
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
 		88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = default_pack_cover_image.jpg; path = Resources/default_pack_cover_image.jpg; sourceTree = "<group>"; };
+		887A45B31929E36B007C94FB /* change_card_background_image_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_background_image_button.png; path = Resources/change_card_background_image_button.png; sourceTree = "<group>"; };
+		887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_card_background_image_button@2x.png"; path = "Resources/change_card_background_image_button@2x.png"; sourceTree = "<group>"; };
+		887A45B51929E36B007C94FB /* change_card_layout_template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_layout_template.png; path = Resources/change_card_layout_template.png; sourceTree = "<group>"; };
+		887A45B61929E36B007C94FB /* change_card_layout_template@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_card_layout_template@2x.png"; path = "Resources/change_card_layout_template@2x.png"; sourceTree = "<group>"; };
+		887A45DC1929E574007C94FB /* helping_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = helping_button.png; path = Resources/helping_button.png; sourceTree = "<group>"; };
+		887A45DE1929E9DB007C94FB /* packs_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = packs_button.png; path = Resources/packs_button.png; sourceTree = "<group>"; };
+		887A45E01929EB29007C94FB /* edit_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = edit_button.png; path = Resources/edit_button.png; sourceTree = "<group>"; };
 		887BD94118D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_answer_iPad.png; path = Resources/templateScreenshot6_answer_iPad.png; sourceTree = "<group>"; };
 		887BD94218D66DDE00E4DA21 /* templateScreenshot6_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_answer.png; path = Resources/templateScreenshot6_answer.png; sourceTree = "<group>"; };
 		887BD94318D66DDE00E4DA21 /* templateScreenshot6_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_question_iPad.png; path = Resources/templateScreenshot6_question_iPad.png; sourceTree = "<group>"; };
@@ -1372,8 +1380,11 @@
 				885C3DD51927818E0090F63C /* save_button.png */,
 				885C3DD61927818E0090F63C /* save_button@2x.png */,
 				885C3DCD1926217A0090F63C /* play_recorded_sound_button@2x.png */,
-				885C3DCB19261F6E0090F63C /* change_card_layout_template@2x.png */,
-				885C3DC919261E8D0090F63C /* change_card_background_image_button@2x.png */,
+				887A45DC1929E574007C94FB /* helping_button.png */,
+				887A45B31929E36B007C94FB /* change_card_background_image_button.png */,
+				887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */,
+				887A45B51929E36B007C94FB /* change_card_layout_template.png */,
+				887A45B61929E36B007C94FB /* change_card_layout_template@2x.png */,
 				885C3DC719261D710090F63C /* record_button@2x.png */,
 				885C3DC1192615E10090F63C /* done_button@2x.png */,
 				885C3D951925C8DE0090F63C /* add_pack_button@2x.png */,
@@ -1381,7 +1392,9 @@
 				885C3D971925C8DE0090F63C /* packs_button@2x.png */,
 				884DE18A18FBA48A00C09067 /* video_default@2x.png */,
 				8858064C18C9984C00490C33 /* upButton@2x.png */,
+				887A45E01929EB29007C94FB /* edit_button.png */,
 				2DD058F816E83FBD00F779BD /* redButton.png */,
+				887A45DE1929E9DB007C94FB /* packs_button.png */,
 				880D19931929856300FD46F0 /* done_button.png */,
 				88CA253517152EE700859BDC /* grayButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
@@ -1392,7 +1405,6 @@
 				2D5FCBBE16DD927800DB8628 /* background_navigationbar@2x.png */,
 				2D1A054D16EE894600527311 /* template_background_change_button.png */,
 				8810F483170BA06400D40562 /* template_background_change_button@2x.png */,
-				2D1A054E16EE894700527311 /* change_template_background_button@2x.png */,
 				880D19701929849900FD46F0 /* close2_button.png */,
 				880D19491929821000FD46F0 /* create_new_pack.png */,
 				2D5FCBC016DD927800DB8628 /* play_button.png */,
@@ -2025,12 +2037,15 @@
 				2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */,
 				885C3D991925C8DE0090F63C /* edit_button@2x.png in Resources */,
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
+				887A45DD1929E574007C94FB /* helping_button.png in Resources */,
 				2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */,
 				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
+				887A45DF1929E9DB007C94FB /* packs_button.png in Resources */,
 				2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */,
 				880D19941929856300FD46F0 /* done_button.png in Resources */,
 				2D5C187E16D1A74800E1E785 /* leftArrow.png in Resources */,
+				887A45B71929E36B007C94FB /* change_card_background_image_button.png in Resources */,
 				2D5C187F16D1A74800E1E785 /* leftArrow@2x.png in Resources */,
 				2D5C188516D1A74800E1E785 /* rightArrow.png in Resources */,
 				8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */,
@@ -2055,7 +2070,6 @@
 				2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */,
 				2DE809C816DF679300B7959A /* selected_table_cell@2x.png in Resources */,
 				8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */,
-				885C3DCA19261E8D0090F63C /* change_card_background_image_button@2x.png in Resources */,
 				2DC177AE16E46AA800939E61 /* help1.jpg in Resources */,
 				887BD97118D6710500E4DA21 /* templateScreenshot7_answer.png in Resources */,
 				2DC177AF16E46AA800939E61 /* help2.jpg in Resources */,
@@ -2063,6 +2077,7 @@
 				885C3DD71927818E0090F63C /* save_button.png in Resources */,
 				2DC177B116E46AA800939E61 /* help4.jpg in Resources */,
 				2DC177B216E46AA800939E61 /* help5.jpg in Resources */,
+				887A45BA1929E36B007C94FB /* change_card_layout_template@2x.png in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 				8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */,
 				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
@@ -2103,7 +2118,6 @@
 				8858064D18C9984D00490C33 /* upButton@2x.png in Resources */,
 				2D1A054A16EDED8800527311 /* template_color_red.png in Resources */,
 				2D1A055116EE894800527311 /* template_background_change_button.png in Resources */,
-				2D1A055216EE894800527311 /* change_template_background_button@2x.png in Resources */,
 				2DB4494E16F02D5A00A33F85 /* dotted_line.png in Resources */,
 				885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */,
 				8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */,
@@ -2119,6 +2133,7 @@
 				88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */,
 				885C3D9A1925C8DE0090F63C /* packs_button@2x.png in Resources */,
 				880AF42918C5A633007F13DF /* release_notes.md in Resources */,
+				887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */,
 				881131AB1703CC8600C7D5A8 /* Default.png in Resources */,
 				887BD97018D6710500E4DA21 /* templateScreenshot7_answer_iPad.png in Resources */,
 				885C3DDF192814C90090F63C /* answer_placeholder_content@2x.jpg in Resources */,
@@ -2130,6 +2145,7 @@
 				881002F9180F801900FA0A52 /* play@2x.png in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
+				887A45E11929EB29007C94FB /* edit_button.png in Resources */,
 				88BC7966170D419A00EFBFCE /* help1_iphone.jpg in Resources */,
 				88BC7967170D419A00EFBFCE /* help2_iphone.jpg in Resources */,
 				88BC7968170D419A00EFBFCE /* help3_iphone.jpg in Resources */,
@@ -2173,7 +2189,7 @@
 				88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */,
 				88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */,
 				880087AE177AE9AA0051594B /* emotion_placeholder.png in Resources */,
-				885C3DCC19261F6E0090F63C /* change_card_layout_template@2x.png in Resources */,
+				887A45B91929E36B007C94FB /* change_card_layout_template.png in Resources */,
 				88D04E4C178D39170058A0D9 /* emotions.txt in Resources */,
 				88A06F931928B70800C0EEF7 /* add_pack_button.png in Resources */,
 				88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */,
