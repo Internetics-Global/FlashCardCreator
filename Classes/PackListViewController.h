@@ -32,8 +32,7 @@
 @property (nonatomic, strong) IBOutlet SwipeView *swipeView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIButton *userNewButton;
-@property (weak, nonatomic) IBOutlet UIButton *sortedByCreatedButton;
-@property (weak, nonatomic) IBOutlet UIButton *sortedByViewedButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegmentedControl;
 
 @property (nonatomic, assign) NSInteger indexCurrentPack;
 @property (nonatomic, assign) NSInteger packIDInMasterView;
