@@ -158,6 +158,8 @@
 		880AF42818C5A633007F13DF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42218C5A60B007F13DF /* README.md */; };
 		880AF42918C5A633007F13DF /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42318C5A60B007F13DF /* release_notes.md */; };
 		880D194A1929821000FD46F0 /* create_new_pack.png in Resources */ = {isa = PBXBuildFile; fileRef = 880D19491929821000FD46F0 /* create_new_pack.png */; };
+		880D19711929849900FD46F0 /* close2_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 880D19701929849900FD46F0 /* close2_button.png */; };
+		880D19941929856300FD46F0 /* done_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 880D19931929856300FD46F0 /* done_button.png */; };
 		880E67201827205B0054DDD0 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E671F1827205B0054DDD0 /* Appsee.framework */; };
 		880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6723182720BF0054DDD0 /* CoreMedia.framework */; };
 		880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6721182720710054DDD0 /* AVFoundation.framework */; };
@@ -761,6 +763,8 @@
 		880AF42518C5A60D007F13DF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		880AF42618C5A60D007F13DF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		880D19491929821000FD46F0 /* create_new_pack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_new_pack.png; path = Resources/create_new_pack.png; sourceTree = "<group>"; };
+		880D19701929849900FD46F0 /* close2_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close2_button.png; path = Resources/close2_button.png; sourceTree = "<group>"; };
+		880D19931929856300FD46F0 /* done_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = done_button.png; path = Resources/done_button.png; sourceTree = "<group>"; };
 		880E671F1827205B0054DDD0 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appsee.framework; path = Libraries/Appsee.framework; sourceTree = "<group>"; };
 		880E6721182720710054DDD0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		880E6723182720BF0054DDD0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1378,6 +1382,7 @@
 				884DE18A18FBA48A00C09067 /* video_default@2x.png */,
 				8858064C18C9984C00490C33 /* upButton@2x.png */,
 				2DD058F816E83FBD00F779BD /* redButton.png */,
+				880D19931929856300FD46F0 /* done_button.png */,
 				88CA253517152EE700859BDC /* grayButton.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
 				8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */,
@@ -1388,6 +1393,7 @@
 				2D1A054D16EE894600527311 /* template_background_change_button.png */,
 				8810F483170BA06400D40562 /* template_background_change_button@2x.png */,
 				2D1A054E16EE894700527311 /* change_template_background_button@2x.png */,
+				880D19701929849900FD46F0 /* close2_button.png */,
 				880D19491929821000FD46F0 /* create_new_pack.png */,
 				2D5FCBC016DD927800DB8628 /* play_button.png */,
 				2D5FCBC216DD927800DB8628 /* play_button@2x.png */,
@@ -2023,6 +2029,7 @@
 				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */,
+				880D19941929856300FD46F0 /* done_button.png in Resources */,
 				2D5C187E16D1A74800E1E785 /* leftArrow.png in Resources */,
 				2D5C187F16D1A74800E1E785 /* leftArrow@2x.png in Resources */,
 				2D5C188516D1A74800E1E785 /* rightArrow.png in Resources */,
@@ -2070,6 +2077,7 @@
 				2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */,
 				2D1A051A16EDDF1D00527311 /* card_background_gray.png in Resources */,
 				2D1A051B16EDDF1D00527311 /* card_background_coffee.png in Resources */,
+				880D19711929849900FD46F0 /* close2_button.png in Resources */,
 				2D1A051C16EDDF1D00527311 /* card_background_blue.png in Resources */,
 				2D1A051E16EDE38200527311 /* card_sidebar_blue.png in Resources */,
 				2D1A053616EDEB2100527311 /* popoverArrowDown.png in Resources */,
