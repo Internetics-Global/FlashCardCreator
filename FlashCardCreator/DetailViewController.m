@@ -209,19 +209,23 @@ enum popover_enum {
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPAD_UI_DETAIL_WIDTH),0) animated:NO];
     }
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    UILabel *label;
     label.backgroundColor = [UIColor clearColor];
     if (isUserInterfaceIdiomPhone) {
+        label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.font = [UIFont boldSystemFontOfSize:16.0];
+        label.textAlignment = NSTextAlignmentCenter;
+        [label sizeToFit];
     }else {
-        label.font = [UIFont boldSystemFontOfSize:20.0];    
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 340, 44)];
+        label.font = [UIFont boldSystemFontOfSize:20.0];
+        label.textAlignment = NSTextAlignmentLeft;
     }
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-    label.textAlignment = NSTextAlignmentCenter;
+    
     label.textColor = [UIColor whiteColor]; // change this color
     label.text = _currentPack.packName;
-    [label sizeToFit];
-    [self.navigationItem setTitleView:label];
+        [self.navigationItem setTitleView:label];
     
     if ((shouldResetSegment == YES) && (_currentCardView.segmentedControl.selectedSegmentIndex == 1)) {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;
