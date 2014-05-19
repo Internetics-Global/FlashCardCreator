@@ -157,6 +157,7 @@
 		880AF42718C5A60E007F13DF /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880AF42118C5A60A007F13DF /* libTestFlight.a */; };
 		880AF42818C5A633007F13DF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42218C5A60B007F13DF /* README.md */; };
 		880AF42918C5A633007F13DF /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42318C5A60B007F13DF /* release_notes.md */; };
+		880D194A1929821000FD46F0 /* create_new_pack.png in Resources */ = {isa = PBXBuildFile; fileRef = 880D19491929821000FD46F0 /* create_new_pack.png */; };
 		880E67201827205B0054DDD0 /* Appsee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E671F1827205B0054DDD0 /* Appsee.framework */; };
 		880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6723182720BF0054DDD0 /* CoreMedia.framework */; };
 		880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6721182720710054DDD0 /* AVFoundation.framework */; };
@@ -759,6 +760,7 @@
 		880AF42418C5A60C007F13DF /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		880AF42518C5A60D007F13DF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		880AF42618C5A60D007F13DF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		880D19491929821000FD46F0 /* create_new_pack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_new_pack.png; path = Resources/create_new_pack.png; sourceTree = "<group>"; };
 		880E671F1827205B0054DDD0 /* Appsee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Appsee.framework; path = Libraries/Appsee.framework; sourceTree = "<group>"; };
 		880E6721182720710054DDD0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		880E6723182720BF0054DDD0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -1386,6 +1388,7 @@
 				2D1A054D16EE894600527311 /* template_background_change_button.png */,
 				8810F483170BA06400D40562 /* template_background_change_button@2x.png */,
 				2D1A054E16EE894700527311 /* change_template_background_button@2x.png */,
+				880D19491929821000FD46F0 /* create_new_pack.png */,
 				2D5FCBC016DD927800DB8628 /* play_button.png */,
 				2D5FCBC216DD927800DB8628 /* play_button@2x.png */,
 				88EEEE67180E434F002AB9A1 /* play.png */,
@@ -2170,6 +2173,7 @@
 				88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */,
 				885C3DCE1926217A0090F63C /* play_recorded_sound_button@2x.png in Resources */,
 				88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */,
+				880D194A1929821000FD46F0 /* create_new_pack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
