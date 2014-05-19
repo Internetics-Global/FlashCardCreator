@@ -225,7 +225,7 @@ enum popover_enum {
     
     label.textColor = [UIColor whiteColor]; // change this color
     label.text = _currentPack.packName;
-        [self.navigationItem setTitleView:label];
+    [self.navigationItem setTitleView:label];
     
     if ((shouldResetSegment == YES) && (_currentCardView.segmentedControl.selectedSegmentIndex == 1)) {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;

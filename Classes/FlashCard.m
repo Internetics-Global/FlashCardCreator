@@ -487,7 +487,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                                   self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
-                                  300,
+                                  500,
                                   kSegmentHeightForiPad);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
