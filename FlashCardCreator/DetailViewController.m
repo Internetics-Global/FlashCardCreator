@@ -798,6 +798,7 @@ enum popover_enum {
     if (_rightPackView) {
         [_rightPackView removeFromSuperview];
         _rightPackView = nil;
+        _scrollView.hidden = NO;
     }
     
 }
@@ -819,18 +820,9 @@ enum popover_enum {
         _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
         _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
-        if isUserInterfaceIdiomPhone {
-            _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
-        } else {
-            if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
-                ([UIScreen mainScreen].scale == 2.0)) {
-                // Retina display
-                _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1648"]];
-            } else {
-                // non-Retina display
-                _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w824"]];
-            }
-        }
+        _rightPackView.backgroundColor = [UIColor clearColor];
+        
+        _scrollView.hidden = YES;
         
         
         UIImageView *rightPackImageView = [[UIImageView alloc] init];
