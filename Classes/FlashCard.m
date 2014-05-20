@@ -560,9 +560,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     //------- begin _functionAreaView
     if (_functionAreaView == nil) {
         _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
-        _functionAreaView.backgroundColor = [UIColor whiteColor];
+        _functionAreaView.backgroundColor = [UIColor colorWithRed:43.0/255 green:43.0/255 blue:43.0/255 alpha:1];
         _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
-        _functionAreaView.layer.borderWidth = 1;
+        _functionAreaView.layer.borderWidth = 0;
+        _functionAreaView.layer.cornerRadius =3;
+        _functionAreaView.layer.masksToBounds = YES;
         [self addSubview:_functionAreaView];
     }
     
@@ -972,9 +974,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     //------- begin _functionAreaView
     if (_functionAreaView == nil) {
         _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
-        _functionAreaView.backgroundColor = [UIColor whiteColor];
+        _functionAreaView.backgroundColor = [UIColor darkGrayColor];
         _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
-        _functionAreaView.layer.borderWidth = 1;
+        _functionAreaView.layer.borderWidth = 0;
+        _functionAreaView.layer.cornerRadius =3;
+        _functionAreaView.layer.masksToBounds = YES;
         [self addSubview:_functionAreaView];
     }
     

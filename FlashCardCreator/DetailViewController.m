@@ -217,7 +217,7 @@ enum popover_enum {
         label.textAlignment = NSTextAlignmentCenter;
         [label sizeToFit];
     }else {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 340, 44)];
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 550, 44)];
         label.font = [UIFont boldSystemFontOfSize:20.0];
         label.textAlignment = NSTextAlignmentLeft;
     }
