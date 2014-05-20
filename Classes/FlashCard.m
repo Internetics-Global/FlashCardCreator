@@ -984,7 +984,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     if (_soundButton == nil) {
         _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _soundButton.frame = CGRectMake(110, 4, 20, 20);
+        _soundButton.frame = CGRectMake(117, 4, 20, 20);
         [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
         [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         _soundButton.backgroundColor = [UIColor clearColor];
@@ -995,7 +995,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (_backgroundImageSelectButton == nil) {
         _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-        _backgroundImageSelectButton.frame = CGRectMake(60, 4, 20, 20);
+        _backgroundImageSelectButton.frame = CGRectMake(67, 4, 20, 20);
         [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_backgroundImageSelectButton];
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
@@ -1006,7 +1006,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     if (_changeTemplateButton == nil) {
         _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _changeTemplateButton.frame = CGRectMake(10, 4, 20, 20);
+        _changeTemplateButton.frame = CGRectMake(17, 4, 20, 20);
         _changeTemplateButton.showsTouchWhenHighlighted = YES;
         [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_changeTemplateButton];
