@@ -162,12 +162,12 @@ BOOL _isDownloadingSamplePack;
     [UIImage imageNamed:@"segment_seperator.png"];
     
     //UISegmentedControl related
-    attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,
-                  [UIFont boldSystemFontOfSize:14.0f],UITextAttributeFont,nil];
+    attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,
+                  [UIFont systemFontOfSize:14.0f],UITextAttributeFont,nil];
     [[UISegmentedControl appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     
-    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,
-                  [UIFont boldSystemFontOfSize:14.0f],UITextAttributeFont,nil];
+    NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,
+                  [UIFont systemFontOfSize:14.0f],UITextAttributeFont,nil];
     [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateHighlighted];
     [[UISegmentedControl appearance] setTitleTextAttributes:highlightedAttributes forState:UIControlStateSelected];
     

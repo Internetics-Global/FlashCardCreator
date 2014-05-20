@@ -214,7 +214,7 @@ enum popover_enum {
     }
     
     UILabel *label;
-    label.backgroundColor = [UIColor clearColor];
+    
     if (isUserInterfaceIdiomPhone) {
         label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.font = [UIFont boldSystemFontOfSize:16.0];
@@ -225,6 +225,7 @@ enum popover_enum {
         label.font = [UIFont boldSystemFontOfSize:20.0];
         label.textAlignment = NSTextAlignmentLeft;
     }
+    label.backgroundColor = [UIColor clearColor];
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     
     label.textColor = [UIColor whiteColor]; // change this color
