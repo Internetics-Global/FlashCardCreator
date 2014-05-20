@@ -76,6 +76,10 @@ enum popover_enum {
 {
     [super viewDidLoad];
     
+    if isUserInterfaceIdiomPhone {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
+    }
+    
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [self.navigationController.navigationBar setTranslucent:FALSE];
     }
@@ -814,7 +818,19 @@ enum popover_enum {
         
         _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
         _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        _rightPackView.backgroundColor = [UIColor blackColor];
+        
+        if isUserInterfaceIdiomPhone {
+            _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
+        } else {
+            if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+                ([UIScreen mainScreen].scale == 2.0)) {
+                // Retina display
+                _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1648"]];
+            } else {
+                // non-Retina display
+                _rightPackView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w824"]];
+            }
+        }
         
         
         UIImageView *rightPackImageView = [[UIImageView alloc] init];

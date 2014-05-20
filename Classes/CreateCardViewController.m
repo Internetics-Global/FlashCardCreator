@@ -134,7 +134,18 @@ BOOL isFromNewCreatedCard = NO;
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background2"]];
+    if isUserInterfaceIdiomPhone {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
+    } else {
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+            ([UIScreen mainScreen].scale == 2.0)) {
+            // Retina display
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1648"]];
+        } else {
+            // non-Retina display
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w824"]];
+        }
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveNewCreatedCardNotification:) name:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
 }

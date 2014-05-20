@@ -119,7 +119,20 @@
     _startDate =[NSDate date];
     
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    
+    if isUserInterfaceIdiomPhone {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
+    } else {
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] &&
+            ([UIScreen mainScreen].scale == 2.0)) {
+            // Retina display
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w2048"]];
+        } else {
+            // non-Retina display
+            self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1024"]];
+        }
+    }
+    
     [self initialzeCardViews];
 	[self layoutView];
 }
