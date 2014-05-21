@@ -49,17 +49,25 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.title = @"Record Sound";
+    self.title = @"Record card Sound";
     
     _recordStatus = Enum_Status_Record_Normal;
+    
+    self.playButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.playButton.layer.borderWidth = 1;
+    
+    self.saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.saveButton.layer.borderWidth = 1;
     
     _playButton.hidden = YES;
     _saveButton.hidden = YES;
     
     _startButton.layer.cornerRadius =45;
-    _startButton.layer.shadowColor = [[UIColor redColor] CGColor];
-    _startButton.layer.shadowOpacity = 1.0f;
-    _startButton.layer.shadowRadius = 10.0f;
+//    _startButton.layer.shadowColor = [[UIColor redColor] CGColor];
+//    _startButton.layer.shadowOpacity = 1.0f;
+    _startButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    _startButton.layer.borderWidth = 1;
+//    _startButton.layer.shadowRadius = 10.0f;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
                                              initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(dismiss)]];
