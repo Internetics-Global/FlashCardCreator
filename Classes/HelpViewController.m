@@ -64,10 +64,10 @@
 			break;
 		}
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.contentMode = UIViewContentModeLeft;
 		CGRect rect;
 		if (isUserInterfaceIdiomPhone) {
-            rect = CGRectMake(0, 0, IPHONE_UI_WIDTH, 169);
+            rect = CGRectMake(0, 0, 480, 169);
         } else {
             rect = CGRectMake(0, 0, 486, 260);
         }
@@ -78,17 +78,22 @@
         
         UITextView *helpText = [[UITextView alloc] initWithFrame:CGRectZero];
         NSString *localizedStr = [NSString stringWithFormat:@"HelpText%d", (nimages + 1)];
+        if (isUserInterfaceIdiomPhone) {
+            if ((nimages == 1)||(nimages == 2)||(nimages == 5)) {
+                localizedStr = [NSString stringWithFormat:@"HelpText%d_iPhone", (nimages + 1)];
+            }
+        }
         helpText.text = NSLocalizedString(localizedStr,@"");
         helpText.backgroundColor = [UIColor clearColor];
         helpText.userInteractionEnabled = FALSE;
         if (isUserInterfaceIdiomPhone) {
-            helpText.font = [UIFont systemFontOfSize:16];    
+            helpText.font = [UIFont systemFontOfSize:15];
         } else {
             helpText.font = [UIFont systemFontOfSize:20];
         }
         helpText.textColor = [UIColor whiteColor];
         if (isUserInterfaceIdiomPhone) {
-            rect = CGRectMake(0, 160, IPHONE_UI_WIDTH, 245);
+            rect = CGRectMake(0, 170, 480, 245);
         } else {
             rect = CGRectMake(0, 260, 486, 245);
         }
