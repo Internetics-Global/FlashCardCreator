@@ -5536,7 +5536,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
                    NSLog(@"%s:unvalid url adress",__FUNCTION__);
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, must be similar like http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
                     
