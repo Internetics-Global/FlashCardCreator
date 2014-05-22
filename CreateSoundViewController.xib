@@ -20,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Up7-uh-RyH">
-                    <rect key="frame" x="239" y="76" width="90" height="90"/>
+                    <rect key="frame" x="239" y="44" width="90" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="90" id="b3m-WB-oLf"/>
@@ -35,15 +35,17 @@
                         <action selector="startButtonClicked:" destination="-1" eventType="touchUpInside" id="F1v-xL-nUw"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="495" translatesAutoresizingMaskIntoConstraints="NO" id="MDu-vj-lO5">
-                    <rect key="frame" x="31" y="172" width="495" height="84"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="495" translatesAutoresizingMaskIntoConstraints="NO" id="MDu-vj-lO5">
+                    <rect key="frame" x="37" y="137" width="495" height="122"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="84" id="ASB-EB-sW3"/>
+                        <constraint firstAttribute="height" constant="122" id="ASB-EB-sW3"/>
                         <constraint firstAttribute="width" constant="495" id="Kz8-Wc-hpC"/>
                     </constraints>
-                    <string key="text">When you click “Record" you have a maximum of ten seconds to record your message. 
-Click “Stop" when ready to stop recording.
+                    <string key="text">When you click “Record” you have a maximum of ten seconds to record your message. 
+
+Click “Stop” when ready to stop recording.
+
 You can then click “Play” to hear it, or “Save” to save it to the card.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,17 +90,17 @@ You can then click “Play” to hear it, or “Save” to save it to the card.<
             <color key="backgroundColor" red="0.24705883860588074" green="0.24705883860588074" blue="0.24705883860588074" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Jsj-5s-3J3" secondAttribute="bottom" constant="20" id="42f-wj-eLm"/>
-                <constraint firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="5.5" id="9BV-Nz-TJ7"/>
+                <constraint firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="-0.5" id="9BV-Nz-TJ7"/>
                 <constraint firstItem="4CF-8G-CwC" firstAttribute="baseline" secondItem="Jsj-5s-3J3" secondAttribute="baseline" id="ARh-ck-B7i"/>
                 <constraint firstItem="4CF-8G-CwC" firstAttribute="top" secondItem="Jsj-5s-3J3" secondAttribute="top" id="DuZ-E8-Gcr"/>
-                <constraint firstItem="Up7-uh-RyH" firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="5.5" id="HMi-j7-4vc"/>
-                <constraint firstItem="MDu-vj-lO5" firstAttribute="top" secondItem="Up7-uh-RyH" secondAttribute="bottom" constant="6" id="Qvg-RF-3em"/>
-                <constraint firstItem="MDu-vj-lO5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="31" id="XZ8-6n-tGf"/>
+                <constraint firstItem="Up7-uh-RyH" firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="-0.5" id="HMi-j7-4vc"/>
+                <constraint firstItem="MDu-vj-lO5" firstAttribute="top" secondItem="Up7-uh-RyH" secondAttribute="bottom" constant="3" id="Qvg-RF-3em"/>
+                <constraint firstItem="MDu-vj-lO5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="37" id="XZ8-6n-tGf"/>
                 <constraint firstAttribute="trailing" secondItem="Jsj-5s-3J3" secondAttribute="trailing" constant="20" id="aF7-Oj-ycB"/>
                 <constraint firstAttribute="centerX" secondItem="Up7-uh-RyH" secondAttribute="centerX" id="i6i-RI-At4"/>
                 <constraint firstAttribute="bottom" secondItem="4CF-8G-CwC" secondAttribute="bottom" constant="20" id="qGM-fT-pqB"/>
                 <constraint firstItem="4CF-8G-CwC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="qZH-Lc-vat"/>
-                <constraint firstAttribute="centerY" secondItem="Up7-uh-RyH" secondAttribute="centerY" constant="39" id="qwu-sV-dWp"/>
+                <constraint firstAttribute="centerY" secondItem="Up7-uh-RyH" secondAttribute="centerY" constant="71" id="qwu-sV-dWp"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

@@ -767,7 +767,12 @@ enum popover_enum {
     if (flag && (image != NULL)) {
         cell.cellImageView.image = image;
     } else {
-        cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];        
+        if (self.currentPack.sidebarTitle.length > 0) {
+           cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder_title.png"];
+        } else {
+            cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
+        }
+        
     }
     
     if (_indexCard == indexPath.row) {

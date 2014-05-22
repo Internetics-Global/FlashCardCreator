@@ -148,7 +148,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                 
                 usleep(200000);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
+                    [_alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
                     [_startButton setTitle:@"Record" forState:UIControlStateNormal];
                     
                     _playButton.hidden = NO;
@@ -168,7 +168,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
             _recordStatus = Enum_Status_Record_Stop;
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_alertLabel setText:@"When you click Start you will have five seconds in which to record your alarm. You can then Play it back for review or Save it for use in the app."];
+                [_alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
                 [_startButton setTitle:@"Record" forState:UIControlStateNormal];
                 
                 _playButton.hidden = NO;
