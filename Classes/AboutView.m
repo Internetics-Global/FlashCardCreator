@@ -26,7 +26,7 @@
 		if (isUserInterfaceIdiomPhone) {
             textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, 205)];
         } else {
-            textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, 260)];
+            textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, 280)];
         }
         
 		textView.backgroundColor = [UIColor clearColor];
