@@ -3977,7 +3977,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     [PopoverView showPopoverAtPoint:pickerImageView.center
                                                                         inView:self
                                                                      withTitle:@"Image/video selection"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Insert Youtube url", @"Select from library", nil]
+                                                               withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library", nil]
                                                                       delegate:self];
 
 }
@@ -5536,7 +5536,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
                    NSLog(@"%s:unvalid url adress",__FUNCTION__);
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid youtube url, must be similar like http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, must be similar like http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
                     
@@ -5581,7 +5581,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (index == 1) {
         [self selectImageOrVideoFromLibrary];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your Youtube url"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
                                                         message:nil
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
