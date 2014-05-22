@@ -68,6 +68,8 @@ enum popover_enum {
                                                  selector:@selector(nextCardNotification:)
                                                      name:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
     }
     return self;
 }
@@ -524,6 +526,39 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_DETAIL_SCROLL_NOTFICATION object:[NSString stringWithFormat:@"%d",page]];
     }
     _scrollView.userInteractionEnabled = YES;
+    
+}
+
+-(void)newPackAddedNotification:(NSNotification *)notification{
+    
+    self.currentPack = (Pack *)[notification object];
+    
+    if (isUserInterfaceIdiomPhone) {
+        //iPhone中并不存在如下的逻辑
+        return;
+    }
+    
+    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+    titleLabel.text = self.currentPack.packName;
+    
+    for (UIView *myView in [_rightPackView subviews]) {
+        if ([myView isKindOfClass:[UILabel class]]) {
+            
+            [(UILabel *)myView setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            
+        } else if ([myView isKindOfClass:[UIImageView class]]) {
+            
+            NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
+            if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
+                ((UIImageView *)myView).image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+            } else {
+                NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+                ((UIImageView *)myView).image = [UIImage imageWithContentsOfFile:path];
+            }
+            
+        }
+    }
+    
     
 }
 
