@@ -5581,7 +5581,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     if (index == 1) {
         [self selectImageOrVideoFromLibrary];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input youtube url"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your Youtube url"
                                                         message:nil
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];

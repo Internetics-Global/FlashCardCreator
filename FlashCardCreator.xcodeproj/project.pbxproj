@@ -178,6 +178,8 @@
 		881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 881131971703CA1400C7D5A8 /* Default-Landscape~ipad.png */; };
 		881131AB1703CC8600C7D5A8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319B1703CA3600C7D5A8 /* Default.png */; };
 		881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319D1703CA3A00C7D5A8 /* Default@2x.png */; };
+		88123D17192D90E30062CA84 /* answer_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */; };
+		88123D18192D90E30062CA84 /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D16192D90E30062CA84 /* question_placeholder_content.jpg */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -217,8 +219,6 @@
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 884DE18A18FBA48A00C09067 /* video_default@2x.png */; };
 		884DE1AF18FBA94F00C09067 /* RequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DE1AE18FBA94F00C09067 /* RequestUtils.m */; };
-		88526A59192AC58200892E77 /* answer_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 88526A57192AC58200892E77 /* answer_placeholder_content.png */; };
-		88526A5A192AC58200892E77 /* question_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 88526A58192AC58200892E77 /* question_placeholder_content.png */; };
 		88526A7D192AC65800892E77 /* question_placeholder_logo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */; };
 		8858064D18C9984D00490C33 /* upButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858064C18C9984C00490C33 /* upButton@2x.png */; };
 		885C3D981925C8DE0090F63C /* add_pack_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3D951925C8DE0090F63C /* add_pack_button@2x.png */; };
@@ -797,6 +797,8 @@
 		8811319B1703CA3600C7D5A8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8811319D1703CA3A00C7D5A8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8811319F1703CA3E00C7D5A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = answer_placeholder_content.jpg; path = Resources/answer_placeholder_content.jpg; sourceTree = "<group>"; };
+		88123D16192D90E30062CA84 /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -838,8 +840,6 @@
 		884DE18A18FBA48A00C09067 /* video_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "video_default@2x.png"; path = "Resources/video_default@2x.png"; sourceTree = "<group>"; };
 		884DE1AD18FBA94F00C09067 /* RequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUtils.h; sourceTree = "<group>"; };
 		884DE1AE18FBA94F00C09067 /* RequestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUtils.m; sourceTree = "<group>"; };
-		88526A57192AC58200892E77 /* answer_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = answer_placeholder_content.png; path = Resources/answer_placeholder_content.png; sourceTree = "<group>"; };
-		88526A58192AC58200892E77 /* question_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = question_placeholder_content.png; path = Resources/question_placeholder_content.png; sourceTree = "<group>"; };
 		88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "question_placeholder_logo@2x.jpg"; path = "Resources/question_placeholder_logo@2x.jpg"; sourceTree = "<group>"; };
 		8858064C18C9984C00490C33 /* upButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "upButton@2x.png"; path = "Resources/upButton@2x.png"; sourceTree = "<group>"; };
 		885C3D951925C8DE0090F63C /* add_pack_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_pack_button@2x.png"; path = "Resources/add_pack_button@2x.png"; sourceTree = "<group>"; };
@@ -1395,6 +1395,8 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */,
+				88123D16192D90E30062CA84 /* question_placeholder_content.jpg */,
 				88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */,
 				88F4D02A192A1DF9005E4BFC /* record_button.png */,
 				88F4D02B192A1DF9005E4BFC /* record_button@2x.png */,
@@ -1416,8 +1418,6 @@
 				885C3D971925C8DE0090F63C /* packs_button@2x.png */,
 				884DE18A18FBA48A00C09067 /* video_default@2x.png */,
 				8858064C18C9984C00490C33 /* upButton@2x.png */,
-				88526A57192AC58200892E77 /* answer_placeholder_content.png */,
-				88526A58192AC58200892E77 /* question_placeholder_content.png */,
 				887A45E01929EB29007C94FB /* edit_button.png */,
 				2DD058F816E83FBD00F779BD /* redButton.png */,
 				887A45DE1929E9DB007C94FB /* packs_button.png */,
@@ -2081,6 +2081,7 @@
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				887A45DF1929E9DB007C94FB /* packs_button.png in Resources */,
 				2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */,
+				88123D17192D90E30062CA84 /* answer_placeholder_content.jpg in Resources */,
 				880D19941929856300FD46F0 /* done_button.png in Resources */,
 				2D5C187E16D1A74800E1E785 /* leftArrow.png in Resources */,
 				887A45B71929E36B007C94FB /* change_card_background_image_button.png in Resources */,
@@ -2147,11 +2148,11 @@
 				2D1A053E16EDEB2100527311 /* popoverBg.png in Resources */,
 				2D1A053F16EDEB2100527311 /* popoverBg@2x.png in Resources */,
 				2D1A054616EDED8800527311 /* template_color_blue.png in Resources */,
-				88526A5A192AC58200892E77 /* question_placeholder_content.png in Resources */,
 				885C3DDC192804F20090F63C /* helping_button@2x.png in Resources */,
 				885C3DD81927818E0090F63C /* save_button@2x.png in Resources */,
 				88F4D02C192A1DF9005E4BFC /* record_button.png in Resources */,
 				2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */,
+				88123D18192D90E30062CA84 /* question_placeholder_content.jpg in Resources */,
 				887BD94718D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png in Resources */,
 				88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */,
 				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
@@ -2204,7 +2205,6 @@
 				88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */,
 				881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */,
 				88491B381714522300833692 /* templateScreenshot0_question.png in Resources */,
-				88526A59192AC58200892E77 /* answer_placeholder_content.png in Resources */,
 				881F271F192B60950068648D /* w1648.png in Resources */,
 				8821E90818BB32C600AFCF12 /* close_buttonBig@2x.png in Resources */,
 				88F4D029192A1D24005E4BFC /* play_recorded_sound_button@2x.png in Resources */,
