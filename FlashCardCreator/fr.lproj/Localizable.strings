@@ -101,11 +101,3 @@
 
 "Indicator_Upload"  = "Téléchargement d'abord ...";
 "Indicator_Create_Share_Link"  = "Créer partager des liens ...";
-
-"HelpText1"  = "1. Click the \"packs\" button to show the packs you've created or have access to\n2. Click the edit button to delete a card in the current pack\n3. Click the plus symbol to create a new pack";
-"HelpText2"  = "1. Click the paint brush to change the colour palette of your cards\n2. Click the information symbol to get to this screen\n3. Click the settings button to access the settings of the app";
-"HelpText3"  = "1. Click the share button to upload your pack to drop box and share with others\n2. Click the play button to play the card!";
-"HelpText4"  = "Click the plus symbol to add a new card to your current pack";
-"HelpText5"  = "Other buttons:\n1. You can click on a link button to link your icon to a web page.\n2. Where you see the symbol image, you can click on it and choose an image from your image library\n3. You can click on the template button to change the template";
-"HelpText6"  = "1. Click the card you want to edit\n2. Click anywhere in the card to edit the text, or click on an image to choose a new image";
-"HelpText7"  = "When you are editing you can change the alignment, size and colour of the text by clicking these buttons";
