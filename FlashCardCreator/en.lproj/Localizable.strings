@@ -24,8 +24,8 @@
 "DIALOG_AlERT"       = "Alert";
 "DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";
-"DIALOG_DELETE_PACK"       = "Are you sure to delete?";
-"DIALOG_DELETE_CARD"       = "Are you sure to delete?";
+"DIALOG_DELETE_PACK"       = "Are you sure you want to delete?";
+"DIALOG_DELETE_CARD"       = "Are you sure you want to delete?";
 
 
 "NavigationBarItem_Packs"   = "Packs";
