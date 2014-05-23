@@ -5410,7 +5410,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         thumbnail = [UIImage imageNamed:@"video_default"];
     }
     
-    UIImage *playImage = [UIImage imageNamed:@"play.png"];
+    UIImage *playImage = [UIImage imageNamed:@"play"];
     
     UIGraphicsBeginImageContext(thumbnail.size);
     [thumbnail drawInRect:CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height)];
