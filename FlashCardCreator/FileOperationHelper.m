@@ -415,7 +415,7 @@
     }
     
     if (([card.question.movieFullPath lastPathComponent].length > 0)
-          && ([card.answer.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
+          && ([card.question.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
         [zipFile addFileToZip:card.question.movieFullPath newname:[card.question.movieFullPath lastPathComponent]];
     }
     
