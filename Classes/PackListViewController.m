@@ -272,11 +272,14 @@
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [deleteButton setTitle:NSLocalizedString(@"NavigationBarItem_Delete", @"") forState:UIControlStateNormal];
-        [deleteButton setBackgroundImage:[[UIImage imageNamed:@"redButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+        [deleteButton setBackgroundColor:[UIColor redColor]];
+        deleteButton.layer.borderColor = [UIColor redColor].CGColor;
+        deleteButton.layer.borderWidth = 1;
+        [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         deleteButton.titleLabel.font = [UIFont systemFontOfSize:12];
         deleteButton.tag = index;
         deleteButton.userInteractionEnabled = TRUE;
-        deleteButton.frame = CGRectMake(20.0f, 255.0f, 85, 25);
+        deleteButton.frame = CGRectMake(15.0f, 256.0f, 85, 25);
         [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         if ((_currentIndex ==index)&&(appDelegate.packIDForMasterViewPack != pack.packID)) {
@@ -285,9 +288,11 @@
         
         //change image and edit cards share common button
         changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [changeImageButton setBackgroundImage:[[UIImage imageNamed:@"grayButton.png"] stretchableImageWithLeftCapWidth:10.0 topCapHeight:0.0] forState:UIControlStateNormal];
+        [changeImageButton setBackgroundColor:[UIColor clearColor]];
+        changeImageButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        changeImageButton.layer.borderWidth = 1;
+        [deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        [changeImageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         changeImageButton.tag = index;
         changeImageButton.userInteractionEnabled = TRUE;
         changeImageButton.frame = CGRectMake(105.0f, 255.0f, 85.0, 25);
