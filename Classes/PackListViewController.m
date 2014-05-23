@@ -215,6 +215,7 @@
         packNameText.returnKeyType = UIReturnKeyDone;
         packNameText.text = pack.packName;
         packNameText.layer.cornerRadius = 5;
+        packNameText.autocapitalizationType = UITextAutocapitalizationTypeWords;
         packNameText.layer.masksToBounds = YES;
         packNameText.delegate = self;
         packNameText.tag = index;

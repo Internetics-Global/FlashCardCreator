@@ -82,6 +82,7 @@
     _packNameText.borderStyle = UITextBorderStyleNone;
     [_packNameText setClearsOnBeginEditing:YES];
     _packNameText.returnKeyType = UIReturnKeyDone;
+    _packNameText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [self.view addSubview:_packNameText];
     
     if (isUserInterfaceIdiomPhone) {
@@ -97,6 +98,7 @@
     _sidebarTitle.borderStyle = UITextBorderStyleNone;
     [_sidebarTitle setClearsOnBeginEditing:YES];
     _sidebarTitle.returnKeyType = UIReturnKeyDone;
+    _sidebarTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [self.view addSubview:_sidebarTitle];
     
     if (isUserInterfaceIdiomPhone) {
@@ -111,6 +113,7 @@
     _creatorText.delegate = self;
     _creatorText.borderStyle = UITextBorderStyleNone;
     [_creatorText setClearsOnBeginEditing:YES];
+    _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     _creatorText.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:_creatorText];
     

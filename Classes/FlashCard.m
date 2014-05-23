@@ -258,6 +258,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionTitle.layer.shadowRadius = 3.5f;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
+        _questionTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
         _questionTitle.returnKeyType = UIReturnKeyDone;
         _questionTitle.tag = kTagTitleQuestion;
@@ -282,6 +283,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
         _answerTitle.returnKeyType = UIReturnKeyDone;
         _answerTitle.tag = kTagTitleAnser;
+        _answerTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_answerTitle];
     }
     
@@ -328,6 +330,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subheadingQuestion.delegate = self;
         _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
+        _subheadingQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -347,6 +350,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _mainQuestion.delegate = self;
         _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
+        _mainQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -367,6 +371,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subQuestion.delegate = self;
         _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
+        _subQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -402,6 +407,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subheadingAnswer.delegate = self;
         _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
+        _subheadingAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = TRUE;
@@ -422,6 +428,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _mainAnswer.delegate = self;
         _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
+        _mainAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = TRUE;
@@ -443,6 +450,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subAnswer.delegate = self;
         _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
+        _subAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = TRUE;
@@ -465,6 +473,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
         _sidebarTitle.returnKeyType = UIReturnKeyDone;
         _sidebarTitle.tag = kTagSidebar;
+        _sidebarTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_sidebarTitle];
     }
     
@@ -554,6 +563,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _creatorText.keyboardType = UIKeyboardAppearanceDefault;
         _creatorText.returnKeyType = UIReturnKeyDone;
         _creatorText.tag = kTagCreator;
+        _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_creatorText];
     }
     
@@ -684,6 +694,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
         _questionTitle.returnKeyType = UIReturnKeyDone;
         _questionTitle.tag = kTagTitleQuestion;
+        _questionTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_questionTitle];
     }
     
@@ -710,6 +721,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
         _answerTitle.returnKeyType = UIReturnKeyDone;
         _answerTitle.tag = kTagTitleAnser;
+        _answerTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_answerTitle];
     }
     
@@ -740,6 +752,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             _sidebarTitle.frame = [Common getScaledViewRect:_sidebarTitle withProportion:kFlashCardViewProporation_iPhone];
         }
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
+        _sidebarTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:12];
         _sidebarTitle.textColor = [UIColor whiteColor];
@@ -788,6 +801,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subheadingQuestion.delegate = self;
         _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
+        _subheadingQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -800,6 +814,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _mainQuestion.delegate = self;
         _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
+        _mainQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -813,6 +828,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subQuestion.delegate = self;
         _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
+        _subQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -841,6 +857,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subheadingAnswer.delegate = self;
         _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
+        _subheadingAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = YES;
@@ -854,6 +871,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _mainAnswer.delegate = self;
         _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
+        _mainAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = YES;
@@ -867,6 +885,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _subAnswer.delegate = self;
         _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
+        _subAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = YES;
@@ -968,6 +987,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _creatorText.keyboardType = UIKeyboardAppearanceDefault;
         _creatorText.returnKeyType = UIReturnKeyDone;
         _creatorText.tag = kTagCreator;
+        _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_creatorText];
     }
     
