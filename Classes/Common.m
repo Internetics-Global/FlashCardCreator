@@ -128,9 +128,9 @@
 
     for (NSString *familyName in fontFamilyNames)
     {
-        NSLog(@"Font Family Name = %@", familyName);
+        DDLogInfo(@"Font Family Name = %@", familyName);
         NSArray *names = [UIFont fontNamesForFamilyName:familyName];
-        NSLog(@"Font Names = %@", fontNames);
+        DDLogInfo(@"Font Names = %@", fontNames);
         [fontNames addObjectsFromArray:names];
     }
     

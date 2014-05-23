@@ -60,7 +60,7 @@
     {
         CGPoint point = [sender locationInView:self];
         Emoticon *emoticon = [self _emoticonAtPoint:point];
-        NSLog(@"单击 : %@",emoticon.title);
+        DDLogInfo(@"单击 : %@",emoticon.title);
         if ([self.delegate respondsToSelector:@selector(emoticonGridView:didSelectEmoticon:)]) {
             [self.delegate emoticonGridView:self didSelectEmoticon:emoticon];
         }

@@ -29,14 +29,26 @@
 #import <Appsee/Appsee.h>
 #import "TestFlight.h"
 
+#import "DDFileLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+
 extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
 BOOL _isDownloadingSamplePack;
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //[Appsee start:@"556562735fb44188885a874b63449621"];
+    
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 1;
+    [DDLog addLogger:fileLogger];
     
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
@@ -57,7 +69,7 @@ BOOL _isDownloadingSamplePack;
                 if([[NSFileManager defaultManager] fileExistsAtPath:dest] == false) {
                     [[NSFileManager defaultManager] moveItemAtPath:from toPath:dest error:&error];
                     if (error) {
-                        NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                        DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
                     }
                 }
             }

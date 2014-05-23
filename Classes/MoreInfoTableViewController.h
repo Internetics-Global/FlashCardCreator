@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface MoreInfoTableViewController : UITableViewController {
+@interface MoreInfoTableViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
     UISwitch *_dropboxSwitch;
     UISwitch *_playModeSwitch;
 }

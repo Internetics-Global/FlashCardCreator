@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     BOOL success = FALSE;
     success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
     if (!success)  {
-        NSLog(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
+        DDLogInfo(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
     }
 }
 
@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                     NSDate* methodFinish =[NSDate date];
                     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
                     if (executionTime > 10) {
-                        NSLog(@"%s:finish recording a new customized sound",__FUNCTION__);
+                        DDLogInfo(@"%s:finish recording a new customized sound",__FUNCTION__);
                         break;
                     }
                     
@@ -201,7 +201,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [_player prepareToPlay];
     
     if (_player == nil)
-		NSLog(@"%s:%@",__FUNCTION__,[error description]);
+		DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
 	else
 		[_player play];
     
@@ -238,7 +238,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                                             toPath:saveTo
                                              error:&error];
     if (error) {
-        NSLog(@"%s:%@",__FUNCTION__,[error localizedDescription]);
+        DDLogInfo(@"%s:%@",__FUNCTION__,[error localizedDescription]);
     }
     
     [_card save];
@@ -274,18 +274,18 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 
 #pragma mark – AVAudioRecorderDelegate
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag {
-  NSLog(@"%s",__FUNCTION__);
+  DDLogInfo(@"%s",__FUNCTION__);
 }
 
 /* if an error occurs while encoding it will be reported to the delegate. */
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error {
-  NSLog(@"%s",__FUNCTION__);
+  DDLogInfo(@"%s",__FUNCTION__);
 }
 
 #pragma mark – AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
     _player = nil;
     
     

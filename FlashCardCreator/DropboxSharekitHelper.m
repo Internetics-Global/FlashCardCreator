@@ -62,7 +62,7 @@
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
                 if (update < share) {
-                    NSLog(@"updateDate is earlier than shareDate");
+                    DDLogInfo(@"updateDate is earlier than shareDate");
                     [self shareAction:shareLink];
                     return;
                 }
@@ -163,7 +163,7 @@
         
     } else {
         [Common alertViewCommon:@"You need to select a pack first"];
-        NSLog(@"%s:Pack to share is nil or public pack",__FUNCTION__);
+        DDLogInfo(@"%s:Pack to share is nil or public pack",__FUNCTION__);
         return;
     }
     
@@ -261,7 +261,7 @@
             dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             __weak DropboxSharekitHelper *safeSelf = self;
             dispatch_async(queue, ^{
-                NSLog(@"Amazon simpleDB item name:%@",simpleDBItemName);
+                DDLogInfo(@"Amazon simpleDB item name:%@",simpleDBItemName);
                 [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
             });
             
@@ -300,7 +300,7 @@
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
-    NSLog(@"File uploaded successfully to path: %@", metadata.path);
+    DDLogInfo(@"File uploaded successfully to path: %@", metadata.path);
     
     _isCreatingShareLinkage = YES;
     
@@ -311,10 +311,10 @@
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
-    NSLog(@"File upload failed with error - %@", error);
+    DDLogInfo(@"File upload failed with error - %@", error);
     [_HUD hide:YES];
     [Common alertViewCommon:@"Failure to upload, please try again"];
-    NSLog(@"failure to upload: %@", [error description]);
+    DDLogInfo(@"failure to upload: %@", [error description]);
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
@@ -327,7 +327,7 @@
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
-    NSLog(@"Share linkage create successfully with linkage - %@", link);
+    DDLogInfo(@"Share linkage create successfully with linkage - %@", link);
     [_HUD hide:YES];
     
     _isCreatingShareLinkage = NO;
@@ -350,7 +350,7 @@
     
     _HUD.labelText = @"Fail to create share linkage";
     _isCreatingShareLinkage = NO;
-    NSLog(@"Share linkage create failed with error - %@", error);
+    DDLogInfo(@"Share linkage create failed with error - %@", error);
 }
 
 #pragma mark -

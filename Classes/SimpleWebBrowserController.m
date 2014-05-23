@@ -42,7 +42,7 @@
 
 - (void)loadView {
     [super loadView];
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 }
 
 - (void)viewDidLoad {
@@ -146,7 +146,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"URL: %@", [[request URL] absoluteString]);
+    DDLogInfo(@"URL: %@", [[request URL] absoluteString]);
     NSString *curUrl = [NSString stringWithFormat:@"%@%@", [[self.webView.request URL] host], [[self.webView.request URL] path]];
     NSString *newUrl = [NSString stringWithFormat:@"%@%@", [[request URL] host], [[request URL] path]];
     
@@ -194,8 +194,8 @@
 
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"%s",__FUNCTION__);
-    NSLog(@"error:%@",error);
+    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogInfo(@"error:%@",error);
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];

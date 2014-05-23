@@ -15,18 +15,23 @@
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
     #import "MGSplitViewController.h"
+    #import "Constant.h"
+    #import "DDLog.h"
 #endif
 
 #ifdef DEBUG
 #else
-#define NSLog(...) do{} while(0)
+#define DDLogInfo(...) do{} while(0)
 #endif
+
+
 
 #define checkNullOrEmptyOrNullStr(str) (str == (id)[NSNull null] || str == nil || str.length == 0 || ([str rangeOfString:@"null"].location != NSNotFound))
 
 //Reachablity requirement
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+
 
 //IPhone,iPad, iPhone5 diff
 #define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
@@ -144,6 +149,4 @@
 #define SimpleDB_ACCESS_KEY_ID                @"AKIAJTO4QTQX2BPPFNAQ"
 #define SimpleDB_SECRET_KEY                   @"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"
 #define SimpleDB_DOMAIN_NAME_FOR_THIS_APP     @"flashcardcreator"
-
-
 

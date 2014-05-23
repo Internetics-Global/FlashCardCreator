@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                                                      name:UIKeyboardWillShowNotification object:nil];
         
         if ((card == nil) || (pack == nil)) {
-            //NSLog(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
+            //DDLogInfo(@"%s:Check your code, it could be possiblly an issue",__FUNCTION__);
         }
         
         self.isPlayingCard = isPlayingCard;
@@ -1267,7 +1267,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 
                 if ((isFontResized)) {
                     
-                    NSLog(@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN);
+                    DDLogInfo(@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN);
 
                 }
             }
@@ -1411,7 +1411,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _imageAnswer.image = imageTemp;
     } else {
         _answerImageFullPath = @"";
-        NSLog(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
+        DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
     }
     
@@ -1468,7 +1468,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _imageQuestion.image = imageTemp;
     } else {
         _questionImageFullPath = @"";
-        NSLog(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
+        DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
     }
     
@@ -1479,7 +1479,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _logoImage.image = imageTemp;
     } else {
         _logoImageFullPath = @"";
-        NSLog(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
+        DDLogInfo(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
     }
     
@@ -2422,7 +2422,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
         default:
         {
-            NSLog(@"%s:No template is selected",__FUNCTION__);
+            DDLogInfo(@"%s:No template is selected",__FUNCTION__);
             break;
         }
             
@@ -2710,7 +2710,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
         default:
         {
-            NSLog(@"%s:No template is selected",__FUNCTION__);
+            DDLogInfo(@"%s:No template is selected",__FUNCTION__);
             break;
         }
             
@@ -2996,7 +2996,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             
         default:
         {
-            NSLog(@"%s:No template is selected",__FUNCTION__);
+            DDLogInfo(@"%s:No template is selected",__FUNCTION__);
             break;
         }
             
@@ -3409,7 +3409,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
         default:
         {
-            NSLog(@"%s:No template is selected",__FUNCTION__);
+            DDLogInfo(@"%s:No template is selected",__FUNCTION__);
             break;
         }
             
@@ -3474,7 +3474,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         responderTextView.selectedRange = range;
     }
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
-    //NSLog(@"Y position for current cursorY is %f",cursorY);
+    //DDLogInfo(@"Y position for current cursorY is %f",cursorY);
     
     //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
@@ -4044,11 +4044,11 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [_audioPlayer prepareToPlay];
         
         if (_audioPlayer == nil)
-            NSLog(@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL);
+            DDLogInfo(@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL);
         else
             [_audioPlayer play];
     } else {
-        NSLog(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
+        DDLogInfo(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -4157,7 +4157,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         
         
         NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
-        NSLog(@"found a movie %@", movieURL);
+        DDLogInfo(@"found a movie %@", movieURL);
         
         //check video lenght
         AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:movieURL options:nil];
@@ -4199,7 +4199,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 //check file size for test purpose
                 NSDictionary *fileDictionary = [[NSFileManager defaultManager] fileAttributesAtPath:destPath traverseLink:YES];
                 long fileSize = [fileDictionary fileSize];
-                NSLog(@"%s:Done and converted 3gp size is:%ld",__FUNCTION__,fileSize);
+                DDLogInfo(@"%s:Done and converted 3gp size is:%ld",__FUNCTION__,fileSize);
                 
             }];
         }
@@ -4804,7 +4804,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
     } else {
-        NSLog(@"%s:Error",__FUNCTION__);
+        DDLogInfo(@"%s:Error",__FUNCTION__);
     }
     
     [_HUD removeFromSuperview];
@@ -4868,7 +4868,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         //[_verticalScrollView setContentOffset:offset animated:YES];
     }
     
-    NSLog(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
+    DDLogInfo(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
     
     height= textView.contentSize.height;
     tag = textView.tag;
@@ -5023,7 +5023,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
                 [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
-                NSLog(@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber);
+                DDLogInfo(@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5034,7 +5034,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainQuestion];
-                NSLog(@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber);
+                DDLogInfo(@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5044,7 +5044,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subQuestion];
-                NSLog(@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber);
+                DDLogInfo(@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5069,7 +5069,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
-                NSLog(@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber);
+                DDLogInfo(@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5079,7 +5079,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainAnswer];
-                NSLog(@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber);
+                DDLogInfo(@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5089,7 +5089,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subAnswer];
-                NSLog(@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber);
+                DDLogInfo(@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber);
                 i++;
                 usleep(5000);
             }
@@ -5160,7 +5160,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     //it could be possible。实际情况中发生了，具体原因不明
     while (textHeight <0) {
         
-        NSLog(@"%s:......Fuck textHeight <0",__FUNCTION__);
+        DDLogInfo(@"%s:......Fuck textHeight <0",__FUNCTION__);
         
         if (textView.font.pointSize <10) {
             break;
@@ -5205,7 +5205,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     if (outputFlag) {
-        NSLog(@"CardSN %d:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize);
+        DDLogInfo(@"CardSN %d:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize);
     }
     
     
@@ -5555,7 +5555,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
             if (buttonIndex ==0) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
-                   NSLog(@"%s:unvalid url adress",__FUNCTION__);
+                   DDLogInfo(@"%s:unvalid url adress",__FUNCTION__);
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
@@ -5629,7 +5629,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     
     _audioPlayer = nil;
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 }
 
 

@@ -133,7 +133,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
 
     }
 }
@@ -150,7 +150,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -174,7 +174,7 @@
                 [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
                 if (error) {
                     [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
-                    NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                    DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
                 }
             }
         }
@@ -186,7 +186,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question imageFullPath"];
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -197,7 +197,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question backgroundImageFullPath"];
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -208,7 +208,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question movieFullPath"];
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -219,7 +219,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question recordedSoundFullPath"];
-                NSLog(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }

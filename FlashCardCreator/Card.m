@@ -92,7 +92,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -106,7 +106,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        NSLog(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }

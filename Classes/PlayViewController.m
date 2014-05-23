@@ -63,7 +63,7 @@
     __weak PlayViewController *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
         [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            //NSLog(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+            //DDLogInfo(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
@@ -103,7 +103,7 @@
             
         }];
     } else {
-        NSLog(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
+        DDLogInfo(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
     }
     
 }
@@ -434,7 +434,7 @@
         }        
         
     } else {
-        NSLog(@"%s:current FlashCardView is empty",__FUNCTION__);
+        DDLogInfo(@"%s:current FlashCardView is empty",__FUNCTION__);
     }
 }
 
@@ -521,7 +521,7 @@
             card.question.css.subSize = [myArray[2] floatValue];
         }
         
-        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
         
         _isResizedArray[_indexCard - 1] = @YES;
@@ -561,7 +561,7 @@
             card.question.css.subSize = [myArray[2] floatValue] ;
         }
         
-        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
         
         _isResizedArray[_indexCard + 1] = @YES;
@@ -595,7 +595,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 }
 
 

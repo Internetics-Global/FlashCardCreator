@@ -357,7 +357,7 @@
 
 - (void)swipeView:(SwipeView *)swipeView didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"Selected item at index %d", index);
+    DDLogInfo(@"Selected item at index %d", index);
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];

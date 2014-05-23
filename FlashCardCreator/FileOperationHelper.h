@@ -48,4 +48,6 @@
 
 + (NSString *)cachesPathForFileNamed:(NSString *)fileName;
 
++(NSString*)logFile;
+
 @end

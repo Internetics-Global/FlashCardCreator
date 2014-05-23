@@ -89,7 +89,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create Users_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create Users_Tables",__FUNCTION__);
         
 	}
     
@@ -102,7 +102,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create Packs_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create Packs_Tables",__FUNCTION__);
 	}
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer);"];
@@ -113,7 +113,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create Cards_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create Cards_Tables",__FUNCTION__);
 	}
     
     
@@ -126,7 +126,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create Question_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create Question_Tables",__FUNCTION__);
         
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
@@ -149,7 +149,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create Answer_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create Answer_Tables",__FUNCTION__);
         
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
@@ -172,7 +172,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        NSLog(@"%s:Create CSS_Tables",__FUNCTION__);
+        DDLogInfo(@"%s:Create CSS_Tables",__FUNCTION__);
 	} else {
         if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
             [self AddFieldForCSSFrom2To3];
@@ -204,7 +204,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 }
 
 
@@ -226,7 +226,7 @@
     sqlite3_finalize(queryStatement);
     
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
     
 }
 
@@ -248,7 +248,7 @@
     sqlite3_finalize(queryStatement);
 
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 
 }
 
@@ -271,7 +271,7 @@
     sqlite3_finalize(queryStatement);
 
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
 
     
 }
@@ -294,7 +294,7 @@
     sqlite3_finalize(queryStatement);
     
     
-    NSLog(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s",__FUNCTION__);
     
 }
 

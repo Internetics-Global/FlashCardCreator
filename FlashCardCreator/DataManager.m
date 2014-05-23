@@ -26,7 +26,7 @@
         
 		return YES;
 	}else {
-        NSLog(@"%s:network is NOT reachable",__FUNCTION__);
+        DDLogInfo(@"%s:network is NOT reachable",__FUNCTION__);
 		return NO;
 	}
 }

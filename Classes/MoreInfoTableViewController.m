@@ -11,6 +11,7 @@
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
 #import "Common.h"
+#import "FileOperationHelper.h"
 
 BOOL isLoggingDropboxInSettingView = NO;
 
@@ -52,12 +53,54 @@ BOOL isLoggingDropboxInSettingView = NO;
             }
         }
     }
+    
+    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendLog)];
+    fiveTap.numberOfTapsRequired = 5;
+    [self.view addGestureRecognizer:fiveTap];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
+
+- (void) sendLog {
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+        composeViewController.mailComposeDelegate = self;
+        
+        [composeViewController setSubject:@"Log"];
+        [composeViewController setMessageBody:@"Log has been attached" isHTML:YES];
+        [composeViewController setToRecipients:nil];
+        
+        NSData *noteData = [NSData dataWithContentsOfFile:[FileOperationHelper logFile]];
+        if (noteData) {
+            [composeViewController addAttachmentData:noteData mimeType:@"text/plain" fileName:@"Log.txt"];
+        }
+        
+        
+        [self presentViewController:composeViewController animated:YES completion:nil];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:@"You haven't configure mail in setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
+
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 #pragma mark - Table view data source
 

@@ -609,7 +609,7 @@ enum popover_enum {
                         _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_shareHelper shareAction];
                     } else {
-                        NSLog(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                        DDLogInfo(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
                     }
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -774,7 +774,7 @@ enum popover_enum {
         card.question.css.mainSize = [myArray[1] floatValue] ;
         card.question.css.subSize = [myArray[2] floatValue] ;
         
-        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
         
         _isResizedArray[_indexCard - 1] = @YES;
@@ -816,7 +816,7 @@ enum popover_enum {
         card.question.css.mainSize = [myArray[1] floatValue] ;
         card.question.css.subSize = [myArray[2] floatValue] ;
         
-        NSLog(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
               card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
         
         _isResizedArray[_indexCard + 1] = @YES;

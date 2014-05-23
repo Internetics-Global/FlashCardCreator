@@ -187,6 +187,18 @@
 		88123D49192DC30A0062CA84 /* help6_iphone@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D48192DC30A0062CA84 /* help6_iphone@2x.jpg */; };
 		88123D4B192DC3BA0062CA84 /* help7_iphone@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D4A192DC3BA0062CA84 /* help7_iphone@2x.jpg */; };
 		88123D4F192DCA670062CA84 /* card_cover_image_placeholder_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */; };
+		88123DE8192EFBAC0062CA84 /* CLIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DD2192EFBAC0062CA84 /* CLIColor.m */; };
+		88123DE9192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DD4192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m */; };
+		88123DEA192EFBAC0062CA84 /* DDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DD6192EFBAC0062CA84 /* DDASLLogCapture.m */; };
+		88123DEB192EFBAC0062CA84 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DD8192EFBAC0062CA84 /* DDASLLogger.m */; };
+		88123DEC192EFBAC0062CA84 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DDA192EFBAC0062CA84 /* DDFileLogger.m */; };
+		88123DED192EFBAC0062CA84 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DDD192EFBAC0062CA84 /* DDLog.m */; };
+		88123DEE192EFBAC0062CA84 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DDF192EFBAC0062CA84 /* DDTTYLogger.m */; };
+		88123DEF192EFBAC0062CA84 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DE2192EFBAC0062CA84 /* DDContextFilterLogFormatter.m */; };
+		88123DF0192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DE4192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m */; };
+		88123DF1192EFBAC0062CA84 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DE6192EFBAC0062CA84 /* DDMultiFormatter.m */; };
+		88123DF2192EFBAC0062CA84 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88123DE7192EFBAC0062CA84 /* README.txt */; };
+		88123DF5192F00480062CA84 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DF4192F00480062CA84 /* Constant.m */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -806,6 +818,30 @@
 		88123D48192DC30A0062CA84 /* help6_iphone@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "help6_iphone@2x.jpg"; path = "Resources/help6_iphone@2x.jpg"; sourceTree = "<group>"; };
 		88123D4A192DC3BA0062CA84 /* help7_iphone@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "help7_iphone@2x.jpg"; path = "Resources/help7_iphone@2x.jpg"; sourceTree = "<group>"; };
 		88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder_title.png; path = Resources/card_cover_image_placeholder_title.png; sourceTree = "<group>"; };
+		88123DD1192EFBAC0062CA84 /* CLIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLIColor.h; sourceTree = "<group>"; };
+		88123DD2192EFBAC0062CA84 /* CLIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLIColor.m; sourceTree = "<group>"; };
+		88123DD3192EFBAC0062CA84 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
+		88123DD4192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
+		88123DD5192EFBAC0062CA84 /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogCapture.h; sourceTree = "<group>"; };
+		88123DD6192EFBAC0062CA84 /* DDASLLogCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogCapture.m; sourceTree = "<group>"; };
+		88123DD7192EFBAC0062CA84 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
+		88123DD8192EFBAC0062CA84 /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDASLLogger.m; sourceTree = "<group>"; };
+		88123DD9192EFBAC0062CA84 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDFileLogger.h; sourceTree = "<group>"; };
+		88123DDA192EFBAC0062CA84 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDFileLogger.m; sourceTree = "<group>"; };
+		88123DDB192EFBAC0062CA84 /* DDLog+LOGV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDLog+LOGV.h"; sourceTree = "<group>"; };
+		88123DDC192EFBAC0062CA84 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		88123DDD192EFBAC0062CA84 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		88123DDE192EFBAC0062CA84 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		88123DDF192EFBAC0062CA84 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		88123DE1192EFBAC0062CA84 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		88123DE2192EFBAC0062CA84 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		88123DE3192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		88123DE4192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		88123DE5192EFBAC0062CA84 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
+		88123DE6192EFBAC0062CA84 /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		88123DE7192EFBAC0062CA84 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		88123DF3192F00480062CA84 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
+		88123DF4192F00480062CA84 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -1109,6 +1145,8 @@
 				884DE1AE18FBA94F00C09067 /* RequestUtils.m */,
 				88C2235417C2BC5E006EB652 /* JSBadgeView.h */,
 				88C2235517C2BC5E006EB652 /* JSBadgeView.m */,
+				88123DF3192F00480062CA84 /* Constant.h */,
+				88123DF4192F00480062CA84 /* Constant.m */,
 				2D5C180C16D1A62700E1E785 /* Common.h */,
 				2D5C180D16D1A62700E1E785 /* Common.m */,
 				2D5C180E16D1A62700E1E785 /* NSArray+Randomised.h */,
@@ -1280,9 +1318,10 @@
 			name = Manager;
 			sourceTree = "<group>";
 		};
-		2D5F3D4F167B5365009D2ADC /* Libraries */ = {
+		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88123DCF192EFBAC0062CA84 /* Lumberjack */,
 				885C3DCF1926281C0090F63C /* PopoverView */,
 				880AF42018C5A60A007F13DF /* TestFlightSDK3 */,
 				880E66FD182720460054DDD0 /* Appsee */,
@@ -1297,7 +1336,7 @@
 				2D7A8CD416910F84002EDF77 /* ZipArchive */,
 				2D7A8C84168EECA3002EDF77 /* AFDownloadRequestOperation */,
 			);
-			name = Libraries;
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
@@ -1536,7 +1575,7 @@
 				2DCE0B1216798E04007A8CAD /* Apps */,
 				2D5F3D56167D557C009D2ADC /* Classes */,
 				2DCE0B0A16798E04007A8CAD /* Frameworks */,
-				2D5F3D4F167B5365009D2ADC /* Libraries */,
+				2D5F3D4F167B5365009D2ADC /* Vendor */,
 				88F47F651793FBE200EE068F /* Media.xcassets */,
 				2DCE0B0816798E04007A8CAD /* Products */,
 				2D5F3D081679EFA8009D2ADC /* Resources */,
@@ -1652,6 +1691,52 @@
 				880E671F1827205B0054DDD0 /* Appsee.framework */,
 			);
 			name = Appsee;
+			sourceTree = "<group>";
+		};
+		88123DCF192EFBAC0062CA84 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				88123DD0192EFBAC0062CA84 /* CLI */,
+				88123DD3192EFBAC0062CA84 /* DDAbstractDatabaseLogger.h */,
+				88123DD4192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m */,
+				88123DD5192EFBAC0062CA84 /* DDASLLogCapture.h */,
+				88123DD6192EFBAC0062CA84 /* DDASLLogCapture.m */,
+				88123DD7192EFBAC0062CA84 /* DDASLLogger.h */,
+				88123DD8192EFBAC0062CA84 /* DDASLLogger.m */,
+				88123DD9192EFBAC0062CA84 /* DDFileLogger.h */,
+				88123DDA192EFBAC0062CA84 /* DDFileLogger.m */,
+				88123DDB192EFBAC0062CA84 /* DDLog+LOGV.h */,
+				88123DDC192EFBAC0062CA84 /* DDLog.h */,
+				88123DDD192EFBAC0062CA84 /* DDLog.m */,
+				88123DDE192EFBAC0062CA84 /* DDTTYLogger.h */,
+				88123DDF192EFBAC0062CA84 /* DDTTYLogger.m */,
+				88123DE0192EFBAC0062CA84 /* Extensions */,
+			);
+			name = Lumberjack;
+			path = Libraries/Lumberjack;
+			sourceTree = "<group>";
+		};
+		88123DD0192EFBAC0062CA84 /* CLI */ = {
+			isa = PBXGroup;
+			children = (
+				88123DD1192EFBAC0062CA84 /* CLIColor.h */,
+				88123DD2192EFBAC0062CA84 /* CLIColor.m */,
+			);
+			path = CLI;
+			sourceTree = "<group>";
+		};
+		88123DE0192EFBAC0062CA84 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				88123DE1192EFBAC0062CA84 /* DDContextFilterLogFormatter.h */,
+				88123DE2192EFBAC0062CA84 /* DDContextFilterLogFormatter.m */,
+				88123DE3192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.h */,
+				88123DE4192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m */,
+				88123DE5192EFBAC0062CA84 /* DDMultiFormatter.h */,
+				88123DE6192EFBAC0062CA84 /* DDMultiFormatter.m */,
+				88123DE7192EFBAC0062CA84 /* README.txt */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		881E9E6F18F7AF1B00ECC523 /* SoundRecord */ = {
@@ -2077,6 +2162,7 @@
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
 				887A45DD1929E574007C94FB /* helping_button.png in Resources */,
 				2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */,
+				88123DF2192EFBAC0062CA84 /* README.txt in Resources */,
 				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				887A45DF1929E9DB007C94FB /* packs_button.png in Resources */,
@@ -2273,6 +2359,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DCE0B1816798E04007A8CAD /* main.m in Sources */,
+				88123DEE192EFBAC0062CA84 /* DDTTYLogger.m in Sources */,
+				88123DEC192EFBAC0062CA84 /* DDFileLogger.m in Sources */,
+				88123DF0192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m in Sources */,
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
 				2DCE0B2516798E04007A8CAD /* MasterViewController.m in Sources */,
 				2DCE0B2816798E04007A8CAD /* DetailViewController.m in Sources */,
@@ -2286,6 +2375,7 @@
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
+				88123DE9192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
@@ -2299,7 +2389,9 @@
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
+				88123DEF192EFBAC0062CA84 /* DDContextFilterLogFormatter.m in Sources */,
 				2D5C17E016D1A56A00E1E785 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				88123DE8192EFBAC0062CA84 /* CLIColor.m in Sources */,
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
 				2D5C17E216D1A56A00E1E785 /* AFURLConnectionOperation.m in Sources */,
 				2D5C17E316D1A56A00E1E785 /* AFXMLRequestOperation.m in Sources */,
@@ -2308,14 +2400,17 @@
 				2D5C17F416D1A59300E1E785 /* ioapi.c in Sources */,
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
 				2D5C17F616D1A59300E1E785 /* unzip.c in Sources */,
+				88123DEA192EFBAC0062CA84 /* DDASLLogCapture.m in Sources */,
 				2D5C17F716D1A59300E1E785 /* zip.c in Sources */,
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
 				2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */,
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
+				88123DF1192EFBAC0062CA84 /* DDMultiFormatter.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
+				88123DEB192EFBAC0062CA84 /* DDASLLogger.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
@@ -2334,6 +2429,7 @@
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
+				88123DED192EFBAC0062CA84 /* DDLog.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
 				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
@@ -2341,6 +2437,7 @@
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
 				884DE1AF18FBA94F00C09067 /* RequestUtils.m in Sources */,
+				88123DF5192F00480062CA84 /* Constant.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
 				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
