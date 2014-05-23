@@ -788,6 +788,7 @@ enum popover_enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     self.currentCard = [_currentPack cards][indexPath.row];
     _indexCard = indexPath.row;
 

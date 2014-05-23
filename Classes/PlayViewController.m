@@ -52,6 +52,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    DDLogInfo(@"%s",__FUNCTION__);
     [super viewWillAppear:animated];
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];
@@ -116,6 +117,7 @@
 
 - (void)viewDidLoad
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     _startDate =[NSDate date];
     
     [super viewDidLoad];
@@ -188,6 +190,7 @@
 
 - (void)layoutScrollObjectsForiPad
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     CGRect rect;
     
     for (FlashCard *cardView in [_scrollView subviews]) {
@@ -259,6 +262,7 @@
 
 - (void)layoutScrollObjectsForiPhone
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     
     CGRect rect;
     
@@ -329,12 +333,13 @@
 
 
 - (void) closePlayView {
+    DDLogInfo(@"%s",__FUNCTION__);
     [self dismissModalViewControllerAnimated:YES];
     
 }
 
 - (void) initialzeCardViews {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     float flashCardYPositionInScrollView;
     
     if (isUserInterfaceIdiomPhone) {
@@ -368,6 +373,7 @@
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    DDLogInfo(@"%s",__FUNCTION__);
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     //NSLog (@"current page is :%d", page);
@@ -378,6 +384,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    DDLogInfo(@"%s",__FUNCTION__);
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
@@ -391,7 +398,7 @@
 }
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
@@ -414,7 +421,7 @@
 }
 
 - (void) switchQuestionAnswerView {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
@@ -439,6 +446,7 @@
 }
 
 - (void) addGestureSupport {
+    DDLogInfo(@"%s",__FUNCTION__);
     UISwipeGestureRecognizer * recognizerUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureUpAction:)];
     [recognizerUp setDirection:(UISwipeGestureRecognizerDirectionUp)];
     [_currentFlashCardView addGestureRecognizer:recognizerUp];
@@ -454,16 +462,19 @@
 }
 
 - (void)tapDownAction:(UITapGestureRecognizer *)sender {
+    DDLogInfo(@"%s",__FUNCTION__);
     [self switchQuestionAnswerView];
 }
 
 - (void)gestureUpAction:(UITapGestureRecognizer *)sender {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
         [self switchQuestionAnswerView];
     }
 }
 
 - (void)gestureDownAction:(UITapGestureRecognizer *)sender {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 0) {
         [self switchQuestionAnswerView];
     }
@@ -495,7 +506,7 @@
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) previousCardNotification:(NSNotification *)notification {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }
@@ -537,7 +548,7 @@
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) nextCardNotification:(NSNotification *)notification {
-
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }

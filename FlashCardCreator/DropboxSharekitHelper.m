@@ -48,6 +48,7 @@
  */
 - (void)shareAction
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([self checkPackEditable]) {
         //Step1: check whether need to upload pack again
         NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
@@ -108,6 +109,7 @@
 }
 
 - (void) setPassword {
+    DDLogInfo(@"%s",__FUNCTION__);
     UIAlertView *alert;
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
@@ -128,6 +130,7 @@
 }
 
 - (BOOL) checkPackEditable {
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result = NO;
     Card *firstCard = [[self.currentPack cards] objectAtIndex:0];
     if ([firstCard.creator isEqualToString:[OpenUDID value]]) {
@@ -141,6 +144,7 @@
 
 
 - (DBRestClient *)restClient {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (!_restClient) {
         _restClient =
         [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -150,7 +154,7 @@
 }
 
 - (void) exectueShareAfterDropboxLinked:(NSString *) password {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *generatedZipFilePath = nil;
     //step1: create zip file
     if (_currentPack) {
@@ -198,7 +202,7 @@
 }
 
 - (void) shareAction:(NSString *)shareLinkage {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
     _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -225,7 +229,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     
     switch (alertView.tag) {
         case 1: {
@@ -287,6 +291,7 @@
 
 
 - (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName withMaxNo: (int) maxNo {
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result = false;
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
     NSString *defaultDomain = [AmazonClientManager defaultDomain];
@@ -347,7 +352,7 @@
 }
 
 - (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     _HUD.labelText = @"Fail to create share linkage";
     _isCreatingShareLinkage = NO;
     DDLogInfo(@"Share linkage create failed with error - %@", error);
@@ -375,6 +380,7 @@
 }
 
 - (void)myProgressTask {
+    DDLogInfo(@"%s",__FUNCTION__);
 	while (_progressivePercent < 1.0f) {
 		_HUD.progress = _progressivePercent;
 		usleep(50000);
@@ -391,10 +397,12 @@
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
+    DDLogInfo(@"%s",__FUNCTION__);
 	[_HUD removeFromSuperview];
 }
 
 - (NSString *) redirectURL:(NSString *)urlStr {
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *returnURL;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@",URL_REDIRECT_API,urlStr];
     

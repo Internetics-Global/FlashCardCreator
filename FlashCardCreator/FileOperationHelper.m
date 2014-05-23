@@ -262,6 +262,7 @@
 #pragma mark - Zip action
 
 + (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password  {
+    DDLogInfo(@"%s",__FUNCTION__);
     //Step1: exception 
     if (pack == nil) {
         [Common alertViewCommon:@"Selected pack is empty"];
@@ -334,7 +335,7 @@
  *  build card, assemble card, assemblecard
  */
 + (NSString *) zipCardForUpload:(Card *) card {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (card == nil) {
         return nil;
     }
@@ -521,6 +522,7 @@
 
 + (BOOL)addSkipBackupAttributeToFileAtPath:(NSString *)aFilePath
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     assert([[NSFileManager defaultManager] fileExistsAtPath:aFilePath]);
     NSError *error = nil;
     BOOL success = NO;

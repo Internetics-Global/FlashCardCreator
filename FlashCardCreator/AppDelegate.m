@@ -52,6 +52,8 @@ BOOL _isDownloadingSamplePack;
     
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
+    DDLogInfo(@"%s",__FUNCTION__);
+    
     //1. check database
     [SQLiteHelper verifyDatabase];
     
@@ -228,6 +230,7 @@ BOOL _isDownloadingSamplePack;
 //url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_isDownloadingSamplePack) {
         _isDownloadingSamplePack = FALSE;
         return NO;
@@ -260,6 +263,7 @@ BOOL _isDownloadingSamplePack;
 
 
 - (Pack *) getLastCreatedCardPack {
+    DDLogInfo(@"%s",__FUNCTION__);
     int lastCreatedPackID = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
 
     _indexLastCreatedPack =0;
@@ -285,6 +289,7 @@ BOOL _isDownloadingSamplePack;
 
 - (void) dropboxLinkedNotification:(id)notification
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
     
     if(![linkedNum boolValue])
@@ -309,6 +314,7 @@ BOOL _isDownloadingSamplePack;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    DDLogInfo(@"%s",__FUNCTION__);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
 }

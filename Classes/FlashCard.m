@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) initDefaultValue {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     _isUITextViewFocused = NO;
     
     _isAllCardsLogoNeedToBeUpdate = NO;
@@ -206,7 +206,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - Layout view
 
 - (void) loadQuestionAnswerViewForiPad {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_templateBackgroundImageView == nil) {
         _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
         _templateBackgroundImageView.contentMode = UIViewContentModeScaleToFill;
@@ -629,7 +629,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) loadQuestionAnswerViewForiPhone {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_templateBackgroundImageView == nil) {
         _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
         _templateBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -1070,6 +1070,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - Editable related
 - (BOOL)checkCardEditable {
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result;
 #ifdef CLIENT_DEBUG_MODE
     result = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
@@ -1087,7 +1088,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) disableCardEdit{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     _logoLinkageButton.hidden = TRUE;
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
@@ -1136,7 +1137,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) enableCardEdit{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     _logoLinkageButton.hidden = FALSE;
     
     int scale = [[UIScreen mainScreen] scale];
@@ -1220,6 +1221,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) refreshAll {
+    DDLogInfo(@"%s",__FUNCTION__);
     [self refreshAll:NO withIndexPlaying:-1];
 }
 
@@ -1231,7 +1233,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行adjustAllTextViewsToFitIfNecessary
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
@@ -1307,6 +1309,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) resetVerticalScrollViewOffset {
+    DDLogInfo(@"%s",__FUNCTION__);
     //reset offset
     CGPoint offset = _verticalScrollView.contentOffset;
     offset.y = 0;
@@ -1315,6 +1318,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) updateUITextViewPaddingTop {
+    DDLogInfo(@"%s",__FUNCTION__);
     _subheadingQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeQuestion], 0, 0, 0.0);
     _subheadingAnswer.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeAnswer], 0, 0, 0.0);
     _mainQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_mainSizeQuestion], 0, 0, 0.0);
@@ -1325,6 +1329,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) refreshQuestionAndAnswerContent {
+    DDLogInfo(@"%s",__FUNCTION__);
     [self refreshQuestionContent];
     [self refreshAnswerContent];
     
@@ -1403,7 +1408,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) refreshAnswerContent {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
     if (imageTemp) {
@@ -1460,7 +1465,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) refreshQuestionContent {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
     if (imageTemp) {
@@ -1531,6 +1536,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark Segment callback
 
 - (void) showQuestionOrAnswer {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_segmentedControl.selectedSegmentIndex == 0) {
         _imageQuestion.hidden = NO;
         _subheadingQuestion.hidden = NO;
@@ -1578,6 +1584,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
  */
 - (void) commitQuestionAndAnswerData {
+    DDLogInfo(@"%s",__FUNCTION__);
     _currentCard.answer.title = _answerTitle.text;
     _currentCard.answer.subheading = _subheadingAnswer.text;
     _currentCard.answer.main = _mainAnswer.text;
@@ -1654,7 +1661,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 //CSS part which is included in three main parts: CSS, template(position) and content
 - (void) updateQuestionAndAnswerCSS {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_currentCard == nil) {
         [Common alertViewCommon:@"Need to set currentCard beforehand"];
     }
@@ -1964,6 +1971,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  规定，所有UITextView默认（正常）contentSize = 0
  */
 - (void) resetAllUITextViewContentOffset {
+    DDLogInfo(@"%s",__FUNCTION__);
     _mainQuestion.contentOffset = CGPointZero;
     _subheadingQuestion.contentOffset = CGPointZero;
     _subQuestion.contentOffset = CGPointZero;
@@ -1974,6 +1982,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) updateQuestionOrAnswerTemplate {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (isUserInterfaceIdiomPhone) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             [self updateQuestionViewTemplateForiPhone];    
@@ -1994,6 +2003,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) updateQuestionAndAnswerTemplate {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (isUserInterfaceIdiomPhone) {
         [self updateQuestionViewTemplateForiPhone];
         [self updateAnswerViewTemplateForiPhone];
@@ -2009,7 +2019,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 //postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateAnswerViewTemplateForiPhone {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     int index = _currentCard.answer.templateID;
     
     switch (index) {
@@ -2430,7 +2440,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) updateAnswerViewTemplateForiPad{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     int index = _currentCard.answer.templateID;
     
     switch (index) {
@@ -2720,7 +2730,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 //postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateQuestionViewTemplateForiPad {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     int index = _currentCard.question.templateID;
     
     switch (index) {
@@ -3004,7 +3014,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) updateQuestionViewTemplateForiPhone {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     int index = _currentCard.question.templateID;
     
     switch (index) {
@@ -3420,7 +3430,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - Keyboard Notification and related
 
 - (void)keyboardWillHide:(NSNotification*)aNotification {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     //we only deal with current card and new created card
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
@@ -3430,7 +3440,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void)keyboardWillShow:(NSNotification*)aNotification {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     //step1: we only deal with current card and new created card
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
@@ -3457,6 +3467,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
@@ -3533,6 +3544,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
@@ -3564,7 +3576,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 // For keyboard input view (top parts)
 - (void) setInputViewTopViewItems  {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeActionForInputView)];
     
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownActionForInputView)];
@@ -3633,7 +3645,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 // For keyboard input accessary view
 - (void) setInputAccessoryViewItems  {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeAction)];
     
     UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
@@ -3789,7 +3801,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) setUpInputView {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     [self setInputViewTopViewItems];
     
     int columnCount;
@@ -3846,7 +3858,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) setUpInputAccessoryView {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     [self setInputAccessoryViewItems];
     
     int columnCount;
@@ -3890,6 +3902,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 -(void)dismissKeyBoard:(id) sender
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (isUserInterfaceIdiomPhone) {
         //we don't need to hide navigation bar on iPad
         [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
@@ -3928,7 +3941,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - UIImagePickerController related
 
 - (void) selectFromImageLibraryByBackgroundSelectButton:(UITapGestureRecognizer *)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -3944,7 +3957,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void)selectFromImageLibraryByLogo:(UITapGestureRecognizer *)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     _typeImageSelector = Type_Image_Selector_Logo;
     
     [self selectFromImageLibrary:sender withPopoverArrowUp:YES  supportMov:NO];
@@ -3953,7 +3966,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void)imageViewTapped:(UITapGestureRecognizer *)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     //1. play mode
     if (_isPlayingCard) {
         
@@ -4003,7 +4016,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void)selectImageOrVideoFromLibrary{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
         _typeImageSelector = Type_Image_Selector_Image;
         [self selectFromImageLibrary:nil withPopoverArrowUp:YES supportMov:YES];
@@ -4027,6 +4040,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) playAudio {
+    DDLogInfo(@"%s",__FUNCTION__);
     NSError *error;
     //不能声明为局部变量，否则无法播放
     NSURL *audioURL;
@@ -4059,7 +4073,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  Play movie/video
  */
 - (void) playVideo:(NSString *) urlStr {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if ([Common isValidYoutubeLinkage:urlStr]) {
         //http://www.youtube.com/watch?v=gzsrooteAZw
         NSString *finalURLStr = [Common embeddedYoutubeURL:urlStr];
@@ -4100,7 +4114,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  @param isArrowUp _imagePickerPopover剪头方向
  */
 - (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_imagePickerController != nil) {
         _imagePickerPopover = nil;
     }
@@ -4149,7 +4163,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
+   DDLogInfo(@"%s",__FUNCTION__);
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:@"public.movie"]){
@@ -4340,13 +4354,14 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) execUpdatelogoImageForAllCards:(NSString *)logoImageFullPath {
+    DDLogInfo(@"%s",__FUNCTION__);
     [self updatelogoImageForAllCards:logoImageFullPath];
     [_HUD removeFromSuperview];
     _HUD = nil;
 }
 
 - (UIImage *)captureWholeViewAsImage {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     bool switchSegment = NO;
     if (_segmentedControl.selectedSegmentIndex == 1) {
         _segmentedControl.selectedSegmentIndex = 0;
@@ -4395,6 +4410,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    DDLogInfo(@"%s",__FUNCTION__);
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
@@ -4404,7 +4420,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) fontTypeAction {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     if ([Common isSymbolIncluded:responderTextView.text]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -4417,19 +4433,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) sizeUpDownAction {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_fontSizeArray animated:TRUE];
 }
 
 - (void) selectColorAction {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_colorArray animated:TRUE];
 }
 
 - (void) alignAction {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_alignArray animated:TRUE];
 }
 
 - (void) fontTypeActionForInputView {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     if ([Common isSymbolIncluded:responderTextView.text]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -4441,19 +4460,22 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) sizeUpDownActionForInputView {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopViewForInputView setItems:_fontSizeArray animated:TRUE];
 }
 
 - (void) selectColorActionForInputView {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopViewForInputView setItems:_colorArray animated:TRUE];
 }
 
 - (void) alignActionForInputView {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopViewForInputView setItems:_alignArray animated:TRUE];
 }
 
 - (void) emotionAndKeyboardSwitch:(id) sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     if (_lastBecomeFirstRespondTextView.inputView == nil) {
@@ -4491,7 +4513,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) changeFontType:(id) sender{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *title = ((UIBarButtonItem *) sender).title;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
@@ -4522,7 +4544,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) changeFontSize:(id) sender{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSUInteger selectFontSize;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
@@ -4648,7 +4670,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) alignPosition:(id) sender{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectAlignStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
@@ -4688,7 +4710,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) changeColor:(id) sender{
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectColorStr = nil;
     
     NSString *title = ((UIBarButtonItem *) sender).title;
@@ -4729,6 +4751,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) backAction:(id) sender{
+    DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
     [_keyboardTopViewForInputView setItems:_buttonArrayForInputView animated:TRUE];
 }
@@ -4736,13 +4759,15 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    DDLogInfo(@"%s",__FUNCTION__);
     [textField resignFirstResponder];
     
     return YES;
 }
 
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {    
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    DDLogInfo(@"%s",__FUNCTION__);
     _isUITextViewFocused = FALSE;
     _keyboardInputBaseView.hidden = TRUE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
@@ -4755,11 +4780,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    DDLogInfo(@"%s",__FUNCTION__);
     _isTextFieldsChanged = YES;
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    DDLogInfo(@"%s",__FUNCTION__);
     [textField resignFirstResponder];
     
     if (_isTextFieldsChanged == NO) {
@@ -4790,6 +4817,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) execTextFieldDidEndEditingTask:(UITextField *)textField  {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (textField.tag == kTagTitleQuestion) {
         [self reSceenshotAll:kReasonQuestionTitleChangeEnum withStringVal:textField.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
@@ -4817,6 +4845,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - UITextViewDelegate
 - (void)textViewDidChange:(UITextView *)textView {
+    DDLogInfo(@"%s",__FUNCTION__);
     //    CGRect frame = textView.frame;
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
@@ -4825,6 +4854,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    DDLogInfo(@"%s",__FUNCTION__);
     _lastBecomeFirstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _keyboardInputBaseView.hidden = FALSE;
@@ -4834,8 +4864,9 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     static CGFloat height = 0;
     static int tag = -1;
     
@@ -4907,6 +4938,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - Add logo linkage relate
 
 - (void) editLogoLinkageURL:(id) sender {
+    DDLogInfo(@"%s",__FUNCTION__);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                     message:[NSString stringWithFormat:NSLocalizedString(@"DIALOG_ENTER_VALID_URL",@"")
 ]
@@ -4925,7 +4957,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void)openWebviewViaLogoURL:(UITapGestureRecognizer *)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSString *str = _currentCard.question.logoURLLinkage;
     if ([Common validateUrl:str] && [str hasPrefix:@"http://www."] && str.length > 12) {
         
@@ -4971,6 +5003,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - MFMailComposeViewController delegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+    DDLogInfo(@"%s",__FUNCTION__);
 	[controller dismissModalViewControllerAnimated:YES];
 }
 
@@ -4978,6 +5011,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - BaseViewDelegate
 
 - (void) updatelogoURLForAllCards:(NSString *)urlString {
+    DDLogInfo(@"%s",__FUNCTION__);
     for (Card *card in [_currentPack cards]) {
         card.question.logoURLLinkage =urlString;
         [card save];
@@ -4987,7 +5021,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) updatelogoImageForAllCards:(NSString *) imagePath {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if ((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (self.tag != NEW_FLASHCARDVIEW_TAG)) {
         return;
     }
@@ -5009,6 +5043,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  返回true,表示执行了；false，表示没有任何调节
  */
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result = NO;
     
     int i = 0;
@@ -5114,6 +5149,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  获取textview中文字高度，而不是frame的高度，这是迄今位置，最靠谱的做法
  */
 - (float) getTextSizeHeight:(UITextView *) textView{
+    DDLogInfo(@"%s",__FUNCTION__);
     CGSize tallerSize = CGSizeMake(textView.frame.size.width-16,999); //左右边间距为8,还要注意，高度要足够，否则会错误
     CGSize stringSize;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -5136,7 +5172,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整，而是默认为10号字体
  */
 - (BOOL) adjustFontToFit:(UITextView *) textView {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result = NO;
     
     //we don't do this in edit mode
@@ -5216,7 +5252,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) saveEdittedCard {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     //we only deal with current card and new created card
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
@@ -5291,7 +5327,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  @param sender <#sender description#>
  */
 - (void) soundRecordButtonClicked:(id)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     if (_isPlayingCard) {
         //play sound
         [self playAudio];
@@ -5318,7 +5354,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 
 - (void) changeTemplateButtonClick:(id)sender {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     
     if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
         
@@ -5353,12 +5389,13 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 }
 
 - (void) dismissSelectTemplatePopoverController {
+    DDLogInfo(@"%s",__FUNCTION__);
     [_selectTemplatePopoverController dismissPopoverAnimated:YES];
     
 }
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     [self performSelector:@selector(dismissSelectTemplatePopoverController) withObject:nil];
     
     //  We don't want to accept when there's create card action now
@@ -5393,7 +5430,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  @param url youtube url or local video library
  */
 - (void) thumbnailImageFromURL:(NSURL *) url {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     UIImageView *pickerImageView;
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         pickerImageView = _imageQuestion;
@@ -5440,6 +5477,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 #pragma mark – UIPopoverControllerDelegate
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    DDLogInfo(@"%s",__FUNCTION__);
     [popoverController dismissPopoverAnimated:YES];
     popoverController = nil;
     
@@ -5449,6 +5487,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - Re-screenshot all cards under current pack
 - (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val{
+    DDLogInfo(@"%s",__FUNCTION__);
     float flashCardYPositionInScrollView;
     FlashCard *tempCardView;
     if (isUserInterfaceIdiomPhone) {
@@ -5506,6 +5545,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark -
 #pragma mark - EmoticonSelectionViewControllerDelegate
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
+    DDLogInfo(@"%s",__FUNCTION__);
     
     int  location =_lastBecomeFirstRespondTextView.selectedRange.location;
     NSString *beforeStr = @"";
@@ -5531,12 +5571,14 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark – AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    DDLogInfo(@"%s",__FUNCTION__);
     player = nil;
 }
 
 #pragma mark – UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    DDLogInfo(@"%s",__FUNCTION__);
     switch (alertView.tag) {
         case Type_AlertView_LogoURL:
             if (buttonIndex ==1) {
@@ -5596,6 +5638,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     [popoverView dismiss];
     
     if (index == 1) {
@@ -5621,6 +5664,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 #pragma mark - Memory management
 
 - (void)dealloc {
+    DDLogInfo(@"%s",__FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _imagePickerController = nil;
