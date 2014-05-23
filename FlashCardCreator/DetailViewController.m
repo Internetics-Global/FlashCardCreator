@@ -867,6 +867,10 @@ enum popover_enum {
         rightPackImageView.layer.cornerRadius = 5;
         rightPackImageView.layer.masksToBounds = TRUE;
         rightPackImageView.layer.opacity = 0.85;
+        rightPackImageView.layer.shadowOpacity= 0.3;
+        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
+//        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
+        rightPackImageView.layer.shadowRadius = 20;
         rightPackImageView.backgroundColor = [UIColor clearColor];
         [_rightPackView addSubview:rightPackImageView];
         
