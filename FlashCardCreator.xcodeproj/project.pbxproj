@@ -253,6 +253,7 @@
 		885C3DDF192814C90090F63C /* answer_placeholder_content@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DDD192814C90090F63C /* answer_placeholder_content@2x.jpg */; };
 		885C3DE0192814C90090F63C /* question_placeholder_content@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DDE192814C90090F63C /* question_placeholder_content@2x.jpg */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
+		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
 		88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */; };
@@ -901,6 +902,8 @@
 		885C3DDD192814C90090F63C /* answer_placeholder_content@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "answer_placeholder_content@2x.jpg"; path = "Resources/answer_placeholder_content@2x.jpg"; sourceTree = "<group>"; };
 		885C3DDE192814C90090F63C /* question_placeholder_content@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "question_placeholder_content@2x.jpg"; path = "Resources/question_placeholder_content@2x.jpg"; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
+		886075011932B167009C16EE /* DKCircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCircleButton.h; sourceTree = "<group>"; };
+		886075021932B167009C16EE /* DKCircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCircleButton.m; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
 		88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = default_pack_cover_image.jpg; path = Resources/default_pack_cover_image.jpg; sourceTree = "<group>"; };
@@ -1321,6 +1324,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				886075001932B167009C16EE /* DKCircleButton */,
 				88123DCF192EFBAC0062CA84 /* Lumberjack */,
 				885C3DCF1926281C0090F63C /* PopoverView */,
 				880AF42018C5A60A007F13DF /* TestFlightSDK3 */,
@@ -1804,6 +1808,16 @@
 			);
 			name = PopoverView;
 			path = Libraries/PopoverView;
+			sourceTree = "<group>";
+		};
+		886075001932B167009C16EE /* DKCircleButton */ = {
+			isa = PBXGroup;
+			children = (
+				886075011932B167009C16EE /* DKCircleButton.h */,
+				886075021932B167009C16EE /* DKCircleButton.m */,
+			);
+			name = DKCircleButton;
+			path = Libraries/DKCircleButton;
 			sourceTree = "<group>";
 		};
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
@@ -2366,6 +2380,7 @@
 				2DCE0B2516798E04007A8CAD /* MasterViewController.m in Sources */,
 				2DCE0B2816798E04007A8CAD /* DetailViewController.m in Sources */,
 				88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */,
+				886075031932B167009C16EE /* DKCircleButton.m in Sources */,
 				2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */,
 				2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */,
 				2D5F3D30167AB3D4009D2ADC /* User.m in Sources */,

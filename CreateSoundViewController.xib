@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -10,7 +10,6 @@
                 <outlet property="alertLabel" destination="MDu-vj-lO5" id="MSj-Bx-txL"/>
                 <outlet property="playButton" destination="4CF-8G-CwC" id="ds4-yh-Oxc"/>
                 <outlet property="saveButton" destination="Jsj-5s-3J3" id="RlM-fA-p97"/>
-                <outlet property="startButton" destination="Up7-uh-RyH" id="Uxk-Dt-bfn"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -19,29 +18,9 @@
             <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Up7-uh-RyH">
-                    <rect key="frame" x="239" y="44" width="90" height="90"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="90" id="b3m-WB-oLf"/>
-                        <constraint firstAttribute="width" constant="90" id="jQV-fG-LHx"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="Record">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="startButtonClicked:" destination="-1" eventType="touchUpInside" id="F1v-xL-nUw"/>
-                    </connections>
-                </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="495" translatesAutoresizingMaskIntoConstraints="NO" id="MDu-vj-lO5">
-                    <rect key="frame" x="37" y="137" width="495" height="122"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="122" id="ASB-EB-sW3"/>
-                        <constraint firstAttribute="width" constant="495" id="Kz8-Wc-hpC"/>
-                    </constraints>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MDu-vj-lO5">
+                    <rect key="frame" x="37" y="150" width="495" height="122"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <string key="text">When you click “Record” you have a maximum of ten seconds to record your message. 
 
 Click “Stop” when ready to stop recording.
@@ -51,15 +30,9 @@ You can then click “Play” to hear it, or “Save” to save it to the card.<
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4CF-8G-CwC">
-                    <rect key="frame" x="20" y="267" width="60" height="33"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4CF-8G-CwC">
+                    <rect key="frame" x="5" y="280" width="60" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="7UC-lW-GkM"/>
-                        <constraint firstAttribute="width" constant="60" id="8JM-wb-nOG"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="I43-no-QIK"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="s5k-0H-Rph"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="Play">
                         <color key="titleColor" red="0.98039221759999995" green="0.98039221759999995" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
@@ -69,14 +42,9 @@ You can then click “Play” to hear it, or “Save” to save it to the card.<
                         <action selector="playButtonClicked:" destination="-1" eventType="touchUpInside" id="goQ-gH-dP4"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jsj-5s-3J3">
-                    <rect key="frame" x="486" y="267" width="62" height="33"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Jsj-5s-3J3">
+                    <rect key="frame" x="501" y="280" width="62" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="6FG-1u-Ukd"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="62" id="KSL-lB-hXo"/>
-                        <constraint firstAttribute="width" constant="62" id="Wpt-wW-I5t"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="Save">
                         <color key="titleColor" red="0.98039221759999995" green="0.98039221759999995" blue="0.98039221759999995" alpha="1" colorSpace="deviceRGB"/>
@@ -88,20 +56,6 @@ You can then click “Play” to hear it, or “Save” to save it to the card.<
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.24705883860588074" green="0.24705883860588074" blue="0.24705883860588074" alpha="1" colorSpace="deviceRGB"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="Jsj-5s-3J3" secondAttribute="bottom" constant="20" id="42f-wj-eLm"/>
-                <constraint firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="-0.5" id="9BV-Nz-TJ7"/>
-                <constraint firstItem="4CF-8G-CwC" firstAttribute="baseline" secondItem="Jsj-5s-3J3" secondAttribute="baseline" id="ARh-ck-B7i"/>
-                <constraint firstItem="4CF-8G-CwC" firstAttribute="top" secondItem="Jsj-5s-3J3" secondAttribute="top" id="DuZ-E8-Gcr"/>
-                <constraint firstItem="Up7-uh-RyH" firstAttribute="centerX" secondItem="MDu-vj-lO5" secondAttribute="centerX" constant="-0.5" id="HMi-j7-4vc"/>
-                <constraint firstItem="MDu-vj-lO5" firstAttribute="top" secondItem="Up7-uh-RyH" secondAttribute="bottom" constant="3" id="Qvg-RF-3em"/>
-                <constraint firstItem="MDu-vj-lO5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="37" id="XZ8-6n-tGf"/>
-                <constraint firstAttribute="trailing" secondItem="Jsj-5s-3J3" secondAttribute="trailing" constant="20" id="aF7-Oj-ycB"/>
-                <constraint firstAttribute="centerX" secondItem="Up7-uh-RyH" secondAttribute="centerX" id="i6i-RI-At4"/>
-                <constraint firstAttribute="bottom" secondItem="4CF-8G-CwC" secondAttribute="bottom" constant="20" id="qGM-fT-pqB"/>
-                <constraint firstItem="4CF-8G-CwC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="qZH-Lc-vat"/>
-                <constraint firstAttribute="centerY" secondItem="Up7-uh-RyH" secondAttribute="centerY" constant="71" id="qwu-sV-dWp"/>
-            </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

@@ -10,6 +10,7 @@
 #import "FileOperationHelper.h"
 #import "Card.h"
 #import "FCCBarButton.h"
+#import "DKCircleButton.h"
 
 typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     Enum_Status_Record_Unknow      = -1,
@@ -25,7 +26,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     Enum_Status_Record                _recordStatus;
 }
 
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *startButton;
+@property (strong, nonatomic) IBOutlet DKCircleButton *startButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *playButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *saveButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *alertLabel;
@@ -52,6 +53,24 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     self.title = @"Record card Sound";
     
     _recordStatus = Enum_Status_Record_Normal;
+    if (isUserInterfaceIdiomPhone) {
+      self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 60,90,90)];
+    } else {
+        self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 200,90,90)];
+    }
+    
+    self.startButton.titleLabel.font = [UIFont systemFontOfSize:18];
+    self.startButton.autoresizingMask = UIViewAutoresizingNone;
+    
+    [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
+    [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateSelected];
+    [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateHighlighted];
+    
+    [self.startButton setTitle:@"Record" forState:UIControlStateNormal];
+    [self.startButton setTitle:@"Record" forState:UIControlStateSelected];
+    [self.startButton setTitle:@"Record" forState:UIControlStateHighlighted];
+    [self.startButton addTarget:self action:@selector(startButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.startButton];
     
     self.playButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.playButton.layer.borderWidth = 1;
@@ -118,6 +137,9 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
         case Enum_Status_Record_Normal: {
             
             _recordStatus = Enum_Status_Record_Recording;
+            
+            self.playButton.hidden = YES;
+            self.saveButton.hidden= YES;
             
             [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
             
