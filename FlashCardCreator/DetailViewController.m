@@ -583,6 +583,9 @@ enum popover_enum {
     _isResizedArray = nil;
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
+    
+    UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+    [titleLable setText:_currentPack.packName];
 }
 
 - (void) hideNavigationBarNotification:(NSNotification *) notification {
