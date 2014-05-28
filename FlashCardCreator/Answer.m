@@ -44,7 +44,7 @@
     _css = [[CSS alloc] init];
     _templateID = 0; //begin from 0
     
-    _autoresizeFlag = 0;
+    _autoresizeFlag = 1; //表示允许
     
     _imageFullPath = @"";
     _movieFullPath = @"";

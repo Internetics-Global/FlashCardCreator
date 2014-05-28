@@ -71,16 +71,25 @@
     _subheadingAlign = [dataDict valueForKey:@"subheading_align"];
     _subheadingColor= [dataDict valueForKey:@"subheading_color"];
     _subheadingFont= [dataDict valueForKey:@"subheading_font"];
+    if (IsEmpty(_subheadingFont)) {
+        _subheadingFont = @"";
+    }
     
     _mainSize = [[dataDict valueForKey:@"main_size"] intValue];
     _mainAlign = [dataDict valueForKey:@"main_align"];
     _mainColor= [dataDict valueForKey:@"main_color"];
     _mainFont= [dataDict valueForKey:@"main_font"];
+    if (IsEmpty(_mainFont)) {
+        _mainFont = @"";
+    }
     
     _subSize = [[dataDict valueForKey:@"sub_size"] intValue];
     _subAlign = [dataDict valueForKey:@"sub_align"];
     _subColor= [dataDict valueForKey:@"sub_color"];
     _subFont= [dataDict valueForKey:@"sub_font"];
+    if (IsEmpty(_subFont)) {
+        _subFont = @"";
+    }
     
 	return self;
 }

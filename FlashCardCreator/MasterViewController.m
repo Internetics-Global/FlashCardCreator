@@ -549,8 +549,8 @@ enum popover_enum {
     cardExample.question.templateID = 0;
     cardExample.answer.templateID = 0;
     
-    cardExample.answer.autoresizeFlag = 0;
-    cardExample.question.autoresizeFlag = 0;
+    cardExample.answer.autoresizeFlag = 1;//默认表示允许
+    cardExample.question.autoresizeFlag = 1;//默认表示允许
     
     cardExample.question.title = NSLocalizedString(@"ToolbarItem_Question",nil);
     cardExample.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);

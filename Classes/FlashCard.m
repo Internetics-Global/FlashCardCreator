@@ -1328,7 +1328,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
                 if ((isFontResized)) {
                     
-                    DDLogInfo(@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN);
+                    DDLogWarn(@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN);
 
                 }
             }
@@ -4169,7 +4169,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         else
             [_audioPlayer play];
     } else {
-        DDLogError(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
+        DDLogInfo(@"%s:no audio file:%@",__FUNCTION__,audioURL);
     }
 }
 
@@ -5156,6 +5156,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 /**
  *  用于根据textview的frame，进行自动调节:
+ *  结果不写入数据库，也就是说切换一个pack，就需要重新执行。这主要是考虑到写入数据库的严重性。
  *  1. 如果字体太小导致行数不一致，则进行字体增加措施，是的行数一致
  *  2. 如果字体太大，导致无法显示，则缩小字体
  *  返回true,表示执行了；false，表示没有任何调节
@@ -5170,7 +5171,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
-        if (1) { //we can disable this function
+        if (_currentCard.question.autoresizeFlag == 1) { //1表示允许
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
@@ -5213,9 +5214,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if ([self adjustFontToFit:_subQuestion]){
             result= YES;
         }
+        
+        //这样下次就不会进行autoresize操作了
+        if (result == YES) {
+            _currentCard.question.autoresizeFlag = 0;
+        }
+        
+        
+        
+        
     } else {
         
-        if (1) { //we can disable this function
+        if (_currentCard.answer.autoresizeFlag == 1) { //1表示允许
             
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
@@ -5256,6 +5266,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         if ([self adjustFontToFit:_subAnswer]){
             result= YES;
+        }
+        
+        //这样下次就不会进行autoresize操作了
+        if (result == YES) {
+            _currentCard.answer.autoresizeFlag = 0;
         }
     }
 
@@ -5314,7 +5329,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //it could be possible。实际情况中发生了，具体原因不明
     while (textHeight <0) {
         
-        DDLogInfo(@"%s:......Fuck textHeight <0",__FUNCTION__);
+        DDLogError(@"%s:......Fuck textHeight <0",__FUNCTION__);
         
         if (textView.font.pointSize <10) {
             break;
@@ -5330,6 +5345,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //设定最小字体
     if (textView.font.pointSize < 10) {
         [textView setFont:[textView.font fontWithSize:(10)]];
+        DDLogError(@"%s:......textView.font.pointSize < 10:%@",__FUNCTION__,textView.text);
     }
     
     float orginalFontSize = textView.font.pointSize;
@@ -5347,8 +5363,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         outputFlag = TRUE;
         result = YES;
         
-        if (textView.font.pointSize <gate) {
+        if (textView.font.pointSize <=gate) {
             //字体越小，size变化越明显
+            DDLogWarn(@"%s:......textView.font.pointSize <gate:%@",__FUNCTION__,textView.text);
             break;
         }
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize -1)]];

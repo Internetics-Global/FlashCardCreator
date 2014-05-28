@@ -24,8 +24,6 @@
 #define DDLogInfo(...) do{} while(0)
 #endif
 
-
-
 #define checkNullOrEmptyOrNullStr(str) (str == (id)[NSNull null] || str == nil || str.length == 0 || ([str rangeOfString:@"null"].location != NSNotFound))
 
 //Reachablity requirement

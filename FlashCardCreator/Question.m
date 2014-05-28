@@ -29,6 +29,9 @@
 @synthesize css = _css;
 @synthesize templateID = _templateID;
 
+/**
+ *  0：允许进行autoresize,否则不允许。默认可以的
+ */
 @synthesize autoresizeFlag = _autoresizeFlag;
 
 @synthesize backgroundImageFullPath = _backgroundImageFullPath;
@@ -46,7 +49,7 @@
     _logoURLLinkage = @"http://www.";
     _templateID = 0;
     
-    _autoresizeFlag = 0;
+    _autoresizeFlag = 1; //表示允许
     
     _imageFullPath = @"";
     _movieFullPath = @"";

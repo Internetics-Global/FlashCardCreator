@@ -52,11 +52,13 @@
 
 @property (nonatomic, copy) NSString *logoFullPath;
 
-/**
- *  autoresize logic to determine best font
- */
+
 @property (nonatomic, assign) NSInteger templateID;
 
+/**
+ *  autoresize logic to determine best font. only for non-editable card
+ *  0：允许；1， 不允许
+ */
 @property (nonatomic, assign) NSInteger autoresizeFlag;
 
 @property (assign, nonatomic) NSInteger lineNoSubheading;
