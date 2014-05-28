@@ -5531,7 +5531,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
                 _selectTemplatePopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
             }
+            
+        } else {
+            [_selectTemplatePopoverController setContentViewController:selectTemplateTableViewController];
         }
+        
+        
         
         CGPoint point = [sender convertPoint:CGPointMake(0, 0) toView:nil];
         CGRect rect = CGRectMake(point.x, point.y, 24, 24);
