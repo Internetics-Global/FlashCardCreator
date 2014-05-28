@@ -244,8 +244,32 @@ enum popover_enum {
             [_rightPackView addSubview:_rightPackCardNo];
         }
         
+        if (_shareCodeLabel == nil) {
+            _shareCodeLabel = [[UILabel alloc] init];
+            _shareCodeLabel.textColor = [UIColor whiteColor];
+            _shareCodeLabel.backgroundColor = [UIColor clearColor];
+            _shareCodeLabel.textAlignment = NSTextAlignmentCenter;
+            _shareCodeLabel.font = [UIFont systemFontOfSize: 14];
+            CGRect rect = _rightPackCardNo. frame;
+            rect.origin.y = rect.origin.y +rect.size.height+16;
+            rect.size.height = 15;
+            _shareCodeLabel.frame = rect;
+            [_rightPackView addSubview:_shareCodeLabel];
+        }
+        
         if (_rightPackImage != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];    
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            
+          
+            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+            NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
+            if (shareCode.length >0) {
+              _shareCodeLabel.hidden = NO;
+              _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+            } else {
+              _shareCodeLabel.hidden = YES;
+            }
+          
         }
         
         

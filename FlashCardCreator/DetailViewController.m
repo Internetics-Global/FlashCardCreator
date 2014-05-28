@@ -560,7 +560,23 @@ enum popover_enum {
     for (UIView *myView in [_rightPackView subviews]) {
         if ([myView isKindOfClass:[UILabel class]]) {
             
-            [(UILabel *)myView setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            if (myView.tag == 0) {
+                
+                [(UILabel *)myView setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+                
+            } else if (myView.tag == 1) {
+                
+                NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+                NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
+                if (shareCode.length >0) {
+                    myView.hidden = NO;
+                    ((UILabel *)myView).text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+                } else {
+                    myView.hidden = YES;
+                }
+
+                
+            }
             
         } else if ([myView isKindOfClass:[UIImageView class]]) {
             
@@ -916,14 +932,37 @@ enum popover_enum {
         rightPackCardNo.backgroundColor = [UIColor clearColor];
         rightPackCardNo.textAlignment = UITextAlignmentCenter;
         rightPackCardNo.font = [UIFont systemFontOfSize: 24];
+        rightPackCardNo.tag = 0;
         CGRect rect = rightPackImageView. frame;
         rect.origin.y = rect.origin.y +rect.size.height+16;
         rect.size.height = 25;
         rightPackCardNo.frame = rect;
         [_rightPackView addSubview:rightPackCardNo];
         
+        UILabel *shareCodeLabel = [[UILabel alloc] init];
+        shareCodeLabel.textColor = [UIColor whiteColor];
+        shareCodeLabel.autoresizingMask =  UIViewAutoresizingNone;
+        shareCodeLabel.backgroundColor = [UIColor clearColor];
+        shareCodeLabel.textAlignment = UITextAlignmentCenter;
+        shareCodeLabel.font = [UIFont systemFontOfSize: 16];
+        shareCodeLabel.tag = 1;
+        rect = rightPackCardNo.frame;
+        rect.origin.y = rect.origin.y +rect.size.height+16;
+        rect.size.height = 25;
+        shareCodeLabel.frame = rect;
+        [_rightPackView addSubview:shareCodeLabel];
+        
         if (rightPackImageView.image != nil) {
             [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            
+            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+            NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
+            if (shareCode.length >0) {
+                shareCodeLabel.hidden = NO;
+                shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+            } else {
+                shareCodeLabel.hidden = YES;
+            }
         }
         
         

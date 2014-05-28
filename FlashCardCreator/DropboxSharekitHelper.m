@@ -417,9 +417,23 @@
     if (error == nil)
     {
         NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if (([newStr rangeOfString:@"http://"].location != 0) || ([[newStr uppercaseString] rangeOfString:@"Error"].location != NSNotFound)) {
+        if (([newStr rangeOfString:@"http://"].location != 0) || ([[newStr uppercaseString] rangeOfString:@"ERROR"].location != NSNotFound)) {
+          DDLogError(@"%s:%@",__FUNCTION__,newStr);
         } else {
             returnURL = newStr;
+            DDLogInfo(@"%s:redireced URL is %@",__FUNCTION__,newStr);
+            
+            //save redirected url
+            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+            if (rawDict) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+                [dict setObject:returnURL forKey:@"redirected_url"];
+                [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            } else {
+                DDLogError(@"%s, not exist in nsuerdefault for %@",__FUNCTION__,_currentPack.packName);
+            }
+            
         }
     } 
     

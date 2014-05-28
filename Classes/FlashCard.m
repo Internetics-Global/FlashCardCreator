@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
         _questionBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -252,7 +252,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
         _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -687,7 +687,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
         _questionBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -702,7 +702,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
         _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -950,7 +950,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(330, 5, 64, 40);
+        _logoImage.frame = CGRectMake(340, 5, 54, 30);
         if (self.isPlayingCard) {
             _logoImage.frame = [Common getScaledViewRect:_logoImage withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1083,7 +1083,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _backgroundImageSelectButton.frame = CGRectMake(67, 4, 20, 20);
         [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_backgroundImageSelectButton];
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundImageSelectButtonClicked:)];
         [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
     }
