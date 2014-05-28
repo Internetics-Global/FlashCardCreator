@@ -5570,6 +5570,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _currentCard.answer.templateID = [templateIDString integerValue];
     }
     
+    DDLogInfo(@"%s,selected templateID = %@",__FUNCTION__,templateIDString);
+    
     [self updateQuestionOrAnswerTemplate];//we will do other side's update when clicking segment
     
     // we put all the save operations only when click the "save button"
