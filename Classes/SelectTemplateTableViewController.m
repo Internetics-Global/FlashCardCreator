@@ -102,6 +102,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TEMPLATE_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",indexPath.row]];
     
     if (isUserInterfaceIdiomPhone) {
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [self dismissModalViewControllerAnimated:YES];    
     }
 }
@@ -110,6 +111,7 @@
 #pragma mark - Action
 
 - (void) closeSelectTemplateView {
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self dismissModalViewControllerAnimated:YES];
 }
 

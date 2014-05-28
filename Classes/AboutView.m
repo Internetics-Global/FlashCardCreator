@@ -39,7 +39,7 @@
 		UILabel *linkLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, 20)];
 		linkLabel.backgroundColor = [UIColor clearColor];
 		linkLabel.text = @"http://www.internetics.net.au";
-        linkLabel.textAlignment = UITextAlignmentCenter;
+        linkLabel.textAlignment = NSTextAlignmentCenter;
 		linkLabel.textColor = [UIColor colorWithRed:0.9 green:0.25 blue:0.59 alpha:1.0];
 		linkLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
 		linkButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -50,7 +50,7 @@
         UILabel *verionLable = [[UILabel alloc] initWithFrame:CGRectMake(0, (linkButton.frame.origin.y + linkButton.frame.size.height), width, 20)];
 		verionLable.backgroundColor = [UIColor clearColor];
 		verionLable.text = [NSString stringWithFormat:@"Version: %@",[Common appVersion]];
-        verionLable.textAlignment = UITextAlignmentCenter;
+        verionLable.textAlignment = NSTextAlignmentCenter;
 		verionLable.textColor = [UIColor whiteColor];
 		verionLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:verionLable];
@@ -58,7 +58,7 @@
         UILabel *buildLable = [[UILabel alloc] initWithFrame:CGRectMake(0, (verionLable.frame.origin.y + verionLable.frame.size.height), width, 20)];
 		buildLable.backgroundColor = [UIColor clearColor];
 		buildLable.text = [NSString stringWithFormat:@"Build: %@",[Common build]];
-        buildLable.textAlignment = UITextAlignmentCenter;
+        buildLable.textAlignment = NSTextAlignmentCenter;
 		buildLable.textColor = [UIColor whiteColor];
 		buildLable.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:buildLable];
@@ -66,7 +66,7 @@
         UILabel *sqliteLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (buildLable.frame.origin.y + verionLable.frame.size.height), width, 20)];
 		sqliteLabel.backgroundColor = [UIColor clearColor];
 		sqliteLabel.text = [NSString stringWithFormat:@"SQlite: %d",[Common currentInstalledSqliteVersion]];
-        sqliteLabel.textAlignment = UITextAlignmentCenter;
+        sqliteLabel.textAlignment = NSTextAlignmentCenter;
 		sqliteLabel.textColor = [UIColor whiteColor];
 		sqliteLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         [self addSubview:sqliteLabel];

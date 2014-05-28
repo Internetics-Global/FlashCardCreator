@@ -279,7 +279,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 }
 
 - (void) dismiss {
-
+  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   [self dismissModalViewControllerAnimated:YES];
     
 }

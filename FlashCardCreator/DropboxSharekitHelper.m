@@ -193,6 +193,7 @@
     }
     
     //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [_restClient uploadFile:saveName toPath:@"/FlashCardCreator"
                    fromPath:generatedZipFilePath];
     [self showProgressIndicator];

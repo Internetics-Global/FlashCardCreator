@@ -74,7 +74,7 @@
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
-    _packNameText.textAlignment = UITextAlignmentCenter;
+    _packNameText.textAlignment = NSTextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:14];
@@ -90,7 +90,7 @@
     } else {
         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
     }
-    _sidebarTitle.textAlignment = UITextAlignmentCenter;
+    _sidebarTitle.textAlignment = NSTextAlignmentCenter;
     _sidebarTitle.backgroundColor = [UIColor whiteColor];
     _sidebarTitle.text = @"Side bar title";
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
@@ -106,7 +106,7 @@
     } else {
         _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 150, 200, 24)];
     }
-    _creatorText.textAlignment = UITextAlignmentCenter;
+    _creatorText.textAlignment = NSTextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
     _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
     _creatorText.font = [UIFont systemFontOfSize:14];
@@ -147,6 +147,7 @@
 }
 
 - (void) closeCreatePackView {
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -207,6 +208,7 @@
     _picker.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [self presentModalViewController:_picker animated:YES];
     } else {
         if (!_imagePickerPopover) {
@@ -219,6 +221,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     if (isUserInterfaceIdiomPhone) {
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [self dismissModalViewControllerAnimated:YES];
     } else {
         [_imagePickerPopover dismissPopoverAnimated:YES];    

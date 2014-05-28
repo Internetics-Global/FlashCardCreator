@@ -210,7 +210,7 @@
         Pack *pack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
         packNameText = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 50.0f, 180, 25.0f)];
-        packNameText.textAlignment = UITextAlignmentCenter;
+        packNameText.textAlignment = NSTextAlignmentCenter;
         packNameText.font = [UIFont systemFontOfSize:16];
         packNameText.returnKeyType = UIReturnKeyDone;
         packNameText.text = pack.packName;
@@ -440,6 +440,7 @@
 - (void) showIntroduction:(id)sender {
     if (isUserInterfaceIdiomPhone) {
     } else {
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [self dismissModalViewControllerAnimated:YES];
     }
     

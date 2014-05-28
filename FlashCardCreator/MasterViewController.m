@@ -286,6 +286,7 @@ enum popover_enum {
     CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
 	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 	[self presentModalViewController:navController animated:YES];
 
 }

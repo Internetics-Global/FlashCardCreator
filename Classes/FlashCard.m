@@ -68,16 +68,22 @@ extern BOOL isFromNewCreatedCard;
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
 typedef NS_ENUM(NSInteger, Type_Image_Selector) {
-    Type_Image_Selector_Logo      = 0, //when clicking the logo
-    Type_Image_Selector_Image       = 1,//when clicking the image from card
-    Type_Image_Selector_Background   = 2, //when trying to change card's background image (not template)
-    Type_Image_Selector_Unkown    = -1,
+    Type_Image_Selector_Logo       = 0,//when clicking the logo
+    Type_Image_Selector_Image      = 1,//when clicking the image from card
+    Type_Image_Selector_Background = 2,//when trying to change card's background image (not template)
+    Type_Image_Selector_Unkown     = -1,
 };
 
 typedef NS_ENUM(NSInteger, Type_AlertView) {
-    Type_AlertView_Unkown      = -1,
-    Type_AlertView_LogoURL       = 0,
-    Type_AlertView_VideoURL   = 1,
+    Type_AlertView_Unkown   = -1,
+    Type_AlertView_LogoURL  = 0,
+    Type_AlertView_VideoURL = 1,
+};
+
+typedef NS_ENUM(NSInteger, Type_PopoverView) {
+    Type_PopoverView_Unkown           = -1,
+    Type_PopoverView_SelectImage      = 1,
+    Type_PopoverView_SelectBackground = 2,
 };
 
 @interface FlashCard () {
@@ -594,7 +600,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         _backgroundImageSelectButton.frame = CGRectMake(68, 8, 24, 24);
         [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
         [_functionAreaView addSubview:_backgroundImageSelectButton];
-        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByBackgroundSelectButton:)];
+        UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundImageSelectButtonClicked:)];
         [_backgroundImageSelectButton addGestureRecognizer:logoSingeTap];
         _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
     }
@@ -1579,6 +1585,32 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 {
 	[self refreshAll];
 }
+
+- (void) backgroundImageSelectButtonClicked:(UITapGestureRecognizer *)sender {
+    
+    NSString *backgroundImagePath;
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        backgroundImagePath =  _currentCard.question.backgroundImageFullPath;
+    } else {
+        backgroundImagePath =  _currentCard.answer.backgroundImageFullPath;
+    }
+    
+    if (backgroundImagePath.length == 0) {
+        [self selectFromImageLibraryByBackgroundSelectButton:sender];
+    } else {
+        
+        CGPoint point = [_backgroundImageSelectButton convertPoint:CGPointMake(CGRectGetWidth(_backgroundImageSelectButton.frame)/2, 0) toView:self];
+        
+        PopoverView *backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
+                                                                                 inView:self
+                                                                              withTitle:@"Edit/Remove"
+                                                                        withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
+                                                                               delegate:self];
+        backgroundImageSelectPopoverView.tag = Type_PopoverView_SelectBackground;
+    }
+    
+}
+
 
 /**
  *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
@@ -3951,7 +3983,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     }
     
     _typeImageSelector = Type_Image_Selector_Background;
-    [self selectFromImageLibrary:sender withPopoverArrowUp:NO  supportMov:NO];
+    [self selectFromImageLibrary:[sender view] withPopoverArrowUp:NO  supportMov:NO];
 }
 
 
@@ -3960,7 +3992,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     DDLogInfo(@"%s",__FUNCTION__);
     _typeImageSelector = Type_Image_Selector_Logo;
     
-    [self selectFromImageLibrary:sender withPopoverArrowUp:YES  supportMov:NO];
+    [self selectFromImageLibrary:[sender view] withPopoverArrowUp:YES  supportMov:NO];
     
     
 }
@@ -4007,11 +4039,12 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         pickerImageView = _imageAnswer;
     }
     
-    [PopoverView showPopoverAtPoint:pickerImageView.center
+    PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
                                                                         inView:self
                                                                      withTitle:@"Image/video selection"
                                                                withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library", nil]
                                                                       delegate:self];
+    imageSelectPopoverView.tag = Type_PopoverView_SelectImage;
 
 }
 
@@ -4083,8 +4116,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         if (_calledViewController) {
             //means this is called from play mode
             //iPad
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [_calledViewController presentModalViewController:playerViewController animated:YES];
         } else {
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
         }
         
@@ -4096,8 +4131,10 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
         if (_calledViewController) {
             //means this is called from play mode
             //iPad
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [_calledViewController presentModalViewController:playerViewController animated:YES];
         } else {
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
         }
 
@@ -4113,7 +4150,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
  *  @param sender    必须是UITapGestureRecognizer
  *  @param isArrowUp _imagePickerPopover剪头方向
  */
-- (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
+- (void)selectFromImageLibrary:(UIView *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
     DDLogInfo(@"%s",__FUNCTION__);
     if (_imagePickerController != nil) {
         _imagePickerPopover = nil;
@@ -4129,6 +4166,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     _imagePickerController.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
         CGPoint point;
@@ -4139,8 +4177,12 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
                 point = _imageAnswer.center;
             }
         }else {
-          point = [sender locationInView:self];
+          point = CGPointMake(CGRectGetWidth(sender.frame)/2, 2);
+          point = [sender convertPoint:point toView:self];
         }
+        
+        
+        
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
         
         if (_imagePickerPopover != nil) {
@@ -5639,22 +5681,59 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
     DDLogInfo(@"%s",__FUNCTION__);
-    [popoverView dismiss];
     
-    if (index == 1) {
-        [self selectImageOrVideoFromLibrary];
+    if (popoverView.tag == Type_PopoverView_SelectImage) {
+      [popoverView dismiss];
+        
+        if (index == 1) {
+            [self selectImageOrVideoFromLibrary];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
+                                                            message:nil
+                                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+            alert.tag = Type_AlertView_VideoURL;
+            [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+            [alert textFieldAtIndex:0].text = @"";
+            [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
+            alert.delegate = self;
+            [alert show];
+        }
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
-                                                        message:nil
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-        alert.tag = Type_AlertView_VideoURL;
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].text = @"";
-        [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
-        alert.delegate = self;
-        [alert show];
+        [popoverView dismiss];
+        if (index == 0) {
+            
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                _questionBackgroundImageFullPath = @"";
+                [_questionBackgroundImageView setImage:nil];
+            } else {
+                _answerBackgroundImageFullPath = @"";
+                [_answerBackgroundImageView setImage:nil];
+            }
+            
+            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                //we will save until after we press the save button
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+                } else {
+                    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+                }
+            } else {
+                [self saveEdittedCard];
+            }
+            
+            
+            
+        } else if (index == 1) {
+            _typeImageSelector = Type_Image_Selector_Background;
+            [self selectFromImageLibrary:_backgroundImageSelectButton withPopoverArrowUp:NO  supportMov:NO];
+        }
     }
+    
+    
+    
+    
+    
 }
 
 

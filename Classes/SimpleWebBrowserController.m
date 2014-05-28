@@ -222,6 +222,7 @@
 - (void)closeButtonClicked:(id)sender {
 
     [self.navigationController popViewControllerAnimated:YES]; //for help item in more tableview
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self dismissModalViewControllerAnimated:YES]; //for logo
     
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SETTING_TABLEVIEW_NOTIFICATION object:nil];

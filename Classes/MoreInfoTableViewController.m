@@ -308,6 +308,7 @@ BOOL isLoggingDropboxInSettingView = NO;
                 [self.navigationController pushViewController:controller animated:YES];
             } else {
                 controller.modalPresentationStyle = UIModalPresentationFormSheet;
+                #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
                 [self presentModalViewController:controller animated:YES];
             }
         } else {

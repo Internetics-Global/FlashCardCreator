@@ -42,7 +42,7 @@
         _titleLabel.clipsToBounds = YES;
         _titleLabel.layer.cornerRadius = 6;
         _titleLabel.layer.masksToBounds = YES;
-        _titleLabel.textAlignment = UITextAlignmentCenter;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:_titleLabel];
     }

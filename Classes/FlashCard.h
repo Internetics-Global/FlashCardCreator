@@ -176,6 +176,11 @@ typedef enum{
 - (void) refreshAll;
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying;
 
+/**
+ *  执行两个动作：
+ *  1. commit所有相关的值到_currentCard
+ *  2. 写入到数据库
+ */
 - (void) saveEdittedCard;
 
 - (void)segmentAction:(id)sender;

@@ -334,6 +334,7 @@
 
 - (void) closePlayView {
     DDLogInfo(@"%s",__FUNCTION__);
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self dismissModalViewControllerAnimated:YES];
     
 }
