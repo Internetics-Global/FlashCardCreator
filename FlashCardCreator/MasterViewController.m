@@ -548,6 +548,10 @@ enum popover_enum {
     cardExample.answer.sub = @"";
     cardExample.question.templateID = 0;
     cardExample.answer.templateID = 0;
+    
+    cardExample.answer.autoresizeFlag = 0;
+    cardExample.question.autoresizeFlag = 0;
+    
     cardExample.question.title = NSLocalizedString(@"ToolbarItem_Question",nil);
     cardExample.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);
     [self.currentPack addCard:cardExample];
@@ -1094,7 +1098,7 @@ enum popover_enum {
                     
                     if (( NO==ret ) || (fileSize == 0)) {
                         //when password encripted, will go into here to
-                        DDLogInfo(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
+                        DDLogError(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
                         [Common alertViewCommon:@"Wrong password"];
                         [za UnzipCloseFile];
                     } else {
@@ -1216,6 +1220,7 @@ enum popover_enum {
             pack.createDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.creatorNickName = packDict[@"creator_nick_name"];
+            pack.jobTitle = packDict[@"job_title"];
             
             packPlatformStr = packDict[@"platform"];
             
@@ -1229,7 +1234,7 @@ enum popover_enum {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
                     [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
                     if (error) {
-                        DDLogInfo(@"%s:Error when moving Pack's cover image",__FUNCTION__);
+                        DDLogError(@"%s:Error when moving Pack's cover image",__FUNCTION__);
                         return;
                     }
                 }
@@ -1253,7 +1258,7 @@ enum popover_enum {
     error = nil;
     NSArray *fileListArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[FileOperationHelper downloadedPackFileDirectory] error:&error];
     if (error) {
-        DDLogInfo(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
+        DDLogError(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
     }
     
     BOOL buildCardResultError = FALSE;
@@ -1356,7 +1361,7 @@ enum popover_enum {
         
         [[NSFileManager defaultManager] removeItemAtPath:zippedFilePath error:nil];
     } else {
-        DDLogInfo(@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath);
+        DDLogError(@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath);
     }
     
     Card *assembledCard = [[Card alloc] init];
@@ -1388,7 +1393,7 @@ enum popover_enum {
             if ([questionDict[@"logo"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard question].logoFullPath = newFileName;
                 }
@@ -1402,7 +1407,7 @@ enum popover_enum {
             if ([questionDict[@"image"] length] >0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard question].imageFullPath = newFileName;
                 }
@@ -1415,7 +1420,7 @@ enum popover_enum {
             if ([questionDict[@"cover_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     assembledCard.coverImageURL = newFileName;
                 }
@@ -1428,7 +1433,7 @@ enum popover_enum {
             if ([questionDict[@"background_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     assembledCard.question.backgroundImageFullPath = newFileName;
                 }
@@ -1472,7 +1477,7 @@ enum popover_enum {
                     
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                     } else {
                         [assembledCard question].movieFullPath = newFileName;
                     }
@@ -1493,7 +1498,7 @@ enum popover_enum {
             if ([questionDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard question].recordedSoundFullPath = newFileName;
                 }
@@ -1619,7 +1624,7 @@ enum popover_enum {
             if ([answerDict[@"image"] length] > 0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard answer].imageFullPath = newFileName;
                 }
@@ -1632,7 +1637,7 @@ enum popover_enum {
             if ([answerDict[@"logo"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard answer].logoFullPath = newFileName;
                 }
@@ -1645,7 +1650,7 @@ enum popover_enum {
             if ([answerDict[@"background_image"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard answer].backgroundImageFullPath = newFileName;
                 }
@@ -1680,7 +1685,7 @@ enum popover_enum {
                     //with video file locally
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                     } else {
                         [assembledCard answer].movieFullPath = newFileName;
                     }
@@ -1699,7 +1704,7 @@ enum popover_enum {
             if ([answerDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogInfo(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
                 } else {
                     [assembledCard answer].recordedSoundFullPath = newFileName;
                 }

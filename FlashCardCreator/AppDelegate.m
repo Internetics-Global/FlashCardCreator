@@ -43,12 +43,7 @@ BOOL _isDownloadingSamplePack;
 {
     //[Appsee start:@"556562735fb44188885a874b63449621"];
     
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 1;
-    [DDLog addLogger:fileLogger];
+    [self setupLog];
     
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
@@ -71,7 +66,7 @@ BOOL _isDownloadingSamplePack;
                 if([[NSFileManager defaultManager] fileExistsAtPath:dest] == false) {
                     [[NSFileManager defaultManager] moveItemAtPath:from toPath:dest error:&error];
                     if (error) {
-                        DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                        DDLogError(@"%s:%@",__FUNCTION__,[error description]);
                     }
                 }
             }
@@ -317,6 +312,32 @@ BOOL _isDownloadingSamplePack;
     DDLogInfo(@"%s",__FUNCTION__);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
+}
+
+- (void) setupLog {
+    // Standard lumberjack initialization
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    // And then enable colors
+    [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 1;
+    [DDLog addLogger:fileLogger];
+    
+    // Check out default colors:
+    // Error : Red
+    // Warn  : Orange
+    
+//    DDLogError(@"Paper jam");                              // Red
+//    DDLogWarn(@"Toner is low");                            // Orange
+//    DDLogInfo(@"Warming up printer (pre-customization)");  // Default (black)
+//    DDLogVerbose(@"Intializing protcol x26");              // Default (black)
+    
+    // Now let's do some customization:
+    // Info  : Pink
 }
 
 

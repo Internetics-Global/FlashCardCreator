@@ -195,7 +195,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     DDLogInfo(@"%s",__FUNCTION__);
-    DDLogInfo(@"error:%@",error);
+    DDLogError(@"error:%@",error);
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];

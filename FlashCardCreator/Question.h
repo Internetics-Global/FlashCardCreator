@@ -25,6 +25,8 @@
     NSString *_logoURLLinkage;
     NSInteger _templateID;
     
+    NSInteger _autoresizeFlag;
+    
     NSInteger _lineNoSubheading;
     NSInteger _lineNoMain;
     NSInteger _lineNoSub;
@@ -51,6 +53,8 @@
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
 @property (nonatomic, assign) NSInteger templateID;
+
+@property (nonatomic, assign) NSInteger autoresizeFlag;
 
 @property (assign, nonatomic) NSInteger lineNoSubheading;
 @property (assign, nonatomic) NSInteger lineNoMain;

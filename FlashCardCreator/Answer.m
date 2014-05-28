@@ -28,6 +28,8 @@
 @synthesize css = _css;
 @synthesize templateID = _templateID;
 
+@synthesize autoresizeFlag = _autoresizeFlag;
+
 @synthesize backgroundImageFullPath = _backgroundImageFullPath;
 @synthesize recordedSoundFullPath = _recordedSoundFullPath;
 
@@ -41,6 +43,8 @@
     _cssID = -1;
     _css = [[CSS alloc] init];
     _templateID = 0; //begin from 0
+    
+    _autoresizeFlag = 0;
     
     _imageFullPath = @"";
     _movieFullPath = @"";
@@ -73,6 +77,8 @@
     }
     _logoFullPath= [dataDict valueForKey:@"logo"];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
+    
+    _autoresizeFlag = [[dataDict valueForKey:@"autoresize_flag"] intValue];
     
     _lineNoSubheading = [[dataDict valueForKey:@"line_number_subheading"] intValue];
     _lineNoMain = [[dataDict valueForKey:@"line_number_main"] intValue];
@@ -121,7 +127,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",audio=\"%@\"  WHERE card_id=%d", _answerID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath,_cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,autoresize_flag=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",audio=\"%@\"  WHERE card_id=%d", _answerID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath,_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -139,7 +145,7 @@
 		_answerID = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
 	}
 
-    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id, template_id,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d, %d, %d, %d, %d,\"%@\",\"%@\",\"%@\")", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
+    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id, template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d, %d, %d,%d, %d, %d,\"%@\",\"%@\",\"%@\")", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -168,7 +174,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer logoFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -178,7 +184,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer imageFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -189,7 +195,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer backgroundImageFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -200,7 +206,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer movieFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -211,7 +217,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer recordedSoundFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -238,6 +244,7 @@
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"background_image"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"movie"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"audio"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"autoresize_flag"];
         
         [answerDict setValue:[CSS cssForCSSID:[[answerDict valueForKey:@"css_id"] intValue]] forKey:@"css"];
 	}

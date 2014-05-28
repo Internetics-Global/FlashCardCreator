@@ -64,6 +64,7 @@ extern BOOL isFromNewCreatedCard;
 #define kTagTitleAnser            302
 #define kTagSidebar               303
 #define kTagCreator               304
+#define kTagJobTitle               305
 
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
@@ -548,7 +549,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_creatorText == nil) {
         
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(510, 45, 90, 50);
+        des.frame = CGRectMake(510, 35, 90, 20);
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:12];
@@ -559,7 +560,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(510, 70, 90, 50);
+        _creatorText.frame = CGRectMake(510, 60, 90, 20);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
@@ -569,8 +570,28 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.keyboardType = UIKeyboardAppearanceDefault;
         _creatorText.returnKeyType = UIReturnKeyDone;
         _creatorText.tag = kTagCreator;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _creatorText.tintColor = [UIColor blackColor];
+        }
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_creatorText];
+        
+        _jobTitleText = [[UITextField alloc] init];
+        _jobTitleText.frame = CGRectMake(510, 85, 90, 20);
+        _jobTitleText.textAlignment = NSTextAlignmentLeft;
+        _jobTitleText.backgroundColor = [UIColor clearColor];
+        _jobTitleText.font = [UIFont systemFontOfSize:12];
+        _jobTitleText.textColor = [UIColor grayColor];
+        _jobTitleText.userInteractionEnabled = FALSE;
+        _jobTitleText.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _jobTitleText.tintColor = [UIColor blackColor];
+        }
+        _jobTitleText.keyboardType = UIKeyboardAppearanceDefault;
+        _jobTitleText.returnKeyType = UIReturnKeyDone;
+        _jobTitleText.tag = kTagJobTitle;
+        _jobTitleText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        [self addSubview:_jobTitleText];
     }
     
     //------- begin _functionAreaView
@@ -960,7 +981,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_creatorText == nil) {
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(220, 15, 68, 15);
+        des.frame = CGRectMake(220, 5, 68, 10);
         if (self.isPlayingCard) {
             des.frame = [Common getScaledViewRect:des withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -977,7 +998,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(220, 25, 68, 15);
+        _creatorText.frame = CGRectMake(220, 15, 68, 10);
         if (self.isPlayingCard) {
             _creatorText.frame = [Common getScaledViewRect:_creatorText withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -987,6 +1008,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (self.isPlayingCard) {
             _creatorText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
         }
+        
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _creatorText.tintColor = [UIColor blackColor];
+        }
         _creatorText.textColor = [UIColor grayColor];
         _creatorText.userInteractionEnabled = FALSE;
         _creatorText.delegate = self;
@@ -995,6 +1020,29 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.tag = kTagCreator;
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         [self addSubview:_creatorText];
+        
+        _jobTitleText = [[UITextField alloc] init];
+        _jobTitleText.frame = CGRectMake(220, 25, 68, 10);
+        if (self.isPlayingCard) {
+            _jobTitleText.frame = [Common getScaledViewRect:_jobTitleText withProportion:kFlashCardViewProporation_iPhone];
+        }
+        _jobTitleText.textAlignment = NSTextAlignmentLeft;
+        _jobTitleText.backgroundColor = [UIColor clearColor];
+        _jobTitleText.font = [UIFont systemFontOfSize:8];
+        if (self.isPlayingCard) {
+            _jobTitleText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
+        }
+        _jobTitleText.textColor = [UIColor grayColor];
+        _jobTitleText.userInteractionEnabled = FALSE;
+        _jobTitleText.delegate = self;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _jobTitleText.tintColor = [UIColor blackColor];
+        }
+        _jobTitleText.keyboardType = UIKeyboardAppearanceDefault;
+        _jobTitleText.returnKeyType = UIReturnKeyDone;
+        _jobTitleText.tag = kTagJobTitle;
+        _jobTitleText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        [self addSubview:_jobTitleText];
     }
     
     //------- begin _functionAreaView
@@ -1140,6 +1188,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         _creatorText.userInteractionEnabled = FALSE;
     }
+    
+    _jobTitleText.userInteractionEnabled = NO;
 }
 
 - (void) enableCardEdit{
@@ -1218,6 +1268,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _sidebarTitle.userInteractionEnabled = YES;
     _creatorText.userInteractionEnabled = YES;
+    _jobTitleText.userInteractionEnabled = YES;
 }
 
 
@@ -1403,6 +1454,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
+    _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
     
     NSString *logoFullPath = _currentCard.question.logoFullPath;
     if (((logoFullPath.length == 0) || ([logoFullPath rangeOfString:@"placeholder"].location != NSNotFound)) && (_isPlayingCard == true)) {
@@ -1679,6 +1731,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
     
     _currentPack.creatorNickName = _creatorText.text;
+    _currentPack.jobTitle = _jobTitleText.text;
     _currentPack.sidebarTitle = _sidebarTitle.text;
 }
 
@@ -1735,6 +1788,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.subheadingColor isEqualToString:@"Green"]) {
         _subheadingQuestion.textColor = [UIColor greenColor];
         _subheadingColorQuestion = @"Green";
+    } else if ([css.subheadingColor isEqualToString:@"White"]) {
+        _subheadingQuestion.textColor = [UIColor whiteColor];
+        _subheadingColorQuestion = @"White";
     }
     
     if ([css.subheadingAlign isEqualToString:@"Left"]) {
@@ -1783,6 +1839,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.mainColor isEqualToString:@"Green"]) {
         _mainQuestion.textColor = [UIColor greenColor];
         _mainColorQuestion = @"Green";
+    }  else if ([css.mainColor isEqualToString:@"White"]) {
+        _mainQuestion.textColor = [UIColor whiteColor];
+        _mainColorQuestion = @"White";
     }
     
     if ([css.mainAlign isEqualToString:@"Left"]) {
@@ -1833,6 +1892,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.subColor isEqualToString:@"Green"]) {
         _subQuestion.textColor = [UIColor greenColor];
         _subColorQuestion = @"Green";
+    } else if ([css.subColor isEqualToString:@"White"]) {
+        _subQuestion.textColor = [UIColor whiteColor];
+        _subColorQuestion = @"White";
     }
     
     if ([css.subAlign isEqualToString:@"Left"]) {
@@ -1884,6 +1946,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.subheadingColor isEqualToString:@"Green"]) {
         _subheadingAnswer.textColor = [UIColor greenColor];
         _subheadingColorAnswer = @"Green";
+    } else if ([css.subheadingColor isEqualToString:@"White"]) {
+        _subheadingAnswer.textColor = [UIColor whiteColor];
+        _subheadingColorAnswer = @"White";
     }
     
     if ([css.subheadingAlign isEqualToString:@"Left"]) {
@@ -1931,6 +1996,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.mainColor isEqualToString:@"Green"]) {
         _mainAnswer.textColor = [UIColor greenColor];
         _mainColorAnswer = @"Green";
+    } else if ([css.mainColor isEqualToString:@"White"]) {
+        _mainAnswer.textColor = [UIColor whiteColor];
+        _mainColorAnswer = @"White";
     }
     
     if ([css.mainAlign isEqualToString:@"Left"]) {
@@ -3814,8 +3882,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Green",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
     
+    UIBarButtonItem *whiteButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_White",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    
     if (_colorArray == nil) {
-        _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,nil];
+        _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,whiteButton,nil];
     }
     
     //Align Array
@@ -4095,14 +4165,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_audioPlayer prepareToPlay];
         
         if (_audioPlayer == nil)
-            DDLogInfo(@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL);
+            DDLogError(@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL);
         else
             [_audioPlayer play];
     } else {
-        DDLogInfo(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Invalid audio file" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
+        DDLogError(@"%s:can not find the audio file:%@",__FUNCTION__,audioURL);
     }
 }
 
@@ -4776,6 +4843,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Green",nil)]) {
         responderTextView.textColor = [UIColor greenColor];
         selectColorStr = @"Green";
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_White",nil)]) {
+        responderTextView.textColor = [UIColor whiteColor];
+        selectColorStr = @"White";
     }
     
     if (responderTextView.tag == kTagSubheadingQuestion){
@@ -4873,11 +4943,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if (textField.tag == kTagSidebar) {
         [self reSceenshotAll:kReasonSidebarTitleChangeEnum withStringVal:textField.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-        
     } else if (textField.tag == kTagCreator) {
         [self reSceenshotAll:kReasonCreatorTitleChaneEnum withStringVal:textField.text];
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
-    } else {
+    } else if (textField.tag == kTagJobTitle) {
+        [self reSceenshotAll:kReasonJobTitleChaneEnum withStringVal:textField.text];
+        [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+    }else {
         DDLogInfo(@"%s:Error",__FUNCTION__);
     }
     
@@ -5551,6 +5623,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_currentPack save];
     } else if (why == kReasonCreatorTitleChaneEnum) {
         _currentPack.creatorNickName = val;
+        [_currentPack save];
+    } else if (why == kReasonJobTitleChaneEnum) {
+        _currentPack.jobTitle = val;
         [_currentPack save];
     }
     

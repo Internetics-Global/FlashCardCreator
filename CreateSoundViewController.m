@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     BOOL success = FALSE;
     success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
     if (!success)  {
-        DDLogInfo(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
+        DDLogError(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
     }
 }
 
@@ -223,7 +223,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [_player prepareToPlay];
     
     if (_player == nil)
-		DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+		DDLogError(@"%s:%@",__FUNCTION__,[error description]);
 	else
 		[_player play];
     
@@ -260,7 +260,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                                             toPath:saveTo
                                              error:&error];
     if (error) {
-        DDLogInfo(@"%s:%@",__FUNCTION__,[error localizedDescription]);
+        DDLogError(@"%s:%@",__FUNCTION__,[error localizedDescription]);
     }
     
     [_card save];

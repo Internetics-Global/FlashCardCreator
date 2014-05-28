@@ -26,7 +26,7 @@
                                          }
                                                                                         failure:
                                          ^(NSURLRequest *req , NSURLResponse *response , NSError *error , id JSON) {
-                                             DDLogInfo(@"Failed: %@",[error localizedDescription]);
+                                             DDLogError(@"Failed: %@",[error localizedDescription]);
                                              [_delegate performSelector:@selector(didNotReceiveJSONResponse)];
                                          }
                                          ];

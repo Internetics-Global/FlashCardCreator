@@ -43,7 +43,7 @@
 	NSString *path = [self documentsPathForFileNamed:@"com.intenectics.fcc"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", path);
+            DDLogError(@"Failed to create directory at %@", path);
         }
     }
 	return path;
@@ -79,7 +79,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", returnPath);
+            DDLogError(@"Failed to create directory at %@", returnPath);
         }
     }
 	return returnPath;
@@ -95,7 +95,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", returnPath);
+            DDLogError(@"Failed to create directory at %@", returnPath);
         }
     }
 	return returnPath;
@@ -106,7 +106,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:returnPath]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:returnPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", returnPath);
+            DDLogError(@"Failed to create directory at %@", returnPath);
         }
     }
 	return returnPath;
@@ -117,7 +117,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:dir]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", dir);
+            DDLogError(@"Failed to create directory at %@", dir);
         }
     }
     
@@ -130,7 +130,7 @@
     NSString *dir = [[FileOperationHelper dataDocumentDirectory] stringByAppendingPathComponent:@"Downloaded Pack"];
     NSError *error = nil;
     if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
-        DDLogInfo(@"Failed to create directory at %@", dir);
+        DDLogError(@"Failed to create directory at %@", dir);
     }
     
     return dir;
@@ -163,7 +163,7 @@
     NSError *error;
     if (![[NSFileManager defaultManager] fileExistsAtPath:dir]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", dir);
+            DDLogError(@"Failed to create directory at %@", dir);
         }
     }
     
@@ -197,7 +197,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", path);
+            DDLogError(@"Failed to create directory at %@", path);
         }
     }
     
@@ -213,7 +213,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", path);
+            DDLogError(@"Failed to create directory at %@", path);
         }
     }
     
@@ -230,7 +230,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", path);
+            DDLogError(@"Failed to create directory at %@", path);
         }
     }
     
@@ -249,7 +249,7 @@
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", path);
+            DDLogError(@"Failed to create directory at %@", path);
         }
     }
     
@@ -285,13 +285,13 @@
         pack.creator = [OpenUDID value];
     }
     
-    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", platformStr,@"platform",nil];
+    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",platformStr,@"platform",nil];
     NSData *jsonPackData = [NSJSONSerialization dataWithJSONObject:packDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *packInfoJsonFilePath = [cardAssembleDir stringByAppendingPathComponent:@"packInformation.json"];
     if (([jsonPackData length] >0) && (error == nil)) {
         [jsonPackData writeToFile:packInfoJsonFilePath atomically:YES];
     } else {
-        DDLogInfo(@"Error to generate %@",packInfoJsonFilePath);
+        DDLogError(@"Error to generate %@",packInfoJsonFilePath);
     }
     
     //Step3: zip them
@@ -321,7 +321,7 @@
     
     if( ![zipFile CloseZipFile2] )
     {
-        DDLogInfo(@"Failure to execute pack zip operation");
+        DDLogError(@"Failure to execute pack zip operation");
         return nil;
     }
     
@@ -346,7 +346,7 @@
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:cardAssembleDir]) {
         if(![[NSFileManager defaultManager] createDirectoryAtPath:cardAssembleDir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogInfo(@"Failed to create directory at %@", cardAssembleDir);
+            DDLogError(@"Failed to create directory at %@", cardAssembleDir);
         }
     }
     
@@ -387,7 +387,7 @@
     if (([jsonQuestionData length] >0) && (error == nil)) {
         [jsonQuestionData writeToFile:[cardAssembleDir stringByAppendingPathComponent:@"questionTextContent.json"] atomically:YES];
     } else {
-        DDLogInfo(@"Error to generate questionTextContent.json");
+        DDLogError(@"Error to generate questionTextContent.json");
     }
     
     //step 3: build answerTextContent.json
@@ -427,7 +427,7 @@
     if (([jsonAnswerData length] >0) && (error == nil)) {
         [jsonAnswerData writeToFile:[cardAssembleDir stringByAppendingPathComponent:@"answerTextContent.json"] atomically:YES];
     } else {
-        DDLogInfo(@"Error to generate answerTextContent.json");
+        DDLogError(@"Error to generate answerTextContent.json");
     }
     
     //step 4: zip them
@@ -543,12 +543,12 @@
     }
     else
     {
-        DDLogInfo(@"Can not add 'do no back up' attribute at systems before 5.0.1");
+        DDLogError(@"Can not add 'do no back up' attribute at systems before 5.0.1");
     }
     
     if(!success)
     {
-        DDLogInfo(@"Error excluding %@ from backup %@", [aFilePath lastPathComponent], error);
+        DDLogError(@"Error excluding %@ from backup %@", [aFilePath lastPathComponent], error);
     }
     
     return success;
@@ -561,7 +561,7 @@
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
     for (count = 0; count < (int)[directoryContent count]; count++)
     {
-        DDLogInfo(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+        DDLogError(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
     }
     return directoryContent;
 }

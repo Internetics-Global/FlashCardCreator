@@ -94,7 +94,7 @@
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
-		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text,create_date integer,last_visit_date integer);"];
+		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text,create_date integer,last_visit_date integer, job_title text);"];
 		sqlite3_step(createItems);
 		sqlite3_finalize(createItems);
         
@@ -103,7 +103,12 @@
 		sqlite3_finalize(createIndex);
         
         DDLogInfo(@"%s:Create Packs_Tables",__FUNCTION__);
-	}
+	}else {
+        if (([Common currentInstalledSqliteVersion] != 4) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForPackFrom3To4];
+        }
+    }
+    
 	if (![SQLiteHelper tableExists:@"Cards_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Cards_Tables (card_id integer, pack_id integer, card_name text, thumb_pic text, template_background text, creator text, card_sn integer);"];
 		sqlite3_step(createNotes);
@@ -118,7 +123,7 @@
     
     
 	if (![SQLiteHelper tableExists:@"Question_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text, movie text, audio text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Question_Tables (question_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, logo_url text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text, movie text, audio text,autoresize_flag integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -136,12 +141,21 @@
         } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
             [self AddFieldForQuestionFrom1To2];
             [self AddFieldForQuestionFrom2To3];
+        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForQuestionFrom1To2];
+            [self AddFieldForQuestionFrom2To3];
+            [self AddFieldForQuestionFrom3To4];
+        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForQuestionFrom2To3];
+            [self AddFieldForQuestionFrom3To4];
+        } else if (([Common currentInstalledSqliteVersion] == 3) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForQuestionFrom3To4];
         }
     }
     
     
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text,movie text, audio text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table Answer_Tables (answer_id integer, card_id integer, title text, main text, sub text, subheading text, image text, logo text, css_id integer,template_id integer,line_number_subheading integer,line_number_main integer,line_number_sub integer, background_image text,movie text, audio text,autoresize_flag integer);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -159,6 +173,15 @@
         } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
             [self AddFieldForAnswerFrom1To2];
             [self AddFieldForAnswerFrom2To3];
+        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForAnswerFrom1To2];
+            [self AddFieldForAnswerFrom2To3];
+            [self AddFieldForAnswerFrom3To4];
+        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForAnswerFrom2To3];
+            [self AddFieldForAnswerFrom3To4];
+        } else if (([Common currentInstalledSqliteVersion] == 3) && ([Common newUpdatingSqliteVersion] == 4)) {
+            [self AddFieldForAnswerFrom3To4];
         }
     
     }
@@ -299,6 +322,43 @@
 }
 
 
++ (void) AddFieldForQuestionFrom3To4 {
+    
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN autoresize_flag integer "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+
+    DDLogInfo(@"%s",__FUNCTION__);
+    
+}
+
+
++ (void) AddFieldForAnswerFrom3To4 {
+    
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN autoresize_flag integer "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    DDLogInfo(@"%s",__FUNCTION__);
+    
+    
+}
+
++ (void) AddFieldForPackFrom3To4 {
+    
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Packs_Tables ADD COLUMN job_title text "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    DDLogInfo(@"%s",__FUNCTION__);
+    
+    
+}
+
+
 
 + (BOOL)booleanForInt:(NSInteger)integer{
 	if (integer > 0) {
@@ -314,6 +374,7 @@
 	if (columnText != NULL) {
 		return @(columnText);
 	}else {
+        DDLogWarn(@"%s:%@",__FUNCTION__,@"can not find related value");
 		return @"";
 	}
 }

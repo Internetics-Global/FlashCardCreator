@@ -29,6 +29,8 @@
 @synthesize css = _css;
 @synthesize templateID = _templateID;
 
+@synthesize autoresizeFlag = _autoresizeFlag;
+
 @synthesize backgroundImageFullPath = _backgroundImageFullPath;
 @synthesize recordedSoundFullPath = _recordedSoundFullPath;
 
@@ -43,6 +45,8 @@
     _css = [[CSS alloc] init];
     _logoURLLinkage = @"http://www.";
     _templateID = 0;
+    
+    _autoresizeFlag = 0;
     
     _imageFullPath = @"";
     _movieFullPath = @"";
@@ -76,6 +80,8 @@
     _logoFullPath= [dataDict valueForKey:@"logo"];
     _logoURLLinkage = [dataDict valueForKey:@"logo_url"];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
+    
+    _autoresizeFlag = [[dataDict valueForKey:@"autoresize_flag"] intValue];
     
     _lineNoSubheading = [[dataDict valueForKey:@"line_number_subheading"] intValue];
     _lineNoMain = [[dataDict valueForKey:@"line_number_main"] intValue];
@@ -125,7 +131,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",audio=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID,_templateID, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, autoresize_flag=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",audio=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID,_templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -133,7 +139,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
 
     }
 }
@@ -142,7 +148,7 @@
 	if (_questionID == -1) {
 		_questionID = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id,template_id,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -150,7 +156,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -174,7 +180,7 @@
                 [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
                 if (error) {
                     [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
-                    DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                    DDLogError(@"%s:%@",__FUNCTION__,[error description]);
                 }
             }
         }
@@ -186,7 +192,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question imageFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -197,7 +203,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question backgroundImageFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -208,7 +214,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question movieFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -219,7 +225,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question recordedSoundFullPath"];
-                DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
     }
@@ -248,6 +254,7 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"background_image"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"movie"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"audio"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"autoresize_flag"];
 
         
         

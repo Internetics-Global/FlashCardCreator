@@ -26,6 +26,8 @@
     NSString *_logoFullPath;  //we don't use this field
     NSInteger _templateID;
     
+    NSInteger _autoresizeFlag;
+    
     CSS *_css;
 
     NSInteger _lineNoSubheading;
@@ -49,7 +51,13 @@
 @property (nonatomic, copy) NSString *movieFullPath;
 
 @property (nonatomic, copy) NSString *logoFullPath;
+
+/**
+ *  autoresize logic to determine best font
+ */
 @property (nonatomic, assign) NSInteger templateID;
+
+@property (nonatomic, assign) NSInteger autoresizeFlag;
 
 @property (assign, nonatomic) NSInteger lineNoSubheading;
 @property (assign, nonatomic) NSInteger lineNoMain;

@@ -317,10 +317,10 @@
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
-    DDLogInfo(@"File upload failed with error - %@", error);
+    DDLogError(@"File upload failed with error - %@", error);
     [_HUD hide:YES];
     [Common alertViewCommon:@"Failure to upload, please try again"];
-    DDLogInfo(@"failure to upload: %@", [error description]);
+    DDLogError(@"failure to upload: %@", [error description]);
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
@@ -353,10 +353,10 @@
 }
 
 - (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
-    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogError(@"%s",__FUNCTION__);
     _HUD.labelText = @"Fail to create share linkage";
     _isCreatingShareLinkage = NO;
-    DDLogInfo(@"Share linkage create failed with error - %@", error);
+    DDLogError(@"Share linkage create failed with error - %@", error);
 }
 
 #pragma mark -

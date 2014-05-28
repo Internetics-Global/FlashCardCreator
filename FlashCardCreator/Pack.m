@@ -25,6 +25,7 @@
 @synthesize cards = _cards;
 @synthesize creator = _creator;
 @synthesize creatorNickName = _creatorNickName;
+@synthesize jobTitle = _jobTitle;
 
 @synthesize isAllowShare = _isAllowShare;
 
@@ -63,6 +64,10 @@
     _languageName = [dict valueForKey:@"language_name"];
     _creator = [dict valueForKey:@"creator"];
     _creatorNickName = [dict valueForKey:@"creator_nick_name"];
+    _jobTitle = [dict valueForKey:@"job_title"];
+    if (_jobTitle.length ==0) {
+        _jobTitle = @"Job tile";
+    }
     
     if ([[dict allKeys] containsObject:@"create_date"]) {
         _createDate = [[dict valueForKey:@"create_date"] intValue];
@@ -114,13 +119,13 @@
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -130,13 +135,13 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName, _sidebarTitle,_createDate,_lastVisitDate];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 	
@@ -211,6 +216,7 @@
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"creator_nick_name"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"create_date"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"last_visit_date"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"job_title"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}

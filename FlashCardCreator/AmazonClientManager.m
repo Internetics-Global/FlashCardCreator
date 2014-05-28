@@ -63,7 +63,7 @@ static AmazonSimpleDBClient *sdb = nil;
             SimpleDBCreateDomainResponse *createDomainsResponse = [[AmazonClientManager sdb] createDomain:createDomainsRequest];
             if(createDomainsResponse.error != nil)
             {
-                DDLogInfo(@"SimpleDBCreateDomainRequest repsonse error: %@", createDomainsResponse.error);
+                DDLogError(@"SimpleDBCreateDomainRequest repsonse error: %@", createDomainsResponse.error);
             } else {
                 defaultDomain = SimpleDB_DOMAIN_NAME_FOR_THIS_APP;
             }
@@ -84,7 +84,7 @@ static AmazonSimpleDBClient *sdb = nil;
     SimpleDBListDomainsResponse *listDomainsResponse = [[AmazonClientManager sdb] listDomains:listDomainsRequest];
     if(listDomainsResponse.error != nil)
     {
-        DDLogInfo(@"SimpleDBListDomainsRequest repsonse error: %@", listDomainsResponse.error);
+        DDLogError(@"SimpleDBListDomainsRequest repsonse error: %@", listDomainsResponse.error);
         return domains;
     }
     
@@ -111,7 +111,7 @@ static AmazonSimpleDBClient *sdb = nil;
     SimpleDBSelectResponse *selectResponse = [[AmazonClientManager sdb] select:selectRequest];
     if(selectResponse.error != nil)
     {
-        DDLogInfo(@"SimpleDBSelectRequest response error: %@", selectResponse.error);
+        DDLogError(@"SimpleDBSelectRequest response error: %@", selectResponse.error);
     }
     
     items = [[NSMutableArray alloc] initWithCapacity:[selectResponse.items count]];
@@ -135,7 +135,7 @@ static AmazonSimpleDBClient *sdb = nil;
     SimpleDBGetAttributesResponse *response = [[AmazonClientManager sdb] getAttributes:gar];
     if(response.error != nil)
     {
-        DDLogInfo(@"SimpleDBGetAttributesRequest response error: %@", response.error);
+        DDLogError(@"SimpleDBGetAttributesRequest response error: %@", response.error);
     }
     
     data = [[NSMutableDictionary alloc] initWithCapacity:[response.attributes count]];
@@ -172,7 +172,7 @@ static AmazonSimpleDBClient *sdb = nil;
     if(putAttributesResponse.error != nil)
     {
         result  = false;
-        DDLogInfo(@"SimpleDBPutAttributesRequest repsonse error: %@", putAttributesResponse.error);
+        DDLogError(@"SimpleDBPutAttributesRequest repsonse error: %@", putAttributesResponse.error);
     }
     
     return result;

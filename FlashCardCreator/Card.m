@@ -92,7 +92,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -106,7 +106,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
         
     }
 }
@@ -126,6 +126,7 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {
+                DDLogError(@"%s:Error when removing file of card coverImageURL",__FUNCTION__);
                 [Common alertViewCommon:@"Error when removing file of card coverImageURL"];
             }
         }

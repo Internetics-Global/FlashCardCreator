@@ -23,6 +23,7 @@ typedef enum RescreenshotReason {
     kReasonAnswerTitleChangeEnum = 3,
     kReasonSidebarTitleChangeEnum = 4,
     kReasonCreatorTitleChaneEnum = 5,
+    kReasonJobTitleChaneEnum = 6,
     
 } RescreenshotReason;
 
@@ -69,6 +70,7 @@ typedef enum{
     UIButton     *_logoLinkageButton;
     UITextField  *_sidebarTitle;
     UITextField   *_creatorText;
+    UITextField   *_jobTitleText;
     
     //movie played related
     NSString     *_questionMovieFullPath;//youtube linkage or an local url

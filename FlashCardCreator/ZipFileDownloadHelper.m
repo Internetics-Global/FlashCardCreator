@@ -47,7 +47,7 @@
         DDLogInfo(@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path);
         [_delegate downloadSuccess:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogInfo(@"Error download: %@", error);
+        DDLogError(@"Error download: %@", error);
         [_delegate downloadFail];
         //[Common alertViewCommon:[error description]];
         [Common alertViewCommon:@"Check your download linkage or Dropbox sever is temporarily unavailable"];
