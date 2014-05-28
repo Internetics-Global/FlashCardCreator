@@ -225,28 +225,35 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_templateBackgroundImageView];
     }
     
+    
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _questionBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _questionBackgroundImageView.frame = CGRectMake(40, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 40, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
-        _questionBackgroundImageView.layer.cornerRadius = 35;
+        CAShapeLayer * maskLayer = [CAShapeLayer layer];
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        _questionBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
+
+    
     
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _answerBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _answerBackgroundImageView.frame = CGRectMake(40, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 40, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);;
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
-        _answerBackgroundImageView.layer.cornerRadius = 35;
+        CAShapeLayer * maskLayer = [CAShapeLayer layer];
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
@@ -674,12 +681,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _questionBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _questionBackgroundImageView.frame = CGRectMake(30, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 30, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);;
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
-        _questionBackgroundImageView.layer.cornerRadius = 15;
+        CAShapeLayer * maskLayer = [CAShapeLayer layer];
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        _questionBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
@@ -687,12 +696,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _answerBackgroundImageView.frame = _templateBackgroundImageView.frame;
+        _answerBackgroundImageView.frame = CGRectMake(30, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 30, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
-        _answerBackgroundImageView.layer.cornerRadius = 15;
+        CAShapeLayer * maskLayer = [CAShapeLayer layer];
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15.0, 15.}].CGPath;
+        _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
@@ -5173,6 +5184,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_currentCard.question.autoresizeFlag == 1) { //1表示允许
             i = 0;
+            
+            //行数不一致时，增大字体
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
                 [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize *1.1)]];
@@ -5184,6 +5197,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             i = 0;
             
+            //行数不一致时，增大字体
             lineNumber = [self lineNumberWithUITextView:_mainQuestion];
             while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize *1.1)]];
@@ -5193,6 +5207,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 usleep(5000);
             }
             
+            //行数不一致时，增大字体
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subQuestion];
             while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
@@ -5215,7 +5230,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             result= YES;
         }
         
-        //这样下次就不会进行autoresize操作了
+        //这样下次就不会进行autoresize操作了 （除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
         if (result == YES) {
             _currentCard.question.autoresizeFlag = 0;
         }
@@ -5228,6 +5243,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_currentCard.answer.autoresizeFlag == 1) { //1表示允许
             
             i = 0;
+            //行数不一致时，增大字体
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
             while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize *1.1)]];
@@ -5238,6 +5254,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
+            //行数不一致时，增大字体
             lineNumber = [self lineNumberWithUITextView:_mainAnswer];
             while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize *1.1)]];
@@ -5248,6 +5265,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
+            //行数不一致时，增大字体
             lineNumber = [self lineNumberWithUITextView:_subAnswer];
             while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize *1.1)]];
@@ -5268,7 +5286,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             result= YES;
         }
         
-        //这样下次就不会进行autoresize操作了
+        //这样下次就不会进行autoresize操作了。除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
         if (result == YES) {
             _currentCard.answer.autoresizeFlag = 0;
         }
@@ -5774,6 +5792,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark – PopoverviewDelegate
 
+/**
+ *  两种情况：
+ *  1. 点击image
+ *  2. 点击_backgroundImageSelectButton
+ */
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
     DDLogInfo(@"%s",__FUNCTION__);
