@@ -205,6 +205,8 @@
 		8813908F193560FD00E04251 /* icon~100.png in Resources */ = {isa = PBXBuildFile; fileRef = 8813908B193560FD00E04251 /* icon~100.png */; };
 		881390921935613500E04251 /* icon~40.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390901935613500E04251 /* icon~40.png */; };
 		881390931935613500E04251 /* icon~80.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390911935613500E04251 /* icon~80.png */; };
+		881390961935683B00E04251 /* play_recorded_sound_button_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390941935683B00E04251 /* play_recorded_sound_button_bigger.png */; };
+		881390971935683B00E04251 /* play_recorded_sound_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390951935683B00E04251 /* play_recorded_sound_button_bigger@2x.png */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -855,6 +857,8 @@
 		8813908B193560FD00E04251 /* icon~100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~100.png"; sourceTree = "<group>"; };
 		881390901935613500E04251 /* icon~40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~40.png"; sourceTree = "<group>"; };
 		881390911935613500E04251 /* icon~80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~80.png"; sourceTree = "<group>"; };
+		881390941935683B00E04251 /* play_recorded_sound_button_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_recorded_sound_button_bigger.png; path = Resources/play_recorded_sound_button_bigger.png; sourceTree = "<group>"; };
+		881390951935683B00E04251 /* play_recorded_sound_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_recorded_sound_button_bigger@2x.png"; path = "Resources/play_recorded_sound_button_bigger@2x.png"; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -1486,6 +1490,8 @@
 				887A45DE1929E9DB007C94FB /* packs_button.png */,
 				880D19931929856300FD46F0 /* done_button.png */,
 				88CA253517152EE700859BDC /* grayButton.png */,
+				881390941935683B00E04251 /* play_recorded_sound_button_bigger.png */,
+				881390951935683B00E04251 /* play_recorded_sound_button_bigger@2x.png */,
 				2DB4494D16F02D5A00A33F85 /* dotted_line.png */,
 				8821E90718BB32C500AFCF12 /* close_buttonBig@2x.png */,
 				8825CC211928C50800B21E60 /* close2_button@2x.png */,
@@ -2210,8 +2216,10 @@
 				2D5C187F16D1A74800E1E785 /* leftArrow@2x.png in Resources */,
 				2D5C188516D1A74800E1E785 /* rightArrow.png in Resources */,
 				8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */,
+				881390971935683B00E04251 /* play_recorded_sound_button_bigger@2x.png in Resources */,
 				2D5C188616D1A74800E1E785 /* rightArrow@2x.png in Resources */,
 				2D5C188716D1A74800E1E785 /* SelectedCellBackground.png in Resources */,
+				881390961935683B00E04251 /* play_recorded_sound_button_bigger.png in Resources */,
 				88123D45192DBFB00062CA84 /* help3_iphone@2x.jpg in Resources */,
 				2D5C189816D1A96600E1E785 /* ShareKit.bundle in Resources */,
 				887BD94918D66DDE00E4DA21 /* templateScreenshot6_question_iPad.png in Resources */,

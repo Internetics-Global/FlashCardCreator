@@ -548,7 +548,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_creatorText == nil) {
         
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(540, 45, 90, 50);
+        des.frame = CGRectMake(510, 45, 90, 50);
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:12];
@@ -559,7 +559,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(540, 70, 90, 50);
+        _creatorText.frame = CGRectMake(510, 70, 90, 50);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
@@ -623,9 +623,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
-        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
-        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
-        _soundButton.frame = CGRectMake(13, 8, 24, 24);
+        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
+        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, 50);
+        _soundButton.frame = CGRectMake(5, 5, 40, 40);
         
     }
     
@@ -960,7 +960,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_creatorText == nil) {
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(250, 15, 68, 15);
+        des.frame = CGRectMake(220, 15, 68, 15);
         if (self.isPlayingCard) {
             des.frame = [Common getScaledViewRect:des withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -977,7 +977,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(250, 25, 68, 15);
+        _creatorText.frame = CGRectMake(220, 25, 68, 15);
         if (self.isPlayingCard) {
             _creatorText.frame = [Common getScaledViewRect:_creatorText withProportion:kFlashCardViewProporation_iPhone];
         }
