@@ -1229,6 +1229,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) refreshAll {
     DDLogInfo(@"%s",__FUNCTION__);
     [self refreshAll:NO withIndexPlaying:-1];
+    
+    
 }
 
 /**
@@ -4082,6 +4084,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         audioURL = [NSURL fileURLWithPath:_currentCard.answer.recordedSoundFullPath];
     }
+    
+    [_audioPlayer stop];
     
     if (audioURL) {
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];

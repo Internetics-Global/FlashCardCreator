@@ -413,6 +413,10 @@
         [_currentFlashCardView segmentAction:nil];
         [_currentFlashCardView disableCardEdit];
     }
+    
+    [_currentFlashCardView playAudio];
+    
+    
 }
 
 
@@ -444,6 +448,8 @@
     } else {
         DDLogInfo(@"%s:current FlashCardView is empty",__FUNCTION__);
     }
+    
+    [_currentFlashCardView playAudio];
 }
 
 - (void) addGestureSupport {
