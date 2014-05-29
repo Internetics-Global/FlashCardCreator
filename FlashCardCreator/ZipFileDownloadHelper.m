@@ -34,7 +34,7 @@
 }
 
 - (NSString *) downloadZipFile:(NSString *)URLStr {
-    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s, download url = %@",__FUNCTION__,URLStr);
     self.downloadedURL = URLStr;
     
     //Every time before download, we need to clear it.

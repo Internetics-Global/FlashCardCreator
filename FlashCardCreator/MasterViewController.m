@@ -1025,8 +1025,11 @@ enum popover_enum {
 
 - (void)downloadSuccess:(BOOL)isSucess {
     if (isSucess == YES) {
+        DDLogInfo(@"%s, download success",__FUNCTION__);
         [_HUD hide:YES];
         [self checkPassword];
+    } else {
+        DDLogInfo(@"%s,download failed",__FUNCTION__);
     }
 }
 
@@ -1058,6 +1061,7 @@ enum popover_enum {
     
     if ([urlStr rangeOfString:@".zip"].length == 0) {
         [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
+        DDLogError(@"%s,Incorrect URL share linkage (must end with .zip",__FUNCTION__);
         return;
     }
     
@@ -1073,6 +1077,7 @@ enum popover_enum {
         _zipFileDownloadHelper.delegate = self;
     }  else {
         [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
+        DDLogError(@"%s,You have reached the limit of downloads for this pack",__FUNCTION__);
     }
     
 }
@@ -1090,8 +1095,10 @@ enum popover_enum {
     
     if ((_currentDownloadCount < _maxDownloadCount)  || (_maxDownloadCount == 0)) {  //maxNo = 0 means no record in AmazonSDB
         result = TRUE;
+        DDLogInfo(@"%s:checkDownloadable = YES",__FUNCTION__);
     } else {
         result = FALSE;
+        DDLogInfo(@"%s:checkDownloadable = NO",__FUNCTION__);
     }
     
     return result;
@@ -1238,6 +1245,9 @@ enum popover_enum {
         if ([packJsonObject isKindOfClass:[NSDictionary class]]){
             
             NSDictionary *packDict = (NSDictionary *)packJsonObject;
+            
+            DDLogInfo(@"%s:packDict =%@",__FUNCTION__,packDict);
+            
             pack.packName = packDict[@"pack_name"];
             pack.sidebarTitle = packDict[@"sidebar_title"];
             pack.creator = packDict[@"creator"];
@@ -1404,6 +1414,9 @@ enum popover_enum {
         
         if ([questionJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *questionDict = (NSDictionary *)questionJsonObject;
+            
+            DDLogInfo(@"%s:questionDict =%@",__FUNCTION__,questionDict);
+            
             [assembledCard question].questionID = -1; // -1 means new
             [assembledCard question].cardID = -1;
             [assembledCard question].title = questionDict[@"title"];
@@ -1633,6 +1646,9 @@ enum popover_enum {
     if (answerJsonObject != nil && error == nil) {
         if ([answerJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *answerDict = (NSDictionary *)answerJsonObject;
+            
+            DDLogInfo(@"%s:answerDict =%@",__FUNCTION__,answerDict);
+            
             [assembledCard answer].answerID = -1;
             [assembledCard answer].cardID = -1;
             [assembledCard answer].title = answerDict[@"title"];
@@ -1919,6 +1935,8 @@ enum popover_enum {
 
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
+    
+    DDLogInfo(@"%s",__FUNCTION__);
     
     [popoverView dismiss];
     

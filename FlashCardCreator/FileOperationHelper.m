@@ -178,7 +178,7 @@
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
     for (count = 0; count < (int)[directoryContent count]; count++)
     {
-        NSLog(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
+        DDLogInfo(@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]);
     }
     return directoryContent;
 }
@@ -286,6 +286,9 @@
     }
     
     NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",platformStr,@"platform",nil];
+    
+    DDLogInfo(@"%s:packDict = %@",__FUNCTION__,packDict);
+    
     NSData *jsonPackData = [NSJSONSerialization dataWithJSONObject:packDict options:NSJSONWritingPrettyPrinted error:&error];
     NSString *packInfoJsonFilePath = [cardAssembleDir stringByAppendingPathComponent:@"packInformation.json"];
     if (([jsonPackData length] >0) && (error == nil)) {
@@ -383,6 +386,8 @@
                                         card.question.css.mainFont,@"main_font",
                                         card.question.css.subFont,@"sub_font",nil];
     
+    DDLogInfo(@"%s: questionDict = %@",__FUNCTION__,questionDict);
+    
     NSData *jsonQuestionData = [NSJSONSerialization dataWithJSONObject:questionDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonQuestionData length] >0) && (error == nil)) {
         [jsonQuestionData writeToFile:[cardAssembleDir stringByAppendingPathComponent:@"questionTextContent.json"] atomically:YES];
@@ -422,6 +427,8 @@
                                       card.answer.css.subheadingFont,@"subheading_font",
                                       card.answer.css.mainFont,@"main_font",
                                       card.answer.css.subFont,@"sub_font",nil];
+    
+    DDLogInfo(@"%s: answerDict = %@",__FUNCTION__,anserDict);
     
     NSData *jsonAnswerData = [NSJSONSerialization dataWithJSONObject:anserDict options:NSJSONWritingPrettyPrinted error:&error];
     if (([jsonAnswerData length] >0) && (error == nil)) {

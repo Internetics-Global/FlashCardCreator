@@ -5420,9 +5420,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 - (void) saveEdittedCard {
-    DDLogInfo(@"%s",__FUNCTION__);
     //we only deal with current card and new created card
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
+        DDLogInfo(@"%s, return because of ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG))",__FUNCTION__);
         return;
     }
     
@@ -5457,6 +5457,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        DDLogInfo(@"%s:(self.tag == NEW_FLASHCARDVIEW_TAG)",__FUNCTION__);
         [_currentPack addCard:_currentCard];
     } else {
         [_currentCard save];
@@ -5480,8 +5481,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //Send notification
     if (self.tag == NEW_FLASHCARDVIEW_TAG){
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:@"SENT_FROM_NEW_CARD"];
+        DDLogInfo(@"%s:postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION",__FUNCTION__);
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
+        DDLogInfo(@"%s:postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION",__FUNCTION__);
     }
     
     

@@ -403,7 +403,7 @@
 }
 
 - (NSString *) redirectURL:(NSString *)urlStr {
-    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s, url to be redirected:%@",__FUNCTION__,urlStr);
     NSString *returnURL;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@",URL_REDIRECT_API,urlStr];
     
@@ -435,7 +435,9 @@
             }
             
         }
-    } 
+    }
+    
+    DDLogInfo(@"%s, redirected url:%@",__FUNCTION__,returnURL);
     
     return returnURL;
 }

@@ -21,6 +21,7 @@ static AmazonSimpleDBClient *sdb = nil;
 */
 +(AmazonSimpleDBClient *)sdb
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     [AmazonClientManager validateCredentials];
     return sdb;
 }
@@ -28,6 +29,7 @@ static AmazonSimpleDBClient *sdb = nil;
 
 +(void)validateCredentials
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     if (sdb == nil) {
         [AmazonClientManager clearCredentials];
         
@@ -38,6 +40,7 @@ static AmazonSimpleDBClient *sdb = nil;
 
 +(void)clearCredentials
 {
+    DDLogInfo(@"%s",__FUNCTION__);
     sdb = nil;
 }
 
@@ -46,6 +49,7 @@ static AmazonSimpleDBClient *sdb = nil;
  if no exist, will create one named SimpleDB_DOMAIN_NAME_FOR_THIS_APP
  */
 + (NSString *) defaultDomain{
+    DDLogInfo(@"%s",__FUNCTION__);
 	static NSString *defaultDomain;
 	@synchronized(self){
 		if (defaultDomain == nil) {
@@ -77,7 +81,7 @@ static AmazonSimpleDBClient *sdb = nil;
  Meaning of domain in Amazon SimpleDB is simliar with table in SQL
  */
 + (NSMutableArray *) fetchDomains {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSMutableArray  *domains;
     
     SimpleDBListDomainsRequest  *listDomainsRequest  = [[SimpleDBListDomainsRequest alloc] init];
@@ -102,7 +106,7 @@ static AmazonSimpleDBClient *sdb = nil;
  Meaning of item in Amazon SimpleDB is simliar with row/record in SQL
  */
 +  (NSMutableArray *) fetchItemsWithDomain:(NSString *) domainName {
-    
+    DDLogInfo(@"%s",__FUNCTION__);
     NSMutableArray       *items;
     
     NSString *selectExpression = [NSString stringWithFormat:@"select itemName() from `%@`", domainName];
@@ -129,6 +133,7 @@ static AmazonSimpleDBClient *sdb = nil;
  Attribute and value pairs
  */
 + (NSMutableDictionary *) fetchAttributeValuesAtItem: (NSString *) itemName withDomainName: (NSString *) domainName{
+    DDLogInfo(@"%s",__FUNCTION__);
     NSMutableDictionary       *data;
     
     SimpleDBGetAttributesRequest *gar = [[SimpleDBGetAttributesRequest alloc] initWithDomainName:domainName andItemName:itemName];
@@ -152,6 +157,7 @@ static AmazonSimpleDBClient *sdb = nil;
   Update or add
  */
 + (BOOL) insertOrUpdateItem: (NSDictionary *) dict withItemName: (NSString *) itemName withDomainName: (NSString *) domainName {
+    DDLogInfo(@"%s",__FUNCTION__);
     BOOL result = TRUE;
     
     SimpleDBReplaceableAttribute *attribute;
