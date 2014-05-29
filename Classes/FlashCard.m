@@ -4996,6 +4996,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark -
 #pragma mark - UITextViewDelegate
+//只要内容一改变，就会call
 - (void)textViewDidChange:(UITextView *)textView {
     DDLogInfo(@"%s",__FUNCTION__);
     //    CGRect frame = textView.frame;
@@ -5004,7 +5005,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
+//当点击，并还没有开始改变内容时
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     DDLogInfo(@"%s",__FUNCTION__);
     _lastBecomeFirstRespondTextView = textView;
@@ -5015,9 +5016,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     return TRUE;
 }
 
-
+//是否允许更改
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    
     DDLogInfo(@"%s",__FUNCTION__);
     static CGFloat height = 0;
     static int tag = -1;
@@ -5077,7 +5079,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         range.location++;
         textView.selectedRange = range;
-        return false;
+        if (text.length ==0) {
+            return true;// that meaning, you are deleting the text
+        } else {
+            return false;
+        }
+        
     } else {
         textView.text = originalStr;
         textView.selectedRange = range;
