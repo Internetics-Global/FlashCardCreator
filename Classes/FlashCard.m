@@ -234,9 +234,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
-        CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
-        _questionBackgroundImageView.layer.mask = maskLayer;
+        
+        CAShapeLayer *styleLayer = [CAShapeLayer layer];
+        
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_questionBackgroundImageView.bounds byRoundingCorners:(UIRectCornerBottomRight) cornerRadii:CGSizeMake(35, 35.0)];
+        
+        styleLayer.path = shadowPath.CGPath;
+        
+        _questionBackgroundImageView.layer.mask = styleLayer;
+        
+        
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
@@ -252,7 +259,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: _answerBackgroundImageView.bounds byRoundingCorners: UIRectCornerBottomRight cornerRadii: (CGSize){35, 35.}].CGPath;
         _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -687,7 +694,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.userInteractionEnabled = NO;
         _questionBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: _questionBackgroundImageView.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15, 15.}].CGPath;
         _questionBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
@@ -702,7 +709,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerBackgroundImageView.userInteractionEnabled = NO;
         _answerBackgroundImageView.layer.masksToBounds = YES;
         CAShapeLayer * maskLayer = [CAShapeLayer layer];
-        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: self.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){0, 15.}].CGPath;
+        maskLayer.path = [UIBezierPath bezierPathWithRoundedRect: _answerBackgroundImageView.bounds byRoundingCorners: UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: (CGSize){15, 15.}].CGPath;
         _answerBackgroundImageView.layer.mask = maskLayer;
         [self addSubview:_answerBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
