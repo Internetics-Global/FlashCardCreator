@@ -43,4 +43,6 @@
 + (BOOL) isSymbolIncluded:(NSString *)str;
 + (BOOL) isIncludedInRecommendedFonts:(NSString *) fontName;
 
++ (NSString *) userAgentInfo;
+
 @end

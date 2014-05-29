@@ -184,5 +184,18 @@
     
 }
 
++ (NSString *) userAgentInfo {
+    NSString *applicationName =
+    [[[NSBundle mainBundle] infoDictionary]
+     objectForKey:(__bridge NSString *)kCFBundleExecutableKey];
+    NSString *applicationVersion = [[[NSBundle mainBundle] infoDictionary]
+                                    objectForKey:(__bridge NSString *)kCFBundleVersionKey];
+    NSString *deviceModel = [[UIDevice currentDevice] model];
+    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+    double screenScale = [[UIScreen mainScreen] scale];
+    NSString *str = [NSString stringWithFormat:@"%@  Build:%@(%@;iOS%@;Scale/%0.2f)",applicationName,applicationVersion,deviceModel,systemVersion, screenScale];
+    return str;
+}
+
 
 @end

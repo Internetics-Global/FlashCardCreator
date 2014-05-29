@@ -47,7 +47,7 @@ BOOL _isDownloadingSamplePack;
     
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s:%@",__FUNCTION__,[Common userAgentInfo]);
     
     //1. check database
     [SQLiteHelper verifyDatabase];
@@ -306,6 +306,10 @@ BOOL _isDownloadingSamplePack;
     }
     
     isLoggingDropboxInSettingView = NO;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    DDLogInfo(@"%s:%@",__FUNCTION__,[Common userAgentInfo]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
