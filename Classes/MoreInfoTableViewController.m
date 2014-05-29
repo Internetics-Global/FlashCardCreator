@@ -80,27 +80,9 @@ BOOL isLoggingDropboxInSettingView = NO;
             [composeViewController addAttachmentData:noteData mimeType:@"text/plain" fileName:@"Log.txt"];
         }
         
-        ZipArchive* zipFile = [[ZipArchive alloc] init];
-        NSString *generatePackZipFilePath = [[FileOperationHelper documentDirectory] stringByAppendingPathComponent:@"sqlite.zip"];
-        [zipFile CreateZipFile2:generatePackZipFilePath];
-        
-        [zipFile addFileToZip:[FileOperationHelper databasePath] newname:@"sqlite.zip"];
-        if( ![zipFile CloseZipFile2] )
-        {
-            DDLogError(@"Failure to execute pack zip operation");
-        } else {
-            NSData *databaseData = [NSData dataWithContentsOfFile:generatePackZipFilePath];
-            if (databaseData) {
-                [composeViewController addAttachmentData:noteData mimeType:@"application/zip" fileName:@"sqlite.zip"];
-            }
-            
-            NSError *error = nil;
-            if (![[NSFileManager defaultManager] removeItemAtPath:generatePackZipFilePath
-                                                            error:&error])
-            {
-                NSLog(@"[Error] %@ (%@)", error, generatePackZipFilePath);
-            }
-
+        NSData *databaseData = [NSData dataWithContentsOfFile:[FileOperationHelper databasePath]];
+        if (databaseData) {
+            [composeViewController addAttachmentData:noteData mimeType:@"application/x-sqlite3" fileName:@"sqlite.db"];
             
         }
         
