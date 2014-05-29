@@ -574,5 +574,11 @@
 }
 
 
++ (NSString *) databasePath {
+    NSString *path = [self documentDirectory];
+    return ([path stringByAppendingPathComponent:@"FlashCardCreator-Local.db"]);
+}
+
+
 
 @end

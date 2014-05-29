@@ -1387,7 +1387,7 @@ enum popover_enum {
         [[NSFileManager defaultManager] removeItemAtPath:[FileOperationHelper temporaryImagesDirectory] error:nil];
         BOOL ret = [za UnzipFileTo:[FileOperationHelper temporaryImagesDirectory] overWrite:YES];
         if( NO==ret ) {
-            DDLogInfo(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
+            DDLogError(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
         } else {
             //DDLogInfo(@"%s\nUnzip file successfully",__FUNCTION__);
         }

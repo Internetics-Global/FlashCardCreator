@@ -177,7 +177,7 @@
     BOOL isDir;
     //For history reason, we share logo image common under the same package. This could introduce into some waste of space, but temporarily, we have to do it like this.
     if (0) {
-        //We never delete placeholder imae
+        //We never delete placeholder image
         if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.jpg"]) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
                 [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];

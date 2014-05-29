@@ -50,4 +50,7 @@
 
 +(NSString*)logFile;
 
++ (NSString *) databasePath;
+
+
 @end

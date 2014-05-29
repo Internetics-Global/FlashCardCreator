@@ -1497,10 +1497,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
+    DDLogInfo(@"%s,_answerImageFullPath = %@",__FUNCTION__,path);
     if (imageTemp) {
         _answerImageFullPath = path;
         _imageAnswer.image = imageTemp;
     } else {
+        DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _answerImageFullPath = @"";
         DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
@@ -1551,13 +1553,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) refreshQuestionContent {
-    DDLogInfo(@"%s",__FUNCTION__);
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
     UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
+    DDLogInfo(@"%s,_questionImageFullPath = %@",__FUNCTION__,path);
     if (imageTemp) {
         _questionImageFullPath = path;
         _imageQuestion.image = imageTemp;
     } else {
+        DDLogWarn(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _questionImageFullPath = @"";
         DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
