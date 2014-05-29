@@ -19,5 +19,6 @@
 @property (strong, nonatomic) Card *card;
 @property (strong, nonatomic) Pack *pack;
 @property (assign, nonatomic) BOOL  isOnQuestion;
+@property (assign, nonatomic) BOOL  isFromNewCreatedCard;
 
 @end

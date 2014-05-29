@@ -263,7 +263,12 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
         DDLogError(@"%s:%@",__FUNCTION__,[error localizedDescription]);
     }
     
-    [_card save];
+    if (self.isFromNewCreatedCard) {
+        //we don't save here
+    } else {
+      [_card save];    
+    }
+    
     [self dismiss];
     
     //update_date info

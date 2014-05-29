@@ -1335,7 +1335,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
         _questionTitle.userInteractionEnabled = false;
         _answerTitle.userInteractionEnabled = false;
-        _functionAreaView.hidden = YES;
+        //_functionAreaView.hidden = YES;
     }
     
     
@@ -1707,8 +1707,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _currentCard.answer.movieFullPath = _answerMovieFullPath;
     
-    _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
-    _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
+    if (isFromNewCreatedCard) {
+       //我们不做什么，因为已经在CreateSoundViewController中进行commit了
+    } else {
+        _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
+        _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
+    }
+    
     
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
@@ -5511,6 +5516,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
             createSoundViewController.card = _currentCard;
             createSoundViewController.pack = _currentPack;
+            
+            if (isFromNewCreatedCard) {
+                createSoundViewController.isFromNewCreatedCard = YES;
+            } else {
+                createSoundViewController.isFromNewCreatedCard = NO;
+            }
+            
             UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
             navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
