@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _questionBackgroundImageView.frame = CGRectMake(40, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 40, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);
+        _questionBackgroundImageView.frame = CGRectMake(41, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 41, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
@@ -253,7 +253,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _answerBackgroundImageView.frame = CGRectMake(40, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 40, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);;
+        _answerBackgroundImageView.frame = CGRectMake(41, 112, CGRectGetWidth(_templateBackgroundImageView.frame) - 41, CGRectGetHeight(_templateBackgroundImageView.frame) - 112);;
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
@@ -532,10 +532,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
         _logoImage.frame = CGRectMake(670, 10, 100, 100);
         _logoImage.clipsToBounds = YES;
-        _logoImage.backgroundColor = [UIColor clearColor];
+        _logoImage.backgroundColor = [UIColor whiteColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
-        _logoImage.layer.cornerRadius = 8;
-        _logoImage.layer.masksToBounds = YES;
+        CAShapeLayer *styleLayer = [CAShapeLayer layer];
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(25, 25.0)];
+        styleLayer.path = shadowPath.CGPath;
+        _logoImage.layer.mask = styleLayer;
+
         [self addSubview:_logoImage];
         //Default logic
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
@@ -688,7 +691,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _questionBackgroundImageView.frame = CGRectMake(30, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 30, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);;
+        _questionBackgroundImageView.frame = CGRectMake(31, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 31, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);;
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
@@ -703,7 +706,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _answerBackgroundImageView.frame = CGRectMake(30, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 30, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);
+        _answerBackgroundImageView.frame = CGRectMake(31, 38, CGRectGetWidth(_templateBackgroundImageView.frame) - 31, CGRectGetHeight(_templateBackgroundImageView.frame) - 38);
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
@@ -961,8 +964,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (self.isPlayingCard) {
             _logoImage.frame = [Common getScaledViewRect:_logoImage withProportion:kFlashCardViewProporation_iPhone];
         }
-        _logoImage.clipsToBounds = YES;
-        _logoImage.backgroundColor = [UIColor clearColor];
+        _logoImage.backgroundColor = [UIColor whiteColor];
+        
+        CAShapeLayer *styleLayer = [CAShapeLayer layer];
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(15, 15.0)];
+        styleLayer.path = shadowPath.CGPath;
+        _logoImage.layer.mask = styleLayer;
+        
         _logoImage.userInteractionEnabled = TRUE;
         _logoImage.tag = 0;
         _logoImage.layer.cornerRadius = 5;
