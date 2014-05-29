@@ -79,6 +79,8 @@
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
+    _packNameText.layer.cornerRadius =2;
+    _packNameText.layer.masksToBounds = YES;
     _packNameText.borderStyle = UITextBorderStyleNone;
     [_packNameText setClearsOnBeginEditing:YES];
     _packNameText.returnKeyType = UIReturnKeyDone;
@@ -95,6 +97,8 @@
     _sidebarTitle.text = @"Side bar title";
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
+    _sidebarTitle.layer.cornerRadius =2;
+    _sidebarTitle.layer.masksToBounds = YES;
     _sidebarTitle.borderStyle = UITextBorderStyleNone;
     [_sidebarTitle setClearsOnBeginEditing:YES];
     _sidebarTitle.returnKeyType = UIReturnKeyDone;
@@ -111,6 +115,8 @@
     _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
     _creatorText.font = [UIFont systemFontOfSize:14];
     _creatorText.delegate = self;
+    _creatorText.layer.cornerRadius =2;
+    _creatorText.layer.masksToBounds = YES;
     _creatorText.borderStyle = UITextBorderStyleNone;
     [_creatorText setClearsOnBeginEditing:YES];
     _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -127,6 +133,13 @@
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
     _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.jpg"];
+    
+    _coverImageView.backgroundColor = [UIColor whiteColor]; //如果设置为clearColor，则不起作用
+    CAShapeLayer *styleLayer = [CAShapeLayer layer];
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_coverImageView.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(15, 15.0)];
+    styleLayer.path = shadowPath.CGPath;
+    _coverImageView.layer.mask = styleLayer;
+    
     [self.view addSubview:_coverImageView];
     
     _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.jpg", [[NSBundle mainBundle] resourcePath]];
