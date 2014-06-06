@@ -4146,10 +4146,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
-                                                                        inView:self
-                                                                     withTitle:@"Image/video selection"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library", nil]
-                                                                      delegate:self];
+                                                      inView:self
+                                                   withTitle:@"Image/video selection"
+                                             withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library",@"Remove video/image", nil]
+                                                    delegate:self];
+    
     imageSelectPopoverView.tag = Type_PopoverView_SelectImage;
 
 }
@@ -5853,7 +5854,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (index == 1) {
             [self selectImageOrVideoFromLibrary];
-        } else {
+        } else if (index == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
                                                             message:nil
                                                            delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
@@ -5864,6 +5865,25 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
             alert.delegate = self;
             [alert show];
+        } else if (index == 2) {
+            if (self.segmentedControl.selectedSegmentIndex == 0) {
+                //TODO , we need to remove video/image resources.
+                _questionImageFullPath = @"";
+                _questionMovieFullPath = @"";
+                _currentCard.question.movieFullPath = @"";
+                _currentCard.question.imageFullPath = @"";
+                [_imageQuestion setImage:nil];
+            } else {
+                //TODO , we need to remove video/image resources.
+                _answerImageFullPath = @"";
+                _answerMovieFullPath = @"";
+                _currentCard.answer.movieFullPath = @"";
+                _currentCard.answer.imageFullPath = @"";
+                [_imageAnswer setImage:nil];
+            }
+            if (isFromNewCreatedCard == FALSE) {
+                [self saveEdittedCard];
+            }
         }
     } else {
         [popoverView dismiss];
