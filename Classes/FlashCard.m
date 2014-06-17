@@ -93,6 +93,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 @property (strong, nonatomic) UIButton *soundButton;
+@property (strong, nonatomic) UIButton *muteButton;
 
 
 @end
@@ -661,9 +662,28 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
-        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
-        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, 50);
-        _soundButton.frame = CGRectMake(5, 5, 40, 40);
+        [_soundButton setImage:[UIImage imageNamed:@"play_button_bigger"] forState:UIControlStateNormal];
+        
+        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 100, CGRectGetMinY(_segmentedControl.frame), 100, 50);
+        
+        _soundButton.frame = CGRectMake(50, 5, 40, 40);
+        
+        if (self.muteButton == nil) {
+            
+            _muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _muteButton.frame = CGRectOffset(_soundButton.frame, -45, 0);
+            
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
+            if (val) {
+                [_muteButton setImage:[UIImage imageNamed:@"mute_button_bigger"] forState:UIControlStateNormal];
+            } else {
+                [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
+            }
+            [_muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            _muteButton.backgroundColor = [UIColor clearColor];
+            _muteButton.showsTouchWhenHighlighted = YES;
+            [_functionAreaView addSubview:_muteButton];
+        }
         
     }
     
@@ -4181,6 +4201,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) playAudio {
     DDLogInfo(@"%s",__FUNCTION__);
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"]) {
+        return;
+    }
+    
+    
     NSError *error;
     //不能声明为局部变量，否则无法播放
     NSURL *audioURL;
@@ -5505,6 +5531,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     
+}
+
+- (void) muteButtonClicked:(id)sender {
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
+    if (val) {
+        [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
+    } else {
+        [_muteButton setImage:[UIImage imageNamed:@"mute_button_bigger"] forState:UIControlStateNormal];
+    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:!val  forKey:@"k_Mute"];
+    [defaults synchronize];
 }
 
 

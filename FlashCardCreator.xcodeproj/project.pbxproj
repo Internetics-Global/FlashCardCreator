@@ -280,6 +280,12 @@
 		887BD94C18D66DDE00E4DA21 /* templateScreenshot7_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */; };
 		887BD97018D6710500E4DA21 /* templateScreenshot7_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD96E18D6710500E4DA21 /* templateScreenshot7_answer_iPad.png */; };
 		887BD97118D6710500E4DA21 /* templateScreenshot7_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD96F18D6710500E4DA21 /* templateScreenshot7_answer.png */; };
+		8883EAF919500EAC0033056F /* mute_button_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EAF519500EAC0033056F /* mute_button_bigger.png */; };
+		8883EAFA19500EAC0033056F /* mute_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EAF619500EAC0033056F /* mute_button_bigger@2x.png */; };
+		8883EAFB19500EAC0033056F /* mute_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EAF719500EAC0033056F /* mute_button.png */; };
+		8883EAFC19500EAC0033056F /* mute_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EAF819500EAC0033056F /* mute_button@2x.png */; };
+		8883EB20195012F40033056F /* play_button_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EB1E195012F40033056F /* play_button_bigger.png */; };
+		8883EB21195012F40033056F /* play_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EB1F195012F40033056F /* play_button_bigger@2x.png */; };
 		88A06F931928B70800C0EEF7 /* add_pack_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A06F921928B70800C0EEF7 /* add_pack_button.png */; };
 		88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* AmazonClientManager.m */; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
@@ -939,6 +945,12 @@
 		887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question.png; path = Resources/templateScreenshot7_question.png; sourceTree = "<group>"; };
 		887BD96E18D6710500E4DA21 /* templateScreenshot7_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_answer_iPad.png; path = Resources/templateScreenshot7_answer_iPad.png; sourceTree = "<group>"; };
 		887BD96F18D6710500E4DA21 /* templateScreenshot7_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_answer.png; path = Resources/templateScreenshot7_answer.png; sourceTree = "<group>"; };
+		8883EAF519500EAC0033056F /* mute_button_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mute_button_bigger.png; path = Resources/mute_button_bigger.png; sourceTree = "<group>"; };
+		8883EAF619500EAC0033056F /* mute_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mute_button_bigger@2x.png"; path = "Resources/mute_button_bigger@2x.png"; sourceTree = "<group>"; };
+		8883EAF719500EAC0033056F /* mute_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mute_button.png; path = Resources/mute_button.png; sourceTree = "<group>"; };
+		8883EAF819500EAC0033056F /* mute_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mute_button@2x.png"; path = "Resources/mute_button@2x.png"; sourceTree = "<group>"; };
+		8883EB1E195012F40033056F /* play_button_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_button_bigger.png; path = Resources/play_button_bigger.png; sourceTree = "<group>"; };
+		8883EB1F195012F40033056F /* play_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_button_bigger@2x.png"; path = "Resources/play_button_bigger@2x.png"; sourceTree = "<group>"; };
 		88A06F921928B70800C0EEF7 /* add_pack_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_pack_button.png; path = Resources/add_pack_button.png; sourceTree = "<group>"; };
 		88A175271797C3BD00FE778C /* AmazonClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonClientManager.h; sourceTree = "<group>"; };
 		88A175281797C3BD00FE778C /* AmazonClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonClientManager.m; sourceTree = "<group>"; };
@@ -1461,6 +1473,12 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				8883EB1E195012F40033056F /* play_button_bigger.png */,
+				8883EB1F195012F40033056F /* play_button_bigger@2x.png */,
+				8883EAF519500EAC0033056F /* mute_button_bigger.png */,
+				8883EAF619500EAC0033056F /* mute_button_bigger@2x.png */,
+				8883EAF719500EAC0033056F /* mute_button.png */,
+				8883EAF819500EAC0033056F /* mute_button@2x.png */,
 				88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */,
 				88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */,
 				88123D16192D90E30062CA84 /* question_placeholder_content.jpg */,
@@ -2202,6 +2220,7 @@
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
 				887A45DD1929E574007C94FB /* helping_button.png in Resources */,
 				2DCE0B3416798E04007A8CAD /* DetailViewController_iPad.xib in Resources */,
+				8883EB20195012F40033056F /* play_button_bigger.png in Resources */,
 				88123DF2192EFBAC0062CA84 /* README.txt in Resources */,
 				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
@@ -2239,6 +2258,7 @@
 				2D5FCBDE16DD927800DB8628 /* plus_button@2x.png in Resources */,
 				2D5FCBE116DD927800DB8628 /* setting_button.png in Resources */,
 				8810031E180FBD8A00FA0A52 /* icon76x76iPad.png in Resources */,
+				8883EB21195012F40033056F /* play_button_bigger@2x.png in Resources */,
 				2D5FCBE416DD927800DB8628 /* share_button.png in Resources */,
 				2D5FCBE616DD927800DB8628 /* share_button@2x.png in Resources */,
 				8825CC461928CA8000B21E60 /* refresh2.png in Resources */,
@@ -2271,6 +2291,7 @@
 				2D1A051B16EDDF1D00527311 /* card_background_coffee.png in Resources */,
 				880D19711929849900FD46F0 /* close2_button.png in Resources */,
 				2D1A051C16EDDF1D00527311 /* card_background_blue.png in Resources */,
+				8883EAFA19500EAC0033056F /* mute_button_bigger@2x.png in Resources */,
 				2D1A051E16EDE38200527311 /* card_sidebar_blue.png in Resources */,
 				2D1A053616EDEB2100527311 /* popoverArrowDown.png in Resources */,
 				2D1A053716EDEB2100527311 /* popoverArrowDown@2x.png in Resources */,
@@ -2286,6 +2307,7 @@
 				2D1A053E16EDEB2100527311 /* popoverBg.png in Resources */,
 				2D1A053F16EDEB2100527311 /* popoverBg@2x.png in Resources */,
 				2D1A054616EDED8800527311 /* template_color_blue.png in Resources */,
+				8883EAFC19500EAC0033056F /* mute_button@2x.png in Resources */,
 				88123D46192DBFB00062CA84 /* help4_iphone@2x.jpg in Resources */,
 				885C3DDC192804F20090F63C /* helping_button@2x.png in Resources */,
 				885C3DD81927818E0090F63C /* save_button@2x.png in Resources */,
@@ -2299,6 +2321,7 @@
 				2D1A054916EDED8800527311 /* template_color_purple.png in Resources */,
 				8858064D18C9984D00490C33 /* upButton@2x.png in Resources */,
 				2D1A054A16EDED8800527311 /* template_color_red.png in Resources */,
+				8883EAF919500EAC0033056F /* mute_button_bigger.png in Resources */,
 				2D1A055116EE894800527311 /* template_background_change_button.png in Resources */,
 				2DB4494E16F02D5A00A33F85 /* dotted_line.png in Resources */,
 				885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */,
@@ -2317,6 +2340,7 @@
 				885C3D9A1925C8DE0090F63C /* packs_button@2x.png in Resources */,
 				880AF42918C5A633007F13DF /* release_notes.md in Resources */,
 				887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */,
+				8883EAFB19500EAC0033056F /* mute_button.png in Resources */,
 				881131AB1703CC8600C7D5A8 /* Default.png in Resources */,
 				887BD97018D6710500E4DA21 /* templateScreenshot7_answer_iPad.png in Resources */,
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
