@@ -567,7 +567,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_creatorText == nil) {
         
         UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(510, 35, 90, 20);
+        des.frame = CGRectMake(490, 25, 90, 20);
         des.textAlignment = NSTextAlignmentLeft;
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:12];
@@ -578,7 +578,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(510, 60, 90, 20);
+        _creatorText.frame = CGRectMake(490, 50, 90, 20);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
@@ -595,7 +595,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_creatorText];
         
         _jobTitleText = [[UITextField alloc] init];
-        _jobTitleText.frame = CGRectMake(510, 85, 90, 20);
+        _jobTitleText.frame = CGRectMake(490, 75, 90, 20);
         _jobTitleText.textAlignment = NSTextAlignmentLeft;
         _jobTitleText.backgroundColor = [UIColor clearColor];
         _jobTitleText.font = [UIFont systemFontOfSize:12];
