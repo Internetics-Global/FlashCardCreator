@@ -662,7 +662,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
-        [_soundButton setImage:[UIImage imageNamed:@"play_button_bigger"] forState:UIControlStateNormal];
+        [_soundButton setImage:[UIImage imageNamed:@"play_sound_button_bigger"] forState:UIControlStateNormal];
         
         _functionAreaView.frame = CGRectMake(self.bounds.size.width - 100, CGRectGetMinY(_segmentedControl.frame), 100, 50);
         
@@ -677,7 +677,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (val) {
                 [_muteButton setImage:[UIImage imageNamed:@"mute_button_bigger"] forState:UIControlStateNormal];
             } else {
-                [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
+                [_muteButton setImage:[UIImage imageNamed:@"un_mute_button_bigger"] forState:UIControlStateNormal];
             }
             [_muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             _muteButton.backgroundColor = [UIColor clearColor];
@@ -1139,11 +1139,30 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _functionAreaView.backgroundColor = [UIColor clearColor];
         _functionAreaView.layer.borderWidth = 0;
         
-        [_soundButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
+        [_soundButton setImage:[UIImage imageNamed:@"play_sound_button"] forState:UIControlStateNormal];
         _changeTemplateButton.hidden = YES;
         _backgroundImageSelectButton.hidden = YES;
-        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 50, CGRectGetMinY(_segmentedControl.frame), 50, CGRectGetHeight(_segmentedControl.frame));
-        _soundButton.frame = CGRectMake(13, 8, 24, 24);
+        _functionAreaView.frame = CGRectMake(self.bounds.size.width - 60, self.bounds.size.height, 70, 24);
+        _soundButton.frame = CGRectMake(40, 2, 20, 20);
+        
+        if (self.muteButton == nil) {
+            
+            self.backgroundColor = [UIColor redColor];
+            
+            _muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _muteButton.frame = CGRectOffset(_soundButton.frame, -35, 0);
+            
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
+            if (val) {
+                [_muteButton setImage:[UIImage imageNamed:@"mute_button"] forState:UIControlStateNormal];
+            } else {
+                [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
+            }
+            [_muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            _muteButton.backgroundColor = [UIColor clearColor];
+            _muteButton.showsTouchWhenHighlighted = YES;
+            [_functionAreaView addSubview:_muteButton];
+        }
         
     }
     
@@ -5536,10 +5555,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) muteButtonClicked:(id)sender {
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
-    if (val) {
-        [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button_bigger"] forState:UIControlStateNormal];
+    if (isUserInterfaceIdiomPhone) {
+        //iPhone的图标尺寸小一点
+        if (val) {
+            [_muteButton setImage:[UIImage imageNamed:@"play_recorded_sound_button"] forState:UIControlStateNormal];
+        } else {
+            [_muteButton setImage:[UIImage imageNamed:@"mute_button"] forState:UIControlStateNormal];
+        }
     } else {
-        [_muteButton setImage:[UIImage imageNamed:@"mute_button_bigger"] forState:UIControlStateNormal];
+        if (val) {
+            [_muteButton setImage:[UIImage imageNamed:@"un_mute_button_bigger"] forState:UIControlStateNormal];
+        } else {
+            [_muteButton setImage:[UIImage imageNamed:@"mute_button_bigger"] forState:UIControlStateNormal];
+        }
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -5960,6 +5988,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     
+}
+
+#pragma mark – Hittest
+
+/**
+ *  适用于iphone且playmode下。
+ *  在playmode下，playsoundbutton和mutebutton由于在Flashcard的frame外面，导致它们无法接收touch事件，所以需要重写hitTest
+ */
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if (isUserInterfaceIdiomPhone && _isPlayingCard) {
+        if (!self.clipsToBounds && !self.hidden && self.alpha > 0) {
+            for (UIView *subview in self.subviews.reverseObjectEnumerator) {
+                CGPoint subPoint = [subview convertPoint:point fromView:self];
+                UIView *result = [subview hitTest:subPoint withEvent:event];
+                if (result != nil) {
+                    return result;
+                }
+            }
+        }
+        
+        return nil;
+    } else {
+        return [super hitTest:point withEvent:event];
+    }
 }
 
 
