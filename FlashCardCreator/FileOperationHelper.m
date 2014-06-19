@@ -580,5 +580,42 @@
 }
 
 
+/**
+ *	Undo card background image: question part
+ *
+ */
++ (NSString *) undoCardBackGroundImageForQuestionPath {
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            DDLogError(@"Failed to create directory at %@", path);
+        }
+    }
+    
+    
+    NSString *uid = [NSString stringWithFormat:@"question_card_background_image_undo.jpg"];
+    return ([path stringByAppendingPathComponent:uid]);
+}
+
+
+/**
+ *	Undo card background image: answer part
+ *
+ */
++ (NSString *) undoCardBackGroundImageForAnswerPath {
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            DDLogError(@"Failed to create directory at %@", path);
+        }
+    }
+    
+    
+    NSString *uid = [NSString stringWithFormat:@"answer_card_background_image_undo.jpg"];
+    return ([path stringByAppendingPathComponent:uid]);
+}
+
 
 @end

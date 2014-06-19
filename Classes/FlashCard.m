@@ -1710,11 +1710,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) backgroundImageSelectButtonClicked:(UITapGestureRecognizer *)sender {
     
+    BOOL isAllowUndo;
+    
     NSString *backgroundImagePath;
+    NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
     if (_segmentedControl.selectedSegmentIndex == 0) {
         backgroundImagePath =  _currentCard.question.backgroundImageFullPath;
+        isAllowUndo = [[cardDict objectForKey:@"K_Is_Allow_Undo_Question_Background_Image"] boolValue];
     } else {
         backgroundImagePath =  _currentCard.answer.backgroundImageFullPath;
+        isAllowUndo = [[cardDict objectForKey:@"K_Is_Allow_Undo_Answer_Background_Image"] boolValue];
     }
     
     if (backgroundImagePath.length == 0) {
@@ -1723,11 +1728,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         CGPoint point = [_backgroundImageSelectButton convertPoint:CGPointMake(CGRectGetWidth(_backgroundImageSelectButton.frame)/2, 0) toView:self];
         
-        PopoverView *backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
-                                                                                 inView:self
-                                                                              withTitle:@"Edit/Remove"
-                                                                        withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
-                                                                               delegate:self];
+        PopoverView *backgroundImageSelectPopoverView;
+        if (isAllowUndo) {
+            backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
+                                     inView:self
+                                  withTitle:@"Edit/Remove"
+                            withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image",@"Undo last operation", nil]
+                                                                      delegate:self];
+        } else {
+            backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
+                                     inView:self
+                                  withTitle:@"Edit/Remove"
+                            withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
+                                                                      delegate:self];
+        }
         backgroundImageSelectPopoverView.tag = Type_PopoverView_SelectBackground;
     }
     
@@ -4510,7 +4524,42 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     || ([_questionBackgroundImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
                     || ((_questionBackgroundImageFullPath.length == 0))) {
                     _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                } else {
+                    //当之前已经有图片时，我们才操作
+                    //step1: 拷贝一份更改前的图片到undoCardBackGroundImageForQuestionPath
+                    NSError *error;
+                    NSString *undoCardBackGroundImageForQuestionPath = [FileOperationHelper undoCardBackGroundImageForQuestionPath];
+                    [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForQuestionPath error:nil];
+                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForQuestionPath] error:&error];
+                    
+                    //step1: 写入文件，并置K_Is_Allow_Undo_Question_Background_Image，允许下次undo
+                    if (error) {
+                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+                    } else {
+                        
+                        NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                        NSMutableDictionary *cardMutableDict;
+                        if (cardDict) {
+                            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                        } else {
+                            cardMutableDict = [NSMutableDictionary dictionary];
+                        }
+                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                        
+                        [cardMutableDict setObject:undoCardBackGroundImageForQuestionPath forKey:@"K_Undo_Question_Background_Image_URL"];
+                        [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+                        [self setUndoForCardBackgroundImage:cardMutableDict];
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
                 }
+                
                 [imageData writeToFile:_questionBackgroundImageFullPath atomically:YES];
                 _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
             } else {
@@ -4518,7 +4567,34 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     || ([_answerBackgroundImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
                     || ((_answerBackgroundImageFullPath.length == 0))) {
                     _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                }else {
+                    
+                    NSError *error;
+                    NSString *undoCardBackGroundImageForAnswerPath = [FileOperationHelper undoCardBackGroundImageForAnswerPath];
+                    [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForAnswerPath error:nil];
+                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForAnswerPath] error:&error];
+                    
+                    if (error) {
+                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+                    } else {
+                        
+                        NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                        NSMutableDictionary *cardMutableDict;
+                        if (cardDict) {
+                            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                        } else {
+                            cardMutableDict = [NSMutableDictionary dictionary];
+                        }
+                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                        
+                        [cardMutableDict setObject:undoCardBackGroundImageForAnswerPath forKey:@"K_Undo_Answer_Background_Image_URL"];
+                        [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Answer_Background_Image"];
+                        [self setUndoForCardBackgroundImage:cardMutableDict];
+                    }
                 }
+                
+                
                 [imageData writeToFile:_answerBackgroundImageFullPath atomically:YES];
                 _answerBackgroundImageView.image = [UIImage imageWithData:imageData];
             }
@@ -5954,6 +6030,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
         }
     } else {
+        //change card background
         [popoverView dismiss];
         if (index == 0) {
             
@@ -5981,6 +6058,77 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (index == 1) {
             _typeImageSelector = Type_Image_Selector_Background;
             [self selectFromImageLibrary:_backgroundImageSelectButton withPopoverArrowUp:NO  supportMov:NO];
+        } else if (index == 2) {
+            
+            NSString * undoFullPath;
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+
+                //step1: 填充 _questionBackgroundImageView
+                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                undoFullPath = [cardDict objectForKey:@"K_Undo_Question_Background_Image_URL"];
+                [_questionBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
+                
+                //step2: 把undoFullPath内容拷贝到_questionBackgroundImageFullPath
+                if (undoFullPath.length >0) {
+                    NSError *error = nil;
+                    [[NSFileManager defaultManager] removeItemAtPath:_questionBackgroundImageFullPath error:nil];
+                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] error:&error];
+                    if (error) {
+                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+                    }
+                }
+                
+                
+                //step3: 我们不支持多级的undo，所以需要重置
+                NSMutableDictionary *cardMutableDict;
+                cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+                [self setUndoForCardBackgroundImage:cardMutableDict];
+
+                
+            } else {
+                
+                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                undoFullPath = [cardDict objectForKey:@"K_Undo_Answer_Background_Image_URL"];
+                [_answerBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
+                
+                if (undoFullPath.length >0) {
+                    NSError *error = nil;
+                    [[NSFileManager defaultManager] removeItemAtPath:_answerBackgroundImageFullPath error:nil];
+                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] error:&error];
+                    if (error) {
+                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+                    }
+                }
+                
+                
+                //我们不支持多级的undo，所以需要重置
+                NSMutableDictionary *cardMutableDict;
+                cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+                [self setUndoForCardBackgroundImage:cardMutableDict];
+                
+            }
+
+            //step4: 保存
+            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                //we will save until after we press the save button
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    
+                    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+                } else {
+                    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+                }
+            } else {
+                [self saveEdittedCard];
+            }
+            
         }
     }
     
@@ -5989,6 +6137,82 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
 }
+
+#pragma mark – Undo
+
+/**
+ *  We put undo info in NSUserDefaults rather than DB
+ */
+- (NSDictionary *) getUndoDictForCardBackgroundImage:(NSInteger) packId withCardId :(NSInteger) cardID {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *array = [defaults objectForKey:@"K_Undo_Dictionary"];
+    if (array) {
+        
+        for (NSDictionary *cardDict in array) {
+            if (([[cardDict objectForKey:@"packId"] integerValue] == packId) &&
+                  ([[cardDict objectForKey:@"cardId"] integerValue] == cardID)){
+                return cardDict;
+            }
+        }
+        
+        return nil;
+        
+        
+        
+    } else {
+        return  nil;
+    }
+    
+    
+}
+
+
+/**
+ *  We put undo info in NSUserDefaults rather than DB
+ */
+- (void) setUndoForCardBackgroundImage:(NSMutableDictionary *) cardDict {
+    
+    NSNumber *packId = [cardDict objectForKey:@"packId"];
+    NSAssert(packId, @"dict needs to include packId");
+    
+    NSNumber *cardId = [cardDict objectForKey:@"cardId"];
+    NSAssert(cardId, @"dict needs to include cardId");
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *array = [defaults objectForKey:@"K_Undo_Dictionary"];
+    NSMutableArray *mutableArray;
+    if (array) {
+        mutableArray = [NSMutableArray arrayWithArray:array];
+    } else {
+        mutableArray = [NSMutableArray array];
+    }
+    
+    
+    for (NSDictionary *cardDict in mutableArray) {
+        if (([[cardDict objectForKey:@"packId"] integerValue] == [packId integerValue]) &&
+            ([[cardDict objectForKey:@"cardId"] integerValue] == [cardId integerValue])){
+            [mutableArray removeObject:cardDict];
+            break;
+        }
+    }
+    
+    [mutableArray addObject:cardDict];
+    
+    [defaults setObject:mutableArray forKey:@"K_Undo_Dictionary"];
+    
+    [defaults synchronize];
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
 
 #pragma mark – Hittest
 

@@ -52,5 +52,8 @@
 
 + (NSString *) databasePath;
 
++ (NSString *) undoCardBackGroundImageForQuestionPath;
++ (NSString *) undoCardBackGroundImageForAnswerPath;
+
 
 @end
