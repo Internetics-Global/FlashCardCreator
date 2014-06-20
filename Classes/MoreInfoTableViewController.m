@@ -131,7 +131,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -146,8 +146,10 @@ BOOL isLoggingDropboxInSettingView = NO;
 #else
         return (2);
 #endif
+    } else if (section == 3) {
+        return 1;
     } else {
-        return 2;
+        return 0;
     }
 }
 
@@ -231,6 +233,16 @@ BOOL isLoggingDropboxInSettingView = NO;
             [editableSwitch setOn:b];
             
         }
+    } else if (indexPath.section ==3) {
+        if (indexPath.row ==0) {
+            cell.textLabel.text = @"Text to Speech";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UISwitch *textToSpeechSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [textToSpeechSwitch addTarget:self action:@selector(textToSpeechSwitchAction) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = textToSpeechSwitch;
+            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+            [textToSpeechSwitch setOn:b];
+        }
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -265,6 +277,12 @@ BOOL isLoggingDropboxInSettingView = NO;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [Common alertViewCommon:@"Note: re-select packs to take effect."];
+}
+
+- (void) textToSpeechSwitchAction {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isTextToSpeech"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

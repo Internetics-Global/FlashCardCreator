@@ -414,8 +414,12 @@
         [_currentFlashCardView disableCardEdit];
     }
     
-    [_currentFlashCardView playAudio];
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+      [_currentFlashCardView textToSpeechAllContentNow];//如果text to speech支持，则text to speech结束后 执行playAudio
+    } else {
+        [_currentFlashCardView playAudio]; //如果没有text to speech不支持，则直接播放audio
+    }
     
 }
 
@@ -448,8 +452,13 @@
     } else {
         DDLogInfo(@"%s:current FlashCardView is empty",__FUNCTION__);
     }
+
     
-    [_currentFlashCardView playAudio];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+        [_currentFlashCardView textToSpeechAllContentNow]; //如果text to speech支持，则text to speech结束后 执行playAudio
+    } else {
+        [_currentFlashCardView playAudio];//如果没有text to speech不支持，则直接播放audio
+    }
 }
 
 - (void) addGestureSupport {

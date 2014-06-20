@@ -95,6 +95,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 @property (strong, nonatomic) UIButton *soundButton;
 @property (strong, nonatomic) UIButton *muteButton;
 
+/**
+ *  Text to Speech function
+ */
+@property (strong, nonatomic) AVSpeechSynthesizer *synth;
+@property (assign, nonatomic) int textToSpeechContentArrayIndex;
+
 
 @end
 
@@ -138,6 +144,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         [self initDefaultValue];
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+          [self setupTextToSpeech];
+        }
+        
         
     }
 
@@ -1426,7 +1437,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 
     
-    
+    if ([_synth isSpeaking]) {
+        [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    }
     
 
 }
@@ -6240,6 +6253,107 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
+#pragma mark – Text-To-Speech function
+
+- (void) setupTextToSpeech {
+    
+    
+    if (SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"7.0")) {
+        DDLogInfo(@"%s,we don't support <iOS7",__FUNCTION__);
+        return ;
+    }
+    
+    if (_synth == nil) {
+        
+        self.synth = [[AVSpeechSynthesizer alloc] init];
+        self.synth.delegate = self;
+        
+    }
+}
+
+- (void) textToSpeechAllContentNow {
+    
+    if (SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"7.0")) {
+        DDLogInfo(@"%s,we don't support <iOS7",__FUNCTION__);
+        return ;
+    }
+    
+    
+    DDLogInfo(@"%s",__FUNCTION__);
+    NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
+    if ([textToSpeechArray count] > 0) {
+        AVSpeechUtterance *utterance = [AVSpeechUtterance
+                                        speechUtteranceWithString:textToSpeechArray[0]];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"]; //AU female voice
+        utterance.rate = 0.2;
+        self.textToSpeechContentArrayIndex = 0;
+        [self.synth speakUtterance:utterance];
+    } else {
+        [self playAudio]; //play audio after textspeech finished
+    }
+    
+}
+
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
+    DDLogInfo(@"%s",__FUNCTION__);
+    NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
+    self.textToSpeechContentArrayIndex ++;
+    
+    if ([textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
+        AVSpeechUtterance *utterance = [AVSpeechUtterance
+                                        speechUtteranceWithString:textToSpeechArray[self.textToSpeechContentArrayIndex]];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"]; //AU female voice
+        utterance.rate = 0.2;
+        
+        usleep(500000);
+        
+        [self.synth speakUtterance:utterance];
+    } else {
+        [self playAudio];
+    }
+    
+}
+
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance {
+  DDLogInfo(@"%s",__FUNCTION__);
+}
+
+
+- (NSMutableArray *) textToSpeechContentArray  {
+    NSMutableArray *myArray = [NSMutableArray array];
+    if (self.segmentedControl.selectedSegmentIndex == 0) {
+        if (_subheadingQuestion.text.length >0) {
+            [myArray addObject:_subheadingQuestion.text];
+        }
+        
+        if (_mainQuestion.text.length >0) {
+            [myArray addObject:_mainQuestion.text];
+        }
+        
+        if (_subQuestion.text.length >0) {
+            [myArray addObject:_subQuestion.text];
+        }
+    } else {
+        if (_subheadingAnswer.text.length >0) {
+            [myArray addObject:_subheadingAnswer.text];
+        }
+        
+        if (_mainAnswer.text.length >0) {
+            [myArray addObject:_mainAnswer.text];
+        }
+        
+        if (_subAnswer.text.length >0) {
+            [myArray addObject:_subAnswer.text];
+        }
+    }
+    
+    return myArray;
+}
+
+
+
 
 
 #pragma mark -
@@ -6254,6 +6368,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _selectTemplatePopoverController = nil;
     
     _audioPlayer = nil;
+
+
+    _synth = nil;
     
     DDLogInfo(@"%s",__FUNCTION__);
 }
