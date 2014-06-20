@@ -101,6 +101,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 @property (strong, nonatomic) AVSpeechSynthesizer *synth;
 @property (assign, nonatomic) int textToSpeechContentArrayIndex;
 
+/**
+ *  比较特殊，由于vertical alignment是通过改变contentOffset实现的，我们特地设立了这个值。
+ */
+@property (assign, nonatomic) CGFloat contentYOffsetForVerticalAlignment;
+
 
 @end
 
@@ -148,6 +153,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
           [self setupTextToSpeech];
         }
+        
         
         
     }
@@ -699,6 +705,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     //------- end _functionAreaView
+
 
 }
 
@@ -1905,6 +1912,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
         _subheadingQuestion.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignQuestion = @"Justify";
+    }else if ([css.subheadingAlign isEqualToString:@"Vertical"]) {
+        _subheadingAlignQuestion = @"Vertical";
+        [self setVerticalAlignment:_subheadingQuestion];
     }
     
     //2. main
@@ -1956,6 +1966,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.mainAlign isEqualToString:@"Justify"]) {
         _mainQuestion.textAlignment = NSTextAlignmentJustified;
         _mainAlignQuestion = @"Justify";
+    }else if ([css.mainAlign isEqualToString:@"Vertical"]) {
+        [self setVerticalAlignment:_mainQuestion];
+        _mainAlignQuestion = @"Vertical";
     }
     
     
@@ -2009,6 +2022,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subAlign isEqualToString:@"Justify"]) {
         _subQuestion.textAlignment = NSTextAlignmentJustified;
         _subAlignQuestion = @"Justify";
+    } else if ([css.subAlign isEqualToString:@"Vertical"]) {
+        [self setVerticalAlignment:_subQuestion];
+        _subAlignQuestion = @"Vertical";
     }
     
     
@@ -2063,6 +2079,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
         _subheadingAnswer.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignAnswer = @"Justify";
+    }else if ([css.subheadingAlign isEqualToString:@"Vertical"]) {
+        [self setVerticalAlignment:_subheadingAnswer];
+        _subheadingAlignAnswer = @"Vertical";
     }
     
     //2. main
@@ -2113,6 +2132,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.mainAlign isEqualToString:@"Justify"]) {
         _mainAnswer.textAlignment = NSTextAlignmentJustified;
         _mainAlignAnswer = @"Justify";
+    }else if ([css.mainAlign isEqualToString:@"Vertical"]) {
+        [self setVerticalAlignment:_mainAnswer];
+        _mainAlignAnswer = @"Vertical";
     }
     
     //3. sub
@@ -2160,6 +2182,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subAlign isEqualToString:@"Justify"]) {
         _subAnswer.textAlignment = NSTextAlignmentJustified;
         _subAlignAnswer = @"Justify";
+    }else if ([css.subAlign isEqualToString:@"Vertical"]) {
+        [self setVerticalAlignment:_subAnswer];
+        _subAlignAnswer = @"Vertical";
     }
     
     [self setNeedsDisplay];
@@ -3997,8 +4022,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     UIBarButtonItem *justifyButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Justify",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
     
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    
     if (_alignArray == nil) {
-        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,justifyButton,nil];
+        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,justifyButton,verticalButton,nil];
     }
     
 }
@@ -4129,6 +4156,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //step2:
     _isUITextViewFocused = NO;
     [_lastBecomeFirstRespondTextView resignFirstResponder];
+    
+    
     [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
     
     //Step3: save data in keyboardWasHidden
@@ -4970,6 +4999,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Justify",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentJustified;
         selectAlignStr = @"Justify";
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil)]) {
+        [self setVerticalAlignment:responderTextView];
+        selectAlignStr = @"Vertical";
     }
     responderTextView.selectedRange = range;  // to restore cursor position
     
@@ -5565,6 +5597,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     return result;
+}
+
+/**
+ *  vertical alignment是通过改变contentOffset实现的
+ */
+- (void) setVerticalAlignment:(UITextView *) textView {
+    
+    CGFloat topCorrect = ([textView bounds].size.height - [textView contentSize].height * [textView zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    textView.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    
+    self.contentYOffsetForVerticalAlignment = textView.contentOffset.y;
+  
 }
 
 
@@ -6354,7 +6399,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     return myArray;
 }
-
 
 
 
