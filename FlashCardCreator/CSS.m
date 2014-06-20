@@ -14,16 +14,19 @@
 @synthesize cssID = _cssID;
 
 @synthesize subheadingAlign = _subheadingAlign;
+@synthesize subheadingAlignVertical = _subheadingAlignVertical;
 @synthesize subheadingColor = _subheadingColor;
 @synthesize subheadingSize = _subheadingSize;
 @synthesize subheadingFont = _subheadingFont;
 
 @synthesize mainAlign = _mainAlign;
+@synthesize mainAlignVertical = _mainAlignVertical;
 @synthesize mainColor = _mainColor;
 @synthesize mainSize = _mainSize;
 @synthesize mainFont = _mainFont;
 
 @synthesize subAlign = _subAlign;
+@synthesize subAlignVertical = _subAlignVertical;
 @synthesize subColor = _subColor;
 @synthesize subSize = _subSize;
 @synthesize subFont = _subFont;
@@ -37,14 +40,17 @@
     _cssID = -1;
     
     _subheadingAlign = @"Center";
+    _subheadingAlignVertical = @"";
     _subheadingColor = @"Black";
     _subheadingFont = @"";
     
     _mainAlign = @"Center";
+    _mainAlignVertical = @"";
     _mainColor = @"Black";
     _mainFont = @"";
     
     _subAlign = @"Center";
+    _subAlignVertical = @"";
     _subColor = @"Black";
     _subFont = @"";
     
@@ -69,6 +75,7 @@
     
     _subheadingSize = [[dataDict valueForKey:@"subheading_size"] intValue];
     _subheadingAlign = [dataDict valueForKey:@"subheading_align"];
+    _subheadingAlignVertical = [dataDict valueForKey:@"subheading_align_vertical"];
     _subheadingColor= [dataDict valueForKey:@"subheading_color"];
     _subheadingFont= [dataDict valueForKey:@"subheading_font"];
     if (IsEmpty(_subheadingFont)) {
@@ -77,6 +84,7 @@
     
     _mainSize = [[dataDict valueForKey:@"main_size"] intValue];
     _mainAlign = [dataDict valueForKey:@"main_align"];
+    _mainAlignVertical = [dataDict valueForKey:@"main_align_vertical"];
     _mainColor= [dataDict valueForKey:@"main_color"];
     _mainFont= [dataDict valueForKey:@"main_font"];
     if (IsEmpty(_mainFont)) {
@@ -85,6 +93,7 @@
     
     _subSize = [[dataDict valueForKey:@"sub_size"] intValue];
     _subAlign = [dataDict valueForKey:@"sub_align"];
+    _subAlignVertical = [dataDict valueForKey:@"sub_align_vertical"];
     _subColor= [dataDict valueForKey:@"sub_color"];
     _subFont= [dataDict valueForKey:@"sub_font"];
     if (IsEmpty(_subFont)) {
@@ -110,7 +119,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont, _cssID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\", subheading_align_vertical=\"%@\", main_align_vertical=\"%@\", sub_align_vertical=\"%@\" WHERE css_id=%d", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont, _subheadingAlignVertical,_mainAlignVertical,_subAlignVertical,_cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -124,7 +133,7 @@
 	if (_cssID == -1) {
 		_cssID = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color,subheading_font,main_font,sub_font) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO CSS_Tables(css_id, subheading_size, subheading_align, subheading_color, main_size, main_align, main_color, sub_size, sub_align, sub_color,subheading_font,main_font,sub_font,subheading_align_vertical,main_align_vertical,sub_align_vertical) VALUES (%d,%d, \"%@\", \"%@\", %d, \"%@\", \"%@\", %d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\")",_cssID, (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont,_subheadingAlignVertical,_mainAlignVertical,_subAlignVertical];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -162,6 +171,10 @@
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"subheading_font"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"main_font"];
         [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"sub_font"];
+        
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"subheading_align_vertical"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"main_align_vertical"];
+        [cssDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"sub_align_vertical"];
 	}
 	sqlite3_finalize(queryStatement);
 	return cssDict;

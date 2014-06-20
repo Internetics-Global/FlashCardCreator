@@ -118,6 +118,14 @@ typedef enum{
     NSString     *_subFontAnswer;
     NSString     *_subFontQuestion;
     
+    NSString     *_subheadingAlignVerticalQuestion;
+    NSString     *_mainAlignVerticalQuestion;
+    NSString     *_subAlignVerticalQuestion;
+    NSString     *_subheadingAlignVerticalAnswer;
+    NSString     *_mainAlignVerticalAnswer;
+    NSString     *_subAlignVerticalAnswer;
+    
+    
     
     NSMutableDictionary *_qDict;
     NSMutableDictionary *_aDict;

@@ -187,7 +187,7 @@
     }
     
     if (![SQLiteHelper tableExists:@"CSS_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text, subheading_font text, main_font text, sub_font text);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text, subheading_font text, main_font text, sub_font text, subheading_align_vertical text,main_align_vertical text, sub_align_vertical text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         

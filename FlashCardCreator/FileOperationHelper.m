@@ -384,7 +384,10 @@
                                       [card.question.recordedSoundFullPath lastPathComponent],@"audio",
                                         card.question.css.subheadingFont,@"subheading_font",
                                         card.question.css.mainFont,@"main_font",
-                                        card.question.css.subFont,@"sub_font",nil];
+                                        card.question.css.subFont,@"sub_font",
+                                            card.question.css.subheadingAlignVertical,@"subheading_align_vertical",
+                                            card.question.css.mainAlignVertical,@"main_align_vertical",
+                                            card.question.css.subheadingAlignVertical,@"sub_align_vertical",nil];
     
     DDLogInfo(@"%s: questionDict = %@",__FUNCTION__,questionDict);
     
@@ -426,7 +429,10 @@
                                    [card.answer.recordedSoundFullPath lastPathComponent],@"audio",
                                       card.answer.css.subheadingFont,@"subheading_font",
                                       card.answer.css.mainFont,@"main_font",
-                                      card.answer.css.subFont,@"sub_font",nil];
+                                      card.answer.css.subFont,@"sub_font",
+                                             card.answer.css.subheadingAlignVertical,@"subheading_align_vertical",
+                                             card.answer.css.mainAlignVertical,@"main_align_vertical",
+                                             card.answer.css.subheadingAlignVertical,@"sub_align_vertical",nil];
     
     DDLogInfo(@"%s: answerDict = %@",__FUNCTION__,anserDict);
     

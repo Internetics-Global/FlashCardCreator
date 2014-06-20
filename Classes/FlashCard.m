@@ -154,8 +154,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
           [self setupTextToSpeech];
         }
         
-        
-        
+        //Vertical alignment，在具体的KVO中，如果alignment是vertical，则
+        [_subheadingQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [_mainQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [_subQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [_subheadingAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [_mainAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [_subAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
 
     
@@ -177,22 +182,28 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subheadingSizeQuestion = 40;
     _subheadingColorQuestion = @"Black";
     _subheadingAlignQuestion = @"Right";
+    _subheadingAlignVerticalQuestion = @"";
     _mainSizeQuestion = 40;
     _mainColorQuestion = @"Black";
     _mainAlignQuestion = @"Center";
+    _mainAlignVerticalQuestion = @"";
     _subSizeQuestion = 40;
     _subColorQuestion = @"Black";
     _subAlignQuestion = @"Center";
+    _subAlignVerticalQuestion = @"";
     
     _subheadingSizeAnswer = 40;
     _subheadingColorAnswer = @"Black";
     _subheadingAlignAnswer = @"Right";
+    _subheadingAlignVerticalAnswer = @"";
     _mainSizeAnswer = 40;
     _mainColorAnswer = @"Black";
     _mainAlignAnswer = @"Center";
+    _mainAlignVerticalAnswer = @"";
     _subSizeAnswer = 40;
     _subColorAnswer = @"Black";
     _subAlignAnswer = @"Center";
+    _subAlignVerticalAnswer = @"";
     
     _keyboardShown = FALSE;
     
@@ -1801,6 +1812,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.subColor = _subColorAnswer;
     _currentCard.answer.css.subSize = _subSizeAnswer;
     
+    _currentCard.answer.css.subheadingAlignVertical = _subheadingAlignVerticalAnswer;
+    _currentCard.answer.css.mainAlignVertical = _mainAlignVerticalAnswer;
+    _currentCard.answer.css.subAlignVertical = _subAlignVerticalAnswer;
+    
     _currentCard.answer.css.subheadingFont = _subheadingFontAnswer;
     _currentCard.answer.css.mainFont = _mainFontAnswer;
     _currentCard.answer.css.subFont = _subFontAnswer;
@@ -1824,6 +1839,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.subAlign = _subAlignQuestion;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
+    
+    _currentCard.question.css.subheadingAlignVertical = _subheadingAlignVerticalQuestion;
+    _currentCard.question.css.mainAlignVertical = _mainAlignVerticalQuestion;
+    _currentCard.question.css.subAlignVertical = _subAlignVerticalQuestion;
     
     _currentCard.question.css.subheadingFont = _subheadingFontQuestion;
     _currentCard.question.css.mainFont = _mainFontQuestion;
@@ -1912,9 +1931,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
         _subheadingQuestion.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignQuestion = @"Justify";
-    }else if ([css.subheadingAlign isEqualToString:@"Vertical"]) {
-        _subheadingAlignQuestion = @"Vertical";
+    }
+    
+    if ([css.subheadingAlignVertical isEqualToString:@"Vertical"]) {
+        _subheadingAlignVerticalQuestion = @"Vertical";
         [self setVerticalAlignment:_subheadingQuestion];
+    } else {
+        _subheadingAlignVerticalQuestion = @"";
+        [self resetVerticalAlignment:_subheadingQuestion];
     }
     
     //2. main
@@ -1966,9 +1990,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.mainAlign isEqualToString:@"Justify"]) {
         _mainQuestion.textAlignment = NSTextAlignmentJustified;
         _mainAlignQuestion = @"Justify";
-    }else if ([css.mainAlign isEqualToString:@"Vertical"]) {
+    }
+    
+    if ([css.mainAlignVertical isEqualToString:@"Vertical"]) {
         [self setVerticalAlignment:_mainQuestion];
-        _mainAlignQuestion = @"Vertical";
+        _mainAlignVerticalQuestion = @"Vertical";
+    } else {
+        [self resetVerticalAlignment:_mainQuestion];
+        _mainAlignVerticalQuestion = @"";
     }
     
     
@@ -2022,9 +2051,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subAlign isEqualToString:@"Justify"]) {
         _subQuestion.textAlignment = NSTextAlignmentJustified;
         _subAlignQuestion = @"Justify";
-    } else if ([css.subAlign isEqualToString:@"Vertical"]) {
+    }
+    
+    if ([css.subAlignVertical isEqualToString:@"Vertical"]) {
         [self setVerticalAlignment:_subQuestion];
-        _subAlignQuestion = @"Vertical";
+        _subAlignVerticalQuestion = @"Vertical";
+    } else {
+        [self resetVerticalAlignment:_subQuestion];
+        _subAlignVerticalQuestion = @"";
     }
     
     
@@ -2079,9 +2113,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subheadingAlign isEqualToString:@"Justify"]) {
         _subheadingAnswer.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignAnswer = @"Justify";
-    }else if ([css.subheadingAlign isEqualToString:@"Vertical"]) {
+    }
+    
+    if ([css.subheadingAlignVertical isEqualToString:@"Vertical"]) {
         [self setVerticalAlignment:_subheadingAnswer];
-        _subheadingAlignAnswer = @"Vertical";
+        _subheadingAlignVerticalAnswer = @"Vertical";
+    } else {
+        [self resetVerticalAlignment:_subheadingAnswer];
+        _subheadingAlignVerticalAnswer = @"";
     }
     
     //2. main
@@ -2132,9 +2171,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.mainAlign isEqualToString:@"Justify"]) {
         _mainAnswer.textAlignment = NSTextAlignmentJustified;
         _mainAlignAnswer = @"Justify";
-    }else if ([css.mainAlign isEqualToString:@"Vertical"]) {
+    }
+    
+    if ([css.mainAlignVertical isEqualToString:@"Vertical"]) {
         [self setVerticalAlignment:_mainAnswer];
-        _mainAlignAnswer = @"Vertical";
+        _mainAlignVerticalAnswer = @"Vertical";
+    } else {
+        [self resetVerticalAlignment:_mainAnswer];
+        _mainAlignVerticalAnswer = @"";
     }
     
     //3. sub
@@ -2182,9 +2226,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }else if ([css.subAlign isEqualToString:@"Justify"]) {
         _subAnswer.textAlignment = NSTextAlignmentJustified;
         _subAlignAnswer = @"Justify";
-    }else if ([css.subAlign isEqualToString:@"Vertical"]) {
+    }
+    
+    if ([css.subAlignVertical isEqualToString:@"Vertical"]) {
         [self setVerticalAlignment:_subAnswer];
-        _subAlignAnswer = @"Vertical";
+        _subAlignVerticalAnswer = @"Vertical";
+    } else {
+        [self resetVerticalAlignment:_subAnswer];
+        _subAlignVerticalAnswer = @"";
     }
     
     [self setNeedsDisplay];
@@ -2273,6 +2322,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
             _subheadingAlignAnswer = @"Center";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 20;
             
@@ -2297,6 +2350,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2334,6 +2391,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 20;
             
@@ -2358,6 +2419,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2382,6 +2447,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subColorAnswer = @"Red";
             _subSizeAnswer = 16;
             
@@ -2415,6 +2484,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 20;
             
@@ -2439,6 +2512,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2477,6 +2554,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2511,6 +2592,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2566,6 +2651,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2589,6 +2678,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subAlignAnswer = @"Left";
             _subColorAnswer = @"Black";
             _subSizeAnswer = 16;
@@ -2624,6 +2717,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 16;
             
@@ -2649,6 +2746,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subColorAnswer = @"Black";
             _subSizeAnswer = 16;
             
@@ -2685,6 +2786,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
             _subheadingAlignAnswer = @"Center";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 34;
             
@@ -2700,6 +2805,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 30;
             
@@ -2725,6 +2834,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 42;
             
@@ -2740,6 +2853,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 38;
             
@@ -2755,6 +2872,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.textColor = [UIColor redColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subColorAnswer = @"Red";
             _subSizeAnswer = 38;
             
@@ -2777,6 +2898,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.textColor = [UIColor blackColor];
             _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
             _subheadingColorAnswer = @"Black";
             _subheadingSizeAnswer = 42;
             
@@ -2792,6 +2917,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 34;
             
@@ -2818,6 +2947,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 34;
             
@@ -2843,6 +2976,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentLeft;
             _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 34;
             
@@ -2883,6 +3020,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 42;
             
@@ -2898,6 +3039,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subColorAnswer = @"Black";
             _subSizeAnswer = 34;
             
@@ -2922,6 +3067,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainAnswer.textColor = [UIColor blackColor];
             _mainAnswer.textAlignment = NSTextAlignmentCenter;
             _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
             _mainColorAnswer = @"Black";
             _mainSizeAnswer = 42;
             
@@ -2937,6 +3086,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
             _subColorAnswer = @"Black";
             _subSizeAnswer = 34;
             
@@ -2975,6 +3128,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 30;
             
@@ -2990,6 +3148,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 38;
             
@@ -3013,6 +3175,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 34;
             
@@ -3028,6 +3194,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 38;
             
@@ -3043,6 +3213,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 30;
             
@@ -3065,6 +3239,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 42;
             
@@ -3080,6 +3258,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 34;
             
@@ -3103,6 +3285,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 42;
             
@@ -3118,6 +3304,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 34;
             
@@ -3141,6 +3331,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 42;
             
@@ -3177,6 +3371,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 42;
             
@@ -3192,6 +3390,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
             _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 34;
             
@@ -3219,6 +3421,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
             _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 34;
             
@@ -3269,6 +3475,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 20;
             
@@ -3293,6 +3503,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -3325,6 +3539,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 20;
             
@@ -3349,6 +3567,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -3373,6 +3595,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 16;
             
@@ -3404,6 +3630,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -3428,6 +3658,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentCenter;
             _subAlignQuestion = @"Center";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 16;
             
@@ -3460,6 +3694,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -3484,6 +3722,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
             _subColorQuestion = @"Black";
             _subSizeQuestion = 16;
             
@@ -3516,6 +3758,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 14;
             
@@ -3565,6 +3811,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.textColor = [UIColor blackColor];
             _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
             _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
             _subheadingColorQuestion = @"Black";
             _subheadingSizeQuestion = 20;
             
@@ -3589,6 +3839,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentLeft;
             _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -3629,6 +3883,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainQuestion.textColor = [UIColor blackColor];
             _mainQuestion.textAlignment = NSTextAlignmentCenter;
             _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
             _mainColorQuestion = @"Black";
             _mainSizeQuestion = 16;
             
@@ -4158,7 +4416,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     
-    [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
+    if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
+        //由于vertical center是通过改变contentOffSet改变的，所以不能重置为CGPointMake(0, 0)
+        [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, self.contentYOffsetForVerticalAlignment) animated:YES];
+    } else {
+        [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
     
     //Step3: save data in keyboardWasHidden
     if ([[(UIButton *)sender titleLabel].text isEqualToString:NSLocalizedString(@"Keyboard_Save",@"")]) {
@@ -4169,6 +4432,29 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
 }
+
+
+
+- (BOOL) isVerticalAlignment:(UITextView *) textView {
+    BOOL result = FALSE;
+    
+    if (textView.tag == kTagSubheadingQuestion) {
+        result =  [_subheadingAlignVerticalQuestion isEqualToString:@"Vertical"];
+    } else if (textView.tag == kTagMainQuestion) {
+        result = [_mainAlignVerticalQuestion isEqualToString:@"Vertical"];
+    } else if (textView.tag == kTagSubQuestion) {
+        result = [_subAlignVerticalQuestion isEqualToString:@"Vertical"];
+    } else if (textView.tag == kTagSubheadingAnswer) {
+        result = [_subheadingAlignVerticalAnswer isEqualToString:@"Vertical"];
+    } else if (textView.tag == kTagMainAnswer) {
+        result = [_mainAlignVerticalAnswer isEqualToString:@"Vertical"];
+    } else if (textView.tag == kTagSubAnswer) {
+        result = [_subAlignVerticalAnswer isEqualToString:@"Vertical"];
+    }
+    
+    return result;
+}
+
 
 #pragma mark -
 #pragma mark - UIImagePickerController related
@@ -5005,18 +5291,34 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     responderTextView.selectedRange = range;  // to restore cursor position
     
-    if (responderTextView.tag == kTagSubheadingQuestion){
-        _subheadingAlignQuestion = selectAlignStr;
-    } else if (responderTextView.tag == kTagMainQuestion) {
-        _mainAlignQuestion = selectAlignStr;
-    } else if (responderTextView.tag == kTagSubQuestion) {
-        _subAlignQuestion = selectAlignStr;
-    } else if (responderTextView.tag == kTagSubheadingAnswer) {
-        _subheadingAlignAnswer = selectAlignStr;
-    } else if (responderTextView.tag == kTagMainAnswer) {
-        _mainAlignAnswer = selectAlignStr;
-    } else if (responderTextView.tag == kTagSubAnswer) {
-        _subAlignAnswer = selectAlignStr;
+    if ([selectAlignStr isEqualToString:@"Vertical"]) {
+        if (responderTextView.tag == kTagSubheadingQuestion){
+            _subheadingAlignVerticalQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagMainQuestion) {
+            _mainAlignVerticalQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubQuestion) {
+            _subAlignVerticalQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubheadingAnswer) {
+            _subheadingAlignVerticalAnswer = selectAlignStr;
+        } else if (responderTextView.tag == kTagMainAnswer) {
+            _mainAlignVerticalAnswer = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubAnswer) {
+            _subAlignVerticalAnswer = selectAlignStr;
+        }
+    } else {
+        if (responderTextView.tag == kTagSubheadingQuestion){
+            _subheadingAlignQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagMainQuestion) {
+            _mainAlignQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubQuestion) {
+            _subAlignQuestion = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubheadingAnswer) {
+            _subheadingAlignAnswer = selectAlignStr;
+        } else if (responderTextView.tag == kTagMainAnswer) {
+            _mainAlignAnswer = selectAlignStr;
+        } else if (responderTextView.tag == kTagSubAnswer) {
+            _subAlignAnswer = selectAlignStr;
+        }
     }
     
     
@@ -5612,6 +5914,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
   
 }
 
+- (void) resetVerticalAlignment:(UITextView *) textView {
+    textView.contentOffset = (CGPoint){.x = 0, .y = 0};
+    
+}
+
 
 
 - (void) saveEdittedCard {
@@ -5885,6 +6192,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     popoverController = nil;
     
 }
+
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath   ofObject:(id)object   change:(NSDictionary *)change   context:(void *)context
+{
+
+    UITextView *tv = object;
+    
+    if ([self isVerticalAlignment:tv]) {
+        CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])  / 2.0;
+        topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+        tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    }
+}
+
+
 
 
 #pragma mark -

@@ -1489,10 +1489,13 @@ enum popover_enum {
             assembledCard.question.templateID = [questionDict[@"template_id"] intValue];
             
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
+            [assembledCard question].css.subheadingAlignVertical = questionDict[@"subheading_align_vertical"];
             [assembledCard question].css.subheadingColor = questionDict[@"subheading_color"];
             [assembledCard question].css.mainAlign = questionDict[@"main_align"];
+            [assembledCard question].css.mainAlignVertical = questionDict[@"main_align_vertical"];
             [assembledCard question].css.mainColor = questionDict[@"main_color"];
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
+            [assembledCard question].css.subAlignVertical = questionDict[@"sub_align_vertical"];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
             
             [assembledCard question].css.subheadingFont = questionDict[@"subheading_font"];
@@ -1701,10 +1704,13 @@ enum popover_enum {
             assembledCard.answer.templateID = [answerDict[@"template_id"] intValue];
             
             [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
+            [assembledCard answer].css.subheadingAlignVertical = answerDict[@"subheading_align_vertical"];
             [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];
             [assembledCard answer].css.mainAlign = answerDict[@"main_align"];
+            [assembledCard answer].css.mainAlignVertical = answerDict[@"main_align_vertical"];
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
+            [assembledCard answer].css.subAlignVertical = answerDict[@"sub_align_vertical"];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
             
             [assembledCard answer].css.subheadingFont = answerDict[@"subheading_font"];
