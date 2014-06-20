@@ -6278,6 +6278,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return ;
     }
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"]) {
+        DDLogInfo(@"%s,return because of mute",__FUNCTION__);
+        return ;
+    }
+    
     
     DDLogInfo(@"%s",__FUNCTION__);
     NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
