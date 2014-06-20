@@ -6284,7 +6284,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ([textToSpeechArray count] > 0) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:textToSpeechArray[0]];
-        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"]; //AU female voice
         utterance.rate = 0.2;
         self.textToSpeechContentArrayIndex = 0;
         [self.synth speakUtterance:utterance];
@@ -6303,7 +6302,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ([textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:textToSpeechArray[self.textToSpeechContentArrayIndex]];
-        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"]; //AU female voice
         utterance.rate = 0.2;
         
         usleep(500000);
