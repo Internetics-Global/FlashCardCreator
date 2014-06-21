@@ -197,8 +197,29 @@
         
         DDLogInfo(@"%s:Create CSS_Tables",__FUNCTION__);
 	} else {
-        if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
-            [self AddFieldForCSSFrom2To3];
+        if ([Common currentInstalledSqliteVersion] == 2) {
+            
+            if (([Common newUpdatingSqliteVersion] == 3) || ([Common newUpdatingSqliteVersion] == 4)) {
+              [self AddFieldForCSSFrom2To3];
+            } else if (([Common newUpdatingSqliteVersion] == 5)) {
+                [self AddFieldForCSSFrom2To3];
+                [self AddFieldForCSSFrom4To5];
+            }
+        } else if ([Common currentInstalledSqliteVersion] == 3) {
+            
+            if (([Common newUpdatingSqliteVersion] == 4)) {
+                //do nothing
+            } else if (([Common newUpdatingSqliteVersion] == 5)) {
+                [self AddFieldForCSSFrom4To5];
+            }
+
+            
+        } else if ([Common currentInstalledSqliteVersion] == 4) {
+            
+            if (([Common newUpdatingSqliteVersion] == 5)) {
+                [self AddFieldForCSSFrom4To5];
+            }
+            
         }
     }
     
@@ -355,6 +376,29 @@
     
     DDLogInfo(@"%s",__FUNCTION__);
     
+    
+}
+
+
++ (void) AddFieldForCSSFrom4To5 {
+    
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN subheading_align_vertical text "];
+    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN main_align_vertical text "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN sub_align_vertical text "];
+    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+    sqlite3_step(queryStatement);
+    sqlite3_finalize(queryStatement);
+    
+    
+    DDLogInfo(@"%s",__FUNCTION__);
     
 }
 
