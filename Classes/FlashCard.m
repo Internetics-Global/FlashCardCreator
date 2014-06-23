@@ -92,6 +92,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     AVAudioPlayer          *_audioPlayer;
 }
 
+
 @property (strong, nonatomic) UIButton *soundButton;
 @property (strong, nonatomic) UIButton *muteButton;
 
@@ -1457,7 +1458,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 
-    [self updateQuestionAnswerVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
+    [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
     
     if ([_synth isSpeaking]) {
         [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
@@ -4152,7 +4153,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     //Back Button
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backAction:)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backBarButtonItemClicked:)];
     NSDictionary *textAttributes;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:16], UITextAttributeFont,nil];
@@ -4165,35 +4166,35 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UIBarButtonItem *fontSizeAlert = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:nil];
     [fontSizeAlert setEnabled:FALSE];
     
-    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize18 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size18",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize18 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size18",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size24",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size24",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size28",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size28",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize32 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size32",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize32 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size32",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize36 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size36",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize36 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size36",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize45 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size45",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize45 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size45",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize50 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size50",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize50 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size50",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize55 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size55",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize55 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size55",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize60 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size60",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize60 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size60",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize80 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size80",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize80 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size80",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize100 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size100",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize100 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size100",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize160 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size160",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize160 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size160",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
-    UIBarButtonItem *fontSize260 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size260",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSize:)];
+    UIBarButtonItem *fontSize260 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size260",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
     
     if (_fontSizeArray == nil) {
         if (isUserInterfaceIdiomPhone) {
@@ -4209,39 +4210,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         NSArray *fontArray = [Common recommendedFonts];
         for (NSString *fontName in fontArray) {
-            UIBarButtonItem *fontBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:fontName style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontType:)];
+            UIBarButtonItem *fontBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:fontName style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontTypeBarButtonItemClicked:)];
             [_fontTypeArray addObject:fontBarButtonItem];
         }
         
     }
     
     //Color Array
-    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Red",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Red",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
-    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Blue",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Blue",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
-    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Black",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Black",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
-    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
-    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Green",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Green",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
-    UIBarButtonItem *whiteButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_White",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColor:)];
+    UIBarButtonItem *whiteButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_White",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
     
     if (_colorArray == nil) {
         _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,whiteButton,nil];
     }
     
     //Align Array
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Left",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Left",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
     
-    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Center",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Center",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Right",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Right",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
     
-    UIBarButtonItem *justifyButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Justify",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *justifyButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Justify",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
     
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignPosition:)];
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
+
     
     if (_alignArray == nil) {
         _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,justifyButton,verticalButton,nil];
@@ -4395,7 +4397,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-
+/**
+ *  isVerticalAlignment的状态值存储于_mainAlignVerticalQuestion等变量中
+ */
 - (BOOL) isVerticalAlignment:(UITextView *) textView {
     BOOL result = FALSE;
     
@@ -5004,9 +5008,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_keyboardTopView setItems:_colorArray animated:TRUE];
 }
 
+/**
+ *  callback当点击toolbar中的"align" barbutton item时
+ */
 - (void) alignAction {
     DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_alignArray animated:TRUE];
+    
+    [self updateAllAlignmentBarButtonsStatus];
 }
 
 - (void) fontTypeActionForInputView {
@@ -5031,9 +5040,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_keyboardTopViewForInputView setItems:_colorArray animated:TRUE];
 }
 
+/**
+ *  callback当点击toolbar中的"align" barbutton item时
+ */
 - (void) alignActionForInputView {
     DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopViewForInputView setItems:_alignArray animated:TRUE];
+    
+    [self updateAllAlignmentBarButtonsStatus];
+    
 }
 
 - (void) emotionAndKeyboardSwitch:(id) sender {
@@ -5074,7 +5089,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) changeFontType:(id) sender{
+- (void) changeFontTypeBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *title = ((UIBarButtonItem *) sender).title;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
@@ -5105,7 +5120,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) changeFontSize:(id) sender{
+- (void) changeFontSizeBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
     NSUInteger selectFontSize;
     
@@ -5231,7 +5246,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
-- (void) alignPosition:(id) sender{
+- (void) changeAlignBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectAlignStr = nil;
     
@@ -5250,10 +5265,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Justify",nil)]) {
         responderTextView.textAlignment = NSTextAlignmentJustified;
         selectAlignStr = @"Justify";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil)]) {
-        [self setVerticalAlignment:responderTextView];
-        selectAlignStr = @"Vertical";
     }
+    
+    //Vertical barbutton item实际上当作一个switch，选中或没有选中
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil)]) {
+        if ([self isVerticalAlignment:responderTextView]) {
+            [self resetVerticalAlignment:responderTextView];
+            selectAlignStr = @"";
+        } else {
+            [self setVerticalAlignment:responderTextView];
+            selectAlignStr = @"Vertical";
+        }
+        
+        [self updateVerticalAlignmentBarButtonStatus];
+        
+    }
+    
+    
     responderTextView.selectedRange = range;  // to restore cursor position
     
     if ([selectAlignStr isEqualToString:@"Vertical"]) {
@@ -5290,7 +5318,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
-- (void) changeColor:(id) sender{
+- (void) changeColorBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectColorStr = nil;
     
@@ -5334,7 +5362,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) backAction:(id) sender{
+- (void) backBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
     [_keyboardTopView setItems:_buttonArray animated:TRUE];
     [_keyboardTopViewForInputView setItems:_buttonArrayForInputView animated:TRUE];
@@ -6657,6 +6685,93 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark – Vertical Alignment special logic
 
 /**
+ *  更新InputView中的Alignment中Veritcal barbutton item的状态（颜色）
+ */
+- (void) updateVerticalAlignmentBarButtonStatus {
+    UIBarButtonItem *targetBarButtonItem = [_alignArray lastObject];
+    if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
+        
+        [targetBarButtonItem setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor redColor], NSForegroundColorAttributeName,nil]
+                                           forState:UIControlStateNormal];
+        
+    } else {
+        
+        [targetBarButtonItem setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor whiteColor], NSForegroundColorAttributeName,nil]
+                                           forState:UIControlStateNormal];
+        
+    }
+}
+
+/**
+ *  更新InputView中的Alignment中所有barbutton的状态,包括left, right, center,justify和veritcal
+ */
+- (void) updateAllAlignmentBarButtonsStatus {
+    if (_lastBecomeFirstRespondTextView) {
+        
+        //step1: vertical alignment
+        [self updateVerticalAlignmentBarButtonStatus];
+        
+        //step2: left, right, center, justify alignment
+        int targetIndex = 0;
+        UIBarButtonItem *targetBarButtonItem;
+        switch (_lastBecomeFirstRespondTextView.textAlignment) {
+            case NSTextAlignmentLeft:
+                targetIndex = 1;  //从1开始，因为第一个是backbutton
+                targetBarButtonItem = _alignArray[1];
+                [targetBarButtonItem setTitleTextAttributes:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  [UIColor redColor], NSForegroundColorAttributeName,nil]
+                                                   forState:UIControlStateNormal];
+                break;
+            case NSTextAlignmentCenter:
+                targetIndex = 2;
+                targetBarButtonItem = _alignArray[2];
+                [targetBarButtonItem setTitleTextAttributes:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  [UIColor redColor], NSForegroundColorAttributeName,nil]
+                                                   forState:UIControlStateNormal];
+                break;
+            case NSTextAlignmentRight:
+                targetIndex = 3;
+                targetBarButtonItem = _alignArray[3];
+                [targetBarButtonItem setTitleTextAttributes:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  [UIColor redColor], NSForegroundColorAttributeName,nil]
+                                                   forState:UIControlStateNormal];
+                break;
+            case NSTextAlignmentJustified:
+                targetIndex = 4;
+                targetBarButtonItem = _alignArray[4];
+                [targetBarButtonItem setTitleTextAttributes:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  [UIColor redColor], NSForegroundColorAttributeName,nil]
+                                                   forState:UIControlStateNormal];
+                break;
+            default:
+                break;
+        }
+        
+        for (int i =1; i<[_alignArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
+            if (i != targetIndex) {
+                [_alignArray[i] setTitleTextAttributes:
+                 [NSDictionary dictionaryWithObjectsAndKeys:
+                  [UIColor whiteColor], NSForegroundColorAttributeName,nil]
+                                                   forState:UIControlStateNormal];
+            }
+        }
+        
+    
+    }
+    
+    
+    
+}
+
+/**
  *  当选择了“vertical alignment”会执行这个
  */
 - (void) setVerticalAlignment:(UITextView *) textView {
@@ -6665,20 +6780,51 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    int tt = [textView bounds].size.height;
-    int yy =  [textView contentSize].height;
-    int zz = [textView contentSize].height * [textView zoomScale];
-    
     CGFloat topCorrect = ([textView bounds].size.height - [textView contentSize].height * [textView zoomScale])/2.0;
     topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
     textView.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
     
     self.contentYOffsetForVerticalAlignment = textView.contentOffset.y;
     
+    
+    if (textView.tag == kTagSubheadingQuestion) {
+        _subheadingAlignVerticalQuestion = @"Vertical";
+    } else if (textView.tag == kTagMainQuestion) {
+        _mainAlignVerticalQuestion = @"Vertical";
+    } else if (textView.tag == kTagSubQuestion) {
+        _subAlignVerticalQuestion = @"Vertical";
+    } else if (textView.tag == kTagSubheadingAnswer) {
+        _subheadingAlignVerticalAnswer = @"Vertical";
+    } else if (textView.tag == kTagMainAnswer) {
+        _mainAlignVerticalAnswer = @"Vertical";
+    } else if (textView.tag == kTagSubAnswer) {
+        _subAlignVerticalAnswer = @"Vertical";
+    }
+    
+    
 }
 
+/**
+ *  做两件事
+ *  1. contentOff归零
+ *  2. 赋值给_subheadingAlignVerticalAnswer， etc
+ */
 - (void) resetVerticalAlignment:(UITextView *) textView {
     textView.contentOffset = (CGPoint){.x = 0, .y = 0};
+    
+    if (textView.tag == kTagSubheadingQuestion) {
+        _subheadingAlignVerticalQuestion = @"";
+    } else if (textView.tag == kTagMainQuestion) {
+        _mainAlignVerticalQuestion = @"";
+    } else if (textView.tag == kTagSubQuestion) {
+        _subAlignVerticalQuestion = @"";
+    } else if (textView.tag == kTagSubheadingAnswer) {
+        _subheadingAlignVerticalAnswer = @"";
+    } else if (textView.tag == kTagMainAnswer) {
+        _mainAlignVerticalAnswer = @"";
+    } else if (textView.tag == kTagSubAnswer) {
+        _subAlignVerticalAnswer = @"";
+    }
     
 }
 
@@ -6701,7 +6847,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 /**
  *  注意，由于alignment跟内容相关，所以必须等到内容填充好后才允许执行
  */
-- (void) updateQuestionAnswerVeriticalAlignment {
+- (void) updateQuestionAnswerAllTextViewVeriticalAlignment {
     
     //question part
     CSS *css= _currentCard.question.css;
