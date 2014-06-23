@@ -4403,7 +4403,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (BOOL) isVerticalAlignment:(UITextView *) textView {
     BOOL result = FALSE;
     
-    if (textView.text.length == 0) {
+    if (textView == nil) {
         return FALSE;
     }
     
@@ -6776,7 +6776,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) setVerticalAlignment:(UITextView *) textView {
     
-    if (textView.text.length == 0) {
+    if (textView == nil) {
         return;
     }
     
@@ -6785,7 +6785,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     textView.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
     
     self.contentYOffsetForVerticalAlignment = textView.contentOffset.y;
-    
     
     if (textView.tag == kTagSubheadingQuestion) {
         _subheadingAlignVerticalQuestion = @"Vertical";
@@ -6810,6 +6809,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  2. 赋值给_subheadingAlignVerticalAnswer， etc
  */
 - (void) resetVerticalAlignment:(UITextView *) textView {
+    
+    if (textView == nil) {
+        return;
+    }
+    
+    
     textView.contentOffset = (CGPoint){.x = 0, .y = 0};
     
     if (textView.tag == kTagSubheadingQuestion) {
@@ -6828,7 +6833,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/**
+/** 
+ *  KVO
  *  仅适用于[self isVerticalAlignment:tv] ＝ YES
  *  当内容改变时，自动进行vertical alignment调整
  */
