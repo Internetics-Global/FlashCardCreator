@@ -91,6 +91,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
                                              initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(dismiss)]];
     
+    
     [self setupRecord];
     
 
@@ -120,6 +121,31 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     if (!success)  {
         DDLogError(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
     }
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    BOOL isExistRecordedSound;
+    if (self.isOnQuestion) {
+        if (_card.question.recordedSoundFullPath.length > 0) {
+            isExistRecordedSound = YES;
+        } else {
+            isExistRecordedSound = NO;
+        }
+    } else {
+        if (_card.answer.recordedSoundFullPath.length > 0 ) {
+            isExistRecordedSound = YES;
+        } else {
+            isExistRecordedSound = NO;
+        }
+    }
+    
+    if (isExistRecordedSound) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                                  initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"delete_button"] target:self action:@selector(delete)]];
+    }
+    
 }
 
 
@@ -281,6 +307,36 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     
+}
+
+- (void) delete {
+    NSError *error;
+    if (self.isOnQuestion) {
+        if (_card.question.recordedSoundFullPath.length > 0) {
+            [[NSFileManager defaultManager] removeItemAtPath:_card.question.recordedSoundFullPath error:&error];
+        }
+        _card.question.recordedSoundFullPath = @"";
+    } else {
+       _card.answer.recordedSoundFullPath = @"";
+        if (_card.answer.recordedSoundFullPath.length > 0) {
+            [[NSFileManager defaultManager] removeItemAtPath:_card.answer.recordedSoundFullPath error:&error];
+        }
+    }
+    
+    if (error) {
+      DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Recorded sound is removed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
+    
+    self.navigationItem.rightBarButtonItem = nil;
+    
+    if (self.isFromNewCreatedCard) {
+        //we don't save here
+    } else {
+        [_card save];
+    }
 }
 
 - (void) dismiss {

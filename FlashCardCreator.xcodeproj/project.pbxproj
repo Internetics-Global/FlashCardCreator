@@ -295,6 +295,8 @@
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
 		88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
+		88B377581960EE8400ED2459 /* delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B377561960EE8400ED2459 /* delete_button.png */; };
+		88B377591960EE8400ED2459 /* delete_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B377571960EE8400ED2459 /* delete_button@2x.png */; };
 		88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C2235517C2BC5E006EB652 /* JSBadgeView.m */; };
 		88CA253617152EE700859BDC /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* grayButton.png */; };
 		88D04E4C178D39170058A0D9 /* emotions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88D04E4B178D39170058A0D9 /* emotions.txt */; };
@@ -963,6 +965,8 @@
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
 		88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_normal@2x.png"; path = "Resources/uibarbuttonitem_normal@2x.png"; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
+		88B377561960EE8400ED2459 /* delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_button.png; path = Resources/delete_button.png; sourceTree = "<group>"; };
+		88B377571960EE8400ED2459 /* delete_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete_button@2x.png"; path = "Resources/delete_button@2x.png"; sourceTree = "<group>"; };
 		88C2235417C2BC5E006EB652 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Classes/JSBadgeView.h; sourceTree = "<group>"; };
 		88C2235517C2BC5E006EB652 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Classes/JSBadgeView.m; sourceTree = "<group>"; };
 		88CA253517152EE700859BDC /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayButton.png; path = Resources/grayButton.png; sourceTree = "<group>"; };
@@ -1477,6 +1481,8 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				88B377561960EE8400ED2459 /* delete_button.png */,
+				88B377571960EE8400ED2459 /* delete_button@2x.png */,
 				8800CC5919525A2D006B80FD /* play_sound_button.png */,
 				8800CC5A19525A2D006B80FD /* play_sound_button@2x.png */,
 				8883EB1E195012F40033056F /* play_sound_button_bigger.png */,
@@ -2322,6 +2328,7 @@
 				2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */,
 				88123D18192D90E30062CA84 /* question_placeholder_content.jpg in Resources */,
 				887BD94718D66DDE00E4DA21 /* templateScreenshot6_answer_iPad.png in Resources */,
+				88B377591960EE8400ED2459 /* delete_button@2x.png in Resources */,
 				88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */,
 				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
 				88123D49192DC30A0062CA84 /* help6_iphone@2x.jpg in Resources */,
@@ -2379,6 +2386,7 @@
 				88491B3B1714522300833692 /* templateScreenshot1_question_iPad.png in Resources */,
 				88491B3C1714522300833692 /* templateScreenshot1_question.png in Resources */,
 				88100320180FBDC200FA0A52 /* icon152x152iPad.png in Resources */,
+				88B377581960EE8400ED2459 /* delete_button.png in Resources */,
 				88491B3D1714522300833692 /* templateScreenshot2_answer_iPad.png in Resources */,
 				887BD94818D66DDE00E4DA21 /* templateScreenshot6_answer.png in Resources */,
 				88491B3E1714522300833692 /* templateScreenshot2_answer.png in Resources */,
