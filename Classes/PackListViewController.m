@@ -282,7 +282,7 @@
         deleteButton.frame = CGRectMake(15.0f, 256.0f, 85, 25);
         [deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        if ((_currentIndex ==index)&&(appDelegate.packIDForMasterViewPack != pack.packID)) {
+        if (_currentIndex ==index) {
             [view addSubview:deleteButton];
         }
         
@@ -501,15 +501,24 @@
 }
 
 - (void) deleteCurrentPack:(id) sender {
-    
     _currentIndex = ((UIButton *)sender).tag;
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                                    message:NSLocalizedString(@"DIALOG_DELETE_PACK",@"")
-                                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
-                                          otherButtonTitles:NSLocalizedString(@"Keyboard_Delete",@""), nil];
-    alert.delegate = self;
-    [alert show];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    Pack *pack = (Pack *)[[[User defaultUser] packs] objectAtIndex:_currentIndex];
+    if (appDelegate.packIDForMasterViewPack != pack.packID) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                                        message:NSLocalizedString(@"DIALOG_DELETE_PACK",@"")
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Delete",@""), nil];
+        alert.delegate = self;
+        [alert show];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack is currently used" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+    
+    
 }
 
 - (void) selectFromImageLibrary: (id) sender {
