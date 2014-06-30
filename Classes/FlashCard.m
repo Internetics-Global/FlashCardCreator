@@ -6650,31 +6650,51 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSMutableArray *myArray = [NSMutableArray array];
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         if (_subheadingQuestion.text.length >0) {
-            [myArray addObject:_subheadingQuestion.text];
+            
+            
+            
+            [myArray addObject:[self replaceBasicSymbol:_subheadingQuestion.text]];
         }
         
         if (_mainQuestion.text.length >0) {
-            [myArray addObject:_mainQuestion.text];
+            [myArray addObject:[self replaceBasicSymbol:_mainQuestion.text]];
         }
         
         if (_subQuestion.text.length >0) {
-            [myArray addObject:_subQuestion.text];
+            [myArray addObject:[self replaceBasicSymbol:_subQuestion.text]];
         }
     } else {
         if (_subheadingAnswer.text.length >0) {
-            [myArray addObject:_subheadingAnswer.text];
+            [myArray addObject:[self replaceBasicSymbol:_subheadingAnswer.text]];
         }
         
         if (_mainAnswer.text.length >0) {
-            [myArray addObject:_mainAnswer.text];
+            [myArray addObject:[self replaceBasicSymbol:_mainAnswer.text]];
         }
         
         if (_subAnswer.text.length >0) {
-            [myArray addObject:_subAnswer.text];
+            [myArray addObject:[self replaceBasicSymbol:_subAnswer.text]];
         }
     }
     
     return myArray;
+}
+
+- (NSString *) replaceBasicSymbol:(NSString *) str {
+    NSString *resultStr;
+    
+    NSString *plusStr = @" plus ";
+    NSString *minusStr = @" minus ";
+    NSString *multiplyStr = @" times ";
+    NSString *divideStr = @" divide ";
+    
+    resultStr = [str stringByReplacingOccurrencesOfString:@"+" withString:plusStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"∗" withString:multiplyStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:divideStr];
+    
+    return resultStr;
+    
 }
 
 #pragma mark – Vertical Alignment special logic
