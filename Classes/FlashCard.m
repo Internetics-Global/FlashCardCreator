@@ -6605,11 +6605,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return ;
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"]) {
-        DDLogInfo(@"%s,return because of mute",__FUNCTION__);
-        return ;
-    }
-    
     
     DDLogInfo(@"%s",__FUNCTION__);
     NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
@@ -6620,7 +6615,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         self.textToSpeechContentArrayIndex = 0;
         [self.synth speakUtterance:utterance];
     } else {
-        [self playAudio]; //play audio after textspeech finished
+        //[self playAudio]; //play audio after textspeech finished
     }
     
 }
@@ -6640,7 +6635,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         [self.synth speakUtterance:utterance];
     } else {
-        [self playAudio];
+        //[self playAudio];
     }
     
 }

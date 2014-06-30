@@ -242,16 +242,7 @@ BOOL isLoggingDropboxInSettingView = NO;
             cell.accessoryView = textToSpeechSwitch;
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
-        } else if (indexPath.row ==1) {
-            cell.textLabel.text = @"Mute";
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = muteSwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
-            [muteSwitch setOn:b];
-        }
-    }
+        }    }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         cell.backgroundColor = [UIColor clearColor];
@@ -279,13 +270,7 @@ BOOL isLoggingDropboxInSettingView = NO;
     
 }
 
-- (void) muteSwitchAction {
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"k_Mute"];
-    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"k_Mute"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [Common alertViewCommon:@"Note: re-select packs to take effect."];
-}
+
 
 - (void) editableSwitchAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
