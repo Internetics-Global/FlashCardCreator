@@ -6919,6 +6919,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)dealloc {
     DDLogInfo(@"%s",__FUNCTION__);
+    
+    [_subheadingQuestion removeObserver:self forKeyPath:@"contentSize"];
+    [_subheadingAnswer removeObserver:self forKeyPath:@"contentSize"];
+    [_mainQuestion removeObserver:self forKeyPath:@"contentSize"];
+    [_mainAnswer removeObserver:self forKeyPath:@"contentSize"];
+    [_subQuestion removeObserver:self forKeyPath:@"contentSize"];
+    [_subAnswer removeObserver:self forKeyPath:@"contentSize"];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     _imagePickerController = nil;
