@@ -1043,7 +1043,12 @@ enum popover_enum {
 - (void) downloadURLViaURLScheme:(NSString *)urlStr{
     
     if ([DataManager apiReachable] == NO) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+                                                        message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
         
         return;
     }

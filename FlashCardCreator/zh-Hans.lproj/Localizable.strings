@@ -11,7 +11,6 @@
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "下载中，来自 ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "只有那些自己所创建的卡，您可以更改";
 "DIALOG_EXISTING_PACK_NAME"                = "名称已存在，请重新输入";
-"DIALOG_CHECK_NETWORK_STATUS"       = "请检查您的网络";
 "DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "已断开Dropbox链接";
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "创建前需先建立一个组";

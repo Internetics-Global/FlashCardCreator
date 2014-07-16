@@ -6,12 +6,11 @@
  Copyright (c) 2013 Internetics. All rights reserved.
  */
 
-"DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your network";
+"DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your internet settings.";
 "DIALOG_DOWNLOAD_PACK"              = "Downloading sample pack";
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Downloading pack from ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can only make changes to cards you have created yourself.";
 "DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
-"DIALOG_CHECK_NETWORK_STATUS"       = "Please check your network";
 "DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Your dropbox account has been unlinked";
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";

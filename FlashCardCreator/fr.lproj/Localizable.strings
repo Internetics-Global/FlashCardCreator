@@ -11,7 +11,6 @@
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Le téléchargement de paquet ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Vous pouvez faire des changements sur les seules cartes qui sont créés par vous-même";
 "DIALOG_EXISTING_PACK_NAME"                = "Existant nom du paquet, s'il vous plaît entrez un autre";
-"DIALOG_CHECK_NETWORK_STATUS"       = "S'il vous plaît vérifier votre réseau";
 "DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Déconnecté Dropbox lien";
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Vous n'avez pas à créer le groupe, donc je ne peux pas créer une nouvelle carte";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Créé est nécessaire avant la mise en place d'un groupe";

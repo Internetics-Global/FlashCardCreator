@@ -198,7 +198,12 @@
     DDLogError(@"error:%@",error);
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+                                                            message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
         }
     }
 }

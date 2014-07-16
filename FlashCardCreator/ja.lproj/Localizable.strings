@@ -11,7 +11,6 @@
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "からパックをダウンロード ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "ご自身で作成されただけのカードに変更を加えることができます";
 "DIALOG_EXISTING_PACK_NAME"                = "パックの名前、既存の入力に別のものをしてください";
-"DIALOG_CHECK_NETWORK_STATUS"       = "あなたのネットワークを確認してください";
 "DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "切断されたDropboxのリンク";
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "グループを作成する必要はありませんので、私は新しいカードを作成することはできません";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "作成は、グループの設立に先立って必要とされる";

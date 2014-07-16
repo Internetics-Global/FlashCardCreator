@@ -33,9 +33,9 @@
 
 + (void)apiReachableAlert {
     if ( NotReachable == [[Reachability reachabilityForInternetConnection] currentReachabilityStatus] ) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"NO Internet"
-                                                        message:@"Please check your network"
-                                                       delegate:self
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+                                                        message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
+                                                       delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];

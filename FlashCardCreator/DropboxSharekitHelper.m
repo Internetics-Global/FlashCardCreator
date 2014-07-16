@@ -173,7 +173,12 @@
     
     //step2: upload to dropbox
     if ([DataManager apiReachable] == NO) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_CHECK_NETWORK_STATUS",@"")];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+                                                        message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
         return;
     }
     
