@@ -38,7 +38,6 @@
 		2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BB16D1A53600E1E785 /* MGSplitDividerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17BD16D1A53600E1E785 /* MGSplitViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C216D1A54200E1E785 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2D5C17C616D1A54F00E1E785 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C516D1A54F00E1E785 /* SwipeView.m */; };
 		2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17C916D1A56A00E1E785 /* AFHTTPClient.m */; };
 		2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17CB16D1A56A00E1E785 /* AFHTTPRequestOperation.m */; };
 		2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C17CD16D1A56A00E1E785 /* AFImageRequestOperation.m */; };
@@ -63,8 +62,6 @@
 		2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181716D1A62700E1E785 /* UIImage+Scale.m */; };
 		2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */; };
 		2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */; };
-		2D5C183416D1A65100E1E785 /* PackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183216D1A65100E1E785 /* PackListViewController.m */; };
-		2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C183316D1A65100E1E785 /* PackListViewController.xib */; };
 		2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */; };
 		2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183A16D1A66400E1E785 /* CreateCardViewController.m */; };
 		2D5C184216D1A69200E1E785 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183D16D1A69200E1E785 /* AboutView.m */; };
@@ -209,6 +206,8 @@
 		881390931935613500E04251 /* icon~80.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390911935613500E04251 /* icon~80.png */; };
 		881390961935683B00E04251 /* un_mute_button_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390941935683B00E04251 /* un_mute_button_bigger.png */; };
 		881390971935683B00E04251 /* un_mute_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390951935683B00E04251 /* un_mute_button_bigger@2x.png */; };
+		8813FA461977A39900D32447 /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8813FA451977A39900D32447 /* delete@2x.png */; };
+		8813FA481977A3F000D32447 /* chang_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8813FA471977A3F000D32447 /* chang_image@2x.png */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -297,6 +296,10 @@
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
 		88B377581960EE8400ED2459 /* delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B377561960EE8400ED2459 /* delete_button.png */; };
 		88B377591960EE8400ED2459 /* delete_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B377571960EE8400ED2459 /* delete_button@2x.png */; };
+		88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD6134197771F500834D72 /* PackListViewControllerV2.m */; };
+		88BD61591977727400834D72 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD61581977727400834D72 /* LineLayout.m */; };
+		88BD615C1977732200834D72 /* PackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD615B1977732200834D72 /* PackListCell.m */; };
+		88BD615F19777D2A00834D72 /* PackListFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD615E19777D2A00834D72 /* PackListFirstCell.m */; };
 		88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C2235517C2BC5E006EB652 /* JSBadgeView.m */; };
 		88CA253617152EE700859BDC /* grayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 88CA253517152EE700859BDC /* grayButton.png */; };
 		88D04E4C178D39170058A0D9 /* emotions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 88D04E4B178D39170058A0D9 /* emotions.txt */; };
@@ -619,8 +622,6 @@
 		2D5C17BD16D1A53600E1E785 /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSplitViewController.m; path = Libraries/MGSplitViewController/MGSplitViewController.m; sourceTree = "<group>"; };
 		2D5C17C116D1A54200E1E785 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenUDID.h; path = Libraries/OpenUDID/OpenUDID.h; sourceTree = "<group>"; };
 		2D5C17C216D1A54200E1E785 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenUDID.m; path = Libraries/OpenUDID/OpenUDID.m; sourceTree = "<group>"; };
-		2D5C17C416D1A54F00E1E785 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwipeView.h; path = Libraries/SwipeView/SwipeView.h; sourceTree = "<group>"; };
-		2D5C17C516D1A54F00E1E785 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwipeView.m; path = Libraries/SwipeView/SwipeView.m; sourceTree = "<group>"; };
 		2D5C17C816D1A56A00E1E785 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPClient.h; path = Libraries/AFNetworking/AFHTTPClient.h; sourceTree = SOURCE_ROOT; };
 		2D5C17C916D1A56A00E1E785 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPClient.m; path = Libraries/AFNetworking/AFHTTPClient.m; sourceTree = SOURCE_ROOT; };
 		2D5C17CA16D1A56A00E1E785 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = Libraries/AFNetworking/AFHTTPRequestOperation.h; sourceTree = SOURCE_ROOT; };
@@ -671,9 +672,6 @@
 		2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImagePickerController+NoRotate.m"; path = "Classes/UIImagePickerController+NoRotate.m"; sourceTree = "<group>"; };
 		2D5C181A16D1A62700E1E785 /* UINavigationController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+DismissKeyboard.h"; path = "Classes/UINavigationController+DismissKeyboard.h"; sourceTree = "<group>"; };
 		2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+DismissKeyboard.m"; path = "Classes/UINavigationController+DismissKeyboard.m"; sourceTree = "<group>"; };
-		2D5C183116D1A65100E1E785 /* PackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackListViewController.h; path = Classes/PackListViewController.h; sourceTree = "<group>"; };
-		2D5C183216D1A65100E1E785 /* PackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackListViewController.m; path = Classes/PackListViewController.m; sourceTree = "<group>"; };
-		2D5C183316D1A65100E1E785 /* PackListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PackListViewController.xib; path = Classes/PackListViewController.xib; sourceTree = "<group>"; };
 		2D5C183616D1A65B00E1E785 /* CreatePackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreatePackViewController.h; path = Classes/CreatePackViewController.h; sourceTree = "<group>"; };
 		2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreatePackViewController.m; path = Classes/CreatePackViewController.m; sourceTree = "<group>"; };
 		2D5C183916D1A66400E1E785 /* CreateCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateCardViewController.h; path = Classes/CreateCardViewController.h; sourceTree = "<group>"; };
@@ -871,6 +869,8 @@
 		881390911935613500E04251 /* icon~80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~80.png"; sourceTree = "<group>"; };
 		881390941935683B00E04251 /* un_mute_button_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = un_mute_button_bigger.png; path = Resources/un_mute_button_bigger.png; sourceTree = "<group>"; };
 		881390951935683B00E04251 /* un_mute_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "un_mute_button_bigger@2x.png"; path = "Resources/un_mute_button_bigger@2x.png"; sourceTree = "<group>"; };
+		8813FA451977A39900D32447 /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete@2x.png"; sourceTree = "<group>"; };
+		8813FA471977A3F000D32447 /* chang_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chang_image@2x.png"; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -967,6 +967,14 @@
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
 		88B377561960EE8400ED2459 /* delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delete_button.png; path = Resources/delete_button.png; sourceTree = "<group>"; };
 		88B377571960EE8400ED2459 /* delete_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "delete_button@2x.png"; path = "Resources/delete_button@2x.png"; sourceTree = "<group>"; };
+		88BD6133197771F500834D72 /* PackListViewControllerV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackListViewControllerV2.h; sourceTree = "<group>"; };
+		88BD6134197771F500834D72 /* PackListViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackListViewControllerV2.m; sourceTree = "<group>"; };
+		88BD61571977727400834D72 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
+		88BD61581977727400834D72 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
+		88BD615A1977732200834D72 /* PackListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackListCell.h; sourceTree = "<group>"; };
+		88BD615B1977732200834D72 /* PackListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackListCell.m; sourceTree = "<group>"; };
+		88BD615D19777D2A00834D72 /* PackListFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackListFirstCell.h; sourceTree = "<group>"; };
+		88BD615E19777D2A00834D72 /* PackListFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackListFirstCell.m; sourceTree = "<group>"; };
 		88C2235417C2BC5E006EB652 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = Classes/JSBadgeView.h; sourceTree = "<group>"; };
 		88C2235517C2BC5E006EB652 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = Classes/JSBadgeView.m; sourceTree = "<group>"; };
 		88CA253517152EE700859BDC /* grayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayButton.png; path = Resources/grayButton.png; sourceTree = "<group>"; };
@@ -1041,15 +1049,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2D09AF0916A4F4A200B1C0C9 /* SwipeView */ = {
-			isa = PBXGroup;
-			children = (
-				2D5C17C416D1A54F00E1E785 /* SwipeView.h */,
-				2D5C17C516D1A54F00E1E785 /* SwipeView.m */,
-			);
-			name = SwipeView;
-			sourceTree = "<group>";
-		};
 		2D09AF1316A5046900B1C0C9 /* CreatePack */ = {
 			isa = PBXGroup;
 			children = (
@@ -1377,7 +1376,6 @@
 				2D1A051F16EDEAD300527311 /* PopupListComponent */,
 				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
 				2DDF5A3316B0F72700191C43 /* OpenUDID */,
-				2D09AF0916A4F4A200B1C0C9 /* SwipeView */,
 				2D75DF64169D05AB00337B10 /* AFNetworking */,
 				2DC151CC169A849200A61969 /* MBProgressHUD */,
 				2D7A8CD416910F84002EDF77 /* ZipArchive */,
@@ -1481,6 +1479,8 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				8813FA471977A3F000D32447 /* chang_image@2x.png */,
+				8813FA451977A39900D32447 /* delete@2x.png */,
 				88B377561960EE8400ED2459 /* delete_button.png */,
 				88B377571960EE8400ED2459 /* delete_button@2x.png */,
 				8800CC5919525A2D006B80FD /* play_sound_button.png */,
@@ -1592,9 +1592,14 @@
 		2DC0629216802C6000F2EA07 /* PackList */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C183116D1A65100E1E785 /* PackListViewController.h */,
-				2D5C183216D1A65100E1E785 /* PackListViewController.m */,
-				2D5C183316D1A65100E1E785 /* PackListViewController.xib */,
+				88BD615A1977732200834D72 /* PackListCell.h */,
+				88BD615B1977732200834D72 /* PackListCell.m */,
+				88BD615D19777D2A00834D72 /* PackListFirstCell.h */,
+				88BD615E19777D2A00834D72 /* PackListFirstCell.m */,
+				88BD61571977727400834D72 /* LineLayout.h */,
+				88BD61581977727400834D72 /* LineLayout.m */,
+				88BD6133197771F500834D72 /* PackListViewControllerV2.h */,
+				88BD6134197771F500834D72 /* PackListViewControllerV2.m */,
 			);
 			name = PackList;
 			sourceTree = "<group>";
@@ -2238,7 +2243,6 @@
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				887A45DF1929E9DB007C94FB /* packs_button.png in Resources */,
 				88123D47192DBFB00062CA84 /* help5_iphone@2x.jpg in Resources */,
-				2D5C183516D1A65100E1E785 /* PackListViewController.xib in Resources */,
 				88123D17192D90E30062CA84 /* answer_placeholder_content.jpg in Resources */,
 				880D19941929856300FD46F0 /* done_button.png in Resources */,
 				2D5C187E16D1A74800E1E785 /* leftArrow.png in Resources */,
@@ -2314,6 +2318,7 @@
 				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
 				88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */,
 				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
+				8813FA461977A39900D32447 /* delete@2x.png in Resources */,
 				2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */,
 				2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */,
 				8813908F193560FD00E04251 /* icon~100.png in Resources */,
@@ -2348,6 +2353,7 @@
 				881131941703CA0200C7D5A8 /* icon72x72iPad.png in Resources */,
 				881131961703CA0400C7D5A8 /* icon144x144iPad.png in Resources */,
 				881131A01703CA3E00C7D5A8 /* Default-568h@2x.png in Resources */,
+				8813FA481977A3F000D32447 /* chang_image@2x.png in Resources */,
 				881131A91703CC5800C7D5A8 /* Default-Landscape@2x~ipad.png in Resources */,
 				881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */,
 				88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */,
@@ -2446,8 +2452,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88BD61591977727400834D72 /* LineLayout.m in Sources */,
 				2DCE0B1816798E04007A8CAD /* main.m in Sources */,
 				88123DEE192EFBAC0062CA84 /* DDTTYLogger.m in Sources */,
+				88BD615F19777D2A00834D72 /* PackListFirstCell.m in Sources */,
 				88123DEC192EFBAC0062CA84 /* DDFileLogger.m in Sources */,
 				88123DF0192EFBAC0062CA84 /* DDDispatchQueueLogFormatter.m in Sources */,
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
@@ -2472,7 +2480,6 @@
 				2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */,
 				2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */,
 				2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */,
-				2D5C17C616D1A54F00E1E785 /* SwipeView.m in Sources */,
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
@@ -2489,6 +2496,7 @@
 				2D5C17F416D1A59300E1E785 /* ioapi.c in Sources */,
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
 				2D5C17F616D1A59300E1E785 /* unzip.c in Sources */,
+				88BD615C1977732200834D72 /* PackListCell.m in Sources */,
 				88123DEA192EFBAC0062CA84 /* DDASLLogCapture.m in Sources */,
 				2D5C17F716D1A59300E1E785 /* zip.c in Sources */,
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
@@ -2497,13 +2505,13 @@
 				88123DF1192EFBAC0062CA84 /* DDMultiFormatter.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
+				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
 				88123DEB192EFBAC0062CA84 /* DDASLLogger.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
-				2D5C183416D1A65100E1E785 /* PackListViewController.m in Sources */,
 				2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */,
 				2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */,
 				2D5C184216D1A69200E1E785 /* AboutView.m in Sources */,

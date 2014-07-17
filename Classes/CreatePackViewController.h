@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Pack;
-@class PackListViewController;
+@class PackListViewControllerV2;
 
 @interface CreatePackViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate> {
     UITextField *_packNameText;

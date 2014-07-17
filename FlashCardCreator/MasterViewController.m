@@ -21,7 +21,7 @@
 #import "Pack.h"
 #import "Card.h"
 #import "CSS.h"
-#import "PackListViewController.h"
+#import "PackListViewControllerV2.h"
 #import "DataManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "CreatePackViewController.h"
@@ -40,6 +40,7 @@
 #import "AppDelegate.h"
 #import "OpenUDID.h"
 #import "Common.h"
+#import "LineLayout.h"
 
 extern BOOL _isDownloadingSamplePack;
 
@@ -318,20 +319,21 @@ enum popover_enum {
 - (void)selectAvailablePacks:(id)sender
 {
     
-    PackListViewController *packListViewController = [[PackListViewController alloc] initWithNibName:@"PackListViewController" bundle:nil];
+    LineLayout* lineLayout = [[LineLayout alloc] init];
+    PackListViewControllerV2 *packListViewController = [[PackListViewControllerV2 alloc] initWithCollectionViewLayout:lineLayout];
     packListViewController.packIDInMasterView = _currentPack.packID;
     
     if (isUserInterfaceIdiomPhone) {
-        packListViewController.view.frame = CGRectMake(10, 10, 320, 131);
+        
+        packListViewController.view.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
         [self.navigationController pushViewController:packListViewController animated:YES];
         
     } else {
         
-        packListViewController.view.frame = CGRectMake(10, 10, 950, 345);
         packListViewController.view.clipsToBounds = YES;
         packListViewController.view.layer.cornerRadius = 0;
-        packListViewController.view.backgroundColor =[UIColor clearColor];
-        packListViewController.contentSizeForViewInPopover = CGSizeMake(970, 325);
+        packListViewController.view.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
+        packListViewController.contentSizeForViewInPopover = CGSizeMake(970, 340);
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:packListViewController];
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
@@ -341,7 +343,7 @@ enum popover_enum {
         
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
-            _packListPickerPopover.popoverContentSize = CGSizeMake(950, 345);
+            _packListPickerPopover.popoverContentSize = CGSizeMake(950, 340);
             if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
                 _packListPickerPopover.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:.3];
             }

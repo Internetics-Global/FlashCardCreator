@@ -11,7 +11,7 @@
 #import "User.h"
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
-#import "PackListViewController.h"
+#import "PackListViewControllerV2.h"
 #import "OpenUDID.h"
 #import "Common.h"
 #import "FCCBarButton.h"
