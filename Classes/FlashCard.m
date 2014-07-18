@@ -36,6 +36,8 @@
 #import "OpenUDID.h"
 #import "Common.h"
 
+#import "KeyboardTopView.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -68,6 +70,7 @@ extern BOOL isFromNewCreatedCard;
 
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
+
 typedef NS_ENUM(NSInteger, Type_Image_Selector) {
     Type_Image_Selector_Logo       = 0,//when clicking the logo
     Type_Image_Selector_Image      = 1,//when clicking the image from card
@@ -87,9 +90,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     Type_PopoverView_SelectBackground = 2,
 };
 
-@interface FlashCard () {
+@interface FlashCard () <KeyboardTopViewDelegate> {
     Type_Image_Selector    _typeImageSelector;
     AVAudioPlayer          *_audioPlayer;
+    
+    KeyboardTopView        *_keyboardTopViewV2;
+    KeyboardTopView        *_keyboardTopViewForInputViewV2;
 }
 
 
@@ -4293,19 +4299,30 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     //Keyboard top view for keyboard input view
-    if (_keyboardTopViewForInputView == nil) {
-        _keyboardTopViewForInputView = [[UIToolbar alloc]init];
+    if (0) { //TODO
+        if (_keyboardTopViewForInputView == nil) {
+            _keyboardTopViewForInputView = [[UIToolbar alloc]init];
+        }
+        
+        [_keyboardTopViewForInputView setBarStyle:UIBarStyleBlackTranslucent];
+        
+        _keyboardTopViewForInputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        
+        _keyboardTopViewForInputView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
+        [_keyboardTopViewForInputView setItems:_buttonArrayForInputView];
+        [_keyboardInputBaseView addSubview:_keyboardTopViewForInputView];
+        [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputView];
+    } else {
+        if (_keyboardTopViewForInputViewV2 == nil) {
+            _keyboardTopViewForInputViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
+        }
+        _keyboardTopViewForInputViewV2.delegate = self;
+        _keyboardTopViewForInputViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        [_keyboardTopViewForInputViewV2 setupSummaryArray];
+        [_keyboardInputBaseView addSubview:_keyboardTopViewForInputViewV2];
+        [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputViewV2];
     }
-    
-    [_keyboardTopViewForInputView setBarStyle:UIBarStyleBlackTranslucent];
-    
-    _keyboardTopViewForInputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    
-    _keyboardTopViewForInputView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
-    [_keyboardTopViewForInputView setItems:_buttonArrayForInputView];
-    [_keyboardInputBaseView addSubview:_keyboardTopViewForInputView];
-    [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputView];
-
+ 
     
 }
 
@@ -4329,25 +4346,42 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
     }
     
-    //Keyboard top view for accessary view
-    if (_keyboardTopView == nil) {
-        _keyboardTopView = [[UIToolbar alloc]init];
+    if (0) { //TODO
+        //Keyboard top view for accessary view
+        if (_keyboardTopView == nil) {
+            _keyboardTopView = [[UIToolbar alloc]init];
+        }
+        
+        [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
+        
+        _keyboardTopView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        
+        _keyboardTopView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
+        [_keyboardTopView setItems:_buttonArray];
+        
+        //default input method
+        [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
+        [_mainQuestion setInputAccessoryView:_keyboardTopView];
+        [_subQuestion setInputAccessoryView:_keyboardTopView];
+        [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
+        [_mainAnswer setInputAccessoryView:_keyboardTopView];
+        [_subAnswer setInputAccessoryView:_keyboardTopView];
+    } else {
+        if (_keyboardTopViewV2 == nil) {
+            _keyboardTopViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
+        }
+        _keyboardTopViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        [_keyboardTopViewV2 setupSummaryArray];
+        _keyboardTopViewV2.delegate = self;
+        
+        //default input method
+        [_subheadingQuestion setInputAccessoryView:_keyboardTopViewV2];
+        [_mainQuestion setInputAccessoryView:_keyboardTopViewV2];
+        [_subQuestion setInputAccessoryView:_keyboardTopViewV2];
+        [_subheadingAnswer setInputAccessoryView:_keyboardTopViewV2];
+        [_mainAnswer setInputAccessoryView:_keyboardTopViewV2];
+        [_subAnswer setInputAccessoryView:_keyboardTopViewV2];
     }
-    
-    [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
-    
-    _keyboardTopView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    
-    _keyboardTopView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
-    [_keyboardTopView setItems:_buttonArray];
-    
-    //default input method
-    [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
-    [_mainQuestion setInputAccessoryView:_keyboardTopView];
-    [_subQuestion setInputAccessoryView:_keyboardTopView];
-    [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
-    [_mainAnswer setInputAccessoryView:_keyboardTopView];
-    [_subAnswer setInputAccessoryView:_keyboardTopView];
     
 }
 
@@ -5078,7 +5112,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _isUITextViewFocused = TRUE;
         [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
-        _lastBecomeFirstRespondTextView.inputAccessoryView = _keyboardTopView;
+        _lastBecomeFirstRespondTextView.inputAccessoryView = _keyboardTopViewV2;
         _lastBecomeFirstRespondTextView.inputView = nil;
         
     }
@@ -5091,7 +5125,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) changeFontTypeBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
-    NSString *title = ((UIBarButtonItem *) sender).title;
+    NSString *title = ((UIButton *) sender).titleLabel.text;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
     CGFloat size = responderTextView.font.pointSize;
@@ -5124,7 +5158,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     NSUInteger selectFontSize;
     
-    NSString *title = ((UIBarButtonItem *) sender).title;
+    NSString *title = ((UIButton *) sender).titleLabel.text;;
     
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
@@ -5250,7 +5284,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectAlignStr = nil;
     
-    NSString *title = ((UIBarButtonItem *) sender).title;
+    NSString *title = ((UIButton *) sender).titleLabel.text;;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     NSRange range = responderTextView.selectedRange;
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Left",nil)]) {
@@ -5322,7 +5356,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     NSString *selectColorStr = nil;
     
-    NSString *title = ((UIBarButtonItem *) sender).title;
+    NSString *title = ((UIButton *) sender).titleLabel.text;;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Black",nil)]) {
         responderTextView.textColor = [UIColor blackColor];
@@ -6928,6 +6962,33 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
+#pragma mark – KeyboardTopViewDelegate
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender {
+    
+    [self changeFontTypeBarButtonItemClicked:sender];
+    
+}
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender {
+    [self changeFontSizeBarButtonItemClicked:sender];
+}
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButtonAtIndex:(id) sender {
+    [self changeAlignBarButtonItemClicked:sender];
+}
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender {
+    [self changeColorBarButtonItemClicked:sender];
+}
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSymbolButton:(id)sender {
+    [self emotionAndKeyboardSwitch:sender];
+}
+
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedDoneButton:(id)sender {
+    [self dismissKeyBoard:sender];
+}
 
 #pragma mark -
 #pragma mark - Memory management
