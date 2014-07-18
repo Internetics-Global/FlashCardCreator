@@ -51,7 +51,7 @@
 "ToolbarItem_Align" = "Alinear";
 "ToolbarItem_Size" = "Tamaño";
 "ToolbarItem_Color" = "Color";
-"ToolbarItem_Emotion"        = "Símbolo";
+"ToolbarItem_Symbol"        = "Símbolo";
 "ToolbarItem_Keyboard"        = "Keyboard";
 "ToolbarItem_Back" = "Volver";
 

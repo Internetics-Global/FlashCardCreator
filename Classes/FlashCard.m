@@ -4033,7 +4033,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignActionForInputView)];
     
-    _emotionButtonForInputView = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
+    _emotionButtonForInputView = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
@@ -4101,7 +4101,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
     
-    _emotionButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
+    _emotionButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
     
     UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
@@ -5076,7 +5076,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     
         _isUITextViewFocused = TRUE;
-        [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",nil)];
+        [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
         _lastBecomeFirstRespondTextView.inputAccessoryView = _keyboardTopView;
         _lastBecomeFirstRespondTextView.inputView = nil;
@@ -5382,7 +5382,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     _isUITextViewFocused = FALSE;
     _keyboardInputBaseView.hidden = TRUE;
-    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
+    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
     
     [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopView];
     [_lastBecomeFirstRespondTextView setInputView:nil];
@@ -5473,7 +5473,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _lastBecomeFirstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _keyboardInputBaseView.hidden = FALSE;
-    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Emotion",@"")];
+    [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
     
     return TRUE;
 }

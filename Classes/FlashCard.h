@@ -145,6 +145,7 @@ typedef enum{
     NSArray                            *_buttonArrayForInputView; //for input view
     UIToolbar                          *_keyboardTopView; //for input accessory view
     UIToolbar                          *_keyboardTopViewForInputView; //for input view
+    
     UIView                             *_keyboardInputBaseView; //for input view
     KeyboardSwitchButtonType            _keyboardSwitchButtonType;
     EmoticonSelectionViewController    *_emoticonSelectionViewController;
