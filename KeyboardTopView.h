@@ -25,10 +25,10 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender;
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender;
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender;
-
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSymbolButton:(id) sender;
-
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedDoneButton:(id) sender;
+/**
+ *  指第一级的button，包括done, symbol， align, size, color, font
+ */
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedMainButton:(id) sender;
 
 @end
 
@@ -52,6 +52,8 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 - (void) setupSizeArray;
 - (void) setupColorArray;
 - (void) setupSummaryArray;
+
+-(NSArray *) getCurrentButtonArray;
 
 
 @end

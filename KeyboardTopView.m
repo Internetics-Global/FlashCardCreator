@@ -147,7 +147,6 @@
 }
 
 - (void) didClickedColorChangeButton:(id) sender {
-    [self setupSummaryArray];
     if (self.delegate) {
         [self.delegate keyboardTopView:self didClickedColorChangeButtonAtIndex:sender];
     } else {
@@ -233,7 +232,7 @@
 
 - (void) didClickedSizeChangeButton:(id) sender {
     if (self.delegate) {
-        [self.delegate keyboardTopView:self didClickedFontChangeButtonAtIndex:sender];
+        [self.delegate keyboardTopView:self didClickedSizeChangeButtonAtIndex:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
@@ -291,32 +290,33 @@
             [self setupFontArray];
             break;
         case 4:
-            if (self.delegate) {
-                //TODO
-                [self.delegate keyboardTopView:self didClickedSymbolButton:sender];
-            } else {
-                //NSAssert(FALSE, @"You need to assign delete");
-            }
             break;
         case 5:
-            if (self.delegate) {
-                //TODO
-                [self.delegate keyboardTopView:self didClickedDoneButton:sender];
-            } else {
-                //NSAssert(FALSE, @"You need to assign delete");
-            }
+            
             break;
         default:
             break;
     }
     
+    if (self.delegate) {
+        //TODO
+        [self.delegate keyboardTopView:self didClickedMainButton:sender];
+    } else {
+        //NSAssert(FALSE, @"You need to assign delete");
+    }
+    
 }
 
 
-#pragma mark – Common 
+#pragma mark – Common
 
 - (void) didClickedBackButton:(id) sender {
     [self setupSummaryArray];
+}
+
+-(NSArray *) getCurrentButtonArray {
+    
+    return [self.scrollView subviews];
 }
 
 

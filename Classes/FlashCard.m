@@ -4027,240 +4027,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-// For keyboard input view (top parts)
-- (void) setInputViewTopViewItems  {
-    DDLogInfo(@"%s",__FUNCTION__);
-    UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeActionForInputView)];
-    
-    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownActionForInputView)];
-    
-    
-    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorActionForInputView)];
-    
-    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignActionForInputView)];
-    
-    _emotionButtonForInputView = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
-    
-    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    if (isUserInterfaceIdiomPhone) {
-        saveButton.bounds = CGRectMake(0, 0, 48, 40);
-    } else {
-        saveButton.bounds = CGRectMake(0, 0, 60, 50);
-    }
-    [saveButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
-    if (isUserInterfaceIdiomPhone) {
-        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    }   else {
-        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    }
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        
-    } else {
-        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
-    }
-    [saveButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
-    
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
-    
-    if (isUserInterfaceIdiomPhone) {
-        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        closeButton.bounds = CGRectMake(0, 0, 48, 40);
-        [closeButton setTitle:NSLocalizedString(@"Keyboard_Cancel",nil) forState:UIControlStateNormal];
-        [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            
-        } else {
-            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
-        }
-        [closeButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
-        
-        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-        
-        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButtonForInputView,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
-        
-    } else {
-        _buttonArrayForInputView = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButtonForInputView,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
-    }
-    
-    
-    
-
-    
-}
-
-
-// For keyboard input accessary view
-- (void) setInputAccessoryViewItems  {
-    DDLogInfo(@"%s",__FUNCTION__);
-    UIBarButtonItem *fontType = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Font",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fontTypeAction)];
-    
-    UIBarButtonItem *sizeSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(sizeUpDownAction)];
-    
-    UIBarButtonItem *colorSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(selectColorAction)];
-    
-    UIBarButtonItem *alignSelect = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(alignAction)];
-    
-    _emotionButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil) style:UIBarButtonItemStyleDone target:self action:@selector(emotionAndKeyboardSwitch:)];
-    
-    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    //UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"Keyboard_Done",nil) style:UIBarStyleDefault target:self action:@selector(dismissKeyBoard)];
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    if (isUserInterfaceIdiomPhone) {
-        saveButton.bounds = CGRectMake(0, 0, 48, 40);
-    } else {
-        saveButton.bounds = CGRectMake(0, 0, 60, 50);
-    }
-    [saveButton setTitle:NSLocalizedString(@"Keyboard_Save",nil) forState:UIControlStateNormal];
-    if (isUserInterfaceIdiomPhone) {
-        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    }   else {
-        [saveButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    }
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        
-    } else {
-        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-        [saveButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
-    }
-    [saveButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
-    
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:saveButton];
-    
-    
-    if (isUserInterfaceIdiomPhone) {
-        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        closeButton.bounds = CGRectMake(0, 0, 48, 40);
-        [closeButton setTitle:NSLocalizedString(@"Keyboard_Cancel",nil) forState:UIControlStateNormal];
-        [closeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            
-        } else {
-            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_normal.png"] forState:UIControlStateNormal];
-            [closeButton setBackgroundImage:[UIImage imageNamed:@"uibarbuttonitem_highlight.png"] forState:UIControlStateHighlighted];
-        }
-        [closeButton addTarget:self action:@selector(dismissKeyBoard:) forControlEvents:UIControlEventTouchDown];
-        
-        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButton,btnSpace,btnSpace,closeButtonItem,doneButtonItem,nil];
-        
-    } else {
-        _buttonArray = [NSArray arrayWithObjects:alignSelect,sizeSelect,colorSelect,fontType,_emotionButton,btnSpace,btnSpace,btnSpace,doneButtonItem,nil];
-    }
-    
-    
-    //Back Button
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back",nil) style:UIBarButtonItemStyleDone target:self action:@selector(backBarButtonItemClicked:)];
-    NSDictionary *textAttributes;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:16], UITextAttributeFont,nil];
-    } else {
-        [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:14], UITextAttributeFont,nil];
-    }
-    [backButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    
-    //Font Array
-    UIBarButtonItem *fontSizeAlert = [[UIBarButtonItem alloc] initWithTitle:@"Size" style:UIBarButtonItemStyleBordered target:self action:nil];
-    [fontSizeAlert setEnabled:FALSE];
-    
-    UIBarButtonItem *fontSize12 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size12",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize18 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Size18",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize24 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size24",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize28 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size28",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize32 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size32",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize36 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size36",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize40 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size40",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize45 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size45",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize50 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size50",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize55 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size55",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize60 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size60",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize80 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size80",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize100 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size100",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize160 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size160",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    UIBarButtonItem *fontSize260 = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Size260",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontSizeBarButtonItemClicked:)];
-    
-    if (_fontSizeArray == nil) {
-        if (isUserInterfaceIdiomPhone) {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize80,nil];
-        } else {
-            _fontSizeArray = [NSArray arrayWithObjects:backButton,fontSizeAlert,fontSize12,fontSize18,fontSize24,fontSize28,fontSize32,fontSize36, fontSize40, fontSize45,fontSize50, fontSize55, fontSize60, fontSize80, fontSize100, fontSize160,fontSize260,nil];
-        }
-        
-    }
-    
-    if (_fontTypeArray == nil) {
-        _fontTypeArray = [NSMutableArray arrayWithObject:backButton];
-        
-        NSArray *fontArray = [Common recommendedFonts];
-        for (NSString *fontName in fontArray) {
-            UIBarButtonItem *fontBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:fontName style:UIBarButtonItemStyleBordered target:self action:@selector(changeFontTypeBarButtonItemClicked:)];
-            [_fontTypeArray addObject:fontBarButtonItem];
-        }
-        
-    }
-    
-    //Color Array
-    UIBarButtonItem *redButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Red",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    UIBarButtonItem *blueButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Blue",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    UIBarButtonItem *blackButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Black",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    UIBarButtonItem *yelloButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    UIBarButtonItem *greenButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_Green",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    UIBarButtonItem *whiteButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Color_White",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeColorBarButtonItemClicked:)];
-    
-    if (_colorArray == nil) {
-        _colorArray = [NSArray arrayWithObjects:backButton,redButton,blueButton,blackButton,yelloButton,greenButton,whiteButton,nil];
-    }
-    
-    //Align Array
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Left",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
-    
-    UIBarButtonItem *centerButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Center",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Right",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
-    
-    UIBarButtonItem *justifyButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Justify",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
-    
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil) style:UIBarButtonItemStyleBordered target:self action:@selector(changeAlignBarButtonItemClicked:)];
-
-    
-    if (_alignArray == nil) {
-        _alignArray = [NSArray arrayWithObjects:backButton,leftButton,centerButton,rightButton,justifyButton,verticalButton,nil];
-    }
-    
-}
-
 
 - (void) setUpInputView {
     DDLogInfo(@"%s",__FUNCTION__);
-    [self setInputViewTopViewItems];
     
     int columnCount;
     int rowCount;
@@ -4298,37 +4067,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    //Keyboard top view for keyboard input view
-    if (0) { //TODO
-        if (_keyboardTopViewForInputView == nil) {
-            _keyboardTopViewForInputView = [[UIToolbar alloc]init];
-        }
-        
-        [_keyboardTopViewForInputView setBarStyle:UIBarStyleBlackTranslucent];
-        
-        _keyboardTopViewForInputView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        
-        _keyboardTopViewForInputView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
-        [_keyboardTopViewForInputView setItems:_buttonArrayForInputView];
-        [_keyboardInputBaseView addSubview:_keyboardTopViewForInputView];
-        [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputView];
-    } else {
-        if (_keyboardTopViewForInputViewV2 == nil) {
-            _keyboardTopViewForInputViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
-        }
-        _keyboardTopViewForInputViewV2.delegate = self;
-        _keyboardTopViewForInputViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        [_keyboardTopViewForInputViewV2 setupSummaryArray];
-        [_keyboardInputBaseView addSubview:_keyboardTopViewForInputViewV2];
-        [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputViewV2];
+    if (_keyboardTopViewForInputViewV2 == nil) {
+        _keyboardTopViewForInputViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
     }
+    _keyboardTopViewForInputViewV2.delegate = self;
+    _keyboardTopViewForInputViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [_keyboardTopViewForInputViewV2 setupSummaryArray];
+    [_keyboardInputBaseView addSubview:_keyboardTopViewForInputViewV2];
+    [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputViewV2];
  
     
 }
 
 - (void) setUpInputAccessoryView {
     DDLogInfo(@"%s",__FUNCTION__);
-    [self setInputAccessoryViewItems];
     
     int columnCount;
     int rowCount;
@@ -4346,42 +4098,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
     }
     
-    if (0) { //TODO
-        //Keyboard top view for accessary view
-        if (_keyboardTopView == nil) {
-            _keyboardTopView = [[UIToolbar alloc]init];
-        }
-        
-        [_keyboardTopView setBarStyle:UIBarStyleBlackTranslucent];
-        
-        _keyboardTopView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        
-        _keyboardTopView.frame = CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight);
-        [_keyboardTopView setItems:_buttonArray];
-        
-        //default input method
-        [_subheadingQuestion setInputAccessoryView:_keyboardTopView];
-        [_mainQuestion setInputAccessoryView:_keyboardTopView];
-        [_subQuestion setInputAccessoryView:_keyboardTopView];
-        [_subheadingAnswer setInputAccessoryView:_keyboardTopView];
-        [_mainAnswer setInputAccessoryView:_keyboardTopView];
-        [_subAnswer setInputAccessoryView:_keyboardTopView];
-    } else {
-        if (_keyboardTopViewV2 == nil) {
-            _keyboardTopViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
-        }
-        _keyboardTopViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        [_keyboardTopViewV2 setupSummaryArray];
-        _keyboardTopViewV2.delegate = self;
-        
-        //default input method
-        [_subheadingQuestion setInputAccessoryView:_keyboardTopViewV2];
-        [_mainQuestion setInputAccessoryView:_keyboardTopViewV2];
-        [_subQuestion setInputAccessoryView:_keyboardTopViewV2];
-        [_subheadingAnswer setInputAccessoryView:_keyboardTopViewV2];
-        [_mainAnswer setInputAccessoryView:_keyboardTopViewV2];
-        [_subAnswer setInputAccessoryView:_keyboardTopViewV2];
+    if (_keyboardTopViewV2 == nil) {
+        _keyboardTopViewV2 = [[KeyboardTopView alloc]initWithFrame:CGRectMake(0, 0, [Common getScreenWidthInLandscape], cssToolbarHeight)];
     }
+    _keyboardTopViewV2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [_keyboardTopViewV2 setupSummaryArray];
+    _keyboardTopViewV2.delegate = self;
+    
+    //default input method
+    [_subheadingQuestion setInputAccessoryView:_keyboardTopViewV2];
+    [_mainQuestion setInputAccessoryView:_keyboardTopViewV2];
+    [_subQuestion setInputAccessoryView:_keyboardTopViewV2];
+    [_subheadingAnswer setInputAccessoryView:_keyboardTopViewV2];
+    [_mainAnswer setInputAccessoryView:_keyboardTopViewV2];
+    [_subAnswer setInputAccessoryView:_keyboardTopViewV2];
     
 }
 
@@ -4405,7 +4135,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
-    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopView];
+    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopViewV2];
     [_lastBecomeFirstRespondTextView setInputView:nil];
     
     //step2:
@@ -5019,73 +4749,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark - Text edit function
 
 
-- (void) fontTypeAction {
-    DDLogInfo(@"%s",__FUNCTION__);
-    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
-    if ([Common isSymbolIncluded:responderTextView.text]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-    
-    
-    [_keyboardTopView setItems:_fontTypeArray animated:TRUE];
-}
-
-- (void) sizeUpDownAction {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopView setItems:_fontSizeArray animated:TRUE];
-}
-
-- (void) selectColorAction {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopView setItems:_colorArray animated:TRUE];
-}
-
-/**
- *  callback当点击toolbar中的"align" barbutton item时
- */
-- (void) alignAction {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopView setItems:_alignArray animated:TRUE];
-    
-    [self updateAllAlignmentBarButtonsStatus];
-}
-
-- (void) fontTypeActionForInputView {
-    DDLogInfo(@"%s",__FUNCTION__);
-    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
-    if ([Common isSymbolIncluded:responderTextView.text]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can not change font once text includes symbol" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-    
-    [_keyboardTopViewForInputView setItems:_fontTypeArray animated:TRUE];
-}
-
-- (void) sizeUpDownActionForInputView {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopViewForInputView setItems:_fontSizeArray animated:TRUE];
-}
-
-- (void) selectColorActionForInputView {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopViewForInputView setItems:_colorArray animated:TRUE];
-}
-
-/**
- *  callback当点击toolbar中的"align" barbutton item时
- */
-- (void) alignActionForInputView {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopViewForInputView setItems:_alignArray animated:TRUE];
-    
-    [self updateAllAlignmentBarButtonsStatus];
-    
-}
-
-- (void) emotionAndKeyboardSwitch:(id) sender {
+- (void) symbolAndKeyboardSwitch:(id) sender {
     DDLogInfo(@"%s",__FUNCTION__);
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
@@ -5276,8 +4940,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     responderTextView.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:selectFontSize], 0, 0, 0.0);
-    
-    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 - (void) changeAlignBarButtonItemClicked:(id) sender{
@@ -5347,9 +5009,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAlignAnswer = selectAlignStr;
         }
     }
-    
-    
-    [_keyboardTopView setItems:_buttonArray animated:TRUE];
 }
 
 - (void) changeColorBarButtonItemClicked:(id) sender{
@@ -5390,17 +5049,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainColorAnswer = selectColorStr;
     } else if (responderTextView.tag == kTagSubAnswer) {
         _subColorAnswer = selectColorStr;
-    } 
-    
-    [_keyboardTopView setItems:_buttonArray animated:TRUE];
+    }
 }
 
-
-- (void) backBarButtonItemClicked:(id) sender{
-    DDLogInfo(@"%s",__FUNCTION__);
-    [_keyboardTopView setItems:_buttonArray animated:TRUE];
-    [_keyboardTopViewForInputView setItems:_buttonArrayForInputView animated:TRUE];
-}
 
 #pragma mark -
 #pragma mark - UITextFieldDelegate
@@ -5418,7 +5069,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _keyboardInputBaseView.hidden = TRUE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
     
-    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopView];
+    [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopViewV2];
     [_lastBecomeFirstRespondTextView setInputView:nil];
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
@@ -6737,28 +6388,162 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  更新InputView中的Alignment中Veritcal barbutton item的状态（颜色）
  */
 - (void) updateVerticalAlignmentBarButtonStatus {
-    UIBarButtonItem *targetBarButtonItem = [_alignArray lastObject];
+    
+    NSArray *targetButtonArray;
+    if (_lastBecomeFirstRespondTextView.inputView == nil) {
+        targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+    } else {
+        targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+    }
+    
+    
     if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
         
-        [targetBarButtonItem setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:
-          [UIColor redColor], NSForegroundColorAttributeName,nil]
-                                           forState:UIControlStateNormal];
+        [[targetButtonArray lastObject] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         
     } else {
         
-        [targetBarButtonItem setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:
-          [UIColor whiteColor], NSForegroundColorAttributeName,nil]
-                                           forState:UIControlStateNormal];
+        [[targetButtonArray lastObject] setBackgroundImage:nil forState:UIControlStateNormal];
+        
+    }
+}
+
+
+- (void) updateSizeButtonsStatus {
+    if (_lastBecomeFirstRespondTextView) {
+        
+        NSArray *targetButtonArray;
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+        } else {
+            targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+        }
+        
+        NSInteger size;
+        if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+            size = _subheadingSizeQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+            size = _mainSizeQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+            size = _subSizeQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+            size = _subheadingSizeAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+            size = _mainSizeAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+            size = _subSizeAnswer;
+        }
+        
+        for (UIButton *button in targetButtonArray) {
+            if ([button.titleLabel.text integerValue]  == size) {
+                [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+            } else {
+                [button setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+            
+        }
+
+        
+    }
+}
+
+- (void) updateColorButtonsStatus {
+    
+    if (_lastBecomeFirstRespondTextView) {
+        
+        NSArray *targetButtonArray;
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+        } else {
+            targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+        }
+        
+        NSString *color;
+        if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+            color = _subheadingColorQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+            color = _mainColorQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+            color = _subColorQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+            color = _subheadingColorAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+            color = _mainColorAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+            color = _subColorAnswer;
+        }
+        
+        BOOL isDefault = YES;
+        
+        for (UIButton *button in targetButtonArray) {
+            if ([button.titleLabel.text isEqualToString:color]) {
+                [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                isDefault= NO;
+            } else {
+                [button setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+            
+        }
+        
+        if (isDefault) {
+              //第一个是back，所以需要index = 1开始
+            [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+        }
+        
+    }
+    
+}
+
+- (void) updateFontButtonsStatus {
+    if (_lastBecomeFirstRespondTextView) {
+        
+        NSArray *targetButtonArray;
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+        } else {
+            targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+        }
+        
+        NSString *fontFamilyName;
+        if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+            fontFamilyName = _subheadingFontQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+            fontFamilyName = _mainFontQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+            fontFamilyName = _subFontQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+            fontFamilyName = _subheadingFontAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+            fontFamilyName = _mainFontAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+            fontFamilyName = _subFontAnswer;
+        }
+        
+        BOOL isDefault = YES;
+        
+        for (UIButton *button in targetButtonArray) {
+            if ([button.titleLabel.text isEqualToString:fontFamilyName]) {
+                [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                isDefault= NO;
+            } else {
+                [button setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+            
+        }
+        
+        if (isDefault) {
+            //第一个是back，所以需要index = 1开始
+            [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+        }
         
     }
 }
 
 /**
  *  更新InputView中的Alignment中所有barbutton的状态,包括left, right, center,justify和veritcal
+ 
  */
-- (void) updateAllAlignmentBarButtonsStatus {
+- (void) updateAlignButtonsStatus {
     if (_lastBecomeFirstRespondTextView) {
         
         //step1: vertical alignment
@@ -6766,50 +6551,37 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         //step2: left, right, center, justify alignment
         int targetIndex = 0;
-        UIBarButtonItem *targetBarButtonItem;
+        NSArray *targetButtonArray;
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+        } else {
+            targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+        }
+        
         switch (_lastBecomeFirstRespondTextView.textAlignment) {
             case NSTextAlignmentLeft:
                 targetIndex = 1;  //从1开始，因为第一个是backbutton
-                targetBarButtonItem = _alignArray[1];
-                [targetBarButtonItem setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor redColor], NSForegroundColorAttributeName,nil]
-                                                   forState:UIControlStateNormal];
+                [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentCenter:
                 targetIndex = 2;
-                targetBarButtonItem = _alignArray[2];
-                [targetBarButtonItem setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor redColor], NSForegroundColorAttributeName,nil]
-                                                   forState:UIControlStateNormal];
+                [targetButtonArray[2] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentRight:
                 targetIndex = 3;
-                targetBarButtonItem = _alignArray[3];
-                [targetBarButtonItem setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor redColor], NSForegroundColorAttributeName,nil]
-                                                   forState:UIControlStateNormal];
+                [targetButtonArray[3] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentJustified:
                 targetIndex = 4;
-                targetBarButtonItem = _alignArray[4];
-                [targetBarButtonItem setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor redColor], NSForegroundColorAttributeName,nil]
-                                                   forState:UIControlStateNormal];
+                [targetButtonArray[4] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             default:
                 break;
         }
         
-        for (int i =1; i<[_alignArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
+        for (int i =1; i<[targetButtonArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
             if (i != targetIndex) {
-                [_alignArray[i] setTitleTextAttributes:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  [UIColor whiteColor], NSForegroundColorAttributeName,nil]
-                                                   forState:UIControlStateNormal];
+                [targetButtonArray[i] setBackgroundImage:nil forState:UIControlStateNormal];
             }
         }
         
@@ -6967,27 +6739,44 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender {
     
     [self changeFontTypeBarButtonItemClicked:sender];
+    [self updateFontButtonsStatus];
     
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender {
     [self changeFontSizeBarButtonItemClicked:sender];
+    [self updateSizeButtonsStatus];
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButtonAtIndex:(id) sender {
     [self changeAlignBarButtonItemClicked:sender];
+    [self updateAlignButtonsStatus];
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender {
     [self changeColorBarButtonItemClicked:sender];
+    [self updateColorButtonsStatus];
 }
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSymbolButton:(id)sender {
-    [self emotionAndKeyboardSwitch:sender];
-}
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedDoneButton:(id)sender {
-    [self dismissKeyBoard:sender];
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedMainButton:(id)sender {
+    
+    NSString *title = [(UIButton *)sender titleLabel].text;
+    
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align",@"")]) {
+        [self updateAlignButtonsStatus];
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size",@"")]) {
+        [self updateSizeButtonsStatus];
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color",@"")]) {
+        [self updateColorButtonsStatus];
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
+        [self updateFontButtonsStatus];
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
+       [self symbolAndKeyboardSwitch:sender];
+    } else {
+       [self dismissKeyBoard:sender];
+    }
+    
 }
 
 #pragma mark -

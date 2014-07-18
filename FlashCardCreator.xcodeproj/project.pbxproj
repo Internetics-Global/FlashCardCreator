@@ -151,6 +151,10 @@
 		8800CC5B19525A2D006B80FD /* play_sound_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800CC5919525A2D006B80FD /* play_sound_button.png */; };
 		8800CC5C19525A2D006B80FD /* play_sound_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8800CC5A19525A2D006B80FD /* play_sound_button@2x.png */; };
 		8806407E170011DF00F9B76D /* setting_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8806407D170011DF00F9B76D /* setting_button@2x.png */; };
+		880978FB1978C1E400C3BD1A /* KeyboardTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880978FA1978C1E400C3BD1A /* KeyboardTopView.m */; };
+		880978FD1978CB2400C3BD1A /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 880978FC1978CB2400C3BD1A /* back_button@2x.png */; };
+		880978FF1978CC0300C3BD1A /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 880978FE1978CC0300C3BD1A /* back_button.png */; };
+		880979011978F3C900C3BD1A /* circle_selected_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 880979001978F3C900C3BD1A /* circle_selected_button@2x.png */; };
 		880AF42718C5A60E007F13DF /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880AF42118C5A60A007F13DF /* libTestFlight.a */; };
 		880AF42818C5A633007F13DF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42218C5A60B007F13DF /* README.md */; };
 		880AF42918C5A633007F13DF /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 880AF42318C5A60B007F13DF /* release_notes.md */; };
@@ -799,6 +803,11 @@
 		8800CC5919525A2D006B80FD /* play_sound_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_sound_button.png; path = Resources/play_sound_button.png; sourceTree = "<group>"; };
 		8800CC5A19525A2D006B80FD /* play_sound_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_sound_button@2x.png"; path = "Resources/play_sound_button@2x.png"; sourceTree = "<group>"; };
 		8806407D170011DF00F9B76D /* setting_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_button@2x.png"; path = "Resources/setting_button@2x.png"; sourceTree = "<group>"; };
+		880978F91978C1E400C3BD1A /* KeyboardTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardTopView.h; sourceTree = "<group>"; };
+		880978FA1978C1E400C3BD1A /* KeyboardTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardTopView.m; sourceTree = "<group>"; };
+		880978FC1978CB2400C3BD1A /* back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_button@2x.png"; path = "Resources/back_button@2x.png"; sourceTree = "<group>"; };
+		880978FE1978CC0300C3BD1A /* back_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_button.png; path = Resources/back_button.png; sourceTree = "<group>"; };
+		880979001978F3C900C3BD1A /* circle_selected_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle_selected_button@2x.png"; path = "Resources/circle_selected_button@2x.png"; sourceTree = "<group>"; };
 		880AF42118C5A60A007F13DF /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		880AF42218C5A60B007F13DF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		880AF42318C5A60B007F13DF /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -1479,6 +1488,8 @@
 		2DAAE19F16B8CE2300EA6D90 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				880978FE1978CC0300C3BD1A /* back_button.png */,
+				880978FC1978CB2400C3BD1A /* back_button@2x.png */,
 				8813FA471977A3F000D32447 /* chang_image@2x.png */,
 				8813FA451977A39900D32447 /* delete@2x.png */,
 				88B377561960EE8400ED2459 /* delete_button.png */,
@@ -1508,6 +1519,7 @@
 				887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */,
 				887A45B51929E36B007C94FB /* change_card_layout_template.png */,
 				887A45B61929E36B007C94FB /* change_card_layout_template@2x.png */,
+				880979001978F3C900C3BD1A /* circle_selected_button@2x.png */,
 				882ACFDF192C537600CDAD15 /* dotted_line@2x.png */,
 				885C3DC1192615E10090F63C /* done_button@2x.png */,
 				885C3D951925C8DE0090F63C /* add_pack_button@2x.png */,
@@ -1573,6 +1585,8 @@
 		2DBD6DD7169BCE2900962A80 /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				880978F91978C1E400C3BD1A /* KeyboardTopView.h */,
+				880978FA1978C1E400C3BD1A /* KeyboardTopView.m */,
 				88B0F7931777BAAF00B6E83A /* Emotion */,
 				2D2E33A516F2C6F600489286 /* FlashCard.h */,
 				2D2E33A616F2C6F600489286 /* FlashCard.m */,
@@ -1950,7 +1964,7 @@
 				ORGANIZATIONNAME = Internetics;
 				TargetAttributes = {
 					2DCE0B0616798E04007A8CAD = {
-						DevelopmentTeam = 35A5R96666;
+						DevelopmentTeam = Y8HQA4YE8L;
 					};
 				};
 			};
@@ -2284,6 +2298,7 @@
 				8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */,
 				2DC177AE16E46AA800939E61 /* help1.jpg in Resources */,
 				887BD97118D6710500E4DA21 /* templateScreenshot7_answer.png in Resources */,
+				880978FD1978CB2400C3BD1A /* back_button@2x.png in Resources */,
 				2DC177AF16E46AA800939E61 /* help2.jpg in Resources */,
 				2DC177B016E46AA800939E61 /* help3.jpg in Resources */,
 				885C3DD71927818E0090F63C /* save_button.png in Resources */,
@@ -2369,6 +2384,7 @@
 				8810F481170B025B00D40562 /* help6.jpg in Resources */,
 				88EEEE69180E434F002AB9A1 /* play.png in Resources */,
 				88F4D02D192A1DF9005E4BFC /* record_button@2x.png in Resources */,
+				880978FF1978CC0300C3BD1A /* back_button.png in Resources */,
 				880AF42818C5A633007F13DF /* README.md in Resources */,
 				881002F9180F801900FA0A52 /* play@2x.png in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
@@ -2377,6 +2393,7 @@
 				8800CC5B19525A2D006B80FD /* play_sound_button.png in Resources */,
 				887A45E11929EB29007C94FB /* edit_button.png in Resources */,
 				8813908C193560FD00E04251 /* icon~29.png in Resources */,
+				880979011978F3C900C3BD1A /* circle_selected_button@2x.png in Resources */,
 				881F2717192B5C740068648D /* w2048.png in Resources */,
 				881390921935613500E04251 /* icon~40.png in Resources */,
 				88491B351714522300833692 /* templateScreenshot0_answer_iPad.png in Resources */,
@@ -2479,6 +2496,7 @@
 				2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */,
 				2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */,
 				2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */,
+				880978FB1978C1E400C3BD1A /* KeyboardTopView.m in Sources */,
 				2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */,
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
@@ -2627,8 +2645,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2644,6 +2662,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "0764E9EE-6029-4B2F-A3FD-947334DF493A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2657,8 +2676,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2667,6 +2686,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
+				PROVISIONING_PROFILE = "0764E9EE-6029-4B2F-A3FD-947334DF493A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2681,8 +2701,8 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2703,7 +2723,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D47C8D72-9E43-492F-86C6-A8D599232629";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
@@ -2719,8 +2739,8 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kim  Halliday (G9SYU78C68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2742,7 +2762,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D47C8D72-9E43-492F-86C6-A8D599232629";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "E6418C9D-6319-4B27-9C5C-341488690DD9";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";

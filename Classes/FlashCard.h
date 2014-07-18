@@ -137,14 +137,6 @@ typedef enum{
     BOOL    _doneButtonPressed;
     
     //keyboard related
-    NSMutableArray                     *_fontTypeArray;
-    NSArray                            *_fontSizeArray;
-    NSArray                            *_colorArray;
-    NSArray                            *_alignArray;
-    NSArray                            *_buttonArray; //for input accessory view
-    NSArray                            *_buttonArrayForInputView; //for input view
-    UIToolbar                          *_keyboardTopView; //for input accessory view
-    UIToolbar                          *_keyboardTopViewForInputView; //for input view
     
     UIView                             *_keyboardInputBaseView; //for input view
     KeyboardSwitchButtonType            _keyboardSwitchButtonType;
