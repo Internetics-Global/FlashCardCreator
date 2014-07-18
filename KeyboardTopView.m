@@ -7,9 +7,9 @@
 //
 
 #import "KeyboardTopView.h"
+#import "Common.h"
 
 #define K_Item_Width  80
-#define K_Item_Font_Width  80
 
 @interface KeyboardTopView() {
     Back_Type _backType;
@@ -51,7 +51,7 @@
     self.scrollView.pagingEnabled = NO;
     [self addSubview:self.scrollView];
     
-    self.sizeArray = @[@"Back",@12,@18,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@160,@260];
+    self.sizeArray = @[@"Back",@12,@14,@18,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@160,@260];
     self.colorArray = @[@"Back",@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"];
     self.alignArray = @[@"Back",@"Left",@"Center",@"Right",@"Justify",@"Vertical"];
     self.fontArray = @[@"Back",@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus"];
@@ -78,12 +78,12 @@
     
     _backType = Back_Type_Font;
     
-    self.scrollView.contentSize = CGSizeMake(K_Item_Font_Width * [self.fontArray count], CGRectGetHeight(self.frame));
+    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [self.fontArray count], CGRectGetHeight(self.frame));
     
     for (int i = 0; i<[self.fontArray count]; i++) {
         UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
         myButton.tag = i;
-        myButton.frame = CGRectMake(i*K_Item_Font_Width, 0, K_Item_Font_Width, CGRectGetHeight(self.frame));
+        myButton.frame = CGRectMake(i*K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
         [myButton titleLabel].font = [UIFont boldSystemFontOfSize:12];
         
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -317,6 +317,18 @@
 -(NSArray *) getCurrentButtonArray {
     
     return [self.scrollView subviews];
+}
+
+- (void) scrollToButtonIndex:(int) index {
+    
+    int offsetX = 0;
+    int screenWidth = [Common getScreenWidthInLandscape];
+    if (index*K_Item_Width > screenWidth) {
+        offsetX = index*K_Item_Width - screenWidth/2;
+    }
+    
+    self.scrollView.contentOffset = CGPointMake(offsetX,0);
+    
 }
 
 

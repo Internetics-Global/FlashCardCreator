@@ -55,5 +55,7 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 
 -(NSArray *) getCurrentButtonArray;
 
+- (void) scrollToButtonIndex:(int) index;
+
 
 @end

@@ -59,9 +59,9 @@
         _mainSize = 12;
         _subSize = 12;
     } else {
-        _subheadingSize = 34;
-        _mainSize = 30;
-        _subSize = 30;
+        _subheadingSize = 32;
+        _mainSize = 28;
+        _subSize = 28;
     }
     
     

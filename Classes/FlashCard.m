@@ -5570,6 +5570,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
+    
+    //必须把auto resize的最终字体大小限制在离散值内
+    //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
+    for (int i = 1; i< [_keyboardTopViewV2.sizeArray count] - 1; i++) {
+        NSString *sizeStr = [_keyboardTopViewV2.sizeArray objectAtIndex:i];
+        if (i == 1) {
+            if (textView.font.pointSize < [sizeStr integerValue]) {
+                DDLogWarn(@"%s:strange behavior 1",__FUNCTION__);
+                [textView.font fontWithSize:[sizeStr integerValue]];
+                break;;
+            }
+        } else if (i == [_keyboardTopViewV2.sizeArray count] - 1) {
+            if (textView.font.pointSize > [sizeStr integerValue]) {
+                [textView.font fontWithSize:[sizeStr integerValue]];
+                DDLogWarn(@"%s:strange behavior 2",__FUNCTION__);
+                break;;
+            }
+        } else {
+            if ((textView.font.pointSize >= [sizeStr integerValue]) && ((textView.font.pointSize < [[_keyboardTopViewV2.sizeArray objectAtIndex:i + 1] integerValue]))) {
+                [textView.font fontWithSize:[sizeStr integerValue]];
+            }
+        }
+    }
+    
+    
     if (outputFlag) {
         DDLogInfo(@"CardSN %d:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize);
     }
@@ -6434,15 +6459,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             size = _subSizeAnswer;
         }
         
-        for (UIButton *button in targetButtonArray) {
+        int contentOffsetIndex = 0;
+        for (int i = 0;i < [targetButtonArray count];i++) {
+            UIButton *button = targetButtonArray[i];
             if ([button.titleLabel.text integerValue]  == size) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                contentOffsetIndex = i;
             } else {
                 [button setBackgroundImage:nil forState:UIControlStateNormal];
             }
             
         }
-
+        
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+        } else {
+            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
+        }
         
     }
 }
@@ -6475,19 +6508,30 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         BOOL isDefault = YES;
         
-        for (UIButton *button in targetButtonArray) {
+        int contentOffsetIndex = 0;
+        for (int i = 0;i < [targetButtonArray count];i++) {
+            UIButton *button = targetButtonArray[i];
             if ([button.titleLabel.text isEqualToString:color]) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                contentOffsetIndex = i;
                 isDefault= NO;
             } else {
                 [button setBackgroundImage:nil forState:UIControlStateNormal];
             }
+            
+            contentOffsetIndex ++;
             
         }
         
         if (isDefault) {
               //第一个是back，所以需要index = 1开始
             [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+        }
+        
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+        } else {
+            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
         }
         
     }
@@ -6521,19 +6565,29 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         BOOL isDefault = YES;
         
-        for (UIButton *button in targetButtonArray) {
+        int contentOffsetIndex = 0;
+        for (int i = 0;i < [targetButtonArray count];i++) {
+            UIButton *button = targetButtonArray[i];
             if ([button.titleLabel.text isEqualToString:fontFamilyName]) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                contentOffsetIndex = i;
                 isDefault= NO;
             } else {
                 [button setBackgroundImage:nil forState:UIControlStateNormal];
             }
+            
             
         }
         
         if (isDefault) {
             //第一个是back，所以需要index = 1开始
             [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+        }
+        
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+        } else {
+            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
         }
         
     }
@@ -6550,7 +6604,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self updateVerticalAlignmentBarButtonStatus];
         
         //step2: left, right, center, justify alignment
-        int targetIndex = 0;
         NSArray *targetButtonArray;
         if (_lastBecomeFirstRespondTextView.inputView == nil) {
             targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
@@ -6558,21 +6611,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
         }
         
+        int contentOffsetIndex = 0;
         switch (_lastBecomeFirstRespondTextView.textAlignment) {
             case NSTextAlignmentLeft:
-                targetIndex = 1;  //从1开始，因为第一个是backbutton
+                contentOffsetIndex = 1;  //从1开始，因为第一个是backbutton
                 [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentCenter:
-                targetIndex = 2;
+                contentOffsetIndex = 2;
                 [targetButtonArray[2] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentRight:
-                targetIndex = 3;
+                contentOffsetIndex = 3;
                 [targetButtonArray[3] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentJustified:
-                targetIndex = 4;
+                contentOffsetIndex = 4;
                 [targetButtonArray[4] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             default:
@@ -6580,9 +6634,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         for (int i =1; i<[targetButtonArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
-            if (i != targetIndex) {
+            if (i != contentOffsetIndex) {
                 [targetButtonArray[i] setBackgroundImage:nil forState:UIControlStateNormal];
             }
+        }
+        
+        
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+        } else {
+            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
         }
         
     
