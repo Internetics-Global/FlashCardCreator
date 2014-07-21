@@ -407,12 +407,16 @@
     
     int offsetX = 0;
     int screenWidth = [Common getScreenWidthInLandscape];
-    if (index*K_Item_Width > screenWidth/2) {
-        offsetX = index*K_Item_Width - screenWidth/2;
+    
+    if (self.scrollView.contentSize.width <= screenWidth) {
+        self.scrollView.contentOffset = CGPointMake(0,0);
+    } else {
+        if (index*K_Item_Width > screenWidth/2) {
+            offsetX = index*K_Item_Width - screenWidth/2;
+        }
+        self.scrollView.contentOffset = CGPointMake(offsetX,0);
     }
-    
-    self.scrollView.contentOffset = CGPointMake(offsetX,0);
-    
+ 
 }
 
 

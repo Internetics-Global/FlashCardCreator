@@ -142,7 +142,11 @@
 
 -(void)insert{
 	if (_answerID == -1) {
-		_answerID = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
+		_answerID = [[NSDate date] timeIntervalSince1970];
+        BOOL isExist = [SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"];
+        if (isExist) {
+            DDLogError(@"%s:_answerID has already existed",__FUNCTION__);
+        }
 	}
 
     NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image, logo, css_id, template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", %d, %d, %d,%d, %d, %d,\"%@\",\"%@\",\"%@\")", _answerID, _cardID, _title, _imageFullPath, _logoFullPath, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
@@ -221,6 +225,8 @@
             }
         }
     }
+    
+    [self.css destroy];
 }
 
 +(NSMutableDictionary *) answerForCardID:(NSInteger)cardID{

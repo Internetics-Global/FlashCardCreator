@@ -99,7 +99,11 @@
 
 -(void)insert{
 	if (_cardID == -1) {
-		_cardID = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
+		_cardID = [[NSDate date] timeIntervalSince1970];
+        BOOL isExist = [SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"];
+        if (isExist) {
+            DDLogError(@"%s:_cardID has already existed",__FUNCTION__);
+        }
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
