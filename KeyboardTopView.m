@@ -8,17 +8,30 @@
 
 #import "KeyboardTopView.h"
 #import "Common.h"
+#import "DDLog.h"
 
 #define K_Item_Width  80
 
+#define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol",@"Save"]
+#define K_NominalSizeArray @[@12,@14,@18,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
+#define K_ColorArray       @[@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"]
+#define K_AlignArray       @[@"Left",@"Center",@"Right",@"Justify",@"Vertical"]
+#define K_FontArray        @[@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus"]
+
+#define K_FontScale_iPhone     1.0
+#define K_FontScale_iPad       2.0
+
 @interface KeyboardTopView() {
     Back_Type _backType;
+    
+    UIImageView *_backImageView;
 }
 
 @end
 
 
 @implementation KeyboardTopView
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -38,6 +51,16 @@
 
 - (void)baseInit {
     
+    _backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_button"]];
+    _backImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _backImageView.frame = CGRectMake(0, 0, K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    [self addSubview:_backImageView];
+    _backImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickedBackButton)];
+    oneTap.numberOfTapsRequired = 1;
+    [_backImageView addGestureRecognizer:oneTap];
+    
     self.scrollView = [ [UIScrollView alloc ] initWithFrame:self.bounds];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.userInteractionEnabled = YES;
@@ -51,11 +74,11 @@
     self.scrollView.pagingEnabled = NO;
     [self addSubview:self.scrollView];
     
-    self.sizeArray = @[@"Back",@12,@14,@18,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@160,@260];
-    self.colorArray = @[@"Back",@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"];
-    self.alignArray = @[@"Back",@"Left",@"Center",@"Right",@"Justify",@"Vertical"];
-    self.fontArray = @[@"Back",@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus"];
-    self.summaryArray = @[@"Align",@"Size",@"Color",@"Font",@"Symbol",@"Done"];
+    self.summaryArray = K_SummaryArray;
+    self.nominalSizeArray = K_NominalSizeArray;
+    self.colorArray = K_ColorArray;
+    self.alignArray = K_AlignArray;
+    self.fontArray = K_FontArray;
     
     _backType = Back_Type_Unkown;
     
@@ -68,6 +91,70 @@
             [v removeFromSuperview];
         }
     }
+}
+
+- (float) scale {
+    
+    if (isUserInterfaceIdiomPhone) {
+        return K_FontScale_iPhone;
+    } else {
+        return K_FontScale_iPad;
+    }
+    
+}
+
+- (NSArray *) getRealSizeArray {
+    NSMutableArray *returnArray = [NSMutableArray array];
+    for (NSString *item in self.nominalSizeArray) {
+        float val = ([item integerValue] * [self scale]);
+        [returnArray addObject:[NSString stringWithFormat:@"%d",(int)val]];
+    }
+    
+    return returnArray;
+}
+
+- (int) getRealSizeFromNominalSize:(int) nominalSize {
+    BOOL isFound = FALSE;
+    BOOL targetIndex = 0;
+    for (int i= 0; i < [self.nominalSizeArray count]; i++) {
+        NSString *item = [self.nominalSizeArray objectAtIndex:i];
+        if ([item integerValue] == nominalSize) {
+            targetIndex = i;
+            isFound = YES;
+            break;
+        }
+    }
+    
+    if (isFound) {
+        NSString *foundItem = [self.realSizeArray objectAtIndex:targetIndex];
+        return [foundItem integerValue];
+    } else {
+        DDLogError(@"%s: can not found",__FUNCTION__);
+        return -1;
+    }
+    
+}
+
+- (int) getNominalSizeFromRealSize:(int) realSize {
+    BOOL isFound = FALSE;
+    BOOL targetIndex = 0;
+    for (int i= 0; i < [self.realSizeArray count]; i++) {
+        NSString *item = [self.realSizeArray objectAtIndex:i];
+        if ([item integerValue] == realSize) {
+            targetIndex = i;
+            isFound = YES;
+            break;
+        }
+    }
+    
+    if (isFound) {
+        NSString *foundItem = [self.nominalSizeArray objectAtIndex:targetIndex];
+        return [foundItem integerValue];
+    } else {
+        DDLogError(@"%s: can not found",__FUNCTION__);
+        return -1;
+    }
+    
 }
 
 #pragma mark – Font
@@ -89,19 +176,14 @@
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.scrollView addSubview:myButton];
         
-        if (i ==0) {
-            [myButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedBackButton:) forControlEvents:UIControlEventTouchDown];
-        } else {
-            NSString *title = self.fontArray[i];
-            [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedFontChangeButton:) forControlEvents:UIControlEventTouchDown];
-        }
+        NSString *title = self.fontArray[i];
+        [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
+        [myButton addTarget:self action:@selector(didClickedFontChangeButton:) forControlEvents:UIControlEventTouchDown];
     
     }
     
-    
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.hidden = NO;
 }
 
 - (void) didClickedFontChangeButton:(id) sender {
@@ -131,18 +213,14 @@
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.scrollView addSubview:myButton];
         
-        if (i ==0) {
-            [myButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedBackButton:) forControlEvents:UIControlEventTouchDown];
-        } else {
-            NSString *title = [NSString stringWithFormat:@"ToolbarItem_Color_%@",self.colorArray[i]];
-            [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedColorChangeButton:) forControlEvents:UIControlEventTouchDown];
-        }
+        NSString *title = [NSString stringWithFormat:@"ToolbarItem_Color_%@",self.colorArray[i]];
+        [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
+        [myButton addTarget:self action:@selector(didClickedColorChangeButton:) forControlEvents:UIControlEventTouchDown];
         
     }
     
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.hidden = NO;
     
 }
 
@@ -173,19 +251,14 @@
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.scrollView addSubview:myButton];
         
-        if (i ==0) {
-            [myButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedBackButton:) forControlEvents:UIControlEventTouchDown];
-        } else {
-            NSString *title = [NSString stringWithFormat:@"ToolbarItem_Align_%@",self.alignArray[i]];
-            [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedAlignChangeButton:) forControlEvents:UIControlEventTouchDown];
-        }
+        NSString *title = [NSString stringWithFormat:@"ToolbarItem_Align_%@",self.alignArray[i]];
+        [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
+        [myButton addTarget:self action:@selector(didClickedAlignChangeButton:) forControlEvents:UIControlEventTouchDown];
         
     }
     
-    
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.hidden = NO;
 }
 
 - (void) didClickedAlignChangeButton:(id) sender {
@@ -204,9 +277,9 @@
     
     _backType = Back_Type_Size;
     
-    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [self.sizeArray count], CGRectGetHeight(self.frame));
+    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [self.nominalSizeArray count], CGRectGetHeight(self.frame));
     
-    for (int i = 0; i<[self.sizeArray count]; i++) {
+    for (int i = 0; i<[self.nominalSizeArray count]; i++) {
         UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
         myButton.tag = i;
         myButton.frame = CGRectMake(i*K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
@@ -215,18 +288,14 @@
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.scrollView addSubview:myButton];
         
-        if (i ==0) {
-            [myButton setImage:[UIImage imageNamed:@"back_button"] forState:UIControlStateNormal];
-            [myButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedBackButton:) forControlEvents:UIControlEventTouchDown];
-        } else {
-            NSString *title = [NSString stringWithFormat:@"ToolbarItem_Size%@",self.sizeArray[i]];
-            [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-            [myButton addTarget:self action:@selector(didClickedSizeChangeButton:) forControlEvents:UIControlEventTouchDown];
-        }
+        NSString *title = [NSString stringWithFormat:@"ToolbarItem_Size%@",self.nominalSizeArray[i]];
+        [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
+        [myButton addTarget:self action:@selector(didClickedSizeChangeButton:) forControlEvents:UIControlEventTouchDown];
         
     }
     
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.hidden = NO;
     
 }
 
@@ -269,7 +338,8 @@
         }
         
     }
-    
+    self.scrollView.frame = self.bounds;
+    _backImageView.hidden = YES;
     
 }
 
@@ -310,20 +380,27 @@
 
 #pragma mark – Common
 
-- (void) didClickedBackButton:(id) sender {
+- (void) didClickedBackButton {
     [self setupSummaryArray];
 }
 
 -(NSArray *) getCurrentButtonArray {
+    NSMutableArray *returnArray = [NSMutableArray array];
     
-    return [self.scrollView subviews];
+    for (UIView *v in self.scrollView.subviews) {
+        if ([v isKindOfClass:[UIButton class]]) {
+            [returnArray addObject:v];
+        }
+    }
+    
+    return returnArray;
 }
 
 - (void) scrollToButtonIndex:(int) index {
     
     int offsetX = 0;
     int screenWidth = [Common getScreenWidthInLandscape];
-    if (index*K_Item_Width > screenWidth) {
+    if (index*K_Item_Width > screenWidth/2) {
         offsetX = index*K_Item_Width - screenWidth/2;
     }
     

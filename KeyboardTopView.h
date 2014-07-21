@@ -39,13 +39,29 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 
 @property (weak, nonatomic) id<KeyboardTopViewDelegate> delegate;
 
-@property (strong, nonatomic) NSArray *sizeArray;
+/**
+ *  keyboard inputview上现实的值，在iPhone上 ＝ 真实值；在iPad则不等于
+ */
+@property (strong, nonatomic) NSArray *nominalSizeArray;
+/**
+ *  实际font size大小，与nominalSizeArray一一对应。实际的字体大小等于realSizeArray ＝ nominalSizeArray[i] * scale
+ */
+@property (strong, nonatomic,getter = getRealSizeArray) NSArray *realSizeArray;
+
 @property (strong, nonatomic) NSArray *colorArray;
 @property (strong, nonatomic) NSArray *fontArray;
 @property (strong, nonatomic) NSArray *alignArray;
 @property (strong, nonatomic) NSArray *summaryArray;
 
+/**
+ *  从nominalSize到realSize
+ */
+- (int) getRealSizeFromNominalSize:(int) nominalSize;
 
+/**
+ *  从realSize到nominalSize
+ */
+- (int) getNominalSizeFromRealSize:(int) realSize;
 
 - (void) setupFontArray;
 - (void) setupAlignArray;

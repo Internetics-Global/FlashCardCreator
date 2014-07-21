@@ -94,6 +94,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     Type_Image_Selector    _typeImageSelector;
     AVAudioPlayer          *_audioPlayer;
     
+    //_keyboardTopViewV2和_keyboardTopViewForInputViewV2内容一样的两份拷贝，
+    //其中_keyboardTopViewV2是为setInputAccessoryView,而_keyboardTopViewForInputViewV2则是inputView的一部分
     KeyboardTopView        *_keyboardTopViewV2;
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
 }
@@ -181,7 +183,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
-    _doneButtonPressed = NO;
+    _saveButtonPressed = NO;
     _templateBackgroundImageName = @"card_background_blue.png";
     _logoLinkURL = @"http://www.";
     _logoImageFullPath = @"";
@@ -4011,8 +4013,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     _keyboardShown = NO;
     
-    if (_doneButtonPressed == YES) {
-        _doneButtonPressed = NO;
+    if (_saveButtonPressed == YES) {
+        _saveButtonPressed = NO;
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
@@ -4151,13 +4153,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     //Step3: save data in keyboardWasHidden
-    if ([[(UIButton *)sender titleLabel].text isEqualToString:NSLocalizedString(@"Keyboard_Save",@"")]) {
-        _doneButtonPressed = YES;
-    } else {
-        _doneButtonPressed = NO;
-    }
-    
-    
+    _saveButtonPressed = YES;
 }
 
 
@@ -4820,110 +4816,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) changeFontSizeBarButtonItemClicked:(id) sender{
     DDLogInfo(@"%s",__FUNCTION__);
-    NSUInteger selectFontSize;
     
-    NSString *title = ((UIButton *) sender).titleLabel.text;;
+    int index = ((UIButton *) sender).tag;
     
+    NSArray *realFontSizeArray = _keyboardTopViewV2.realSizeArray;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
-    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size12",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:12]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:12*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 12;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size18",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:18]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:18*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 18;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size24",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:24]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:24*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 24;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size28",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:28]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:28*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 28;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size32",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:32]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:32*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 32;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size36",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:36]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:36*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 36;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size40",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:40]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:40*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 40;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size45",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:45]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:45*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 45;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size50",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:50]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:50*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 50;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size55",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:55]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:55*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 55;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size60",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:60]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:60*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 60;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size80",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:80]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:80*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 80;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size100",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:100]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:100*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 100;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size160",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:160]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:160*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 160;
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size260",nil)]) {
-        [responderTextView setFont:[responderTextView.font fontWithSize:260]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:260*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 260;
-    } else {
-        [responderTextView setFont:[responderTextView.font fontWithSize:32]];
-        if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
-            [responderTextView setFont:[responderTextView.font fontWithSize:32*kFlashCardViewProporation_iPhone]];
-        }
-        selectFontSize = 32;
+    NSUInteger selectFontSize = [realFontSizeArray [index] integerValue];
+    [responderTextView setFont:[responderTextView.font fontWithSize:selectFontSize]];
+    if ((self.isPlayingCard) && (isUserInterfaceIdiomPhone)) {
+        [responderTextView setFont:[responderTextView.font fontWithSize:selectFontSize*kFlashCardViewProporation_iPhone]];
     }
-    
     
     if (responderTextView.tag == kTagSubheadingQuestion){
         _subheadingSizeQuestion = selectFontSize;
@@ -5573,22 +5476,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //必须把auto resize的最终字体大小限制在离散值内
     //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
-    for (int i = 1; i< [_keyboardTopViewV2.sizeArray count] - 1; i++) {
-        NSString *sizeStr = [_keyboardTopViewV2.sizeArray objectAtIndex:i];
+    for (int i = 1; i< [_keyboardTopViewV2.realSizeArray count] - 1; i++) {
+        NSString *sizeStr = [_keyboardTopViewV2.realSizeArray objectAtIndex:i];
         if (i == 1) {
             if (textView.font.pointSize < [sizeStr integerValue]) {
                 DDLogWarn(@"%s:strange behavior 1",__FUNCTION__);
                 [textView.font fontWithSize:[sizeStr integerValue]];
                 break;;
             }
-        } else if (i == [_keyboardTopViewV2.sizeArray count] - 1) {
+        } else if (i == [_keyboardTopViewV2.realSizeArray count] - 1) {
             if (textView.font.pointSize > [sizeStr integerValue]) {
                 [textView.font fontWithSize:[sizeStr integerValue]];
                 DDLogWarn(@"%s:strange behavior 2",__FUNCTION__);
                 break;;
             }
         } else {
-            if ((textView.font.pointSize >= [sizeStr integerValue]) && ((textView.font.pointSize < [[_keyboardTopViewV2.sizeArray objectAtIndex:i + 1] integerValue]))) {
+            if ((textView.font.pointSize >= [sizeStr integerValue]) && ((textView.font.pointSize < [[_keyboardTopViewV2.realSizeArray objectAtIndex:i + 1] integerValue]))) {
                 [textView.font fontWithSize:[sizeStr integerValue]];
             }
         }
@@ -6434,7 +6337,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) updateSizeButtonsStatus {
+- (void) updateSizeButtonsStatus:(id) sender {
     if (_lastBecomeFirstRespondTextView) {
         
         NSArray *targetButtonArray;
@@ -6444,7 +6347,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
         }
         
-        NSInteger size;
+        NSInteger size = -1;
         if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
             size = _subheadingSizeQuestion;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
@@ -6457,12 +6360,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             size = _mainSizeAnswer;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
             size = _subSizeAnswer;
+        } else {
+            //
         }
         
+        int nominalFontSize = [_keyboardTopViewV2 getNominalSizeFromRealSize:size];
         int contentOffsetIndex = 0;
         for (int i = 0;i < [targetButtonArray count];i++) {
             UIButton *button = targetButtonArray[i];
-            if ([button.titleLabel.text integerValue]  == size) {
+            if ([button.titleLabel.text integerValue]  == nominalFontSize) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 contentOffsetIndex = i;
             } else {
@@ -6480,7 +6386,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-- (void) updateColorButtonsStatus {
+- (void) updateColorButtonsStatus:(id)sender {
     
     if (_lastBecomeFirstRespondTextView) {
         
@@ -6538,7 +6444,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (void) updateFontButtonsStatus {
+- (void) updateFontButtonsStatus:(id) sender {
     if (_lastBecomeFirstRespondTextView) {
         
         NSArray *targetButtonArray;
@@ -6581,7 +6487,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (isDefault) {
             //第一个是back，所以需要index = 1开始
-            [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+            [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
         if (_lastBecomeFirstRespondTextView.inputView == nil) {
@@ -6597,7 +6503,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  更新InputView中的Alignment中所有barbutton的状态,包括left, right, center,justify和veritcal
  
  */
-- (void) updateAlignButtonsStatus {
+- (void) updateAlignButtonsStatus:(id) sender {
     if (_lastBecomeFirstRespondTextView) {
         
         //step1: vertical alignment
@@ -6614,26 +6520,26 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         int contentOffsetIndex = 0;
         switch (_lastBecomeFirstRespondTextView.textAlignment) {
             case NSTextAlignmentLeft:
-                contentOffsetIndex = 1;  //从1开始，因为第一个是backbutton
-                [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                contentOffsetIndex = 0;  //从1开始，因为第一个是backbutton
+                [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentCenter:
+                contentOffsetIndex = 1;
+                [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                break;
+            case NSTextAlignmentRight:
                 contentOffsetIndex = 2;
                 [targetButtonArray[2] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
-            case NSTextAlignmentRight:
+            case NSTextAlignmentJustified:
                 contentOffsetIndex = 3;
                 [targetButtonArray[3] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
-                break;
-            case NSTextAlignmentJustified:
-                contentOffsetIndex = 4;
-                [targetButtonArray[4] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             default:
                 break;
         }
         
-        for (int i =1; i<[targetButtonArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
+        for (int i =0; i<[targetButtonArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
             if (i != contentOffsetIndex) {
                 [targetButtonArray[i] setBackgroundImage:nil forState:UIControlStateNormal];
             }
@@ -6800,23 +6706,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender {
     
     [self changeFontTypeBarButtonItemClicked:sender];
-    [self updateFontButtonsStatus];
+    [self updateFontButtonsStatus:sender];
     
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender {
     [self changeFontSizeBarButtonItemClicked:sender];
-    [self updateSizeButtonsStatus];
+    [self updateSizeButtonsStatus:sender];
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButtonAtIndex:(id) sender {
     [self changeAlignBarButtonItemClicked:sender];
-    [self updateAlignButtonsStatus];
+    [self updateAlignButtonsStatus:sender];
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender {
     [self changeColorBarButtonItemClicked:sender];
-    [self updateColorButtonsStatus];
+    [self updateColorButtonsStatus:sender];
 }
 
 
@@ -6825,13 +6731,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *title = [(UIButton *)sender titleLabel].text;
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align",@"")]) {
-        [self updateAlignButtonsStatus];
+        [self updateAlignButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size",@"")]) {
-        [self updateSizeButtonsStatus];
+        [self updateSizeButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color",@"")]) {
-        [self updateColorButtonsStatus];
+        [self updateColorButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
-        [self updateFontButtonsStatus];
+        [self updateFontButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
        [self symbolAndKeyboardSwitch:sender];
     } else {

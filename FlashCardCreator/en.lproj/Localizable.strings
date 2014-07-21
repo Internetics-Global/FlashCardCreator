@@ -66,6 +66,7 @@
 "ToolbarItem_Keyboard"        = "Keyboard";
 "ToolbarItem_Back"        = "Back";
 "ToolbarItem_Done"        = "Done";
+"ToolbarItem_Save"        = "Save";
 
 "ToolbarItem_Align_Left"        = "Left";
 "ToolbarItem_Align_Center"        = "Center";
@@ -87,6 +88,7 @@
 "ToolbarItem_Size60"        = " 60 ";
 "ToolbarItem_Size80"        = " 80 ";
 "ToolbarItem_Size100"        = " 100 ";
+"ToolbarItem_Size130"        = " 130 ";
 "ToolbarItem_Size160"        = " 160 ";
 "ToolbarItem_Size260"        = " 260 ";
 

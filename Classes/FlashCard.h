@@ -134,7 +134,7 @@ typedef enum{
     BOOL    _isAllCardsLogoNeedToBeUpdate;
     BOOL    _dismissKeyboardFromEmotionSwitch;
     BOOL    _isTextFieldsChanged; // when no changes, don't need to do save operation
-    BOOL    _doneButtonPressed;
+    BOOL    _saveButtonPressed;
     
     //keyboard related
     
