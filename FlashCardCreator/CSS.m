@@ -131,7 +131,10 @@
 
 -(void)insert{
 	if (_cssID == -1) {
-		_cssID = [[NSDate date] timeIntervalSince1970];
+		int partA = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
+        int partB = [[NSDate date] timeIntervalSince1970];
+		_cssID = partA + (partB%100000 * 1000);
+        
         BOOL isExist = [SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"];
         if (isExist) {
             DDLogError(@"%s:css has already existed",__FUNCTION__);

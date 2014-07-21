@@ -99,7 +99,11 @@
 
 -(void)insert{
 	if (_cardID == -1) {
-		_cardID = [[NSDate date] timeIntervalSince1970];
+        
+        int partA = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"]  + 1;
+        int partB = [[NSDate date] timeIntervalSince1970];
+		_cardID = partA + (partB%100000 * 1000);
+        
         BOOL isExist = [SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"];
         if (isExist) {
             DDLogError(@"%s:_cardID has already existed",__FUNCTION__);

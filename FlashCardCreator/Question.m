@@ -149,7 +149,10 @@
 
 -(void)insert{
 	if (_questionID == -1) {
-		_questionID = [[NSDate date] timeIntervalSince1970];
+		int partA = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"]  + 1;
+        int partB = [[NSDate date] timeIntervalSince1970];
+		_questionID = partA + (partB%100000 * 1000);
+        
         BOOL isExist = [SQLiteHelper checkIntegerValueExists:_questionID forColumn:@"question_id" inTable:@"Question_Tables"];
         if (isExist) {
             DDLogError(@"%s:_questionID has already existed",__FUNCTION__);

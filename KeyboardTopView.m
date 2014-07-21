@@ -13,7 +13,7 @@
 #define K_Item_Width  80
 
 #define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol",@"Save"]
-#define K_NominalSizeArray @[@12,@14,@18,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
+#define K_NominalSizeArray @[@12,@14,@16,@18,@20,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
 #define K_ColorArray       @[@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"]
 #define K_AlignArray       @[@"Left",@"Center",@"Right",@"Justify",@"Vertical"]
 #define K_FontArray        @[@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus"]

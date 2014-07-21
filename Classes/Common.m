@@ -204,23 +204,25 @@
  */
 + (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element {
     
+    if (element <= [[array firstObject] integerValue]) {
+        DDLogWarn(@"%s:please check element =:%d",__FUNCTION__,element);
+        return 0;
+    }
+    
+    if (element >= [[array lastObject] integerValue]) {
+        DDLogWarn(@"%s:please check element =:%d",__FUNCTION__,element);
+        return [array count] - 1;
+    }
+    
     for (int i = 0; i< [array count] - 1; i++) {
-        
-        if (element <= [[array firstObject] integerValue]) {
-            DDLogWarn(@"%s:strange behavior 1",__FUNCTION__);
-            return i;
-        }
-        
-        if (element >= [[array lastObject] integerValue]) {
-            DDLogWarn(@"%s:strange behavior 2",__FUNCTION__);
-            return i + 1;
-        }
         
         if ((element >= [array[i] integerValue]) && ((element < [array[i +1] integerValue]))) {
             
             return i;
         }
     }
+    
+    DDLogError(@"%s:please check element =:%d",__FUNCTION__,element);
     
     return -1;
     

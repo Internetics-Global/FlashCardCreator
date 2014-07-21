@@ -23,7 +23,7 @@
 @implementation LineLayout
 
 #define ACTIVE_DISTANCE 60
-#define ZOOM_FACTOR 0.1
+#define ZOOM_FACTOR 0
 
 -(id)init
 {
