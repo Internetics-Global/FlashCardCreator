@@ -68,7 +68,7 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
-    //    scrollView.contentOffset = CGPointMake(60, 0);
+    //    scrollView.contentOffset = CGPointMake(60, 0); //内容区域，决定了是否可以滚动
     self.scrollView.directionalLockEnabled = YES; //默认行为是允许用户同时进行横向和纵向的滚动。将这个属性设置为YES会导致将用户的滚动行为锁定成只允许横向或纵向进行，具体方向由初始姿态决定。
     self.scrollView.bounces = YES;
     self.scrollView.pagingEnabled = NO;

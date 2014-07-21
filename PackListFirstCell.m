@@ -21,6 +21,16 @@
         self.addNewPackImageView.layer.masksToBounds = YES;
         self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
         [self.contentView addSubview:self.addNewPackImageView];
+        
+        UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, 250, 30)];
+        desLabel.textAlignment = NSTextAlignmentCenter;
+        desLabel.font = [UIFont boldSystemFontOfSize:20];
+        desLabel.text = @"Create a new pack";
+        desLabel.numberOfLines = 1;
+        desLabel.textColor = [UIColor whiteColor];
+        desLabel.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:desLabel];
+        
     }
     return self;
 }
