@@ -185,7 +185,7 @@
         
         NSString *title = self.fontArray[i];
         [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-        [myButton addTarget:self action:@selector(didClickedFontChangeButton:) forControlEvents:UIControlEventTouchDown];
+        [myButton addTarget:self action:@selector(didClickedFontChangeButton:) forControlEvents:UIControlEventTouchUpInside];
     
     }
     
@@ -222,7 +222,7 @@
         
         NSString *title = [NSString stringWithFormat:@"ToolbarItem_Color_%@",self.colorArray[i]];
         [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-        [myButton addTarget:self action:@selector(didClickedColorChangeButton:) forControlEvents:UIControlEventTouchDown];
+        [myButton addTarget:self action:@selector(didClickedColorChangeButton:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     
@@ -260,7 +260,7 @@
         
         NSString *title = [NSString stringWithFormat:@"ToolbarItem_Align_%@",self.alignArray[i]];
         [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-        [myButton addTarget:self action:@selector(didClickedAlignChangeButton:) forControlEvents:UIControlEventTouchDown];
+        [myButton addTarget:self action:@selector(didClickedAlignChangeButton:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     
@@ -297,7 +297,7 @@
         
         NSString *title = [NSString stringWithFormat:@"ToolbarItem_Size%@",self.nominalSizeArray[i]];
         [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
-        [myButton addTarget:self action:@selector(didClickedSizeChangeButton:) forControlEvents:UIControlEventTouchDown];
+        [myButton addTarget:self action:@selector(didClickedSizeChangeButton:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     
