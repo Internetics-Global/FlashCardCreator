@@ -21,10 +21,10 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 
 @protocol KeyboardTopViewDelegate <NSObject>
 
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButtonAtIndex:(id) sender;
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender;
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender;
-- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButton:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButton:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButton:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButton:(id) sender;
 /**
  *  指第一级的button，包括done, symbol， align, size, color, font
  */

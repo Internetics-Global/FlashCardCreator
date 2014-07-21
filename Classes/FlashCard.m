@@ -5476,25 +5476,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //必须把auto resize的最终字体大小限制在离散值内
     //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
-    for (int i = 1; i< [_keyboardTopViewV2.realSizeArray count] - 1; i++) {
-        NSString *sizeStr = [_keyboardTopViewV2.realSizeArray objectAtIndex:i];
-        if (i == 1) {
-            if (textView.font.pointSize < [sizeStr integerValue]) {
-                DDLogWarn(@"%s:strange behavior 1",__FUNCTION__);
-                [textView.font fontWithSize:[sizeStr integerValue]];
-                break;;
-            }
-        } else if (i == [_keyboardTopViewV2.realSizeArray count] - 1) {
-            if (textView.font.pointSize > [sizeStr integerValue]) {
-                [textView.font fontWithSize:[sizeStr integerValue]];
-                DDLogWarn(@"%s:strange behavior 2",__FUNCTION__);
-                break;;
-            }
-        } else {
-            if ((textView.font.pointSize >= [sizeStr integerValue]) && ((textView.font.pointSize < [[_keyboardTopViewV2.realSizeArray objectAtIndex:i + 1] integerValue]))) {
-                [textView.font fontWithSize:[sizeStr integerValue]];
-            }
-        }
+    int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
+    if (index == - 1) {
+        DDLogError(@"%s:return - 1 when execut [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize]",__FUNCTION__);
+    } else {
+        [textView.font fontWithSize:[[_keyboardTopViewV2.realSizeArray objectAtIndex:index] integerValue]];
     }
     
     
@@ -6703,24 +6689,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark – KeyboardTopViewDelegate
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButtonAtIndex:(id) sender {
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButton:(id) sender {
     
     [self changeFontTypeBarButtonItemClicked:sender];
     [self updateFontButtonsStatus:sender];
     
 }
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButtonAtIndex:(id) sender {
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButton:(id) sender {
     [self changeFontSizeBarButtonItemClicked:sender];
     [self updateSizeButtonsStatus:sender];
 }
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButtonAtIndex:(id) sender {
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButton:(id) sender {
     [self changeAlignBarButtonItemClicked:sender];
     [self updateAlignButtonsStatus:sender];
 }
 
-- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButtonAtIndex:(id) sender {
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButton:(id) sender {
     [self changeColorBarButtonItemClicked:sender];
     [self updateColorButtonsStatus:sender];
 }

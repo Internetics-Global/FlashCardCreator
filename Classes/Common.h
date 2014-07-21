@@ -45,4 +45,6 @@
 
 + (NSString *) userAgentInfo;
 
++ (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element;
+
 @end

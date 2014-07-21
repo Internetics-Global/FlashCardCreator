@@ -199,5 +199,32 @@
     return str;
 }
 
+/**
+ *  这个array必须是一个NSString类型的，但是可以转换成int的。而且必须从小到大预先排列好
+ */
++ (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element {
+    
+    for (int i = 0; i< [array count] - 1; i++) {
+        
+        if (element <= [[array firstObject] integerValue]) {
+            DDLogWarn(@"%s:strange behavior 1",__FUNCTION__);
+            return i;
+        }
+        
+        if (element >= [[array lastObject] integerValue]) {
+            DDLogWarn(@"%s:strange behavior 2",__FUNCTION__);
+            return i + 1;
+        }
+        
+        if ((element >= [array[i] integerValue]) && ((element < [array[i +1] integerValue]))) {
+            
+            return i;
+        }
+    }
+    
+    return -1;
+    
+}
+
 
 @end

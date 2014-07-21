@@ -129,8 +129,11 @@
         NSString *foundItem = [self.realSizeArray objectAtIndex:targetIndex];
         return [foundItem integerValue];
     } else {
-        DDLogError(@"%s: can not found",__FUNCTION__);
-        return -1;
+        DDLogError(@"%s: can not found related realsize value. nominal value = %d",__FUNCTION__,nominalSize);
+        
+        int nearestIndex = [Common nearestIndexForStringArray:self.nominalSizeArray withElement:nominalSize];
+        NSString *foundItem = [self.realSizeArray objectAtIndex:nearestIndex];
+        return [foundItem integerValue];
     }
     
 }
@@ -145,14 +148,18 @@
             isFound = YES;
             break;
         }
+        
     }
     
     if (isFound) {
         NSString *foundItem = [self.nominalSizeArray objectAtIndex:targetIndex];
         return [foundItem integerValue];
     } else {
-        DDLogError(@"%s: can not found",__FUNCTION__);
-        return -1;
+        DDLogError(@"%s: can not find related nomimal value. realSize value = %d",__FUNCTION__,realSize);
+        
+        int nearestIndex = [Common nearestIndexForStringArray:self.realSizeArray withElement:realSize];
+        NSString *foundItem = [self.nominalSizeArray objectAtIndex:nearestIndex];
+        return [foundItem integerValue];
     }
     
 }
@@ -188,7 +195,7 @@
 
 - (void) didClickedFontChangeButton:(id) sender {
     if (self.delegate) {
-        [self.delegate keyboardTopView:self didClickedFontChangeButtonAtIndex:sender];
+        [self.delegate keyboardTopView:self didClickedFontChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
@@ -226,7 +233,7 @@
 
 - (void) didClickedColorChangeButton:(id) sender {
     if (self.delegate) {
-        [self.delegate keyboardTopView:self didClickedColorChangeButtonAtIndex:sender];
+        [self.delegate keyboardTopView:self didClickedColorChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
@@ -263,7 +270,7 @@
 
 - (void) didClickedAlignChangeButton:(id) sender {
     if (self.delegate) {
-        [self.delegate keyboardTopView:self didClickedAlignChangeButtonAtIndex:sender];
+        [self.delegate keyboardTopView:self didClickedAlignChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
@@ -301,7 +308,7 @@
 
 - (void) didClickedSizeChangeButton:(id) sender {
     if (self.delegate) {
-        [self.delegate keyboardTopView:self didClickedSizeChangeButtonAtIndex:sender];
+        [self.delegate keyboardTopView:self didClickedSizeChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
