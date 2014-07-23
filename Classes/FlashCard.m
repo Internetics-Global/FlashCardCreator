@@ -82,6 +82,7 @@ typedef NS_ENUM(NSInteger, Type_AlertView) {
     Type_AlertView_Unkown   = -1,
     Type_AlertView_LogoURL  = 0,
     Type_AlertView_VideoURL = 1,
+    Type_AlertView_BackgroundImage_Crop_Size = 2,
 };
 
 typedef NS_ENUM(NSInteger, Type_PopoverView) {
@@ -4666,6 +4667,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             } else {
                 [self saveEdittedCard];
             }
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Not_Show_Saved_Background_Image_Size_Dialog"] == FALSE) {
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Scale the background image to be 400 * 400 size." delegate:self cancelButtonTitle:@"Not show again" otherButtonTitles:@"Close", nil];
+                alertView.tag = Type_AlertView_BackgroundImage_Crop_Size;
+                [alertView show];
+                
+            }
         }
     }
     
@@ -5916,6 +5925,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             }
             break;
+        case Type_AlertView_BackgroundImage_Crop_Size:
+            if (buttonIndex == 0) {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setBool:YES  forKey:@"K_Not_Show_Saved_Background_Image_Size_Dialog"];
+                [defaults synchronize];
+            }
+            break;
         default:
             break;
     }
@@ -6731,6 +6747,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
+
 
 #pragma mark -
 #pragma mark - Memory management
