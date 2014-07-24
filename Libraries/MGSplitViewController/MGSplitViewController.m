@@ -242,8 +242,14 @@
 	
 	// Correct for orientation.
 	if (UIInterfaceOrientationIsLandscape(theOrientation)) {
-		width = height;
-		height = fullScreenRect.size.width;
+        //ccaa comment
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            // in iOS8, willAnimateRotationToInterfaceOrientation is not called again.
+        } else {
+            width = height;
+            height = fullScreenRect.size.width;
+        }
+		
 	}
 	
 	// Account for status bar, which always subtracts from the height (since it's always at the top of the screen).
