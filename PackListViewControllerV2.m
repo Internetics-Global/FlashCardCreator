@@ -375,7 +375,7 @@
         [self dismissModalViewControllerAnimated:YES];
     }
     
-    [self performSelector:@selector(sendNotificationAfterCreateNewPack) withObject:nil afterDelay:0.2]; // only in iOS7, you can not directly call without delay, otherwise, you will not be able to click navigation bar again
+    [self performSelector:@selector(sendNotificationAfterCreateNewPack) withObject:nil afterDelay:0.5]; // only in iOS7, you can not directly call without delay, otherwise, you will not be able to click navigation bar again
     
     
 }
