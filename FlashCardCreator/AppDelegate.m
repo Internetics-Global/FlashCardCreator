@@ -344,5 +344,9 @@ BOOL _isDownloadingSamplePack;
     // Info  : Pink
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskAll;
+}
+
 
 @end
