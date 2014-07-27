@@ -5657,24 +5657,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:selectTemplateTableViewController];
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     } else {
-        if (_selectTemplatePopoverController == nil) {
-            _selectTemplatePopoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
-            _selectTemplatePopoverController.delegate = self;
-            _selectTemplatePopoverController.popoverContentSize = CGSizeMake(250, 95*5);
-            if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-                _selectTemplatePopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
-            }
-            
-        } else {
-            [_selectTemplatePopoverController setContentViewController:selectTemplateTableViewController];
+        
+        _selectTemplatePopoverController = [[UIPopoverController alloc] initWithContentViewController:selectTemplateTableViewController];
+        _selectTemplatePopoverController.delegate = self;
+        _selectTemplatePopoverController.popoverContentSize = CGSizeMake(250, 95*5);
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            _selectTemplatePopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
         }
+        [_selectTemplatePopoverController setContentViewController:selectTemplateTableViewController];
         
-        
-        
-        CGPoint point = [sender convertPoint:CGPointMake(0, 0) toView:nil];
+        CGPoint point = [sender convertPoint:CGPointMake(0, 0) toView:self];
         CGRect rect = CGRectMake(point.x, point.y, 24, 24);
         
-        [_selectTemplatePopoverController presentPopoverFromRect:rect inView:[UIApplication sharedApplication].keyWindow permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+        [_selectTemplatePopoverController presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
         
     }
 }
@@ -5682,6 +5677,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) dismissSelectTemplatePopoverController {
     DDLogInfo(@"%s",__FUNCTION__);
     [_selectTemplatePopoverController dismissPopoverAnimated:YES];
+    _selectTemplatePopoverController = nil;
     
 }
 
