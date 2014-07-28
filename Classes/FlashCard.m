@@ -3908,7 +3908,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //step1: bring out the _keyboardTopView
         CGRect keyboardBounds;
         [[aNotification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
-        _keyboardHeight = keyboardBounds.size.width;
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            _keyboardHeight = keyboardBounds.size.width;
+        } else {
+            _keyboardHeight = keyboardBounds.size.height;
+        }
         
     }
 
