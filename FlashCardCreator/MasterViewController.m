@@ -1864,15 +1864,10 @@ enum popover_enum {
     
     _progressivePercent = 0;
 	
-    _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     
-    //_HUD.color = [UIColor blackColor];
-    //make sure to be in front and disable user interaction
-    CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
-    [_HUD setTransform:at];
-    
-    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
-    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+    [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+    [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
     
     // Set determinate mode
     _HUD.mode = MBProgressHUDModeDeterminate;

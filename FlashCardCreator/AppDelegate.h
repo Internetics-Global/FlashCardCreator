@@ -28,4 +28,7 @@
 
 @property (assign, nonatomic) BOOL isDownloadingPack;
 
+
+- (UIView *)progressHUDHolderView;
+
 @end

@@ -344,9 +344,20 @@ BOOL _isDownloadingSamplePack;
     // Info  : Pink
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-    return UIInterfaceOrientationMaskAll;
+//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+//    
+//    return UIInterfaceOrientationMaskAll;
+//}
+
+
+- (UIView *)progressHUDHolderView {
+    if (isUserInterfaceIdiomPhone) {
+        return self.navigationController.view;
+    } else {
+        return self.splitViewController.view;
+    }
 }
+
 
 
 @end

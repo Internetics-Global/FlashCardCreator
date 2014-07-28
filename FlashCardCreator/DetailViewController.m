@@ -24,6 +24,7 @@
 #import "FileOperationHelper.h"
 #import "Common.h"
 #import "OpenUDID.h"
+#import "AppDelegate.h"
 
 enum template_color_enum {
     template_color_enum_blue = 0,
@@ -694,10 +695,10 @@ enum popover_enum {
         
         //Show progress indicator and invoke other long-time post-execution
         if (!_HUD)
-            _HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
+            _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
         
-        [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
-        [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+        [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+        [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
         
         _HUD.mode = MBProgressHUDModeIndeterminate;
         _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");

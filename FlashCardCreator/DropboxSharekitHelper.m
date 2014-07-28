@@ -15,6 +15,7 @@
 #import "AmazonClientManager.h"
 #import "Common.h"
 #import "OpenUDID.h"
+#import "AppDelegate.h"
 
 @implementation DropboxSharekitHelper
 
@@ -369,10 +370,7 @@
 
 - (void)showProgressIndicator {
 	
-	_HUD = [[MBProgressHUD alloc] initWithView:[[UIApplication sharedApplication] keyWindow]];
-    //_HUD.color = [UIColor blackColor];
-    CGAffineTransform at = CGAffineTransformMakeRotation(-M_PI/2);
-    [_HUD setTransform:at];
+	_HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
     _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
@@ -380,8 +378,8 @@
     _isCreatingShareLinkage = NO;
     [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
-    [[[UIApplication sharedApplication] keyWindow] insertSubview:_HUD atIndex:0];
-    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:_HUD];
+    [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+    [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
     
 }
 
