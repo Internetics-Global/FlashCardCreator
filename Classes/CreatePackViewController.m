@@ -68,7 +68,7 @@
     if (isUserInterfaceIdiomPhone) {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 10, 190, 24)];
     } else {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 50, 200, 24)];
     }
     _packNameText.textAlignment = NSTextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
@@ -87,7 +87,7 @@
     if (isUserInterfaceIdiomPhone) {
         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 45, 190, 24)];
     } else {
-        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
+        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 100, 200, 24)];
     }
     _sidebarTitle.textAlignment = NSTextAlignmentCenter;
     _sidebarTitle.backgroundColor = [UIColor whiteColor];
@@ -106,7 +106,7 @@
     if (isUserInterfaceIdiomPhone) {
         _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 80, 190, 24)];
     } else {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 150, 200, 24)];
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 150, 200, 24)];
     }
     _creatorText.textAlignment = NSTextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
@@ -125,7 +125,7 @@
     if (isUserInterfaceIdiomPhone){
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 95,190,190)];
     } else {
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 200,200,200)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 200,200,200)];
     }
     _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     _coverImageView.layer.masksToBounds = YES;
