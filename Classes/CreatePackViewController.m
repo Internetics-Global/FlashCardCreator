@@ -64,13 +64,9 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-}
-
-- (void)loadView {
-    [super loadView];
-
+    
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 10, 190, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 10, 190, 24)];
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake(170, 50, 200, 24)];
     }
@@ -83,12 +79,13 @@
     _packNameText.layer.masksToBounds = YES;
     _packNameText.borderStyle = UITextBorderStyleNone;
     [_packNameText setClearsOnBeginEditing:YES];
+    _packNameText.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     _packNameText.returnKeyType = UIReturnKeyDone;
     _packNameText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [self.view addSubview:_packNameText];
     
     if (isUserInterfaceIdiomPhone) {
-         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 45, 190, 24)];
+        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 45, 190, 24)];
     } else {
         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake(170, 100, 200, 24)];
     }
@@ -103,10 +100,11 @@
     [_sidebarTitle setClearsOnBeginEditing:YES];
     _sidebarTitle.returnKeyType = UIReturnKeyDone;
     _sidebarTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    _sidebarTitle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:_sidebarTitle];
     
     if (isUserInterfaceIdiomPhone) {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 80, 190, 24)];
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 80, 190, 24)];
     } else {
         _creatorText = [[UITextField alloc] initWithFrame:CGRectMake(170, 150, 200, 24)];
     }
@@ -121,10 +119,11 @@
     [_creatorText setClearsOnBeginEditing:YES];
     _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
     _creatorText.returnKeyType = UIReturnKeyDone;
+    _creatorText.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:_creatorText];
     
     if (isUserInterfaceIdiomPhone){
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-190)/2, 95,190,190)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 95,190,190)];
     } else {
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake(170, 200,200,200)];
     }
@@ -133,6 +132,7 @@
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
     _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.jpg"];
+    _coverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     
     _coverImageView.backgroundColor = [UIColor whiteColor]; //如果设置为clearColor，则不起作用
     CAShapeLayer *styleLayer = [CAShapeLayer layer];
@@ -148,8 +148,8 @@
     [_coverImageView addGestureRecognizer:imageSingeTap];
     
     self.view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
-    
 }
+
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
