@@ -149,7 +149,9 @@ BOOL _isDownloadingSamplePack;
         attributes = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[UIColor whiteColor],[UIFont boldSystemFontOfSize:20], nil] forKeys:[NSArray arrayWithObjects:UITextAttributeTextColor,UITextAttributeFont, nil]];
         [[UINavigationBar appearance] setTitleTextAttributes:attributes];
         
-        self.window.tintColor = [UIColor whiteColor];
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            self.window.tintColor = [UIColor whiteColor];
+        }
         
         //used to change the cursor color (in iOS7, the default cursor color is white)
         [[UITextView appearance] setTintColor:[UIColor blueColor]];
