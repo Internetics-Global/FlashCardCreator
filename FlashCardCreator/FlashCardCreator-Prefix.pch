@@ -17,7 +17,11 @@
     #import "MGSplitViewController.h"
     #import "Constant.h"
     #import "DDLog.h"
+
+    #import "UIViewController+LandscapeOnly.h"
+
 #endif
+
 
 #ifdef DEBUG
 #else

@@ -346,10 +346,10 @@ BOOL _isDownloadingSamplePack;
     // Info  : Pink
 }
 
-//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-//    
-//    return UIInterfaceOrientationMaskAll;
-//}
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    
+    return UIInterfaceOrientationMaskAll;
+}
 
 
 - (UIView *)progressHUDHolderView {
