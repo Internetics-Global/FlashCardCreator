@@ -4674,7 +4674,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Not_Show_Saved_Background_Image_Size_Dialog"] == FALSE) {
                 
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Scale the background image to be 400 * 400 size." delegate:self cancelButtonTitle:@"Not show again" otherButtonTitles:@"Close", nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Background images" message:@"Recommended background image size is 400 x 400" delegate:self cancelButtonTitle:@"Do not show again" otherButtonTitles:@"Close", nil];
                 alertView.tag = Type_AlertView_BackgroundImage_Crop_Size;
                 [alertView show];
                 
