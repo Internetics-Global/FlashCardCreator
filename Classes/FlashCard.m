@@ -4748,7 +4748,11 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [self.backgroundColor set];
     CGContextFillRect(ctx, screenRect);
-    [self.layer renderInContext:ctx];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    } else {
+        [self.layer renderInContext:ctx];
+    }
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     if (isEditable == YES) {
