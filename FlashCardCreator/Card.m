@@ -102,7 +102,7 @@
         
         int partA = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"]  + 1;
         int partB = [[NSDate date] timeIntervalSince1970];
-		_cardID = partA + (partB%100000 * 1000);
+		_cardID = partA%1000 + (partB%100000 * 1000);
         
         BOOL isExist = [SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"];
         if (isExist) {

@@ -144,7 +144,7 @@
 	if (_answerID == -1) {
         int partA = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
         int partB = [[NSDate date] timeIntervalSince1970];
-		_answerID = partA + (partB%100000 * 1000);
+		_answerID = partA%1000 + (partB%100000 * 1000);
         
         BOOL isExist = [SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"];
         if (isExist) {
