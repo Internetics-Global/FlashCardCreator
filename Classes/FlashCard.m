@@ -1645,10 +1645,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     _mainAnswer.text =_currentCard.answer.main;
     _subAnswer.text =_currentCard.answer.sub;
     
-    _subheadingFontAnswer = _currentCard.answer.css.subheadingFont;
-    _mainFontAnswer = _currentCard.answer.css.mainFont;
-    _subFontAnswer = _currentCard.answer.css.subFont;
-    
 }
 
 - (void) refreshQuestionContent {
@@ -1713,10 +1709,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
     _subQuestion.text =_currentCard.question.sub;
-    
-    _subheadingFontQuestion = _currentCard.question.css.subheadingFont;
-    _mainFontQuestion = _currentCard.question.css.mainFont;
-    _subFontQuestion = _currentCard.question.css.subFont;
 }
 
 
@@ -1906,6 +1898,14 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     if (_currentCard == nil) {
         [Common alertViewCommon:@"Need to set currentCard beforehand"];
     }
+    
+    _subheadingFontAnswer = _currentCard.answer.css.subheadingFont;
+    _mainFontAnswer = _currentCard.answer.css.mainFont;
+    _subFontAnswer = _currentCard.answer.css.subFont;
+    
+    _subheadingFontQuestion = _currentCard.question.css.subheadingFont;
+    _mainFontQuestion = _currentCard.question.css.mainFont;
+    _subFontQuestion = _currentCard.question.css.subFont;
     
     //PartA: Question
     CSS *css = _currentCard.question.css;
@@ -6324,30 +6324,30 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (NSMutableArray *) textToSpeechContentArray  {
     NSMutableArray *myArray = [NSMutableArray array];
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-        if ((_subheadingQuestion.text.length >0)) {
+        if ((_subheadingQuestion.text.length >0) && (_subheadingQuestion.hidden == NO)) {
             
             
             
             [myArray addObject:[self replaceBasicSymbol:_subheadingQuestion.text]];
         }
         
-        if ((_mainQuestion.text.length >0)) {
+        if ((_mainQuestion.text.length >0)&& (_mainQuestion.hidden == NO)) {
             [myArray addObject:[self replaceBasicSymbol:_mainQuestion.text]];
         }
         
-        if ((_subQuestion.text.length >0)) {
+        if ((_subQuestion.text.length >0)&& (_subQuestion.hidden == NO)) {
             [myArray addObject:[self replaceBasicSymbol:_subQuestion.text]];
         }
     } else {
-        if ((_subheadingAnswer.text.length >0)) {
+        if ((_subheadingAnswer.text.length >0)&& (_subheadingAnswer.hidden == NO)) {
             [myArray addObject:[self replaceBasicSymbol:_subheadingAnswer.text]];
         }
         
-        if ((_mainAnswer.text.length >0)) {
+        if ((_mainAnswer.text.length >0)&& (_mainAnswer.hidden == NO)) {
             [myArray addObject:[self replaceBasicSymbol:_mainAnswer.text]];
         }
         
-        if ((_subAnswer.text.length >0)) {
+        if ((_subAnswer.text.length >0)&& (_subAnswer.hidden == NO)) {
             [myArray addObject:[self replaceBasicSymbol:_subAnswer.text]];
         }
     }
