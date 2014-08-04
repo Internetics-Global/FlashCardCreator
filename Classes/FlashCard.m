@@ -5731,8 +5731,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 }
 
 - (void) templateSelectedNotification: (NSNotification *) notification {
-    DDLogInfo(@"%s",__FUNCTION__);
-    [self performSelector:@selector(dismissSelectTemplatePopoverController) withObject:nil];
     
     //  We don't want to accept when there's create card action now
     if (((isFromNewCreatedCard == YES) && (self.tag == CURRENT_FLASHCARDVIEW_TAG))
@@ -5741,6 +5739,9 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         return;
     }
     
+    [self performSelector:@selector(dismissSelectTemplatePopoverController) withObject:nil afterDelay:0.1];
+    
+    
     NSString *templateIDString = (NSString *)[notification object];
     if (_segmentedControl.selectedSegmentIndex == 0) {
         _currentCard.question.templateID = [templateIDString integerValue];
@@ -5748,7 +5749,7 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         _currentCard.answer.templateID = [templateIDString integerValue];
     }
     
-    DDLogInfo(@"%s,selected templateID = %@",__FUNCTION__,templateIDString);
+    DDLogInfo(@"%s,tag = %d,selected templateID = %@",__FUNCTION__,self.tag, templateIDString);
     
     [self updateQuestionOrAnswerTemplate];//we will do other side's update when clicking segment
     
