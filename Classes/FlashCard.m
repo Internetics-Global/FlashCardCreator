@@ -110,6 +110,8 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
     
     Type_Toolbar_State     _toolbarState;
+    
+    NSMutableArray         *_textToSpeechArray;
 }
 
 
@@ -6256,6 +6258,13 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     }
 }
 
+- (void) stopTextToSpeechNow {
+    if ([_synth isSpeaking]) {
+        [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    }
+    _textToSpeechArray = nil;
+}
+
 - (void) textToSpeechAllContentNow {
     
     if (SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -6263,12 +6272,15 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         return ;
     }
     
+    if ([_synth isSpeaking]) {
+        [self.synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    }
     
     DDLogInfo(@"%s",__FUNCTION__);
-    NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
-    if ([textToSpeechArray count] > 0) {
+    _textToSpeechArray = [self textToSpeechContentArray];
+    if ([_textToSpeechArray count] > 0) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
-                                        speechUtteranceWithString:textToSpeechArray[0]];
+                                        speechUtteranceWithString:_textToSpeechArray[0]];
         utterance.rate = 0.1;
         self.textToSpeechContentArrayIndex = 0;
         [self.synth speakUtterance:utterance];
@@ -6281,17 +6293,21 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
     DDLogInfo(@"%s",__FUNCTION__);
-    NSMutableArray *textToSpeechArray = [self textToSpeechContentArray];
     self.textToSpeechContentArrayIndex ++;
     
-    if ([textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
+    if ([_textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
-                                        speechUtteranceWithString:textToSpeechArray[self.textToSpeechContentArrayIndex]];
+                                        speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         utterance.rate = 0.1;
         
         usleep(500000);
         
-        [self.synth speakUtterance:utterance];
+        if ([_textToSpeechArray count] > 0) {
+            [self.synth speakUtterance:utterance];
+        } else {
+            [self.synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+        }
+        
     } else {
         //[self playAudio];
     }
@@ -6307,30 +6323,30 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (NSMutableArray *) textToSpeechContentArray  {
     NSMutableArray *myArray = [NSMutableArray array];
     if (self.segmentedControl.selectedSegmentIndex == 0) {
-        if (_subheadingQuestion.text.length >0) {
+        if ((_subheadingQuestion.text.length >0)) {
             
             
             
             [myArray addObject:[self replaceBasicSymbol:_subheadingQuestion.text]];
         }
         
-        if (_mainQuestion.text.length >0) {
+        if ((_mainQuestion.text.length >0)) {
             [myArray addObject:[self replaceBasicSymbol:_mainQuestion.text]];
         }
         
-        if (_subQuestion.text.length >0) {
+        if ((_subQuestion.text.length >0)) {
             [myArray addObject:[self replaceBasicSymbol:_subQuestion.text]];
         }
     } else {
-        if (_subheadingAnswer.text.length >0) {
+        if ((_subheadingAnswer.text.length >0)) {
             [myArray addObject:[self replaceBasicSymbol:_subheadingAnswer.text]];
         }
         
-        if (_mainAnswer.text.length >0) {
+        if ((_mainAnswer.text.length >0)) {
             [myArray addObject:[self replaceBasicSymbol:_mainAnswer.text]];
         }
         
-        if (_subAnswer.text.length >0) {
+        if ((_subAnswer.text.length >0)) {
             [myArray addObject:[self replaceBasicSymbol:_subAnswer.text]];
         }
     }
@@ -6804,7 +6820,9 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 #pragma mark - Memory management
 
 - (void)dealloc {
-    DDLogInfo(@"%s",__FUNCTION__);
+    DDLogInfo(@"%s,tag = %d,question main = %@",__FUNCTION__,self.tag,_mainQuestion.text);
+    
+    _synth = nil;
     
     [_subheadingQuestion removeObserver:self forKeyPath:@"contentSize"];
     [_subheadingAnswer removeObserver:self forKeyPath:@"contentSize"];
@@ -6822,7 +6840,7 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     _audioPlayer = nil;
 
 
-    _synth = nil;
+    
     
     DDLogInfo(@"%s",__FUNCTION__);
 }

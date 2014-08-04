@@ -334,6 +334,9 @@
 
 - (void) closePlayView {
     DDLogInfo(@"%s",__FUNCTION__);
+    
+    [_currentFlashCardView stopTextToSpeechNow];
+    
     #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self dismissModalViewControllerAnimated:YES];
     
@@ -399,7 +402,11 @@
 }
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
+    
     DDLogInfo(@"%s",__FUNCTION__);
+    
+    
+    
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
@@ -439,6 +446,8 @@
     }
     
     if (_currentFlashCardView) {
+    
+        
         if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [_currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
             [_currentFlashCardView refreshAll];

@@ -195,5 +195,6 @@ typedef enum{
 - (void) playAudio;
 
 - (void) textToSpeechAllContentNow;
+- (void) stopTextToSpeechNow;
 
 @end
