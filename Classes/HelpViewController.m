@@ -157,4 +157,8 @@
     return UIInterfaceOrientationMaskLandscapeLeft;
 }
 
+- (void)dealloc {
+    _scrollView.delegate = nil;
+}
+
 @end

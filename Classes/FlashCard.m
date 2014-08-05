@@ -6825,6 +6825,23 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     
     _synth = nil;
     
+    _synth.delegate = nil;
+    _questionTitle.delegate = nil;
+    _answerTitle.delegate  = nil;
+    _subheadingQuestion.delegate  = nil;
+    _mainQuestion.delegate  = nil;
+    _subQuestion.delegate  = nil;
+    _subheadingAnswer.delegate  = nil;
+    _mainAnswer.delegate  = nil;
+    _subAnswer.delegate  = nil;
+    _sidebarTitle.delegate  = nil;
+    _creatorText.delegate  = nil;
+    _jobTitleText.delegate  = nil;
+    _emoticonSelectionViewController.delegate = nil;
+    _imagePickerController.delegate = nil;
+    _imagePickerPopover.delegate = nil;
+    _selectTemplatePopoverController.delegate= nil;
+    
     [_subheadingQuestion removeObserver:self forKeyPath:@"contentSize"];
     [_subheadingAnswer removeObserver:self forKeyPath:@"contentSize"];
     [_mainQuestion removeObserver:self forKeyPath:@"contentSize"];

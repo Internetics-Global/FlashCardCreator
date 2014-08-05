@@ -158,6 +158,7 @@
     _scrollView.clipsToBounds = YES;
     _scrollView.pagingEnabled = YES;
     _scrollView.delegate = self;
+
     _scrollView.bounces = YES;
     _scrollView.backgroundColor =[UIColor clearColor];
     
@@ -630,6 +631,7 @@
 }
 
 - (void)dealloc {
+    _scrollView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     DDLogInfo(@"%s",__FUNCTION__);
 }

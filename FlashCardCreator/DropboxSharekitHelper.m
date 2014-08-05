@@ -445,4 +445,9 @@
     return returnURL;
 }
 
+- (void) dealloc {
+    _restClient.delegate = nil;
+}
+
+
 @end

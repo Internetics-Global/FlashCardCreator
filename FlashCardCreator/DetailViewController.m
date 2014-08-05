@@ -751,6 +751,9 @@ enum popover_enum {
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _scrollView.delegate = nil;
+    _helpPopoverController.delegate = nil;
+    _settingPopoverController.delegate = nil;
 }
 
 #pragma mark -
@@ -973,6 +976,7 @@ enum popover_enum {
         
     }
 }
+
 
 
 

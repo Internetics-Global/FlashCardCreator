@@ -7,6 +7,5 @@
 //
 
 #import "Constant.h"
-#import "DDLog.h"
 
 int const ddLogLevel = LOG_LEVEL_INFO;

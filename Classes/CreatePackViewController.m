@@ -307,4 +307,12 @@
     
 }
 
+- (void)dealloc {
+    _packNameText.delegate = nil;
+    _sidebarTitle.delegate = nil;
+    _creatorText.delegate =  nil;
+    _picker.delegate = nil;
+
+}
+
 @end

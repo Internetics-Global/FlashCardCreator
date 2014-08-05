@@ -19,6 +19,7 @@
 - (void)dealloc{
     
     [_emoticonGridViews makeObjectsPerformSelector:@selector(setDelegate:) withObject:nil];
+    _emoticonScrollView.delegate = nil;
 }
 
 
