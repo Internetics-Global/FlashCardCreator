@@ -380,11 +380,13 @@ enum popover_enum {
         //Avoid fast click to crash app
         _addCardButton.enabled = FALSE;
         _backgroundOfCreateCardView.enabled = FALSE;
-        double delayInSeconds = 0.6;
+        self.view.userInteractionEnabled = NO;
+        double delayInSeconds = 0.8;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            _addCardButton.enabled = YES;
             _backgroundOfCreateCardView.enabled = YES;
+            _addCardButton.enabled = YES;
+            self.view.userInteractionEnabled = YES;
         });
         
     }
@@ -406,10 +408,22 @@ enum popover_enum {
 }
 
 - (void) dismissCreateCardView:(id)sender {
-    if ([sender isMemberOfClass:[UIButton class]]) {
-        [(UIButton *)sender removeFromSuperview];
-    }
+    
     [self.detailViewController.navigationController popViewControllerAnimated:YES];
+    
+    _addCardButton.enabled = NO;
+    _backgroundOfCreateCardView.enabled = NO;
+    self.view.userInteractionEnabled = NO;
+    
+    
+    double delayInSeconds = 0.8;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [_backgroundOfCreateCardView removeFromSuperview];
+        _addCardButton.enabled = YES;
+        _backgroundOfCreateCardView.enabled = YES;
+        self.view.userInteractionEnabled = YES;
+    });
 }
 
 #pragma mark -
