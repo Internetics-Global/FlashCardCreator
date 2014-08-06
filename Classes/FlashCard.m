@@ -91,14 +91,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     Type_PopoverView_SelectBackground = 2,
 };
 
-typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
-    Type_Toolbar_State_Main           = -1,
-    Type_Toolbar_State_Font      = 1,
-    Type_Toolbar_State_Size = 2,
-    Type_Toolbar_State_Align      = 3,
-    Type_Toolbar_State_Color = 4,
-    Type_Toolbar_State_Unkown = 5,
-};
+
 
 @interface FlashCard () <KeyboardTopViewDelegate> {
     Type_Image_Selector    _typeImageSelector;
@@ -108,8 +101,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     //其中_keyboardTopViewV2是为setInputAccessoryView,而_keyboardTopViewForInputViewV2则是inputView的一部分
     KeyboardTopView        *_keyboardTopViewV2;
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
-    
-    Type_Toolbar_State     _toolbarState;
     
     NSMutableArray         *_textToSpeechArray;
 }
@@ -194,8 +185,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (void) initDefaultValue {
     DDLogInfo(@"%s",__FUNCTION__);
     _isUITextViewFocused = NO;
-    
-    _toolbarState = Type_Toolbar_State_Main;
     
     _isAllCardsLogoNeedToBeUpdate = NO;
     _isTextFieldsChanged = NO;
@@ -2751,6 +2740,10 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         }
             
     }
+    
+    _subheadingAnswer.contentOffset = CGPointZero;
+    _mainAnswer.contentOffset = CGPointZero;
+    _subAnswer.contentOffset = CGPointZero;
 }
 
 - (void) updateAnswerViewTemplateForiPad{
@@ -3091,6 +3084,10 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         }
             
     }
+    
+    _subheadingAnswer.contentOffset = CGPointZero;
+    _mainAnswer.contentOffset = CGPointZero;
+    _subAnswer.contentOffset = CGPointZero;
 }
 
 
@@ -3430,6 +3427,10 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         }
             
     }
+    
+    _subheadingQuestion.contentOffset = CGPointZero;
+    _mainQuestion.contentOffset = CGPointZero;
+    _subQuestion.contentOffset = CGPointZero;
 }
 
 - (void) updateQuestionViewTemplateForiPhone {
@@ -3895,6 +3896,10 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         }
             
     }
+    
+    _subheadingQuestion.contentOffset = CGPointZero;
+    _mainQuestion.contentOffset = CGPointZero;
+    _subQuestion.contentOffset = CGPointZero;
 }
 
 #pragma mark -
@@ -3907,8 +3912,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
         return;
     }
     
-    _toolbarState = Type_Toolbar_State_Main;
-    
 }
 
 
@@ -3918,8 +3921,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
-    
-    _toolbarState = Type_Toolbar_State_Main;
     
     //only repsonde to UITextView
     if (_isUITextViewFocused) {
@@ -5099,7 +5100,7 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     _keyboardInputBaseView.hidden = FALSE;
     [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",@"")];
     
-    switch (_toolbarState) {
+    switch (_keyboardTopViewV2.toolbarState) {
         case Type_Toolbar_State_Main:
             break;
         case Type_Toolbar_State_Font:
@@ -6797,16 +6798,12 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     NSString *title = [(UIButton *)sender titleLabel].text;
     
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align",@"")]) {
-        _toolbarState = Type_Toolbar_State_Align;
         [self updateAlignButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Size",@"")]) {
-        _toolbarState = Type_Toolbar_State_Size;
         [self updateSizeButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color",@"")]) {
-        _toolbarState = Type_Toolbar_State_Color;
         [self updateColorButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
-        _toolbarState = Type_Toolbar_State_Font;
         [self updateFontButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
        [self symbolAndKeyboardSwitch:sender];

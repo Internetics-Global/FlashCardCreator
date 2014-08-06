@@ -49,7 +49,7 @@
 }
 
 - (void)baseInit {
-    
+    _toolbarState = Type_Toolbar_State_Main;
     _backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_button"]];
     _backImageView.contentMode = UIViewContentModeScaleAspectFit;
     _backImageView.frame = CGRectMake(0, 0, K_Item_Width, CGRectGetHeight(self.frame));
@@ -307,6 +307,7 @@
 
 - (void) didClickedSizeChangeButton:(id) sender {
     if (self.delegate) {
+
         [self.delegate keyboardTopView:self didClickedSizeChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
@@ -320,6 +321,8 @@
     [self removeAllScrollSubButtons];
     
     _backType = Back_Type_Summary;
+    
+    _toolbarState = Type_Toolbar_State_Main;
     
     self.scrollView.contentSize = self.frame.size;
     
@@ -354,15 +357,19 @@
     
     switch (index) {
         case 0:
+            _toolbarState = Type_Toolbar_State_Align;
             [self setupAlignArray];
             break;
         case 1:
+            _toolbarState = Type_Toolbar_State_Size;
             [self setupSizeArray];
             break;
         case 2:
+            _toolbarState = Type_Toolbar_State_Color;
             [self setupColorArray];
             break;
         case 3:
+            _toolbarState = Type_Toolbar_State_Font;
             [self setupFontArray];
             break;
         case 4:

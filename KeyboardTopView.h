@@ -17,6 +17,15 @@ typedef NS_ENUM(NSInteger, Back_Type) {
     Back_Type_Summary    = 5,
 };
 
+typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
+    Type_Toolbar_State_Main           = -1,
+    Type_Toolbar_State_Font      = 1,
+    Type_Toolbar_State_Size = 2,
+    Type_Toolbar_State_Align      = 3,
+    Type_Toolbar_State_Color = 4,
+    Type_Toolbar_State_Unkown = 5,
+};
+
 @class KeyboardTopView;
 
 @protocol KeyboardTopViewDelegate <NSObject>
@@ -52,6 +61,8 @@ typedef NS_ENUM(NSInteger, Back_Type) {
 @property (strong, nonatomic) NSArray *fontArray;
 @property (strong, nonatomic) NSArray *alignArray;
 @property (strong, nonatomic) NSArray *summaryArray;
+
+@property (assign, nonatomic) Type_Toolbar_State     toolbarState;
 
 /**
  *  从nominalSize到realSize
