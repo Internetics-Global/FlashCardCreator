@@ -11,7 +11,7 @@
 
 #define K_Item_Width  80
 
-#define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol",@"Save"]
+#define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol"]
 #define K_NominalSizeArray @[@12,@14,@16,@18,@20,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
 #define K_ColorArray       @[@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"]
 #define K_AlignArray       @[@"Left",@"Center",@"Right",@"Justify",@"Vertical"]
@@ -24,6 +24,7 @@
     Back_Type _backType;
     
     UIImageView *_backImageView;
+    UIButton *_saveButton;
 }
 
 @end
@@ -63,7 +64,7 @@
     self.scrollView = [ [UIScrollView alloc ] initWithFrame:self.bounds];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.userInteractionEnabled = YES;
-    self.scrollView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    self.scrollView.backgroundColor = [UIColor clearColor];
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
@@ -78,6 +79,8 @@
     self.colorArray = K_ColorArray;
     self.alignArray = K_AlignArray;
     self.fontArray = K_FontArray;
+    
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
     
     _backType = Back_Type_Unkown;
     
@@ -188,8 +191,10 @@
     
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
+    
+    [self setupSaveButton];
 }
 
 - (void) didClickedFontChangeButton:(id) sender {
@@ -225,8 +230,10 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
+    
+    [self setupSaveButton];
     
 }
 
@@ -263,8 +270,10 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
+    
+    [self setupSaveButton];
 }
 
 - (void) didClickedAlignChangeButton:(id) sender {
@@ -300,8 +309,10 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
+    
+    [self setupSaveButton];
     
 }
 
@@ -324,7 +335,7 @@
     
     _toolbarState = Type_Toolbar_State_Main;
     
-    self.scrollView.contentSize = self.frame.size;
+    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [self.summaryArray count], CGRectGetHeight(self.frame));;
     
     for (int i = 0; i<[self.summaryArray count]; i++) {
         UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -339,16 +350,36 @@
         [myButton setTitle:NSLocalizedString(str,nil) forState:UIControlStateNormal];
         [myButton addTarget:self action:@selector(didClickedSummaryButton:) forControlEvents:UIControlEventTouchDown];
         
-        if (i == [self.summaryArray count] - 1) {
-            CGRect rect = myButton.frame;
-            rect.origin.x = CGRectGetWidth(self.frame) - CGRectGetWidth(myButton.frame) - 5;
-            myButton.frame = rect;
-            
-        }
-        
     }
     self.scrollView.frame = self.bounds;
     _backImageView.hidden = YES;
+    
+    [self setupSaveButton];
+    
+}
+
+- (void) setupSaveButton {
+    if (_saveButton == nil) {
+        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10, 0, K_Item_Width - 20, CGRectGetHeight(self.frame));
+        [_saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        _saveButton.backgroundColor = [UIColor clearColor];
+        [_saveButton addTarget:self action:@selector(didClickedSaveButton:) forControlEvents:UIControlEventTouchDown];
+    }
+    if (_saveButton.superview == nil) {
+        [self addSubview:_saveButton];
+    }
+    
+}
+
+
+- (void) didClickedSaveButton:(id) sender {
+    
+    if (self.delegate) {
+        [self.delegate keyboardTopView:self didClickedSaveButton:sender];
+    } else {
+        //NSAssert(FALSE, @"You need to assign delete");
+    }
     
 }
 

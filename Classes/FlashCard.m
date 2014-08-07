@@ -6792,6 +6792,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 }
 
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id)sender {
+  [self dismissKeyBoard:sender];
+}
+
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedMainButton:(id)sender {
     
@@ -6808,7 +6812,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
        [self symbolAndKeyboardSwitch:sender];
     } else {
-       [self dismissKeyBoard:sender];
+       //do nothing
     }
     
 }
