@@ -65,8 +65,8 @@
     _creator = [dict valueForKey:@"creator"];
     _creatorNickName = [dict valueForKey:@"creator_nick_name"];
     _jobTitle = [dict valueForKey:@"job_title"];
-    if (_jobTitle.length ==0) {
-        _jobTitle = @"Job tile";
+    if (checkNullOrEmptyOrNullStr(_jobTitle)) {
+        _jobTitle = @"";
     }
     
     if ([[dict allKeys] containsObject:@"create_date"]) {
