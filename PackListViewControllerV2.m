@@ -298,6 +298,16 @@
     Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
     [selectedPack savePackOnly];
+    
+    
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        //dismiss popover view in notification
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
 - (void) resetPackContent {
