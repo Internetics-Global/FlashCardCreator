@@ -6366,7 +6366,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     resultStr = [str stringByReplacingOccurrencesOfString:@"+" withString:plusStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"∗" withString:multiplyStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:multiplyStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:divideStr];
     
     return resultStr;
@@ -6398,6 +6398,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
 }
+
+
 
 
 - (void) updateSizeButtonsStatus:(id) sender {
