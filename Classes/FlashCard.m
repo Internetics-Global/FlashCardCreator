@@ -1594,6 +1594,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerImageFullPath = @"";
         DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+        
+        if (_isPlayingCard) {
+            _imageAnswer.hidden = YES;
+        } else {
+        }
     }
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
@@ -1648,6 +1653,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionImageFullPath = @"";
         DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
+        
+        if (_isPlayingCard) {
+            _imageQuestion.hidden = YES;
+        } else {
+        }
+        
     }
     
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
@@ -1659,6 +1670,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _logoImageFullPath = @"";
         DDLogInfo(@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__);
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
+        
+        if (_isPlayingCard) {
+            _logoImage.hidden = YES;
+        } else {
+        }
     }
     
     
