@@ -6327,7 +6327,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         utterance.rate = 0.1;
         
-        usleep(500000);
+        utterance.postUtteranceDelay = 0.3;
         
         if ([_textToSpeechArray count] > 0) {
             [self.synth speakUtterance:utterance];
@@ -6351,37 +6351,35 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSMutableArray *myArray = [NSMutableArray array];
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         if ((_subheadingQuestion.text.length >0) && (_subheadingQuestion.hidden == NO)) {
-            
-            
-            
-            [myArray addObject:[self replaceBasicSymbol:_subheadingQuestion.text]];
+
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subheadingQuestion.text]];
         }
         
         if ((_mainQuestion.text.length >0)&& (_mainQuestion.hidden == NO)) {
-            [myArray addObject:[self replaceBasicSymbol:_mainQuestion.text]];
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_mainQuestion.text]];
         }
         
         if ((_subQuestion.text.length >0)&& (_subQuestion.hidden == NO)) {
-            [myArray addObject:[self replaceBasicSymbol:_subQuestion.text]];
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subQuestion.text]];
         }
     } else {
         if ((_subheadingAnswer.text.length >0)&& (_subheadingAnswer.hidden == NO)) {
-            [myArray addObject:[self replaceBasicSymbol:_subheadingAnswer.text]];
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subheadingAnswer.text]];
         }
         
         if ((_mainAnswer.text.length >0)&& (_mainAnswer.hidden == NO)) {
-            [myArray addObject:[self replaceBasicSymbol:_mainAnswer.text]];
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_mainAnswer.text]];
         }
         
         if ((_subAnswer.text.length >0)&& (_subAnswer.hidden == NO)) {
-            [myArray addObject:[self replaceBasicSymbol:_subAnswer.text]];
+            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subAnswer.text]];
         }
     }
     
     return myArray;
 }
 
-- (NSString *) replaceBasicSymbol:(NSString *) str {
+- (NSArray *) replaceBasicSymbol:(NSString *) str {
     NSString *resultStr;
     
     NSString *plusStr = @" plus ";
@@ -6394,7 +6392,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:multiplyStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:divideStr];
     
-    return resultStr;
+    NSArray *returnArray = [resultStr componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    return returnArray;
     
 }
 
