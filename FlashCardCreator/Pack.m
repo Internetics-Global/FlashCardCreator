@@ -39,6 +39,7 @@
     _cards = [[NSMutableArray alloc] init];
     
     _coverImageURL = @"";
+    _jobTitle = @"";
     
     _isAllowShare = YES;
     

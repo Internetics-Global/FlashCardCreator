@@ -1566,9 +1566,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    if (checkNullOrEmptyOrNullStr(_currentPack.creatorNickName)) {
+      _creatorText.text = @"";
+    } else {
+      _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
+    }
     
-    _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
-    _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
+    if (checkNullOrEmptyOrNullStr(_currentPack.jobTitle)) {
+        _jobTitleText.text = @"";
+    } else {
+      _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
+    }
+    
     
     NSString *logoFullPath = _currentCard.question.logoFullPath;
     if (((logoFullPath.length == 0) || ([logoFullPath rangeOfString:@"placeholder"].location != NSNotFound)) && (_isPlayingCard == true)) {
