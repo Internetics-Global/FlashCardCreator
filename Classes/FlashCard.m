@@ -6362,7 +6362,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *plusStr = @" plus ";
     NSString *minusStr = @" minus ";
     NSString *multiplyStr = @" times ";
-    NSString *divideStr = @" divid by ";
+    NSString *divideStr = @" divided by ";
     
     resultStr = [str stringByReplacingOccurrencesOfString:@"+" withString:plusStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
