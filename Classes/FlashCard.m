@@ -2771,39 +2771,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subAnswer.contentOffset = CGPointZero;
 }
 
-- (void) updateAnswerViewTemplateForiPad{
+- (void) updateAnswerViewTemplateForiPad {
     DDLogInfo(@"%s",__FUNCTION__);
     int index = _currentCard.answer.templateID;
     
     switch (index) {
-        case 0: //Template 0
+        case 10: //Template 0
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 80);
+            _subheadingAnswer.frame = CGRectMake(10, 20, 700, 50);
             
             if (_subheadingFontAnswer.length == 0) {
-                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:34];
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:30];
             } else {
-                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:34];
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:30];
             }
             
             _subheadingAnswer.textColor = [UIColor blackColor];
-            _subheadingAnswer.textAlignment = NSTextAlignmentCenter;
-            _subheadingAlignAnswer = @"Center";
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
             
             _subheadingAlignVerticalAnswer = @"";
             [self resetVerticalAlignment:_subheadingAnswer];
             
+            
             _subheadingColorAnswer = @"Black";
-            _subheadingSizeAnswer = 34;
+            _subheadingSizeAnswer = 30;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 100, 360, 320);
+            _mainAnswer.frame = CGRectMake(10, 75, 700, 350);
             
             if (_mainFontAnswer.length == 0) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:30];
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
             } else {
-                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:30];
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:38];
             }
             
             _mainAnswer.textColor = [UIColor blackColor];
@@ -2814,17 +2815,290 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self resetVerticalAlignment:_mainAnswer];
             
             _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 30;
+            _mainSizeAnswer = 38;
+            
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.hidden = TRUE;
+            
+            break;
+        }
+        case 8: //Template 1
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(10, 20, 500, 50);
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:34];
+            }
+            
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 34;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 75, 700, 180);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:38];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 38;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(10, 260, 700, 160);
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:30];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:30];
+            }
+            
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentCenter;
+            _subAlignAnswer = @"Center";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 30;
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+        case 7: //Template 2
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 30, 700, 280);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 42;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(10, 320, 700, 100);
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
+            }
+            
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentCenter;
+            _subAlignAnswer = @"Center";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 34;
+            
+            _imageAnswer.hidden = TRUE;
+            
+            break;
+        }
+        case 6: //Template 3
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 42;
+            
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
+            }
+            
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 34;
+            
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+        case 3: //Template 4
+        {
+            _subheadingAnswer.hidden = TRUE;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 40, 700, 380);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentCenter;
+            _mainAlignAnswer = @"Center";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 42;
+            
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.hidden = TRUE;
+            break;
+        }
+            
+        case 5: //Template 5
+        {
+            _subheadingAnswer.hidden = TRUE;
+            
+            _mainAnswer.hidden = TRUE;
+            
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(10, 20, 700, 410);
+            break;
+        }
+            
+        case 0:
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:42];
+            }
+            
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 42;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 75, 360, 355);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 34;
             
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
-
             
             break;
         }
-        case 1: //Template 1
+            
+        case 4:
+        {
+            _subheadingAnswer.hidden = TRUE;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(10, 10, 360, 420);
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
+            }
+            
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 34;
+            
+            _subAnswer.hidden = YES;
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
+            
+            
+            break;
+        }
+        case 1:
         {
             _subheadingAnswer.hidden = FALSE;
             _subheadingAnswer.frame = CGRectMake(10, 10, 700, 60);
@@ -2888,10 +3162,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-        case 2: //Template 2
+        case 11:
+        {
+            break;
+        }
+        case 2:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 210);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -2910,7 +3188,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 75, 360, 355);
+            _mainAnswer.frame = CGRectMake(10, 225, 360, 210);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -2935,85 +3213,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-        case 3: //Template 3
+        case 9:
         {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 10, 700, 420);
-            
-            if (_mainFontAnswer.length == 0) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
-            } else {
-                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
-            }
-            
-            _mainAnswer.textColor = [UIColor blackColor];
-            _mainAnswer.textAlignment = NSTextAlignmentLeft;
-            _mainAlignAnswer = @"Left";
-            
-            _mainAlignVerticalAnswer = @"";
-            [self resetVerticalAlignment:_mainAnswer];
-            
-            _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 34;
-            
-            _subAnswer.hidden = TRUE;
-            
-            _imageAnswer.hidden = TRUE;
-            
-            break;
-        }
-        case 4: //Template4
-        {
-            _subheadingAnswer.hidden = TRUE;
-            
-            _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 10, 360, 420);
-            
-            if (_mainFontAnswer.length == 0) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
-            } else {
-                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:34];
-            }
-            
-            _mainAnswer.textColor = [UIColor blackColor];
-            _mainAnswer.textAlignment = NSTextAlignmentLeft;
-            _mainAlignAnswer = @"Left";
-            
-            _mainAlignVerticalAnswer = @"";
-            [self resetVerticalAlignment:_mainAnswer];
-            
-            _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 34;
-            
-            _subAnswer.hidden = YES;
-            
-            _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
-            
-            
-            break;
-        }
-        
-        case 5: //Template 5
-        {
-            _subheadingAnswer.hidden = TRUE;
-            _mainAnswer.hidden = TRUE;
-            _subAnswer.hidden = TRUE;
-            
-            _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(10, 20, 700, 410);
-            
-            break;
-        }
-        
-        case 6:
-        {
-            _subheadingAnswer.hidden = YES;
-            
-            _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
+            _mainAnswer.frame = CGRectMake(10, 40, 345, 380);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -3032,71 +3237,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
+            _subAnswer.frame = CGRectMake(365, 40, 345, 380);
             
             if (_subFontAnswer.length == 0) {
-                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
+                _subAnswer.font =[UIFont boldSystemFontOfSize:42];
             } else {
-                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:42];
             }
             
             _subAnswer.textColor = [UIColor blackColor];
-            _subAnswer.textAlignment = NSTextAlignmentLeft;
-            _subAlignAnswer = @"Left";
+            _subAnswer.textAlignment = NSTextAlignmentCenter;
+            _subAlignAnswer = @"Center";
             
             _subAlignVerticalAnswer = @"";
             [self resetVerticalAlignment:_subAnswer];
             
             _subColorAnswer = @"Black";
-            _subSizeAnswer = 34;
-            
-            
-            _imageAnswer.hidden = TRUE;
-            break;
-        }
-            
-        case 7:
-        {
-            _subheadingAnswer.hidden = YES;
-            
-            _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
-            
-            if (_mainFontAnswer.length == 0) {
-                _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
-            } else {
-                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:42];
-            }
-            
-            _mainAnswer.textColor = [UIColor blackColor];
-            _mainAnswer.textAlignment = NSTextAlignmentCenter;
-            _mainAlignAnswer = @"Center";
-            
-            _mainAlignVerticalAnswer = @"";
-            [self resetVerticalAlignment:_mainAnswer];
-            
-            _mainColorAnswer = @"Black";
-            _mainSizeAnswer = 42;
-            
-            _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
-            
-            if (_subFontAnswer.length == 0) {
-                _subAnswer.font =[UIFont boldSystemFontOfSize:34];
-            } else {
-                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:34];
-            }
-            
-            _subAnswer.textColor = [UIColor blackColor];
-            _subAnswer.textAlignment = NSTextAlignmentLeft;
-            _subAlignAnswer = @"Left";
-            
-            _subAlignVerticalAnswer = @"";
-            [self resetVerticalAlignment:_subAnswer];
-            
-            _subColorAnswer = @"Black";
-            _subSizeAnswer = 34;
-            
+            _subSizeAnswer = 42;
             
             _imageAnswer.hidden = TRUE;
             break;
@@ -3442,6 +3599,166 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
             
             
+            break;
+        }
+        case 8:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(10, 10, 700, 60);
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:42];
+            }
+            
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 42;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(10, 75, 360, 295);
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:38];
+            }
+            
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 38;
+            
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(10, 380, 360, 50);
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:38];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:38];
+            }
+            
+            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Red";
+            _subSizeQuestion = 38;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(380, 80, 330, 330);
+            
+            break;
+        }
+        case 9:
+        {
+            break;
+        }
+        case 10:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 210);
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:42];
+            }
+            
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 42;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(10, 225, 360, 210);
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:34];
+            }
+            
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 34;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
+            
+            break;
+        }
+        case 11:
+        {
+            _subheadingQuestion.hidden = TRUE;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(10, 40, 345, 380);
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:42];
+            }
+            
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentCenter;
+            _mainAlignQuestion = @"Center";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 42;
+            
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(365, 40, 345, 380);
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:42];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:42];
+            }
+            
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 42;
+            
+            _imageQuestion.hidden = TRUE;
             break;
         }
             

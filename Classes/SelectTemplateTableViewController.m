@@ -50,7 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6 + 2; //2 is the latest added as request from client
+    return 12; //2 is the latest added as request from client
     
 }
 
