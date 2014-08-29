@@ -106,6 +106,7 @@
 "Label_New_Pack_Name" = "New pack name";
 "Label_Creator"       = "Your name";
 "Label_Creator_Hint"       = "Created by";
+"Job_Title"       = "Name or title";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";

@@ -16,6 +16,7 @@
     UITextField *_sidebarTitle;
     UIImageView *_coverImageView;
     UITextField *_creatorText;
+    UITextField *_jobTitleText;
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
     

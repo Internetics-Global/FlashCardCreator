@@ -66,7 +66,7 @@
     }
     
     if (isUserInterfaceIdiomPhone) {
-        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 10, 190, 24)];
+        _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 5, 180, 20)];
     } else {
         _packNameText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 50, 200, 24)];
     }
@@ -85,7 +85,7 @@
     [self.view addSubview:_packNameText];
     
     if (isUserInterfaceIdiomPhone) {
-        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 45, 190, 24)];
+        _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 30, 180, 20)];
     } else {
         _sidebarTitle = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 100, 200, 24)];
     }
@@ -104,7 +104,7 @@
     [self.view addSubview:_sidebarTitle];
     
     if (isUserInterfaceIdiomPhone) {
-        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 80, 190, 24)];
+        _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 55, 180, 20)];
     } else {
         _creatorText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 150, 200, 24)];
     }
@@ -122,8 +122,27 @@
     _creatorText.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:_creatorText];
     
+    if (isUserInterfaceIdiomPhone) {
+        _jobTitleText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 80, 180, 20)];
+    } else {
+        _jobTitleText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 150, 200, 24)];
+    }
+    _jobTitleText.textAlignment = NSTextAlignmentCenter;
+    _jobTitleText.backgroundColor = [UIColor whiteColor];
+    _jobTitleText.text = NSLocalizedString(@"Job_Title", nil);
+    _jobTitleText.font = [UIFont systemFontOfSize:14];
+    _jobTitleText.delegate = self;
+    _jobTitleText.layer.cornerRadius =2;
+    _jobTitleText.layer.masksToBounds = YES;
+    _jobTitleText.borderStyle = UITextBorderStyleNone;
+    [_jobTitleText setClearsOnBeginEditing:YES];
+    _jobTitleText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    _jobTitleText.returnKeyType = UIReturnKeyDone;
+    _jobTitleText.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
+    [self.view addSubview:_jobTitleText];
+    
     if (isUserInterfaceIdiomPhone){
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-190)/2, 95,190,190)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 105,180,180)];
     } else {
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 200,200,200)];
     }
@@ -153,10 +172,7 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    
-    CGRect rect = _coverImageView.frame;
-    rect.origin.y = _creatorText.frame.origin.y + 40;
-    _coverImageView.frame = rect;
+
 }
 
 - (void) closeCreatePackView {
@@ -172,6 +188,7 @@
         _newPack.createDate = (int)[[NSDate date] timeIntervalSince1970];
         _newPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         _newPack.creatorNickName = _creatorText.text;
+        _newPack.jobTitle = _jobTitleText.text;
         [[User defaultUser] addPack:_newPack];
         [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
         
