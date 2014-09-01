@@ -20,8 +20,11 @@
     NSString *_sub;
     
     NSString *_imageFullPath;
+    NSString *_imageFullPath2;
+    
     //youtube linkage or an local url
     NSString *_movieFullPath;
+    NSString *_movieFullPath2;
     
     NSString *_logoFullPath;  //we don't use this field
     NSInteger _templateID;
@@ -48,7 +51,9 @@
 @property (nonatomic, copy) NSString *sub;
 
 @property (nonatomic, copy) NSString *imageFullPath;
+@property (nonatomic, copy) NSString *imageFullPath2;
 @property (nonatomic, copy) NSString *movieFullPath;
+@property (nonatomic, copy) NSString *movieFullPath2;
 
 @property (nonatomic, copy) NSString *logoFullPath;
 

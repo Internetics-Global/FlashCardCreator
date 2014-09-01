@@ -22,7 +22,9 @@
 @synthesize subheading = _subheading;
 
 @synthesize imageFullPath = _imageFullPath;
+@synthesize imageFullPath2 = _imageFullPath2;
 @synthesize movieFullPath = _movieFullPath;
+@synthesize movieFullPath2 = _movieFullPath2;
 
 @synthesize logoFullPath = _logoFullPath;
 @synthesize logoURLLinkage = _logoURLLinkage;
@@ -52,7 +54,9 @@
     _autoresizeFlag = 1; //表示允许
     
     _imageFullPath = @"";
+    _imageFullPath2 = @"";
     _movieFullPath = @"";
+    _movieFullPath2 = @"";
     _logoFullPath = @"";
     
     _backgroundImageFullPath = @"";
@@ -72,14 +76,27 @@
     _main= [dataDict valueForKey:@"main"];
     _sub= [dataDict valueForKey:@"sub"];
     _subheading= [dataDict valueForKey:@"subheading"];
+    
     _imageFullPath= [dataDict valueForKey:@"image"];
     if (_imageFullPath.length == 0) {
         _imageFullPath = @"";
     }
+    
+    _imageFullPath2= [dataDict valueForKey:@"image2"];
+    if (_imageFullPath2.length == 0) {
+        _imageFullPath2 = @"";
+    }
+    
     _movieFullPath= [dataDict valueForKey:@"movie"];
     if (_movieFullPath.length == 0) {
         _movieFullPath = @"";
     }
+    
+    _movieFullPath2= [dataDict valueForKey:@"movie2"];
+    if (_movieFullPath2.length == 0) {
+        _movieFullPath2 = @"";
+    }
+    
     _logoFullPath= [dataDict valueForKey:@"logo"];
     _logoURLLinkage = [dataDict valueForKey:@"logo_url"];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
@@ -134,7 +151,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, autoresize_flag=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",audio=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID,_templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, autoresize_flag=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _logoURLLinkage, _cssID,_templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -158,7 +175,7 @@
             DDLogError(@"%s:_questionID has already existed",__FUNCTION__);
         }
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_recordedSoundFullPath];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, image2, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath,_imageFullPath2, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -208,6 +225,17 @@
     }
     
     error = nil;
+    if (![[self.imageFullPath2 lastPathComponent] isEqualToString:@"question_placeholder_content.jpg"]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath2 isDirectory:&isDir]  && (isDir  == FALSE)) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath2 error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of question imageFullPath2"];
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+            }
+        }
+    }
+    
+    error = nil;
     if (self.backgroundImageFullPath.length >0) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.backgroundImageFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
@@ -224,6 +252,17 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question movieFullPath"];
+                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+            }
+        }
+    }
+    
+    error = nil;
+    if (self.movieFullPath2.length >0) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.movieFullPath2 isDirectory:&isDir]  && (isDir  == FALSE)) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath2 error:&error];
+            if (error) {
+                [Common alertViewCommon:@"Error when removing file of question movieFullPath2"];
                 DDLogError(@"%s:%@",__FUNCTION__,[error description]);
             }
         }
@@ -256,17 +295,18 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:4] forKey:@"sub"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:5] forKey:@"subheading"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:6] forKey:@"image"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"logo"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"logo_url"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"css_id"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"template_id"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"line_number_subheading"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"line_number_main"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"line_number_sub"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"background_image"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"movie"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"audio"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"autoresize_flag"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:7] forKey:@"image2"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:8] forKey:@"logo"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:9] forKey:@"logo_url"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"css_id"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"template_id"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"line_number_subheading"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"line_number_main"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"line_number_sub"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"background_image"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"movie"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"audio"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:18] forKey:@"autoresize_flag"];
 
         
         

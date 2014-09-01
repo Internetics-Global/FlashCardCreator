@@ -227,7 +227,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //movie or video
     _answerMovieFullPath = @"";
+    _answerMovieFullPath2 = @"";
     _questionMovieFullPath = @"";
+    _questionMovieFullPath2 = @"";
     
     //audio
     _answerRecordedSoundFullPath = @"";
@@ -378,6 +380,21 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
+    if (_imageQuestion2 == nil) {
+        _imageQuestion2= [[UIImageView  alloc] init];
+        _imageQuestion2.userInteractionEnabled = FALSE;
+        _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
+        _imageQuestion2.clipsToBounds = YES;
+        _imageQuestion2.backgroundColor = [UIColor clearColor];
+        _imageQuestion.layer.cornerRadius = 15;
+        _imageQuestion.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageQuestion2];
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        //TODO: XXX
+        [_imageQuestion2 addGestureRecognizer:imageSingeTap];
+    }
+    
     if (_subheadingQuestion == nil) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
@@ -453,7 +470,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     
+    if (_imageAnswer2 == nil) {
+        _imageAnswer2= [[UIImageView  alloc] init];
+        _imageAnswer2.userInteractionEnabled = FALSE;
+        _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer2.clipsToBounds = YES;
+        _imageAnswer2.backgroundColor = [UIColor clearColor];
+        _imageAnswer2.layer.cornerRadius = 15;
+        _imageAnswer2.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageAnswer2];
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        //TODO:XXXX
+        [_imageAnswer2 addGestureRecognizer:imageSingeTap];
+    }
+    
     _imageAnswer.hidden = YES;
+    _imageAnswer2.hidden = YES;
     
     if (_subheadingAnswer == nil) {
         _subheadingAnswer = [[UITextView alloc]init];
@@ -903,6 +936,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
+    if (_imageQuestion2 ==  nil) {
+        _imageQuestion2= [[UIImageView  alloc] init];
+        _imageQuestion2.userInteractionEnabled = FALSE;
+        _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
+        _imageQuestion2.clipsToBounds = YES;
+        _imageQuestion2.backgroundColor = [UIColor clearColor];
+        _imageQuestion2.tag = 1;
+        _imageQuestion2.layer.cornerRadius = 10;
+        _imageQuestion2.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageQuestion2];
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        //TODO:XX
+        [_imageQuestion2 addGestureRecognizer:imageSingeTap];
+    }
+    
     if (_subheadingQuestion ==  nil) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
@@ -958,6 +1007,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     _imageAnswer.hidden = YES;
+    
+    if (_imageAnswer2 ==  nil) {
+        _imageAnswer2= [[UIImageView  alloc] init];
+        _imageAnswer2.userInteractionEnabled = FALSE;
+        _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
+        _imageAnswer2.clipsToBounds = YES;
+        _imageAnswer2.backgroundColor = [UIColor clearColor];
+        _imageAnswer2.tag = 1;
+        _imageAnswer2.layer.cornerRadius = 10;
+        _imageAnswer2.layer.masksToBounds = YES;
+        [_verticalScrollView addSubview:_imageAnswer2];
+        
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        //TODO:XXX
+        [_imageAnswer2 addGestureRecognizer:imageSingeTap];
+    }
+    _imageAnswer2.hidden = YES;
+    
     
     if (_subheadingAnswer ==  nil) {
         _subheadingAnswer = [[UITextView alloc]init];
@@ -1262,7 +1329,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion.userInteractionEnabled        = FALSE;
     }
     
+    if (_currentCard.question.movieFullPath2.length > 0) {
+        //allow to play movie
+        _imageQuestion2.userInteractionEnabled        = YES;
+    } else {
+        _imageQuestion2.userInteractionEnabled        = FALSE;
+    }
+    
     _imageQuestion.layer.borderWidth = 0;
+    _imageQuestion2.layer.borderWidth = 0;
     _mainQuestion.userInteractionEnabled         = FALSE;
     _mainQuestion.layer.borderWidth = 0;
     _subQuestion.userInteractionEnabled          = FALSE;
@@ -1276,7 +1351,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
       _imageAnswer.userInteractionEnabled        = FALSE;
     }
     
+    if (_currentCard.answer.movieFullPath2.length > 0) {
+        _imageAnswer2.userInteractionEnabled        = YES;
+    } else {
+        _imageAnswer.userInteractionEnabled        = FALSE;
+    }
+    
     _imageAnswer.layer.borderWidth = 0;
+    _imageAnswer2.layer.borderWidth = 0;
     _mainAnswer.userInteractionEnabled         = FALSE;
     _mainAnswer.layer.borderWidth = 0;
     _subAnswer.userInteractionEnabled          = FALSE;
@@ -1320,6 +1402,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion.layer.borderWidth = 3/scale;
     }
     
+    _imageQuestion2.userInteractionEnabled        = TRUE;
+    _imageQuestion2.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _imageQuestion2.layer.borderWidth = 2/scale;
+    } else {
+        _imageQuestion2.layer.borderWidth = 3/scale;
+    }
+    
+    
     _mainQuestion.userInteractionEnabled         = TRUE;
     _mainQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     if (isUserInterfaceIdiomPhone) {
@@ -1348,6 +1439,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageAnswer.layer.borderWidth = 2/scale;
     } else {
         _imageAnswer.layer.borderWidth = 3/scale;
+    }
+    
+    _imageAnswer2.userInteractionEnabled        = TRUE;
+    _imageAnswer2.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
+    if (isUserInterfaceIdiomPhone) {
+        _imageAnswer2.layer.borderWidth = 2/scale;
+    } else {
+        _imageAnswer2.layer.borderWidth = 3/scale;
     }
     
     _mainAnswer.userInteractionEnabled         = TRUE;
@@ -1536,6 +1635,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
+    if (_currentCard.question.movieFullPath2.length >0) {
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath2]) {
+            _questionMovieFullPath2 = _currentCard.question.movieFullPath2;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath2 lastPathComponent]];
+            _questionMovieFullPath2 = path;
+        }
+        
+    }
+    
     if (_currentCard.question.recordedSoundFullPath.length > 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
         _questionRecordedSoundFullPath = path;
@@ -1610,6 +1719,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath2 lastPathComponent]];
+    imageTemp = [UIImage imageWithContentsOfFile:path];
+    DDLogInfo(@"%s,_answerImageFullPath2 = %@",__FUNCTION__,path);
+    if (imageTemp) {
+        _answerImageFullPath2 = path;
+        _imageAnswer2.image = imageTemp;
+    } else {
+        DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
+        _answerImageFullPath2 = @"";
+        DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer2",__FUNCTION__);
+        _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+        
+        if (_isPlayingCard) {
+            _imageAnswer2.hidden = YES;
+        } else {
+        }
+    }
+    
     path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
     imageTemp = [UIImage imageWithContentsOfFile:path];
     if (imageTemp) {
@@ -1631,6 +1758,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         _answerMovieFullPath = @"";
+    }
+    
+    if (_currentCard.answer.movieFullPath2.length > 0) {
+        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath2]) {
+            _answerMovieFullPath2 = _currentCard.answer.movieFullPath2;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath2 lastPathComponent]];
+            _answerMovieFullPath2 = path;
+        }
+        
+    } else {
+        _answerMovieFullPath2 = @"";
     }
     
     if (_currentCard.answer.recordedSoundFullPath.length > 0) {
@@ -1665,6 +1804,25 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_isPlayingCard) {
             _imageQuestion.hidden = YES;
+        } else {
+        }
+        
+    }
+    
+    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath2 lastPathComponent]];
+    imageTemp = [UIImage imageWithContentsOfFile:path];
+    DDLogInfo(@"%s,_questionImageFullPath2 = %@",__FUNCTION__,path);
+    if (imageTemp) {
+        _questionImageFullPath2 = path;
+        _imageQuestion2.image = imageTemp;
+    } else {
+        DDLogWarn(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
+        _questionImageFullPath2 = @"";
+        DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion2",__FUNCTION__);
+        _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
+        
+        if (_isPlayingCard) {
+            _imageQuestion2.hidden = YES;
         } else {
         }
         
@@ -1710,6 +1868,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionMovieFullPath = @"";
     }
     
+    if (_currentCard.question.movieFullPath2.length > 0) {
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath2]) {
+            _questionMovieFullPath2 = _currentCard.question.movieFullPath2;
+        } else {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath2 lastPathComponent]];
+            _questionMovieFullPath2 = path;
+        }
+        
+    } else {
+        _questionMovieFullPath2 = @"";
+    }
+    
     if (_currentCard.question.recordedSoundFullPath.length > 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
         _questionRecordedSoundFullPath = path;
@@ -1738,6 +1908,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.hidden = NO;
         
         _imageAnswer.hidden = YES;
+        _imageAnswer2.hidden = YES;
         _subheadingAnswer.hidden = YES;
         _mainAnswer.hidden = YES;
         _subAnswer.hidden = YES;
@@ -1756,6 +1927,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.hidden = YES;
         
         _imageAnswer.hidden = NO;
+        _imageAnswer2.hidden = NO;
         _subheadingAnswer.hidden = NO;
         _mainAnswer.hidden = NO;
         _subAnswer.hidden = NO;
@@ -1828,6 +2000,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
     
     _currentCard.answer.movieFullPath = _answerMovieFullPath;
+    _currentCard.answer.movieFullPath2 = _answerMovieFullPath2;
     
     if (isFromNewCreatedCard) {
        //我们不做什么，因为已经在CreateSoundViewController中进行commit了
@@ -1864,6 +2037,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
     
     _currentCard.question.movieFullPath = _questionMovieFullPath;
+    _currentCard.question.movieFullPath2 = _questionMovieFullPath2;
     
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
@@ -5276,6 +5450,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
         //save movie info
+        //TODO: XXX
         NSString *destPath;
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (([_questionMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
@@ -5290,6 +5465,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                    || (_answerMovieFullPath.length == 0)){
                 _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                 destPath = _answerMovieFullPath;
+                //TODO:XXX
             }
         }
         
@@ -5319,9 +5495,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (_segmentedControl.selectedSegmentIndex == 0) {
                 _currentCard.question.imageFullPath = _questionImageFullPath;
                 _currentCard.question.movieFullPath = _questionMovieFullPath;
+                //TODO:XXX
             } else {
                 _currentCard.answer.imageFullPath = _answerImageFullPath;
                 _currentCard.answer.movieFullPath = _answerMovieFullPath;
+                //TODO:XXX
             }
         } else {
             [self saveEdittedCard];
@@ -6751,9 +6929,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     
                     if (self.segmentedControl.selectedSegmentIndex == 0) {
                         _questionMovieFullPath = youtbueLinkage;
+                        //TODO:XXX
                         
                     } else {
                         _answerMovieFullPath = youtbueLinkage;
+                        //TODO:XXX
                     }
                     
                     if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -6761,9 +6941,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         if (_segmentedControl.selectedSegmentIndex == 0) {
                             _currentCard.question.imageFullPath = _questionImageFullPath;
                             _currentCard.question.movieFullPath = _questionMovieFullPath;
+                            //TODO:XXX
                         } else {
                             _currentCard.answer.imageFullPath = _answerImageFullPath;
                             _currentCard.answer.movieFullPath = _answerMovieFullPath;
+                            //TODO:XXX
                         }
                     } else {
                         [self saveEdittedCard];
@@ -6817,16 +6999,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.segmentedControl.selectedSegmentIndex == 0) {
                 //TODO , we need to remove video/image resources.
                 _questionImageFullPath = @"";
+                _questionImageFullPath2 = @"";
                 _questionMovieFullPath = @"";
+                //TODO:XX
                 _currentCard.question.movieFullPath = @"";
                 _currentCard.question.imageFullPath = @"";
+                _currentCard.question.imageFullPath2 = @"";
                 [_imageQuestion setImage:nil];
             } else {
                 //TODO , we need to remove video/image resources.
                 _answerImageFullPath = @"";
+                _answerImageFullPath2 = @"";
                 _answerMovieFullPath = @"";
+                //TODO:XXX
                 _currentCard.answer.movieFullPath = @"";
                 _currentCard.answer.imageFullPath = @"";
+                _currentCard.answer.imageFullPath2 = @"";
                 [_imageAnswer setImage:nil];
             }
             if (isFromNewCreatedCard == FALSE) {

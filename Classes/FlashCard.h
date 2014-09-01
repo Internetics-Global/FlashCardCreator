@@ -74,11 +74,15 @@ typedef enum{
     
     //movie played related
     NSString     *_questionMovieFullPath;//youtube linkage or an local url
+    NSString     *_questionMovieFullPath2;//youtube linkage or an local url
     NSString     *_answerMovieFullPath; //youtube linkage or an local url
+    NSString     *_answerMovieFullPath2; //youtube linkage or an local url
     
     //image or thubmnail(video)
     NSString     *_questionImageFullPath; //如果播放的是mov，则是Mov的thumbnail
+    NSString     *_questionImageFullPath2; //如果播放的是mov，则是Mov的thumbnail
     NSString     *_answerImageFullPath; //如果播放的是mov，则是Mov的thumbnail
+    NSString     *_answerImageFullPath2; //如果播放的是mov，则是Mov的thumbnail
     
     UIScrollView *_verticalScrollView;
     
@@ -87,6 +91,7 @@ typedef enum{
     UITextView   *_mainQuestion;
     UITextView   *_subQuestion;
     UIImageView  *_imageQuestion;
+    UIImageView  *_imageQuestion2;
     NSInteger    _subheadingSizeQuestion;
 	NSString     *_subheadingColorQuestion;
     NSString     *_subheadingAlignQuestion;
@@ -101,6 +106,7 @@ typedef enum{
     UITextView   *_mainAnswer;
     UITextView   *_subAnswer;
     UIImageView  *_imageAnswer;
+    UIImageView  *_imageAnswer2;
     NSInteger    _subheadingSizeAnswer;
 	NSString     *_subheadingColorAnswer;
     NSString     *_subheadingAlignAnswer;

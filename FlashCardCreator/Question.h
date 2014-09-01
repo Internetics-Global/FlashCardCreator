@@ -19,7 +19,9 @@
     NSString *_main;
     NSString *_sub;
     NSString *_imageFullPath;
+    NSString *_imageFullPath2;
     NSString *_movieFullPath;
+    NSString *_movieFullPath2;
     
     NSString *_logoFullPath;
     NSString *_logoURLLinkage;
@@ -47,8 +49,11 @@
 @property (nonatomic, copy) NSString *sub;
 
 @property (nonatomic, copy) NSString *imageFullPath;
+@property (nonatomic, copy) NSString *imageFullPath2;
+
 //youtube linkage or an local url
 @property (nonatomic, copy) NSString *movieFullPath;
+@property (nonatomic, copy) NSString *movieFullPath2;
 
 @property (nonatomic, copy) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;

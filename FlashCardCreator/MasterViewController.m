@@ -1475,6 +1475,19 @@ enum popover_enum {
             
             error = nil;
             newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([questionDict[@"image2"] length] >0) {
+                [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image2"]] toPath:newFileName error:&error];
+                if (error) {
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard question].imageFullPath2 = newFileName;
+                }
+            } else {
+                [assembledCard question].imageFullPath2 = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             if ([questionDict[@"cover_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1547,6 +1560,27 @@ enum popover_enum {
                 
             }  else {
                 [assembledCard question].movieFullPath = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            if ([questionDict[@"movie2"] length] > 0) {
+                
+                if ([Common isValidYoutubeLinkage:questionDict[@"movie2"]]) {
+                    [assembledCard question].movieFullPath2 = questionDict[@"movie2"];
+                } else {
+                    
+                    [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie2"]] toPath:newFileName error:&error];
+                    if (error) {
+                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    } else {
+                        [assembledCard question].movieFullPath2 = newFileName;
+                    }
+                    
+                }
+                
+            }  else {
+                [assembledCard question].movieFullPath2 = @"";
             }
             
             
@@ -1683,6 +1717,8 @@ enum popover_enum {
             if ([[assembledCard answer].main rangeOfString:@"Point to"].length > 0) {
                 error = nil;
             }
+            
+            
             error = nil;
             newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image"] length] > 0) {
@@ -1694,6 +1730,19 @@ enum popover_enum {
                 }
             } else {
                 [assembledCard answer].imageFullPath = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            if ([answerDict[@"image2"] length] > 0) {
+                [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image2"]] toPath:newFileName error:&error];
+                if (error) {
+                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                } else {
+                    [assembledCard answer].imageFullPath2 = newFileName;
+                }
+            } else {
+                [assembledCard answer].imageFullPath2 = @"";
             }
             
             error = nil;
@@ -1760,6 +1809,26 @@ enum popover_enum {
                 
             }   else {
                 [assembledCard answer].movieFullPath = @"";
+            }
+            
+            error = nil;
+            newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            if ([answerDict[@"movie2"] length] > 0) {
+                //youtube link
+                if ([Common isValidYoutubeLinkage:answerDict[@"movie2"]]) {
+                    [assembledCard answer].movieFullPath2 = answerDict[@"movie2"];
+                } else {
+                    //with video file locally
+                    [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie2"]] toPath:newFileName error:&error];
+                    if (error) {
+                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    } else {
+                        [assembledCard answer].movieFullPath2 = newFileName;
+                    }
+                }
+                
+            }   else {
+                [assembledCard answer].movieFullPath2 = @"";
             }
             
             error = nil;
