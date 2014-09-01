@@ -38,6 +38,8 @@
 
 #import "KeyboardTopView.h"
 
+#import "PECropViewController.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -96,7 +98,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 
-@interface FlashCard () <KeyboardTopViewDelegate> {
+@interface FlashCard () <KeyboardTopViewDelegate,PECropViewControllerDelegate> {
     Type_Image_Source    _imageSourceType;
     AVAudioPlayer          *_audioPlayer;
     
@@ -1902,6 +1904,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     DDLogInfo(@"%s",__FUNCTION__);
     if (_segmentedControl.selectedSegmentIndex == 0) {
         _imageQuestion.hidden = NO;
+        _imageQuestion2.hidden = NO;
+        
         _subheadingQuestion.hidden = NO;
         _mainQuestion.hidden = NO;
         _subQuestion.hidden = NO;
@@ -1921,12 +1925,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         _imageQuestion.hidden = YES;
+        _imageQuestion2.hidden = YES;
+        
         _subheadingQuestion.hidden = YES;
         _mainQuestion.hidden = YES;
         _subQuestion.hidden = YES;
         
         _imageAnswer.hidden = NO;
         _imageAnswer2.hidden = NO;
+        
         _subheadingAnswer.hidden = NO;
         _mainAnswer.hidden = NO;
         _subAnswer.hidden = NO;
@@ -5848,6 +5855,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     } else if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        
         NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
         
         if (isUserInterfaceIdiomPhone) {
@@ -5948,116 +5957,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             } else {
                 [self saveEdittedCard];
             }
-        } else if (_imageSourceType == Type_Image_Source_Background) {
+        } else if (_imageSourceType == Type_Image_Source_Background)  {
             
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_questionBackgroundImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
-                    || ((_questionBackgroundImageFullPath.length == 0))) {
-                    _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-                } else {
-                    //当之前已经有图片时，我们才操作
-                    //step1: 拷贝一份更改前的图片到undoCardBackGroundImageForQuestionPath
-                    NSError *error;
-                    NSString *undoCardBackGroundImageForQuestionPath = [FileOperationHelper undoCardBackGroundImageForQuestionPath];
-                    [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForQuestionPath error:nil];
-                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForQuestionPath] error:&error];
-                    
-                    //step1: 写入文件，并置K_Is_Allow_Undo_Question_Background_Image，允许下次undo
-                    if (error) {
-                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
-                    } else {
-                        
-                        NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
-                        NSMutableDictionary *cardMutableDict;
-                        if (cardDict) {
-                            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
-                        } else {
-                            cardMutableDict = [NSMutableDictionary dictionary];
-                        }
-                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
-                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
-                        
-                        [cardMutableDict setObject:undoCardBackGroundImageForQuestionPath forKey:@"K_Undo_Question_Background_Image_URL"];
-                        [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
-                        [self setUndoForCardBackgroundImage:cardMutableDict];
-                        
-                        
-                        
-                        
-                    }
-                    
-                    
-                    
-                }
-                
-                [imageData writeToFile:_questionBackgroundImageFullPath atomically:YES];
-                _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
+            if (isUserInterfaceIdiomPhone) {
+                [picker dismissModalViewControllerAnimated:YES];
             } else {
-                if (([_answerBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_answerBackgroundImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
-                    || ((_answerBackgroundImageFullPath.length == 0))) {
-                    _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-                }else {
-                    
-                    NSError *error;
-                    NSString *undoCardBackGroundImageForAnswerPath = [FileOperationHelper undoCardBackGroundImageForAnswerPath];
-                    [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForAnswerPath error:nil];
-                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForAnswerPath] error:&error];
-                    
-                    if (error) {
-                        DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
-                    } else {
-                        
-                        NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
-                        NSMutableDictionary *cardMutableDict;
-                        if (cardDict) {
-                            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
-                        } else {
-                            cardMutableDict = [NSMutableDictionary dictionary];
-                        }
-                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
-                        [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
-                        
-                        [cardMutableDict setObject:undoCardBackGroundImageForAnswerPath forKey:@"K_Undo_Answer_Background_Image_URL"];
-                        [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Answer_Background_Image"];
-                        [self setUndoForCardBackgroundImage:cardMutableDict];
-                    }
-                }
-                
-                
-                [imageData writeToFile:_answerBackgroundImageFullPath atomically:YES];
-                _answerBackgroundImageView.image = [UIImage imageWithData:imageData];
+                [_imagePickerPopover dismissPopoverAnimated:YES];
             }
             
-            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-                //we will save until after we press the save button
-                if (_segmentedControl.selectedSegmentIndex == 0) {
-                    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
-                } else {
-                    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
-                }
-            } else {
-                [self saveEdittedCard];
-            }
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Not_Show_Saved_Background_Image_Size_Dialog"] == FALSE) {
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Background images" message:@"Recommended background image size is 400 x 400" delegate:self cancelButtonTitle:@"Do not show again" otherButtonTitles:@"Close", nil];
-                alertView.tag = Type_AlertView_BackgroundImage_Crop_Size;
-                [alertView show];
-                
-            }
+            [self openEditor:origialmage];
         }
     }
     
-    if (isUserInterfaceIdiomPhone) {
-        [picker dismissModalViewControllerAnimated:YES];
-    } else {
-      [_imagePickerPopover dismissPopoverAnimated:YES];
+    if (_imageSourceType != Type_Image_Source_Background) {
+        if (isUserInterfaceIdiomPhone) {
+            [picker dismissModalViewControllerAnimated:YES];
+        } else {
+            [_imagePickerPopover dismissPopoverAnimated:YES];
+        }
+        
     }
-    
-    
+
     
 }
 
@@ -8282,6 +8202,137 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
        //do nothing
     }
     
+}
+
+#pragma mark - PECropViewControllerDelegate methods
+
+- (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
+{
+     NSData *imageData = UIImageJPEGRepresentation([croppedImage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    
+    [controller dismissViewControllerAnimated:YES completion:NULL];
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        if (([_questionBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+            || ([_questionBackgroundImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
+            || ((_questionBackgroundImageFullPath.length == 0))) {
+            _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+        } else {
+            //当之前已经有图片时，我们才操作
+            //step1: 拷贝一份更改前的图片到undoCardBackGroundImageForQuestionPath
+            NSError *error;
+            NSString *undoCardBackGroundImageForQuestionPath = [FileOperationHelper undoCardBackGroundImageForQuestionPath];
+            [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForQuestionPath error:nil];
+            [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForQuestionPath] error:&error];
+            
+            //step1: 写入文件，并置K_Is_Allow_Undo_Question_Background_Image，允许下次undo
+            if (error) {
+                DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+            } else {
+                
+                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                NSMutableDictionary *cardMutableDict;
+                if (cardDict) {
+                    cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                } else {
+                    cardMutableDict = [NSMutableDictionary dictionary];
+                }
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                
+                [cardMutableDict setObject:undoCardBackGroundImageForQuestionPath forKey:@"K_Undo_Question_Background_Image_URL"];
+                [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+                [self setUndoForCardBackgroundImage:cardMutableDict];
+                
+                
+                
+                
+            }
+            
+            
+            
+        }
+        
+        [imageData writeToFile:_questionBackgroundImageFullPath atomically:YES];
+        _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
+    } else {
+        if (([_answerBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+            || ([_answerBackgroundImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
+            || ((_answerBackgroundImageFullPath.length == 0))) {
+            _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+        }else {
+            
+            NSError *error;
+            NSString *undoCardBackGroundImageForAnswerPath = [FileOperationHelper undoCardBackGroundImageForAnswerPath];
+            [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForAnswerPath error:nil];
+            [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForAnswerPath] error:&error];
+            
+            if (error) {
+                DDLogError(@"%s:Error when copyItem.%@",__FUNCTION__,[error description]);
+            } else {
+                
+                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+                NSMutableDictionary *cardMutableDict;
+                if (cardDict) {
+                    cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+                } else {
+                    cardMutableDict = [NSMutableDictionary dictionary];
+                }
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+                
+                [cardMutableDict setObject:undoCardBackGroundImageForAnswerPath forKey:@"K_Undo_Answer_Background_Image_URL"];
+                [cardMutableDict setObject:[NSNumber numberWithBool:YES] forKey:@"K_Is_Allow_Undo_Answer_Background_Image"];
+                [self setUndoForCardBackgroundImage:cardMutableDict];
+            }
+        }
+        
+        
+        [imageData writeToFile:_answerBackgroundImageFullPath atomically:YES];
+        _answerBackgroundImageView.image = [UIImage imageWithData:imageData];
+    }
+    
+    if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+        //we will save until after we press the save button
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+        } else {
+            _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+        }
+    } else {
+        [self saveEdittedCard];
+    }
+    
+}
+
+- (void)cropViewControllerDidCancel:(PECropViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (IBAction)openEditor:(UIImage *)origialmage
+{
+    PECropViewController *controller = [[PECropViewController alloc] init];
+    controller.delegate = self;
+    controller.image = origialmage;
+    
+//    UIImage *image = self.imageView.image;
+//    CGFloat width = image.size.width;
+//    CGFloat height = image.size.height;
+//    CGFloat length = MIN(width, height);
+//    controller.imageCropRect = CGRectMake((width - length) / 2,
+//                                          (height - length) / 2,
+//                                          length,
+//                                          length);
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+    
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navigationController animated:YES completion:NULL];
 }
 
 
