@@ -141,7 +141,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,autoresize_flag=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\"  WHERE card_id=%d", _answerID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _cssID, _templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath,_recordedSoundFullPath,_cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,autoresize_flag=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\"  WHERE card_id=%d", _answerID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _cssID, _templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath,_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -289,8 +289,9 @@
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"line_number_sub"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"background_image"];
         [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"movie"];
-        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"audio"];
-        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"autoresize_flag"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"movie2"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"audio"];
+        [answerDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:18] forKey:@"autoresize_flag"];
         
         [answerDict setValue:[CSS cssForCSSID:[[answerDict valueForKey:@"css_id"] intValue]] forKey:@"css"];
 	}

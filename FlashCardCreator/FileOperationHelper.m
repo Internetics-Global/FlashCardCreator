@@ -492,12 +492,12 @@
     }
     
     if (([card.answer.movieFullPath lastPathComponent].length > 0)
-          && ([card.answer.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
+          && ([card.answer.movieFullPath rangeOfString:@"http://"].location == NSNotFound) && ([card.answer.movieFullPath rangeOfString:@"https://"].location == NSNotFound)){
         [zipFile addFileToZip:card.answer.movieFullPath newname:[card.answer.movieFullPath lastPathComponent]];
     }
     
     if (([card.answer.movieFullPath2 lastPathComponent].length > 0)
-        && ([card.answer.movieFullPath2 rangeOfString:@"http://"].location == NSNotFound)){
+        && ([card.answer.movieFullPath2 rangeOfString:@"http://"].location == NSNotFound) && ([card.answer.movieFullPath2 rangeOfString:@"https://"].location == NSNotFound)){
         [zipFile addFileToZip:card.answer.movieFullPath2 newname:[card.answer.movieFullPath2 lastPathComponent]];
     }
     
@@ -506,12 +506,12 @@
     }
     
     if (([card.question.movieFullPath lastPathComponent].length > 0)
-          && ([card.question.movieFullPath rangeOfString:@"http://"].location == NSNotFound)){
+          && ([card.question.movieFullPath rangeOfString:@"http://"].location == NSNotFound) && ([card.question.movieFullPath rangeOfString:@"https://"].location == NSNotFound)){
         [zipFile addFileToZip:card.question.movieFullPath newname:[card.question.movieFullPath lastPathComponent]];
     }
     
     if (([card.question.movieFullPath2 lastPathComponent].length > 0)
-        && ([card.question.movieFullPath2 rangeOfString:@"http://"].location == NSNotFound)){
+        && ([card.question.movieFullPath2 rangeOfString:@"http://"].location == NSNotFound) && ([card.question.movieFullPath2 rangeOfString:@"https://"].location == NSNotFound)){
         [zipFile addFileToZip:card.question.movieFullPath2 newname:[card.question.movieFullPath2 lastPathComponent]];
     }
     

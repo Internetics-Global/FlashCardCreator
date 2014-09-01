@@ -7410,7 +7410,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
                 _currentCard.answer.movieFullPath2 = @"";
                 _currentCard.answer.imageFullPath2 = @"";
-                [_imageAnswer setImage:nil];
+                [_imageAnswer2 setImage:nil];
             }
             if (isFromNewCreatedCard == FALSE) {
                 [self saveEdittedCard];

@@ -624,9 +624,6 @@ enum popover_enum {
        [popoverView dismiss];
     });
 
-    if ([_currentPack cards].count == 0) {
-        return;
-    }
     
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
@@ -643,6 +640,10 @@ enum popover_enum {
                 break;
             }
             case 1: {
+                
+                if ([_currentPack cards].count == 0) {
+                    return;
+                }
                 
                 if (_currentPack.isAllowShare) {
                     if ((_currentPack) && (_currentCard)) {

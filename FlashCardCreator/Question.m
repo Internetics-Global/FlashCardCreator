@@ -305,8 +305,9 @@
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"line_number_sub"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"background_image"];
         [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"movie"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"audio"];
-        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:18] forKey:@"autoresize_flag"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:17] forKey:@"movie2"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:18] forKey:@"audio"];
+        [questionDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:19] forKey:@"autoresize_flag"];
 
         
         
