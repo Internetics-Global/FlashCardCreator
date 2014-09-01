@@ -3078,7 +3078,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(10, 40, 140, 140);
+            _imageAnswer2.frame = CGRectMake(30, 40, 140, 140);
             if (self.isPlayingCard) {
                 _imageAnswer2.frame = [Common getScaledViewRect:_imageAnswer2 withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -4955,7 +4955,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(10, 40, 140, 140);
+            _imageQuestion2.frame = CGRectMake(30, 40, 140, 140);
             if (self.isPlayingCard) {
                 _imageQuestion2.frame = [Common getScaledViewRect:_imageQuestion2 withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5961,11 +5961,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             if (isUserInterfaceIdiomPhone) {
                 [picker dismissModalViewControllerAnimated:YES];
+                
             } else {
                 [_imagePickerPopover dismissPopoverAnimated:YES];
             }
             
-            [self openEditor:origialmage];
+            double delayInSeconds = 0.6;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self openEditor:origialmage];
+            });
         }
     }
     
@@ -8311,7 +8316,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (IBAction)openEditor:(UIImage *)origialmage
+- (void)openEditor:(UIImage *)origialmage
 {
     PECropViewController *controller = [[PECropViewController alloc] init];
     controller.delegate = self;
