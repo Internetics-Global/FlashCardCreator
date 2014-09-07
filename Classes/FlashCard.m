@@ -1355,7 +1355,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_currentCard.answer.movieFullPath2.length > 0) {
         _imageAnswer2.userInteractionEnabled        = YES;
     } else {
-        _imageAnswer.userInteractionEnabled        = FALSE;
+        _imageAnswer2.userInteractionEnabled        = FALSE;
     }
     
     _imageAnswer.layer.borderWidth = 0;
