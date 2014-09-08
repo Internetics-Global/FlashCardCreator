@@ -7441,7 +7441,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [alert show];
         } else if (index == 2) {
             if (self.segmentedControl.selectedSegmentIndex == 0) {
-                //TODO , we need to remove video/image resources.
+                
+                if (([_questionImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                    (_questionImageFullPath2.length > 0)) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath2
+                                                                    error:&error])
+                    {
+                        NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath2);
+                    }
+                }
+                
+                if (([_questionMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                    (_questionMovieFullPath2.length > 0)) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
+                                                                    error:&error])
+                    {
+                        NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath2);
+                    }
+                }
+                
                 _questionImageFullPath2 = @"";
                 _questionMovieFullPath2 = @"";
                 
@@ -7450,7 +7470,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
                 [_imageQuestion2 setImage:nil];
             } else {
-                //TODO , we need to remove video/image resources.
+                
+                if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                    (_answerImageFullPath2.length > 0)) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath2
+                                                                    error:&error])
+                    {
+                        NSLog(@"[Error] %@ (%@)", error, _answerImageFullPath2);
+                    }
+                }
+                
+                if (([_answerMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                    (_answerMovieFullPath2.length > 0)) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
+                                                                    error:&error])
+                    {
+                        NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath2);
+                    }
+                }
+                
                 _answerImageFullPath2 = @"";
                 _answerMovieFullPath2 = @"";
 
