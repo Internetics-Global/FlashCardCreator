@@ -97,8 +97,6 @@
     _currentIndex = -1;
     
     
-    [_userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
-    
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     
     switch (_sortTypeEnum) {
@@ -123,15 +121,16 @@
     }
     
     self.userNewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.userNewButton.frame = CGRectMake(14, 260, 84, 30);
+    self.userNewButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+    self.userNewButton.frame = CGRectMake(14, CGRectGetHeight(self.view.frame) - 40, 84, 30);
     [self.userNewButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.userNewButton setTitle:@"New User?" forState:UIControlStateNormal];
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"recently created",@"recently viewed", nil]];
-    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 240 -5, 260, 240, 29);
-    self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 240 -5, CGRectGetHeight(self.view.frame) - 40, 240, 29);
+    self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sortSegmentedControl];
     
     switch (_sortTypeEnum) {
