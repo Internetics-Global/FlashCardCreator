@@ -5772,32 +5772,60 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_imageSourceType == Type_Image_Source_Image) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
-                    || (_questionMovieFullPath.length == 0)){
+                if ([_questionMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
+                                                                    error:&error])
+                    {
+                        DDLogInfo(@"[Error] %@ (%@)", error, _questionMovieFullPath);
+                    }
+                    destPath = _questionMovieFullPath;
+                } else {
                     _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                     destPath = _questionMovieFullPath;
                 }
                 
-                
             } else {
-                if (([_answerMovieFullPath rangeOfString:@".3gp"].location == NSNotFound)
-                    || (_answerMovieFullPath.length == 0)){
+                
+                if ([_answerMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
+                                                                    error:&error])
+                    {
+                        DDLogInfo(@"[Error] %@ (%@)", error, _answerMovieFullPath);
+                    }
+                    destPath = _answerMovieFullPath;
+                } else {
                     _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                     destPath = _answerMovieFullPath;
                 }
             }
         } else {
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionMovieFullPath2 rangeOfString:@".3gp"].location == NSNotFound)
-                    || (_questionMovieFullPath2.length == 0)){
+                if ([_questionMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
+                                                                    error:&error])
+                    {
+                        DDLogInfo(@"[Error] %@ (%@)", error, _questionMovieFullPath2);
+                    }
+                    destPath = _questionMovieFullPath2;
+                } else {
                     _questionMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                     destPath = _questionMovieFullPath2;
                 }
                 
                 
             } else {
-                if (([_answerMovieFullPath2 rangeOfString:@".3gp"].location == NSNotFound)
-                    || (_answerMovieFullPath2.length == 0)){
+                if ([_answerMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
+                    NSError *error = nil;
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
+                                                                    error:&error])
+                    {
+                        DDLogInfo(@"[Error] %@ (%@)", error, _answerMovieFullPath2);
+                    }
+                    destPath = _answerMovieFullPath2;
+                } else {
                     _answerMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
                     destPath = _answerMovieFullPath2;
                 }
@@ -8400,6 +8428,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void)openEditor:(UIImage *)origialmage
 {
     PECropViewController *controller = [[PECropViewController alloc] init];
+    controller.view.frame = [UIApplication sharedApplication].keyWindow.bounds;
     controller.delegate = self;
     controller.image = origialmage;
     

@@ -1069,7 +1069,7 @@ enum popover_enum {
         return;
     }
     
-    NSString *httpURL = [urlStr stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"];
+    NSString *httpURL = [urlStr stringByReplacingOccurrencesOfString:@"fcc" withString:@"http"]; //TODO, @"http" needs to be changed to @"https" in future
     NSString *downloadableURL = [httpURL stringByReplacingOccurrencesOfString:@"www" withString:@"dl"];
     NSDictionary *params = [NSString queryParamsFromString:downloadableURL];
     NSString *type = params[@"type"];
