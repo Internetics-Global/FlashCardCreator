@@ -1682,10 +1682,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
       _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     }
     
+    if (_isPlayingCard) {
+        if ([_creatorText.text isEqualToString:NSLocalizedString(@"Label_Creator", nil)]) {
+            _creatorText.text = @"";
+        }
+    }
+    
     if (checkNullOrEmptyOrNullStr(_currentPack.jobTitle)) {
         _jobTitleText.text = @"";
     } else {
       _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
+    }
+    
+    if (_isPlayingCard) {
+        if ([_jobTitleText.text isEqualToString:NSLocalizedString(@"Job_Title", nil)]) {
+          _jobTitleText.text = @"";
+        }
     }
     
     

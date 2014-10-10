@@ -72,7 +72,7 @@
     }
     _packNameText.textAlignment = NSTextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
-    _packNameText.placeholder = NSLocalizedString(@"Label_New_Pack_Name", nil);
+    _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
     _packNameText.layer.cornerRadius =2;
@@ -91,7 +91,7 @@
     }
     _sidebarTitle.textAlignment = NSTextAlignmentCenter;
     _sidebarTitle.backgroundColor = [UIColor whiteColor];
-    _sidebarTitle.placeholder = @"Side bar title";
+    _sidebarTitle.text = @"Side bar title";
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
     _sidebarTitle.layer.cornerRadius =2;
@@ -110,7 +110,7 @@
     }
     _creatorText.textAlignment = NSTextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
-    _creatorText.placeholder = NSLocalizedString(@"Label_Creator", nil);
+    _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
     _creatorText.font = [UIFont systemFontOfSize:14];
     _creatorText.delegate = self;
     _creatorText.layer.cornerRadius =2;
@@ -129,7 +129,7 @@
     }
     _jobTitleText.textAlignment = NSTextAlignmentCenter;
     _jobTitleText.backgroundColor = [UIColor whiteColor];
-    _jobTitleText.placeholder = NSLocalizedString(@"Job_Title", nil);
+    _jobTitleText.text = NSLocalizedString(@"Job_Title", nil);
     _jobTitleText.font = [UIFont systemFontOfSize:14];
     _jobTitleText.delegate = self;
     _jobTitleText.layer.cornerRadius =2;
