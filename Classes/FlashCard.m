@@ -7856,16 +7856,99 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (NSArray *) replaceBasicSymbol:(NSString *) str {
     NSString *resultStr;
     
-    NSString *plusStr = @" plus ";
+    NSString *plusStr = @" Plus ";
+    NSString *timesStr = @" Times ";
+    NSString *dividedByStr = @" divided by ";
     NSString *minusStr = @" minus ";
-    NSString *multiplyStr = @" times ";
-    NSString *divideStr = @" divided by ";
     
+    NSString *equalsStr = @" equals ";
+    NSString *cubicMetresStr = @"  Cubic Metres ";
+    NSString *squareMetresStr = @" Square Metres ";
+    NSString *squareFeetStr = @" Square feet ";
+    
+    NSString *cubicFeetStr = @"  Cubic Feet ";
+    NSString *squareInchesStr = @" Square Inches ";
+    NSString *cubicInchesStr = @" Cubic Inches ";
+    NSString *cubicCentimetresStr = @" Cubic Centimetres ";
+    
+    NSString *squareCentimetresStr = @" Square Centimetres ";
+    NSString *cubicMillimetresStr = @" Cubic Millimetres ";
+    NSString *squareMillimetresStr = @" Square millimetres ";
+    NSString *degreesCelsiusStr = @" Degrees Celsius ";
+    
+    NSString *degreesFahrenheitStr = @"  Degrees Fahrenheit ";
+    NSString *degreesRankinStr = @" Degrees Rankin ";
+    NSString *degresssKelvinStr = @" Degrees Kelvin ";
+    NSString *carbonDioxideStr = @" Carbon Dioxide ";
+    
+    NSString *nitrogenStr = @" Nitrogen ";
+    NSString *oxygenStr = @" Oxygen ";
+    NSString *pieStr = @" Pie ";
+    NSString *squareRdiusStr = @" square radius ";
+
+    NSString *OzoneStr = @"  Ozone ";
+    NSString *perStr = @" per ";
+    NSString *millibarStr = @" millibar ";
+    NSString *percentStr = @" percent ";
+
+    NSString *radiusStr = @"  Radius ";
+    NSString *diameterStr = @" Diameter ";
+    NSString *greaterThenStr = @" Greater then ";
+    NSString *lessThenStr = @" Less then ";
+
+    NSString *squareRootStr = @" square root ";
+
+
     resultStr = [str stringByReplacingOccurrencesOfString:@"+" withString:plusStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:timesStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:dividedByStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:multiplyStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:divideStr];
+
+    resultStr = [str stringByReplacingOccurrencesOfString:@"=" withString:equalsStr]; ////// , not unicode
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m³" withString:cubicMetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m²" withString:squareMetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ft²" withString:squareFeetStr];
+
+    resultStr = [str stringByReplacingOccurrencesOfString:@"ft³" withString:cubicFeetStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in²" withString:squareInchesStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in³" withString:cubicInchesStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm³" withString:cubicCentimetresStr];
+
+    resultStr = [str stringByReplacingOccurrencesOfString:@"cm²" withString:squareCentimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm³" withString:cubicMillimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm²" withString:squareMillimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°C" withString:degreesCelsiusStr];
+
+    resultStr = [str stringByReplacingOccurrencesOfString:@"°F" withString:degreesFahrenheitStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°R" withString:degreesRankinStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°K" withString:degresssKelvinStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"CO₂" withString:carbonDioxideStr];
+
+    resultStr = [str stringByReplacingOccurrencesOfString:@"N₂" withString:nitrogenStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"O₂" withString:oxygenStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"π" withString:pieStr];  ////// but not included into current symbol table
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r²" withString:squareRdiusStr];
     
+    
+    resultStr = [str stringByReplacingOccurrencesOfString:@"O₃" withString:OzoneStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"∕" withString:perStr]; //unicode
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"/" withString:perStr]; //not unicode
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mb=" withString:millibarStr]; ////// mb = millibar
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mb =" withString:millibarStr]; ////// mb = millibar
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"%" withString:percentStr]; ///// not unicode
+
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r=" withString:radiusStr]; //////// r
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r =" withString:radiusStr]; //////// r
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"d=" withString:diameterStr]; /////// d
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"d =" withString:diameterStr]; /////// d
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@">" withString:greaterThenStr]; //// not unicode
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"<" withString:lessThenStr];///// not unicode
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"√" withString:squareRootStr];
+
+
+
+
+
     NSArray *returnArray = [resultStr componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
     return returnArray;
