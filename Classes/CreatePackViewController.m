@@ -72,7 +72,7 @@
     }
     _packNameText.textAlignment = NSTextAlignmentCenter;
     _packNameText.backgroundColor = [UIColor whiteColor];
-    _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
+    _packNameText.placeholder = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
     _packNameText.layer.cornerRadius =2;
@@ -91,7 +91,7 @@
     }
     _sidebarTitle.textAlignment = NSTextAlignmentCenter;
     _sidebarTitle.backgroundColor = [UIColor whiteColor];
-    _sidebarTitle.text = @"Side bar title";
+    _sidebarTitle.placeholder = @"Side bar title";
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
     _sidebarTitle.layer.cornerRadius =2;
@@ -110,7 +110,7 @@
     }
     _creatorText.textAlignment = NSTextAlignmentCenter;
     _creatorText.backgroundColor = [UIColor whiteColor];
-    _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
+    _creatorText.placeholder = NSLocalizedString(@"Label_Creator", nil);
     _creatorText.font = [UIFont systemFontOfSize:14];
     _creatorText.delegate = self;
     _creatorText.layer.cornerRadius =2;
@@ -125,11 +125,11 @@
     if (isUserInterfaceIdiomPhone) {
         _jobTitleText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 80, 180, 20)];
     } else {
-        _jobTitleText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 150, 200, 24)];
+        _jobTitleText = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 200, 200, 24)];
     }
     _jobTitleText.textAlignment = NSTextAlignmentCenter;
     _jobTitleText.backgroundColor = [UIColor whiteColor];
-    _jobTitleText.text = NSLocalizedString(@"Job_Title", nil);
+    _jobTitleText.placeholder = NSLocalizedString(@"Job_Title", nil);
     _jobTitleText.font = [UIFont systemFontOfSize:14];
     _jobTitleText.delegate = self;
     _jobTitleText.layer.cornerRadius =2;
@@ -144,7 +144,7 @@
     if (isUserInterfaceIdiomPhone){
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-180)/2, 105,180,180)];
     } else {
-        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 200,200,200)];
+        _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 250,200,200)];
     }
     _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     _coverImageView.layer.masksToBounds = YES;
