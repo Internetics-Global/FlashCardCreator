@@ -75,6 +75,7 @@
     _packNameText.text = NSLocalizedString(@"Label_New_Pack_Name", nil);
     _packNameText.font = [UIFont systemFontOfSize:14];
     _packNameText.delegate = self;
+    _packNameText.tintColor = [UIColor blackColor];
     _packNameText.layer.cornerRadius =2;
     _packNameText.layer.masksToBounds = YES;
     _packNameText.borderStyle = UITextBorderStyleNone;
@@ -95,6 +96,7 @@
     _sidebarTitle.font = [UIFont systemFontOfSize:14];
     _sidebarTitle.delegate = self;
     _sidebarTitle.layer.cornerRadius =2;
+    _sidebarTitle.tintColor = [UIColor blackColor];
     _sidebarTitle.layer.masksToBounds = YES;
     _sidebarTitle.borderStyle = UITextBorderStyleNone;
     [_sidebarTitle setClearsOnBeginEditing:YES];
@@ -112,6 +114,7 @@
     _creatorText.backgroundColor = [UIColor whiteColor];
     _creatorText.text = NSLocalizedString(@"Label_Creator", nil);
     _creatorText.font = [UIFont systemFontOfSize:14];
+    _creatorText.tintColor = [UIColor blackColor];
     _creatorText.delegate = self;
     _creatorText.layer.cornerRadius =2;
     _creatorText.layer.masksToBounds = YES;
@@ -129,6 +132,7 @@
     }
     _jobTitleText.textAlignment = NSTextAlignmentCenter;
     _jobTitleText.backgroundColor = [UIColor whiteColor];
+    _jobTitleText.tintColor = [UIColor blackColor];
     _jobTitleText.text = NSLocalizedString(@"Job_Title", nil);
     _jobTitleText.font = [UIFont systemFontOfSize:14];
     _jobTitleText.delegate = self;
