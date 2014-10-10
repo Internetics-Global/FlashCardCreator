@@ -3499,8 +3499,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3536,8 +3536,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3567,8 +3567,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3604,8 +3604,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3635,8 +3635,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3672,8 +3672,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3703,8 +3703,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3740,8 +3740,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3771,8 +3771,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3808,8 +3808,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3839,8 +3839,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3876,8 +3876,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3907,8 +3907,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3944,8 +3944,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -3975,8 +3975,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4012,8 +4012,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4043,8 +4043,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4080,8 +4080,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4111,8 +4111,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4134,7 +4134,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -4150,8 +4150,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4166,7 +4166,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -4183,8 +4183,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4220,8 +4220,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -4250,8 +4250,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4287,8 +4287,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4318,8 +4318,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4355,8 +4355,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4386,8 +4386,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4423,8 +4423,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4454,8 +4454,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4491,8 +4491,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4522,8 +4522,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4559,8 +4559,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4590,8 +4590,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4627,8 +4627,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4658,8 +4658,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4695,8 +4695,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4726,8 +4726,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4763,8 +4763,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4794,8 +4794,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4831,8 +4831,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4862,8 +4862,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4899,8 +4899,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4930,8 +4930,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4967,8 +4967,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -4998,8 +4998,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5035,8 +5035,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5066,8 +5066,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5103,8 +5103,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5134,8 +5134,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5171,8 +5171,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5274,8 +5274,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5311,8 +5311,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5342,8 +5342,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5379,8 +5379,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5410,8 +5410,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5447,8 +5447,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5478,8 +5478,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5515,8 +5515,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5546,8 +5546,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5583,8 +5583,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5614,8 +5614,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5652,8 +5652,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5684,8 +5684,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5723,8 +5723,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
+					armv7s,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5756,8 +5756,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
@@ -5793,8 +5793,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7s,
+					armv7,
 				);
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/ShareKitLibrary.dst;
