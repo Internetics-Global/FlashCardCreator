@@ -7938,7 +7938,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"N₂" withString:nitrogenStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"O₂" withString:oxygenStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"π" withString:pieStr];  ////// but not included into current symbol table
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"π" withString:pieStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r²" withString:squareRdiusStr];
     
     
