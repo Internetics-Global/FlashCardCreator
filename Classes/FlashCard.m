@@ -7916,7 +7916,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:dividedByStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
 
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"=" withString:equalsStr]; ////// , not unicode
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m³" withString:cubicMetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m²" withString:squareMetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ft²" withString:squareFeetStr];
@@ -7957,7 +7956,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"<" withString:lessThenStr];///// not unicode
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"√" withString:squareRootStr];
 
-
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"=" withString:equalsStr]; ////// , not unicode, need to be put last
 
 
 
