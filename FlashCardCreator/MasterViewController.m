@@ -292,6 +292,11 @@ enum popover_enum {
         
     }
     
+    if ((isUserInterfaceIdiomPhone == FALSE) && ([[_currentPack cards] count] > 0)) {
+        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
+    
 }
 
 
