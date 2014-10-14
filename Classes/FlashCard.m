@@ -7915,6 +7915,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:timesStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:dividedByStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"−" withString:minusStr];
+    
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm²" withString:squareCentimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm³" withString:cubicMillimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm²" withString:squareMillimetresStr];
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm³" withString:cubicCentimetresStr];
 
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m³" withString:cubicMetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m²" withString:squareMetresStr];
@@ -7923,11 +7928,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ft³" withString:cubicFeetStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in²" withString:squareInchesStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in³" withString:cubicInchesStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm³" withString:cubicCentimetresStr];
 
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm²" withString:squareCentimetresStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm³" withString:cubicMillimetresStr];
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm²" withString:squareMillimetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°C" withString:degreesCelsiusStr];
 
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°F" withString:degreesFahrenheitStr];
@@ -7956,7 +7957,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"<" withString:lessThenStr];///// not unicode
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"√" withString:squareRootStr];
 
-    resultStr = [resultStr stringByReplacingOccurrencesOfString:@"=" withString:equalsStr]; ////// , not unicode, need to be put last
+    resultStr = [resultStr stringByReplacingOccurrencesOfString:@" = " withString:equalsStr]; ////// , not unicode, need to be put last
 
 
 
