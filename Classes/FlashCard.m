@@ -5279,8 +5279,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self saveEdittedCard];
         }
     }
-    
-    
+
     
 }
 
@@ -5400,12 +5399,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     
-    if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
-        //由于vertical center是通过改变contentOffSet改变的，所以不能重置为CGPointMake(0, 0)
-        [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, self.contentYOffsetForVerticalAlignment) animated:YES];
-    } else {
-        [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }
+    double delayInSeconds = 0.2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
+            //由于vertical center是通过改变contentOffSet改变的，所以不能重置为CGPointMake(0, 0)
+            [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, self.contentYOffsetForVerticalAlignment) animated:YES];
+        } else {
+            [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+    });
     
     //Step3: save data in keyboardWasHidden
     _saveButtonPressed = YES;
