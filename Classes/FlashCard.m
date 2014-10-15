@@ -7884,11 +7884,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *cubicFeetStr = @"  Cubic Feet ";
     NSString *squareInchesStr = @" Square Inches ";
     NSString *cubicInchesStr = @" Cubic Inches ";
-    NSString *cubicCentimetresStr = @" Cubic Centimetres ";
+    NSString *cubicCentimetresStr = @" Cubic Centi metres ";
     
-    NSString *squareCentimetresStr = @" Square Centimetres ";
-    NSString *cubicMillimetresStr = @" Cubic Millimetres ";
-    NSString *squareMillimetresStr = @" Square millimetres ";
+    NSString *squareCentimetresStr = @" Square Centi metres ";
+    NSString *cubicMillimetresStr = @" Cubic Milli metres ";
+    NSString *squareMillimetresStr = @" Square milli metres ";
     NSString *degreesCelsiusStr = @" Degrees Celsius ";
     
     NSString *degreesFahrenheitStr = @"  Degrees Fahrenheit ";
@@ -7903,7 +7903,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     NSString *OzoneStr = @"  Ozone ";
     NSString *perStr = @" per ";
-    NSString *millibarStr = @" millibar equals ";
+    NSString *millibarStr = @" milli bar equals ";
     NSString *percentStr = @" percent ";
 
     NSString *radiusStr = @"  Radius equals ";
