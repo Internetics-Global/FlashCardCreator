@@ -8250,6 +8250,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAlignVerticalAnswer = @"Vertical";
     }
     
+    [textView resignFirstResponder];
+    [textView becomeFirstResponder];
     
 }
 
