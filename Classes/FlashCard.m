@@ -5279,6 +5279,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self saveEdittedCard];
         }
     }
+    
+    if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
+        [self setVerticalAlignment:_lastBecomeFirstRespondTextView];
+    }
 
     
 }
@@ -6228,6 +6232,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else {
             [self setVerticalAlignment:responderTextView];
             selectAlignStr = @"Vertical";
+            [responderTextView resignFirstResponder];
+            [responderTextView becomeFirstResponder];
         }
         
         [self updateVerticalAlignmentBarButtonStatus];
@@ -8249,9 +8255,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if (textView.tag == kTagSubAnswer) {
         _subAlignVerticalAnswer = @"Vertical";
     }
-    
-    [textView resignFirstResponder];
-    [textView becomeFirstResponder];
     
 }
 
