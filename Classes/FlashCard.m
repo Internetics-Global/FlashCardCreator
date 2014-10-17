@@ -5200,14 +5200,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
     if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
-        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+        } else {
+            yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+        }
     } else {
         //Since we convert to point based on UIWindow
-        if (isUserInterfaceIdiomPhone) {
-            yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].x;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            if (isUserInterfaceIdiomPhone) {
+                yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].y;
+            } else {
+                yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].y;
+            }
         } else {
-            yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].x;
+            if (isUserInterfaceIdiomPhone) {
+                yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].x;
+            } else {
+                yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].x;
+            }
         }
+        
     }
     
     //Step3: calculate the offset and gap value
