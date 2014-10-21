@@ -5199,7 +5199,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
-    if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
+    if (([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight)
+        || ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft)){
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
             yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
         } else {
