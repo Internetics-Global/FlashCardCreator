@@ -27,6 +27,8 @@
     [button setBackgroundImage:nil forState:UIControlStateHighlighted];
     [button setBackgroundImage:nil forState:UIControlStateSelected];
     [button setBackgroundImage:nil forState:UIControlStateDisabled];
+    
+    button.showsTouchWhenHighlighted = YES;
 
     [button sizeToFit];
     CGRect rect = button.frame;
