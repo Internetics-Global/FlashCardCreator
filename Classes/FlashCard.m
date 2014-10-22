@@ -7836,7 +7836,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         utterance.rate = 0.1;
         
-        utterance.postUtteranceDelay = 0.3;
+        //utterance.postUtteranceDelay = 0.3;
         
         if ([_textToSpeechArray count] > 0) {
             [self.synth speakUtterance:utterance];
