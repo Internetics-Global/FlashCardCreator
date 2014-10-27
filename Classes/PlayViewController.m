@@ -424,7 +424,11 @@
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-      [_currentFlashCardView textToSpeechAllContentNow];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [_currentFlashCardView textToSpeechAllContentNow];
+        });;
     } else {
         [_currentFlashCardView playAudio];
     }
@@ -465,7 +469,11 @@
 
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-        [_currentFlashCardView textToSpeechAllContentNow];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [_currentFlashCardView textToSpeechAllContentNow];
+        });;
     } else {
         [_currentFlashCardView playAudio];
     }
