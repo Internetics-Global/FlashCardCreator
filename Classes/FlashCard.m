@@ -1507,7 +1507,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
-    
+    [self resetUITextViewPadding];//由于我们在切换card时，不是重新创建cardview,所以需要重置所有的参数，包括padding
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
     if ([self checkCardEditable] == YES) {
@@ -1590,7 +1590,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) updateUITextViewPaddingTop {
+
+- (void) resetUITextViewPadding {
     DDLogInfo(@"%s",__FUNCTION__);
     _subheadingQuestion.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeQuestion], 0, 0, 0.0);
     _subheadingAnswer.contentInset = UIEdgeInsetsMake([self setTextViewTopPadding:_subheadingSizeAnswer], 0, 0, 0.0);
