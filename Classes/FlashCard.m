@@ -1723,7 +1723,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _answerImageFullPath = @"";
-        DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
+        //DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
         
         if (_isPlayingCard) {
@@ -1741,7 +1741,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _answerImageFullPath2 = @"";
-        DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer2",__FUNCTION__);
+        //DDLogInfo(@"%s:Use answer_placeholder_content.jpg as self.imageAnswer2",__FUNCTION__);
         _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
         
         if (_isPlayingCard) {
@@ -1810,9 +1810,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionImageFullPath = path;
         _imageQuestion.image = imageTemp;
     } else {
-        DDLogWarn(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
+        DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _questionImageFullPath = @"";
-        DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
+        //DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
         
         if (_isPlayingCard) {
@@ -1829,9 +1829,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionImageFullPath2 = path;
         _imageQuestion2.image = imageTemp;
     } else {
-        DDLogWarn(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
+        DDLogInfo(@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__);
         _questionImageFullPath2 = @"";
-        DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion2",__FUNCTION__);
+        //DDLogInfo(@"%s:Set question_placeholder_content.jpg as self.imageQuestion2",__FUNCTION__);
         _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
         
         if (_isPlayingCard) {

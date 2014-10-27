@@ -16,7 +16,7 @@
     #import <QuartzCore/QuartzCore.h>
     #import "MGSplitViewController.h"
     #import "Constant.h"
-    #import "DDLog.h"
+    #import "CocoaLumberjack.h"
 
     #import "UIViewController+LandscapeOnly.h"
 

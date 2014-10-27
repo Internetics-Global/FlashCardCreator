@@ -330,6 +330,7 @@ BOOL _isDownloadingSamplePack;
     
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    [fileLogger setMaximumFileSize:1024 *512];
     fileLogger.logFileManager.maximumNumberOfLogFiles = 1;
     [DDLog addLogger:fileLogger];
     

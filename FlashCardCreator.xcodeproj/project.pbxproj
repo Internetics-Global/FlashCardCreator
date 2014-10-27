@@ -837,6 +837,9 @@
 		880AF42418C5A60C007F13DF /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		880AF42518C5A60D007F13DF /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		880AF42618C5A60D007F13DF /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		880B9F4C19FDFDCE00C41596 /* CocoaLumberjack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaLumberjack.h; sourceTree = "<group>"; };
+		880B9F4D19FDFDCE00C41596 /* DDAssertMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAssertMacros.h; sourceTree = "<group>"; };
+		880B9F4E19FDFDCE00C41596 /* DDLogMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLogMacros.h; sourceTree = "<group>"; };
 		880D19491929821000FD46F0 /* create_new_pack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = create_new_pack.png; path = Resources/create_new_pack.png; sourceTree = "<group>"; };
 		880D19701929849900FD46F0 /* close2_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close2_button.png; path = Resources/close2_button.png; sourceTree = "<group>"; };
 		880D19931929856300FD46F0 /* done_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = done_button.png; path = Resources/done_button.png; sourceTree = "<group>"; };
@@ -1846,6 +1849,9 @@
 		88123DCF192EFBAC0062CA84 /* Lumberjack */ = {
 			isa = PBXGroup;
 			children = (
+				880B9F4C19FDFDCE00C41596 /* CocoaLumberjack.h */,
+				880B9F4D19FDFDCE00C41596 /* DDAssertMacros.h */,
+				880B9F4E19FDFDCE00C41596 /* DDLogMacros.h */,
 				88123DD0192EFBAC0062CA84 /* CLI */,
 				88123DD3192EFBAC0062CA84 /* DDAbstractDatabaseLogger.h */,
 				88123DD4192EFBAC0062CA84 /* DDAbstractDatabaseLogger.m */,
@@ -2814,8 +2820,8 @@
 					armv7,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2836,8 +2842,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "0764E9EE-6029-4B2F-A3FD-947334DF493A";
+				PROVISIONING_PROFILE = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
+				"PROVISIONING_PROFILE[sdk=*]" = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2875,7 +2881,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
 				"PROVISIONING_PROFILE[sdk=*]" = "0764E9EE-6029-4B2F-A3FD-947334DF493A";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";

@@ -8,4 +8,8 @@
 
 #import "Constant.h"
 
-int const ddLogLevel = LOG_LEVEL_INFO;
+#ifdef DEBUG
+int const ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+int const ddLogLevel = LOG_LEVEL_ERROR;
+#endif
