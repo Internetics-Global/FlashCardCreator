@@ -6478,7 +6478,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
     
-    CGFloat yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+    CGFloat yInScrren;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+    } else {
+        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+    }
     
     CGPoint offset = _verticalScrollView.contentOffset;
     CGFloat gap;
