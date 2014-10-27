@@ -75,14 +75,16 @@ BOOL isLoggingDropboxInSettingView = NO;
         [composeViewController setMessageBody:@"Log has been attached" isHTML:YES];
         [composeViewController setToRecipients:nil];
         
-        NSData *noteData = [NSData dataWithContentsOfFile:[FileOperationHelper logFile]];
-        if (noteData) {
-            [composeViewController addAttachmentData:noteData mimeType:@"text/plain" fileName:@"Log.txt"];
+        NSMutableData *errorLogData = [NSMutableData data];
+        for (NSData *errorLogFileData in [FileOperationHelper logFileArray]) {
+            [errorLogData appendData:errorLogFileData];
         }
+        [composeViewController addAttachmentData:errorLogData mimeType:@"text/plain" fileName:@"log.txt"];
+        
         
         NSData *databaseData = [NSData dataWithContentsOfFile:[FileOperationHelper databasePath]];
         if (databaseData) {
-            [composeViewController addAttachmentData:noteData mimeType:@"application/x-sqlite3" fileName:@"sqlite.db"];
+            [composeViewController addAttachmentData:databaseData mimeType:@"application/x-sqlite3" fileName:@"sqlite.db"];
             
         }
         

@@ -328,11 +328,11 @@ BOOL _isDownloadingSamplePack;
     // And then enable colors
     [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
     
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    [fileLogger setMaximumFileSize:1024 *512];
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 1;
-    [DDLog addLogger:fileLogger];
+    self.fileLogger = [[DDFileLogger alloc] init];
+    self.fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    [self.fileLogger setMaximumFileSize:1024 *12];
+    self.fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:self.fileLogger];
     
     // Check out default colors:
     // Error : Red

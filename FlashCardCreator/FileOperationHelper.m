@@ -16,6 +16,7 @@
 #import <sys/xattr.h>
 #import "Common.h"
 #import "OpenUDID.h"
+#import "AppDelegate.h"
 
 @implementation FileOperationHelper
 
@@ -142,32 +143,21 @@
     return path;
 }
 
-/**
- *  Get only the first log file (full path)
- *
- *  @return <#return value description#>
- */
-+(NSString*)logFile {
-    
-    NSArray *array = [self listFileAtPath:[self logDirectory]];
-    if ([array count]>0) {
-        return [[self logDirectory] stringByAppendingPathComponent:array[0]];
-    } else {
-        return nil;
-    }
-}
 
 
-+ (NSString *)logDirectory {
-    NSString *dir = [[FileOperationHelper cachesDirectory] stringByAppendingPathComponent:@"Logs"];
-    NSError *error;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:dir]) {
-        if(![[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            DDLogError(@"Failed to create directory at %@", dir);
-        }
+
++ (NSMutableArray *)logFileArray
+{
+    DDFileLogger *fileLogger = APP_DELEGATE.fileLogger;
+    NSUInteger maximumLogFilesToReturn = MIN(fileLogger.logFileManager.maximumNumberOfLogFiles, 10);
+    NSMutableArray *logFiles = [NSMutableArray arrayWithCapacity:maximumLogFilesToReturn];
+    NSArray *sortedLogFileInfos = [fileLogger.logFileManager sortedLogFileInfos];
+    for (int i = 0; i < MIN(sortedLogFileInfos.count, maximumLogFilesToReturn); i++) {
+        DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
+        NSData *fileData = [NSData dataWithContentsOfFile:logFileInfo.filePath];
+        [logFiles addObject:fileData];
     }
-    
-    return dir;
+    return logFiles;
 }
 
 

@@ -28,6 +28,8 @@
 
 @property (assign, nonatomic) BOOL isDownloadingPack;
 
+@property (nonatomic, strong) DDFileLogger *fileLogger;
+
 
 - (UIView *)progressHUDHolderView;
 
