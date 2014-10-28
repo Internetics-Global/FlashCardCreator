@@ -55,7 +55,7 @@
     _cardID = -1;
     _packID = -1;
     _cardSN = -1;
-    _templateBackgroundName =     [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:@"card_background_blue.png"];
+    _templateBackgroundName =     @"card_background_blue.png";
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     
@@ -125,9 +125,12 @@
         int partB = [[NSDate date] timeIntervalSince1970];
 		_cardID = partA%1000 + (partB%100000 * 1000);
         
-        BOOL isExist = [SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"];
-        if (isExist) {
-            DDLogError(@"%s:_cardID has already existed",__FUNCTION__);
+        while ([SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"]) {
+            DDLogError(@"%s:_cardID has already existed, regenerate",__FUNCTION__);
+            partA = [SQLiteHelper getMaxValueForColumn:@"card_id" inTable:@"Cards_Tables"] + 1;
+            partB = [[NSDate date] timeIntervalSince1970] + 1;
+            _cardID = partA%1000 + (partB%100000 * 1000);
+            
         }
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, self.coverImageURL, _templateBackgroundName, _creator, _cardSN];

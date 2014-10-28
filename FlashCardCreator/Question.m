@@ -257,9 +257,12 @@
         int partB = [[NSDate date] timeIntervalSince1970];
 		_questionID = partA%1000 + (partB%100000 * 1000);
         
-        BOOL isExist = [SQLiteHelper checkIntegerValueExists:_questionID forColumn:@"question_id" inTable:@"Question_Tables"];
-        if (isExist) {
-            DDLogError(@"%s:_questionID has already existed",__FUNCTION__);
+        while ([SQLiteHelper checkIntegerValueExists:_questionID forColumn:@"question_id" inTable:@"Question_Tables"]) {
+            DDLogError(@"%s:_questionID has already existed, regenerate",__FUNCTION__);
+            partA = [SQLiteHelper getMaxValueForColumn:@"question_id" inTable:@"Question_Tables"] + 1;
+            partB = [[NSDate date] timeIntervalSince1970] + 1;
+            _questionID = partA%1000 + (partB%100000 * 1000);
+            
         }
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, image2, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath,_imageFullPath2, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];

@@ -247,9 +247,12 @@
         int partB = [[NSDate date] timeIntervalSince1970];
 		_answerID = partA%1000 + (partB%100000 * 1000);
         
-        BOOL isExist = [SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"];
-        if (isExist) {
-            DDLogError(@"%s:_answerID has already existed",__FUNCTION__);
+        while ([SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"]) {
+            DDLogError(@"%s:_answerID has already existed, regenerate",__FUNCTION__);
+            partA = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
+            partB = [[NSDate date] timeIntervalSince1970] + 1;
+            _answerID = partA%1000 + (partB%100000 * 1000);
+            
         }
 	}
 
