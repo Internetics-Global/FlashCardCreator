@@ -5195,7 +5195,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         range.length = 0;
         responderTextView.selectedRange = range;
     }
-    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
+    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y + responderTextView.font.lineHeight;
     //DDLogInfo(@"Y position for current cursorY is %f",cursorY);
     
     //Step2: Get view's Y value relative to screen
@@ -5235,7 +5235,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (gap >0)
-        offset.y = gap+responderTextView.font.lineHeight;
+        offset.y = gap;
     
     
     //Step4: set contentSize which is used by user for manually scroll up/down
@@ -6428,6 +6428,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
     
+    
 }
 
 //当点击，并还没有开始改变内容时
@@ -6466,8 +6467,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //是否允许更改
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    
     DDLogInfo(@"%s",__FUNCTION__);
+    
     static CGFloat height = 0;
     static int tag = -1;
     
@@ -6476,7 +6477,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
-    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y;
+    CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y + responderTextView.font.lineHeight;
     
     CGFloat yInScrren;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
@@ -6486,23 +6487,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     CGPoint offset = _verticalScrollView.contentOffset;
-    CGFloat gap;
+    CGFloat gap;  //
     if (isUserInterfaceIdiomPhone) {
         gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
     } else {
         gap = _keyboardHeight -(IPAD_UI_HEIGHT - yInScrren - cursorY);
     }
     
-    if ((textView.contentSize.height > height) && (height != 0)) {
-        if (gap > -responderTextView.font.lineHeight) {
-            offset.y = offset.y + responderTextView.font.lineHeight;
+    BOOL couldTriggerToResetContentOffset = FALSE;
+    
+    //这时实际中可能因为键盘输入速度太快，导致无法及时完成setContentOffset，所以需要包含：textView.contentSize.height == height
+    if ([text isEqualToString:@""] == FALSE) {
+        if ((textView.contentSize.height >= height) && (height != 0)) { //增加行数（增加文字）
+            if (gap > 0) {
+                offset.y = offset.y + gap;
+                [_verticalScrollView setContentOffset:offset animated:YES];
+                couldTriggerToResetContentOffset = YES;
+            }
         }
-        [_verticalScrollView setContentOffset:offset animated:YES];
-    } else if ((textView.contentSize.height < height)&& (height != 0)) {
-        if (gap < -responderTextView.font.lineHeight) {
-            //offset.y = offset.y - responderTextView.font.lineHeight;
+        
+    } else {
+        if ((textView.contentSize.height <= height)&& (height != 0)) { //删除行（减少文字）
+            if (gap < 0) {
+                offset.y = offset.y - fabsf(gap);
+                [_verticalScrollView setContentOffset:offset animated:YES];
+                couldTriggerToResetContentOffset = YES;
+                
+            }
         }
-        //[_verticalScrollView setContentOffset:offset animated:YES];
+    }
+    
+    if ((offset.y <= 0) && couldTriggerToResetContentOffset) {  //因为offset永远是大于0的
+       offset.y = 0;
+       [_verticalScrollView setContentOffset:offset animated:YES];
+       couldTriggerToResetContentOffset = FALSE;
     }
     
     DDLogInfo(@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY);
