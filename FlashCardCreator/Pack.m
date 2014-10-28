@@ -56,7 +56,7 @@
     _userID = -1;
     _cards = [[NSMutableArray alloc] init];
     
-    self.coverImageURL = @"";
+    _coverImageURL = @"";
     _jobTitle = @"";
     
     _isAllowShare = YES;

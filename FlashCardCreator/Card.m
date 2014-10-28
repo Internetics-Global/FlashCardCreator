@@ -55,11 +55,11 @@
     _cardID = -1;
     _packID = -1;
     _cardSN = -1;
-    self.templateBackgroundName = @"card_background_blue.png";
+    _templateBackgroundName =     [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:@"card_background_blue.png"];
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     
-    self.coverImageURL = @"";
+    _coverImageURL = @"";
     
 	return self;
 }

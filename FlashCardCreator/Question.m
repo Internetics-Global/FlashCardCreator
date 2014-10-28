@@ -140,11 +140,11 @@
     
     _autoresizeFlag = 1; //表示允许
     
-    self.imageFullPath = @"";
-    self.imageFullPath2 = @"";
-    self.movieFullPath = @"";
-    self.movieFullPath2 = @"";
-    self.logoFullPath = @"";
+    _imageFullPath = @"";
+    _imageFullPath2 = @"";
+    _movieFullPath = @"";
+    _movieFullPath2 = @"";
+    _logoFullPath = @"";
     
     _backgroundImageFullPath = @"";
     
