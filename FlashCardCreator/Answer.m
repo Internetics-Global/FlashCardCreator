@@ -243,15 +243,11 @@
 
 -(void)insert{
 	if (_answerID == -1) {
-        int partA = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
-        int partB = [[NSDate date] timeIntervalSince1970];
-		_answerID = partA%1000 + (partB%100000 * 1000);
+        _answerID = [[NSDate date] timeIntervalSince1970];
         
         while ([SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"]) {
             DDLogError(@"%s:_answerID has already existed, regenerate",__FUNCTION__);
-            partA = [SQLiteHelper getMaxValueForColumn:@"answer_id" inTable:@"Answer_Tables"] + 1;
-            partB = [[NSDate date] timeIntervalSince1970] + 1;
-            _answerID = partA%1000 + (partB%100000 * 1000);
+            _answerID = [[NSDate date] timeIntervalSince1970] + 1;
             
         }
 	}

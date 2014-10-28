@@ -131,15 +131,11 @@
 
 -(void)insert{
 	if (_cssID == -1) {
-		int partA = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
-        int partB = [[NSDate date] timeIntervalSince1970];
-		_cssID = partA%1000 + (partB%100000 * 1000); //最大数为：99999000 + 999 = 9，9999，9999
+        _cssID = [[NSDate date] timeIntervalSince1970];
         
         while ([SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"]) {
             DDLogError(@"%s:css has already existed, regenerate",__FUNCTION__);
-            partA = [SQLiteHelper getMaxValueForColumn:@"css_id" inTable:@"CSS_Tables"] + 1;
-            partB = [[NSDate date] timeIntervalSince1970] + 1;
-            _cssID = partA%1000 + (partB%100000 * 1000);
+            _cssID = [[NSDate date] timeIntervalSince1970] + 1;
             
         }
 	}
