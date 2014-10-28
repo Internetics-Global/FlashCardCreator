@@ -1507,7 +1507,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
-    [self resetUITextViewPadding];//由于我们在切换card时，不是重新创建cardview,所以需要重置所有的参数，包括padding
+    if (_isPlayingCard == FALSE) {
+        //在playingCard时，如果执行这个逻辑会引起布局的稍微扰动，会影响体验。这主要是默认的padding不是零，而我们reset成了0.这在edit card时没什么问题，但是play的时候就会影响体验。后续可以改进：resetUITextViewPadding设置成默认的padding，而不是一刀切为0
+        [self resetUITextViewPadding];//由于我们在切换card时，不是重新创建cardview,所以需要重置所有的参数，包括padding
+    }
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
     if ([self checkCardEditable] == YES) {
