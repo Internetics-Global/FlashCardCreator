@@ -39,14 +39,6 @@
     
 }
 
-- (NSString *)getTemplateBackgroundName {
-    if (_templateBackgroundName.length == 0) {
-        return nil;
-    } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_templateBackgroundName lastPathComponent]];
-        return fullPath;
-    }
-}
 
 - (void)setCoverImageURL:(NSString *)coverImageURL {
     if (coverImageURL.length == 0) {
@@ -56,13 +48,6 @@
     }
 }
 
-- (void)setTemplateBackgroundName:(NSString *)templateBackgroundName {
-    if (templateBackgroundName.length == 0) {
-    } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[templateBackgroundName lastPathComponent]];
-        _templateBackgroundName = fullPath;
-    }
-}
 
 -(id)init{
 	self = [super init];
