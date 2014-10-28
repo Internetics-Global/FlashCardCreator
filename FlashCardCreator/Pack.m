@@ -13,6 +13,7 @@
 #import "Card.h"
 #import "NSArray+Randomised.h"
 #import "Common.h"
+#import "FileOperationHelper.h"
 
 @implementation Pack
 
@@ -32,13 +33,30 @@
 #pragma mark -
 #pragma mark Initialization
 
+- (NSString *)getCoverImageURL {
+    if (_coverImageURL.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_coverImageURL lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (void)setCoverImageURL:(NSString *)coverImageURL {
+    if (coverImageURL.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[coverImageURL lastPathComponent]];
+        _coverImageURL = fullPath;
+    }
+}
+
 -(id)init{
 	self = [super init];
     _packID = -1;
     _userID = -1;
     _cards = [[NSMutableArray alloc] init];
     
-    _coverImageURL = @"";
+    self.coverImageURL = @"";
     _jobTitle = @"";
     
     _isAllowShare = YES;
@@ -56,7 +74,7 @@
     }
     _packName = [dict valueForKey:@"pack_name"];
     _sidebarTitle = [dict valueForKey:@"sidebar_title"];
-     _coverImageURL = [dict valueForKey:@"cover_image"];
+     self.coverImageURL = [dict valueForKey:@"cover_image"];
     if ([[dict allKeys] containsObject:@"user_id"]) {
         _userID = [[dict valueForKey:@"user_id"] intValue];
     } else {
@@ -120,7 +138,7 @@
 
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, _coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -136,7 +154,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, _coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);

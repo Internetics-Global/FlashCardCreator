@@ -48,14 +48,14 @@
 @property (nonatomic, copy) NSString *main;
 @property (nonatomic, copy) NSString *sub;
 
-@property (nonatomic, copy) NSString *imageFullPath;
-@property (nonatomic, copy) NSString *imageFullPath2;
+@property (nonatomic, copy, getter=getImageFullPath) NSString *imageFullPath;
+@property (nonatomic, copy, getter=getImageFullPath2) NSString *imageFullPath2;
 
 //youtube linkage or an local url
-@property (nonatomic, copy) NSString *movieFullPath;
-@property (nonatomic, copy) NSString *movieFullPath2;
+@property (nonatomic, copy, getter=getMovieFullPath) NSString *movieFullPath;
+@property (nonatomic, copy, getter=getMovieFullPath2) NSString *movieFullPath2;
 
-@property (nonatomic, copy) NSString *logoFullPath;
+@property (nonatomic, copy, getter=getLogoFullPath) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
 @property (nonatomic, assign) NSInteger templateID;
 

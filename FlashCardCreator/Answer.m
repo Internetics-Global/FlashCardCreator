@@ -10,6 +10,7 @@
 #import "SQLiteHelper.h"
 #import "CSS.h"
 #import "Common.h"
+#import "FileOperationHelper.h"
 
 @implementation Answer
 
@@ -38,6 +39,92 @@
 #pragma mark -
 #pragma mark Initialization
 
+- (NSString *)getImageFullPath {
+    if (_imageFullPath.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (NSString *)getImageFullPath2 {
+    if (_imageFullPath2.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath2 lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (NSString *)getLogoFullPath {
+    if (_logoFullPath.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_logoFullPath lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (NSString *)getMovieFullPath {
+    if (_movieFullPath.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (NSString *)getMovieFullPath2 {
+    if (_movieFullPath2.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath2 lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (void)setImageFullPath:(NSString *)imageFullPath {
+    if (imageFullPath.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath lastPathComponent]];
+        _imageFullPath = fullPath;
+    }
+}
+
+- (void)setImageFullPath2:(NSString *)imageFullPath2 {
+    if (imageFullPath2.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath2 lastPathComponent]];
+        _imageFullPath2 = fullPath;
+    }
+    
+}
+
+- (void)setLogoFullPath:(NSString *)logoFullPath {
+    if (logoFullPath.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[logoFullPath lastPathComponent]];
+        _logoFullPath = fullPath;
+    }
+}
+
+- (void)setMovieFullPath:(NSString *)movieFullPath {
+    if (movieFullPath.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath lastPathComponent]];
+        _movieFullPath = fullPath;
+    }
+}
+
+- (void)setMovieFullPath2:(NSString *)movieFullPath2 {
+    if (movieFullPath2.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];
+        _movieFullPath2 = fullPath;
+    }
+}
+
 -(id)init{
 	self = [super init];
     _answerID = -1;
@@ -48,11 +135,11 @@
     
     _autoresizeFlag = 1; //表示允许
     
-    _imageFullPath = @"";
-    _imageFullPath2 = @"";
-    _movieFullPath = @"";
-    _movieFullPath2 = @"";
-    _logoFullPath = @"";
+    self.imageFullPath = @"";
+    self.imageFullPath2 = @"";
+    self.movieFullPath = @"";
+    self.movieFullPath2 = @"";
+    self.logoFullPath = @"";
     
     _recordedSoundFullPath = @"";
     
@@ -71,25 +158,25 @@
     _subheading= [dataDict valueForKey:@"subheading"];
     _main= [dataDict valueForKey:@"main"];
     _sub= [dataDict valueForKey:@"sub"];
-    _imageFullPath= [dataDict valueForKey:@"image"];
-    if (_imageFullPath.length == 0) {
-        _imageFullPath = @"";
+    self.imageFullPath= [dataDict valueForKey:@"image"];
+    if (self.imageFullPath.length == 0) {
+        self.imageFullPath = @"";
     }
-    _imageFullPath2= [dataDict valueForKey:@"image2"];
-    if (_imageFullPath2.length == 0) {
-        _imageFullPath2 = @"";
+    self.imageFullPath2= [dataDict valueForKey:@"image2"];
+    if (self.imageFullPath2.length == 0) {
+        self.imageFullPath2 = @"";
     }
-    _movieFullPath= [dataDict valueForKey:@"movie"];
-    if (_movieFullPath.length == 0) {
-        _movieFullPath = @"";
-    }
-    
-    _movieFullPath2= [dataDict valueForKey:@"movie2"];
-    if (_movieFullPath2.length == 0) {
-        _movieFullPath2 = @"";
+    self.movieFullPath= [dataDict valueForKey:@"movie"];
+    if (self.movieFullPath.length == 0) {
+        self.movieFullPath = @"";
     }
     
-    _logoFullPath= [dataDict valueForKey:@"logo"];
+    self.movieFullPath2= [dataDict valueForKey:@"movie2"];
+    if (self.movieFullPath2.length == 0) {
+        self.movieFullPath2 = @"";
+    }
+    
+    self.logoFullPath= [dataDict valueForKey:@"logo"];
     _templateID = [[dataDict valueForKey:@"template_id"] intValue];
     
     _autoresizeFlag = [[dataDict valueForKey:@"autoresize_flag"] intValue];

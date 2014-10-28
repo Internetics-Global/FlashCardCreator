@@ -12,6 +12,7 @@
 #import "Question.h"
 #import "SQLiteHelper.h"
 #import "Common.h"
+#import "FileOperationHelper.h"
 
 @implementation Card
 
@@ -28,17 +29,52 @@
 #pragma mark -
 #pragma mark Initialization
 
+- (NSString *)getCoverImageURL {
+    if (_coverImageURL.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_coverImageURL lastPathComponent]];
+        return fullPath;
+    }
+    
+}
+
+- (NSString *)getTemplateBackgroundName {
+    if (_templateBackgroundName.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_templateBackgroundName lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (void)setCoverImageURL:(NSString *)coverImageURL {
+    if (coverImageURL.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[coverImageURL lastPathComponent]];
+        _coverImageURL = fullPath;
+    }
+}
+
+- (void)setTemplateBackgroundName:(NSString *)templateBackgroundName {
+    if (templateBackgroundName.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[templateBackgroundName lastPathComponent]];
+        _templateBackgroundName = fullPath;
+    }
+}
+
 -(id)init{
 	self = [super init];
     
     _cardID = -1;
     _packID = -1;
     _cardSN = -1;
-    _templateBackgroundName = @"card_background_blue.png";
+    self.templateBackgroundName = @"card_background_blue.png";
     _question = [[Question alloc] init];
     _answer = [[Answer alloc] init];
     
-    _coverImageURL = @"";
+    self.coverImageURL = @"";
     
 	return self;
 }
@@ -50,8 +86,8 @@
     _packID = [[dataDict valueForKey:@"pack_id"] intValue];
     _cardSN = [[dataDict valueForKey:@"card_sn"] intValue];
     _cardName = [dataDict valueForKey:@"card_name"];    
-    _coverImageURL = [dataDict valueForKey:@"thumb_pic"];
-    _templateBackgroundName = [dataDict valueForKey:@"template_background"];
+    self.coverImageURL = [dataDict valueForKey:@"thumb_pic"];
+    self.templateBackgroundName = [dataDict valueForKey:@"template_background"];
     _creator = [dataDict valueForKey:@"creator"];
 
 	if ([[dataDict allKeys] containsObject:@"question"]) {
@@ -87,7 +123,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d WHERE card_id=%d", _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Cards_Tables SET pack_id=%d, card_name=\"%@\", thumb_pic=\"%@\", template_background=\"%@\", creator=\"%@\", card_sn=%d WHERE card_id=%d", _packID, _cardName, self.coverImageURL, _templateBackgroundName, _creator, _cardSN, _cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -109,7 +145,7 @@
             DDLogError(@"%s:_cardID has already existed",__FUNCTION__);
         }
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, _coverImageURL, _templateBackgroundName, _creator, _cardSN];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Cards_Tables(card_id, pack_id, card_name, thumb_pic, template_background, creator, card_sn) VALUES (%d, %d, \"%@\", \"%@\", \"%@\", \"%@\", %d)", _cardID, _packID, _cardName, self.coverImageURL, _templateBackgroundName, _creator, _cardSN];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);

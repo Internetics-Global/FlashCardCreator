@@ -30,8 +30,8 @@
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, assign) NSInteger cardSN;
 @property (nonatomic, copy) NSString *cardName;
-@property (nonatomic, copy) NSString *coverImageURL;
-@property (nonatomic, copy) NSString *templateBackgroundName;
+@property (nonatomic, copy,getter=getCoverImageURL) NSString *coverImageURL;
+@property (nonatomic, copy,getter=getTemplateBackgroundName) NSString *templateBackgroundName;
 @property (nonatomic, copy) NSString *creator;
 @property (strong, nonatomic) Question *question;
 @property (strong, nonatomic) Answer *answer;
