@@ -5201,6 +5201,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y + responderTextView.font.lineHeight;
     //DDLogInfo(@"Y position for current cursorY is %f",cursorY);
     
+    if (cursorY > CGRectGetHeight(responderTextView.frame)) {
+        cursorY = CGRectGetHeight(responderTextView.frame);
+    }
+    
     //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
     if (([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight)
