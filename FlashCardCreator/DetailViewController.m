@@ -244,6 +244,8 @@ enum popover_enum {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;
         [_currentCardView segmentAction:nil];
     }
+    
+    _scrollView.userInteractionEnabled = YES; //在特殊情况下scrollviewdidenddecelerating（这里会重置_scrollView.userInteractionEnabled = YES）没有被调用，导致界面完全失去响应，所以这里需要加一个backup
 
 }
 
@@ -545,6 +547,7 @@ enum popover_enum {
     _scrollView.userInteractionEnabled = YES;
     
 }
+
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
     DDLogInfo(@"%s",__FUNCTION__);
