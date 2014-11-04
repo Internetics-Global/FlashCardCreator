@@ -209,14 +209,16 @@ enum popover_enum {
     if ((isUserInterfaceIdiomPhone) && (_currentPack.packID != -1)) {   //must be a valid pack
         
         if (_rightPackView == nil) {
-            _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, IPHONE_UI_WIDTH-150-100, IPHONE_UI_HEIGHT)];
+            _rightPackView = [[UIView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH -150- 200)/2 + 150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, 200, IPHONE_UI_HEIGHT)];
+//            _rightPackView.backgroundColor = [UIColor redColor];
+            _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         }
         
         if (_rightPackImage == nil) {
             _rightPackImage = [[UIImageView alloc] init];
             _rightPackImage.frame = CGRectMake(0, 0, 180, 144);
             _rightPackImage.contentMode = UIViewContentModeScaleAspectFit;
-            _rightPackImage.center = CGPointMake((IPHONE_UI_WIDTH-150)/2-20, (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT)/2-20);
+            _rightPackImage.center = CGPointMake(100, 100);
             _rightPackImage.layer.cornerRadius = 5;
             _rightPackImage.layer.masksToBounds = TRUE;
             _rightPackImage.layer.opacity = 0.85;

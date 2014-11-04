@@ -88,7 +88,7 @@
 #define IPHONE_UI_TOOL_BAR_HEIGHT              32
 #define IPHONE_UI_TAB_BAR_HEIGHT               49
 #define IPHONE_UI_STATUS_BAR_HEIGHT            20
-#define IPHONE_UI_WIDTH                        (SYSTEM_VERSION_EQUAL_TO(@"8.0")?([[UIScreen mainScreen] bounds].size.width):([[UIScreen mainScreen] bounds].size.height))
+#define IPHONE_UI_WIDTH                        (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")?([[UIScreen mainScreen] bounds].size.width):([[UIScreen mainScreen] bounds].size.height))
 #define IPHONE_UI_HEIGHT                       320
 
 //Based on landscape
