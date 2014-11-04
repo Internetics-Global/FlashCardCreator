@@ -16,6 +16,14 @@
 #import "Common.h"
 #import "OpenUDID.h"
 #import "AppDelegate.h"
+#import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
+
+@interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
+    NSString *_finalPostMessage; //final share message
+}
+
+@end
 
 @implementation DropboxSharekitHelper
 
@@ -91,12 +99,22 @@
                 return;
             }
             
-            NSString *finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
-            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
-            SHKItem *item = [SHKItem text:finalPostMessage];
-            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
-            [SHK setRootViewController:self.baseViewController];
-            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+//            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
+//            SHKItem *item = [SHKItem text:finalPostMessage];
+//            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+//            [SHK setRootViewController:self.baseViewController];
+//            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+            
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                          @"Facebook",
+                                          @"Twitter",
+                                          @"Email",
+                                          @"Copy",
+                                          nil];
+            [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+            
+            
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
                                                message:@"Packs downloaded before current version of FlashCardCreator are no more supported to share"
@@ -278,12 +296,20 @@
             
             
             
-            NSString *finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+            _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
             //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
-            SHKItem *item = [SHKItem text:finalPostMessage];
-            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
-            [SHK setRootViewController:self.baseViewController];
-            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+//            SHKItem *item = [SHKItem text:finalPostMessage];
+//            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+//            [SHK setRootViewController:self.baseViewController];
+//            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
+            
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                          @"Facebook",
+                                          @"Twitter",
+                                          @"Email",
+                                          @"Copy",
+                                          nil];
+            [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
         }
             
             break;
@@ -443,6 +469,93 @@
     DDLogInfo(@"%s, redirected url:%@",__FUNCTION__,returnURL);
     
     return returnURL;
+}
+
+#pragma mark – UIActionSheet
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0: {
+            
+            if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+                SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                [controller setInitialText:_finalPostMessage];
+                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
+                [_baseViewController presentViewController:controller animated:YES completion:Nil];
+            } else {
+                //iOS6下，会自动提示，iOS7则需要手工加入
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Facebook Account" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+            
+        }
+            break;
+        case 1: {
+            
+            if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+            {
+                SLComposeViewController *controller = [SLComposeViewController
+                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
+                [controller setInitialText:_finalPostMessage];
+                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
+                [_baseViewController presentViewController:controller animated:YES completion:nil];
+            } else {
+                //iOS6下，会自动提示，iOS7则需要手工加入
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Twitter Account" message:@"There are no Twitter accounts configured. You can add or create a Facebook account in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+            
+        }
+            break;
+        case 2: {
+            
+            if ([MFMailComposeViewController canSendMail]) {
+                MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+                composeViewController.mailComposeDelegate = self;
+
+                
+                [composeViewController setSubject:@"Hi"];
+                [composeViewController setMessageBody:_finalPostMessage isHTML:YES];
+                [composeViewController setToRecipients:nil];
+                
+                [_baseViewController presentViewController:composeViewController animated:YES completion:nil];
+            } else {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please configure your mail in setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+
+            
+        }
+            break;
+        case 3: {
+            
+            UIPasteboard *pb = [UIPasteboard generalPasteboard];
+            [pb setString:_finalPostMessage];
+            
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Copy done" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            });
+            
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    
+    [_baseViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) dealloc {

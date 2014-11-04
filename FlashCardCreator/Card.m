@@ -124,7 +124,7 @@
         
         while ([SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"]) {
             DDLogError(@"%s:_cardID has already existed, regenerate",__FUNCTION__);
-            _cardID = [[NSDate date] timeIntervalSince1970] + 1;
+            _cardID = [[NSDate date] timeIntervalSince1970] + arc4random()%100;
             
         }
 	}
