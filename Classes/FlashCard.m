@@ -5207,8 +5207,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //Step2: Get view's Y value relative to screen
     CGFloat yInScrren;
-    if (([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight)
-        || ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft)){
+    if (([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight)){
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
             yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
         } else {
@@ -5218,9 +5217,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //Since we convert to point based on UIWindow
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
             if (isUserInterfaceIdiomPhone) {
-                yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].y;
+                yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
             } else {
-                yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].y;
+                yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
             }
         } else {
             if (isUserInterfaceIdiomPhone) {
@@ -6487,10 +6486,29 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y + responderTextView.font.lineHeight;
     
     CGFloat yInScrren;
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+    
+    if (([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight)){
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+        } else {
+            yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+        }
     } else {
-        yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].x;
+        //Since we convert to point based on UIWindow
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            if (isUserInterfaceIdiomPhone) {
+                yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+            } else {
+                yInScrren = [responderTextView convertPoint:CGPointZero toView:nil].y;
+            }
+        } else {
+            if (isUserInterfaceIdiomPhone) {
+                yInScrren = IPHONE_UI_HEIGHT - [responderTextView convertPoint:CGPointZero toView:nil].x;
+            } else {
+                yInScrren = IPAD_UI_HEIGHT -[responderTextView convertPoint:CGPointZero toView:nil].x;
+            }
+        }
+        
     }
     
     CGPoint offset = _verticalScrollView.contentOffset;
