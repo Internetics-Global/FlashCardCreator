@@ -42,7 +42,7 @@
 
 - (void)loadView {
     [super loadView];
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 }
 
 - (void)viewDidLoad {
@@ -146,7 +146,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    DDLogInfo(@"URL: %@", [[request URL] absoluteString]);
+    [iConsole info:@"URL: %@", [[request URL] absoluteString]];
     NSString *curUrl = [NSString stringWithFormat:@"%@%@", [[self.webView.request URL] host], [[self.webView.request URL] path]];
     NSString *newUrl = [NSString stringWithFormat:@"%@%@", [[request URL] host], [[request URL] path]];
     
@@ -194,8 +194,8 @@
 
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    DDLogInfo(@"%s",__FUNCTION__);
-    DDLogError(@"error:%@",error);
+    [iConsole info:@"%s",__FUNCTION__];
+    [iConsole error:@"error:%@",error];
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"

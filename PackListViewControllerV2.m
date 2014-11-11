@@ -250,7 +250,7 @@
     
     int index = indexPath.row;
     
-    DDLogInfo(@"Selected item at index %d", indexPath.row);
+    [iConsole info:@"Selected item at index %d", indexPath.row];
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];

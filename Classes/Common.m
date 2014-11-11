@@ -128,9 +128,9 @@
 
     for (NSString *familyName in fontFamilyNames)
     {
-        DDLogInfo(@"Font Family Name = %@", familyName);
+        [iConsole info:@"Font Family Name = %@", familyName];
         NSArray *names = [UIFont fontNamesForFamilyName:familyName];
-        DDLogInfo(@"Font Names = %@", fontNames);
+        [iConsole info:@"Font Names = %@", fontNames];
         [fontNames addObjectsFromArray:names];
     }
     
@@ -205,12 +205,12 @@
 + (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element {
     
     if (element <= [[array firstObject] integerValue]) {
-        DDLogWarn(@"%s:please check element =:%d",__FUNCTION__,element);
+        [iConsole warn:@"%s:please check element =:%d",__FUNCTION__,element];
         return 0;
     }
     
     if (element >= [[array lastObject] integerValue]) {
-        DDLogWarn(@"%s:please check element =:%d",__FUNCTION__,element);
+        [iConsole warn:@"%s:please check element =:%d",__FUNCTION__,element];
         return [array count] - 1;
     }
     
@@ -222,7 +222,7 @@
         }
     }
     
-    DDLogError(@"%s:please check element =:%d",__FUNCTION__,element);
+    [iConsole error:@"%s:please check element =:%d",__FUNCTION__,element];
     
     return -1;
     

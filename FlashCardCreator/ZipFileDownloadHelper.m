@@ -34,7 +34,7 @@
 }
 
 - (NSString *) downloadZipFile:(NSString *)URLStr {
-    DDLogInfo(@"%s, download url = %@",__FUNCTION__,URLStr);
+    [iConsole info:@"%s, download url = %@",__FUNCTION__,URLStr];
     self.downloadedURL = URLStr;
     
     //Every time before download, we need to clear it.
@@ -44,16 +44,16 @@
     NSString *path = [FileOperationHelper downloadedZipPackFileFixedPath];
     AFDownloadRequestOperation *operation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        DDLogInfo(@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path);
+        [iConsole info:@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path];
         [_delegate downloadSuccess:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        DDLogError(@"Error download: %@", error);
+        [iConsole error:@"Error download: %@", error];
         [_delegate downloadFail];
         //[Common alertViewCommon:[error description]];
         [Common alertViewCommon:@"Check your download linkage or Dropbox sever is temporarily unavailable"];
     }];
     [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
-        DDLogInfo(@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile);
+        [iConsole info:@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile];
         if (_delegate != nil) {
             [_delegate downloadProgressivePercent:totalBytesReadForFile totalLength:totalBytesExpectedToReadForFile];
         }
@@ -70,7 +70,7 @@
 
 //The reson why to do it: https://www.dropbox.com/help/201/en
 + (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr{
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     NSString *temp = [urlStr stringByReplacingOccurrencesOfString:@"fcc://dropbox.com" withString:@"fcc://www.dropbox.com"];
     NSString *downloadableURL = [temp stringByReplacingOccurrencesOfString:@"fcc://www" withString:@"https://dl"];
     downloadableURL = [downloadableURL stringByReplacingOccurrencesOfString:@"https://www" withString:@"https://dl"];

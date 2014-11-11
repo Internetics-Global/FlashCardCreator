@@ -77,7 +77,7 @@ enum popover_enum {
 
 - (void)viewDidLoad
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewDidLoad];
     
     if isUserInterfaceIdiomPhone {
@@ -119,7 +119,7 @@ enum popover_enum {
 
 
 - (void)loadView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super loadView];
     
     _templateBackgroundSelectButton = [[UIBarButtonItem alloc]
@@ -163,7 +163,7 @@ enum popover_enum {
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
     if (isUserInterfaceIdiomPhone){
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
@@ -190,7 +190,7 @@ enum popover_enum {
 
 
 - (void) viewDidAppear:(BOOL)animated {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewDidAppear:animated];
     
     static dispatch_once_t onceToken;
@@ -212,7 +212,7 @@ enum popover_enum {
 #pragma mark - Layout 
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (isUserInterfaceIdiomPhone) {
         [self layoutScrollObjectsForiPhone];
         [_scrollView setContentOffset:CGPointMake(_indexCard*(IPHONE_UI_WIDTH),0) animated:NO];
@@ -251,7 +251,7 @@ enum popover_enum {
 
 - (void)layoutScrollObjectsForiPad
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     CGRect rect;
     
     for (FlashCard *cardView in [_scrollView subviews]) {
@@ -309,7 +309,7 @@ enum popover_enum {
 
 - (void)layoutScrollObjectsForiPhone
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     CGRect rect;
     
     if ([_currentPack cards].count == 0) {
@@ -373,7 +373,7 @@ enum popover_enum {
 #pragma mark UIBarButtonItem action (only for iPad)
 
 - (void)shareButtonClicked:(id) sender {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
         [_helpPopoverController dismissPopoverAnimated:YES];
@@ -393,7 +393,7 @@ enum popover_enum {
 
 - (void)helpButtonClicked:(id) sender
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
     }
@@ -415,7 +415,7 @@ enum popover_enum {
 }
 
 - (void) selectCardBackgroundTemplate:(id) sender {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -435,7 +435,7 @@ enum popover_enum {
 
 - (void)moreButtonClicked:(id) sender
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (!isUserInterfaceIdiomPhone) {
         [_helpPopoverController dismissPopoverAnimated:YES];
     }
@@ -457,7 +457,7 @@ enum popover_enum {
 
 - (void)playButtonClicked:(id) sender
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     PlayViewController *playViewController = [[PlayViewController alloc] init];
     playViewController.currentPack = self.currentPack;
     //playViewController.currentCard = self.currentCard;
@@ -485,7 +485,7 @@ enum popover_enum {
 
 - (void)backButtonClicked:(id) sender
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -494,7 +494,7 @@ enum popover_enum {
 
 - (void)splitViewController:(MGSplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     barButtonItem.title = NSLocalizedString(@"Master", @"Master");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
@@ -502,7 +502,7 @@ enum popover_enum {
 
 - (void)splitViewController:(MGSplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     barButtonItem.title = NSLocalizedString(@"Master", @"Master");
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
@@ -513,7 +513,7 @@ enum popover_enum {
 #pragma mark Rotate control
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
@@ -522,7 +522,7 @@ enum popover_enum {
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
@@ -532,7 +532,7 @@ enum popover_enum {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
@@ -550,7 +550,7 @@ enum popover_enum {
 
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     self.currentPack = (Pack *)[notification object];
     
     if (isUserInterfaceIdiomPhone) {
@@ -599,7 +599,7 @@ enum popover_enum {
 }
 
 - (void) selectedPackNotification:(NSNotification *) notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     _isResizedArray = nil;
     int index = [(NSString *)[notification object] intValue];
     self.currentPack = [[User defaultUser] packs][index];
@@ -609,12 +609,12 @@ enum popover_enum {
 }
 
 - (void) hideNavigationBarNotification:(NSNotification *) notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void) showNavigationBarNotification:(NSNotification *) notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -622,7 +622,7 @@ enum popover_enum {
 
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     dispatch_async(dispatch_get_main_queue(), ^{
        [popoverView dismiss];
     });
@@ -653,7 +653,7 @@ enum popover_enum {
                         _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_shareHelper shareAction];
                     } else {
-                        DDLogInfo(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                        [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -714,7 +714,7 @@ enum popover_enum {
 
 
 - (void) execTemplateBackgroundChangeTask:(NSString *)templateBackgroundName {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     //Step4: Change all cards card template background, screenshot them, and save them
     [_currentCardView reSceenshotAll:kReasonTemplateBackgroundChangeEnum withStringVal:templateBackgroundName];
     [_currentCardView refreshAll];
@@ -763,7 +763,7 @@ enum popover_enum {
 #pragma mark -
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (buttonIndex == 0) {
         NSString *downloadCode = [alertView textFieldAtIndex:0].text;
         if (downloadCode.length > 0) {
@@ -796,7 +796,7 @@ enum popover_enum {
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) previousCardNotification:(NSNotification *)notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }
@@ -823,8 +823,8 @@ enum popover_enum {
         card.question.css.mainSize = [myArray[1] floatValue] ;
         card.question.css.subSize = [myArray[2] floatValue] ;
         
-        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
         
         _isResizedArray[_indexCard - 1] = @YES;
         
@@ -839,7 +839,7 @@ enum popover_enum {
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) nextCardNotification:(NSNotification *)notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }
@@ -865,8 +865,8 @@ enum popover_enum {
         card.question.css.mainSize = [myArray[1] floatValue] ;
         card.question.css.subSize = [myArray[2] floatValue] ;
         
-        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
         
         _isResizedArray[_indexCard + 1] = @YES;
     }
@@ -897,7 +897,7 @@ enum popover_enum {
  *  3. selecting an existing pack
  */
 - (void) showPackInfoView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (isUserInterfaceIdiomPhone == FALSE) {
         
         [_rightPackView removeFromSuperview];

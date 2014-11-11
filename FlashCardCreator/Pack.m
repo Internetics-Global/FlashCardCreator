@@ -119,7 +119,7 @@
 	[self savePackOnly];
     
 	for (int i = 0; i < [_cards count]; i++) {
-		DDLogInfo(@"%s:saving cards...",__FUNCTION__);
+		[iConsole info:@"%s:saving cards...",__FUNCTION__];
 		[_cards[i] save];
 	}
 }
@@ -144,7 +144,7 @@
 	sqlite3_finalize(queryStatement);
     
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -160,7 +160,7 @@
 	sqlite3_finalize(queryStatement);
     
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 	
@@ -199,7 +199,7 @@
 
 - (void)addCard:(Card *)card{
 	if (_cards == nil) {
-		DDLogInfo(@"%s:could not enter an empty card",__FUNCTION__);
+		[iConsole info:@"%s:could not enter an empty card",__FUNCTION__];
 	}
     
     card.packID = self.packID; //build table linkage in database

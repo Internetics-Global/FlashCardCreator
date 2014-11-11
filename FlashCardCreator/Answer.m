@@ -236,7 +236,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole info:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -246,7 +246,7 @@
         _answerID = [[NSDate date] timeIntervalSince1970];
         
         while ([SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"]) {
-            DDLogError(@"%s:_answerID has already existed, regenerate",__FUNCTION__);
+            [iConsole error:@"%s:_answerID has already existed, regenerate",__FUNCTION__];
             _answerID = [[NSDate date] timeIntervalSince1970] + arc4random()%100;
             
         }
@@ -260,7 +260,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogInfo(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole info:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -281,7 +281,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer logoFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -291,7 +291,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer imageFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -302,7 +302,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath2 error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer imageFullPath2"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -313,7 +313,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer backgroundImageFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -324,7 +324,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer movieFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -335,7 +335,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath2 error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer movieFullPath2"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -346,7 +346,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of answer recordedSoundFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }

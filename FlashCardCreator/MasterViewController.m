@@ -170,8 +170,6 @@ enum popover_enum {
     [self.tableView reloadData];
 
     
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -803,8 +801,8 @@ enum popover_enum {
     
     //Just to keep consistent: indexPath.row should be same as card.cardSN
     if (card.cardSN != indexPath.row +1) {
-        DDLogInfo(@"card.cardSN = %d, indexPath.row = %d", card.cardSN, indexPath.row);
-        DDLogInfo(@"******warning: We have to reorder it since it's not consistent");
+        [iConsole info:@"card.cardSN = %d, indexPath.row = %d", card.cardSN, indexPath.row];
+        [iConsole info:@"******warning: We have to reorder it since it's not consistent"];
         card.cardSN = indexPath.row +1;
         [card save];
     }
@@ -840,7 +838,7 @@ enum popover_enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     self.currentCard = [_currentPack cards][indexPath.row];
     _indexCard = indexPath.row;
 
@@ -993,7 +991,7 @@ enum popover_enum {
 #pragma mark - Move action
 
 - (void) moveAction: (NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *) toIndexPath {
-    DDLogInfo(@"move from:%d to:%d", fromIndexPath.row, toIndexPath.row);
+    [iConsole info:@"move from:%d to:%d", fromIndexPath.row, toIndexPath.row];
     
     if (fromIndexPath.row == toIndexPath.row)
         return;
@@ -1048,11 +1046,11 @@ enum popover_enum {
 
 - (void)downloadSuccess:(BOOL)isSucess {
     if (isSucess == YES) {
-        DDLogInfo(@"%s, download success",__FUNCTION__);
+        [iConsole info:@"%s, download success",__FUNCTION__];
         [_HUD hide:YES];
         [self checkPassword];
     } else {
-        DDLogInfo(@"%s,download failed",__FUNCTION__);
+        [iConsole info:@"%s,download failed",__FUNCTION__];
     }
 }
 
@@ -1089,7 +1087,7 @@ enum popover_enum {
     
     if ([urlStr rangeOfString:@".zip"].length == 0) {
         [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
-        DDLogError(@"%s,Incorrect URL share linkage (must end with .zip",__FUNCTION__);
+        [iConsole error:@"%s,Incorrect URL share linkage (must end with .zip",__FUNCTION__];
         return;
     }
     
@@ -1105,7 +1103,7 @@ enum popover_enum {
         _zipFileDownloadHelper.delegate = self;
     }  else {
         [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
-        DDLogError(@"%s,You have reached the limit of downloads for this pack",__FUNCTION__);
+        [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
     }
     
 }
@@ -1123,10 +1121,10 @@ enum popover_enum {
     
     if ((_currentDownloadCount < _maxDownloadCount)  || (_maxDownloadCount == 0)) {  //maxNo = 0 means no record in AmazonSDB
         result = TRUE;
-        DDLogInfo(@"%s:checkDownloadable = YES",__FUNCTION__);
+        [iConsole info:@"%s:checkDownloadable = YES",__FUNCTION__];
     } else {
         result = FALSE;
-        DDLogInfo(@"%s:checkDownloadable = NO",__FUNCTION__);
+        [iConsole info:@"%s:checkDownloadable = NO",__FUNCTION__];
     }
     
     return result;
@@ -1157,11 +1155,11 @@ enum popover_enum {
                     
                     if (( NO==ret ) || (fileSize == 0)) {
                         //when password encripted, will go into here to
-                        DDLogError(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
+                        [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
                         [Common alertViewCommon:@"Wrong password"];
                         [za UnzipCloseFile];
                     } else {
-                        DDLogInfo(@"%s\nUnzip file successfully",__FUNCTION__);
+                        [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
                         [za UnzipCloseFile];
                         
                         [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
@@ -1170,7 +1168,7 @@ enum popover_enum {
                     }
                     
                 } else {
-                    DDLogInfo(@"%sFailure to unzip downloaded file(%@)",__FUNCTION__,downloadedZipPackFileFixedPath);
+                    [iConsole info:@"%sFailure to unzip downloaded file(%@)",__FUNCTION__,downloadedZipPackFileFixedPath];
                     [Common alertViewCommon:@"Failure to unzip downloaded file"];
                     [za UnzipCloseFile];
                 }
@@ -1238,9 +1236,9 @@ enum popover_enum {
     } else {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
-            DDLogInfo(@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath);
+            [iConsole info:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
         } else {
-            DDLogInfo(@"%s\nUnzip file successfully",__FUNCTION__);
+            [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
         }
         [za UnzipCloseFile];
         
@@ -1274,7 +1272,7 @@ enum popover_enum {
             
             NSDictionary *packDict = (NSDictionary *)packJsonObject;
             
-            DDLogInfo(@"%s:packDict =%@",__FUNCTION__,packDict);
+            [iConsole info:@"%s:packDict =%@",__FUNCTION__,packDict];
             
             pack.packName = packDict[@"pack_name"];
             pack.sidebarTitle = packDict[@"sidebar_title"];
@@ -1296,7 +1294,7 @@ enum popover_enum {
                 if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
                     [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
                     if (error) {
-                        DDLogError(@"%s:Error when moving Pack's cover image",__FUNCTION__);
+                        [iConsole error:@"%s:Error when moving Pack's cover image",__FUNCTION__];
                         return;
                     }
                 }
@@ -1307,7 +1305,7 @@ enum popover_enum {
             
         }
     } else {
-        DDLogInfo(@"Unexpected packInformation.json format");
+        [iConsole info:@"Unexpected packInformation.json format"];
     }
     
     //Step3: Update user's pack and database
@@ -1320,7 +1318,7 @@ enum popover_enum {
     error = nil;
     NSArray *fileListArray = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[FileOperationHelper downloadedPackFileDirectory] error:&error];
     if (error) {
-        DDLogError(@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__);
+        [iConsole error:@"%s:Error when using contentsOfDirectoryAtPath of NSFileManager",__FUNCTION__];
     }
     
     BOOL buildCardResultError = FALSE;
@@ -1333,7 +1331,7 @@ enum popover_enum {
             if (assembledCard)
                 [array addObject:assembledCard];
             else {
-                DDLogInfo(@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFileName);
+                [iConsole info:@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFileName];
                 buildCardResultError = TRUE;
             }
         }
@@ -1415,15 +1413,15 @@ enum popover_enum {
         [[NSFileManager defaultManager] removeItemAtPath:[FileOperationHelper temporaryImagesDirectory] error:nil];
         BOOL ret = [za UnzipFileTo:[FileOperationHelper temporaryImagesDirectory] overWrite:YES];
         if( NO==ret ) {
-            DDLogError(@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath);
+            [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,zippedFilePath];
         } else {
-            //DDLogInfo(@"%s\nUnzip file successfully",__FUNCTION__);
+            //[iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
         }
         [za UnzipCloseFile];
         
         [[NSFileManager defaultManager] removeItemAtPath:zippedFilePath error:nil];
     } else {
-        DDLogError(@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath);
+        [iConsole error:@"%s\nunzip %@ failed", __FUNCTION__,zippedFilePath];
     }
     
     Card *assembledCard = [[Card alloc] init];
@@ -1443,7 +1441,7 @@ enum popover_enum {
         if ([questionJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *questionDict = (NSDictionary *)questionJsonObject;
             
-            DDLogInfo(@"%s:questionDict =%@",__FUNCTION__,questionDict);
+            [iConsole info:@"%s:questionDict =%@",__FUNCTION__,questionDict];
             
             [assembledCard question].questionID = -1; // -1 means new
             [assembledCard question].cardID = -1;
@@ -1458,7 +1456,7 @@ enum popover_enum {
             if ([questionDict[@"logo"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard question].logoFullPath = newFileName;
                 }
@@ -1472,7 +1470,7 @@ enum popover_enum {
             if ([questionDict[@"image"] length] >0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard question].imageFullPath = newFileName;
                 }
@@ -1485,7 +1483,7 @@ enum popover_enum {
             if ([questionDict[@"image2"] length] >0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard question].imageFullPath2 = newFileName;
                 }
@@ -1498,7 +1496,7 @@ enum popover_enum {
             if ([questionDict[@"cover_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     assembledCard.coverImageURL = newFileName;
                 }
@@ -1511,7 +1509,7 @@ enum popover_enum {
             if ([questionDict[@"background_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     assembledCard.question.backgroundImageFullPath = newFileName;
                 }
@@ -1558,7 +1556,7 @@ enum popover_enum {
                     
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                     } else {
                         [assembledCard question].movieFullPath = newFileName;
                     }
@@ -1579,7 +1577,7 @@ enum popover_enum {
                     
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"movie2"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                     } else {
                         [assembledCard question].movieFullPath2 = newFileName;
                     }
@@ -1600,7 +1598,7 @@ enum popover_enum {
             if ([questionDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard question].recordedSoundFullPath = newFileName;
                 }
@@ -1628,18 +1626,18 @@ enum popover_enum {
             }
             
             if ([packPlatformStr isEqualToString:@"iPhone"] && (!isUserInterfaceIdiomPhone)) {
-                DDLogInfo(@"You are using iPad and pack was made on iPhone");
+                [iConsole info:@"You are using iPad and pack was made on iPhone"];
                 [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
                 [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
                 [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                DDLogInfo(@"You are using iPhone and pack was made on iPad");
+                [iConsole info:@"You are using iPhone and pack was made on iPad"];
                 [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
-                DDLogInfo(@"You are using iPhone and pack was made on non-iOS platform");
+                [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
 
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
@@ -1663,7 +1661,7 @@ enum popover_enum {
                 
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
-                DDLogInfo(@"You are using iPad and pack was made on non-iOS platform");
+                [iConsole info:@"You are using iPad and pack was made on non-iOS platform"];
                 
                 //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
@@ -1686,7 +1684,7 @@ enum popover_enum {
                 }
                 
             } else {
-                DDLogInfo(@"The platform you are using and pack was made are the same");
+                [iConsole info:@"The platform you are using and pack was made are the same"];
                 [assembledCard question].css.subheadingSize = subheadingSize;
                 [assembledCard question].css.mainSize = mainSize;
                 [assembledCard question].css.subSize = subSize;
@@ -1694,7 +1692,7 @@ enum popover_enum {
             
         }
     } else {
-        DDLogInfo(@"Unexpected questionTextContent.json format");
+        [iConsole info:@"Unexpected questionTextContent.json format"];
     }
     [[NSFileManager defaultManager] removeItemAtPath:questionJsonPath error:nil];
     
@@ -1712,7 +1710,7 @@ enum popover_enum {
         if ([answerJsonObject isKindOfClass:[NSDictionary class]]){
             NSDictionary *answerDict = (NSDictionary *)answerJsonObject;
             
-            DDLogInfo(@"%s:answerDict =%@",__FUNCTION__,answerDict);
+            [iConsole info:@"%s:answerDict =%@",__FUNCTION__,answerDict];
             
             [assembledCard answer].answerID = -1;
             [assembledCard answer].cardID = -1;
@@ -1731,7 +1729,7 @@ enum popover_enum {
             if ([answerDict[@"image"] length] > 0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard answer].imageFullPath = newFileName;
                 }
@@ -1744,7 +1742,7 @@ enum popover_enum {
             if ([answerDict[@"image2"] length] > 0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard answer].imageFullPath2 = newFileName;
                 }
@@ -1757,7 +1755,7 @@ enum popover_enum {
             if ([answerDict[@"logo"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard answer].logoFullPath = newFileName;
                 }
@@ -1770,7 +1768,7 @@ enum popover_enum {
             if ([answerDict[@"background_image"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard answer].backgroundImageFullPath = newFileName;
                 }
@@ -1808,7 +1806,7 @@ enum popover_enum {
                     //with video file locally
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                     } else {
                         [assembledCard answer].movieFullPath = newFileName;
                     }
@@ -1828,7 +1826,7 @@ enum popover_enum {
                     //with video file locally
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie2"]] toPath:newFileName error:&error];
                     if (error) {
-                        DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                        [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                     } else {
                         [assembledCard answer].movieFullPath2 = newFileName;
                     }
@@ -1847,7 +1845,7 @@ enum popover_enum {
             if ([answerDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"audio"]] toPath:newFileName error:&error];
                 if (error) {
-                    DDLogError(@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName);
+                    [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
                 } else {
                     [assembledCard answer].recordedSoundFullPath = newFileName;
                 }
@@ -1883,7 +1881,7 @@ enum popover_enum {
                 [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
-                DDLogInfo(@"You are using iPhone and pack was made on non-iOS platform");
+                [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
                 
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
@@ -1906,7 +1904,7 @@ enum popover_enum {
                 }
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
-                DDLogInfo(@"You are using iPad and pack was made on non-iOS platform");
+                [iConsole info:@"You are using iPad and pack was made on non-iOS platform"];
                 
                 //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
@@ -1929,7 +1927,7 @@ enum popover_enum {
                 }
                 
             } else {
-                DDLogInfo(@"The platform you are using and pack was made are the same");
+                [iConsole info:@"The platform you are using and pack was made are the same"];
                 [assembledCard answer].css.subheadingSize = subheadingSize;
                 [assembledCard answer].css.mainSize = mainSize;
                 [assembledCard answer].css.subSize = subSize;
@@ -1937,7 +1935,7 @@ enum popover_enum {
             
         }
     } else {
-        DDLogInfo(@"Unexpected questionTextContent.json format");
+        [iConsole info:@"Unexpected questionTextContent.json format"];
     }
     [[NSFileManager defaultManager] removeItemAtPath:answerJsonPath error:nil];
     
@@ -2034,7 +2032,7 @@ enum popover_enum {
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     [popoverView dismiss];
     
@@ -2061,7 +2059,7 @@ enum popover_enum {
                         _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_shareHelper shareAction];
                     } else {
-                        DDLogInfo(@"%s:_currentPack or _currentCard is nil",__FUNCTION__);
+                        [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

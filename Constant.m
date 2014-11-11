@@ -7,9 +7,3 @@
 //
 
 #import "Constant.h"
-
-#ifdef DEBUG
-int const ddLogLevel = LOG_LEVEL_VERBOSE;
-#else
-int const ddLogLevel = LOG_LEVEL_ERROR;
-#endif

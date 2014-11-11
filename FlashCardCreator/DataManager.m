@@ -26,7 +26,7 @@
         
 		return YES;
 	}else {
-        DDLogInfo(@"%s:network is NOT reachable",__FUNCTION__);
+        [iConsole info:@"%s:network is NOT reachable",__FUNCTION__];
 		return NO;
 	}
 }

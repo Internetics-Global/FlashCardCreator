@@ -48,7 +48,7 @@
 			[_packs addObject:newPack];
 		}
 	} else {
-       //DDLogInfo(@"%s:no pack under current user",__FUNCTION__);
+       //[iConsole info:@"%s:no pack under current user",__FUNCTION__];
     }
 	
     return self;
@@ -83,7 +83,7 @@
 	for (int i = 0; i < [_packs count]; i++) {
 		if ([_packs[i] packID] == pack.packID) {
 			exists = YES;
-            DDLogInfo(@"%s:addPack failure because already existence",__FUNCTION__);
+            [iConsole info:@"%s:addPack failure because already existence",__FUNCTION__];
 			break;
 		}
 	}

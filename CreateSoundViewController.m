@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     BOOL success = FALSE;
     success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
     if (!success)  {
-        DDLogError(@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error);
+        [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
     }
 }
 
@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                     NSDate* methodFinish =[NSDate date];
                     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
                     if (executionTime > 10) {
-                        DDLogInfo(@"%s:finish recording a new customized sound",__FUNCTION__);
+                        [iConsole info:@"%s:finish recording a new customized sound",__FUNCTION__];
                         break;
                     }
                     
@@ -249,7 +249,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [_player prepareToPlay];
     
     if (_player == nil)
-		DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+		[iConsole error:@"%s:%@",__FUNCTION__,[error description]];
 	else
 		[_player play];
     
@@ -286,7 +286,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                                             toPath:saveTo
                                              error:&error];
     if (error) {
-        DDLogError(@"%s:%@",__FUNCTION__,[error localizedDescription]);
+        [iConsole error:@"%s:%@",__FUNCTION__,[error localizedDescription]];
     }
     
     if (self.isFromNewCreatedCard) {
@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     }
     
     if (error) {
-      DDLogInfo(@"%s:%@",__FUNCTION__,[error description]);
+      [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
     }
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Recorded sound is removed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -357,18 +357,18 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 
 #pragma mark – AVAudioRecorderDelegate
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag {
-  DDLogInfo(@"%s",__FUNCTION__);
+  [iConsole info:@"%s",__FUNCTION__];
 }
 
 /* if an error occurs while encoding it will be reported to the delegate. */
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error {
-  DDLogInfo(@"%s",__FUNCTION__);
+  [iConsole info:@"%s",__FUNCTION__];
 }
 
 #pragma mark – AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     _player = nil;
     
     

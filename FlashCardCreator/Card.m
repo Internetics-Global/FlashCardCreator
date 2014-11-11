@@ -113,7 +113,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -123,7 +123,7 @@
 		_cardID = [[NSDate date] timeIntervalSince1970];
         
         while ([SQLiteHelper checkIntegerValueExists:_cardID forColumn:@"card_id" inTable:@"Cards_Tables"]) {
-            DDLogError(@"%s:_cardID has already existed, regenerate",__FUNCTION__);
+            [iConsole error:@"%s:_cardID has already existed, regenerate",__FUNCTION__];
             _cardID = [[NSDate date] timeIntervalSince1970] + arc4random()%100;
             
         }
@@ -133,7 +133,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -153,7 +153,7 @@
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {
-                DDLogError(@"%s:Error when removing file of card coverImageURL",__FUNCTION__);
+                [iConsole error:@"%s:Error when removing file of card coverImageURL",__FUNCTION__];
                 [Common alertViewCommon:@"Error when removing file of card coverImageURL"];
             }
         }

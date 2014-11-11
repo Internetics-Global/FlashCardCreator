@@ -246,7 +246,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
 
     }
 }
@@ -256,7 +256,7 @@
 		_questionID = [[NSDate date] timeIntervalSince1970];
         
         while ([SQLiteHelper checkIntegerValueExists:_questionID forColumn:@"question_id" inTable:@"Question_Tables"]) {
-            DDLogError(@"%s:_questionID has already existed, regenerate",__FUNCTION__);
+            [iConsole error:@"%s:_questionID has already existed, regenerate",__FUNCTION__];
             _questionID = [[NSDate date] timeIntervalSince1970]+ arc4random()%100;
             
         }
@@ -269,7 +269,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -293,7 +293,7 @@
                 [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
                 if (error) {
                     [Common alertViewCommon:@"Error when removing file of question logoFullPath"];
-                    DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                    [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
                 }
             }
         }
@@ -305,7 +305,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question imageFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -316,7 +316,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath2 error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question imageFullPath2"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -327,7 +327,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.backgroundImageFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question backgroundImageFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -338,7 +338,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question movieFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -349,7 +349,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.movieFullPath2 error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question movieFullPath2"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }
@@ -360,7 +360,7 @@
             [[NSFileManager defaultManager] removeItemAtPath:self.recordedSoundFullPath error:&error];
             if (error) {
                 [Common alertViewCommon:@"Error when removing file of question recordedSoundFullPath"];
-                DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
         }
     }

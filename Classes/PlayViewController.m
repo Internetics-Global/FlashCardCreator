@@ -52,7 +52,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];
@@ -64,7 +64,7 @@
     __weak PlayViewController *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
         [_motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            //DDLogInfo(@"The roll of gyroscope sensor is:%f",motion.attitude.roll);
+            //[iConsole info:@"The roll of gyroscope sensor is:%f",motion.attitude.roll];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
@@ -104,7 +104,7 @@
             
         }];
     } else {
-        DDLogInfo(@"%s:The gyroscope sensor is not available",__FUNCTION__);;
+        [iConsole info:@"%s:The gyroscope sensor is not available",__FUNCTION__];
     }
     
 }
@@ -117,7 +117,7 @@
 
 - (void)viewDidLoad
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     _startDate =[NSDate date];
     
     [super viewDidLoad];
@@ -191,7 +191,7 @@
 
 - (void)layoutScrollObjectsForiPad
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     CGRect rect;
     
     for (FlashCard *cardView in [_scrollView subviews]) {
@@ -263,7 +263,7 @@
 
 - (void)layoutScrollObjectsForiPhone
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     CGRect rect;
     
@@ -334,7 +334,7 @@
 
 
 - (void) closePlayView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     [_currentFlashCardView stopTextToSpeechNow];
     
@@ -344,7 +344,7 @@
 }
 
 - (void) initialzeCardViews {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     float flashCardYPositionInScrollView;
     
     if (isUserInterfaceIdiomPhone) {
@@ -378,7 +378,7 @@
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     //NSLog (@"current page is :%d", page);
@@ -389,7 +389,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
@@ -404,7 +404,7 @@
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     
     
@@ -442,7 +442,7 @@
 }
 
 - (void) switchQuestionAnswerView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
@@ -464,7 +464,7 @@
         }        
         
     } else {
-        DDLogInfo(@"%s:current FlashCardView is empty",__FUNCTION__);
+        [iConsole info:@"%s:current FlashCardView is empty",__FUNCTION__];
     }
 
     
@@ -480,7 +480,7 @@
 }
 
 - (void) addGestureSupport {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     UISwipeGestureRecognizer * recognizerUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureUpAction:)];
     [recognizerUp setDirection:(UISwipeGestureRecognizerDirectionUp)];
     [_currentFlashCardView addGestureRecognizer:recognizerUp];
@@ -496,19 +496,19 @@
 }
 
 - (void)tapDownAction:(UITapGestureRecognizer *)sender {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [self switchQuestionAnswerView];
 }
 
 - (void)gestureUpAction:(UITapGestureRecognizer *)sender {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
         [self switchQuestionAnswerView];
     }
 }
 
 - (void)gestureDownAction:(UITapGestureRecognizer *)sender {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (_currentFlashCardView.segmentedControl.selectedSegmentIndex == 0) {
         [self switchQuestionAnswerView];
     }
@@ -540,7 +540,7 @@
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) previousCardNotification:(NSNotification *)notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }
@@ -566,8 +566,8 @@
             card.question.css.subSize = [myArray[2] floatValue];
         }
         
-        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
         
         _isResizedArray[_indexCard - 1] = @YES;
         
@@ -582,7 +582,7 @@
  *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
  */
 -(void) nextCardNotification:(NSNotification *)notification {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
         return;
     }
@@ -606,8 +606,8 @@
             card.question.css.subSize = [myArray[2] floatValue] ;
         }
         
-        DDLogInfo(@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize);
+        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
+              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
         
         _isResizedArray[_indexCard + 1] = @YES;
     }
@@ -641,7 +641,7 @@
 - (void)dealloc {
     _scrollView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 }
 
 

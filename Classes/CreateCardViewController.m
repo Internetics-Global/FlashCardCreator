@@ -69,7 +69,7 @@ BOOL isFromNewCreatedCard = NO;
 }
 
 - (void)loadView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super loadView];
 
     if (_newCardView == nil) {
@@ -133,7 +133,7 @@ BOOL isFromNewCreatedCard = NO;
 
 - (void)viewDidLoad
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewDidLoad];
     
     if isUserInterfaceIdiomPhone {
@@ -153,14 +153,14 @@ BOOL isFromNewCreatedCard = NO;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
     //iOS7 special, since UIImagePickerController will display status bar forcely.
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [super viewDidDisappear:animated];
 }
 
@@ -170,7 +170,7 @@ BOOL isFromNewCreatedCard = NO;
 }
 
 - (void) saveAndCloseCreateCardView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     //Step1: dismiss window
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -193,7 +193,7 @@ BOOL isFromNewCreatedCard = NO;
 }
 
 - (void) backAndPopCreateCardView {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     [self.navigationController popViewControllerAnimated:YES];
     if (!isUserInterfaceIdiomPhone) {
         AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];

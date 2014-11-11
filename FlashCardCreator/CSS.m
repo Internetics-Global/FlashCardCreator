@@ -124,7 +124,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }
@@ -133,7 +133,7 @@
 	if (_cssID == -1) {
         _cssID = [[NSDate date] timeIntervalSince1970];
         while ([SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"]) {
-            DDLogError(@"%s:css has already existed, regenerate",__FUNCTION__);
+            [iConsole error:@"%s:css has already existed, regenerate",__FUNCTION__];
             _cssID = [[NSDate date] timeIntervalSince1970] + arc4random()%100;
             
         }
@@ -143,7 +143,7 @@
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
     if ((error != SQLITE_OK)&&(error != SQLITE_DONE)) {
-        DDLogError(@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query);
+        [iConsole error:@"%s:error (code = %d) to execute %@",__FUNCTION__,error,query];
         
     }
 }

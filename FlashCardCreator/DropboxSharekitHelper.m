@@ -57,7 +57,7 @@
  */
 - (void)shareAction
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if ([self checkPackEditable]) {
         //Step1: check whether need to upload pack again
         NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
@@ -72,7 +72,7 @@
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
                 if (update < share) {
-                    DDLogInfo(@"updateDate is earlier than shareDate");
+                    [iConsole info:@"updateDate is earlier than shareDate"];
                     [self shareAction:shareLink];
                     return;
                 }
@@ -128,7 +128,7 @@
 }
 
 - (void) setPassword {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     UIAlertView *alert;
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
@@ -149,7 +149,7 @@
 }
 
 - (BOOL) checkPackEditable {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     BOOL result = NO;
     Card *firstCard = [[self.currentPack cards] objectAtIndex:0];
     if ([firstCard.creator isEqualToString:[OpenUDID value]]) {
@@ -163,7 +163,7 @@
 
 
 - (DBRestClient *)restClient {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (!_restClient) {
         _restClient =
         [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
@@ -173,7 +173,7 @@
 }
 
 - (void) exectueShareAfterDropboxLinked:(NSString *) password {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     NSString *generatedZipFilePath = nil;
     //step1: create zip file
     if (_currentPack) {
@@ -186,7 +186,7 @@
         
     } else {
         [Common alertViewCommon:@"You need to select a pack first"];
-        DDLogInfo(@"%s:Pack to share is nil or public pack",__FUNCTION__);
+        [iConsole info:@"%s:Pack to share is nil or public pack",__FUNCTION__];
         return;
     }
     
@@ -227,7 +227,7 @@
 }
 
 - (void) shareAction:(NSString *)shareLinkage {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     NSString *urlSchemeLinkage = [shareLinkage stringByReplacingOccurrencesOfString:@"https://" withString:@"fcc://"];
     
     _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -254,7 +254,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     switch (alertView.tag) {
         case 1: {
@@ -290,7 +290,7 @@
             dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             __weak DropboxSharekitHelper *safeSelf = self;
             dispatch_async(queue, ^{
-                DDLogInfo(@"Amazon simpleDB item name:%@",simpleDBItemName);
+                [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
                 [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
             });
             
@@ -324,7 +324,7 @@
 
 
 - (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName withMaxNo: (int) maxNo {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     BOOL result = false;
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
     NSString *defaultDomain = [AmazonClientManager defaultDomain];
@@ -338,7 +338,7 @@
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
               from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
     
-    DDLogInfo(@"File uploaded successfully to path: %@", metadata.path);
+    [iConsole info:@"File uploaded successfully to path: %@", metadata.path];
     
     _isCreatingShareLinkage = YES;
     
@@ -349,10 +349,10 @@
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
-    DDLogError(@"File upload failed with error - %@", error);
+    [iConsole error:@"File upload failed with error - %@", error];
     [_HUD hide:YES];
     [Common alertViewCommon:@"Failure to upload, please try again"];
-    DDLogError(@"failure to upload: %@", [error description]);
+    [iConsole error:@"failure to upload: %@", [error description]];
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
@@ -365,7 +365,7 @@
 }
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
-    DDLogInfo(@"Share linkage create successfully with linkage - %@", link);
+    [iConsole info:@"Share linkage create successfully with linkage - %@", link];
     [_HUD hide:YES];
     
     _isCreatingShareLinkage = NO;
@@ -385,10 +385,10 @@
 }
 
 - (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
-    DDLogError(@"%s",__FUNCTION__);
+    [iConsole error:@"%s",__FUNCTION__];
     _HUD.labelText = @"Fail to create share linkage";
     _isCreatingShareLinkage = NO;
-    DDLogError(@"Share linkage create failed with error - %@", error);
+    [iConsole error:@"Share linkage create failed with error - %@", error];
 }
 
 #pragma mark -
@@ -410,7 +410,7 @@
 }
 
 - (void)myProgressTask {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 	while (_progressivePercent < 1.0f) {
 		_HUD.progress = _progressivePercent;
 		usleep(50000);
@@ -427,12 +427,12 @@
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 	[_HUD removeFromSuperview];
 }
 
 - (NSString *) redirectURL:(NSString *)urlStr {
-    DDLogInfo(@"%s, url to be redirected:%@",__FUNCTION__,urlStr);
+    [iConsole info:@"%s, url to be redirected:%@",__FUNCTION__,urlStr];
     NSString *returnURL;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@",URL_REDIRECT_API,urlStr];
     
@@ -447,10 +447,10 @@
     {
         NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         if (([newStr rangeOfString:@"http://"].location != 0) || ([[newStr uppercaseString] rangeOfString:@"ERROR"].location != NSNotFound)) {
-          DDLogError(@"%s:%@",__FUNCTION__,newStr);
+          [iConsole error:@"%s:%@",__FUNCTION__,newStr];
         } else {
             returnURL = newStr;
-            DDLogInfo(@"%s:redireced URL is %@",__FUNCTION__,newStr);
+            [iConsole info:@"%s:redireced URL is %@",__FUNCTION__,newStr];
             
             //save redirected url
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
@@ -460,13 +460,13 @@
                 [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             } else {
-                DDLogError(@"%s, not exist in nsuerdefault for %@",__FUNCTION__,_currentPack.packName);
+                [iConsole error:@"%s, not exist in nsuerdefault for %@",__FUNCTION__,_currentPack.packName];
             }
             
         }
     }
     
-    DDLogInfo(@"%s, redirected url:%@",__FUNCTION__,returnURL);
+    [iConsole info:@"%s, redirected url:%@",__FUNCTION__,returnURL];
     
     return returnURL;
 }

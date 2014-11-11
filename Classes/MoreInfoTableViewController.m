@@ -67,34 +67,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 }
 
 - (void) sendLog {
-    if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
-        composeViewController.mailComposeDelegate = self;
-        
-        [composeViewController setSubject:@"Log"];
-        [composeViewController setMessageBody:@"Log has been attached" isHTML:YES];
-        [composeViewController setToRecipients:nil];
-        
-        NSMutableData *errorLogData = [NSMutableData data];
-        for (NSData *errorLogFileData in [FileOperationHelper logFileArray]) {
-            [errorLogData appendData:errorLogFileData];
-        }
-        [composeViewController addAttachmentData:errorLogData mimeType:@"text/plain" fileName:@"log.txt"];
-        
-        
-        NSData *databaseData = [NSData dataWithContentsOfFile:[FileOperationHelper databasePath]];
-        if (databaseData) {
-            [composeViewController addAttachmentData:databaseData mimeType:@"application/x-sqlite3" fileName:@"sqlite.db"];
-            
-        }
-        
-        
-        
-        
-        [self presentViewController:composeViewController animated:YES completion:nil];
-    } else {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:@"You haven't configure mail in setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }
+  [[iConsole sharedConsole] sendLogViaMail];
 }
 
 

@@ -50,8 +50,6 @@
 
 + (NSString *) databasePath;
 
-+ (NSMutableArray *)logFileArray;
-
 + (NSString *) undoCardBackGroundImageForQuestionPath;
 + (NSString *) undoCardBackGroundImageForAnswerPath;
 

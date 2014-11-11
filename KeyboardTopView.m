@@ -131,7 +131,7 @@
         NSString *foundItem = [self.realSizeArray objectAtIndex:targetIndex];
         return [foundItem integerValue];
     } else {
-        DDLogError(@"%s: can not found related realsize value. nominal value = %d",__FUNCTION__,nominalSize);
+        [iConsole error:@"%s: can not found related realsize value. nominal value = %d",__FUNCTION__,nominalSize];
         
         int nearestIndex = [Common nearestIndexForStringArray:self.nominalSizeArray withElement:nominalSize];
         NSString *foundItem = [self.realSizeArray objectAtIndex:nearestIndex];
@@ -157,7 +157,7 @@
         NSString *foundItem = [self.nominalSizeArray objectAtIndex:targetIndex];
         return [foundItem integerValue];
     } else {
-        DDLogError(@"%s: can not find related nomimal value. realSize value = %d",__FUNCTION__,realSize);
+        [iConsole error:@"%s: can not find related nomimal value. realSize value = %d",__FUNCTION__,realSize];
         
         int nearestIndex = [Common nearestIndexForStringArray:self.realSizeArray withElement:realSize];
         NSString *foundItem = [self.nominalSizeArray objectAtIndex:nearestIndex];

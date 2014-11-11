@@ -89,7 +89,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create Users_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create Users_Tables",__FUNCTION__];
         
 	}
     
@@ -102,7 +102,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create Packs_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create Packs_Tables",__FUNCTION__];
 	}else {
         if (([Common currentInstalledSqliteVersion] != 4) && ([Common newUpdatingSqliteVersion] == 4)) {
             [self AddFieldForPackFrom3To4];
@@ -118,7 +118,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create Cards_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create Cards_Tables",__FUNCTION__];
 	}
     
     
@@ -131,7 +131,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create Question_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create Question_Tables",__FUNCTION__];
         
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
@@ -163,7 +163,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create Answer_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create Answer_Tables",__FUNCTION__];
         
 	} else {
         if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
@@ -195,7 +195,7 @@
 		sqlite3_step(createIndex);
 		sqlite3_finalize(createIndex);
         
-        DDLogInfo(@"%s:Create CSS_Tables",__FUNCTION__);
+        [iConsole info:@"%s:Create CSS_Tables",__FUNCTION__];
 	} else {
         if ([Common currentInstalledSqliteVersion] == 2) {
             
@@ -248,7 +248,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 }
 
 
@@ -270,7 +270,7 @@
     sqlite3_finalize(queryStatement);
     
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
 }
 
@@ -292,7 +292,7 @@
     sqlite3_finalize(queryStatement);
 
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 
 }
 
@@ -315,7 +315,7 @@
     sqlite3_finalize(queryStatement);
 
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
 
     
 }
@@ -338,7 +338,7 @@
     sqlite3_finalize(queryStatement);
     
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
 }
 
@@ -350,7 +350,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
 
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
 }
 
@@ -362,7 +362,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     
 }
@@ -374,7 +374,7 @@
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
     
 }
@@ -398,7 +398,7 @@
     sqlite3_finalize(queryStatement);
     
     
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     
 }
 
@@ -418,7 +418,7 @@
 	if (columnText != NULL) {
 		return @(columnText);
 	}else {
-        DDLogWarn(@"%s:%@",__FUNCTION__,@"can not find related value");
+        [iConsole warn:@"%s:%@",__FUNCTION__,@"can not find related value"];
 		return @"";
 	}
 }

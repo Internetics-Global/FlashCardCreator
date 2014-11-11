@@ -29,10 +29,6 @@
 #import <Appsee/Appsee.h>
 #import "TestFlight.h"
 
-#import "DDFileLogger.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
-
 extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
 BOOL _isDownloadingSamplePack;
 
@@ -47,7 +43,7 @@ BOOL _isDownloadingSamplePack;
     
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
-    DDLogInfo(@"%s:%@",__FUNCTION__,[Common userAgentInfo]);
+    [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
     
     //1. check database
     [SQLiteHelper verifyDatabase];
@@ -66,7 +62,7 @@ BOOL _isDownloadingSamplePack;
                 if([[NSFileManager defaultManager] fileExistsAtPath:dest] == false) {
                     [[NSFileManager defaultManager] moveItemAtPath:from toPath:dest error:&error];
                     if (error) {
-                        DDLogError(@"%s:%@",__FUNCTION__,[error description]);
+                        [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
                     }
                 }
             }
@@ -227,7 +223,7 @@ BOOL _isDownloadingSamplePack;
 //url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     if (_isDownloadingSamplePack) {
         _isDownloadingSamplePack = FALSE;
         return NO;
@@ -260,7 +256,7 @@ BOOL _isDownloadingSamplePack;
 
 
 - (Pack *) getLastCreatedCardPack {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     int lastCreatedPackID = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
 
     _indexLastCreatedPack =0;
@@ -286,7 +282,7 @@ BOOL _isDownloadingSamplePack;
 
 - (void) dropboxLinkedNotification:(id)notification
 {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
     
     if(![linkedNum boolValue])
@@ -311,40 +307,17 @@ BOOL _isDownloadingSamplePack;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    DDLogInfo(@"%s:%@",__FUNCTION__,[Common userAgentInfo]);
+    [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    DDLogInfo(@"%s",__FUNCTION__);
+    [iConsole info:@"%s",__FUNCTION__];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
 }
 
 - (void) setupLog {
-    // Standard lumberjack initialization
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
-    // And then enable colors
-    [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
-    
-    self.fileLogger = [[DDFileLogger alloc] init];
-    self.fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    [self.fileLogger setMaximumFileSize:1024 *12];
-    self.fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:self.fileLogger];
-    
-    // Check out default colors:
-    // Error : Red
-    // Warn  : Orange
-    
-//    DDLogError(@"Paper jam");                              // Red
-//    DDLogWarn(@"Toner is low");                            // Orange
-//    DDLogInfo(@"Warming up printer (pre-customization)");  // Default (black)
-//    DDLogVerbose(@"Intializing protcol x26");              // Default (black)
-    
-    // Now let's do some customization:
-    // Info  : Pink
+
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
