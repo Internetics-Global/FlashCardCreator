@@ -247,7 +247,7 @@
         
         while ([SQLiteHelper checkIntegerValueExists:_answerID forColumn:@"answer_id" inTable:@"Answer_Tables"]) {
             [iConsole error:@"%s:_answerID has already existed, regenerate",__FUNCTION__];
-            _answerID = [[NSDate date] timeIntervalSince1970] + arc4random()%500;
+            _answerID = [[NSDate date] timeIntervalSince1970] + arc4random()%1000;
             
         }
 	}
