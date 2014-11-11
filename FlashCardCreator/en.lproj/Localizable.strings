@@ -29,7 +29,7 @@
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
-"NavigationBarItem_Edit"    = "Edit";
+"NavigationBarItem_Edit"    = " Edit ";
 "NavigationBarItem_Edit_Cards"    = "Edit cards";
 "NavigationBarItem_Create_New_Pack"    = "Create New Pack";
 "NavigationBarItem_Delete"    = "Delete";
@@ -37,7 +37,7 @@
 "NavigationBarItem_Done"    = "Done";
 "NavigationBarItem_Share"   = "Share the pack";
 "NavigationBarItem_More"    = "More";
-"NavigationBarItem_Back"    = "Back";
+"NavigationBarItem_Back"    = " Back ";
 "NavigationBarItem_Play"    = "Play";
 
 "NavigationBarItem_More_Dropbox"    = "Dropbox";
