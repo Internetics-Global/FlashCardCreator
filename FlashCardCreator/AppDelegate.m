@@ -41,6 +41,7 @@ BOOL _isDownloadingSamplePack;
     
     [self setupLog];
     
+    
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
@@ -317,6 +318,8 @@ BOOL _isDownloadingSamplePack;
 }
 
 - (void) setupLog {
+    
+    [[iConsole sharedConsole] setMaxLogItems:1000];
 
 }
 
