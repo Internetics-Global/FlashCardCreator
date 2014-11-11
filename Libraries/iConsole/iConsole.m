@@ -435,7 +435,12 @@ static void exceptionHandler(NSException *exception)
     NSMutableString *URLString = [NSMutableString stringWithFormat:@"mailto:%@?subject=%@%%20Console%%20Log&body=%@",
                                   _logSubmissionEmail ?: @"", URLSafeName, URLSafeLog];
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:URLString]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You haven't configure mail" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 
