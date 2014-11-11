@@ -134,7 +134,7 @@
         _cssID = [[NSDate date] timeIntervalSince1970];
         while ([SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"]) {
             [iConsole error:@"%s:css has already existed, regenerate",__FUNCTION__];
-            _cssID = [[NSDate date] timeIntervalSince1970] + arc4random()%100;
+            _cssID = [[NSDate date] timeIntervalSince1970] + arc4random()%500;
             
         }
 	}

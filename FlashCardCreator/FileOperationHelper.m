@@ -592,7 +592,7 @@
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
     for (count = 0; count < (int)[directoryContent count]; count++)
     {
-        [iConsole error:@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]];
+        [iConsole info:@"File %d: %@", (count + 1), [directoryContent objectAtIndex:count]];
     }
     return directoryContent;
 }
