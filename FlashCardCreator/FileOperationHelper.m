@@ -380,7 +380,7 @@
                                         card.question.css.subFont,@"sub_font",
                                             card.question.css.subheadingAlignVertical,@"subheading_align_vertical",
                                             card.question.css.mainAlignVertical,@"main_align_vertical",
-                                            card.question.css.subheadingAlignVertical,@"sub_align_vertical",nil];
+                                            card.question.css.subAlignVertical,@"sub_align_vertical",nil];
     
     [iConsole info:@"%s: questionDict = %@",__FUNCTION__,questionDict];
     
@@ -444,7 +444,7 @@
                                       card.answer.css.subFont,@"sub_font",
                                              card.answer.css.subheadingAlignVertical,@"subheading_align_vertical",
                                              card.answer.css.mainAlignVertical,@"main_align_vertical",
-                                             card.answer.css.subheadingAlignVertical,@"sub_align_vertical",nil];
+                                             card.answer.css.subAlignVertical,@"sub_align_vertical",nil];
     
     [iConsole info:@"%s: answerDict = %@",__FUNCTION__,anserDict];
     
