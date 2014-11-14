@@ -259,7 +259,7 @@
         pack.creator = [OpenUDID value];
     }
     
-    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent],@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",platformStr,@"platform",nil];
+    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent]?:@"",@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",platformStr,@"platform",nil];
     
     [iConsole info:@"%s:packDict = %@",__FUNCTION__,packDict];
     
@@ -352,6 +352,9 @@
         
     } else {
         movieFinalPathQuestion = [card.question.movieFullPath lastPathComponent];
+        if (movieFinalPathQuestion == nil) {
+            movieFinalPathQuestion = @"";
+        }
     }
     
     NSString *movieFinalPathQuestion2;
@@ -361,14 +364,17 @@
         
     } else {
         movieFinalPathQuestion2 = [card.question.movieFullPath2 lastPathComponent];
+        if (movieFinalPathQuestion2 == nil) {
+            movieFinalPathQuestion2 = @"";
+        }
     }
     
-    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent],@"image",[card.question.imageFullPath2 lastPathComponent],@"image2",[card.question.logoFullPath lastPathComponent],@"logo", card.question.logoURLLinkage,@"logo_url",card.creator,@"creator",[card.coverImageURL lastPathComponent],@"cover_image",card.templateBackgroundName,@"template_background",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.question.templateID],@"template_id",card.question.css.subheadingAlign,@"subheading_align",card.question.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subheadingSize],@"subheading_size",card.question.css.mainAlign,@"main_align",card.question.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.question.css.mainSize],@"main_size",card.question.css.subAlign,@"sub_align",card.question.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subSize],@"sub_size",
+    NSDictionary *questionDict = [NSDictionary dictionaryWithObjectsAndKeys:card.question.title,@"title",card.question.main,@"main",card.question.sub,@"sub",card.question.subheading,@"subheading",[card.question.imageFullPath lastPathComponent]?:@"",@"image",[card.question.imageFullPath2 lastPathComponent]?:@"",@"image2",[card.question.logoFullPath lastPathComponent]?:@"",@"logo", card.question.logoURLLinkage,@"logo_url",card.creator,@"creator",[card.coverImageURL lastPathComponent]?:@"",@"cover_image",card.templateBackgroundName,@"template_background",[NSString stringWithFormat:@"%d",card.cardSN],@"cardSN",[NSString stringWithFormat:@"%d",card.question.templateID],@"template_id",card.question.css.subheadingAlign,@"subheading_align",card.question.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subheadingSize],@"subheading_size",card.question.css.mainAlign,@"main_align",card.question.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.question.css.mainSize],@"main_size",card.question.css.subAlign,@"sub_align",card.question.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.question.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.question.lineNoSubheading],@"line_number_subheading",
                 [NSString stringWithFormat:@"%d",card.question.lineNoMain],@"line_number_main",
-                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent],@"background_image",
+                        [NSString stringWithFormat:@"%d",card.question.lineNoSub],@"line_number_sub",[card.question.backgroundImageFullPath lastPathComponent]?:@"",@"background_image",
                                   movieFinalPathQuestion,@"movie",movieFinalPathQuestion2,@"movie2",
-                                      [card.question.recordedSoundFullPath lastPathComponent],@"audio",
+                                      [card.question.recordedSoundFullPath lastPathComponent]?:@"",@"audio",
                                         card.question.css.subheadingFont,@"subheading_font",
                                         card.question.css.mainFont,@"main_font",
                                         card.question.css.subFont,@"sub_font",
@@ -410,6 +416,9 @@
         
     } else {
         movieFinalPathAnswer = [card.answer.movieFullPath lastPathComponent];
+        if (movieFinalPathAnswer == nil) {
+            movieFinalPathAnswer = @"";
+        }
     }
     
     NSString *movieFinalPathAnswer2;
@@ -419,14 +428,17 @@
         
     } else {
         movieFinalPathAnswer2 = [card.answer.movieFullPath2 lastPathComponent];
+        if (movieFinalPathAnswer2 == nil) {
+            movieFinalPathAnswer2 = @"";
+        }
     }
     
-    NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent],@"image",[card.answer.imageFullPath2 lastPathComponent],@"image2",[card.answer.logoFullPath lastPathComponent],@"logo",[NSString stringWithFormat:@"%d",card.answer.templateID],@"template_id", card.answer.css.subheadingAlign,@"subheading_align",card.answer.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subheadingSize],@"subheading_size",card.answer.css.mainAlign,@"main_align",card.answer.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.mainSize],@"main_size",card.answer.css.subAlign,@"sub_align",card.answer.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subSize],@"sub_size",
+    NSDictionary *anserDict = [NSDictionary dictionaryWithObjectsAndKeys:card.answer.title,@"title",card.answer.main,@"main",card.answer.sub,@"sub", card.answer.subheading,@"subheading",[card.answer.imageFullPath lastPathComponent]?:@"",@"image",[card.answer.imageFullPath2 lastPathComponent]?:@"",@"image2",[card.answer.logoFullPath lastPathComponent]?:@"",@"logo",[NSString stringWithFormat:@"%d",card.answer.templateID],@"template_id", card.answer.css.subheadingAlign,@"subheading_align",card.answer.css.subheadingColor,@"subheading_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subheadingSize],@"subheading_size",card.answer.css.mainAlign,@"main_align",card.answer.css.mainColor,@"main_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.mainSize],@"main_size",card.answer.css.subAlign,@"sub_align",card.answer.css.subColor,@"sub_color",[NSString stringWithFormat:@"%d",(int)card.answer.css.subSize],@"sub_size",
         [NSString stringWithFormat:@"%d",card.answer.lineNoSubheading],@"line_number_subheading",
             [NSString stringWithFormat:@"%d",card.answer.lineNoMain],@"line_number_main",
-                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent],@"background_image",
+                    [NSString stringWithFormat:@"%d",card.answer.lineNoSub],@"line_number_sub",[card.answer.backgroundImageFullPath lastPathComponent]?:@"",@"background_image",
                                movieFinalPathAnswer,@"movie",movieFinalPathAnswer2,@"movie2",
-                                   [card.answer.recordedSoundFullPath lastPathComponent],@"audio",
+                                   [card.answer.recordedSoundFullPath lastPathComponent]?:@"",@"audio",
                                       card.answer.css.subheadingFont,@"subheading_font",
                                       card.answer.css.mainFont,@"main_font",
                                       card.answer.css.subFont,@"sub_font",
