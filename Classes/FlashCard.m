@@ -8688,10 +8688,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    if ((_popTipLogo.isVisible == YES) || (_popTipImage.isVisible == YES)
-        || (_popTipToolbar.isVisible == YES) || (_popTipSubheading.isVisible == YES)
-        || (_popTipNavigationBarRight.isVisible == YES) || (_popTipSegment.isVisible == YES)){
-        return;
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        //in iPhone, we don't need this logic
+        if ((_popTipLogo.isVisible == YES) || (_popTipImage.isVisible == YES)
+            || (_popTipToolbar.isVisible == YES) || (_popTipSubheading.isVisible == YES)
+            || (_popTipNavigationBarRight.isVisible == YES) || (_popTipSegment.isVisible == YES)){
+            return;
+        }
     }
     
     
@@ -8721,8 +8724,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _popTipImage.dismissHandler = ^() {
             [weakSelf setTooltipFlagsAtPositionB];
         };
-        CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, CGRectGetHeight(_imageQuestion.frame)/2, 0, 0) toView:self];
-        [_popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectImage duration:10];
+        CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, CGRectGetHeight(_imageQuestion.frame)/6, 0, 0) toView:self];
+        [_popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:300 inView:self fromFrame:rectImage duration:10];
     }
     
     _popTipToolbar = [AMPopTip popTip];
