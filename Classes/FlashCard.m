@@ -1587,9 +1587,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     double delayInSeconds = 0.8;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
-            [self showTooltips];
-        }
+        [self showTooltips];
     });
     
 
@@ -8679,18 +8677,25 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) showTooltips {
     
+    if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
+        return;
+    }
+    
+    if (_isShowingTooltip) {
+        return;
+    }
+    
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
     if (val) {
         return;
     }
     
     if ([self checkCardEditable] == FALSE) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Tooltip only shows on editable packs/cards" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
         return;
     }
     
     [self setTooltipFlagsAtPositionB];
+    _isShowingTooltip = YES;
     
     AMPopTip *popTipLogo = [AMPopTip popTip];
     popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
@@ -8716,7 +8721,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self setTooltipFlagsAtPositionB];
     };
     CGRect rectToolbar = [_functionAreaView  convertRect:CGRectMake(CGRectGetWidth(_functionAreaView.frame)/2,0, 0, 0) toView:self];
-    [popTipToolbar showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectToolbar duration:10];
+    [popTipToolbar showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:150 inView:self fromFrame:rectToolbar duration:10];
     
     AMPopTip *popTipSubheading = [AMPopTip popTip];
     popTipSubheading.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
@@ -8729,13 +8734,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (isUserInterfaceIdiomPhone == FALSE) {
-        AMPopTip *popTipNavigationBar = [AMPopTip popTip];
-        popTipNavigationBar.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        popTipNavigationBar.shouldDismissOnTap = YES;
-        popTipNavigationBar.dismissHandler = ^() {
+        AMPopTip *popTipNavigationBarRight = [AMPopTip popTip];
+        popTipNavigationBarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        popTipNavigationBarRight.shouldDismissOnTap = YES;
+        popTipNavigationBarRight.dismissHandler = ^() {
             [self setTooltipFlagsAtPositionB];
         };
-        [popTipNavigationBar showText:@"Toolbar select/edit/create packs, play, share and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0) duration:10];
+        [popTipNavigationBarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0) duration:10];
+        
+    } else {
     }
     
     AMPopTip *popTipSegment = [AMPopTip popTip];
@@ -8752,12 +8759,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
     [defaults synchronize];
+    
+    _isShowingTooltip = NO;
 }
 
 - (void) showTooltipNotification:(NSNotification *) notification {
-    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
-        [self showTooltips];
-    }
+    [self showTooltips];
 }
 
 

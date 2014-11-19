@@ -58,7 +58,9 @@
     
     DropboxSharekitHelper *_shareHelper;
     
-    NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)    
+    NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
+    
+    BOOL _isShowingTooltip;
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;
@@ -68,6 +70,8 @@
 @property (nonatomic, assign) NSUInteger indexPack;
 @property (nonatomic, strong) UIButton *backgroundOfCreateCardView;
 @property (nonatomic, strong) FMMoveTableView *tableView;
+
+
 
 - (void)shareButtonClicked:(id) sender;
 

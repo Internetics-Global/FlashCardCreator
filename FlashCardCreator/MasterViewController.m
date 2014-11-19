@@ -578,6 +578,8 @@ enum popover_enum {
         
     }
     
+    [self showTooltips];
+    
 }
 
 
@@ -630,6 +632,8 @@ enum popover_enum {
         self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
     }
+    
+    [self showTooltips];
 }
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
@@ -2100,16 +2104,18 @@ enum popover_enum {
 
 - (void) showTooltips {
     
+    if (_isShowingTooltip) {
+        return;
+    }
+    
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
     if (val) {
         return;
     }
     
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
-        return;
-    }
     
     [self setTooltipFlagsAtPositionA];
+    _isShowingTooltip = YES;
     
     double delayInSeconds = 0.8;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -2123,6 +2129,28 @@ enum popover_enum {
         CGRect rect = _addCardButton.frame;
         rect.origin.y = rect.origin.y - 30;
         [popTipLogo showText:@"Create a new card" direction:AMPopTipDirectionUp maxWidth:200 inView:self.view fromFrame: rect duration:10];
+        
+        
+        AMPopTip *popTipNavigationBarLeft = [AMPopTip popTip];
+        popTipNavigationBarLeft.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        popTipNavigationBarLeft.shouldDismissOnTap = YES;
+        popTipNavigationBarLeft.dismissHandler = ^() {
+            [self setTooltipFlagsAtPositionA];
+        };
+        [popTipNavigationBarLeft showText:@"Toolbar to select, edit and create packs" direction:AMPopTipDirectionDown maxWidth:200 inView:self.view fromFrame:CGRectMake(50, 0, 0, 0) duration:10];
+        
+        
+        if (isUserInterfaceIdiomPhone) {
+            AMPopTip *popTipNavigationBarRight = [AMPopTip popTip];
+            popTipNavigationBarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+            popTipNavigationBarRight.shouldDismissOnTap = YES;
+            popTipNavigationBarRight.dismissHandler = ^() {
+                [self setTooltipFlagsAtPositionA];
+            };
+            [popTipNavigationBarRight showText:@"Toolbar to play and share packs" direction:AMPopTipDirectionDown maxWidth:100 inView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0) duration:10];
+            
+        }
+        
     });
 }
 
@@ -2131,6 +2159,8 @@ enum popover_enum {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
     [defaults synchronize];
+    
+    _isShowingTooltip = NO;
 }
 
 - (void) showTooltipNotification:(NSNotification *) notification {

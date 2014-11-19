@@ -160,6 +160,8 @@ typedef enum{
     //when use, please use together
     UITextView   *_lastBecomeFirstRespondTextView; //
     BOOL          _isUITextViewFocused; //used to diff better UITextView and UITextField
+    
+    BOOL _isShowingTooltip;
 }
 
 @property (nonatomic, strong) Card *currentCard;

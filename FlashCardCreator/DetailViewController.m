@@ -246,6 +246,7 @@ enum popover_enum {
     }
     
     _scrollView.userInteractionEnabled = YES; //在特殊情况下scrollviewdidenddecelerating（这里会重置_scrollView.userInteractionEnabled = YES）没有被调用，导致界面完全失去响应，所以这里需要加一个backup
+    
 
 }
 
@@ -988,7 +989,6 @@ enum popover_enum {
         
     }
 }
-
 
 
 
