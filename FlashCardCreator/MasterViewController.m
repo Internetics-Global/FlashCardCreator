@@ -42,6 +42,8 @@
 #import "Common.h"
 #import "LineLayout.h"
 
+#import "AMPopTip.h"
+
 extern BOOL _isDownloadingSamplePack;
 
 @implementation MasterViewController
@@ -95,6 +97,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
         
         
         //2. Initialize
@@ -297,7 +301,11 @@ enum popover_enum {
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
     
+    
+    [self showTooltips];
+    
 }
+
 
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -477,8 +485,17 @@ enum popover_enum {
 
 - (void)helpButtonClicked:(id) sender
 {
-    HelpViewController *helpViewController = [[HelpViewController alloc] init];
-    [self.navigationController pushViewController:helpViewController animated:YES];
+    if (0) {
+        HelpViewController *helpViewController = [[HelpViewController alloc] init];
+        [self.navigationController pushViewController:helpViewController animated:YES];
+    } else {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
+        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
+        [defaults synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+    }
+    
 }
 
 
@@ -2079,6 +2096,45 @@ enum popover_enum {
 }
 
 
+#pragma mark – Tooltips
 
+- (void) showTooltips {
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
+    if (val) {
+        return;
+    }
+    
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+        return;
+    }
+    
+    [self setTooltipFlagsAtPositionA];
+    
+    double delayInSeconds = 0.8;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        AMPopTip *popTipLogo = [AMPopTip popTip];
+        popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
+        popTipLogo.dismissHandler = ^() {
+            [self setTooltipFlagsAtPositionA];
+        };
+        popTipLogo.shouldDismissOnTap = YES;
+        CGRect rect = _addCardButton.frame;
+        rect.origin.y = rect.origin.y - 30;
+        [popTipLogo showText:@"Create a new card" direction:AMPopTipDirectionUp maxWidth:200 inView:self.view fromFrame: rect duration:10];
+    });
+}
+
+
+- (void) setTooltipFlagsAtPositionA {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
+    [defaults synchronize];
+}
+
+- (void) showTooltipNotification:(NSNotification *) notification {
+    [self showTooltips];
+}
 
 @end

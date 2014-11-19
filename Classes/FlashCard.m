@@ -40,6 +40,8 @@
 
 #import "PECropViewController.h"
 
+#import "AMPopTip.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -152,6 +154,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
         
         if ((card == nil) || (pack == nil)) {
             //[iConsole info:@"%s:Check your code, it could be possiblly an issue",__FUNCTION__];
@@ -1492,7 +1496,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     [self refreshAll:NO withIndexPlaying:-1];
     
-    
 }
 
 /**
@@ -1579,6 +1582,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ([_synth isSpeaking]) {
         [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     }
+    
+    
+    double delayInSeconds = 0.8;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
+            [self showTooltips];
+        }
+    });
     
 
 }
@@ -8661,6 +8673,91 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     [iConsole info:@"%s",__FUNCTION__];
+}
+
+#pragma mark – Tooltips
+
+- (void) showTooltips {
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
+    if (val) {
+        return;
+    }
+    
+    if ([self checkCardEditable] == FALSE) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message" message:@"Tooltip only shows on editable packs/cards" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    
+    [self setTooltipFlagsAtPositionB];
+    
+    AMPopTip *popTipLogo = [AMPopTip popTip];
+    popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
+    popTipLogo.shouldDismissOnTap = YES;
+    CGRect rectLogo = [_logoImage  convertRect:CGRectMake(CGRectGetWidth(_logoImage.frame)/2, CGRectGetHeight(_logoImage.frame), 0, 0) toView:self];
+    [popTipLogo showText:@"Edit logo image" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectLogo duration:10];
+    
+    if (_imageQuestion.hidden == FALSE) {
+        AMPopTip *popTipImage = [AMPopTip popTip];
+        popTipImage.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
+        popTipImage.shouldDismissOnTap = YES;
+        popTipImage.dismissHandler = ^() {
+            [self setTooltipFlagsAtPositionB];
+        };
+        CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, CGRectGetHeight(_imageQuestion.frame)/2, 0, 0) toView:self];
+        [popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectImage duration:10];
+    }
+    
+    AMPopTip *popTipToolbar = [AMPopTip popTip];
+    popTipToolbar.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+    popTipToolbar.shouldDismissOnTap = YES;
+    popTipToolbar.dismissHandler = ^() {
+        [self setTooltipFlagsAtPositionB];
+    };
+    CGRect rectToolbar = [_functionAreaView  convertRect:CGRectMake(CGRectGetWidth(_functionAreaView.frame)/2,0, 0, 0) toView:self];
+    [popTipToolbar showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectToolbar duration:10];
+    
+    AMPopTip *popTipSubheading = [AMPopTip popTip];
+    popTipSubheading.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
+    popTipSubheading.shouldDismissOnTap = YES;
+    popTipSubheading.dismissHandler = ^() {
+        [self setTooltipFlagsAtPositionB];
+    };
+    CGRect rectSubheading = [_subheadingQuestion  convertRect:CGRectMake(CGRectGetWidth(_subheadingQuestion.frame)/3, CGRectGetHeight(_subheadingQuestion.frame)/2, 0, 0) toView:self];
+    [popTipSubheading showText:@"Click anywhere in the card to edit the text" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSubheading duration:10];
+    
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        AMPopTip *popTipNavigationBar = [AMPopTip popTip];
+        popTipNavigationBar.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        popTipNavigationBar.shouldDismissOnTap = YES;
+        popTipNavigationBar.dismissHandler = ^() {
+            [self setTooltipFlagsAtPositionB];
+        };
+        [popTipNavigationBar showText:@"Toolbar select/edit/create packs, play, share and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0) duration:10];
+    }
+    
+    AMPopTip *popTipSegment = [AMPopTip popTip];
+    popTipSegment.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
+    popTipSegment.shouldDismissOnTap = YES;
+    popTipSegment.dismissHandler = ^() {
+        [self setTooltipFlagsAtPositionB];
+    };
+    CGRect rectSegment = [_segmentedControl  convertRect:CGRectMake(CGRectGetWidth(_segmentedControl.frame)/2, 0, 0, 0) toView:self];
+    [popTipSegment showText:@"Switch to question/answer part of a card" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSegment duration:10];
+}
+
+- (void) setTooltipFlagsAtPositionB {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
+    [defaults synchronize];
+}
+
+- (void) showTooltipNotification:(NSNotification *) notification {
+    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
+        [self showTooltips];
+    }
 }
 
 

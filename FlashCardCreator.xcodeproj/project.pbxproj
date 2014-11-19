@@ -216,6 +216,7 @@
 		882ACF91192C22E300CDAD15 /* segment_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */; };
 		882ACF92192C22E300CDAD15 /* segment_seperator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */; };
 		882ACFE0192C537600CDAD15 /* dotted_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFDF192C537600CDAD15 /* dotted_line@2x.png */; };
+		883763E41A1C205D007FD84F /* AMPopTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 883763E31A1C205D007FD84F /* AMPopTip.m */; };
 		8842A52919AFF3860044C8CC /* templateScreenshot8_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */; };
 		8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */; };
 		8842A52D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png */; };
@@ -888,6 +889,8 @@
 		882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_selected@2x.png"; path = "Resources/segment_selected@2x.png"; sourceTree = "<group>"; };
 		882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_seperator@2x.png"; path = "Resources/segment_seperator@2x.png"; sourceTree = "<group>"; };
 		882ACFDF192C537600CDAD15 /* dotted_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dotted_line@2x.png"; path = "Resources/dotted_line@2x.png"; sourceTree = "<group>"; };
+		883763E21A1C205D007FD84F /* AMPopTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTip.h; sourceTree = "<group>"; };
+		883763E31A1C205D007FD84F /* AMPopTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPopTip.m; sourceTree = "<group>"; };
 		8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question_iPad.png; path = Resources/templateScreenshot8_question_iPad.png; sourceTree = "<group>"; };
 		8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question.png; path = Resources/templateScreenshot8_question.png; sourceTree = "<group>"; };
 		8842A51D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot9_question_iPad.png; path = Resources/templateScreenshot9_question_iPad.png; sourceTree = "<group>"; };
@@ -1418,6 +1421,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
 				88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */,
 				886075001932B167009C16EE /* DKCircleButton */,
@@ -1861,6 +1865,16 @@
 				885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */,
 			);
 			name = Placeholders;
+			sourceTree = "<group>";
+		};
+		883763E11A1C205D007FD84F /* AMPopTip */ = {
+			isa = PBXGroup;
+			children = (
+				883763E21A1C205D007FD84F /* AMPopTip.h */,
+				883763E31A1C205D007FD84F /* AMPopTip.m */,
+			);
+			name = AMPopTip;
+			path = Libraries/AMPopTip;
 			sourceTree = "<group>";
 		};
 		885C3DBC19260BD70090F63C /* Background */ = {
@@ -2564,6 +2578,7 @@
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				88F5CE6E19B40B4B00107075 /* PECropRectView.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
+				883763E41A1C205D007FD84F /* AMPopTip.m in Sources */,
 				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,

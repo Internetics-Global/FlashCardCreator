@@ -393,25 +393,33 @@ enum popover_enum {
 
 - (void)helpButtonClicked:(id) sender
 {
-    [iConsole info:@"%s",__FUNCTION__];
-    if (!isUserInterfaceIdiomPhone) {
-        [_settingPopoverController dismissPopoverAnimated:YES];
-    }
-    
-    HelpViewController *helpViewController = [[HelpViewController alloc] init];
-    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
-    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-        navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    }
-    if (_helpPopoverController == nil) {
-        _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
-        _helpPopoverController.delegate = self;
-        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-            _helpPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
+    if (0) {
+        [iConsole info:@"%s",__FUNCTION__];
+        if (!isUserInterfaceIdiomPhone) {
+            [_settingPopoverController dismissPopoverAnimated:YES];
         }
+        
+        HelpViewController *helpViewController = [[HelpViewController alloc] init];
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+        }
+        if (_helpPopoverController == nil) {
+            _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
+            _helpPopoverController.delegate = self;
+            if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+                _helpPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
+            }
+        }
+        _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
+        [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    } else {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
+        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
+        [defaults synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
     }
-    _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
-    [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 - (void) selectCardBackgroundTemplate:(id) sender {
