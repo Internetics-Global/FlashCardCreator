@@ -59,8 +59,6 @@
     DropboxSharekitHelper *_shareHelper;
     
     NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
-    
-    BOOL _isShowingTooltip;
 }
 
 @property (nonatomic, strong) DetailViewController *detailViewController;

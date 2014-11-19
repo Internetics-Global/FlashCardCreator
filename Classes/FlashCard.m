@@ -110,6 +110,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
     
     NSMutableArray         *_textToSpeechArray;
+    
+    AMPopTip               *_popTipLogo;
+    AMPopTip               *_popTipImage;
+    AMPopTip               *_popTipToolbar;
+    AMPopTip               *_popTipSubheading;
+    AMPopTip               *_popTipNavigationBarRight;
+    AMPopTip               *_popTipSegment;
 }
 
 
@@ -8681,9 +8688,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    if (_isShowingTooltip) {
+    if ((_popTipLogo.isVisible == YES) || (_popTipImage.isVisible == YES)
+        || (_popTipToolbar.isVisible == YES) || (_popTipSubheading.isVisible == YES)
+        || (_popTipNavigationBarRight.isVisible == YES) || (_popTipSegment.isVisible == YES)){
         return;
     }
+    
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
     if (val) {
@@ -8695,64 +8705,65 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     [self setTooltipFlagsAtPositionB];
-    _isShowingTooltip = YES;
     
-    AMPopTip *popTipLogo = [AMPopTip popTip];
-    popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
-    popTipLogo.shouldDismissOnTap = YES;
+    __weak __typeof(&*self)weakSelf = self;
+    
+    _popTipLogo = [AMPopTip popTip];
+    _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
+    _popTipLogo.shouldDismissOnTap = YES;
     CGRect rectLogo = [_logoImage  convertRect:CGRectMake(CGRectGetWidth(_logoImage.frame)/2, CGRectGetHeight(_logoImage.frame), 0, 0) toView:self];
-    [popTipLogo showText:@"Edit logo image" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectLogo duration:10];
+    [_popTipLogo showText:@"Edit logo image" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectLogo duration:10];
     
     if (_imageQuestion.hidden == FALSE) {
-        AMPopTip *popTipImage = [AMPopTip popTip];
-        popTipImage.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
-        popTipImage.shouldDismissOnTap = YES;
-        popTipImage.dismissHandler = ^() {
-            [self setTooltipFlagsAtPositionB];
+        _popTipImage = [AMPopTip popTip];
+        _popTipImage.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
+        _popTipImage.shouldDismissOnTap = YES;
+        _popTipImage.dismissHandler = ^() {
+            [weakSelf setTooltipFlagsAtPositionB];
         };
         CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, CGRectGetHeight(_imageQuestion.frame)/2, 0, 0) toView:self];
-        [popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectImage duration:10];
+        [_popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:rectImage duration:10];
     }
     
-    AMPopTip *popTipToolbar = [AMPopTip popTip];
-    popTipToolbar.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-    popTipToolbar.shouldDismissOnTap = YES;
-    popTipToolbar.dismissHandler = ^() {
-        [self setTooltipFlagsAtPositionB];
+    _popTipToolbar = [AMPopTip popTip];
+    _popTipToolbar.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+    _popTipToolbar.shouldDismissOnTap = YES;
+    _popTipToolbar.dismissHandler = ^() {
+        [weakSelf setTooltipFlagsAtPositionB];
     };
     CGRect rectToolbar = [_functionAreaView  convertRect:CGRectMake(CGRectGetWidth(_functionAreaView.frame)/2,0, 0, 0) toView:self];
-    [popTipToolbar showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:150 inView:self fromFrame:rectToolbar duration:10];
+    [_popTipToolbar showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:150 inView:self fromFrame:rectToolbar duration:10];
     
-    AMPopTip *popTipSubheading = [AMPopTip popTip];
-    popTipSubheading.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
-    popTipSubheading.shouldDismissOnTap = YES;
-    popTipSubheading.dismissHandler = ^() {
-        [self setTooltipFlagsAtPositionB];
+    _popTipSubheading = [AMPopTip popTip];
+    _popTipSubheading.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
+    _popTipSubheading.shouldDismissOnTap = YES;
+    _popTipSubheading.dismissHandler = ^() {
+        [weakSelf setTooltipFlagsAtPositionB];
     };
     CGRect rectSubheading = [_subheadingQuestion  convertRect:CGRectMake(CGRectGetWidth(_subheadingQuestion.frame)/3, CGRectGetHeight(_subheadingQuestion.frame)/2, 0, 0) toView:self];
-    [popTipSubheading showText:@"Click anywhere in the card to edit the text" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSubheading duration:10];
+    [_popTipSubheading showText:@"Click anywhere in the card to edit the text" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSubheading duration:10];
     
     
     if (isUserInterfaceIdiomPhone == FALSE) {
-        AMPopTip *popTipNavigationBarRight = [AMPopTip popTip];
-        popTipNavigationBarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        popTipNavigationBarRight.shouldDismissOnTap = YES;
-        popTipNavigationBarRight.dismissHandler = ^() {
-            [self setTooltipFlagsAtPositionB];
+        _popTipNavigationBarRight = [AMPopTip popTip];
+        _popTipNavigationBarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        _popTipNavigationBarRight.shouldDismissOnTap = YES;
+        _popTipNavigationBarRight.dismissHandler = ^() {
+            [weakSelf setTooltipFlagsAtPositionB];
         };
-        [popTipNavigationBarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0) duration:10];
+        [_popTipNavigationBarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0) duration:10];
         
     } else {
     }
     
-    AMPopTip *popTipSegment = [AMPopTip popTip];
-    popTipSegment.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
-    popTipSegment.shouldDismissOnTap = YES;
-    popTipSegment.dismissHandler = ^() {
-        [self setTooltipFlagsAtPositionB];
+    _popTipSegment = [AMPopTip popTip];
+    _popTipSegment.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
+    _popTipSegment.shouldDismissOnTap = YES;
+    _popTipSegment.dismissHandler = ^() {
+        [weakSelf setTooltipFlagsAtPositionB];
     };
     CGRect rectSegment = [_segmentedControl  convertRect:CGRectMake(CGRectGetWidth(_segmentedControl.frame)/2, 0, 0, 0) toView:self];
-    [popTipSegment showText:@"Switch to question/answer part of a card" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSegment duration:10];
+    [_popTipSegment showText:@"Switch to question/answer part of a card" direction:AMPopTipDirectionUp maxWidth:200 inView:self fromFrame:rectSegment duration:10];
 }
 
 - (void) setTooltipFlagsAtPositionB {
@@ -8760,7 +8771,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
     [defaults synchronize];
     
-    _isShowingTooltip = NO;
 }
 
 - (void) showTooltipNotification:(NSNotification *) notification {
