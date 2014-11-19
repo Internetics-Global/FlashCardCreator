@@ -8703,10 +8703,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    if ([self checkCardEditable] == FALSE) {
-        return;
-    }
-    
     [self setTooltipFlagsAtPositionB];
     
     __weak __typeof(&*self)weakSelf = self;
