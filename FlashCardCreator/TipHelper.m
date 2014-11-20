@@ -154,7 +154,7 @@
             [weakSelf setTootipActiveFlag:NO];
         };
     }
-    [_popTipNavigationbarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipNavigationbarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:100 inView:view fromFrame:frame duration:0];
     
 }
 

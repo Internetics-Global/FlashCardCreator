@@ -8708,7 +8708,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //5
     if (isUserInterfaceIdiomPhone == FALSE) {
-        [[TipHelper defaultHelper] showTipForNavigationBarRightInView_iPad:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -40, 0, 0)];
+        [[TipHelper defaultHelper] showTipForNavigationBarRightInView_iPad:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -35, 0, 0)];
         
     } else {
     }
