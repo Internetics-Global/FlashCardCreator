@@ -62,6 +62,7 @@
 #define REFRESH_SETTING_TABLEVIEW_NOTIFICATION @"REFRESH_SETTING_TABLEVIEW_NOTIFICATION"
 #define SAVE_NEW_CREATED_CARD_NOTIFICATION @"SAVE_NEW_CREATED_CARD_NOTIFICATION"
 #define SHOW_TOOLTIPS_NOTIFICATION @"SHOW_TOOLTIPS_NOTIFICATION"
+#define DISMISS_TOOLTIPS_NOTIFICATION @"DISMISS_TOOLTIPS_NOTIFICATION"
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"
@@ -148,4 +149,10 @@
 #define SimpleDB_ACCESS_KEY_ID                @"AKIAJTO4QTQX2BPPFNAQ"
 #define SimpleDB_SECRET_KEY                   @"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"
 #define SimpleDB_DOMAIN_NAME_FOR_THIS_APP     @"flashcardcreator"
+
+
+//Tooltip related
+
+#define K_Tooltip_Master_Not_Allow  @"K_Tooltip_Master_Not_Allow"
+#define K_Tooltip_Detail_Not_Allow  @"K_Tooltip_Detail_Not_Allow"
 

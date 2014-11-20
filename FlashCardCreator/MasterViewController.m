@@ -44,15 +44,9 @@
 
 #import "AMPopTip.h"
 
+#import "TipHelper.h"
+
 extern BOOL _isDownloadingSamplePack;
-
-@interface MasterViewController () {
-    AMPopTip *_popTipLogo;
-    AMPopTip *_popTipNavigationBarLeft;
-    AMPopTip *_popTipNavigationBarRight;
-}
-
-@end
 
 @implementation MasterViewController
 
@@ -107,6 +101,7 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissTooltipNotification:) name:DISMISS_TOOLTIPS_NOTIFICATION object:nil];
         
         
         //2. Initialize
@@ -310,7 +305,10 @@ enum popover_enum {
     }
     
     
-    [self showTooltips];
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
     
 }
 
@@ -491,17 +489,35 @@ enum popover_enum {
 }
 
 
+// on iPhone, Help button only  exists on master
 - (void)helpButtonClicked:(id) sender
 {
     if (0) {
         HelpViewController *helpViewController = [[HelpViewController alloc] init];
         [self.navigationController pushViewController:helpViewController animated:YES];
     } else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
-        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
-        [defaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+        
+        BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+        BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+        
+        if (isNotAllowShowTooltip_Master && isNotAllowShowTooltip_Detail) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            
+        } else {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+        }
+        
+        
     }
     
 }
@@ -586,7 +602,6 @@ enum popover_enum {
         
     }
     
-    [self showTooltips];
     
 }
 
@@ -641,7 +656,6 @@ enum popover_enum {
         [self.detailViewController showPackInfoView];
     }
     
-    [self showTooltips];
 }
 
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
@@ -2112,67 +2126,35 @@ enum popover_enum {
 
 - (void) showTooltips {
     
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
-    if (val) {
-        return;
-    }
-    
-    if ((_popTipLogo.isVisible == YES) || (_popTipNavigationBarLeft.isVisible == YES)
-        || (_popTipNavigationBarRight.isVisible == YES)) {
-        return;
-    }
-    
-    
-    [self setTooltipFlagsAtPositionA];
-    
-    __weak __typeof(&*self)weakSelf = self;
-    
-    double delayInSeconds = 0.8;
+    double delayInSeconds = 0.2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        _popTipLogo = [AMPopTip popTip];
-        _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
-        _popTipLogo.dismissHandler = ^() {
-            [weakSelf setTooltipFlagsAtPositionA];
-        };
-        _popTipLogo.shouldDismissOnTap = YES;
+        
+        //1.
         CGRect rect = _addCardButton.frame;
         rect.origin.y = rect.origin.y - 30;
-        [_popTipLogo showText:@"Create a new card" direction:AMPopTipDirectionUp maxWidth:200 inView:self.view fromFrame: rect duration:10];
+        [[TipHelper defaultHelper] showTipForCreateCardInView:self.view fromFrame:rect];
         
-        
-        _popTipNavigationBarLeft = [AMPopTip popTip];
-        _popTipNavigationBarLeft.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        _popTipNavigationBarLeft.shouldDismissOnTap = YES;
-        _popTipNavigationBarLeft.dismissHandler = ^() {
-            [weakSelf setTooltipFlagsAtPositionA];
-        };
-        [_popTipNavigationBarLeft showText:@"Toolbar to select, edit and create packs" direction:AMPopTipDirectionDown maxWidth:200 inView:self.view fromFrame:CGRectMake(50, 0, 0, 0) duration:10];
-        
-        
+        //2.
+        [[TipHelper defaultHelper] showTipForNavigationBarLeftInView:self.view fromFrame:CGRectMake(50, 0, 0, 0)];
+        //3.
         if (isUserInterfaceIdiomPhone) {
-            _popTipNavigationBarRight = [AMPopTip popTip];
-            _popTipNavigationBarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-            _popTipNavigationBarRight.shouldDismissOnTap = YES;
-            _popTipNavigationBarRight.dismissHandler = ^() {
-                [weakSelf setTooltipFlagsAtPositionA];
-            };
-            [_popTipNavigationBarRight showText:@"Toolbar to play and share packs" direction:AMPopTipDirectionDown maxWidth:100 inView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0) duration:10];
-            
+            [[TipHelper defaultHelper] showTipForNavigationBarRightInView_iPhone:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0)];
         }
         
     });
+    
+    
 }
 
-
-- (void) setTooltipFlagsAtPositionA {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
-    [defaults synchronize];
-}
 
 - (void) showTooltipNotification:(NSNotification *) notification {
     [self showTooltips];
 }
+
+- (void) dismissTooltipNotification:(NSNotification *) notification {
+    [[TipHelper defaultHelper] hideMasterTip];
+}
+
 
 @end

@@ -26,6 +26,8 @@
 #import "OpenUDID.h"
 #import "AppDelegate.h"
 
+#import "TipHelper.h"
+
 enum template_color_enum {
     template_color_enum_blue = 0,
     template_color_enum_coffee = 1,
@@ -392,6 +394,7 @@ enum popover_enum {
     
 }
 
+// on iPad, Help button only  exists on detail
 - (void)helpButtonClicked:(id) sender
 {
     if (0) {
@@ -415,11 +418,26 @@ enum popover_enum {
         _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
         [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     } else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionA"];
-        [defaults setBool:NO  forKey:@"K_NOT_Allow_Show_Tooltip_PostiionB"];
-        [defaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+        
+        BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+        BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+        
+        if (isNotAllowShowTooltip_Master && isNotAllowShowTooltip_Detail) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            
+        } else {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+        }
     }
 }
 

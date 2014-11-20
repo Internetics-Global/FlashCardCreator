@@ -201,6 +201,7 @@
 		881390971935683B00E04251 /* un_mute_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881390951935683B00E04251 /* un_mute_button_bigger@2x.png */; };
 		8813FA461977A39900D32447 /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8813FA451977A39900D32447 /* delete@2x.png */; };
 		8813FA481977A3F000D32447 /* chang_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8813FA471977A3F000D32447 /* chang_image@2x.png */; };
+		881670BB1A1DC62000832236 /* TipHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 881670BA1A1DC62000832236 /* TipHelper.m */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -873,6 +874,8 @@
 		881390951935683B00E04251 /* un_mute_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "un_mute_button_bigger@2x.png"; path = "Resources/un_mute_button_bigger@2x.png"; sourceTree = "<group>"; };
 		8813FA451977A39900D32447 /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete@2x.png"; sourceTree = "<group>"; };
 		8813FA471977A3F000D32447 /* chang_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chang_image@2x.png"; sourceTree = "<group>"; };
+		881670B91A1DC62000832236 /* TipHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipHelper.h; sourceTree = "<group>"; };
+		881670BA1A1DC62000832236 /* TipHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipHelper.m; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -1773,6 +1776,8 @@
 				2DCE0B1716798E04007A8CAD /* main.m */,
 				2DCE0B1916798E04007A8CAD /* FlashCardCreator-Prefix.pch */,
 				2DA97ED916CB7E04004E7FAB /* Localizable.strings */,
+				881670B91A1DC62000832236 /* TipHelper.h */,
+				881670BA1A1DC62000832236 /* TipHelper.m */,
 			);
 			name = Apps;
 			path = FlashCardCreator;
@@ -2581,6 +2586,7 @@
 				883763E41A1C205D007FD84F /* AMPopTip.m in Sources */,
 				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
+				881670BB1A1DC62000832236 /* TipHelper.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
