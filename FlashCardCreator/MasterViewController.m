@@ -285,8 +285,8 @@ enum popover_enum {
         }
         
         
-        [self.navigationController.view insertSubview:_rightPackView atIndex:0];
-        [self.navigationController.view bringSubviewToFront:_rightPackView];
+        [self.view insertSubview:_rightPackView atIndex:0];
+        [self.view bringSubviewToFront:_rightPackView];
         
     }
     
@@ -306,6 +306,12 @@ enum popover_enum {
     if ((isUserInterfaceIdiomPhone == FALSE) && ([[_currentPack cards] count] > 0)) {
         NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    }
+    
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if ((val == FALSE) && (APP_DELEGATE.isAllowToShowTooltip)) {
+        [self showTooltips];
     }
     
     
@@ -498,20 +504,24 @@ enum popover_enum {
     } else {
         
         BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+        BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
         BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
         
-        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_Detail) {
+        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
             [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            [self showTooltips];
             
         } else {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
             [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
@@ -2156,10 +2166,16 @@ enum popover_enum {
         [[TipHelper defaultHelper] showTipForCreateCardInView:self.view fromFrame:rect];
         
         //2.
-        [[TipHelper defaultHelper] showTipForNavigationBarLeftInView:self.view fromFrame:CGRectMake(50, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:self.view fromFrame:CGRectMake(140, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:self.view fromFrame:CGRectMake(90, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:self.view fromFrame:CGRectMake(40, 0, 0, 0)];
+        
         //3.
         if (isUserInterfaceIdiomPhone) {
-            [[TipHelper defaultHelper] showTipForNavigationBarRightInView_iPhone:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 20, 0, 0, 0)];;
         }
         
     });

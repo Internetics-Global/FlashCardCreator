@@ -1591,7 +1591,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         double delayInSeconds = 0.2;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
             if (val == FALSE) {
                 [self showTooltips];
             }
@@ -8695,30 +8695,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //2
     if (_imageQuestion.hidden == FALSE) {
-        CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, 20, 0, 0) toView:self];
+        CGRect rectImage = [_imageQuestion  convertRect:CGRectMake(CGRectGetWidth(_imageQuestion.frame)/2, CGRectGetHeight(_imageQuestion.frame)/2, 0, 0) toView:self];
         [[TipHelper defaultHelper] showTipForImageInView:self fromFrame:rectImage];
     }
     
     //3
-    CGRect rectToolbar = [_functionAreaView  convertRect:CGRectMake(CGRectGetWidth(_functionAreaView.frame)/2,0, 0, 0) toView:self];
-    [[TipHelper defaultHelper] showTipForToolbarBottomRightInView:self fromFrame:rectToolbar];
+    CGRect rectTemplateButton = [_changeTemplateButton  convertRect:CGRectMake(CGRectGetWidth(_changeTemplateButton.frame)/2,0, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForToolbarBottomRightChangeTemplateInView:self fromFrame:rectTemplateButton];
+    
+    CGRect rectBackgroundButton = [_backgroundImageSelectButton  convertRect:CGRectMake(CGRectGetWidth(_backgroundImageSelectButton.frame)/2,0, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForToolbarBottomRightChangeBackgroundInView:self fromFrame:rectBackgroundButton];
+    
+    CGRect rectRecordButton = [_soundButton  convertRect:CGRectMake(CGRectGetWidth(_soundButton.frame)/2,0, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForToolbarBottomRightRecordSoundInView:self fromFrame:rectRecordButton];
+
     
     //4
-    CGRect rectSubheading = [_subheadingQuestion  convertRect:CGRectMake(CGRectGetWidth(_subheadingQuestion.frame)/3, CGRectGetHeight(_subheadingQuestion.frame)/4, 0, 0) toView:self];
-    [[TipHelper defaultHelper] showTipForMainInView:self fromFrame:rectSubheading];
-    
-    
-    //5
-    if (isUserInterfaceIdiomPhone == FALSE) {
-        [[TipHelper defaultHelper] showTipForNavigationBarRightInView_iPad:self fromFrame:CGRectMake(CGRectGetWidth(self.frame)- 200, -35, 0, 0)];
-        
-    } else {
-    }
+    CGRect recLinkButton = [_logoLinkageButton  convertRect:CGRectMake(CGRectGetWidth(_logoLinkageButton.frame)/3, CGRectGetHeight(_logoLinkageButton.frame)/4, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForLinkButtonInView:self fromFrame:recLinkButton];
     
     
     //6
-    CGRect rectSegment = [_segmentedControl  convertRect:CGRectMake(CGRectGetWidth(_segmentedControl.frame)/2, 0, 0, 0) toView:self];
-    [[TipHelper defaultHelper] showTipForSegmentInView:self fromFrame:rectSegment];
+    CGRect rectSegmentQuestion = [_segmentedControl  convertRect:CGRectMake(CGRectGetWidth(_segmentedControl.frame)/4, 0, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForSegmentQuestionInView:self fromFrame:rectSegmentQuestion];
+    CGRect rectSegmentAnswer = [_segmentedControl  convertRect:CGRectMake(CGRectGetWidth(_segmentedControl.frame)/4*3, 0, 0, 0) toView:self];
+    [[TipHelper defaultHelper] showTipForSegmentAnswerInView:self fromFrame:rectSegmentAnswer];
 }
 
 
@@ -8727,7 +8728,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) dismissTooltipNotification:(NSNotification *) notification {
-    [[TipHelper defaultHelper] hideDetailTip];
+    [[TipHelper defaultHelper] hideFlashCardTip];
 }
 
 

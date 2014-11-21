@@ -155,4 +155,5 @@
 
 #define K_Tooltip_Master_Not_Allow  @"K_Tooltip_Master_Not_Allow"
 #define K_Tooltip_Detail_Not_Allow  @"K_Tooltip_Detail_Not_Allow"
+#define K_Tooltip_FlashCard_Not_Allow  @"K_Tooltip_FlashCard_Not_Allow"
 

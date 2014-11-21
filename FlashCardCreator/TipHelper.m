@@ -12,12 +12,27 @@
 
 @property (nonatomic, strong) AMPopTip *popTipLogo;  //on logo
 @property (nonatomic, strong) AMPopTip *popTipImage; //on Image
-@property (nonatomic, strong) AMPopTip *popTipSegment; //on Segment
-@property (nonatomic, strong) AMPopTip *popTipNavigationbarLeft;  //on Top Navigationbar Left
-@property (nonatomic, strong) AMPopTip *popTipNavigationbarRight; //on Top Navigationbar Right
-@property (nonatomic, strong) AMPopTip *popTipToolbarBottomRight; //on Bottom Toolbar Right
+
+@property (nonatomic, strong) AMPopTip *popTipSegmentQuestion; //on Segment
+@property (nonatomic, strong) AMPopTip *popTipSegmentAnswer; //on Segment
+
 @property (nonatomic, strong) AMPopTip *popTipCreateNewCard;  //on create card button
-@property (nonatomic, strong) AMPopTip *popTipMain;  //on main textView in the card
+@property (nonatomic, strong) AMPopTip *popTipLinkButton;  //on main textView in the card
+
+@property (nonatomic, strong) AMPopTip *popTipToolbarBottomRightChangeTemplate; //on Bottom Toolbar Right
+@property (nonatomic, strong) AMPopTip *popTipToolbarBottomRightChangeBackground; //on Bottom Toolbar Right
+@property (nonatomic, strong) AMPopTip *popTipToolbarBottomRightRecordSound; //on Bottom Toolbar Right
+
+@property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemOpenPack;  //on Top Navigationbar Left
+@property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemCreatePack;  //on Top Navigationbar Left
+@property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemEditPack;  //on Top Navigationbar Left
+
+
+@property (nonatomic, strong) AMPopTip *popTipRightNaviBarItemPalette; //on Top Navigationbar Right
+@property (nonatomic, strong) AMPopTip *popTipRightNaviBarItemHelp; //on Top Navigationbar Right
+@property (nonatomic, strong) AMPopTip *popTipRightNaviBarItemSetting; //on Top Navigationbar Right
+@property (nonatomic, strong) AMPopTip *popTipRightNaviBarItemShare; //on Top Navigationbar Right
+@property (nonatomic, strong) AMPopTip *popTipRightNaviBarItemPlay; //on Top Navigationbar Right
 
 @end
 
@@ -48,7 +63,7 @@
         _popTipCreateNewCard.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipCreateNewCard.shouldDismissOnTap = YES;
         _popTipCreateNewCard.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:YES];
+            [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
     [_popTipCreateNewCard showText:@"Create a new card" direction:AMPopTipDirectionUp maxWidth:200 inView:view fromFrame:frame duration:0];
@@ -69,7 +84,7 @@
         _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipLogo.shouldDismissOnTap = YES;
         _popTipLogo.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
     [_popTipLogo showText:@"Edit logo image" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
@@ -89,141 +104,210 @@
         _popTipImage.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipImage.shouldDismissOnTap = YES;
         _popTipImage.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
     [_popTipImage showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:180 inView:view fromFrame:frame duration:0];
     
 }
 
-- (void) showTipForToolbarBottomRightInView:(UIView *)view fromFrame:(CGRect) frame {
+- (void) showTipForToolbarBottomRightChangeTemplateInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipToolbarBottomRight isVisible]) {
+    if ([_popTipToolbarBottomRightChangeTemplate isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipToolbarBottomRight == nil) {
-        _popTipToolbarBottomRight = [AMPopTip popTip];
-        _popTipToolbarBottomRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        _popTipToolbarBottomRight.shouldDismissOnTap = YES;
-        _popTipToolbarBottomRight.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+    if (_popTipToolbarBottomRightChangeTemplate == nil) {
+        _popTipToolbarBottomRightChangeTemplate = [AMPopTip popTip];
+        _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 100);
+        _popTipToolbarBottomRightChangeTemplate.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightChangeTemplate.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipToolbarBottomRight showText:@"Toolbar to change template, background image and record sound" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightChangeTemplate showText:@"Change template" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
-- (void) showTipForMainInView:(UIView *)view fromFrame:(CGRect) frame {
+- (void) showTipForToolbarBottomRightChangeBackgroundInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipMain isVisible]) {
+    if ([_popTipToolbarBottomRightChangeBackground isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipMain == nil) {
-        _popTipMain = [AMPopTip popTip];
-        _popTipMain.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
-        _popTipMain.shouldDismissOnTap = YES;
-        _popTipMain.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+    if (_popTipToolbarBottomRightChangeBackground == nil) {
+        _popTipToolbarBottomRightChangeBackground = [AMPopTip popTip];
+        _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 60);
+        _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:1 blue:0.87 alpha:1];
+        _popTipToolbarBottomRightChangeBackground.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightChangeBackground.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipMain showText:@"Click to select an image/video from library, or insert a YouTube video linkage" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightChangeBackground showText:@"Change background" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
-
-//only for iPad
-- (void) showTipForNavigationBarRightInView_iPad:(UIView *)view fromFrame:(CGRect) frame {
+- (void) showTipForToolbarBottomRightRecordSoundInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipNavigationbarRight isVisible]) {
+    if ([_popTipToolbarBottomRightRecordSound isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipNavigationbarRight == nil) {
-        _popTipNavigationbarRight = [AMPopTip popTip];
-        _popTipNavigationbarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        _popTipNavigationbarRight.shouldDismissOnTap = YES;
-        _popTipNavigationbarRight.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+    if (_popTipToolbarBottomRightRecordSound == nil) {
+        _popTipToolbarBottomRightRecordSound = [AMPopTip popTip];
+        _popTipToolbarBottomRightRecordSound.arrowSize = CGSizeMake(8, 10);
+        _popTipToolbarBottomRightRecordSound.popoverColor = [UIColor colorWithRed:1 green:0.57 blue:0.87 alpha:1];
+        _popTipToolbarBottomRightRecordSound.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightRecordSound.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipNavigationbarRight showText:@"Toolbar to play, share packs and change the colour palette of your cards" direction:AMPopTipDirectionDown maxWidth:100 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightRecordSound showText:@"Record sound or voice" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
-//only for iPhone
-- (void) showTipForNavigationBarRightInView_iPhone:(UIView *)view fromFrame:(CGRect) frame {
+- (void) showTipForLinkButtonInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipNavigationbarRight isVisible]) {
+    if ([_popTipLinkButton isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipNavigationbarRight == nil) {
-        _popTipNavigationbarRight = [AMPopTip popTip];
-        _popTipNavigationbarRight.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        _popTipNavigationbarRight.shouldDismissOnTap = YES;
-        _popTipNavigationbarRight.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:YES];
+    if (_popTipLinkButton == nil) {
+        _popTipLinkButton = [AMPopTip popTip];
+        _popTipLinkButton.arrowSize = CGSizeMake(100, 8);
+        _popTipLinkButton.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
+        _popTipLinkButton.shouldDismissOnTap = YES;
+        _popTipLinkButton.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipNavigationbarRight showText:@"Toolbar to play and share packs" direction:AMPopTipDirectionDown maxWidth:100 inView:view fromFrame:frame duration:0];
+    [_popTipLinkButton showText:@"Add a link" direction:AMPopTipDirectionLeft maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
 
-- (void) showTipForNavigationBarLeftInView:(UIView *)view fromFrame:(CGRect) frame {
+
+
+- (void) showTipForLeftNaviBarItemOpenPackInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipNavigationbarLeft isVisible]) {
+    if ([_popTipLeftNaviBarItemOpenPack isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipNavigationbarLeft == nil) {
-        _popTipNavigationbarLeft = [AMPopTip popTip];
-        _popTipNavigationbarLeft.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
-        _popTipNavigationbarLeft.shouldDismissOnTap = YES;
-        _popTipNavigationbarLeft.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:YES];
+    if (_popTipLeftNaviBarItemOpenPack == nil) {
+        _popTipLeftNaviBarItemOpenPack = [AMPopTip popTip];
+        _popTipLeftNaviBarItemOpenPack.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0.17 alpha:1];
+        _popTipLeftNaviBarItemOpenPack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemOpenPack.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipNavigationbarLeft showText:@"Toolbar to select, edit and create packs" direction:AMPopTipDirectionDown maxWidth:100 inView:view fromFrame:frame duration:0];
+    [_popTipLeftNaviBarItemOpenPack showText:@"Open pack viewer" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
-- (void) showTipForSegmentInView:(UIView *)view fromFrame:(CGRect) frame {
+
+- (void) showTipForLeftNaviBarItemCreatePackInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if ([_popTipSegment isVisible]) {
+    if ([_popTipLeftNaviBarItemCreatePack isVisible]) {
         return;
     }
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if (_popTipSegment == nil) {
-        _popTipSegment = [AMPopTip popTip];
-        _popTipSegment.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
-        _popTipSegment.shouldDismissOnTap = YES;
-        _popTipSegment.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:NO];
+    if (_popTipLeftNaviBarItemCreatePack == nil) {
+        _popTipLeftNaviBarItemCreatePack = [AMPopTip popTip];
+        _popTipLeftNaviBarItemCreatePack.arrowSize = CGSizeMake(8, 90);
+        _popTipLeftNaviBarItemCreatePack.popoverColor = [UIColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
+        _popTipLeftNaviBarItemCreatePack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemCreatePack.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipSegment showText:@"Switch to question/answer part of a card" direction:AMPopTipDirectionUp maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipLeftNaviBarItemCreatePack showText:@"Create a new pack" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
 
-- (void) setTootipActiveFlag: (BOOL) isOnMasterView {
+- (void) showTipForLeftNaviBarItemEditPackInView:(UIView *)view fromFrame:(CGRect) frame {
     
-    if (isOnMasterView) {
+    if ([_popTipLeftNaviBarItemEditPack isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipLeftNaviBarItemEditPack == nil) {
+        _popTipLeftNaviBarItemEditPack = [AMPopTip popTip];
+        _popTipLeftNaviBarItemEditPack.arrowSize = CGSizeMake(8, 45);
+        _popTipLeftNaviBarItemEditPack.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
+        _popTipLeftNaviBarItemEditPack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemEditPack.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+        };
+    }
+    [_popTipLeftNaviBarItemEditPack showText:@"Edit a pack" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForSegmentQuestionInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipSegmentQuestion isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipSegmentQuestion == nil) {
+        _popTipSegmentQuestion = [AMPopTip popTip];
+        _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 100);
+        _popTipSegmentQuestion.popoverColor = [UIColor colorWithRed:0.21 green:0.57 blue:0.87 alpha:1];
+        _popTipSegmentQuestion.shouldDismissOnTap = YES;
+        _popTipSegmentQuestion.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
+        };
+    }
+    [_popTipSegmentQuestion showText:@"Click here to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForSegmentAnswerInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipSegmentAnswer isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipSegmentAnswer == nil) {
+        _popTipSegmentAnswer = [AMPopTip popTip];
+        _popTipSegmentAnswer.arrowSize = CGSizeMake(8, 20);
+        _popTipSegmentAnswer.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
+        _popTipSegmentAnswer.shouldDismissOnTap = YES;
+        _popTipSegmentAnswer.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
+        };
+    }
+    [_popTipSegmentAnswer showText:@"Click here to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    
+}
+
+
+- (void) setTootipActiveFlag: (Where_Tooltip_Type) whereTooltip {
+    
+    if (whereTooltip == Where_Tooltip_Master) {
         
         if (isUserInterfaceIdiomPhone) {
             
@@ -246,24 +330,47 @@
             
         }
         
-    } else {
+    } else if (whereTooltip == Where_Tooltip_FlashCard) {
         
         if (isUserInterfaceIdiomPhone) {
             
-            if ([self isDetailTipVisible_iPhone]) {
+            if ([self isFlashCardTipVisible]) {
                 
             } else {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
                 [defaults synchronize];
             }
         } else {
             
-            if ([self isDetailTipVisible_iPad]) {
+            if ([self isFlashCardTipVisible]) {
                 
             } else {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+                [defaults synchronize];
+            }
+            
+        }
+        
+    } else {
+        
+        if (isUserInterfaceIdiomPhone) {
+            
+            if ([self isFlashCardTipVisible]) {
+                
+            } else {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+                [defaults synchronize];
+            }
+        } else {
+            
+            if ([self isFlashCardTipVisible]) {
+                
+            } else {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
                 [defaults synchronize];
             }
             
@@ -272,6 +379,130 @@
     }
 
 }
+
+- (void) showTipForRightNaviBarItemPaletteInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipRightNaviBarItemPalette isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipRightNaviBarItemPalette == nil) {
+        _popTipRightNaviBarItemPalette = [AMPopTip popTip];
+        _popTipRightNaviBarItemPalette.arrowSize = CGSizeMake(8, 30);
+        _popTipRightNaviBarItemPalette.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0.17 alpha:1];
+        _popTipRightNaviBarItemPalette.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemPalette.dismissHandler = ^() {
+            [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+        };
+    }
+    [_popTipRightNaviBarItemPalette showText:@"Change the color palette" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForRightNaviBarItemHelpInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipRightNaviBarItemHelp isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipRightNaviBarItemHelp == nil) {
+        _popTipRightNaviBarItemHelp = [AMPopTip popTip];
+        _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 5);
+        _popTipRightNaviBarItemHelp.popoverColor = [UIColor colorWithRed:0 green:0.5 blue:0.17 alpha:1];
+        _popTipRightNaviBarItemHelp.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemHelp.dismissHandler = ^() {
+            if (isUserInterfaceIdiomPhone) {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+            } else {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+            }
+        };
+    }
+    [_popTipRightNaviBarItemHelp showText:@"Toggle help tips on and off" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForRightNaviBarItemSettingInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipRightNaviBarItemSetting isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipRightNaviBarItemSetting == nil) {
+        _popTipRightNaviBarItemSetting = [AMPopTip popTip];
+        _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 50);
+        _popTipRightNaviBarItemSetting.popoverColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.17 alpha:1];
+        _popTipRightNaviBarItemSetting.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemSetting.dismissHandler = ^() {
+            if (isUserInterfaceIdiomPhone) {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+            } else {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+            }
+        };
+    }
+    [_popTipRightNaviBarItemSetting showText:@"App setting" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForRightNaviBarItemShareInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipRightNaviBarItemShare isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipRightNaviBarItemShare == nil) {
+        _popTipRightNaviBarItemShare = [AMPopTip popTip];
+        _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 100);
+        _popTipRightNaviBarItemShare.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0 alpha:1];
+        _popTipRightNaviBarItemShare.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemShare.dismissHandler = ^() {
+            if (isUserInterfaceIdiomPhone) {
+              [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+            } else {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+            }
+            
+        };
+    }
+    [_popTipRightNaviBarItemShare showText:@"Share this pack" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+}
+
+- (void) showTipForRightNaviBarItemPlayInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([_popTipRightNaviBarItemPlay isVisible]) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if (_popTipRightNaviBarItemPlay == nil) {
+        _popTipRightNaviBarItemPlay = [AMPopTip popTip];
+        _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 150);
+        _popTipRightNaviBarItemPlay.popoverColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.17 alpha:1];
+        _popTipRightNaviBarItemPlay.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemPlay.dismissHandler = ^() {
+            if (isUserInterfaceIdiomPhone) {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+            } else {
+                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+            }
+        };
+    }
+    [_popTipRightNaviBarItemPlay showText:@"Play these cards" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+}
+
+
 
 - (BOOL) isMasterTipVisible {
     
@@ -283,22 +514,18 @@
     
 }
 
-- (BOOL) isDetailTipVisible{
-    
-    if (isUserInterfaceIdiomPhone) {
-        return [self isDetailTipVisible_iPhone];
-    } else {
-        return [self isDetailTipVisible_iPad];
-    }
-    
-}
 
 
 - (BOOL) isMasterTipVisible_iPhone {
     
-    if ((_popTipNavigationbarLeft.isVisible == YES) ||
+    if ((_popTipLeftNaviBarItemOpenPack.isVisible == YES) ||
+        (_popTipLeftNaviBarItemCreatePack.isVisible == YES) ||
+        (_popTipLeftNaviBarItemEditPack.isVisible == YES) ||
         (_popTipCreateNewCard.isVisible == YES) ||
-        (_popTipNavigationbarRight.isVisible == YES)) {
+        (_popTipRightNaviBarItemHelp.isVisible == YES)||
+        (_popTipRightNaviBarItemSetting.isVisible == YES)||
+        (_popTipRightNaviBarItemShare.isVisible == YES)||
+        (_popTipRightNaviBarItemPlay.isVisible == YES)) {
         return YES;
     } else {
         return NO;
@@ -309,7 +536,9 @@
 
 - (BOOL) isMasterTipVisible_iPad {
     
-    if ((_popTipNavigationbarLeft.isVisible == YES) ||
+    if ((_popTipLeftNaviBarItemOpenPack.isVisible == YES) ||
+        (_popTipLeftNaviBarItemCreatePack.isVisible == YES) ||
+        (_popTipLeftNaviBarItemEditPack.isVisible == YES) ||
         (_popTipCreateNewCard.isVisible == YES)) {
         return YES;
     } else {
@@ -319,13 +548,15 @@
 }
 
 
-- (BOOL) isDetailTipVisible_iPhone {
-    
+- (BOOL) isFlashCardTipVisible {
     if ((_popTipImage.isVisible == YES) ||
-        (_popTipSegment.isVisible == YES) ||
-        (_popTipToolbarBottomRight.isVisible == YES)||
-        (_popTipMain.isVisible == YES) ||
-        (_popTipImage.isVisible == YES)) {
+        (_popTipSegmentQuestion.isVisible == YES) ||
+        (_popTipSegmentAnswer.isVisible == YES) ||
+        (_popTipToolbarBottomRightChangeTemplate.isVisible == YES)||
+        (_popTipToolbarBottomRightChangeBackground.isVisible == YES)||
+        (_popTipToolbarBottomRightRecordSound.isVisible == YES)||
+        (_popTipLinkButton.isVisible == YES) ||
+        (_popTipLogo.isVisible == YES)) {
         return YES;
     } else {
         return NO;
@@ -333,13 +564,12 @@
     
 }
 
-- (BOOL) isDetailTipVisible_iPad {
-    if ((_popTipImage.isVisible == YES) ||
-        (_popTipSegment.isVisible == YES) ||
-        (_popTipToolbarBottomRight.isVisible == YES)||
-        (_popTipMain.isVisible == YES) ||
-        (_popTipLogo.isVisible == YES) ||
-        (_popTipNavigationbarRight.isVisible == YES)) {
+- (BOOL) isDetailTipVisible {
+    if ((_popTipRightNaviBarItemPalette.isVisible == YES) ||
+        (_popTipRightNaviBarItemHelp.isVisible == YES)||
+        (_popTipRightNaviBarItemSetting.isVisible == YES)||
+        (_popTipRightNaviBarItemShare.isVisible == YES)||
+        (_popTipRightNaviBarItemPlay.isVisible == YES)) {
         return YES;
     } else {
         return NO;
@@ -349,36 +579,50 @@
 
 - (void) hideMasterTip {
     if (isUserInterfaceIdiomPhone) {
-        [_popTipNavigationbarLeft hide];
-        [_popTipNavigationbarRight hide];
+        [_popTipLeftNaviBarItemOpenPack hide];
+        [_popTipLeftNaviBarItemCreatePack hide];
+        [_popTipLeftNaviBarItemEditPack hide];
+        [_popTipRightNaviBarItemHelp hide];
+        [_popTipRightNaviBarItemSetting hide];
+        [_popTipRightNaviBarItemShare hide];
+        [_popTipRightNaviBarItemPlay hide];
         [_popTipCreateNewCard hide];
     } else {
-        
-        [_popTipNavigationbarLeft hide];
+        [_popTipLeftNaviBarItemOpenPack hide];
+        [_popTipLeftNaviBarItemCreatePack hide];
+        [_popTipLeftNaviBarItemEditPack hide];
         [_popTipCreateNewCard hide];
         
     }
     
 }
 
-- (void)hideDetailTip {
+
+
+- (void)hideFlashCardTip {
+    
+    [_popTipImage hide];
+    [_popTipLinkButton hide];
+    [_popTipSegmentQuestion hide];
+    [_popTipSegmentAnswer hide];
+    [_popTipLogo hide];
+    [_popTipToolbarBottomRightChangeTemplate hide];
+    [_popTipToolbarBottomRightChangeBackground hide];
+    [_popTipToolbarBottomRightRecordSound hide];
+    
+}
+
+- (void)hideDetailCardTip {
     
     if (isUserInterfaceIdiomPhone) {
         
-        [_popTipImage hide];
-        [_popTipMain hide];
-        [_popTipLogo hide];
-        [_popTipSegment hide];
-        [_popTipToolbarBottomRight hide];
-        
     } else {
         
-        [_popTipNavigationbarRight hide];
-        [_popTipImage hide];
-        [_popTipMain hide];
-        [_popTipSegment hide];
-        [_popTipLogo hide];
-        [_popTipToolbarBottomRight hide];
+        [_popTipRightNaviBarItemPalette hide];
+        [_popTipRightNaviBarItemHelp hide];
+        [_popTipRightNaviBarItemSetting hide];
+        [_popTipRightNaviBarItemShare hide];
+        [_popTipRightNaviBarItemPlay hide];
         
     }
     

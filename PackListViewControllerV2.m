@@ -149,6 +149,7 @@
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     [self.userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
     
+    APP_DELEGATE.isAllowToShowTooltip = YES;
 
 }
 

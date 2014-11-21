@@ -421,25 +421,40 @@ enum popover_enum {
         
         BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
         BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+        BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
         
-        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_Detail) {
+        
+        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
             [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            [self showTooltips];
             
         } else {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
             [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
         }
     }
 }
+
+
+-(void) showTooltips {
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemPaletteInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 230, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 180, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 130, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 80, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 30, 0, 0, 0)];
+}
+
 
 - (void) selectCardBackgroundTemplate:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
@@ -622,6 +637,11 @@ enum popover_enum {
         }
     }
     
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
+    
     
 }
 
@@ -633,6 +653,11 @@ enum popover_enum {
     
     UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
     [titleLable setText:_currentPack.packName];
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
 }
 
 - (void) hideNavigationBarNotification:(NSNotification *) notification {
