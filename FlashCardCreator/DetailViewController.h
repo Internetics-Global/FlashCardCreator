@@ -74,4 +74,6 @@
 - (void) showPackInfoView;
 - (void) hidePackInfoView;
 
+- (void) dismissPackListNotification;
+
 @end

@@ -158,7 +158,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                      name:UIKeyboardWillShowNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissTooltipNotification:) name:DISMISS_TOOLTIPS_NOTIFICATION object:nil];
         
         if ((card == nil) || (pack == nil)) {
             //[iConsole info:@"%s:Check your code, it could be possiblly an issue",__FUNCTION__];
@@ -8727,9 +8726,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self showTooltips];
 }
 
-- (void) dismissTooltipNotification:(NSNotification *) notification {
-    [[TipHelper defaultHelper] hideFlashCardTip];
-}
 
 
 @end

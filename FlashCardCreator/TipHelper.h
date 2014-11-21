@@ -52,4 +52,6 @@ typedef NS_ENUM(NSInteger, Where_Tooltip_Type) {
 - (void) hideMasterTip;
 - (void)hideFlashCardTip;
 
+- (void) hideEverything;
+
 @end

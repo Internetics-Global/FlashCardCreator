@@ -81,6 +81,7 @@
     
     if (_popTipLogo == nil) {
         _popTipLogo = [AMPopTip popTip];
+        _popTipLogo.arrowSize = CGSizeMake(8, 60);
         _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipLogo.shouldDismissOnTap = YES;
         _popTipLogo.dismissHandler = ^() {
@@ -121,7 +122,7 @@
     
     if (_popTipToolbarBottomRightChangeTemplate == nil) {
         _popTipToolbarBottomRightChangeTemplate = [AMPopTip popTip];
-        _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 100);
+        _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 80);
         _popTipToolbarBottomRightChangeTemplate.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTap = YES;
         _popTipToolbarBottomRightChangeTemplate.dismissHandler = ^() {
@@ -142,7 +143,7 @@
     
     if (_popTipToolbarBottomRightChangeBackground == nil) {
         _popTipToolbarBottomRightChangeBackground = [AMPopTip popTip];
-        _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 60);
+        _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 45);
         _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:1 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTap = YES;
         _popTipToolbarBottomRightChangeBackground.dismissHandler = ^() {
@@ -251,7 +252,7 @@
     
     if (_popTipLeftNaviBarItemEditPack == nil) {
         _popTipLeftNaviBarItemEditPack = [AMPopTip popTip];
-        _popTipLeftNaviBarItemEditPack.arrowSize = CGSizeMake(8, 45);
+        _popTipLeftNaviBarItemEditPack.arrowSize = CGSizeMake(8, 50);
         _popTipLeftNaviBarItemEditPack.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
         _popTipLeftNaviBarItemEditPack.shouldDismissOnTap = YES;
         _popTipLeftNaviBarItemEditPack.dismissHandler = ^() {
@@ -272,14 +273,14 @@
     
     if (_popTipSegmentQuestion == nil) {
         _popTipSegmentQuestion = [AMPopTip popTip];
-        _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 100);
+        _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 80);
         _popTipSegmentQuestion.popoverColor = [UIColor colorWithRed:0.21 green:0.57 blue:0.87 alpha:1];
         _popTipSegmentQuestion.shouldDismissOnTap = YES;
         _popTipSegmentQuestion.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentQuestion showText:@"Click here to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentQuestion showText:@"Click here to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -293,14 +294,14 @@
     
     if (_popTipSegmentAnswer == nil) {
         _popTipSegmentAnswer = [AMPopTip popTip];
-        _popTipSegmentAnswer.arrowSize = CGSizeMake(8, 20);
+        _popTipSegmentAnswer.arrowSize = CGSizeMake(8, 10);
         _popTipSegmentAnswer.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
         _popTipSegmentAnswer.shouldDismissOnTap = YES;
         _popTipSegmentAnswer.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentAnswer showText:@"Click here to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentAnswer showText:@"Click here to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -390,7 +391,7 @@
     
     if (_popTipRightNaviBarItemPalette == nil) {
         _popTipRightNaviBarItemPalette = [AMPopTip popTip];
-        _popTipRightNaviBarItemPalette.arrowSize = CGSizeMake(8, 30);
+        _popTipRightNaviBarItemPalette.arrowSize = CGSizeMake(8, 10);
         _popTipRightNaviBarItemPalette.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemPalette.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemPalette.dismissHandler = ^() {
@@ -411,7 +412,7 @@
     
     if (_popTipRightNaviBarItemHelp == nil) {
         _popTipRightNaviBarItemHelp = [AMPopTip popTip];
-        _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 5);
+        _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 50);
         _popTipRightNaviBarItemHelp.popoverColor = [UIColor colorWithRed:0 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemHelp.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemHelp.dismissHandler = ^() {
@@ -436,7 +437,7 @@
     
     if (_popTipRightNaviBarItemSetting == nil) {
         _popTipRightNaviBarItemSetting = [AMPopTip popTip];
-        _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 50);
+        _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 90);
         _popTipRightNaviBarItemSetting.popoverColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemSetting.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemSetting.dismissHandler = ^() {
@@ -461,7 +462,7 @@
     
     if (_popTipRightNaviBarItemShare == nil) {
         _popTipRightNaviBarItemShare = [AMPopTip popTip];
-        _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 100);
+        _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 130);
         _popTipRightNaviBarItemShare.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0 alpha:1];
         _popTipRightNaviBarItemShare.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemShare.dismissHandler = ^() {
@@ -487,7 +488,7 @@
     
     if (_popTipRightNaviBarItemPlay == nil) {
         _popTipRightNaviBarItemPlay = [AMPopTip popTip];
-        _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 150);
+        _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 170);
         _popTipRightNaviBarItemPlay.popoverColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.17 alpha:1];
         _popTipRightNaviBarItemPlay.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemPlay.dismissHandler = ^() {
@@ -626,6 +627,12 @@
         
     }
     
+}
+
+- (void) hideEverything {
+    [self hideMasterTip];
+    [self hideDetailCardTip];
+    [self hideFlashCardTip];
 }
 
 @end

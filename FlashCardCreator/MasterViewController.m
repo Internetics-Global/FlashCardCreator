@@ -105,7 +105,6 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissTooltipNotification:) name:DISMISS_TOOLTIPS_NOTIFICATION object:nil];
         
         
         //2. Initialize
@@ -524,7 +523,7 @@ enum popover_enum {
             [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            [[TipHelper defaultHelper] hideEverything];
         }
         
         
@@ -2188,12 +2187,12 @@ enum popover_enum {
     [self showTooltips];
 }
 
-- (void) dismissTooltipNotification:(NSNotification *) notification {
-    [[TipHelper defaultHelper] hideMasterTip];
-}
 
 
 #pragma mark – Popover
+//当通过dismissPopoverAnimated执行时，不会call到这个method
+//当点击popover外面区域时，会调用这个方法
+//具体见这里：http://stackoverflow.com/questions/3567033/dismissing-uipopovercontroller-with-dismisspopoveranimated-wont-call-delegate
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
@@ -2202,6 +2201,9 @@ enum popover_enum {
     if (val == FALSE) {
         [self showTooltips];
     }
+    
+    //在iPad中我们需要告诉detail
+    [self.detailViewController dismissPackListNotification];
     
 }
 
