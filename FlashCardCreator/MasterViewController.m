@@ -48,6 +48,10 @@
 
 extern BOOL _isDownloadingSamplePack;
 
+@interface MasterViewController () <UIPopoverControllerDelegate>
+
+@end
+
 @implementation MasterViewController
 
 @synthesize currentPack = _currentPack;
@@ -305,11 +309,6 @@ enum popover_enum {
     }
     
     
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if (val == FALSE) {
-        [self showTooltips];
-    }
-    
 }
 
 
@@ -362,6 +361,7 @@ enum popover_enum {
         
         if (_packListPickerPopover == nil) {
             _packListPickerPopover = [[UIPopoverController alloc] initWithContentViewController:navController];
+            _packListPickerPopover.delegate = self;
             _packListPickerPopover.popoverContentSize = CGSizeMake(950, 340);
             if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
                 _packListPickerPopover.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:.3];
@@ -500,7 +500,7 @@ enum popover_enum {
         BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
         BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
         
-        if (isNotAllowShowTooltip_Master && isNotAllowShowTooltip_Detail) {
+        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_Detail) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
@@ -602,6 +602,13 @@ enum popover_enum {
         
     }
     
+    APP_DELEGATE.isAllowToShowTooltip = YES;
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
+    
     
 }
 
@@ -654,6 +661,12 @@ enum popover_enum {
     } else {
         self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
+    }
+    
+    APP_DELEGATE.isAllowToShowTooltip = YES;
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
     }
     
 }
@@ -710,6 +723,13 @@ enum popover_enum {
         if (_packListPickerPopover) {
             [_packListPickerPopover dismissPopoverAnimated:NO];
         }
+    }
+    
+    APP_DELEGATE.isAllowToShowTooltip = YES;
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
     }
 }
 
@@ -2156,5 +2176,17 @@ enum popover_enum {
     [[TipHelper defaultHelper] hideMasterTip];
 }
 
+
+#pragma mark – Popover
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    
+    APP_DELEGATE.isAllowToShowTooltip = YES;
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
+    
+}
 
 @end

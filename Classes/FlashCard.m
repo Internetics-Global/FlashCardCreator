@@ -1587,14 +1587,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    double delayInSeconds = 0.2;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-        if (val == FALSE) {
-            [self showTooltips];
-        }
-    });
+    if (APP_DELEGATE.isAllowToShowTooltip) {
+        double delayInSeconds = 0.2;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+            if (val == FALSE) {
+                [self showTooltips];
+            }
+        });
+    }
     
 
 }

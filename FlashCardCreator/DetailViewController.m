@@ -422,7 +422,7 @@ enum popover_enum {
         BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
         BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
         
-        if (isNotAllowShowTooltip_Master && isNotAllowShowTooltip_Detail) {
+        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_Detail) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];

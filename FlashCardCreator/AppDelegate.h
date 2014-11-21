@@ -28,6 +28,8 @@
 
 @property (assign, nonatomic) BOOL isDownloadingPack;
 
+@property (assign, nonatomic) BOOL isAllowToShowTooltip; //在第一次启动下载sample,packlist等对话框存在下，不允许显示
+
 
 - (UIView *)progressHUDHolderView;
 
