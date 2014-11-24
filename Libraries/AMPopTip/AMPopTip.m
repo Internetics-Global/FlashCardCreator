@@ -67,6 +67,9 @@
         _edgeMargin = 0;
         
         _removeGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeGestureHandler)];
+        
+        //ccaa only
+        _removeGesture.cancelsTouchesInView = NO;
     }
     return self;
 }

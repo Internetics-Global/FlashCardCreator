@@ -62,6 +62,7 @@
         _popTipCreateNewCard = [AMPopTip popTip];
         _popTipCreateNewCard.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipCreateNewCard.shouldDismissOnTap = YES;
+        _popTipCreateNewCard.shouldDismissOnTapOutside = NO;
         _popTipCreateNewCard.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
@@ -84,6 +85,7 @@
         _popTipLogo.arrowSize = CGSizeMake(8, 60);
         _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipLogo.shouldDismissOnTap = YES;
+        _popTipLogo.shouldDismissOnTapOutside = NO;
         _popTipLogo.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -104,6 +106,7 @@
         _popTipImage = [AMPopTip popTip];
         _popTipImage.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipImage.shouldDismissOnTap = YES;
+        _popTipImage.shouldDismissOnTapOutside = NO;
         _popTipImage.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -125,6 +128,7 @@
         _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 80);
         _popTipToolbarBottomRightChangeTemplate.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTapOutside = NO;
         _popTipToolbarBottomRightChangeTemplate.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -146,6 +150,7 @@
         _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 45);
         _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:1 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightChangeBackground.shouldDismissOnTapOutside = NO;
         _popTipToolbarBottomRightChangeBackground.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -167,6 +172,7 @@
         _popTipToolbarBottomRightRecordSound.arrowSize = CGSizeMake(8, 10);
         _popTipToolbarBottomRightRecordSound.popoverColor = [UIColor colorWithRed:1 green:0.57 blue:0.87 alpha:1];
         _popTipToolbarBottomRightRecordSound.shouldDismissOnTap = YES;
+        _popTipToolbarBottomRightRecordSound.shouldDismissOnTapOutside = NO;
         _popTipToolbarBottomRightRecordSound.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -188,6 +194,7 @@
         _popTipLinkButton.arrowSize = CGSizeMake(100, 8);
         _popTipLinkButton.popoverColor = [UIColor colorWithRed:0.73 green:0.91 blue:0.55 alpha:1];
         _popTipLinkButton.shouldDismissOnTap = YES;
+        _popTipLinkButton.shouldDismissOnTapOutside = NO;
         _popTipLinkButton.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -211,6 +218,7 @@
         _popTipLeftNaviBarItemOpenPack = [AMPopTip popTip];
         _popTipLeftNaviBarItemOpenPack.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0.17 alpha:1];
         _popTipLeftNaviBarItemOpenPack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemOpenPack.shouldDismissOnTapOutside = NO;
         _popTipLeftNaviBarItemOpenPack.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
@@ -233,6 +241,7 @@
         _popTipLeftNaviBarItemCreatePack.arrowSize = CGSizeMake(8, 90);
         _popTipLeftNaviBarItemCreatePack.popoverColor = [UIColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
         _popTipLeftNaviBarItemCreatePack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemCreatePack.shouldDismissOnTapOutside = NO;
         _popTipLeftNaviBarItemCreatePack.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
@@ -255,6 +264,7 @@
         _popTipLeftNaviBarItemEditPack.arrowSize = CGSizeMake(8, 50);
         _popTipLeftNaviBarItemEditPack.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
         _popTipLeftNaviBarItemEditPack.shouldDismissOnTap = YES;
+        _popTipLeftNaviBarItemEditPack.shouldDismissOnTapOutside = NO;
         _popTipLeftNaviBarItemEditPack.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
@@ -276,6 +286,7 @@
         _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 80);
         _popTipSegmentQuestion.popoverColor = [UIColor colorWithRed:0.21 green:0.57 blue:0.87 alpha:1];
         _popTipSegmentQuestion.shouldDismissOnTap = YES;
+        _popTipSegmentQuestion.shouldDismissOnTapOutside = NO;
         _popTipSegmentQuestion.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -297,6 +308,7 @@
         _popTipSegmentAnswer.arrowSize = CGSizeMake(8, 10);
         _popTipSegmentAnswer.popoverColor = [UIColor colorWithRed:0.71 green:0.57 blue:0.87 alpha:1];
         _popTipSegmentAnswer.shouldDismissOnTap = YES;
+        _popTipSegmentAnswer.shouldDismissOnTapOutside = NO;
         _popTipSegmentAnswer.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
@@ -394,6 +406,7 @@
         _popTipRightNaviBarItemPalette.arrowSize = CGSizeMake(8, 10);
         _popTipRightNaviBarItemPalette.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemPalette.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemPalette.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemPalette.dismissHandler = ^() {
             [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
         };
@@ -415,6 +428,7 @@
         _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 50);
         _popTipRightNaviBarItemHelp.popoverColor = [UIColor colorWithRed:0 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemHelp.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemHelp.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemHelp.dismissHandler = ^() {
             if (isUserInterfaceIdiomPhone) {
                 [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
@@ -440,6 +454,7 @@
         _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 90);
         _popTipRightNaviBarItemSetting.popoverColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemSetting.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemSetting.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemSetting.dismissHandler = ^() {
             if (isUserInterfaceIdiomPhone) {
                 [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
@@ -465,6 +480,7 @@
         _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 130);
         _popTipRightNaviBarItemShare.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0 alpha:1];
         _popTipRightNaviBarItemShare.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemShare.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemShare.dismissHandler = ^() {
             if (isUserInterfaceIdiomPhone) {
               [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
@@ -491,6 +507,7 @@
         _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 170);
         _popTipRightNaviBarItemPlay.popoverColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.17 alpha:1];
         _popTipRightNaviBarItemPlay.shouldDismissOnTap = YES;
+        _popTipRightNaviBarItemPlay.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemPlay.dismissHandler = ^() {
             if (isUserInterfaceIdiomPhone) {
                 [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
