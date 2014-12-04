@@ -82,7 +82,7 @@
     
     if (_popTipLogo == nil) {
         _popTipLogo = [AMPopTip popTip];
-        _popTipLogo.arrowSize = CGSizeMake(8, 60);
+        _popTipLogo.arrowSize = CGSizeMake(8, 10);
         _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipLogo.shouldDismissOnTap = YES;
         _popTipLogo.shouldDismissOnTapOutside = NO;
@@ -477,7 +477,11 @@
     
     if (_popTipRightNaviBarItemShare == nil) {
         _popTipRightNaviBarItemShare = [AMPopTip popTip];
-        _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 130);
+        if (isUserInterfaceIdiomPhone) {
+            _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 130);
+        } else {
+            _popTipRightNaviBarItemShare.arrowSize = CGSizeMake(8, 200);
+        }
         _popTipRightNaviBarItemShare.popoverColor = [UIColor colorWithRed:1 green:0.5 blue:0 alpha:1];
         _popTipRightNaviBarItemShare.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemShare.shouldDismissOnTapOutside = NO;
@@ -504,7 +508,11 @@
     
     if (_popTipRightNaviBarItemPlay == nil) {
         _popTipRightNaviBarItemPlay = [AMPopTip popTip];
-        _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 170);
+        if (isUserInterfaceIdiomPhone) {
+            _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 170);
+        } else {
+            _popTipRightNaviBarItemPlay.arrowSize = CGSizeMake(8, 240);
+        }
         _popTipRightNaviBarItemPlay.popoverColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.17 alpha:1];
         _popTipRightNaviBarItemPlay.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemPlay.shouldDismissOnTapOutside = NO;
