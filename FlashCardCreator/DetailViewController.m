@@ -448,11 +448,12 @@ enum popover_enum {
 
 
 -(void) showTooltips {
-    [[TipHelper defaultHelper] showTipForRightNaviBarItemPaletteInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 245, 0, 0, 0)];
-    [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 193, 0, 0, 0)];
-    [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
-    [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 90, 0, 0, 0)];
     [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 40, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 90, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 193, 0, 0, 0)];
+    [[TipHelper defaultHelper] showTipForRightNaviBarItemPaletteInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 245, 0, 0, 0)];
+    
 }
 
 

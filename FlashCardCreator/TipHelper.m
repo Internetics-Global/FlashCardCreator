@@ -148,7 +148,7 @@
     if (_popTipToolbarBottomRightChangeBackground == nil) {
         _popTipToolbarBottomRightChangeBackground = [AMPopTip popTip];
         _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 45);
-        _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:1 blue:0.87 alpha:1];
+        _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:0.3 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTap = YES;
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTapOutside = NO;
         _popTipToolbarBottomRightChangeBackground.dismissHandler = ^() {
