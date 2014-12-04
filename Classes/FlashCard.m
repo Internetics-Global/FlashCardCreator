@@ -8691,7 +8691,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //1.
     CGRect rectLogo = [_logoImage  convertRect:CGRectMake(CGRectGetWidth(_logoImage.frame)/2, CGRectGetHeight(_logoImage.frame), 0, 0) toView:self];
     if (isUserInterfaceIdiomPhone == FALSE) {
-      rectLogo = CGRectOffset(rectLogo, -30, 0);
+      rectLogo = CGRectOffset(rectLogo, -30, -10);
     }
     [[TipHelper defaultHelper] showTipForLogoInView:self fromFrame:rectLogo];
     

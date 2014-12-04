@@ -82,7 +82,7 @@
     
     if (_popTipLogo == nil) {
         _popTipLogo = [AMPopTip popTip];
-        _popTipLogo.arrowSize = CGSizeMake(8, 10);
+        _popTipLogo.arrowSize = CGSizeMake(8, 20);
         _popTipLogo.popoverColor = [UIColor colorWithRed:0.95 green:0.65 blue:0.21 alpha:1];
         _popTipLogo.shouldDismissOnTap = YES;
         _popTipLogo.shouldDismissOnTapOutside = NO;
