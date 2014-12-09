@@ -411,7 +411,7 @@
         alert.delegate = self;
         [alert show];
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack is currently used" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack is currently being used" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
     }
     

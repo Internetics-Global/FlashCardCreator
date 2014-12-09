@@ -7190,7 +7190,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             pickerImageView = _imageAnswer2;
         }
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"error onthumbnailImageFromURL" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error on thumbnailImageFromURL" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -7249,7 +7249,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _imageAnswer2.image = compositeThumbNail;
         }
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"error onthumbnailImageFromURL2" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error on thumbnailImageFromURL2" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -8691,7 +8691,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //1.
     CGRect rectLogo = [_logoImage  convertRect:CGRectMake(CGRectGetWidth(_logoImage.frame)/2, CGRectGetHeight(_logoImage.frame), 0, 0) toView:self];
     if (isUserInterfaceIdiomPhone == FALSE) {
-      rectLogo = CGRectOffset(rectLogo, -30, -10);
+      rectLogo = CGRectOffset(rectLogo, -38, -20);
     }
     [[TipHelper defaultHelper] showTipForLogoInView:self fromFrame:rectLogo];
     

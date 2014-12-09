@@ -90,7 +90,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipLogo showText:@"Edit logo image" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipLogo showText:@"Edit logo" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
