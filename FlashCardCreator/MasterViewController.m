@@ -123,12 +123,16 @@ enum popover_enum {
 {
     [super viewDidLoad];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.edgesForExtendedLayout = FALSE;
+    }
+    
     if isUserInterfaceIdiomPhone {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [self.navigationController.navigationBar setTranslucent:FALSE];
+        [self.navigationController.navigationBar setTranslucent:YES];
     }
     
     if (isUserInterfaceIdiomPhone) {
