@@ -6102,11 +6102,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [self.backgroundColor set];
     CGContextFillRect(ctx, screenRect);
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
-    } else {
-        [self.layer renderInContext:ctx];
-    }
+    [self.layer renderInContext:ctx];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     if (isEditable == YES) {
@@ -8678,6 +8674,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
         return;
+    }
+    
+    if (_isPlayingCard) {
+        return;  //not allow to show tooltip
     }
     
     //1.
