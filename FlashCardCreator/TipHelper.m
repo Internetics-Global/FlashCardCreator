@@ -370,20 +370,20 @@
         
         if (isUserInterfaceIdiomPhone) {
             
-            if ([self isFlashCardTipVisible]) {
+            if ([self isDetailTipVisible]) {
                 
             } else {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+                [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
                 [defaults synchronize];
             }
         } else {
             
-            if ([self isFlashCardTipVisible]) {
+            if ([self isDetailTipVisible]) {
                 
             } else {
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+                [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
                 [defaults synchronize];
             }
             
