@@ -629,14 +629,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
         [_logoImage addGestureRecognizer:logoSingeTap];
         
-        UIImageView *upImageView = [[UIImageView  alloc] init];
-        [upImageView setImage:[UIImage imageNamed:@"upButton"]];
-        upImageView.contentMode = UIViewContentModeScaleAspectFit;
-        upImageView.frame = CGRectMake(720-7, 110-18.75-5, 15, 18.75);
-        upImageView.clipsToBounds = YES;
-        upImageView.backgroundColor = [UIColor clearColor];
-        upImageView.userInteractionEnabled = NO;
-        [self addSubview:upImageView];
 
     }
     
