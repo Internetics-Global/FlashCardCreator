@@ -38,7 +38,15 @@
              _titleLabel.font = [UIFont systemFontOfSize:24.0];
         }
         _titleLabel.text = emoticon.title;
-        _titleLabel.backgroundColor = [UIColor colorWithRed:194.0/255 green:195.0/255 blue:199.0/255 alpha:1];
+        if ([emoticon.title isEqualToString:@"⨯"] || [emoticon.title isEqualToString:@"+"] ||
+            [emoticon.title isEqualToString:@"÷"] || [emoticon.title isEqualToString:@"−"] ||
+                  [emoticon.title isEqualToString:@"="]) {
+            _titleLabel.backgroundColor = [UIColor orangeColor];
+            
+        } else {
+            _titleLabel.backgroundColor = [UIColor colorWithRed:194.0/255 green:195.0/255 blue:199.0/255 alpha:1];
+        }
+        
         _titleLabel.clipsToBounds = YES;
         _titleLabel.layer.cornerRadius = 6;
         _titleLabel.layer.masksToBounds = YES;
