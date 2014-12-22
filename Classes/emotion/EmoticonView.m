@@ -41,7 +41,7 @@
         if ([emoticon.title isEqualToString:@"⨯"] || [emoticon.title isEqualToString:@"+"] ||
             [emoticon.title isEqualToString:@"÷"] || [emoticon.title isEqualToString:@"−"] ||
                   [emoticon.title isEqualToString:@"="]) {
-            _titleLabel.backgroundColor = [UIColor orangeColor];
+            _titleLabel.backgroundColor = [UIColor colorWithRed:134.0/255 green:135.0/255 blue:139.0/255 alpha:1];
             
         } else {
             _titleLabel.backgroundColor = [UIColor colorWithRed:194.0/255 green:195.0/255 blue:199.0/255 alpha:1];
