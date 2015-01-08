@@ -2425,6 +2425,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([css.subColor isEqualToString:@"Green"]) {
         _subAnswer.textColor = [UIColor greenColor];
         _subColorAnswer = @"Green";
+    } else if ([css.subColor isEqualToString:@"White"]) {
+        _subAnswer.textColor = [UIColor whiteColor];
+        _subColorAnswer = @"White";
     }
     
     if ([css.subAlign isEqualToString:@"Left"]) {
