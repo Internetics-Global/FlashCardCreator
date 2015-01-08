@@ -6642,6 +6642,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if ([MFMailComposeViewController canSendMail]) {
             MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
             mailer.mailComposeDelegate = self;
+            mailer.navigationBar.tintColor = [UIColor whiteColor];
             NSArray *sendTo = [[NSArray alloc] initWithObjects:str, nil];
             [mailer setToRecipients:sendTo];
             [mailer setSubject:@"Hello"];

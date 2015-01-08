@@ -511,8 +511,7 @@
             if ([MFMailComposeViewController canSendMail]) {
                 MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
                 composeViewController.mailComposeDelegate = self;
-
-                
+                composeViewController.navigationBar.tintColor = [UIColor whiteColor];
                 [composeViewController setSubject:@"Hi"];
                 [composeViewController setMessageBody:_finalPostMessage isHTML:YES];
                 [composeViewController setToRecipients:nil];
