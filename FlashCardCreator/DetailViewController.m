@@ -1030,7 +1030,7 @@ enum popover_enum {
             
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
             NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if (shareCode.length >0) {
+            if ((shareCode.length >0) && ([_currentCard.creator isEqualToString:[OpenUDID value]])) {
                 shareCodeLabel.hidden = NO;
                 shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
             } else {

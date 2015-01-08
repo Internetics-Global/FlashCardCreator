@@ -278,7 +278,7 @@ enum popover_enum {
           
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
             NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if (shareCode.length >0) {
+            if ((shareCode.length >0) && ([_currentCard.creator isEqualToString:[OpenUDID value]])) {
               _shareCodeLabel.hidden = NO;
               _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
             } else {
@@ -1024,7 +1024,7 @@ enum popover_enum {
     } else {
         //Update right pack info
         if (_rightPackImage.image != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"Total cards: %d",[_currentPack cards].count]];
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
         }
         
     }
