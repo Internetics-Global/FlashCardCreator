@@ -212,9 +212,13 @@
         
         if (_isCollectionViewEditing) {
             cell.deleteButton.hidden = NO;
-            cell.changeImageButton.hidden = NO;
         } else {
             cell.deleteButton.hidden = YES;
+        }
+        
+        if ((_isCollectionViewEditing) && ([pack.creator isEqualToString:[OpenUDID value]])) {
+            cell.changeImageButton.hidden = NO;
+        } else {
             cell.changeImageButton.hidden = YES;
         }
         

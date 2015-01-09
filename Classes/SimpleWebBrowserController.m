@@ -59,7 +59,8 @@
     if (!_hidesToolbar) {
         UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, size.height-44, size.width, 44)];
         bar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-        bar.barStyle = UIBarStyleBlackOpaque;
+        bar.barStyle = UIBarStyleBlackTranslucent;
+        bar.tintColor = [UIColor whiteColor];
         
         UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                    target:nil action:nil];

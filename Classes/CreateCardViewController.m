@@ -136,6 +136,10 @@ BOOL isFromNewCreatedCard = NO;
     [iConsole info:@"%s",__FUNCTION__];
     [super viewDidLoad];
     
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        self.edgesForExtendedLayout = FALSE;
+    }
+    
     if isUserInterfaceIdiomPhone {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
     } else {

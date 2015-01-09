@@ -7484,6 +7484,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (index == 2) {
             if (self.segmentedControl.selectedSegmentIndex == 0) {
                 
+                BOOL isToSetImageViewEmpty = false;
+                
                 if (([_questionImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
                     (_questionImageFullPath.length > 0)) {
                     NSError *error = nil;
@@ -7491,7 +7493,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                                     error:&error])
                     {
                         NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath);
+                    } else {
+                        isToSetImageViewEmpty = YES;
                     }
+                    
+                
                 }
                 
                 if (([_questionMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
@@ -7501,16 +7507,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                                     error:&error])
                     {
                         NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath);
+                    } else {
+                        isToSetImageViewEmpty = YES;
                     }
                 }
                 
+                if (isToSetImageViewEmpty) {
+                    _questionImageFullPath = @"";
+                    _questionMovieFullPath = @"";
+                    
+                    _currentCard.question.movieFullPath = @"";
+                    _currentCard.question.imageFullPath = @"";
+                    [_imageQuestion setImage:nil];
+                } else {
+                    [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
+                }
                 
-                _questionImageFullPath = @"";
-                _questionMovieFullPath = @"";
-
-                _currentCard.question.movieFullPath = @"";
-                _currentCard.question.imageFullPath = @"";
-                [_imageQuestion setImage:nil];
             } else {
                 
                 if (([_answerImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
