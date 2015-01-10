@@ -5922,10 +5922,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [imageData writeToFile:_logoImageFullPath atomically:YES];
             _logoImage.image = [UIImage imageWithData:imageData];
             
+            _currentCard.question.logoFullPath = _logoImageFullPath;
             if (isFromNewCreatedCard) {
                 //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
                 _isAllCardsLogoNeedToBeUpdate = YES;
-                _currentCard.question.logoFullPath = _logoImageFullPath;
             } else {
                 //do save operation and update all others
                 
