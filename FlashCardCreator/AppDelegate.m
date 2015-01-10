@@ -135,6 +135,8 @@ BOOL _isDownloadingSamplePack;
     UIImage *buttonImage = [[UIImage imageNamed:@"background_navigationbar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
     [[UINavigationBar appearance] setBackgroundImage:buttonImage forBarMetrics:UIBarMetricsDefault];
     
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
     NSDictionary *attributes;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         //[[UIBarButtonItem appearance] setBackgroundImage:[UIImage imageNamed:@"bar_button_black.png"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
