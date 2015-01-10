@@ -54,13 +54,13 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     
     _recordStatus = Enum_Status_Record_Normal;
     if (isUserInterfaceIdiomPhone) {
-      self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 60,90,90)];
+      self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 25,90,90)];
     } else {
         self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 200,90,90)];
     }
     
     self.startButton.titleLabel.font = [UIFont systemFontOfSize:18];
-    self.startButton.autoresizingMask = UIViewAutoresizingNone;
+    self.startButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleLeftMargin;
     
     [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateNormal];
     [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateSelected];

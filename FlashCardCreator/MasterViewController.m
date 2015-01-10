@@ -287,9 +287,20 @@ enum popover_enum {
           
         }
         
+        int miniumAMPopTipIndex = 1000000000;// big enough value
+        for (UIView *myView in self.view.subviews) {
+            int indexNow = [self.view.subviews indexOfObject:myView];
+            if ((indexNow < miniumAMPopTipIndex) && ([myView isKindOfClass:[AMPopTip class]])) {
+                miniumAMPopTipIndex = indexNow;
+            }
+        }
         
-        [self.view insertSubview:_rightPackView atIndex:0];
-        [self.view bringSubviewToFront:_rightPackView];
+        if (miniumAMPopTipIndex <= 0) {
+            miniumAMPopTipIndex = 1;
+        }
+        
+        //make sure _rightPackView is under all the AMPopTips
+        [self.view insertSubview:_rightPackView atIndex:(miniumAMPopTipIndex -1)];
         
     }
     

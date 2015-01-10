@@ -7154,7 +7154,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     theMovie.view.frame = CGRectMake(0, 0, CGRectGetWidth(pickerImageView.frame) * 2, CGRectGetHeight(pickerImageView.frame) * 2);
     theMovie.controlStyle = MPMovieControlStyleNone;
     theMovie.shouldAutoplay=NO;
-    UIImage *thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
+    UIImage *thumbnail;
+    if ([[url absoluteString].lowercaseString rangeOfString:@"http"].location == 0) {
+      // it's a http format web video. Considering performance/cost to fetch online content, we skip it.
+    } else {
+      //it's a local video
+        thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
+    }
     if (thumbnail == nil) {
         thumbnail = [UIImage imageNamed:@"video_default"];
     }
