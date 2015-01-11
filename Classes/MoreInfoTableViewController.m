@@ -259,6 +259,12 @@ BOOL isLoggingDropboxInSettingView = NO;
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
     [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isTextToSpeech"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //see here
+    if ((TARGET_IPHONE_SIMULATOR) && (SYSTEM_VERSION_GREATER_THAN(@"8.0"))) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The iOS 8 simulators do not support text-to-speech. However, the iOS 7 simulators do still support text-to-speech (at least as of Xcode 6.1)," delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 
