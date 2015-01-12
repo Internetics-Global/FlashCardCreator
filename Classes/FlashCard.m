@@ -1546,6 +1546,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) resetVerticalScrollViewOffset {
     [iConsole info:@"%s",__FUNCTION__];
+    
     //reset offset
     CGPoint offset = _verticalScrollView.contentOffset;
     offset.y = 0;
@@ -5243,6 +5244,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
+    
     _dismissKeyboardFromEmotionSwitch = FALSE;
     
     if ((_isUITextViewFocused == FALSE) && (isUserInterfaceIdiomPhone)) {
@@ -6856,9 +6858,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //为了防止字体太小而设立
     int gate;
     if (_isPlayingCard) {
-        gate = 12;
+        gate = 8;
     } else {
-        gate = 10;
+        gate = 8;
     }
     
     //确保top margin和bottom margin足够，所以用一个经验值代替frameHeight/5
