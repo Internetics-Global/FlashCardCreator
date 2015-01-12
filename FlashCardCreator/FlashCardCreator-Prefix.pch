@@ -97,20 +97,6 @@
 #define IPAD_UI_WIDTH                          1024
 #define IPAD_UI_HEIGHT                         768
 
-//Flash Card size
-#define kFlashCardViewWidth_Detail_iPad        800.0
-#define kFlashCardViewHeight_Detail_iPad       640.0     //NOT is the scroll view's height
-#define kFlashCardViewWidth_Detail_iPhone      ((480.0) - 80.0)
-#define kFlashCardViewHeight_Detail_iPhone     (280.0 - kFalshCardViewHeight_QASegment_iPhone)     //NOT is the scroll view's height; don't include question/answer segment
-#define kFalshCardViewHeight_QASegment_iPhone  (45.0)
-
-#define kFlashCardViewWidth_PlayMode_iPad      800.0
-#define kFlashCardViewHeight_PlayMode_iPad     640.0     //NOT is the scroll view's height
-#define kFlashCardViewWidth_PlayMode_iPhone    (470.0)
-#define kFlashCardViewHeight_PlayMode_iPhone   (kFlashCardViewHeight_Detail_iPhone*kFlashCardViewProporation_iPhone)    //NOT is the scroll view's height
-
-#define kFlashCardViewProporation_iPhone       (kFlashCardViewWidth_PlayMode_iPhone/kFlashCardViewWidth_Detail_iPhone) //放大比例
-
 //Master view cell size
 #define kCellSizeWidth                         IPAD_UI_MASTER_WIDTH
 #define kCellSizeHeight_iPad                        130
@@ -155,4 +141,39 @@
 #define K_Tooltip_Master_Not_Allow  @"K_Tooltip_Master_Not_Allow"
 #define K_Tooltip_Detail_Not_Allow  @"K_Tooltip_Detail_Not_Allow"
 #define K_Tooltip_FlashCard_Not_Allow  @"K_Tooltip_FlashCard_Not_Allow"
+
+#pragma mark – Card size (iPad)
+
+//total height
+//kFlashCardViewHeight_Detail_iPad = kFlashCardViewHeight_Detail_iPad_Pure + kSegmentButtomMarginForiPad + kSegmentHeightForiPad + segment top margin
+#define kFlashCardViewWidth_Detail_iPad        800.0
+#define kFlashCardViewHeight_Detail_iPad       640.0     //including segment control and its top/bottom margin
+#define kFlashCardViewHeight_Detail_iPad_Pure  550.0     //only card view part
+#define kSegmentButtomMarginForiPad            10.0
+#define kSegmentHeightForiPad                  44.0
+#define kFlashCardViewSidebarWidth_Detail_iPad 41.0      //sidebar part
+#define kFlashCardViewHeaderHeight_Detail_iPad 112.0     //title view part
+
+#define kFlashCardViewWidth_PlayMode_iPad      800.0
+#define kFlashCardViewHeight_PlayMode_iPad     640.0     //NOT is the scroll view's height
+
+#pragma mark – Card size (iPhone)
+
+//kFlashCardViewHeight_Detail_iPhone = kFlashCardViewHeight_Detail_iPhone_Pure + kSegmentButtomMarginForiPhone + kSegmentHeightForiPhone + segment top margin
+#define kFlashCardViewWidth_Detail_iPhone      (kFlashCardViewHeight_Detail_iPhone_Pure * kFlashCardViewWidth_Detail_iPad /kFlashCardViewHeight_Detail_iPad_Pure)
+#define kFlashCardViewHeight_Detail_iPhone     (280.0)     //NOT is the scroll view's height; don't include question/answer segment
+#define kFlashCardViewHeight_Detail_iPhone_Pure  235     //only card view part
+#define kFalshCardViewHeight_QASegment_iPhone  (45.0)
+#define kSegmentHeightForiPhone                28.0
+#define kSegmentButtomMarginForiPhone          10.0
+
+#define kFlashCardViewWidth_PlayMode_iPhone    (kFlashCardViewWidth_Detail_iPhone * kFlashCardViewProporation_iPhone)
+#define kFlashCardViewHeight_PlayMode_iPhone   (kFlashCardViewHeight_Detail_iPhone_Pure* kFlashCardViewProporation_iPhone)    //NOT is the scroll view's height
+
+#define kFlashCardViewTopMarginWithNav_Detail_iPhone (5.0)
+
+#define kFlashCardViewProporation_iPhone       1.2//放大比例
+
+#define kFlashCardSidebarWidth_iPhone      (26.25)
+#define kFlashCardHeaderHeight_iPhone      (48.0)   //title view part
 

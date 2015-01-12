@@ -94,15 +94,17 @@ BOOL isFromNewCreatedCard = NO;
         _newCard.answer.title = NSLocalizedString(@"ToolbarItem_Answer",nil);
                 
         //Step2: Init card
-        float flashCardYPositionInScrollView;
+        
         if (isUserInterfaceIdiomPhone) {
-            flashCardYPositionInScrollView = (IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPhone - kFalshCardViewHeight_QASegment_iPhone)/2;
-            _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone + kFalshCardViewHeight_QASegment_iPhone) defaultPack:_currentPack defaultCard:_newCard];
+            _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,kFlashCardViewTopMarginWithNav_Detail_iPhone,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone) defaultPack:_currentPack defaultCard:_newCard];
             
         } else {
+            float flashCardYPositionInScrollView;
             flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_Detail_iPad)/2;
             _newCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_DETAIL_WIDTH-kFlashCardViewWidth_Detail_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_Detail_iPad,kFlashCardViewHeight_Detail_iPad) defaultPack:_currentPack defaultCard:_newCard];
+            
         }
+//        _newCardView.backgroundColor = [UIColor redColor];
         
         //Step3: Response (这个非常重要)
         _newCardView.tag = NEW_FLASHCARDVIEW_TAG;  
