@@ -17,8 +17,13 @@
 #import "Answer.h"
 #import "Common.h"
 #import "OpenUDID.h"
+#import "SharkfoodMuteSwitchDetector.h"
 
-@interface PlayViewController ()
+@interface PlayViewController () {
+    SharkfoodMuteSwitchDetector * _silenceDetector;
+}
+
+
 
 @end
 
@@ -118,6 +123,20 @@
 - (void)viewDidLoad
 {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    //check silence mode
+    _silenceDetector = [SharkfoodMuteSwitchDetector shared];
+    __weak __typeof(&*self)weakSelf = self;
+    _silenceDetector.silentNotify = ^(BOOL silent){
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+        if (silent && b && (weakSelf != nil)) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Silent Mode is On. You may possibly could not hear text speech" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            
+        }
+    };
+    
+    
     _startDate =[NSDate date];
     
     [super viewDidLoad];
@@ -639,6 +658,7 @@
 }
 
 - (void)dealloc {
+    _silenceDetector = nil;
     _scrollView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [iConsole info:@"%s",__FUNCTION__];

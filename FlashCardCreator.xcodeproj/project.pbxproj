@@ -310,6 +310,9 @@
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
 		88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E61797C2F7004160F5 /* AWSRuntime.framework */; };
+		88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */; };
+		88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */; };
+		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
 		88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */; };
 		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
 		88EEEE69180E434F002AB9A1 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE67180E434F002AB9A1 /* play.png */; };
@@ -993,6 +996,10 @@
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
 		88E739E61797C2F7004160F5 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Libraries/AWSRuntime.framework; sourceTree = "<group>"; };
+		88E93D761A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharkfoodMuteSwitchDetector.h; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.h; sourceTree = "<group>"; };
+		88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharkfoodMuteSwitchDetector.m; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.m; sourceTree = "<group>"; };
+		88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		88E93D7B1A634EA2007CB7A2 /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = mute.caf; path = Resources/mute.caf; sourceTree = "<group>"; };
 		88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "create_new_pack@2x.png"; path = "Resources/create_new_pack@2x.png"; sourceTree = "<group>"; };
 		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		88EEEE67180E434F002AB9A1 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = Resources/play.png; sourceTree = "<group>"; };
@@ -1024,6 +1031,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
 				880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */,
@@ -1351,6 +1359,7 @@
 		2D5F3D081679EFA8009D2ADC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88E93D7B1A634EA2007CB7A2 /* mute.caf */,
 				881F26E0192B54120068648D /* Wallpaper */,
 				885C3DBC19260BD70090F63C /* Background */,
 				883567F018F3F75600A988AA /* Placeholders */,
@@ -1395,6 +1404,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88E93D541A634C85007CB7A2 /* SoundSwitch */,
 				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
 				88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */,
@@ -1673,6 +1683,7 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */,
 				2D5C172616D1A4F700E1E785 /* ShareKit.xcodeproj */,
 				9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */,
 				9A7E451218274AB900A05C05 /* DropboxSDK.framework */,
@@ -1908,6 +1919,15 @@
 				88E739E61797C2F7004160F5 /* AWSRuntime.framework */,
 			);
 			name = Amazon;
+			sourceTree = "<group>";
+		};
+		88E93D541A634C85007CB7A2 /* SoundSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				88E93D761A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.h */,
+				88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */,
+			);
+			name = SoundSwitch;
 			sourceTree = "<group>";
 		};
 		88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */ = {
@@ -2303,6 +2323,7 @@
 				887A45BA1929E36B007C94FB /* change_card_layout_template@2x.png in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 				8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */,
+				88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */,
 				8842A58419B00D470044C8CC /* templateScreenshot2_answer.png in Resources */,
 				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
 				887BD94B18D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png in Resources */,
@@ -2523,6 +2544,7 @@
 				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
 				881670BB1A1DC62000832236 /* TipHelper.m in Sources */,
+				88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
