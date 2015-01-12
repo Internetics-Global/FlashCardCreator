@@ -446,7 +446,11 @@ enum popover_enum {
     
 }
 
+extern BOOL isFromNewCreatedCard;
+
 - (void) dismissCreateCardView:(id)sender {
+    
+    isFromNewCreatedCard = NO;
     
     [self.detailViewController.navigationController popViewControllerAnimated:YES];
     
@@ -470,6 +474,7 @@ enum popover_enum {
 
 - (void)playButtonClicked:(id) sender
 {
+    
     PlayViewController *playViewController = [[PlayViewController alloc] init];
     playViewController.currentPack = self.currentPack;
     //playViewController.currentCard = self.currentCard;

@@ -3627,7 +3627,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:38];
             }
             
-            _subAnswer.textColor = [UIColor redColor];
+            _subAnswer.textColor = [UIColor blackColor];
             _subAnswer.textAlignment = NSTextAlignmentLeft;
             _subAlignAnswer = @"Left";
             
@@ -4181,7 +4181,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:38];
             }
             
-            _subQuestion.textColor = [UIColor redColor];
+            _subQuestion.textColor = [UIColor blackColor];
             _subQuestion.textAlignment = NSTextAlignmentLeft;
             _subAlignQuestion = @"Left";
             
