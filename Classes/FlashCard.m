@@ -44,6 +44,8 @@
 
 #import "TipHelper.h"
 
+#import "iConsole.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -2464,7 +2466,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 10:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 5, 304.5, 25.375);
+            _subheadingAnswer.frame = CGRectMake(3, 5, 304, 26);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2813,7 +2815,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 23.5);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 24);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2841,7 +2843,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 28, 156, 155);
+            _mainAnswer.frame = CGRectMake(3, 28, 156, 156);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -4340,7 +4342,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0: //Template 0
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 5, 304.5, 25.375);
+            _subheadingQuestion.frame = CGRectMake(3, 5, 304, 25.375);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -4689,7 +4691,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 6:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 23.5);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 24);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -4717,7 +4719,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 28, 156, 155);
+            _mainQuestion.frame = CGRectMake(3, 28, 156, 156);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
