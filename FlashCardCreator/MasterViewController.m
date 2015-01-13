@@ -738,8 +738,11 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showPackListAfterApplicationDidBecomeActive {
     
+    
     if (self.view.window == nil) {
-        return;//for safe and to avoid same issue in showPackListNotification
+        //The view's window property is non-nil if a view is currently visible, http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
+        //当在当前view controller弹出一个对话框时，则self.view.window不是nil,这也就是为什么需要额外参数APP_DELEGATE.isAllowToShowPackList的原因
+        return;
     }
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -750,6 +753,9 @@ extern BOOL isFromNewCreatedCard;
 
 
 - (void) dismissPackListNotification :(NSNotification *) notification {
+    
+    [iConsole info:@"%s",__FUNCTION__];
+    
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popToRootViewControllerAnimated:NO];
     } else {

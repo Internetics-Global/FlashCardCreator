@@ -5238,7 +5238,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _keyboardShown = YES;
     
     
-    
 }
 
 
@@ -5274,6 +5273,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
         [self setVerticalAlignment:_lastBecomeFirstRespondTextView];
     }
+    
 
     
 }

@@ -63,6 +63,11 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
         
+        if (isUserInterfaceIdiomPhone) {
+            //需要在进入后台时，隐藏键盘并重新显示navigationbar,否则再次进入前台会导致navigation bar消失。
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
+        }
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(previousCardNotification:)
                                                      name:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION"
@@ -684,6 +689,12 @@ enum popover_enum {
 
 - (void) showNavigationBarNotification:(NSNotification *) notification {
     [iConsole info:@"%s",__FUNCTION__];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void) applicationWillResignActiveNotification :(NSNotification *) notification{
+    [iConsole info:@"%s",__FUNCTION__];
+    [self.view endEditing:YES];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
