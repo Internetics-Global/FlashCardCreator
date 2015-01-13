@@ -104,7 +104,10 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
+        if (isUserInterfaceIdiomPhone == false) {
+            //在iPhone中，不需要这逻辑
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
+        }
         
         
         //2. Initialize
@@ -533,7 +536,9 @@ extern BOOL isFromNewCreatedCard;
             [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
             [defaults synchronize];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            if (isUserInterfaceIdiomPhone == false) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+            }
             [self showTooltips];
             
         } else {
