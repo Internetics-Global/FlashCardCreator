@@ -658,6 +658,7 @@
 }
 
 - (void)dealloc {
+    _silenceDetector.silentNotify = nil;
     _silenceDetector = nil;
     _scrollView.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];

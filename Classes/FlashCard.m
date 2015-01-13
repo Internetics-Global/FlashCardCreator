@@ -6030,12 +6030,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (UIImage *)captureWholeViewAsImage {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    [[TipHelper defaultHelper] hideEverything];
+    
     bool switchSegment = NO;
     if (_segmentedControl.selectedSegmentIndex == 1) {
         _segmentedControl.selectedSegmentIndex = 0;
         [self refreshAll];
         switchSegment = YES;
     }
+    
     
     BOOL isEditable = [self checkCardEditable];
     if (isEditable == YES) {
