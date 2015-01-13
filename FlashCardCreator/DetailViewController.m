@@ -138,12 +138,13 @@ enum popover_enum {
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+    
     _helpButton = [[UIBarButtonItem alloc]
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
     
     if (isUserInterfaceIdiomPhone) {
         self.navigationItem.rightBarButtonItems =
-        @[playButton,_templateBackgroundSelectButton];
+        @[playButton,_templateBackgroundSelectButton,_helpButton];
     } else {
         self.navigationItem.rightBarButtonItems =
                                 @[playButton,shareButton,_settingButton,_helpButton,_templateBackgroundSelectButton];
@@ -436,7 +437,10 @@ enum popover_enum {
             [defaults synchronize];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
-            [self showTooltips];
+            if (isUserInterfaceIdiomPhone == false) {
+              [self showTooltips];
+            }
+            
             
         } else {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

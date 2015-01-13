@@ -125,7 +125,7 @@
     
     if (_popTipToolbarBottomRightChangeTemplate == nil) {
         _popTipToolbarBottomRightChangeTemplate = [AMPopTip popTip];
-        _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 80);
+        _popTipToolbarBottomRightChangeTemplate.arrowSize = CGSizeMake(8, 115);
         _popTipToolbarBottomRightChangeTemplate.popoverColor = [UIColor colorWithRed:0.31 green:0.57 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTap = YES;
         _popTipToolbarBottomRightChangeTemplate.shouldDismissOnTapOutside = NO;
@@ -147,7 +147,7 @@
     
     if (_popTipToolbarBottomRightChangeBackground == nil) {
         _popTipToolbarBottomRightChangeBackground = [AMPopTip popTip];
-        _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 45);
+        _popTipToolbarBottomRightChangeBackground.arrowSize = CGSizeMake(8, 60);
         _popTipToolbarBottomRightChangeBackground.popoverColor = [UIColor colorWithRed:0 green:0.3 blue:0.87 alpha:1];
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTap = YES;
         _popTipToolbarBottomRightChangeBackground.shouldDismissOnTapOutside = NO;
@@ -177,7 +177,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipToolbarBottomRightRecordSound showText:@"Record sound or voice" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightRecordSound showText:@"Record sound/voice" direction:AMPopTipDirectionUp maxWidth:100 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -283,7 +283,7 @@
     
     if (_popTipSegmentQuestion == nil) {
         _popTipSegmentQuestion = [AMPopTip popTip];
-        _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 80);
+        _popTipSegmentQuestion.arrowSize = CGSizeMake(8, 65);
         _popTipSegmentQuestion.popoverColor = [UIColor colorWithRed:0.21 green:0.57 blue:0.87 alpha:1];
         _popTipSegmentQuestion.shouldDismissOnTap = YES;
         _popTipSegmentQuestion.shouldDismissOnTapOutside = NO;
@@ -291,7 +291,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentQuestion showText:@"Click here to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentQuestion showText:@"Click to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -313,7 +313,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentAnswer showText:@"Click here to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentAnswer showText:@"Click to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
     
 }
 
