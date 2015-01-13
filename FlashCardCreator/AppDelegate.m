@@ -41,6 +41,8 @@ BOOL _isDownloadingSamplePack;
     
     [self setupLog];
     
+    self.isAllowToShowPackList = YES;
+    
     [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
@@ -319,6 +321,8 @@ BOOL _isDownloadingSamplePack;
 }
 
 - (void) setupLog {
+    
+    //[iConsole sharedConsole].logLevel = iConsoleLogLevelNone;
     
     [[iConsole sharedConsole] setMaxLogItems:1000];
 

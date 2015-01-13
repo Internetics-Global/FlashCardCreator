@@ -2059,7 +2059,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (int) lineNumberWithUITextView:(UITextView *) textView
 {
-    int numLines = [self getTextSizeHeight:textView] / textView.font.lineHeight;
+    float textHeight = [self getTextSizeHeight:textView];
+    float lineHeight = textView.font.lineHeight;
+    
+    int numLines = textHeight / lineHeight;
     
     return numLines;
 }
@@ -5700,6 +5703,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void)selectFromImageLibrary:(UIView *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    APP_DELEGATE.isAllowToShowPackList = NO;
+    
     if (_imagePickerController != nil) {
         _imagePickerPopover = nil;
     }
@@ -6017,6 +6023,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
 
     
 }
@@ -6573,6 +6581,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     alert.tag = Type_AlertView_LogoURL;
     alert.delegate = self;
     [alert show];
+    
+    APP_DELEGATE.isAllowToShowPackList = NO;
 }
 
 
@@ -7502,6 +7512,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         default:
             break;
     }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
 }
 
 #pragma mark – PopoverviewDelegate
@@ -7533,6 +7545,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
             alert.delegate = self;
             [alert show];
+            
+            APP_DELEGATE.isAllowToShowPackList = YES;
+            
         } else if (index == 2) {
             if (self.segmentedControl.selectedSegmentIndex == 0) {
                 

@@ -414,6 +414,7 @@
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Delete",@""), nil];
         alert.delegate = self;
         [alert show];
+        APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack is currently being used" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -508,6 +509,8 @@
         
         [self.collectionView reloadData];
     }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
 }
 
 

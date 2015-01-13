@@ -146,6 +146,8 @@
     [alert textFieldAtIndex:0].text = @"";
     alert.delegate = self;
     [alert show];
+    
+    APP_DELEGATE.isAllowToShowPackList = NO;
 }
 
 - (BOOL) checkPackEditable {
@@ -251,6 +253,8 @@
     alert.delegate = self;
     [alert show];
     
+    APP_DELEGATE.isAllowToShowPackList = NO;
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -258,6 +262,7 @@
     
     switch (alertView.tag) {
         case 1: {
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
             NSString *password = [alertView textFieldAtIndex:0].text;
             [self exectueShareAfterDropboxLinked:password];
             
@@ -266,6 +271,7 @@
             break;
             
         case 2: {
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
             NSString *maxNoString = [alertView textFieldAtIndex:0].text;
             
             int maxNo;
@@ -317,6 +323,8 @@
         default:
             break;
     }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
     
     
     

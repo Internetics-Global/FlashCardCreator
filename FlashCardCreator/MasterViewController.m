@@ -728,7 +728,11 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showPackListNotification :(NSNotification *) notification {
     //avoid this kind of issue: [UIPopoverController _commonPresentPopoverFromRect:inView:permittedArrowDirections:animated:]: Popovers cannot be presented from a view which does not have a window.
-    [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
+    
+    if (APP_DELEGATE.isAllowToShowPackList) {
+      [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
+    }
+    
 }
 
 
@@ -994,6 +998,8 @@ extern BOOL isFromNewCreatedCard;
         alert.tag = UIAlertViewTypeEnum_DeleteCard;
         alert.delegate = self;
         [alert show];
+        
+        APP_DELEGATE.isAllowToShowPackList = NO;
     }
     
 }
@@ -1304,6 +1310,8 @@ extern BOOL isFromNewCreatedCard;
         default:
             break;
     }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
 }
 
 
@@ -1325,6 +1333,7 @@ extern BOOL isFromNewCreatedCard;
         alert.tag = UIAlertViewTypeEnum_SetPassword;
         alert.delegate = self;
         [alert show];
+        APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
@@ -2142,6 +2151,7 @@ extern BOOL isFromNewCreatedCard;
                 alert.tag = UIAlertViewTypeEnum_Download_From_Code;
                 alert.delegate = self;
                 [alert show];
+                APP_DELEGATE.isAllowToShowPackList = NO;
                 break;
             }
             case 1: {
