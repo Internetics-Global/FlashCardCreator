@@ -112,7 +112,7 @@
     switch (sortType) {
         case SortTypeLastCreatedAscend:
             
-            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+            shuffledArray = [self.packs sortedArrayUsingComparator:^NSComparisonResult(Pack *a, Pack *b) {
                 return (a.createDate >= b.createDate);
             }];
             self.packs = [NSMutableArray arrayWithArray:shuffledArray];
@@ -120,7 +120,7 @@
             break;
         case SortTypeLastCreatedDescend:
             
-            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+            shuffledArray = [self.packs sortedArrayUsingComparator:^NSComparisonResult(Pack *a, Pack *b) {
                 return (a.createDate <= b.createDate);
             }];
             self.packs = [NSMutableArray arrayWithArray:shuffledArray];
@@ -128,7 +128,7 @@
             break;
         case SortTypeLastVisitedAscend:
             
-            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+            shuffledArray = [self.packs sortedArrayUsingComparator:^NSComparisonResult(Pack *a, Pack *b) {
                 return (a.lastVisitDate >= b.lastVisitDate);
             }];
             self.packs = [NSMutableArray arrayWithArray:shuffledArray];
@@ -136,7 +136,7 @@
             break;
         case SortTypeLastVisitedDescend:
             
-            shuffledArray = [self.packs sortedArrayUsingComparator:^(Pack *a, Pack *b) {
+            shuffledArray = [self.packs sortedArrayUsingComparator:^NSComparisonResult(Pack *a, Pack *b) {
                 return (a.lastVisitDate <= b.lastVisitDate);
             }];
             self.packs = [NSMutableArray arrayWithArray:shuffledArray];

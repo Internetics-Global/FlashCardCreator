@@ -1,8 +1,8 @@
 //
 //  Appsee.h
-//  Appsee
+//  Appsee v2.1.2
 //
-//  Copyright (c) 2012 Shift 6 Ltd. All rights reserved.
+//  Copyright (c) 2014 Shift 6 Ltd. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -35,7 +35,7 @@
  */
 +(void)stopAndUpload;
 
-/** Pause recording of the video. Note: user gestures will still be recorded. To resume, call 'resume'.
+/** Pause recording of the video. To resume, call 'resume'.
  */
 +(void)pause;
 
@@ -48,26 +48,32 @@
  */
 +(void)setDebugToNSLog:(BOOL)log;
 
-/***************************
- Application Events & Views
- **************************/
+/****************************
+ Application Events & Screens
+ ***************************/
 
-/** Add a timed application event (such as: user reached a specific level or screen). 
+/** Add a timed application event (such as: user reached a specific level or screen).
  @param eventName The name of the event (ie: "WelcomeScreen").
  */
 +(void)addEvent:(NSString*)eventName;
 
-/** Add a timed application event (such as: user reached a specific level or screen) along with a parameter. 
+/** Add a timed application event (such as: user reached a specific level or screen) along with custom properties.
  @param eventName The name of the event (ie: "Level").
- @param parameter A parameter describing the the event (ie: "3").
+ @param properties Key-value pairs with custom properties for the event. Properties must be NSNumbers, NSStrings, NSDates, NSURL, or NSNull. Keys must be NSStrings.
  */
-+(void)addEvent:(NSString*)eventName withParameter:(NSString*)parameter;
++(void)addEvent:(NSString*)eventName withProperties:(NSDictionary *)properties;
 
 /** Mark the appearance starting time of a screen.
  This method should be usually called from the viewDidAppear: method.
  @param screenName The name of the screen (ie: "WelcomeScreen").
  */
 +(void)startScreen:(NSString*)screenName;
+
+/** Overlay an image on top of the next video frame.
+ @param image The image to overlay. Can be 'nil' to stop overlaying any image.
+ @param rect The image's location in the screen.
+ */
++(void)overlayImage:(UIImage*)image inRect:(CGRect)rect;
 
 /************************
  Setting User Information
@@ -86,6 +92,11 @@
  */
 +(void)setLocation:(double)latitude longitude:(double)longitude horizontalAccuracy:(float)horizontalAccuracy verticalAccuracy:(float)verticalAccuracy;
 
+/** Set the user's location.
+ @param description The location's description.
+*/
++(void)setLocationDescription:(NSString*)description;
+
 /****************
  Privacy Control
  ****************/
@@ -96,6 +107,9 @@
  */
 +(void)markViewAsSensitive:(UIView*)view;
 
-
+/** Unmark a view as sensitive, so it will be displayed in videos.
+ @param view A UIView that no longer contains sensitive information.
+ */
++(void)unmarkViewAsSensitive:(UIView*)view;
 
 @end

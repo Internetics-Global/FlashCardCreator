@@ -20,8 +20,6 @@
 
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
-#import "MySHKConfigurator.h"
-#import "SHKConfiguration.h"
 #import "CreatePackViewController.h"
 
 #import "Common.h"
@@ -201,9 +199,7 @@ BOOL _isDownloadingSamplePack;
                                           barMetrics:UIBarMetricsDefault];
     
     //9.Sharekit configuration
-    //Sharekit configuration, should be put in method of "didFinishLaunchingWithOptions:"
-    DefaultSHKConfigurator *configurator = [[MySHKConfigurator alloc] init];
-    [SHKConfiguration sharedInstanceWithConfigurator:configurator];
+    //not use share kit any more
     
 
     //10. Show UI
