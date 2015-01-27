@@ -2058,13 +2058,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (int) lineNumberWithUITextView:(UITextView *) textView
-{
+{    
     float textHeight = [self getTextSizeHeight:textView];
     float lineHeight = textView.font.lineHeight;
     
-    int numLines = textHeight / lineHeight;
+    float numLines = textHeight / lineHeight;
     
-    return numLines;
+    int returnVal = ceilf(numLines);
+    
+    return returnVal;
 }
 
 #pragma mark -
