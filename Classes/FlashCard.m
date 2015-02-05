@@ -399,8 +399,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion2.clipsToBounds = YES;
         _imageQuestion2.backgroundColor = [UIColor clearColor];
-        _imageQuestion.layer.cornerRadius = 15;
-        _imageQuestion.layer.masksToBounds = YES;
+        _imageQuestion2.layer.cornerRadius = 15;
+        _imageQuestion2.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageQuestion2];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
