@@ -7587,7 +7587,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     
                     _currentCard.question.movieFullPath = @"";
                     _currentCard.question.imageFullPath = @"";
-                    [_imageQuestion setImage:nil];
+                    [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content.jpg"]];
                 } else {
                     [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
                 }
@@ -7619,7 +7619,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
                 _currentCard.answer.movieFullPath = @"";
                 _currentCard.answer.imageFullPath = @"";
-                [_imageAnswer setImage:nil];
+                [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content.jpg"]];
             }
             if (isFromNewCreatedCard == FALSE) {
                 [self saveEdittedCard];
@@ -7670,7 +7670,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _currentCard.question.movieFullPath2 = @"";
                 _currentCard.question.imageFullPath2 = @"";
                 
-                [_imageQuestion2 setImage:nil];
+                [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content.jpg"]];
             } else {
                 
                 if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
@@ -7698,7 +7698,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
                 _currentCard.answer.movieFullPath2 = @"";
                 _currentCard.answer.imageFullPath2 = @"";
-                [_imageAnswer2 setImage:nil];
+                [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content.jpg"]];
             }
             if (isFromNewCreatedCard == FALSE) {
                 [self saveEdittedCard];
