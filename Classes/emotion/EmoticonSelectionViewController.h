@@ -14,15 +14,15 @@
 @protocol EmoticonSelectionViewControllerDelegate;
 
 @interface EmoticonSelectionViewController : UIViewController <UIScrollViewDelegate,EmoticonGridViewDelegate>{
-    NSArray *_emoticons;
+    NSArray          *_emoticons;
 
-    NSInteger _emoticonRowCount;
-    NSInteger _emoticonColumnCount;
+    NSInteger         _emoticonRowCount;
+    NSInteger         _emoticonColumnCount;
     
-    UIScrollView *_emoticonScrollView;
+    UIScrollView     *_emoticonScrollView;
     ColorPageControl *_pageControl;
     
-    NSMutableArray *_emoticonGridViews;
+    NSMutableArray  *_emoticonGridViews;
 }
 
 @property (nonatomic, assign) id<EmoticonSelectionViewControllerDelegate> delegate;

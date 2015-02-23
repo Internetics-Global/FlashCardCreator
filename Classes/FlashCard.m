@@ -7402,8 +7402,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _lastBecomeFirstRespondTextView.text = newValue;
     
+    int symbolLength = emoticon.code.length;
     NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
-    range.location = location + 1;
+    range.location = location + symbolLength;
     [_lastBecomeFirstRespondTextView setSelectedRange:range];
 }
 

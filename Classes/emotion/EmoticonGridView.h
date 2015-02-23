@@ -12,23 +12,27 @@
 @class EmoticonPreviewView;
 @protocol EmoticonGridViewDelegate;
 @interface EmoticonGridView : UIView{
-    NSInteger         _rowCount;
-    NSInteger         _columnCount;
-    
-    CGSize            _emoticonThumbSize;
-    
-    NSArray           *_emoticons;
-    UIView            *_gridContainerView;
-    NSMutableArray    *_emoticonViews;
-    
-    UITapGestureRecognizer        *_tapGestureRecognizer;
+  NSInteger              _rowCount;
+  NSInteger              _columnCount;
+
+  CGSize                 _emoticonThumbSize;
+
+  NSArray                *_emoticons;
+  UIView                 *_gridContainerView;
+  NSMutableArray         *_emoticonViews;
+
+  UITapGestureRecognizer *_tapGestureRecognizer;
 }
-@property (nonatomic,assign) CGSize emoticonThumbSize;
+
+@property (nonatomic,assign ) int                      currentPage;
+@property (nonatomic,assign ) CGSize                   emoticonThumbSize;
 @property (nonatomic, assign) id<EmoticonGridViewDelegate> delegate;
 
-- (id)initWithEmoticons:(NSArray *)emoticons;
-- (id)initWithEmoticons:(NSArray *)emoticons rowCount:(NSInteger)rowCount columnCount:(NSInteger)columnCount;
-- (void)handleTap:(UIGestureRecognizer *)sender;
+/**
+ *  在实际中，第一个page中有一个space bar需要特殊处理
+ */
+- (id)initWithEmoticons:(NSArray *)emoticons atPage:(int) page;
+
 @end
 
 @protocol EmoticonGridViewDelegate <NSObject>

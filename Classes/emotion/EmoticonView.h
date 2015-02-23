@@ -10,12 +10,15 @@
 #import "Emoticon.h"
 
 @interface EmoticonView : UIView{
-    Emoticon  *_emoticon;
-    
-    UIImageView *_emoticonView;
-    UILabel     *_titleLabel;
+  Emoticon    *_emoticon;
+
+  UIImageView *_emoticonView;
+  UILabel     *_titleLabel;
 }
 
-- (id)initWithEmoticon:(Emoticon *)emoticon;
+/**
+ *  在实际中，第一个page中有一个space bar需要特殊处理
+ */
+- (id)initWithEmoticon:(Emoticon *)emoticon atPage:(int) page;
 
 @end

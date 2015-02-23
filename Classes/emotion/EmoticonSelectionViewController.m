@@ -81,7 +81,7 @@
         }
         
         NSArray *subArray = [_emoticons subarrayWithRange:subRange];
-        EmoticonGridView *emoticonGridView = [[EmoticonGridView alloc] initWithEmoticons:subArray];
+        EmoticonGridView *emoticonGridView = [[EmoticonGridView alloc] initWithEmoticons:subArray atPage:i];
         emoticonGridView.delegate = self;
         //emoticonGridView.backgroundColor = [UIColor redColor];
         emoticonGridView.frame = CGRectOffset(_emoticonScrollView.bounds, i * screenWidth, 0) ;

@@ -8,30 +8,31 @@
 
 #import "EmoticonView.h"
 
-
-#define EMOTICON_VIEW_DEFAULT_WIDTH 40
-#define EMOTICON_VIEW_DEFAULT_HEIGHT 60
-
-#define EMOTICON_IMAGE_WIDTH 32
-#define EMOTICON_IMAGE_HEIGHT 32
+#define EMOTICON_VIEW_DEFAULT_WIDTH 40  //不是最终值
+#define EMOTICON_VIEW_DEFAULT_HEIGHT 60  //不是最终值
 
 @implementation EmoticonView
 
 
-- (id)initWithEmoticon:(Emoticon *)emoticon{
-    if (self = [super initWithFrame:CGRectMake(0, 0, EMOTICON_VIEW_DEFAULT_WIDTH, EMOTICON_VIEW_DEFAULT_HEIGHT)]) {
+- (id)initWithEmoticon:(Emoticon *)emoticon atPage:(int) page{
+    
+    int width;
+    if (page == 0) {
+        if ([emoticon.code isEqualToString:@" "]) {
+            width = EMOTICON_VIEW_DEFAULT_WIDTH * 2 + 10;
+        } else {
+            width = EMOTICON_VIEW_DEFAULT_WIDTH;
+        }
+    } else {
+        width = EMOTICON_VIEW_DEFAULT_WIDTH;
+    }
+    
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, EMOTICON_VIEW_DEFAULT_HEIGHT)]) {
         //_emoticon = [emoticon retain];
         _emoticon = emoticon;
+    
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 14, width - 4*2, EMOTICON_VIEW_DEFAULT_HEIGHT - 14*2)];
         
-        /* we don't need this now
-        _emoticonView = [[UIImageView alloc] initWithImage:emoticon.image];
-        _emoticonView.frame = CGRectMake(0, 0, EMOTICON_IMAGE_WIDTH, EMOTICON_IMAGE_HEIGHT);
-        _emoticonView.center = CGPointMake(20, 20);
-        _emoticonView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-        [self addSubview:_emoticonView]; */
-        
-        
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, EMOTICON_IMAGE_WIDTH, EMOTICON_IMAGE_HEIGHT)];
         if (isUserInterfaceIdiomPhone) {
              _titleLabel.font = [UIFont systemFontOfSize:18.0];
         } else {

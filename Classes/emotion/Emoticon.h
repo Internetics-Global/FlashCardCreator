@@ -22,9 +22,9 @@ typedef enum {
 }
 
 @property (nonatomic, assign) EmoticonType type;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *code;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy  ) NSString     *title;
+@property (nonatomic, copy  ) NSString     *code;
+@property (nonatomic, strong) UIImage      *image;
 
 /*!
  @param type 表情类型
