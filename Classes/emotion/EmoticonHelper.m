@@ -21,7 +21,7 @@
             NSString *filePath = [[NSBundle mainBundle] pathForResource:@"emotions" ofType:@"txt"];
             NSString* content = [NSString stringWithContentsOfFile:filePath
                                                           encoding:NSUTF8StringEncoding error:nil];
-            NSString *filtedContent = [[[content stringByReplacingOccurrencesOfString:@" " withString:@""]
+            NSString *filtedContent = [[content
                                         stringByReplacingOccurrencesOfString:@"\n" withString:@""]
                                        stringByReplacingOccurrencesOfString:@"\"" withString:@""];
             NSArray *stringsArray = [filtedContent componentsSeparatedByString:@","];
