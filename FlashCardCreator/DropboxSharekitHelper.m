@@ -238,12 +238,12 @@
     UIAlertView *alert;
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
-                                           message:@"Set max number of downloads"
+                                           message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                   message:@"Set max number of downloads"
+                                   message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                          otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
     }

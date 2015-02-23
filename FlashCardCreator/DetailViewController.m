@@ -387,6 +387,9 @@ enum popover_enum {
 
 - (void)shareButtonClicked:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    [self dismissKeyboardGlobally];
+    
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
         [_helpPopoverController dismissPopoverAnimated:YES];
@@ -407,6 +410,8 @@ enum popover_enum {
 // on iPad, Help button only  exists on detail
 - (void)helpButtonClicked:(id) sender
 {
+    [self dismissKeyboardGlobally];
+    
     if (0) {
         [iConsole info:@"%s",__FUNCTION__];
         if (!isUserInterfaceIdiomPhone) {
@@ -492,6 +497,9 @@ enum popover_enum {
 - (void)moreButtonClicked:(id) sender
 {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    [self dismissKeyboardGlobally];
+    
     if (!isUserInterfaceIdiomPhone) {
         [_helpPopoverController dismissPopoverAnimated:YES];
     }
@@ -1062,5 +1070,26 @@ enum popover_enum {
 }
 
 
+- (void) dismissKeyboardGlobally {
+    
+    [self resignTextSubviewsFrom:self.view];
+}
+
+- (void) resignTextSubviewsFrom:(UIView *)view {
+    
+    
+    NSArray *subviews = [view subviews];
+    
+    if ([subviews count] == 0) return;
+    
+    for (UIView *subview in subviews) {
+        
+        if (([subview isKindOfClass:[UITextView class]] || [subview isKindOfClass:[UITextField class]]) && (subview.isFirstResponder)) {
+            [subview resignFirstResponder];
+        }
+        
+        [self resignTextSubviewsFrom:subview];
+    }
+}
 
 @end
