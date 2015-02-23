@@ -138,6 +138,13 @@
 
 
 -(void)update{
+    
+    //temporarily solution: TODO
+    //when _jobTitle == creator, the result will be the value of "_creator", we still don't know why,
+    if ([_jobTitle.lowercaseString isEqualToString:@"creator"]) {
+        _jobTitle = @"Creator ";
+    }
+    
 	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d WHERE pack_id=%d", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate, _packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
@@ -150,6 +157,13 @@
 }
 
 -(void)insert{
+    
+    //temporarily solution: TODO
+    //when _jobTitle == creator, the result will be the value of "_creator", we still don't know why,
+    if ([_jobTitle.lowercaseString isEqualToString:@"creator"]) {
+        _jobTitle = @"Creator ";
+    }
+    
 	if (_packID == -1) {
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
