@@ -34,6 +34,7 @@
 @property (assign, nonatomic) SortTypeEnum       sortTypeEnum;
 @property (strong, nonatomic) UISegmentedControl * sortSegmentedControl;
 @property (strong, nonatomic) UIButton           *userNewButton;
+@property (strong, nonatomic) UIButton           *visitStoreButton;
 
 @end
 
@@ -128,6 +129,14 @@
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
+    self.visitStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+    self.visitStoreButton.frame = CGRectOffset(self.userNewButton.frame, 100, 0);
+    [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
+    [self.visitStoreButton setTitle:@"Visit Store" forState:UIControlStateNormal];
+    [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:self.visitStoreButton];
+    
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"recently created",@"recently viewed", nil]];
     self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 240 -5, CGRectGetHeight(self.view.frame) - 40, 240, 29);
     self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
@@ -148,6 +157,7 @@
     
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     [self.userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
+    [self.visitStoreButton addTarget:self action:@selector(visitStoreButtonClicked:) forControlEvents:UIControlEventTouchDown];
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
 
@@ -346,6 +356,11 @@
      ];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
+}
+
+- (void) visitStoreButtonClicked:(id)sender {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Not implemented" message:@"Not implemented" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 
