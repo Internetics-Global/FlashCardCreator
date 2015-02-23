@@ -13,7 +13,14 @@
 //in order not to distore, we only use size.height
 - (UIImage *)scaleToSize:(CGSize)size{
     CGFloat ratio = self.size.width/self.size.height;
-    CGSize realSize = CGSizeMake(size.height*ratio, size.height);
+    CGFloat ratio2 = size.width/size.height;
+    CGSize realSize;
+    if (ratio > ratio2) {
+      realSize = CGSizeMake(size.width, size.width/ratio );
+    } else {
+      realSize = CGSizeMake(size.height*ratio, size.height);
+    }
+    
     UIGraphicsBeginImageContext(realSize);
     [self drawInRect:CGRectMake(0, 0, realSize.width, realSize.height)];
 

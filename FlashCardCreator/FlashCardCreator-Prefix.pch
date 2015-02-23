@@ -103,7 +103,7 @@
 #define kCellSizeHeight_iPhone                      88
 
 //UIImageJPEGRepresentation quality factor
-#define kJPEGQualityFactor                     0.7
+#define kJPEGQualityFactor                     0.4
 
 //Tag
 #define CURRENT_FLASHCARDVIEW_TAG              111

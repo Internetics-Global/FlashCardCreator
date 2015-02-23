@@ -8578,7 +8578,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
-     NSData *imageData = UIImageJPEGRepresentation([croppedImage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    int downScaleWidth = CGRectGetWidth(_questionBackgroundImageView.frame);
+    int downScaleHeight = CGRectGetHeight(_questionBackgroundImageView.frame);
+    
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    
+    
+    NSData *imageData = UIImageJPEGRepresentation([croppedImage scaleToSize:CGSizeMake(downScaleWidth *screenScale, downScaleHeight * screenScale)], kJPEGQualityFactor);
     
     [controller dismissViewControllerAnimated:YES completion:NULL];
     
