@@ -11,11 +11,6 @@
 #import "EmoticonView.h"
 #import "Common.h"
 
-#define DEFAULT_ROW_COUNT_IPHONE 4
-#define DEFAULT_ROW_COUNT_IPAD 7
-#define DEFAULT_COLUMN_COUNT_IPHONE 10
-#define DEFAULT_COLUMN_COUNT_IPAD   12
-
 #define CONTAINER_MARGIN 8
 
 @implementation EmoticonGridView
@@ -103,6 +98,9 @@
 #pragma mark -
 #pragma mark Private Methods
 
+/**
+ *  这里的Index是emotion list的index
+ */
 - (CGRect)_frameForEmoticonViewAtIndex:(NSInteger)index{
     
     CGFloat emoticonViewWidth = _gridContainerView.bounds.size.width / _columnCount;
@@ -113,16 +111,17 @@
     NSInteger column;
     
     if (self.currentPage == 0) {
-        if (index < 10) {
+        if (index <= K_Space_Bar_Index) {
             row = index/ _columnCount;
             column = index % _columnCount;
-        } else if (index == 10) {
-            row = index/ _columnCount;
-            column = index % _columnCount;
-        } else {
+        } else if (index <= K_Line_Break_Index) {
             //Space bar 占据两行，所以需要index +1
-            row = (index +1) / _columnCount;
-            column = (index +1) % _columnCount;
+            row = (index + 1)/ _columnCount;
+            column = (index + 1) % _columnCount;
+        } else {
+            //Space bar 和 line break 各 占据两行，所以需要index +1
+            row = (index +2) / _columnCount;
+            column = (index +2) % _columnCount;
         }
     } else {
         row = index/ _columnCount;
@@ -133,7 +132,7 @@
     CGFloat startY = row * emoticonViewHeight;
     
     if (self.currentPage == 0) {
-        if (index == 10) {
+        if ((index == K_Space_Bar_Index) || (index == K_Line_Break_Index)) {
             return CGRectMake(startX, startY, emoticonViewWidth*2, emoticonViewHeight);
         } else {
             return CGRectMake(startX, startY, emoticonViewWidth, emoticonViewHeight);
@@ -150,16 +149,23 @@
     NSInteger row = point.y / emoticonViewHeight;
     NSInteger column = point.x / emoticonViewWidth;
     
+    //这里的index非实际的symbol box的列表index。
+    //由于我们的grid view非真正grid view，其中有两个symbol占据了4个grid item
     NSInteger index =  row * _columnCount + column;
     
     if (self.currentPage == 0) {
-        if (index <10) {
+        if (index <K_Space_Bar_Index) {
             return [_emoticons objectAtIndex:index];
-        } else if ((index == 10) || (index == 11)) {
+        } else if ((index == K_Space_Bar_Index) || (index == K_Space_Bar_Index + 1)) {
             //这是一个Space Bar
-            return [_emoticons objectAtIndex:10];
-        } else {
+            return [_emoticons objectAtIndex:K_Space_Bar_Index];
+        } else if (index < K_Line_Break_Index + 1) {  //+1的原因
             return [_emoticons objectAtIndex:index - 1];
+        } else if ((index == K_Line_Break_Index + 1) || (index == K_Line_Break_Index + 1 + 1)) {
+            //这是一个Space Bar
+            return [_emoticons objectAtIndex:K_Line_Break_Index];
+        } else {
+            return [_emoticons objectAtIndex:index - 2];
         }
     } else {
         return [_emoticons objectAtIndex:index];

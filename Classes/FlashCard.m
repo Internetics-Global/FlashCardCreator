@@ -5289,13 +5289,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int emotionViewHeight;
     int cssToolbarHeight; 
     if (isUserInterfaceIdiomPhone) {
-        columnCount = CSS_EMOTION_COLUMN_COUNT_IPHONE;
-        rowCount = CSS_EMOTION_ROW_COUNT_IPHONE;
+        columnCount = DEFAULT_COLUMN_COUNT_IPHONE;
+        rowCount = DEFAULT_ROW_COUNT_IPHONE;
         cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
         emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
     } else {
-        columnCount = CSS_EMOTION_COLUMN_COUNT_IPAD;
-        rowCount = CSS_EMOTION_ROW_COUNT_IPAD;
+        columnCount = DEFAULT_COLUMN_COUNT_IPAD;
+        rowCount = DEFAULT_ROW_COUNT_IPAD;
         emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
         cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
     }
@@ -5340,13 +5340,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int emotionViewHeight;
     int cssToolbarHeight;
     if (isUserInterfaceIdiomPhone) {
-        columnCount = CSS_EMOTION_COLUMN_COUNT_IPHONE;
-        rowCount = CSS_EMOTION_ROW_COUNT_IPHONE;
+        columnCount = DEFAULT_COLUMN_COUNT_IPHONE;
+        rowCount = DEFAULT_ROW_COUNT_IPHONE;
         cssToolbarHeight = IPHONE_UI_TOOL_BAR_HEIGHT;
         emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPHONE;
     } else {
-        columnCount = CSS_EMOTION_COLUMN_COUNT_IPAD;
-        rowCount = CSS_EMOTION_ROW_COUNT_IPAD;
+        columnCount = DEFAULT_COLUMN_COUNT_IPAD;
+        rowCount = DEFAULT_ROW_COUNT_IPAD;
         emotionViewHeight = CSS_EMOTION_VIEW_HEIGHT_IPAD;
         cssToolbarHeight = IPAD_UI_TOOL_BAR_HEIGHT;
     }
@@ -7386,6 +7386,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
     [iConsole info:@"%s",__FUNCTION__];
     
+    NSString *insertVal;
+    if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString]) {
+        insertVal = @" ";
+    } else if ([emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString]) {
+        insertVal = @"\r";
+    }else {
+        insertVal = emoticon.code;
+    }
+    
     int  location =_lastBecomeFirstRespondTextView.selectedRange.location;
     NSString *beforeStr = @"";
     NSString *afterStr = @"";
@@ -7398,11 +7407,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _lastBecomeFirstRespondTextView.text = @"";
     }
     
-    newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,emoticon.code,afterStr];
+    newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,insertVal,afterStr];
     
     _lastBecomeFirstRespondTextView.text = newValue;
     
-    int symbolLength = emoticon.code.length;
+    int symbolLength = insertVal.length;
     NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
     range.location = location + symbolLength;
     [_lastBecomeFirstRespondTextView setSelectedRange:range];

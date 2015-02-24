@@ -18,7 +18,7 @@
     
     int width;
     if (page == 0) {
-        if ([emoticon.code isEqualToString:@" "]) {
+        if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString] || [emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString]) {
             width = EMOTICON_VIEW_DEFAULT_WIDTH * 2 + 10;
         } else {
             width = EMOTICON_VIEW_DEFAULT_WIDTH;
@@ -34,7 +34,7 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 14, width - 4*2, EMOTICON_VIEW_DEFAULT_HEIGHT - 14*2)];
         
         if (isUserInterfaceIdiomPhone) {
-             _titleLabel.font = [UIFont systemFontOfSize:18.0];
+             _titleLabel.font = [UIFont systemFontOfSize:14.0];
         } else {
              _titleLabel.font = [UIFont systemFontOfSize:24.0];
         }
@@ -42,17 +42,13 @@
         
         
         
-        if ([self isPureNumberOrEmpty:_titleLabel.text]) {
+        if ([self isPureNumberOrSpaceBar:_titleLabel.text]) {
             _titleLabel.backgroundColor = [UIColor colorWithRed:134.0/255 green:135.0/255 blue:139.0/255 alpha:1];
             
         } else {
             _titleLabel.backgroundColor = [UIColor colorWithRed:194.0/255 green:195.0/255 blue:199.0/255 alpha:1];
         }
         
-        //Rename
-        if ([self isMadeOfSpace:_titleLabel.text]) {
-          _titleLabel.text = @"Space bar";
-        }
         
         _titleLabel.clipsToBounds = YES;
         _titleLabel.layer.cornerRadius = 6;
@@ -64,9 +60,9 @@
     return self;
 }
 
-- (BOOL) isPureNumberOrEmpty:(NSString *)string {
+- (BOOL) isPureNumberOrSpaceBar:(NSString *)string {
     
-    if ([self isMadeOfSpace:string]) {
+    if ([string.lowercaseString isEqualToString:K_Space_Bar.lowercaseString]) {
         return YES;
     }
     
@@ -80,16 +76,5 @@
     }
 }
 
-- (BOOL) isMadeOfSpace:(NSString *) string {
-    
-    if (string.length == 1 && ([string isEqualToString:@" "]))
-    {
-        // String contains only whitespace.
-        return YES;
-    } else {
-        return NO;
-    }
-    
-}
 
 @end
