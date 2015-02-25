@@ -1003,10 +1003,10 @@ enum popover_enum {
         rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 130, 400, 400);
         rightPackImageView.autoresizingMask = UIViewAutoresizingNone;
         rightPackImageView.layer.opacity = 0.85;
-        rightPackImageView.layer.shadowOpacity= 0.3;
-        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
-//        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
-        rightPackImageView.layer.shadowRadius = 20;
+//        rightPackImageView.layer.shadowOpacity= 0.3;
+//        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
+////        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
+//        rightPackImageView.layer.shadowRadius = 20;
         rightPackImageView.layer.masksToBounds = YES;
         rightPackImageView.backgroundColor = [UIColor clearColor];
         
