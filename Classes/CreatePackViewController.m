@@ -154,10 +154,10 @@
     _coverImageView.layer.masksToBounds = YES;
     _coverImageView.layer.cornerRadius = 10;
     _coverImageView.userInteractionEnabled = YES;
-    _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image.jpg"];
+    _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
     _coverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     
-    _coverImageView.backgroundColor = [UIColor whiteColor]; //如果设置为clearColor，则不起作用
+    _coverImageView.backgroundColor = [UIColor clearColor]; 
     CAShapeLayer *styleLayer = [CAShapeLayer layer];
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_coverImageView.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(15, 15.0)];
     styleLayer.path = shadowPath.CGPath;
