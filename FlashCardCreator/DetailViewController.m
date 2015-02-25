@@ -1013,8 +1013,8 @@ enum popover_enum {
         [_rightPackView addSubview:rightPackImageView];
         
         NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-        if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
-            rightPackImageView.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+        if ([fileName rangeOfString:@"default_pack_cover_image"].location != -1) {
+            rightPackImageView.image = [UIImage imageNamed:@"default_pack_cover_image_transparent"];
         } else {
             NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
             rightPackImageView.image = [UIImage imageWithContentsOfFile:path];
