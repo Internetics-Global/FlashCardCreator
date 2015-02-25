@@ -131,7 +131,7 @@
     
     self.visitStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-    self.visitStoreButton.frame = CGRectOffset(self.userNewButton.frame, 100, 0);
+    self.visitStoreButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
     [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.visitStoreButton setTitle:@"Visit Store" forState:UIControlStateNormal];
     [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
