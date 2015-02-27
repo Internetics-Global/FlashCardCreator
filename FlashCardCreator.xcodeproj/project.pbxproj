@@ -281,6 +281,7 @@
 		8883EAFC19500EAC0033056F /* mute_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EAF819500EAC0033056F /* mute_button@2x.png */; };
 		8883EB20195012F40033056F /* play_sound_button_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EB1E195012F40033056F /* play_sound_button_bigger.png */; };
 		8883EB21195012F40033056F /* play_sound_button_bigger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8883EB1F195012F40033056F /* play_sound_button_bigger@2x.png */; };
+		888503F11AA039C30062A025 /* icon~60.png in Resources */ = {isa = PBXBuildFile; fileRef = 888503F01AA039C30062A025 /* icon~60.png */; };
 		889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D11A123DED0011B7ED /* GTMStackTrace.m */; };
 		889131D51A123DED0011B7ED /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D31A123DED0011B7ED /* iConsole.m */; };
 		88A06F931928B70800C0EEF7 /* add_pack_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A06F921928B70800C0EEF7 /* add_pack_button.png */; };
@@ -696,6 +697,7 @@
 		8883EAF819500EAC0033056F /* mute_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mute_button@2x.png"; path = "Resources/mute_button@2x.png"; sourceTree = "<group>"; };
 		8883EB1E195012F40033056F /* play_sound_button_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_sound_button_bigger.png; path = Resources/play_sound_button_bigger.png; sourceTree = "<group>"; };
 		8883EB1F195012F40033056F /* play_sound_button_bigger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_sound_button_bigger@2x.png"; path = "Resources/play_sound_button_bigger@2x.png"; sourceTree = "<group>"; };
+		888503F01AA039C30062A025 /* icon~60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon~60.png"; sourceTree = "<group>"; };
 		889131D01A123DED0011B7ED /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
 		889131D11A123DED0011B7ED /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
 		889131D21A123DED0011B7ED /* iConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iConsole.h; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 		2D09AF9816A52C5000B1C0C9 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				888503F01AA039C30062A025 /* icon~60.png */,
 				881390901935613500E04251 /* icon~40.png */,
 				881390911935613500E04251 /* icon~80.png */,
 				88139088193560FD00E04251 /* icon~29.png */,
@@ -1905,6 +1908,7 @@
 				884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */,
 				8842A57A19B00D470044C8CC /* templateScreenshot4_answer_iPad.png in Resources */,
 				8825CC221928C50800B21E60 /* close2_button@2x.png in Resources */,
+				888503F11AA039C30062A025 /* icon~60.png in Resources */,
 				88491B431714522300833692 /* templateScreenshot3_question_iPad.png in Resources */,
 				88491B441714522300833692 /* templateScreenshot3_question.png in Resources */,
 				88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */,
@@ -2168,6 +2172,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
@@ -2191,8 +2197,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
-				"PROVISIONING_PROFILE[sdk=*]" = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
+				PROVISIONING_PROFILE = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
+				"PROVISIONING_PROFILE[sdk=*]" = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2203,6 +2209,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
@@ -2227,8 +2235,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
-				"PROVISIONING_PROFILE[sdk=*]" = "58e3cae7-8b0d-417d-b754-e2b6fa21b7a7";
+				PROVISIONING_PROFILE = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
+				"PROVISIONING_PROFILE[sdk=*]" = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
