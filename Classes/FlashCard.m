@@ -5900,7 +5900,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         
-        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+        NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
         
         if (isUserInterfaceIdiomPhone) {
             [picker dismissModalViewControllerAnimated:YES];
@@ -5943,7 +5943,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (_imageSourceType == Type_Image_Source_Image) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                if (([_questionImageFullPath rangeOfString:@".png"].location == NSNotFound)
+                    ||([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
                     || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
                     || ((_questionImageFullPath.length == 0))) {
                     _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
@@ -5951,7 +5952,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [imageData writeToFile:_questionImageFullPath atomically:YES];
                 _imageQuestion.image = [UIImage imageWithData:imageData];
             } else {
-                if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
+                if (([_answerImageFullPath rangeOfString:@".png"].location == NSNotFound)
+                    ||([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
                     || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
                     || ((_answerImageFullPath.length == 0))) {
                     _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];

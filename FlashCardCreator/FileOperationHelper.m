@@ -209,7 +209,7 @@
     }
     
     
-    NSString *uid = [NSString stringWithFormat:@"%d%d.jpg", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    NSString *uid = [NSString stringWithFormat:@"%d%d.png", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
     return ([path stringByAppendingPathComponent:uid]);
 }
 
