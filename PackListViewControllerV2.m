@@ -129,13 +129,6 @@
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
-    self.visitStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-    self.visitStoreButton.frame = CGRectMake((CGRectGetWidth(self.view.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
-    [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
-    [self.visitStoreButton setTitle:@"Visit Store" forState:UIControlStateNormal];
-    [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:self.visitStoreButton];
     
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"recently created",@"recently viewed", nil]];
     self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 240 -5, CGRectGetHeight(self.view.frame) - 40, 240, 29);
@@ -154,6 +147,13 @@
             break;
     }
     
+    self.visitStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+    self.visitStoreButton.frame = CGRectMake((CGRectGetMaxX(self.userNewButton.frame) + CGRectGetMinX(self.sortSegmentedControl.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
+    [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
+    [self.visitStoreButton setTitle:@"Visit Store" forState:UIControlStateNormal];
+    [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:self.visitStoreButton];
     
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     [self.userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
