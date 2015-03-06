@@ -34,9 +34,9 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 14, width - 4*2, EMOTICON_VIEW_DEFAULT_HEIGHT - 14*2)];
         
         if (isUserInterfaceIdiomPhone) {
-             _titleLabel.font = [UIFont systemFontOfSize:14.0];
+             _titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
         } else {
-             _titleLabel.font = [UIFont systemFontOfSize:24.0];
+             _titleLabel.font = [UIFont boldSystemFontOfSize:28.0];
         }
         _titleLabel.text = emoticon.title;
         
