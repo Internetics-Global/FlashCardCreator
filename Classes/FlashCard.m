@@ -5914,7 +5914,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_imageSourceType == Type_Image_Source_Logo) {
             
             _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-            if (([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
+            if (([_logoImageFullPath rangeOfString:@".png"].location == NSNotFound) ||
+                ([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
                 _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
             
@@ -5975,7 +5976,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (_imageSourceType == Type_Image_Source_Image2) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
+                if (([_questionImageFullPath2 rangeOfString:@".png"].location == NSNotFound)
+                    ||([_questionImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
                     || ([_questionImageFullPath2 hasSuffix:@"question_placeholder_content.jpg"])
                     || ((_questionImageFullPath2.length == 0))) {
                     _questionImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
@@ -5983,7 +5985,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [imageData writeToFile:_questionImageFullPath2 atomically:YES];
                 _imageQuestion2.image = [UIImage imageWithData:imageData];
             } else {
-                if (([_answerImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
+                if (([_answerImageFullPath2 rangeOfString:@".png"].location == NSNotFound)
+                    ||([_answerImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
                     || ([_answerImageFullPath2 hasSuffix:@"answer_placeholder_content.jpg"])
                     || ((_answerImageFullPath2.length == 0))) {
                     _answerImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
