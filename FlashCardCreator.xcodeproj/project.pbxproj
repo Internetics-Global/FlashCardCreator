@@ -102,7 +102,6 @@
 		2D66C18416A6B3E400795CF9 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18316A6B3E300795CF9 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2D66C18616A6B3F300795CF9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18516A6B3F300795CF9 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2D66C18B16A6B5D600795CF9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D66C18A16A6B5D500795CF9 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		2D6A55C516D813F5002D1489 /* question_placeholder_logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */; };
 		2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D75DF87169D07CB00337B10 /* MobileCoreServices.framework */; };
 		2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7A8CE61691100F002EDF77 /* libz.dylib */; };
 		2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D89234916806BF200B43BCD /* PublicPackRequest.m */; };
@@ -171,8 +170,6 @@
 		881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 881131971703CA1400C7D5A8 /* Default-Landscape~ipad.png */; };
 		881131AB1703CC8600C7D5A8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319B1703CA3600C7D5A8 /* Default.png */; };
 		881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8811319D1703CA3A00C7D5A8 /* Default@2x.png */; };
-		88123D17192D90E30062CA84 /* answer_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */; };
-		88123D18192D90E30062CA84 /* question_placeholder_content.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88123D16192D90E30062CA84 /* question_placeholder_content.jpg */; };
 		88123D4F192DCA670062CA84 /* card_cover_image_placeholder_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */; };
 		88123DF5192F00480062CA84 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DF4192F00480062CA84 /* Constant.m */; };
 		8813908C193560FD00E04251 /* icon~29.png in Resources */ = {isa = PBXBuildFile; fileRef = 88139088193560FD00E04251 /* icon~29.png */; };
@@ -201,6 +198,13 @@
 		882ACF91192C22E300CDAD15 /* segment_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */; };
 		882ACF92192C22E300CDAD15 /* segment_seperator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */; };
 		882ACFE0192C537600CDAD15 /* dotted_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFDF192C537600CDAD15 /* dotted_line@2x.png */; };
+		8833F4061AAC1E7B00B62576 /* answer_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4001AAC1E7B00B62576 /* answer_placeholder_content.png */; };
+		8833F4071AAC1E7B00B62576 /* answer_placeholder_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4011AAC1E7B00B62576 /* answer_placeholder_content@2x.png */; };
+		8833F4081AAC1E7B00B62576 /* question_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4021AAC1E7B00B62576 /* question_placeholder_content.png */; };
+		8833F4091AAC1E7B00B62576 /* question_placeholder_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4031AAC1E7B00B62576 /* question_placeholder_content@2x.png */; };
+		8833F40A1AAC1E7B00B62576 /* question_placeholder_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4041AAC1E7B00B62576 /* question_placeholder_logo.png */; };
+		8833F40B1AAC1E7B00B62576 /* question_placeholder_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4051AAC1E7B00B62576 /* question_placeholder_logo@2x.png */; };
+		8833F40D1AAC1EDB00B62576 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F40C1AAC1EDB00B62576 /* default_pack_cover_image.png */; };
 		883763E41A1C205D007FD84F /* AMPopTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 883763E31A1C205D007FD84F /* AMPopTip.m */; };
 		8842A52919AFF3860044C8CC /* templateScreenshot8_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */; };
 		8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */; };
@@ -246,7 +250,6 @@
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 884DE18A18FBA48A00C09067 /* video_default@2x.png */; };
 		884DE1AF18FBA94F00C09067 /* RequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DE1AE18FBA94F00C09067 /* RequestUtils.m */; };
-		88526A7D192AC65800892E77 /* question_placeholder_logo@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */; };
 		8858064D18C9984D00490C33 /* upButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858064C18C9984C00490C33 /* upButton@2x.png */; };
 		885C3D991925C8DE0090F63C /* edit_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3D961925C8DE0090F63C /* edit_button@2x.png */; };
 		885C3D9A1925C8DE0090F63C /* packs_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3D971925C8DE0090F63C /* packs_button@2x.png */; };
@@ -257,13 +260,10 @@
 		885C3DD81927818E0090F63C /* save_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DD61927818E0090F63C /* save_button@2x.png */; };
 		885C3DDA192782AB0090F63C /* edit_link_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DD9192782AB0090F63C /* edit_link_button@2x.png */; };
 		885C3DDC192804F20090F63C /* helping_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DDB192804F20090F63C /* helping_button@2x.png */; };
-		885C3DDF192814C90090F63C /* answer_placeholder_content@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DDD192814C90090F63C /* answer_placeholder_content@2x.jpg */; };
-		885C3DE0192814C90090F63C /* question_placeholder_content@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DDE192814C90090F63C /* question_placeholder_content@2x.jpg */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
-		88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */; };
 		887A45B71929E36B007C94FB /* change_card_background_image_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B31929E36B007C94FB /* change_card_background_image_button.png */; };
 		887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */; };
 		887A45B91929E36B007C94FB /* change_card_layout_template.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B51929E36B007C94FB /* change_card_layout_template.png */; };
@@ -480,7 +480,6 @@
 		2D66C18316A6B3E300795CF9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		2D66C18516A6B3F300795CF9 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		2D66C18A16A6B5D500795CF9 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_logo.jpg; path = Resources/question_placeholder_logo.jpg; sourceTree = "<group>"; };
 		2D75DF87169D07CB00337B10 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
@@ -577,8 +576,6 @@
 		8811319B1703CA3600C7D5A8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8811319D1703CA3A00C7D5A8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8811319F1703CA3E00C7D5A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = answer_placeholder_content.jpg; path = Resources/answer_placeholder_content.jpg; sourceTree = "<group>"; };
-		88123D16192D90E30062CA84 /* question_placeholder_content.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = question_placeholder_content.jpg; path = Resources/question_placeholder_content.jpg; sourceTree = "<group>"; };
 		88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder_title.png; path = Resources/card_cover_image_placeholder_title.png; sourceTree = "<group>"; };
 		88123DF3192F00480062CA84 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		88123DF4192F00480062CA84 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
@@ -610,6 +607,13 @@
 		882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_selected@2x.png"; path = "Resources/segment_selected@2x.png"; sourceTree = "<group>"; };
 		882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_seperator@2x.png"; path = "Resources/segment_seperator@2x.png"; sourceTree = "<group>"; };
 		882ACFDF192C537600CDAD15 /* dotted_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dotted_line@2x.png"; path = "Resources/dotted_line@2x.png"; sourceTree = "<group>"; };
+		8833F4001AAC1E7B00B62576 /* answer_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = answer_placeholder_content.png; path = Resources/answer_placeholder_content.png; sourceTree = "<group>"; };
+		8833F4011AAC1E7B00B62576 /* answer_placeholder_content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "answer_placeholder_content@2x.png"; path = "Resources/answer_placeholder_content@2x.png"; sourceTree = "<group>"; };
+		8833F4021AAC1E7B00B62576 /* question_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = question_placeholder_content.png; path = Resources/question_placeholder_content.png; sourceTree = "<group>"; };
+		8833F4031AAC1E7B00B62576 /* question_placeholder_content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "question_placeholder_content@2x.png"; path = "Resources/question_placeholder_content@2x.png"; sourceTree = "<group>"; };
+		8833F4041AAC1E7B00B62576 /* question_placeholder_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = question_placeholder_logo.png; path = Resources/question_placeholder_logo.png; sourceTree = "<group>"; };
+		8833F4051AAC1E7B00B62576 /* question_placeholder_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "question_placeholder_logo@2x.png"; path = "Resources/question_placeholder_logo@2x.png"; sourceTree = "<group>"; };
+		8833F40C1AAC1EDB00B62576 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
 		883763E21A1C205D007FD84F /* AMPopTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTip.h; sourceTree = "<group>"; };
 		883763E31A1C205D007FD84F /* AMPopTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPopTip.m; sourceTree = "<group>"; };
 		8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question_iPad.png; path = Resources/templateScreenshot8_question_iPad.png; sourceTree = "<group>"; };
@@ -657,7 +661,6 @@
 		884DE18A18FBA48A00C09067 /* video_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "video_default@2x.png"; path = "Resources/video_default@2x.png"; sourceTree = "<group>"; };
 		884DE1AD18FBA94F00C09067 /* RequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUtils.h; sourceTree = "<group>"; };
 		884DE1AE18FBA94F00C09067 /* RequestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUtils.m; sourceTree = "<group>"; };
-		88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "question_placeholder_logo@2x.jpg"; path = "Resources/question_placeholder_logo@2x.jpg"; sourceTree = "<group>"; };
 		8858064C18C9984C00490C33 /* upButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "upButton@2x.png"; path = "Resources/upButton@2x.png"; sourceTree = "<group>"; };
 		885C3D951925C8DE0090F63C /* add_pack_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_pack_button@2x.png"; path = "Resources/add_pack_button@2x.png"; sourceTree = "<group>"; };
 		885C3D961925C8DE0090F63C /* edit_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_button@2x.png"; path = "Resources/edit_button@2x.png"; sourceTree = "<group>"; };
@@ -672,14 +675,11 @@
 		885C3DD61927818E0090F63C /* save_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "save_button@2x.png"; path = "Resources/save_button@2x.png"; sourceTree = "<group>"; };
 		885C3DD9192782AB0090F63C /* edit_link_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_link_button@2x.png"; path = "Resources/edit_link_button@2x.png"; sourceTree = "<group>"; };
 		885C3DDB192804F20090F63C /* helping_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "helping_button@2x.png"; path = "Resources/helping_button@2x.png"; sourceTree = "<group>"; };
-		885C3DDD192814C90090F63C /* answer_placeholder_content@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "answer_placeholder_content@2x.jpg"; path = "Resources/answer_placeholder_content@2x.jpg"; sourceTree = "<group>"; };
-		885C3DDE192814C90090F63C /* question_placeholder_content@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "question_placeholder_content@2x.jpg"; path = "Resources/question_placeholder_content@2x.jpg"; sourceTree = "<group>"; };
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		886075011932B167009C16EE /* DKCircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCircleButton.h; sourceTree = "<group>"; };
 		886075021932B167009C16EE /* DKCircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCircleButton.m; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
-		88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = default_pack_cover_image.jpg; path = Resources/default_pack_cover_image.jpg; sourceTree = "<group>"; };
 		887A45B31929E36B007C94FB /* change_card_background_image_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_background_image_button.png; path = Resources/change_card_background_image_button.png; sourceTree = "<group>"; };
 		887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_card_background_image_button@2x.png"; path = "Resources/change_card_background_image_button@2x.png"; sourceTree = "<group>"; };
 		887A45B51929E36B007C94FB /* change_card_layout_template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_layout_template.png; path = Resources/change_card_layout_template.png; sourceTree = "<group>"; };
@@ -1241,9 +1241,6 @@
 				8883EAF719500EAC0033056F /* mute_button.png */,
 				8883EAF819500EAC0033056F /* mute_button@2x.png */,
 				88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */,
-				88123D15192D90E30062CA84 /* answer_placeholder_content.jpg */,
-				88123D16192D90E30062CA84 /* question_placeholder_content.jpg */,
-				88526A7C192AC65800892E77 /* question_placeholder_logo@2x.jpg */,
 				88F4D02A192A1DF9005E4BFC /* record_button.png */,
 				88F4D02B192A1DF9005E4BFC /* record_button@2x.png */,
 				88F4D028192A1D24005E4BFC /* play_recorded_sound_button@2x.png */,
@@ -1527,11 +1524,14 @@
 		883567F018F3F75600A988AA /* Placeholders */ = {
 			isa = PBXGroup;
 			children = (
-				885C3DDD192814C90090F63C /* answer_placeholder_content@2x.jpg */,
+				8833F4001AAC1E7B00B62576 /* answer_placeholder_content.png */,
+				8833F4011AAC1E7B00B62576 /* answer_placeholder_content@2x.png */,
+				8833F4021AAC1E7B00B62576 /* question_placeholder_content.png */,
+				8833F4031AAC1E7B00B62576 /* question_placeholder_content@2x.png */,
+				8833F4041AAC1E7B00B62576 /* question_placeholder_logo.png */,
+				8833F4051AAC1E7B00B62576 /* question_placeholder_logo@2x.png */,
+				8833F40C1AAC1EDB00B62576 /* default_pack_cover_image.png */,
 				880E85E51A9DA39F00EB3926 /* default_pack_cover_image_transparent.png */,
-				885C3DDE192814C90090F63C /* question_placeholder_content@2x.jpg */,
-				88764FEE1829CD2A00ABC683 /* default_pack_cover_image.jpg */,
-				2D6A55C416D813F5002D1489 /* question_placeholder_logo.jpg */,
 				885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */,
 			);
 			name = Placeholders;
@@ -1739,7 +1739,6 @@
 				88F47F661793FBE200EE068F /* Media.xcassets in Resources */,
 				2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */,
 				887A45DF1929E9DB007C94FB /* packs_button.png in Resources */,
-				88123D17192D90E30062CA84 /* answer_placeholder_content.jpg in Resources */,
 				880D19941929856300FD46F0 /* done_button.png in Resources */,
 				2D5C187E16D1A74800E1E785 /* leftArrow.png in Resources */,
 				8842A57D19B00D470044C8CC /* templateScreenshot5_answer.png in Resources */,
@@ -1753,7 +1752,6 @@
 				2D5C188716D1A74800E1E785 /* SelectedCellBackground.png in Resources */,
 				881390961935683B00E04251 /* un_mute_button_bigger.png in Resources */,
 				887BD94918D66DDE00E4DA21 /* templateScreenshot6_question_iPad.png in Resources */,
-				2D6A55C516D813F5002D1489 /* question_placeholder_logo.jpg in Resources */,
 				8800CC5C19525A2D006B80FD /* play_sound_button@2x.png in Resources */,
 				881F271A192B5EC80068648D /* w1024.png in Resources */,
 				2D5FCBD216DD927800DB8628 /* add_pack_button@2x.png in Resources */,
@@ -1762,7 +1760,6 @@
 				2D5FCBD616DD927800DB8628 /* background_navigationbar@2x.png in Resources */,
 				2D5FCBD816DD927800DB8628 /* play_button.png in Resources */,
 				881F271E192B60950068648D /* w824.png in Resources */,
-				88526A7D192AC65800892E77 /* question_placeholder_logo@2x.jpg in Resources */,
 				882ACF91192C22E300CDAD15 /* segment_selected@2x.png in Resources */,
 				8842A58819B00D470044C8CC /* templateScreenshot11_answer.png in Resources */,
 				8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */,
@@ -1781,6 +1778,7 @@
 				2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */,
 				2DE809C816DF679300B7959A /* selected_table_cell@2x.png in Resources */,
 				8821E8E518BB300800AFCF12 /* close_button@2x.png in Resources */,
+				8833F40A1AAC1E7B00B62576 /* question_placeholder_logo.png in Resources */,
 				8842A57B19B00D470044C8CC /* templateScreenshot4_answer.png in Resources */,
 				880978FD1978CB2400C3BD1A /* back_button@2x.png in Resources */,
 				885C3DD71927818E0090F63C /* save_button.png in Resources */,
@@ -1788,6 +1786,7 @@
 				887A45BA1929E36B007C94FB /* change_card_layout_template@2x.png in Resources */,
 				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 				8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */,
+				8833F40B1AAC1E7B00B62576 /* question_placeholder_logo@2x.png in Resources */,
 				88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */,
 				8842A58419B00D470044C8CC /* templateScreenshot2_answer.png in Resources */,
 				2DD058F916E83FBD00F779BD /* redButton.png in Resources */,
@@ -1800,6 +1799,7 @@
 				2DD0590716E8597100F779BD /* edit_link_button.png in Resources */,
 				2D1A051816EDDF1D00527311 /* card_background_red.png in Resources */,
 				881390931935613500E04251 /* icon~80.png in Resources */,
+				8833F4061AAC1E7B00B62576 /* answer_placeholder_content.png in Resources */,
 				2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */,
 				88123D4F192DCA670062CA84 /* card_cover_image_placeholder_title.png in Resources */,
 				2D1A051A16EDDF1D00527311 /* card_background_gray.png in Resources */,
@@ -1814,6 +1814,7 @@
 				8842A58219B00D470044C8CC /* templateScreenshot7_answer.png in Resources */,
 				2D1A053916EDEB2100527311 /* popoverArrowLeft@2x.png in Resources */,
 				885C3DDA192782AB0090F63C /* edit_link_button@2x.png in Resources */,
+				8833F4091AAC1E7B00B62576 /* question_placeholder_content@2x.png in Resources */,
 				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
 				88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */,
 				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
@@ -1832,7 +1833,6 @@
 				88F4D02C192A1DF9005E4BFC /* record_button.png in Resources */,
 				2D1A054716EDED8800527311 /* template_color_coffee.png in Resources */,
 				8842A58919B00D470044C8CC /* templateScreenshot11_answer_iPad.png in Resources */,
-				88123D18192D90E30062CA84 /* question_placeholder_content.jpg in Resources */,
 				88B377591960EE8400ED2459 /* delete_button@2x.png in Resources */,
 				88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */,
 				2D1A054816EDED8800527311 /* template_color_gray.png in Resources */,
@@ -1862,15 +1862,14 @@
 				881131A91703CC5800C7D5A8 /* Default-Landscape@2x~ipad.png in Resources */,
 				8842A52E19AFF3860044C8CC /* templateScreenshot9_question.png in Resources */,
 				881131AA1703CC8000C7D5A8 /* Default-Landscape~ipad.png in Resources */,
-				88764FEF1829CD2A00ABC683 /* default_pack_cover_image.jpg in Resources */,
 				885C3D9A1925C8DE0090F63C /* packs_button@2x.png in Resources */,
 				880AF42918C5A633007F13DF /* release_notes.md in Resources */,
+				8833F40D1AAC1EDB00B62576 /* default_pack_cover_image.png in Resources */,
 				887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */,
 				8842A57219B00D470044C8CC /* templateScreenshot0_answer_iPad.png in Resources */,
 				8883EAFB19500EAC0033056F /* mute_button.png in Resources */,
 				881131AB1703CC8600C7D5A8 /* Default.png in Resources */,
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
-				885C3DDF192814C90090F63C /* answer_placeholder_content@2x.jpg in Resources */,
 				881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */,
 				88EEEE69180E434F002AB9A1 /* play.png in Resources */,
 				88F4D02D192A1DF9005E4BFC /* record_button@2x.png in Resources */,
@@ -1889,6 +1888,7 @@
 				881F2717192B5C740068648D /* w2048.png in Resources */,
 				8842A53619AFF3860044C8CC /* templateScreenshot11_question.png in Resources */,
 				881390921935613500E04251 /* icon~40.png in Resources */,
+				8833F4071AAC1E7B00B62576 /* answer_placeholder_content@2x.png in Resources */,
 				88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */,
 				881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */,
 				88491B381714522300833692 /* templateScreenshot0_question.png in Resources */,
@@ -1902,7 +1902,6 @@
 				88B405071A3824D200D8C218 /* background_navigationbar.png in Resources */,
 				88100320180FBDC200FA0A52 /* icon152x152iPad.png in Resources */,
 				88B377581960EE8400ED2459 /* delete_button.png in Resources */,
-				885C3DE0192814C90090F63C /* question_placeholder_content@2x.jpg in Resources */,
 				88491B3F1714522300833692 /* templateScreenshot2_question_iPad.png in Resources */,
 				88491B401714522300833692 /* templateScreenshot2_question.png in Resources */,
 				884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */,
@@ -1912,6 +1911,7 @@
 				88491B431714522300833692 /* templateScreenshot3_question_iPad.png in Resources */,
 				88491B441714522300833692 /* templateScreenshot3_question.png in Resources */,
 				88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */,
+				8833F4081AAC1E7B00B62576 /* question_placeholder_content.png in Resources */,
 				88491B481714522300833692 /* templateScreenshot4_question.png in Resources */,
 				88CA253617152EE700859BDC /* grayButton.png in Resources */,
 				88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */,
