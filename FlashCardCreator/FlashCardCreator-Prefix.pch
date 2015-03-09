@@ -67,12 +67,13 @@
 #define SHOW_TOOLTIPS_NOTIFICATION @"SHOW_TOOLTIPS_NOTIFICATION"
 
 //Special symbol
-#define K_Space_Bar    @"Space Bar"   // 与emotions.txt保持一致
+#define K_No_Doulbe_Width      3       //占据2个普通宽度的symbol的数目，这里是3个
+#define K_Space_Bar    @"Space Bar"    // 与emotions.txt保持一致
 #define K_Line_Break   @"Line Break"   // 与emotions.txt保持一致
-#define K_Delete       @"Delete"   // 与emotions.txt保持一致
+#define K_Delete       @"Delete"       // 与emotions.txt保持一致
 #define K_Space_Bar_Index     10       //在sybmol表中的位置
-#define K_Line_Break_Index    21      //在sybmol表中的位置
-#define K_Delete_Index        32      //在sybmol表中的位置
+#define K_Line_Break_Index    21       //在sybmol表中的位置
+#define K_Delete_Index        32       //在sybmol表中的位置
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"
