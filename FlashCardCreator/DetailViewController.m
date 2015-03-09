@@ -19,10 +19,8 @@
 #import "PlayViewController.h"
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
-#import "HelpViewController.h"
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
-#import "Common.h"
 #import "OpenUDID.h"
 #import "AppDelegate.h"
 
@@ -412,55 +410,32 @@ enum popover_enum {
 {
     [self dismissKeyboardGlobally];
     
-    if (0) {
-        [iConsole info:@"%s",__FUNCTION__];
-        if (!isUserInterfaceIdiomPhone) {
-            [_settingPopoverController dismissPopoverAnimated:YES];
+    BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+    BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
+    
+    
+    if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
+        [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+        [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+        [defaults synchronize];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
+        if (isUserInterfaceIdiomPhone == false) {
+            [self showTooltips];
         }
         
-        HelpViewController *helpViewController = [[HelpViewController alloc] init];
-        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:helpViewController];
-        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-            navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-        }
-        if (_helpPopoverController == nil) {
-            _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
-            _helpPopoverController.delegate = self;
-            if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-                _helpPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
-            }
-        }
-        _helpPopoverController.popoverContentSize = CGSizeMake(486, 510);
-        [_helpPopoverController presentPopoverFromBarButtonItem:_helpButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        
     } else {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+        [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+        [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+        [defaults synchronize];
         
-        BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-        BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-        BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
-        
-        
-        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
-            [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
-            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
-            [defaults synchronize];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
-            if (isUserInterfaceIdiomPhone == false) {
-              [self showTooltips];
-            }
-            
-            
-        } else {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
-            [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
-            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
-            [defaults synchronize];
-            
-            [[TipHelper defaultHelper] hideEverything];
-        }
+        [[TipHelper defaultHelper] hideEverything];
     }
 }
 
@@ -649,8 +624,8 @@ enum popover_enum {
         } else if ([myView isKindOfClass:[UIImageView class]]) {
             
             NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-            if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
-                ((UIImageView *)myView).image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+            if ([Common isDefaultPath:fileName]) {
+                ((UIImageView *)myView).image = [UIImage imageNamed:@"default_pack_cover_image"];
             } else {
                 NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
                 ((UIImageView *)myView).image = [UIImage imageWithContentsOfFile:path];
@@ -1048,7 +1023,7 @@ enum popover_enum {
         shareCodeLabel.frame = rect;
         [_rightPackView addSubview:shareCodeLabel];
         
-        if (rightPackImageView.image != nil) {
+        if ((rightPackImageView.image != nil) && (_currentPack != nil)) {
             [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];

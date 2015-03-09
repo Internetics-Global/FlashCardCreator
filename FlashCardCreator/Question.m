@@ -9,7 +9,6 @@
 #import "Question.h"
 #import "SQLiteHelper.h"
 #import "CSS.h"
-#import "Common.h"
 #import "FileOperationHelper.h"
 
 @implementation Question
@@ -288,7 +287,7 @@
     //For history reason, we share logo image common under the same package. This could introduce into some waste of space, but temporarily, we have to do it like this.
     if (0) {
         //We never delete placeholder image
-        if (![[self.logoFullPath lastPathComponent] isEqualToString:@"question_placeholder_logo.jpg"]) {
+        if ([Common isDefaultPath:self.logoFullPath] == FALSE) {
             if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
                 [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
                 if (error) {
@@ -300,7 +299,7 @@
     }
     
     error = nil;
-    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"question_placeholder_content.jpg"]) {
+    if ([Common isDefaultPath:self.imageFullPath] == FALSE) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
@@ -311,7 +310,7 @@
     }
     
     error = nil;
-    if (![[self.imageFullPath2 lastPathComponent] isEqualToString:@"question_placeholder_content.jpg"]) {
+    if ([Common isDefaultPath:self.imageFullPath2] == FALSE) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath2 isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath2 error:&error];
             if (error) {

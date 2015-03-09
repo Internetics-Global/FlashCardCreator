@@ -24,7 +24,6 @@
 #import "MasterViewController.h"
 #import "UIImage+Scale.h"
 #import "OpenUDID.h"
-#import "Common.h"
 #import "FCCBarButton.h"
 
 BOOL isFromNewCreatedCard = NO;

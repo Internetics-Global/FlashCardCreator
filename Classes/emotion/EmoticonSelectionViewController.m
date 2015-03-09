@@ -8,7 +8,6 @@
 
 #import "EmoticonSelectionViewController.h"
 #import "ColorPageControl.h"
-#import "Common.h"
 
 @implementation EmoticonSelectionViewController
 

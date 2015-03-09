@@ -228,5 +228,23 @@
     
 }
 
++ (BOOL) isDefaultPath :(NSString *) pathStr {
+    
+    if (pathStr.length == 0) {
+        return YES;
+    }
+    
+    if ([[pathStr lastPathComponent] rangeOfString:@"placeholder"].location != NSNotFound) {
+        return YES;
+    }
+    
+    if ([[pathStr lastPathComponent] rangeOfString:@"default"].location != NSNotFound) {
+        return YES;
+    }
+    
+    
+    return NO;
+}
+
 
 @end

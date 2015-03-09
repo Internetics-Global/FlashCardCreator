@@ -9,7 +9,6 @@
 #import "Answer.h"
 #import "SQLiteHelper.h"
 #import "CSS.h"
-#import "Common.h"
 #import "FileOperationHelper.h"
 
 @implementation Answer
@@ -276,7 +275,7 @@
     NSError *error = nil;
     //We never delete placeholder imae
     BOOL isDir;
-    if (![[self.logoFullPath lastPathComponent] isEqualToString:@"answer_placeholder_logo.jpg"]) {
+    if ([Common isDefaultPath:self.logoFullPath] == FALSE) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.logoFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.logoFullPath error:&error];
             if (error) {
@@ -286,7 +285,7 @@
         }
     }
     error = nil;
-    if (![[self.imageFullPath lastPathComponent] isEqualToString:@"answer_placeholder_content.jpg"]) {
+    if ([Common isDefaultPath:self.imageFullPath] == FALSE) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath error:&error];
             if (error) {
@@ -297,7 +296,7 @@
     }
     
     error = nil;
-    if (![[self.imageFullPath2 lastPathComponent] isEqualToString:@"answer_placeholder_content.jpg"]) {
+    if ([Common isDefaultPath:self.imageFullPath2] == FALSE) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.imageFullPath2 isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.imageFullPath2 error:&error];
             if (error) {

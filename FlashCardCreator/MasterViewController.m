@@ -32,14 +32,12 @@
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
 #import "PlayViewController.h"
-#import "HelpViewController.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
 #import "AmazonClientManager.h"
 #import "SimpleWebBrowserController.h"
 #import "AppDelegate.h"
 #import "OpenUDID.h"
-#import "Common.h"
 #import "LineLayout.h"
 
 #import "AMPopTip.h"
@@ -241,8 +239,8 @@ enum popover_enum {
         }
         
         NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-        if ([fileName isEqualToString:@"default_pack_cover_image.jpg"]) {
-            _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+        if ([Common isDefaultPath:fileName]) {
+            _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image"];
         } else {
             NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
             _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
@@ -520,38 +518,30 @@ extern BOOL isFromNewCreatedCard;
 // on iPhone, Help button only  exists on master
 - (void)helpButtonClicked:(id) sender
 {
-    if (0) {
-        HelpViewController *helpViewController = [[HelpViewController alloc] init];
-        [self.navigationController pushViewController:helpViewController animated:YES];
-    } else {
+    BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
+    BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+    
+    if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
+        [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
+        [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
+        [defaults synchronize];
         
-        BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-        BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
-        BOOL isNotAllowShowTooltip_Detail = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-        
-        if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
-            [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
-            [defaults setBool:NO  forKey:K_Tooltip_Detail_Not_Allow];
-            [defaults synchronize];
-            
-            if (isUserInterfaceIdiomPhone == false) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
-            }
-            [self showTooltips];
-            
-        } else {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
-            [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
-            [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
-            [defaults synchronize];
-            
-            [[TipHelper defaultHelper] hideEverything];
+        if (isUserInterfaceIdiomPhone == false) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_TOOLTIPS_NOTIFICATION object:nil userInfo:nil];
         }
+        [self showTooltips];
         
+    } else {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES  forKey:K_Tooltip_FlashCard_Not_Allow];
+        [defaults setBool:YES  forKey:K_Tooltip_Master_Not_Allow];
+        [defaults setBool:YES  forKey:K_Tooltip_Detail_Not_Allow];
+        [defaults synchronize];
         
+        [[TipHelper defaultHelper] hideEverything];
     }
     
 }
@@ -917,11 +907,9 @@ extern BOOL isFromNewCreatedCard;
     cell.indexLabel.text = [NSString stringWithFormat:@"%d",card.cardSN];
     
 
-    BOOL flag = ([card.coverImageURL rangeOfString:@".png"].location != NSNotFound) ||
-                           ([card.coverImageURL rangeOfString:@".jpg"].location != NSNotFound);
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[card.coverImageURL lastPathComponent]];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
-    if (flag && (image != NULL)) {
+    if (([Common isDefaultPath:card.coverImageURL] == FALSE) && (image != NULL)) {
         cell.cellImageView.image = image;
     } else {
         if (self.currentPack.sidebarTitle.length > 0) {

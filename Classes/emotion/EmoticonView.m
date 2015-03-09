@@ -18,7 +18,8 @@
     
     int width;
     if (page == 0) {
-        if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString] || [emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString]) {
+        if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString] || [emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString] ||
+            [emoticon.code.lowercaseString isEqualToString:K_Delete.lowercaseString]) {
             width = EMOTICON_VIEW_DEFAULT_WIDTH * 2 + 10;
         } else {
             width = EMOTICON_VIEW_DEFAULT_WIDTH;
@@ -31,7 +32,7 @@
         //_emoticon = [emoticon retain];
         _emoticon = emoticon;
     
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 14, width - 4*2, EMOTICON_VIEW_DEFAULT_HEIGHT - 14*2)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 4, width - 4*2, EMOTICON_VIEW_DEFAULT_HEIGHT - 4*2)];
         
         if (isUserInterfaceIdiomPhone) {
              _titleLabel.font = [UIFont boldSystemFontOfSize:16.0];
@@ -54,7 +55,7 @@
         _titleLabel.layer.cornerRadius = 6;
         _titleLabel.layer.masksToBounds = YES;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_titleLabel];
     }
     return self;

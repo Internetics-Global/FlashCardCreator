@@ -9,7 +9,6 @@
 #import "EmoticonGridView.h"
 #import "Emoticon.h"
 #import "EmoticonView.h"
-#import "Common.h"
 
 #define CONTAINER_MARGIN 8
 
@@ -83,7 +82,7 @@
         CGRect emoticonViewFrame = emoticonView.frame;
         emoticonViewFrame.origin.x = floorf(emoticonViewFrame.origin.x);
         if (isUserInterfaceIdiomPhone) {
-            emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 20;  // ccaa need to get to know why it's 20    
+            emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 0;  
         } else {
             emoticonViewFrame.origin.y = floorf(emoticonViewFrame.origin.y) + 10;
         }
@@ -115,13 +114,14 @@
             row = index/ _columnCount;
             column = index % _columnCount;
         } else if (index <= K_Line_Break_Index) {
-            //Space bar 占据两行，所以需要index +1
             row = (index + 1)/ _columnCount;
             column = (index + 1) % _columnCount;
-        } else {
-            //Space bar 和 line break 各 占据两行，所以需要index +1
-            row = (index +2) / _columnCount;
-            column = (index +2) % _columnCount;
+        } else if (index <= K_Delete_Index) {
+            row = (index + 2)/ _columnCount;
+            column = (index + 2) % _columnCount;
+        }else {
+            row = (index +3) / _columnCount;
+            column = (index +3) % _columnCount;
         }
     } else {
         row = index/ _columnCount;
@@ -132,7 +132,7 @@
     CGFloat startY = row * emoticonViewHeight;
     
     if (self.currentPage == 0) {
-        if ((index == K_Space_Bar_Index) || (index == K_Line_Break_Index)) {
+        if ((index == K_Space_Bar_Index) || (index == K_Line_Break_Index)|| (index == K_Delete_Index)) {
             return CGRectMake(startX, startY, emoticonViewWidth*2, emoticonViewHeight);
         } else {
             return CGRectMake(startX, startY, emoticonViewWidth, emoticonViewHeight);
@@ -159,13 +159,17 @@
         } else if ((index == K_Space_Bar_Index) || (index == K_Space_Bar_Index + 1)) {
             //这是一个Space Bar
             return [_emoticons objectAtIndex:K_Space_Bar_Index];
-        } else if (index < K_Line_Break_Index + 1) {  //+1的原因
+        } else if (index < K_Line_Break_Index + 1) {
             return [_emoticons objectAtIndex:index - 1];
         } else if ((index == K_Line_Break_Index + 1) || (index == K_Line_Break_Index + 1 + 1)) {
             //这是一个Space Bar
             return [_emoticons objectAtIndex:K_Line_Break_Index];
-        } else {
+        } else if (index < K_Delete_Index + 2) {
             return [_emoticons objectAtIndex:index - 2];
+        } else if ((index == K_Delete_Index + 2) || (index == K_Delete_Index + 2 + 1)) {
+            return [_emoticons objectAtIndex:K_Delete_Index];
+        } else {
+            return [_emoticons objectAtIndex:index - 3];
         }
     } else {
         return [_emoticons objectAtIndex:index];

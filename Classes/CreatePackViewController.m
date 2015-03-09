@@ -13,7 +13,6 @@
 #import "UIImage+Scale.h"
 #import "PackListViewControllerV2.h"
 #import "OpenUDID.h"
-#import "Common.h"
 #import "FCCBarButton.h"
 
 @interface CreatePackViewController ()
@@ -151,8 +150,10 @@
         _coverImageView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-200)/2, 250,200,200)];
     }
     _coverImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _coverImageView.layer.masksToBounds = YES;
-    _coverImageView.layer.cornerRadius = 10;
+//    _coverImageView.layer.masksToBounds = YES;
+//    _coverImageView.layer.cornerRadius = 10;
+    _coverImageView.layer.borderWidth = 1;
+    _coverImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _coverImageView.userInteractionEnabled = YES;
     _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
     _coverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
@@ -165,7 +166,7 @@
     
     [self.view addSubview:_coverImageView];
     
-    _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.jpg", [[NSBundle mainBundle] resourcePath]];
+    _newPack.coverImageURL = [NSString stringWithFormat:@"%@/default_pack_cover_image.png", [[NSBundle mainBundle] resourcePath]];
     
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
     [_coverImageView addGestureRecognizer:imageSingeTap];
@@ -261,7 +262,7 @@
         [_imagePickerPopover dismissPopoverAnimated:YES];    
     }
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
     NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
     [imageData writeToFile:savedFullPath atomically:YES];
     _coverImageView.image = [UIImage imageWithContentsOfFile:savedFullPath];

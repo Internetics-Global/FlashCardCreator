@@ -11,7 +11,6 @@
 #import "Answer.h"
 #import "Question.h"
 #import "SQLiteHelper.h"
-#import "Common.h"
 #import "FileOperationHelper.h"
 
 @implementation Card

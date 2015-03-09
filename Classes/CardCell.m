@@ -7,7 +7,6 @@
 //
 
 #import "CardCell.h"
-#import "Common.h"
 
 @implementation CardCell
 

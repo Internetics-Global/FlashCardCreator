@@ -7,7 +7,6 @@
 //
 
 #import "AboutView.h"
-#import "Common.h"
 
 @implementation AboutView
 

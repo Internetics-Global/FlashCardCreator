@@ -109,8 +109,6 @@
 		2DB4494E16F02D5A00A33F85 /* dotted_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB4494D16F02D5A00A33F85 /* dotted_line.png */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
-		2DC177A716E4680500939E61 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC177A616E4680500939E61 /* HelpViewController.m */; };
-		2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC177B316E46B1B00939E61 /* HelpViewController.xib */; };
 		2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC177B616E49B8600939E61 /* PlayViewController.m */; };
 		2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0B16798E04007A8CAD /* UIKit.framework */; };
 		2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0D16798E04007A8CAD /* Foundation.framework */; };
@@ -498,9 +496,6 @@
 		2DB4494D16F02D5A00A33F85 /* dotted_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dotted_line.png; path = Resources/dotted_line.png; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2DC177A516E4680500939E61 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpViewController.h; path = Classes/HelpViewController.h; sourceTree = "<group>"; };
-		2DC177A616E4680500939E61 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HelpViewController.m; path = Classes/HelpViewController.m; sourceTree = "<group>"; };
-		2DC177B316E46B1B00939E61 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HelpViewController.xib; path = Classes/HelpViewController.xib; sourceTree = "<group>"; };
 		2DC177B516E49B8600939E61 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = Classes/PlayViewController.h; sourceTree = "<group>"; };
 		2DC177B616E49B8600939E61 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = Classes/PlayViewController.m; sourceTree = "<group>"; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1152,9 +1147,6 @@
 		2D5F3D58167D5590009D2ADC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				2DC177A516E4680500939E61 /* HelpViewController.h */,
-				2DC177A616E4680500939E61 /* HelpViewController.m */,
-				2DC177B316E46B1B00939E61 /* HelpViewController.xib */,
 				2D5C183C16D1A69200E1E785 /* AboutView.h */,
 				2D5C183D16D1A69200E1E785 /* AboutView.m */,
 				2D5C183E16D1A69200E1E785 /* AboutViewController.h */,
@@ -1784,7 +1776,6 @@
 				885C3DD71927818E0090F63C /* save_button.png in Resources */,
 				8842A52D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png in Resources */,
 				887A45BA1929E36B007C94FB /* change_card_layout_template@2x.png in Resources */,
-				2DC177B416E46B1B00939E61 /* HelpViewController.xib in Resources */,
 				8825CC471928CA8000B21E60 /* refresh2@2x.png in Resources */,
 				8833F40B1AAC1E7B00B62576 /* question_placeholder_logo@2x.png in Resources */,
 				88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */,
@@ -2024,7 +2015,6 @@
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
-				2DC177A716E4680500939E61 /* HelpViewController.m in Sources */,
 				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,

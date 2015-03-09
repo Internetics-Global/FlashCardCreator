@@ -12,7 +12,6 @@
 #import "User.h"
 #import "Card.h"
 #import "NSArray+Randomised.h"
-#import "Common.h"
 #import "FileOperationHelper.h"
 
 @implementation Pack
@@ -193,7 +192,7 @@
     NSError *error = nil;
     //We never delete placeholder image
     BOOL isDir;
-    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image.jpg"]) {
+    if (![[self.coverImageURL lastPathComponent] isEqualToString:@"default_pack_cover_image"]) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.coverImageURL isDirectory:&isDir]  && (isDir  == FALSE)) {
             [[NSFileManager defaultManager] removeItemAtPath:self.coverImageURL error:&error];
             if (error) {

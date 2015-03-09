@@ -15,7 +15,6 @@
 #import "Pack.h"
 #import "User.h"
 #import "FileOperationHelper.h"
-#import "Common.h"
 #import "OpenUDID.h"
 
 @interface PackListViewControllerV2() <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
@@ -212,7 +211,7 @@
         NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[((Pack *)[[User defaultUser].packs objectAtIndex:index]).coverImageURL lastPathComponent]];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         if (image == NULL) {
-            cell.coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image.jpg"];
+            cell.coverImageView.image = [UIImage imageNamed:@"default_pack_cover_image"];
         } else {
             cell.coverImageView.image = image;
         }
@@ -477,10 +476,10 @@
     }
     
     UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
+    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
     
     if (_currentPack) {
-        if (([_currentPack.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ([_currentPack.coverImageURL hasSuffix:@"default_pack_cover_image.jpg"])||((_currentPack.coverImageURL.length == 0))) {
+        if ([Common isDefaultPath:_currentPack.coverImageURL]) {
             _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }
         [imageData writeToFile:_currentPack.coverImageURL atomically:YES];

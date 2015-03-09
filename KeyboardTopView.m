@@ -7,7 +7,6 @@
 //
 
 #import "KeyboardTopView.h"
-#import "Common.h"
 
 #define K_Item_Width  80
 

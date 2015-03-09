@@ -28,13 +28,11 @@
 #import "EmoticonSelectionViewController.h"
 #import "EmoticonHelper.h"
 #import "Emoticon.h"
-#import "Common.h"
 #import <AVFoundation/AVFoundation.h>
 
 #import "CreateSoundViewController.h"
 
 #import "OpenUDID.h"
-#import "Common.h"
 
 #import "KeyboardTopView.h"
 
@@ -1690,8 +1688,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
         _answerImageFullPath = @"";
-        //[iConsole info:@"%s:Use answer_placeholder_content.jpg as self.imageAnswer",__FUNCTION__);
-        _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+        _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
         if (_isPlayingCard) {
             _imageAnswer.hidden = YES;
@@ -1708,8 +1705,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
         _answerImageFullPath2 = @"";
-        //[iConsole info:@"%s:Use answer_placeholder_content.jpg as self.imageAnswer2",__FUNCTION__);
-        _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content.jpg"];
+        _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
         if (_isPlayingCard) {
             _imageAnswer2.hidden = YES;
@@ -1779,8 +1775,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
         _questionImageFullPath = @"";
-        //[iConsole info:@"%s:Set question_placeholder_content.jpg as self.imageQuestion",__FUNCTION__);
-        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
+        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content"];
         
         if (_isPlayingCard) {
             _imageQuestion.hidden = YES;
@@ -1798,8 +1793,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
         _questionImageFullPath2 = @"";
-        //[iConsole info:@"%s:Set question_placeholder_content.jpg as self.imageQuestion2",__FUNCTION__);
-        _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content.jpg"];
+        _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content"];
         
         if (_isPlayingCard) {
             _imageQuestion2.hidden = YES;
@@ -1815,8 +1809,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _logoImage.image = imageTemp;
     } else {
         _logoImageFullPath = @"";
-        [iConsole info:@"%s:Use placeholder logo image for self.logoImage",__FUNCTION__];
-        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo.jpg"];
+        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo"];
         
         if (_isPlayingCard) {
             _logoImage.hidden = YES;
@@ -5914,8 +5907,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_imageSourceType == Type_Image_Source_Logo) {
             
             _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-            if (([_logoImageFullPath rangeOfString:@".png"].location == NSNotFound) ||
-                ([_logoImageFullPath rangeOfString:@".jpg"].location == NSNotFound) || ([_logoImageFullPath hasSuffix:@"question_placeholder_logo.jpg"])||((_logoImageFullPath.length == 0))) {
+            if ([Common isDefaultPath:_logoImageFullPath]) {
                 _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
             
@@ -5944,19 +5936,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (_imageSourceType == Type_Image_Source_Image) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionImageFullPath rangeOfString:@".png"].location == NSNotFound)
-                    ||([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
-                    || ((_questionImageFullPath.length == 0))) {
+                if ([Common isDefaultPath:_questionImageFullPath]) {
                     _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_questionImageFullPath atomically:YES];
                 _imageQuestion.image = [UIImage imageWithData:imageData];
             } else {
-                if (([_answerImageFullPath rangeOfString:@".png"].location == NSNotFound)
-                    ||([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
-                    || ((_answerImageFullPath.length == 0))) {
+                if ([Common isDefaultPath:_answerImageFullPath]) {
                     _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_answerImageFullPath atomically:YES];
@@ -5976,19 +5962,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else if (_imageSourceType == Type_Image_Source_Image2) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (([_questionImageFullPath2 rangeOfString:@".png"].location == NSNotFound)
-                    ||([_questionImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_questionImageFullPath2 hasSuffix:@"question_placeholder_content.jpg"])
-                    || ((_questionImageFullPath2.length == 0))) {
+                if ([Common isDefaultPath:_questionImageFullPath2]) {
                     _questionImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_questionImageFullPath2 atomically:YES];
                 _imageQuestion2.image = [UIImage imageWithData:imageData];
             } else {
-                if (([_answerImageFullPath2 rangeOfString:@".png"].location == NSNotFound)
-                    ||([_answerImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
-                    || ([_answerImageFullPath2 hasSuffix:@"answer_placeholder_content.jpg"])
-                    || ((_answerImageFullPath2.length == 0))) {
+                if ([Common isDefaultPath:_answerImageFullPath2]) {
                     _answerImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_answerImageFullPath2 atomically:YES];
@@ -7039,8 +7019,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         UIImage *origialmage = [self captureWholeViewAsImage];
-        NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-        if (([_currentCard.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((_currentCard.coverImageURL == nil))) {
+        NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+        if ([Common isDefaultPath:_currentCard.coverImageURL]) {
             NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             [imageData writeToFile:savedFullPath atomically:YES];
             _currentCard.coverImageURL = savedFullPath;
@@ -7275,38 +7255,30 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (imageSoucrType == Type_Image_Source_Image) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            if (([_questionImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_questionImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
-                || ((_questionImageFullPath.length == 0))) {
+            if ([Common isDefaultPath:_questionImageFullPath]) {
                 _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_questionImageFullPath atomically:YES];
+            [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath atomically:YES];
             _imageQuestion.image = compositeThumbNail;
         } else {
-            if (([_answerImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_answerImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
-                || ((_answerImageFullPath.length == 0))) {
+            if ([Common isDefaultPath:_answerImageFullPath]) {
                 _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_answerImageFullPath atomically:YES];
+            [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath atomically:YES];
             _imageAnswer.image = compositeThumbNail;
         }
     } else if (imageSoucrType == Type_Image_Source_Image2) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            if (([_questionImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_questionImageFullPath2 hasSuffix:@"question_placeholder_content.jpg"])
-                || ((_questionImageFullPath2.length == 0))) {
+            if ([Common isDefaultPath:_questionImageFullPath2]) {
                 _questionImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_questionImageFullPath2 atomically:YES];
+            [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath2 atomically:YES];
             _imageQuestion2.image = compositeThumbNail;
         } else {
-            if (([_answerImageFullPath2 rangeOfString:@".jpg"].location == NSNotFound)
-                || ([_answerImageFullPath2 hasSuffix:@"answer_placeholder_content.jpg"])
-                || ((_answerImageFullPath2.length == 0))) {
+            if ([Common isDefaultPath:_answerImageFullPath2]) {
                 _answerImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
             }
-            [UIImageJPEGRepresentation(compositeThumbNail, 0.6) writeToFile:_answerImageFullPath2 atomically:YES];
+            [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath2 atomically:YES];
             _imageAnswer2.image = compositeThumbNail;
         }
     } else {
@@ -7370,8 +7342,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [tempCardView refreshAll];
             
             UIImage *origialmage = [tempCardView captureWholeViewAsImage];
-            NSData *imageData = UIImageJPEGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)], kJPEGQualityFactor);
-            if (([card.coverImageURL rangeOfString:@".jpg"].location == NSNotFound) || ((card.coverImageURL == nil))) {
+            NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+            if ([Common isDefaultPath:card.coverImageURL]) {
                 NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
                 [imageData writeToFile:savedFullPath atomically:YES];
                 card.coverImageURL = savedFullPath;
@@ -7391,35 +7363,53 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
     [iConsole info:@"%s",__FUNCTION__];
     
-    NSString *insertVal;
-    if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString]) {
-        insertVal = @" ";
-    } else if ([emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString]) {
-        insertVal = @"\r";
-    }else {
-        insertVal = emoticon.code;
-    }
-    
     int  location =_lastBecomeFirstRespondTextView.selectedRange.location;
     NSString *beforeStr = @"";
     NSString *afterStr = @"";
     
     beforeStr = [_lastBecomeFirstRespondTextView.text substringToIndex:location];
     afterStr = [_lastBecomeFirstRespondTextView.text substringFromIndex:location];
-
+    
     NSString *newValue;
     if (_lastBecomeFirstRespondTextView.text == NULL) {
         _lastBecomeFirstRespondTextView.text = @"";
     }
     
-    newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,insertVal,afterStr];
+    if ([emoticon.code.lowercaseString isEqualToString:K_Delete.lowercaseString]) {
+       
+        if (beforeStr.length >= 1) {
+            beforeStr = [beforeStr substringToIndex:beforeStr.length-1];
+        }
+        
+        newValue = [NSString stringWithFormat:@"%@%@",beforeStr,afterStr];
+        
+        _lastBecomeFirstRespondTextView.text = newValue;
+        
+        NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
+        range.location = beforeStr.length;
+        [_lastBecomeFirstRespondTextView setSelectedRange:range];
+        
+    } else {
+        NSString *insertVal;
+        if ([emoticon.code.lowercaseString isEqualToString:K_Space_Bar.lowercaseString]) {
+            insertVal = @" ";
+        } else if ([emoticon.code.lowercaseString isEqualToString:K_Line_Break.lowercaseString]) {
+            insertVal = @"\r";
+        }else {
+            insertVal = emoticon.code;
+        }
+        
+        newValue = [NSString stringWithFormat:@"%@%@%@",beforeStr,insertVal,afterStr];
+        
+        _lastBecomeFirstRespondTextView.text = newValue;
+        
+        int symbolLength = insertVal.length;
+        NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
+        range.location = location + symbolLength;
+        [_lastBecomeFirstRespondTextView setSelectedRange:range];
+    }
     
-    _lastBecomeFirstRespondTextView.text = newValue;
     
-    int symbolLength = insertVal.length;
-    NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
-    range.location = location + symbolLength;
-    [_lastBecomeFirstRespondTextView setSelectedRange:range];
 }
 
 #pragma mark – AVAudioPlayerDelegate
@@ -7602,7 +7592,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     
                     _currentCard.question.movieFullPath = @"";
                     _currentCard.question.imageFullPath = @"";
-                    [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content.jpg"]];
+                    [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content"]];
                 } else {
                     [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
                 }
@@ -7634,7 +7624,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
                 _currentCard.answer.movieFullPath = @"";
                 _currentCard.answer.imageFullPath = @"";
-                [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content.jpg"]];
+                [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
             }
             if (isFromNewCreatedCard == FALSE) {
                 [self saveEdittedCard];
@@ -7685,7 +7675,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _currentCard.question.movieFullPath2 = @"";
                 _currentCard.question.imageFullPath2 = @"";
                 
-                [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content.jpg"]];
+                [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content"]];
             } else {
                 
                 if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
@@ -7713,7 +7703,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
                 _currentCard.answer.movieFullPath2 = @"";
                 _currentCard.answer.imageFullPath2 = @"";
-                [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content.jpg"]];
+                [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
             }
             if (isFromNewCreatedCard == FALSE) {
                 [self saveEdittedCard];
@@ -8593,8 +8583,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
-    int downScaleWidth = CGRectGetWidth(_questionBackgroundImageView.frame);
-    int downScaleHeight = CGRectGetHeight(_questionBackgroundImageView.frame);
+    float downScaleWidth = CGRectGetWidth(_questionBackgroundImageView.frame);
+    float downScaleHeight = CGRectGetHeight(_questionBackgroundImageView.frame);
     
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     
@@ -8604,9 +8594,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [controller dismissViewControllerAnimated:YES completion:NULL];
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        if (([_questionBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-            || ([_questionBackgroundImageFullPath hasSuffix:@"question_placeholder_content.jpg"])
-            || ((_questionBackgroundImageFullPath.length == 0))) {
+        if ([Common isDefaultPath:_questionBackgroundImageFullPath]) {
             _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         } else {
             //当之前已经有图片时，我们才操作
@@ -8647,9 +8635,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [imageData writeToFile:_questionBackgroundImageFullPath atomically:YES];
         _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
     } else {
-        if (([_answerBackgroundImageFullPath rangeOfString:@".jpg"].location == NSNotFound)
-            || ([_answerBackgroundImageFullPath hasSuffix:@"answer_placeholder_content.jpg"])
-            || ((_answerBackgroundImageFullPath.length == 0))) {
+        if ([Common isDefaultPath:_answerBackgroundImageFullPath]) {
             _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
         }else {
             

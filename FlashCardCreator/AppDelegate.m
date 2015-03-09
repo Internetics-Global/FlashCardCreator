@@ -22,8 +22,6 @@
 #import "FileOperationHelper.h"
 #import "CreatePackViewController.h"
 
-#import "Common.h"
-
 #import <Appsee/Appsee.h>
 #import "TestFlight.h"
 

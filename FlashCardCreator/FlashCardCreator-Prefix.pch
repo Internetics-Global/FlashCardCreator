@@ -10,12 +10,15 @@
 #warning "This project uses features only available in iOS SDK 4.0 and later."
 #endif
 
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
     #import "MGSplitViewController.h"
     #import "Constant.h"
+
+    #import "Common.h"
 
     #import "UIViewController+LandscapeOnly.h"
 
@@ -66,8 +69,10 @@
 //Special symbol
 #define K_Space_Bar    @"Space Bar"   // 与emotions.txt保持一致
 #define K_Line_Break   @"Line Break"   // 与emotions.txt保持一致
+#define K_Delete       @"Delete"   // 与emotions.txt保持一致
 #define K_Space_Bar_Index     10       //在sybmol表中的位置
-#define K_Line_Break_Index     21      //在sybmol表中的位置
+#define K_Line_Break_Index    21      //在sybmol表中的位置
+#define K_Delete_Index        32      //在sybmol表中的位置
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"
@@ -125,7 +130,7 @@
 #define CSS_EMOTION_VIEW_HEIGHT_IPHONE         162   
 #define CSS_EMOTION_VIEW_HEIGHT_IPAD           350
 #define DEFAULT_ROW_COUNT_IPHONE 4
-#define DEFAULT_ROW_COUNT_IPAD 7
+#define DEFAULT_ROW_COUNT_IPAD 6
 #define DEFAULT_COLUMN_COUNT_IPHONE 12
 #define DEFAULT_COLUMN_COUNT_IPAD   12
 
