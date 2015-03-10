@@ -1041,6 +1041,12 @@ enum popover_enum {
         
         [self.view bringSubviewToFront:_rightPackView];
         
+        if (APP_DELEGATE.isDownloadingPack) {
+            _rightPackView.hidden = YES;
+        } else {
+            _rightPackView.hidden = NO;
+        }
+        
     }
 }
 
