@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "FCC": {
+            "applicationId": "WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3", 
+            "masterKey": "kCj5sGwaS9ZXh21KQUJd7fCMUbR8GUl5c73lIpba"
+        }, 
+        "_default": {
+            "link": "FCC"
+        }
+    }
+}
