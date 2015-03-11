@@ -21,9 +21,8 @@
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
 #import "CreatePackViewController.h"
-
-#import <Appsee/Appsee.h>
-#import "TestFlight.h"
+#import <Parse/Parse.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
 
 extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
 BOOL _isDownloadingSamplePack;
@@ -33,13 +32,15 @@ BOOL _isDownloadingSamplePack;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[Appsee start:@"556562735fb44188885a874b63449621"];
     
     [self setupLog];
     
-    self.isAllowToShowPackList = YES;
+    [ParseCrashReporting enable];
+    [Parse setApplicationId:@"WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3"
+                  clientKey:@"EN7hKNQ0B8SEG3BlRO79GB1Av8pOw4YUk5ylhd0r"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    [TestFlight takeOff:@"f4a521b6-66f1-406b-97fc-cfa6f60c1be6"];
+    self.isAllowToShowPackList = YES;
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
     
