@@ -141,7 +141,7 @@
 
 - (int) getNominalSizeFromRealSize:(int) realSize {
     BOOL isFound = FALSE;
-    BOOL targetIndex = 0;
+    int targetIndex = 0;
     for (int i= 0; i < [self.realSizeArray count]; i++) {
         NSString *item = [self.realSizeArray objectAtIndex:i];
         if ([item integerValue] == realSize) {

@@ -8161,7 +8161,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             //
         }
         
-        int nominalFontSize = [_keyboardTopViewV2 getNominalSizeFromRealSize:size];
+        int nominalFontSize = [_keyboardTopViewV2 getNominalSizeFromRealSize:size]; //这里_keyboardTopViewV2和_keyboardTopViewForInputViewV2 其实是一样的
         int contentOffsetIndex = 0;
         for (int i = 0;i < [targetButtonArray count];i++) {
             UIButton *button = targetButtonArray[i];
