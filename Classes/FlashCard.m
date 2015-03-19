@@ -6396,7 +6396,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
     
-    
+
 }
 
 //当点击，并还没有开始改变内容时
@@ -6517,36 +6517,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     [self adjustFontToFit:textView];
     
-    //limit text within text box
-    NSString *originalStr = textView.text;
-    textView.text = [textView.text stringByAppendingString:text];
-    CGFloat lineHeight = textView.font.lineHeight;
-    int currentLines = textView.contentSize.height / lineHeight;
-    int maxLines = textView.frame.size.height/lineHeight;
-    if ((currentLines > maxLines)&&(maxLines > 0)&&(originalStr.length >0)) {
-        NSString * firstHalfString = [originalStr substringToIndex:range.location];
-        NSString * secondHalfString = [originalStr substringFromIndex: range.location];
-        textView.text = [NSString stringWithFormat: @"%@%@%@",
-                         firstHalfString,
-                         text,
-                         secondHalfString];
-        
-        textView.text = [textView.text substringToIndex:(textView.text.length -1)];
-        [textView layoutIfNeeded];
-        
-        range.location++;
-        textView.selectedRange = range;
-        if (text.length ==0) {
-            return true;// that meaning, you are deleting the text
-        } else {
-            return false;
-        }
-        
-    } else {
-        textView.text = originalStr;
-        textView.selectedRange = range;
-        return true;
-    }
+    return YES;
     
 }
 
