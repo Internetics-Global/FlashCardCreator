@@ -9,12 +9,14 @@
 #import "CycleScrollView.h"
 
 @interface CycleScrollView () {
-    NSInteger       _totalPages;
-    NSInteger       _curPage;
-    NSMutableArray *_curViews;
-    
-    NSTimer        *_autoScrollTimer;
+    NSInteger         _totalPages;
+    NSInteger         _curPage;
+    NSMutableArray   *_curViews;
+    NSTimer          *_autoScrollTimer;
 }
+
+@property (nonatomic,readonly) UIScrollView   *scrollView;
+@property (nonatomic,assign) NSInteger         currentPage;
 
 @end
 
@@ -25,27 +27,50 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.delegate = self;
-        _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
         _scrollView.showsHorizontalScrollIndicator = NO;
-        _scrollView.contentOffset = CGPointMake(self.bounds.size.width, 0);
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.alwaysBounceHorizontal = YES;
+        _scrollView.alwaysBounceVertical = NO;
+        _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
         _scrollView.pagingEnabled = YES;
         [self addSubview:_scrollView];
+        
+        _curPage = 0;
         
         //Auto scroll function
         _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
         
-        _curPage = 0;
+        [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionOld context:NULL];
     }
     return self;
 }
 
-- (void)setDataource:(id<CycleScrollViewDatasource>)datasource
+
+- (void)setDataSource:(id<CycleScrollViewDatasource>)datasource
 {
     _datasource = datasource;
     [self reloadData];
+}
+
+- (void) setCycle:(BOOL)isCycle {
+    _isCycle = isCycle;
+    
+    
+}
+
+- (void) setAutoScroll:(BOOL)isAutoScroll {
+    
+    if (_autoScrollTimer) {
+        [_autoScrollTimer invalidate];
+        _autoScrollTimer = nil;
+    }
+    
+    if (isAutoScroll) {
+       _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
+    }
+    
 }
 
 - (void)reloadData
@@ -60,7 +85,6 @@
 - (void)loadData
 {
     
-    //从scrollView上移除所有的subview
     NSArray *subViews = [_scrollView subviews];
     if([subViews count] != 0) {
         [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -71,30 +95,18 @@
     for (int i = 0; i < 3; i++) {
         UIView *v = [_curViews objectAtIndex:i];
         v.userInteractionEnabled = YES;
-        
-        [self addGesture:v];
-        
         v.frame = CGRectOffset(v.frame, self.frame.size.width * i, 0);
-        
-//test code
-//        if (i == 0) {
-//            v.backgroundColor = [UIColor orangeColor];
-//        } else if (i == 0) {
-//            v.backgroundColor = [UIColor cyanColor];
-//        } else {
-//            v.backgroundColor = [UIColor redColor];
-//        }
-        
         [_scrollView addSubview:v];
+        [self addGesture:v];
     }
     
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
 }
 
-- (void)getPageViewAtIndex:(int)page {
+- (void)getPageViewAtIndex:(NSInteger)page {
     
-    int pre = [self validPageValue:_curPage-1];
-    int last = [self validPageValue:_curPage+1];
+    NSInteger pre = [self validPageValue:_curPage-1];
+    NSInteger last = [self validPageValue:_curPage+1];
     
     if (!_curViews) {
         _curViews = [[NSMutableArray alloc] init];
@@ -116,7 +128,7 @@
     }
 }
 
-- (int)validPageValue:(NSInteger)value {
+- (NSInteger)validPageValue:(NSInteger)value {
     
     if(value == -1) value = _totalPages - 1;
     if(value == _totalPages) value = 0;
@@ -147,6 +159,8 @@
     [iConsole info:@"%s",__FUNCTION__];
     if ([_delegate respondsToSelector:@selector(tapDownAction:atPageIndex:)]) {
         [_delegate tapDownAction:self atPageIndex:_curPage];
+    } else {
+         [iConsole error:@"%s:_delegate is empty",__FUNCTION__];
     }
 }
 
@@ -154,6 +168,8 @@
     [iConsole info:@"%s",__FUNCTION__];
     if ([_delegate respondsToSelector:@selector(gestureUpAction:atPageIndex:)]) {
         [_delegate gestureUpAction:self atPageIndex:_curPage];
+    } else {
+        [iConsole error:@"%s:_delegate is empty",__FUNCTION__];
     }
 }
 
@@ -161,6 +177,8 @@
     [iConsole info:@"%s",__FUNCTION__];
     if ([_delegate respondsToSelector:@selector(gestureDownAction:atPageIndex:)]) {
         [_delegate gestureDownAction:self atPageIndex:_curPage];
+    } else {
+        [iConsole error:@"%s:_delegate is empty",__FUNCTION__];
     }
 }
 
@@ -170,13 +188,13 @@
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     int x = aScrollView.contentOffset.x;
     
-    //往下翻一张
+    //next page
     if(x >= (2*self.frame.size.width)) {
         _curPage = [self validPageValue:_curPage+1];
         [self loadData];
     }
     
-    //往上翻
+    //previous page
     if(x <= 0) {
         _curPage = [self validPageValue:_curPage-1];
         [self loadData];
@@ -188,6 +206,8 @@
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0) animated:YES];
     
 }
+
+#pragma mark – Gesture function
 
 - (void) addGesture:(UIView *) v {
     UISwipeGestureRecognizer * recognizerUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureUpAction:)];
@@ -206,8 +226,15 @@
 
 - (void)autoScrollView
 {
-    int page = _currentPage;
+    NSInteger page = _currentPage;
     [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(page+2),0) animated:YES];
+}
+
+#pragma mark – view.frame
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if([keyPath isEqualToString:@"frame"]) {
+        _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
+    }
 }
 
 
@@ -219,8 +246,11 @@
 }
 
 - (void)dealloc {
+    [self removeObserver:self forKeyPath:@"frame"];
     [_autoScrollTimer invalidate];
     _autoScrollTimer = nil;
 }
+
+
 
 @end

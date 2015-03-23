@@ -156,9 +156,13 @@
     //step2: uiscroll view
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
-    _scrollView.delegate = self;
-    _scrollView.datasource = self;
-    _scrollView.backgroundColor =[UIColor clearColor];
+    if (NO) {
+        _scrollView.userInteractionEnabled = YES;
+        _scrollView.isAutoScroll = NO;
+    } else {
+        _scrollView.userInteractionEnabled = NO;
+        _scrollView.isAutoScroll = YES;
+    }
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
@@ -170,6 +174,10 @@
     
     [self.view addSubview:_scrollView];
     [self.view addSubview:_closeButton];
+    
+    _scrollView.delegate = self;
+    _scrollView.datasource = self;
+    _scrollView.backgroundColor =[UIColor clearColor];
     
 
 }

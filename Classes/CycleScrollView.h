@@ -13,13 +13,13 @@
 
 @interface CycleScrollView : UIView<UIScrollViewDelegate>
 
-@property (nonatomic,readonly) UIScrollView *scrollView;
-@property (nonatomic,assign) NSInteger currentPage;
-@property (nonatomic,assign,setter = setDataource:) id<CycleScrollViewDatasource> datasource;
-@property (nonatomic,assign,setter = setDelegate:) id<CycleScrollViewDelegate> delegate;
+@property (nonatomic,assign,setter = setDataSource:) id<CycleScrollViewDatasource> datasource;
+@property (nonatomic,assign,setter = setDelegate:)  id<CycleScrollViewDelegate>   delegate;
 
-- (void)reloadData;
-- (void)setViewContent:(UIView *)view atIndex:(NSInteger)index;
+@property (nonatomic,assign,setter = setCycle:)       BOOL      isCycle;
+@property (nonatomic,assign,setter = setAutoScroll:)  BOOL      isAutoScroll;
+
+
 - (UIView *) getCurrentView;
 
 /**
