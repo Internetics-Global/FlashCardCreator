@@ -17,6 +17,7 @@
 #import "CSS.h"
 #import "Reachability.h"
 #import "PlayViewController.h"
+#import "PlayViewControllerV2.h"
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
 #import "UIImage+Scale.h"
@@ -497,7 +498,7 @@ enum popover_enum {
 - (void)playButtonClicked:(id) sender
 {
     [iConsole info:@"%s",__FUNCTION__];
-    PlayViewController *playViewController = [[PlayViewController alloc] init];
+    PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.currentPack = self.currentPack;
     //playViewController.currentCard = self.currentCard;
     if (isUserInterfaceIdiomPhone) {

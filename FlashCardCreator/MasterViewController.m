@@ -32,6 +32,7 @@
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
 #import "PlayViewController.h"
+#import "PlayViewControllerV2.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
 #import "AmazonClientManager.h"
@@ -476,7 +477,7 @@ extern BOOL isFromNewCreatedCard;
 - (void)playButtonClicked:(id) sender
 {
     
-    PlayViewController *playViewController = [[PlayViewController alloc] init];
+    PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.currentPack = self.currentPack;
     //playViewController.currentCard = self.currentCard;
     if (isUserInterfaceIdiomPhone) {
@@ -778,7 +779,7 @@ extern BOOL isFromNewCreatedCard;
     int index = [[notification object] intValue];
     Pack *selectedPack = [[[User defaultUser] packs] objectAtIndex:index];
     
-    PlayViewController *playViewController = [[PlayViewController alloc] init];
+    PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.currentPack = selectedPack;
     if (isUserInterfaceIdiomPhone) {
         playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);

@@ -312,6 +312,8 @@
 		88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */; };
 		88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */; };
 		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
+		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
+		88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */; };
 		88EEEE5F180E2890002AB9A1 /* create_new_pack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */; };
 		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
 		88EEEE69180E434F002AB9A1 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EEEE67180E434F002AB9A1 /* play.png */; };
@@ -740,6 +742,10 @@
 		88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharkfoodMuteSwitchDetector.m; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.m; sourceTree = "<group>"; };
 		88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		88E93D7B1A634EA2007CB7A2 /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = mute.caf; path = Resources/mute.caf; sourceTree = "<group>"; };
+		88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CycleScrollView.h; path = Classes/CycleScrollView.h; sourceTree = "<group>"; };
+		88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CycleScrollView.m; path = Classes/CycleScrollView.m; sourceTree = "<group>"; };
+		88EA2ACA1ABFC24800A3663E /* PlayViewControllerV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewControllerV2.h; sourceTree = "<group>"; };
+		88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewControllerV2.m; sourceTree = "<group>"; };
 		88EEEE5E180E2890002AB9A1 /* create_new_pack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "create_new_pack@2x.png"; path = "Resources/create_new_pack@2x.png"; sourceTree = "<group>"; };
 		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		88EEEE67180E434F002AB9A1 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = Resources/play.png; sourceTree = "<group>"; };
@@ -1007,6 +1013,10 @@
 			children = (
 				2DC177B516E49B8600939E61 /* PlayViewController.h */,
 				2DC177B616E49B8600939E61 /* PlayViewController.m */,
+				88EA2ACA1ABFC24800A3663E /* PlayViewControllerV2.h */,
+				88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */,
+				88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */,
+				88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */,
 			);
 			name = Play;
 			sourceTree = "<group>";
@@ -1976,6 +1986,7 @@
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
 				2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */,
 				2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */,
+				88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */,
 				2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */,
 				880978FB1978C1E400C3BD1A /* KeyboardTopView.m in Sources */,
 				2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */,
@@ -2037,6 +2048,7 @@
 				88123DF5192F00480062CA84 /* Constant.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
+				88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */,
 				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
 				88D2005B1985ED980022E8E9 /* UIViewController+LandscapeOnly.m in Sources */,
 				880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */,
