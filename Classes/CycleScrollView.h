@@ -22,6 +22,11 @@
 - (void)setViewContent:(UIView *)view atIndex:(NSInteger)index;
 - (UIView *) getCurrentView;
 
+/**
+ *  This is not an elegant way to clean resource, especially for NSTimer, but this is the only way we can do currently.
+ */
+- (void) clean;
+
 @end
 
 @protocol CycleScrollViewDelegate <NSObject>

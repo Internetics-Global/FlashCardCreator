@@ -213,6 +213,11 @@
 
 #pragma mark – Memory management
 
+- (void) clean {
+    [_autoScrollTimer invalidate];
+    _autoScrollTimer = nil;
+}
+
 - (void)dealloc {
     [_autoScrollTimer invalidate];
     _autoScrollTimer = nil;

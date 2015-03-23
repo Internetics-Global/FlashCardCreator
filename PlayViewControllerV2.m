@@ -236,7 +236,13 @@
 - (void) dismiss {
     [iConsole info:@"%s",__FUNCTION__];
     
-    //[_currentFlashCardView stopTextToSpeechNow]; TODO:XXX
+    [_scrollView clean];
+    
+    FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+    [currentFlashCardView stopTextToSpeechNow];
+    
+    _scrollView = nil;
+    
 
     [self dismissViewControllerAnimated:YES completion:nil];
     
