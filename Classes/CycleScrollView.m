@@ -27,8 +27,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.isAutoScroll = NO;
+        self.isCycle = YES;
+        _curPage = 0;
+        self.autoPlayDelaySeconds = k_Default_AutoPlayDelaySeconds;
+        
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.delegate = self;
+        _scrollView.bounces = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.alwaysBounceHorizontal = YES;
@@ -36,8 +43,6 @@
         _scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
         _scrollView.pagingEnabled = YES;
         [self addSubview:_scrollView];
-        
-        _curPage = 0;
         
         //Auto scroll function
         _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
@@ -62,16 +67,32 @@
 
 - (void) setAutoScroll:(BOOL)isAutoScroll {
     
+    _isAutoScroll = isAutoScroll;
+    
+    [self resetTimer];
+    
+}
+
+- (void)setAutoPlayDelaySeconds:(float)autoPlayDelaySeconds {
+    
+    _autoPlayDelaySeconds = autoPlayDelaySeconds;
+    
+    [self resetTimer];
+    
+}
+
+- (void) resetTimer {
     if (_autoScrollTimer) {
         [_autoScrollTimer invalidate];
         _autoScrollTimer = nil;
     }
     
-    if (isAutoScroll) {
-       _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
+    if (_isAutoScroll) {
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:_autoPlayDelaySeconds target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
     }
-    
+
 }
+
 
 - (void)reloadData
 {
@@ -185,20 +206,52 @@
 
 
 #pragma mark - UIScrollViewDelegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    
     int x = aScrollView.contentOffset.x;
     
-    //next page
-    if(x >= (2*self.frame.size.width)) {
-        _curPage = [self validPageValue:_curPage+1];
-        [self loadData];
+    if (self.isCycle == FALSE) {
+        
+        if (((_curPage == 0) && (x < self.frame.size.width)) ||
+            ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
+            
+            [aScrollView setScrollEnabled:NO];
+            double delayInSeconds = 0.8;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [aScrollView setScrollEnabled:YES];
+            });
+            
+        } else {
+            if(x >= (2*self.frame.size.width)) {
+                _curPage = [self validPageValue:_curPage+1];
+                [self loadData];
+            }
+            
+            //previous page
+            if(x <= 0) {
+                _curPage = [self validPageValue:_curPage-1];
+                [self loadData];
+            }
+        }
+        
+        
+    } else {
+        //next page
+        if(x >= (2*self.frame.size.width)) {
+            _curPage = [self validPageValue:_curPage+1];
+            [self loadData];
+        }
+        
+        //previous page
+        if(x <= 0) {
+            _curPage = [self validPageValue:_curPage-1];
+            [self loadData];
+        }
     }
     
-    //previous page
-    if(x <= 0) {
-        _curPage = [self validPageValue:_curPage-1];
-        [self loadData];
-    }
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
@@ -232,6 +285,7 @@
 
 #pragma mark – view.frame
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
     if([keyPath isEqualToString:@"frame"]) {
         _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
     }

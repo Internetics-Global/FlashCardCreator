@@ -202,5 +202,4 @@ typedef enum{
 
 - (void) textToSpeechAllContentNow;
 - (void) stopTextToSpeechNow;
-
 @end

@@ -27,6 +27,12 @@
     NSDate                      *_startDate;
     SharkfoodMuteSwitchDetector *_silenceDetector;
     
+    BOOL  _isAutoScroll;
+    BOOL  _isCyclePlay;
+    BOOL  _isMute;
+    
+    UIView *_controlPanel;
+    
 }
 
 @end
@@ -72,6 +78,11 @@
                                              selector:@selector(landscapeLeftRightOrientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+    
+    
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showControlerPanel)];
+    oneTap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:oneTap];
     
     
     
@@ -156,13 +167,8 @@
     //step2: uiscroll view
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
-    if (NO) {
-        _scrollView.userInteractionEnabled = YES;
-        _scrollView.isAutoScroll = NO;
-    } else {
-        _scrollView.userInteractionEnabled = NO;
-        _scrollView.isAutoScroll = YES;
-    }
+    _scrollView.isCycle = NO;
+    _scrollView.isAutoScroll = NO;
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
@@ -178,6 +184,90 @@
     _scrollView.delegate = self;
     _scrollView.datasource = self;
     _scrollView.backgroundColor =[UIColor clearColor];
+    
+    //step4: control panel
+    _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 300)/2, CGRectGetHeight(self.view.frame) - 50 -30, 300, 60)];
+    _controlPanel.layer.cornerRadius = 3;
+    _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
+    [self.view addSubview:_controlPanel];
+    
+    UIButton *cyclePlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cyclePlayButton.frame = CGRectMake(10, 35, 20, 20);
+    [cyclePlayButton setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
+    [cyclePlayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cyclePlayButton addTarget:self action:@selector(cyclePlayButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    cyclePlayButton.showsTouchWhenHighlighted =YES;
+    [_controlPanel addSubview:cyclePlayButton];
+    
+    UIButton *autoScrollButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    autoScrollButton.frame = CGRectMake(10, 5, 20, 20);
+    [autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
+    [autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    autoScrollButton.showsTouchWhenHighlighted =YES;
+    [_controlPanel addSubview:autoScrollButton];
+    
+    UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    playButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -10, 5, 20, 20);
+    [playButton setImage:[UIImage imageNamed:@"play25"] forState:UIControlStateNormal];
+    [playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    playButton.showsTouchWhenHighlighted =YES;
+    [_controlPanel addSubview:playButton];
+    
+    UIButton *muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    muteButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -10, 35, 20, 20);
+    [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+    [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    muteButton.showsTouchWhenHighlighted =YES;
+    [_controlPanel addSubview:muteButton];
+    
+    
+    UISlider *autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectMake(60, 10, 180, 20)];
+    autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
+    [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
+    autoPlayDelaySlider.minimumValue = 4;
+    autoPlayDelaySlider.maximumValue = 10.0;
+    autoPlayDelaySlider.continuous = NO;
+    autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
+    autoPlayDelaySlider.tintColor = [UIColor greenColor];
+    [autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
+    [autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
+    [_controlPanel addSubview: autoPlayDelaySlider];
+    
+    UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 12, 15, 15)];
+    minLabel.textAlignment = NSTextAlignmentCenter;
+    minLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    minLabel.text = @"4";
+    minLabel.numberOfLines = 1;
+    minLabel.textColor = [UIColor whiteColor];
+    minLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:minLabel];
+    
+    UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 12, 15, 15)];
+    maxLabel.textAlignment = NSTextAlignmentCenter;
+    maxLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    maxLabel.text = @"10";
+    maxLabel.numberOfLines = 1;
+    maxLabel.textColor = [UIColor whiteColor];
+    maxLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:maxLabel];
+    
+    UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, 180, 20)];
+    autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
+    autoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    autoPlayDelayLabel.text = @"Auto Play Speed";
+    autoPlayDelayLabel.numberOfLines = 1;
+    autoPlayDelayLabel.textColor = [UIColor whiteColor];
+    autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:autoPlayDelayLabel];
+    
+    double delayInSeconds = 2;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        _controlPanel.hidden = YES;
+    });
     
 
 }
@@ -206,7 +296,6 @@
     
     FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
                                                  defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
-    currentFlashCardView.calledViewController = self;
     currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
     
     [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:index];
@@ -227,7 +316,6 @@
                              kFlashCardViewWidth_PlayMode_iPhone,
                              kFlashCardViewHeight_PlayMode_iPhone);
     FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
-    currentFlashCardView.calledViewController = self;
     //[self addGestureSupport]; :TODO:XXXX
 
     currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
@@ -328,6 +416,93 @@
     } else {
         [currentFlashCardView playAudio];
     }
+}
+
+
+- (void) cyclePlayButtonClicked:(UIButton *) button {
+    
+    if (_isCyclePlay) {
+        _isCyclePlay = NO;
+        [button setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
+    } else {
+         _isCyclePlay = YES;
+        [button setImage:[UIImage imageNamed:@"repeat_selected"] forState:UIControlStateNormal];
+    }
+    
+    if (_isCyclePlay) {
+        _scrollView.isCycle = YES;
+    } else {
+        _scrollView.isCycle = NO;
+    }
+    
+}
+
+- (void) autoScrollButtonClicked:(UIButton *) button {
+    
+    if (_isAutoScroll) {
+        _isAutoScroll = NO;
+        [button setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
+    } else {
+        _isAutoScroll = YES;
+        [button setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
+    }
+    
+    if (_isAutoScroll) {
+        _scrollView.userInteractionEnabled = NO;
+        _scrollView.isAutoScroll = YES;
+    } else {
+        _scrollView.userInteractionEnabled = YES;
+        _scrollView.isAutoScroll = NO;
+    }
+    
+}
+
+- (void) playButtonClicked:(UIButton *) button {
+    
+    if (_isMute) {
+        return;
+    }
+    
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    if (currentCard) {
+        [currentCard playAudio];
+    } else {
+         [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+    }
+    
+    
+    
+    
+}
+
+- (void) muteButtonClicked:(UIButton *) button {
+    
+    if (_isMute) {
+        _isMute = NO;
+        [button setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+    } else {
+        _isMute = YES;
+        [button setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
+    }
+    
+}
+
+- (void) autoPlayDelaySliderClicked:(UISlider *) slider {
+    
+    NSLog(@"test");
+    
+    _scrollView.autoPlayDelaySeconds = slider.value;
+    
+}
+
+- (void) showControlerPanel {
+    
+    if (_controlPanel.hidden == YES) {
+        _controlPanel.hidden = NO;
+    } else {
+        _controlPanel.hidden = YES;
+    }
+    
 }
 
 

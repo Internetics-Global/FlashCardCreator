@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define k_Default_AutoPlayDelaySeconds  6.0
+
 @protocol CycleScrollViewDelegate;
 @protocol CycleScrollViewDatasource;
 
@@ -18,6 +20,7 @@
 
 @property (nonatomic,assign,setter = setCycle:)       BOOL      isCycle;
 @property (nonatomic,assign,setter = setAutoScroll:)  BOOL      isAutoScroll;
+@property (nonatomic,assign,setter = setAutoPlayDelaySeconds:)  float     autoPlayDelaySeconds;
 
 
 - (UIView *) getCurrentView;
