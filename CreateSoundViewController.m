@@ -12,6 +12,8 @@
 #import "FCCBarButton.h"
 #import "DKCircleButton.h"
 
+#define k_Max_Record_Second   30
+
 typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     Enum_Status_Record_Unknow      = -1,
     Enum_Status_Record_Recording       = 1,
@@ -183,13 +185,13 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                     usleep(10000);
                     NSDate* methodFinish =[NSDate date];
                     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
-                    if (executionTime > 10) {
+                    if (executionTime > k_Max_Record_Second) {
                         [iConsole info:@"%s:finish recording a new customized sound",__FUNCTION__];
                         break;
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",10.0 - executionTime]];
+                        [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",k_Max_Record_Second - executionTime]];
                     
                     });
                 }
