@@ -81,10 +81,6 @@
                                                object:nil];
     
     
-    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showControlerPanel)];
-    oneTap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:oneTap];
-    
     
     
     
@@ -503,15 +499,6 @@
     
 }
 
-- (void) showControlerPanel {
-    
-    if (_controlPanel.hidden == YES) {
-        _controlPanel.hidden = NO;
-    } else {
-        _controlPanel.hidden = YES;
-    }
-    
-}
 
 
 #pragma mark – CycleScrollViewDelegate
