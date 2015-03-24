@@ -5566,12 +5566,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     NSError *error;
     //不能声明为局部变量，否则无法播放
-    NSURL *audioURL;
+    NSString *normalizedPath;
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        audioURL = [NSURL fileURLWithPath:_currentCard.question.recordedSoundFullPath];
+        normalizedPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
     } else {
-        audioURL = [NSURL fileURLWithPath:_currentCard.answer.recordedSoundFullPath];
+        normalizedPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
     }
+    NSURL *audioURL = [NSURL fileURLWithPath:normalizedPath];;
     
     [_audioPlayer stop];
     
