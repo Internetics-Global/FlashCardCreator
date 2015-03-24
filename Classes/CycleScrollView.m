@@ -227,12 +227,18 @@
             if(x >= (2*self.frame.size.width)) {
                 _curPage = [self validPageValue:_curPage+1];
                 [self loadData];
+                if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                    [self.delegate didScrollToPage:_curPage];
+                }
             }
             
             //previous page
             if(x <= 0) {
                 _curPage = [self validPageValue:_curPage-1];
                 [self loadData];
+                if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                    [self.delegate didScrollToPage:_curPage];
+                }
             }
         }
         
@@ -242,12 +248,18 @@
         if(x >= (2*self.frame.size.width)) {
             _curPage = [self validPageValue:_curPage+1];
             [self loadData];
+            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                [self.delegate didScrollToPage:_curPage];
+            }
         }
         
         //previous page
         if(x <= 0) {
             _curPage = [self validPageValue:_curPage-1];
             [self loadData];
+            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                [self.delegate didScrollToPage:_curPage];
+            }
         }
     }
     

@@ -39,6 +39,8 @@
 - (void)gestureUpAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 - (void)gestureDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 
+- (void)didScrollToPage:(NSInteger)index;
+
 @end
 
 @protocol CycleScrollViewDatasource <NSObject>

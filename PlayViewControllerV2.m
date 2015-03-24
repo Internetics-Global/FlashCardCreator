@@ -537,6 +537,17 @@
     }
 }
 
+- (void)didScrollToPage:(NSInteger)index {
+     [iConsole info:@"%s",__FUNCTION__];
+    if (_isMute == FALSE) {
+        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        if (currentCard) {
+            [currentCard playAudio:YES];
+        } else {
+            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+        };
+    }
+}
 
 
 #pragma mark -
