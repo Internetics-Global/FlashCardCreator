@@ -176,7 +176,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self initDefaultValue];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-          [self setupTextToSpeech];
+            [self setupTextToSpeech];
         }
         
         //Vertical alignment，在具体的KVO中，如果alignment是vertical，则
@@ -187,7 +187,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_mainAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
         [_subAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
-
+    
     
     return self;
 }
@@ -260,7 +260,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     
     self.backgroundColor = [UIColor clearColor];
-
+    
 }
 
 
@@ -303,7 +303,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_questionBackgroundImageView];
         [self bringSubviewToFront:_templateBackgroundImageView];
     }
-
+    
     
     
     if (_answerBackgroundImageView == nil) {
@@ -342,7 +342,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_questionTitle];
     }
     
-
+    
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
         _answerTitle.frame = CGRectMake(80, 60, 400, 52);
@@ -410,9 +410,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.tag = kTagSubheadingQuestion;
         
         if (_subheadingFontQuestion.length == 0) {
-          _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
+            _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
         } else {
-          _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:28];
+            _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:28];
         }
         
         _subheadingQuestion.userInteractionEnabled = FALSE;
@@ -451,9 +451,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.tag = kTagSubQuestion;
         
         if (_subFontQuestion.length == 0) {
-          _subQuestion.font =[UIFont boldSystemFontOfSize:28];
+            _subQuestion.font =[UIFont boldSystemFontOfSize:28];
         } else {
-          _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:28];
+            _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:28];
         }
         
         _subQuestion.userInteractionEnabled = FALSE;
@@ -570,7 +570,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else {
             _sidebarTitle.center = CGPointMake(50, 275);
         }
-
+        
         _sidebarTitle.textAlignment = NSTextAlignmentCenter;
         _sidebarTitle.backgroundColor = [UIColor clearColor];
         _sidebarTitle.font = [UIFont systemFontOfSize:20];
@@ -597,8 +597,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_segmentedControl == nil) {
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:
                              @[NSLocalizedString(@"ToolbarItem_Question",nil),
-                             NSLocalizedString(@"ToolbarItem_Answer",nil)]];
-
+                               NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+        
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                                   self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
@@ -623,13 +623,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(25, 25.0)];
         styleLayer.path = shadowPath.CGPath;
         _logoImage.layer.mask = styleLayer;
-
+        
         [self addSubview:_logoImage];
         //Default logic
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
         [_logoImage addGestureRecognizer:logoSingeTap];
         
-
+        
     }
     
     if (_logoLinkageButton == nil) {
@@ -736,8 +736,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     //------- end _functionAreaView
-
-
+    
+    
 }
 
 
@@ -856,7 +856,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    if (_sidebarTitle ==  nil) {        
+    if (_sidebarTitle ==  nil) {
         _sidebarTitle = [[UITextField alloc] init];
         _sidebarTitle.frame = CGRectMake(0, 0, 200, kFlashCardSidebarWidth_iPhone);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
@@ -890,7 +890,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             point.y = point.y * kFlashCardViewProporation_iPhone;
         }
         _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
-
+        
     }
     
     
@@ -1042,7 +1042,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_segmentedControl == nil) {
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:
                              @[NSLocalizedString(@"ToolbarItem_Question",nil),
-                             NSLocalizedString(@"ToolbarItem_Answer",nil)]];
+                               NSLocalizedString(@"ToolbarItem_Answer",nil)]];
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
                                   self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
@@ -1055,7 +1055,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_segmentedControl];
     }
     
-
+    
     
     
     if (_logoImage == nil){
@@ -1081,7 +1081,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //Default logic
         UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
         [_logoImage addGestureRecognizer:logoSingeTap];
-    
+        
     }
     
     if (_logoLinkageButton == nil) {
@@ -1221,12 +1221,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int val = 0;
     
     if (val < 40) {
-        val = -(fontSize/6) -1;    
+        val = -(fontSize/6) -1;
     } else {
         val = -(fontSize/7) + 2;
     }
     
-
+    
     return val;
 }
 
@@ -1259,7 +1259,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_currentCard.question.movieFullPath.length > 0) {
         //allow to play movie
-      _imageQuestion.userInteractionEnabled        = YES;
+        _imageQuestion.userInteractionEnabled        = YES;
     } else {
         _imageQuestion.userInteractionEnabled        = FALSE;
     }
@@ -1281,9 +1281,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subheadingQuestion.layer.borderWidth = 0;
     
     if (_currentCard.answer.movieFullPath.length > 0) {
-      _imageAnswer.userInteractionEnabled        = YES;
+        _imageAnswer.userInteractionEnabled        = YES;
     } else {
-      _imageAnswer.userInteractionEnabled        = FALSE;
+        _imageAnswer.userInteractionEnabled        = FALSE;
     }
     
     if (_currentCard.answer.movieFullPath2.length > 0) {
@@ -1438,7 +1438,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if ((isFontResized)) {
                     
                     [iConsole warn:@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN];
-
+                    
                 }
             }
         } else {
@@ -1449,7 +1449,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //当可编辑时，我们不进行自动autoresize的notification
     //当为CURRENT_FLASHCARDVIEW_TAG，我们也不作处理
     if (([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE)
-             && (self.tag != CURRENT_FLASHCARDVIEW_TAG)){
+        && (self.tag != CURRENT_FLASHCARDVIEW_TAG)){
         
         if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
             NSArray *myArray = [NSArray arrayWithObjects:
@@ -1468,7 +1468,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-
+    
     [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
     
     if ([_synth isSpeaking]) {
@@ -1487,7 +1487,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         });
     }
     
-
+    
 }
 
 
@@ -1540,7 +1540,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_currentCard.question.movieFullPath.length >0) {
         if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
-          _questionMovieFullPath = _currentCard.question.movieFullPath;
+            _questionMovieFullPath = _currentCard.question.movieFullPath;
         } else {
             path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
             _questionMovieFullPath = path;
@@ -1573,7 +1573,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 self.functionAreaView.hidden = YES;
             }
         } else {
-           self.functionAreaView.hidden = NO;
+            self.functionAreaView.hidden = NO;
         }
         
     } else {
@@ -1589,9 +1589,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (checkNullOrEmptyOrNullStr(_currentPack.creatorNickName)) {
-      _creatorText.text = @"";
+        _creatorText.text = @"";
     } else {
-      _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
+        _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
     }
     
     if (_isPlayingCard) {
@@ -1603,12 +1603,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (checkNullOrEmptyOrNullStr(_currentPack.jobTitle)) {
         _jobTitleText.text = @"";
     } else {
-      _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
+        _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
     }
     
     if (_isPlayingCard) {
         if ([_jobTitleText.text isEqualToString:NSLocalizedString(@"Job_Title", nil)]) {
-          _jobTitleText.text = @"";
+            _jobTitleText.text = @"";
         }
     }
     
@@ -1673,10 +1673,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //两种情况，普通youtube，另外一种，本地创建
     if (_currentCard.answer.movieFullPath.length > 0) {
         if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
-          _answerMovieFullPath = _currentCard.answer.movieFullPath;
+            _answerMovieFullPath = _currentCard.answer.movieFullPath;
         } else {
             path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
-        _answerMovieFullPath = path;
+            _answerMovieFullPath = path;
         }
         
     } else {
@@ -1701,11 +1701,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         _answerRecordedSoundFullPath = @"";
     }
-
+    
     
     
     _answerTitle.text = _currentCard.answer.title;
-
+    
     _subheadingAnswer.text = _currentCard.answer.subheading;
     _mainAnswer.text =_currentCard.answer.main;
     _subAnswer.text =_currentCard.answer.sub;
@@ -1868,7 +1868,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)segmentAction:(id)sender
 {
-	[self refreshAll];
+    [self refreshAll];
 }
 
 - (void) backgroundImageSelectButtonClicked:(UITapGestureRecognizer *)sender {
@@ -1894,15 +1894,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         PopoverView *backgroundImageSelectPopoverView;
         if (isAllowUndo) {
             backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
-                                     inView:self
-                                  withTitle:@"Edit/Remove"
-                            withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image",@"Undo last operation", nil]
+                                                                        inView:self
+                                                                     withTitle:@"Edit/Remove"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image",@"Undo last operation", nil]
                                                                       delegate:self];
         } else {
             backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
-                                     inView:self
-                                  withTitle:@"Edit/Remove"
-                            withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
+                                                                        inView:self
+                                                                     withTitle:@"Edit/Remove"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
                                                                       delegate:self];
         }
         backgroundImageSelectPopoverView.tag = Type_PopoverView_SelectBackground;
@@ -1929,7 +1929,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.movieFullPath2 = _answerMovieFullPath2;
     
     if (isFromNewCreatedCard) {
-       //我们不做什么，因为已经在CreateSoundViewController中进行commit了
+        //我们不做什么，因为已经在CreateSoundViewController中进行commit了
     } else {
         _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
         _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
@@ -1998,7 +1998,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (int) lineNumberWithUITextView:(UITextView *) textView
-{    
+{
     float textHeight = [self getTextSizeHeight:textView];
     float lineHeight = textView.font.lineHeight;
     
@@ -2080,7 +2080,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignQuestion = @"Justify";
     }
-
+    
     
     //2. main
     //during creating a new card, we used default value
@@ -2370,14 +2370,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     if (isUserInterfaceIdiomPhone) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            [self updateQuestionViewTemplateForiPhone];    
+            [self updateQuestionViewTemplateForiPhone];
         } else {
-            [self updateAnswerViewTemplateForiPhone];    
+            [self updateAnswerViewTemplateForiPhone];
         }
     }
     else {
         if (_segmentedControl.selectedSegmentIndex == 0) {
-            [self updateQuestionViewTemplateForiPad];    
+            [self updateQuestionViewTemplateForiPad];
         }else {
             [self updateAnswerViewTemplateForiPad];
         }
@@ -3608,7 +3608,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
-    
+            
             
             break;
         }
@@ -3967,7 +3967,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-        
+            
         case 5: //Template 5
         {
             _subheadingQuestion.hidden = TRUE;
@@ -4165,7 +4165,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _imageQuestion.hidden = FALSE;
             _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
             
-
+            
             break;
         }
         case 10:
@@ -4320,7 +4320,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4358,7 +4358,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
             } else {
@@ -4386,7 +4386,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4414,7 +4414,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4451,7 +4451,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4479,7 +4479,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4516,7 +4516,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4544,7 +4544,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4583,7 +4583,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:14];
             } else {
@@ -4613,7 +4613,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-        
+            
         case 5: //Template 5
         {
             _subheadingQuestion.hidden = TRUE;
@@ -4640,7 +4640,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
             } else {
@@ -4668,7 +4668,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
             } else {
@@ -4713,7 +4713,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-
+            
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
@@ -4892,7 +4892,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
-    
+            
             
             break;
         }
@@ -5033,7 +5033,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-    
+            
         default:
         {
             [iConsole info:@"%s:No template is selected",__FUNCTION__];
@@ -5080,7 +5080,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     }
-
+    
     
     if (isUserInterfaceIdiomPhone) {
         //we don't need to hide navigation bar on ipAD
@@ -5160,9 +5160,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGSize size = _verticalScrollView.contentSize;
     if (gap > 0) {
         if (isUserInterfaceIdiomPhone ) {
-          size.height =size.height + fabsf(scrollableOffset) + gap;
+            size.height =size.height + fabsf(scrollableOffset) + gap;
         } else {
-          size.height =size.height + fabsf(scrollableOffset) + gap;
+            size.height =size.height + fabsf(scrollableOffset) + gap;
         }
         
     } else {
@@ -5216,7 +5216,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self setVerticalAlignment:_lastBecomeFirstRespondTextView];
     }
     
-
+    
     
 }
 
@@ -5227,7 +5227,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int columnCount;
     int rowCount;
     int emotionViewHeight;
-    int cssToolbarHeight; 
+    int cssToolbarHeight;
     if (isUserInterfaceIdiomPhone) {
         columnCount = DEFAULT_COLUMN_COUNT_IPHONE;
         rowCount = DEFAULT_ROW_COUNT_IPHONE;
@@ -5246,7 +5246,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_keyboardInputBaseView setBackgroundColor:[UIColor clearColor]];
         
     }
-
+    
     
     //Emotion view
     
@@ -5268,7 +5268,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [_keyboardTopViewForInputViewV2 setupSummaryArray];
     [_keyboardInputBaseView addSubview:_keyboardTopViewForInputViewV2];
     [_keyboardInputBaseView bringSubviewToFront:_keyboardTopViewForInputViewV2];
- 
+    
     
 }
 
@@ -5324,7 +5324,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //reset offset
     [self resetVerticalScrollViewOffset];
-
+    
     
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
@@ -5451,13 +5451,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
-                                                      inView:self
-                                                   withTitle:@"Image/video selection"
-                                             withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library",@"Remove video/image", nil]
-                                                    delegate:self];
+                                                                   inView:self
+                                                                withTitle:@"Image/video selection"
+                                                          withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library",@"Remove video/image", nil]
+                                                                 delegate:self];
     
     imageSelectPopoverView.tag = Type_PopoverView_SelectImage;
-
+    
 }
 
 - (void)imageViewTapped2:(UITapGestureRecognizer *)sender {
@@ -5572,11 +5572,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         normalizedPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
     }
-    NSURL *audioURL = [NSURL fileURLWithPath:normalizedPath];;
     
-    [_audioPlayer stop];
-    
-    if (audioURL) {
+    NSURL *audioURL;
+    BOOL isDirectory;
+    BOOL isExist = [[NSFileManager defaultManager] fileExistsAtPath:normalizedPath isDirectory:&isDirectory];
+    if (isExist && (isDirectory == FALSE)) {
+        audioURL = [NSURL fileURLWithPath:normalizedPath];
+        
+        [_audioPlayer stop];
+        
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];
         
         _audioPlayer.numberOfLoops = 0;
@@ -5587,6 +5591,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [iConsole error:@"%s:%@,audio file:%@",__FUNCTION__,[error description],audioURL];
         else
             [_audioPlayer play];
+        
     } else {
         [iConsole info:@"%s:no audio file:%@",__FUNCTION__,audioURL];
         
@@ -5618,10 +5623,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_calledViewController) {
             //means this is called from play mode
             //iPad
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [_calledViewController presentModalViewController:playerViewController animated:YES];
         } else {
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
         }
         
@@ -5633,16 +5638,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_calledViewController) {
             //means this is called from play mode
             //iPad
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [_calledViewController presentModalViewController:playerViewController animated:YES];
         } else {
-            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
         }
-
+        
     }
-
-
+    
+    
 }
 
 
@@ -5664,14 +5669,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     if (isSupportMovie) {
-      _imagePickerController.mediaTypes = [NSArray arrayWithObjects:(NSString *) kUTTypeMovie, (NSString *) kUTTypeImage,nil];
+        _imagePickerController.mediaTypes = [NSArray arrayWithObjects:(NSString *) kUTTypeMovie, (NSString *) kUTTypeImage,nil];
     }
     _imagePickerController.navigationBar.barStyle = UIBarStyleBlack;
     _imagePickerController.contentSizeForViewInPopover = CGSizeMake(320, 400);
     _imagePickerController.delegate = self;
     
     if (isUserInterfaceIdiomPhone) {
-        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
         CGPoint point;
@@ -5682,8 +5687,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 point = _imageAnswer.center;
             }
         }else {
-          point = CGPointMake(CGRectGetWidth(sender.frame)/2, 2);
-          point = [sender convertPoint:point toView:self];
+            point = CGPointMake(CGRectGetWidth(sender.frame)/2, 2);
+            point = [sender convertPoint:point toView:self];
         }
         
         
@@ -5698,7 +5703,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
         _imagePickerPopover.delegate = self;
         if (isArrowUp) {
-          [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         } else {
             [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
         }
@@ -5710,7 +5715,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-   [iConsole info:@"%s",__FUNCTION__];
+    [iConsole info:@"%s",__FUNCTION__];
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:@"public.movie"]){
@@ -5823,17 +5828,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (_segmentedControl.selectedSegmentIndex == 0) {
                     _currentCard.question.imageFullPath = _questionImageFullPath;
                     _currentCard.question.movieFullPath = _questionMovieFullPath;
-
+                    
                 } else {
                     _currentCard.answer.imageFullPath = _answerImageFullPath;
                     _currentCard.answer.movieFullPath = _answerMovieFullPath;
-
+                    
                 }
             } else {
                 if (_segmentedControl.selectedSegmentIndex == 0) {
                     _currentCard.question.imageFullPath2 = _questionImageFullPath2;
                     _currentCard.question.movieFullPath2 = _questionMovieFullPath2;
-
+                    
                 } else {
                     _currentCard.answer.imageFullPath2 = _answerImageFullPath2;
                     _currentCard.answer.movieFullPath2 = _answerMovieFullPath2;
@@ -5843,8 +5848,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self saveEdittedCard];
         }
         
-    
-    
+        
+        
     } else if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
@@ -5968,7 +5973,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     APP_DELEGATE.isAllowToShowPackList = YES;
-
+    
     
 }
 
@@ -6009,7 +6014,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (isUserInterfaceIdiomPhone) {
         screenRect.size.height = kFlashCardViewHeight_Detail_iPhone_Pure;
     } else {
-        screenRect.size.height = kFlashCardViewHeight_Detail_iPad_Pure;    
+        screenRect.size.height = kFlashCardViewHeight_Detail_iPad_Pure;
     }
     UIGraphicsBeginImageContextWithOptions(screenRect.size, NO, 0.3);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -6026,7 +6031,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (switchSegment == YES) {
         _segmentedControl.selectedSegmentIndex = 1;
-          [self refreshAll];
+        [self refreshAll];
     }
     
     return newImage;
@@ -6065,7 +6070,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _lastBecomeFirstRespondTextView.inputView = _keyboardInputBaseView;
     } else {
         
-    
+        
         _isUITextViewFocused = TRUE;
         [_emotionButton setTitle:NSLocalizedString(@"ToolbarItem_Symbol",nil)];
         _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
@@ -6308,7 +6313,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_HUD show:YES];
         _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
         [self performSelector:@selector(execTextFieldDidEndEditingTask:) withObject:textField afterDelay:0.01];
-    
+        
     }
     
     _isTextFieldsChanged = NO;
@@ -6352,7 +6357,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
     
-
+    
 }
 
 //当点击，并还没有开始改变内容时
@@ -6397,9 +6402,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     static int tag = -1;
     
     if (tag != textView.tag) {
-        height = 0; 
+        height = 0;
     }
-
+    
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     CGFloat cursorY = [responderTextView caretRectForPosition:responderTextView.selectedTextRange.start].origin.y + responderTextView.font.lineHeight;
     
@@ -6461,9 +6466,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if ((offset.y <= 0) && couldTriggerToResetContentOffset) {  //因为offset永远是大于0的
-       offset.y = 0;
-       [_verticalScrollView setContentOffset:offset animated:YES];
-       couldTriggerToResetContentOffset = FALSE;
+        offset.y = 0;
+        [_verticalScrollView setContentOffset:offset animated:YES];
+        couldTriggerToResetContentOffset = FALSE;
     }
     
     [iConsole info:@"lineHeight = %f, height = %f, cursorY = %f",responderTextView.font.lineHeight,height,cursorY];
@@ -6484,7 +6489,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
                                                     message:[NSString stringWithFormat:NSLocalizedString(@"DIALOG_ENTER_VALID_URL",@"")
-]
+                                                             ]
                                                    delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
                                           otherButtonTitles:NSLocalizedString(@"Keyboard_Done",@""), nil];
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -6542,7 +6547,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
     } else {
-        [Common alertViewCommon:@"Incorrect URL or Email format"];    
+        [Common alertViewCommon:@"Incorrect URL or Email format"];
     }
 }
 
@@ -6550,7 +6555,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark - MFMailComposeViewController delegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
     [iConsole info:@"%s",__FUNCTION__];
-	[controller dismissModalViewControllerAnimated:YES];
+    [controller dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -
@@ -6572,10 +6577,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-//    for (Card *card in [_currentPack cards]) {
-//        card.question.logoFullPath =imagePath;
-//        [card save];
-//    }
+    //    for (Card *card in [_currentPack cards]) {
+    //        card.question.logoFullPath =imagePath;
+    //        [card save];
+    //    }
     
     [self reSceenshotAll:kReasonLogoImageChangeEnum withStringVal:imagePath];
     
@@ -6736,7 +6741,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([self adjustFontToFit:_subheadingAnswer]){
-           result= YES;
+            result= YES;
         }
         if ([self adjustFontToFit:_mainAnswer]){
             result= YES;
@@ -6780,14 +6785,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 usleep(5000);
             }
         }
-
+        
         
         //这样下次就不会进行autoresize操作了。除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
         if (result == YES) {
             _currentCard.answer.autoresizeFlag = 0;
         }
     }
-
+    
     
     return result;
 }
@@ -6848,7 +6853,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (textView.font.pointSize <10) {
             break;
         }
-    
+        
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize -1)]];
         [textView layoutSubviews];
         
@@ -6884,7 +6889,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         float factor = 1.0;
         if (textView.font.pointSize < 10.0) {
-           factor = 0.25;
+            factor = 0.25;
         }
         if (textView.font.pointSize < 12.0) {
             factor = 0.5;
@@ -6941,7 +6946,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ((self.tag == NEW_FLASHCARDVIEW_TAG) && (_segmentedControl.selectedSegmentIndex == 1)) {
         [_segmentedControl setSelectedSegmentIndex:0];
         [self refreshAll];
-
+        
     }
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -7133,9 +7138,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     theMovie.shouldAutoplay=NO;
     UIImage *thumbnail;
     if ([[url absoluteString].lowercaseString rangeOfString:@"http"].location == 0) {
-      // it's a http format web video. Considering performance/cost to fetch online content, we skip it.
+        // it's a http format web video. Considering performance/cost to fetch online content, we skip it.
     } else {
-      //it's a local video
+        //it's a local video
         thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
     }
     if (thumbnail == nil) {
@@ -7274,7 +7279,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if ([emoticon.code.lowercaseString isEqualToString:K_Delete.lowercaseString]) {
-       
+        
         if (beforeStr.length >= 1) {
             beforeStr = [beforeStr substringToIndex:beforeStr.length-1];
         }
@@ -7339,7 +7344,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (buttonIndex ==0) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
-                   [iConsole info:@"%s:unvalid url adress",__FUNCTION__];
+                    [iConsole info:@"%s:unvalid url adress",__FUNCTION__];
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
@@ -7435,7 +7440,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     Type_PopoverView sourceType = popoverView.tag;
     
     if (sourceType == Type_PopoverView_SelectImage) {
-      [popoverView dismiss];
+        [popoverView dismiss];
         
         if (index == 1) {
             [self selectImageOrVideoFromLibraryWithImageType:sourceType];
@@ -7469,7 +7474,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         isToSetImageViewEmpty = YES;
                     }
                     
-                
+                    
                 }
                 
                 if (([_questionMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
@@ -7516,10 +7521,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath);
                     }
                 }
-
+                
                 _answerImageFullPath = @"";
                 _answerMovieFullPath = @"";
-
+                
                 _currentCard.answer.movieFullPath = @"";
                 _currentCard.answer.imageFullPath = @"";
                 [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
@@ -7598,7 +7603,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
                 _answerImageFullPath2 = @"";
                 _answerMovieFullPath2 = @"";
-
+                
                 _currentCard.answer.movieFullPath2 = @"";
                 _currentCard.answer.imageFullPath2 = @"";
                 [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
@@ -7640,7 +7645,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             NSString * undoFullPath;
             if (_segmentedControl.selectedSegmentIndex == 0) {
-
+                
                 //step1: 填充 _questionBackgroundImageView
                 NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
                 undoFullPath = [cardDict objectForKey:@"K_Undo_Question_Background_Image_URL"];
@@ -7665,7 +7670,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
                 [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
                 [self setUndoForCardBackgroundImage:cardMutableDict];
-
+                
                 
             } else {
                 
@@ -7693,7 +7698,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [self setUndoForCardBackgroundImage:cardMutableDict];
                 
             }
-
+            
             //step4: 保存
             if (self.tag == NEW_FLASHCARDVIEW_TAG) {
                 //we will save until after we press the save button
@@ -7728,7 +7733,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         for (NSDictionary *cardDict in array) {
             if (([[cardDict objectForKey:@"packId"] integerValue] == packId) &&
-                  ([[cardDict objectForKey:@"cardId"] integerValue] == cardID)){
+                ([[cardDict objectForKey:@"cardId"] integerValue] == cardID)){
                 return cardDict;
             }
         }
@@ -7894,7 +7899,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance {
-  [iConsole info:@"%s",__FUNCTION__];
+    [iConsole info:@"%s",__FUNCTION__];
 }
 
 
@@ -7902,7 +7907,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSMutableArray *myArray = [NSMutableArray array];
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         if ((_subheadingQuestion.text.length >0) && (_subheadingQuestion.hidden == NO)) {
-
+            
             [myArray addObjectsFromArray:[self replaceBasicSymbol:_subheadingQuestion.text]];
         }
         
@@ -7962,20 +7967,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *oxygenStr = @" Oxygen ";
     NSString *pieStr = @" Pie ";
     NSString *squareRdiusStr = @" square radius ";
-
+    
     NSString *OzoneStr = @"  Ozone ";
     NSString *perStr = @" per ";
     NSString *millibarStr = @" milli bar equals ";
     NSString *percentStr = @" percent ";
-
+    
     NSString *radiusStr = @"  Radius equals ";
     NSString *diameterStr = @" Diameter equals ";
     NSString *greaterThenStr = @" Greater then ";
     NSString *lessThenStr = @" Less then ";
-
+    
     NSString *squareRootStr = @" square root ";
-
-
+    
+    
     resultStr = [str stringByReplacingOccurrencesOfString:@"+" withString:plusStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"⨯" withString:timesStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"÷" withString:dividedByStr];
@@ -7985,22 +7990,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm³" withString:cubicMillimetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mm²" withString:squareMillimetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"cm³" withString:cubicCentimetresStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m³" withString:cubicMetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"m²" withString:squareMetresStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ft²" withString:squareFeetStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"ft³" withString:cubicFeetStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in²" withString:squareInchesStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"in³" withString:cubicInchesStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°C" withString:degreesCelsiusStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°F" withString:degreesFahrenheitStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°R" withString:degreesRankinStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"°K" withString:degresssKelvinStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"CO₂" withString:carbonDioxideStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"N₂" withString:nitrogenStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"O₂" withString:oxygenStr];
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"π" withString:pieStr];
@@ -8013,7 +8018,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mb=" withString:millibarStr]; ////// mb = millibar
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"mb =" withString:millibarStr]; ////// mb = millibar
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"%" withString:percentStr]; ///// not unicode
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r=" withString:radiusStr]; //////// r
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"r =" withString:radiusStr]; //////// r
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"d=" withString:diameterStr]; /////// d
@@ -8021,11 +8026,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@">" withString:greaterThenStr]; //// not unicode
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"<" withString:lessThenStr];///// not unicode
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@"√" withString:squareRootStr];
-
+    
     resultStr = [resultStr stringByReplacingOccurrencesOfString:@" = " withString:equalsStr]; ////// , not unicode, need to be put last
-
-
-
+    
+    
+    
     NSArray *returnArray = [resultStr componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
     return returnArray;
@@ -8154,7 +8159,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if (isDefault) {
-              //第一个是back，所以需要index = 1开始
+            //第一个是back，所以需要index = 1开始
             [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
@@ -8276,7 +8281,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
         }
         
-    
+        
     }
     
     
@@ -8344,7 +8349,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/** 
+/**
  *  KVO
  *  仅适用于[self isVerticalAlignment:tv] ＝ YES
  *  当内容改变时，自动进行vertical alignment调整
@@ -8430,30 +8435,30 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     [self changeFontTypeBarButtonItemClicked:sender];
     [self updateFontButtonsStatus:sender];
-
+    
     
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButton:(id) sender {
     [self changeFontSizeBarButtonItemClicked:sender];
     [self updateSizeButtonsStatus:sender];
-
+    
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedAlignChangeButton:(id) sender {
     [self changeAlignBarButtonItemClicked:sender];
     [self updateAlignButtonsStatus:sender];
-
+    
 }
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButton:(id) sender {
     [self changeColorBarButtonItemClicked:sender];
     [self updateColorButtonsStatus:sender];
-
+    
 }
 
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id)sender {
-  [self dismissKeyBoard:sender];
+    [self dismissKeyBoard:sender];
 }
 
 
@@ -8470,9 +8475,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
         [self updateFontButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
-       [self symbolAndKeyboardSwitch:sender];
+        [self symbolAndKeyboardSwitch:sender];
     } else {
-       //do nothing
+        //do nothing
     }
     
 }
@@ -8593,14 +8598,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     controller.delegate = self;
     controller.image = origialmage;
     
-//    UIImage *image = self.imageView.image;
-//    CGFloat width = image.size.width;
-//    CGFloat height = image.size.height;
-//    CGFloat length = MIN(width, height);
-//    controller.imageCropRect = CGRectMake((width - length) / 2,
-//                                          (height - length) / 2,
-//                                          length,
-//                                          length);
+    //    UIImage *image = self.imageView.image;
+    //    CGFloat width = image.size.width;
+    //    CGFloat height = image.size.height;
+    //    CGFloat length = MIN(width, height);
+    //    controller.imageCropRect = CGRectMake((width - length) / 2,
+    //                                          (height - length) / 2,
+    //                                          length,
+    //                                          length);
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     
@@ -8651,8 +8656,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _selectTemplatePopoverController = nil;
     
     _audioPlayer = nil;
-
-
+    
+    
     
     
     [iConsole info:@"%s",__FUNCTION__];
@@ -8673,7 +8678,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //1.
     CGRect rectLogo = [_logoImage  convertRect:CGRectMake(CGRectGetWidth(_logoImage.frame)/2, CGRectGetHeight(_logoImage.frame), 0, 0) toView:self];
     if (isUserInterfaceIdiomPhone == FALSE) {
-      rectLogo = CGRectOffset(rectLogo, -38, -20);
+        rectLogo = CGRectOffset(rectLogo, -38, -20);
     }
     [[TipHelper defaultHelper] showTipForLogoInView:self fromFrame:rectLogo];
     
@@ -8692,7 +8697,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     CGRect rectRecordButton = [_soundButton  convertRect:CGRectMake(CGRectGetWidth(_soundButton.frame)/2,0, 0, 0) toView:self];
     [[TipHelper defaultHelper] showTipForToolbarBottomRightRecordSoundInView:self fromFrame:rectRecordButton];
-
+    
     
     //4
     CGRect recLinkButton = [_logoLinkageButton  convertRect:CGRectMake(CGRectGetWidth(_logoLinkageButton.frame)/3, CGRectGetHeight(_logoLinkageButton.frame)/4, 0, 0) toView:self];
