@@ -203,6 +203,7 @@
     } else {
         _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 25 -30, 400, 30)];
     }
+    _controlPanel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     _controlPanel.layer.cornerRadius = 3;
     _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
     [self.view addSubview:_controlPanel];
@@ -312,8 +313,8 @@
     FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
                                                  defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
     currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
-    
-    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:index];
+    currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
     [currentFlashCardView disableCardEdit];
     [currentFlashCardView.segmentedControl setHidden:YES];
     
@@ -334,8 +335,8 @@
     //[self addGestureSupport]; :TODO:XXXX
 
     currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
-    
-    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:index];
+    currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
     [currentFlashCardView disableCardEdit];
     [currentFlashCardView.segmentedControl setHidden:YES];
     

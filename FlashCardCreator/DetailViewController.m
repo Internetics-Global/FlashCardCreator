@@ -500,13 +500,7 @@ enum popover_enum {
     [iConsole info:@"%s",__FUNCTION__];
     PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.currentPack = self.currentPack;
-    //playViewController.currentCard = self.currentCard;
-    if (isUserInterfaceIdiomPhone) {
-        playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
-    } else {
-        playViewController.view.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
-    }
-    playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"Current card or pack is nil"];
         return;
