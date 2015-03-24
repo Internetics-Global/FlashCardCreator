@@ -13,6 +13,7 @@
 #import "Card.h"
 #import <CoreMotion/CoreMotion.h>
 #import "SharkfoodMuteSwitchDetector.h"
+#import "UIButton+Extensions.h"
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate> {
     CycleScrollView *_scrollView;
@@ -176,7 +177,7 @@
     _closeButton.titleLabel.text = nil;
     _closeButton.showsTouchWhenHighlighted = YES;
     [_closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_closeButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
     //step2: uiscroll view
     
@@ -200,45 +201,40 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     //step4: control panel
-    _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 300)/2, CGRectGetHeight(self.view.frame) - 50 -30, 300, 60)];
+    _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 25 -30, 400, 30)];
     _controlPanel.layer.cornerRadius = 3;
     _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
     [self.view addSubview:_controlPanel];
     
     UIButton *cyclePlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cyclePlayButton.frame = CGRectMake(10, 35, 20, 20);
+    cyclePlayButton.frame = CGRectMake(10, 5, 20, 20);
     [cyclePlayButton setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
     [cyclePlayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cyclePlayButton addTarget:self action:@selector(cyclePlayButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     cyclePlayButton.showsTouchWhenHighlighted =YES;
+    [cyclePlayButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:cyclePlayButton];
     
     UIButton *autoScrollButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    autoScrollButton.frame = CGRectMake(10, 5, 20, 20);
+    autoScrollButton.frame = CGRectOffset(cyclePlayButton.frame, 20 + 20, 0);
     [autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
     [autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     autoScrollButton.showsTouchWhenHighlighted =YES;
+    [autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:autoScrollButton];
     
-    UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    playButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -10, 5, 20, 20);
-    [playButton setImage:[UIImage imageNamed:@"play25"] forState:UIControlStateNormal];
-    [playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    playButton.showsTouchWhenHighlighted =YES;
-    [_controlPanel addSubview:playButton];
     
-    UIButton *muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    muteButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -10, 35, 20, 20);
-    [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
-    [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    muteButton.showsTouchWhenHighlighted =YES;
-    [_controlPanel addSubview:muteButton];
+    UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 5, 90, 20)];
+    autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
+    autoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    autoPlayDelayLabel.text = @"Auto Play Speed";
+    autoPlayDelayLabel.numberOfLines = 1;
+    autoPlayDelayLabel.textColor = [UIColor whiteColor];
+    autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:autoPlayDelayLabel];
     
-    
-    UISlider *autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectMake(60, 10, 180, 20)];
+    UISlider *autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
     autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
     autoPlayDelaySlider.minimumValue = 4;
@@ -250,8 +246,8 @@
     [autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
     [_controlPanel addSubview: autoPlayDelaySlider];
     
-    UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 12, 15, 15)];
-    minLabel.textAlignment = NSTextAlignmentCenter;
+    UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
+    minLabel.textAlignment = NSTextAlignmentRight;
     minLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
     minLabel.text = @"4";
     minLabel.numberOfLines = 1;
@@ -259,8 +255,8 @@
     minLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:minLabel];
     
-    UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 12, 15, 15)];
-    maxLabel.textAlignment = NSTextAlignmentCenter;
+    UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(autoPlayDelaySlider.frame), 5, 20, 20)];
+    maxLabel.textAlignment = NSTextAlignmentLeft;
     maxLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
     maxLabel.text = @"10";
     maxLabel.numberOfLines = 1;
@@ -268,20 +264,24 @@
     maxLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:maxLabel];
     
-    UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, 180, 20)];
-    autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
-    autoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    autoPlayDelayLabel.text = @"Auto Play Speed";
-    autoPlayDelayLabel.numberOfLines = 1;
-    autoPlayDelayLabel.textColor = [UIColor whiteColor];
-    autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:autoPlayDelayLabel];
     
-    double delayInSeconds = 2;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        _controlPanel.hidden = YES;
-    });
+    UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    playButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -20, 5, 20, 20);
+    [playButton setImage:[UIImage imageNamed:@"play25"] forState:UIControlStateNormal];
+    [playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    playButton.showsTouchWhenHighlighted =YES;
+    [playButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
+    [_controlPanel addSubview:playButton];
+    
+    UIButton *muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    muteButton.frame = CGRectOffset(playButton.frame, -30, 0);
+    [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+    [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    muteButton.showsTouchWhenHighlighted =YES;
+    [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
+    [_controlPanel addSubview:muteButton];
     
 
 }
@@ -542,7 +542,7 @@
     if (_isMute == FALSE) {
         FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
         if (currentCard) {
-            [currentCard playAudio:YES];
+            [currentCard playAudio:NO];
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };

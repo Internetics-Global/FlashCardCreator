@@ -264,6 +264,7 @@
 		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
 		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
 		88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */; };
+		88EA2ACF1AC1329600A3663E /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */; };
 		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
 		88F47F661793FBE200EE068F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F47F651793FBE200EE068F /* Media.xcassets */; };
 		88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */; };
@@ -641,6 +642,8 @@
 		88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CycleScrollView.m; path = Classes/CycleScrollView.m; sourceTree = "<group>"; };
 		88EA2ACA1ABFC24800A3663E /* PlayViewControllerV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewControllerV2.h; sourceTree = "<group>"; };
 		88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewControllerV2.m; sourceTree = "<group>"; };
+		88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extensions.h"; sourceTree = "<group>"; };
+		88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Extensions.m"; sourceTree = "<group>"; };
 		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		88F47F651793FBE200EE068F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = FlashCardCreator/Media.xcassets; sourceTree = "<group>"; };
 		88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_recorded_sound_button.png; path = Resources/play_recorded_sound_button.png; sourceTree = "<group>"; };
@@ -862,6 +865,8 @@
 		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */,
+				88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */,
 				884DE1AD18FBA94F00C09067 /* RequestUtils.h */,
 				884DE1AE18FBA94F00C09067 /* RequestUtils.m */,
 				88C2235417C2BC5E006EB652 /* JSBadgeView.h */,
@@ -1771,6 +1776,7 @@
 				88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */,
 				2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */,
 				880978FB1978C1E400C3BD1A /* KeyboardTopView.m in Sources */,
+				88EA2ACF1AC1329600A3663E /* UIButton+Extensions.m in Sources */,
 				2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */,
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
