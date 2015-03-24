@@ -5560,7 +5560,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (void) playAudio {
+- (void) playAudio:(BOOL) isManualClicked {
     [iConsole info:@"%s",__FUNCTION__];
     
     
@@ -5589,15 +5589,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         [iConsole info:@"%s:no audio file:%@",__FUNCTION__,audioURL];
         
-//        NSString *msg;
-//        if (_segmentedControl.selectedSegmentIndex == 0) {
-//          msg = @"No recorded audio on the question card";
-//        } else {
-//            msg = @"No recorded audio on the answer card";
-//        }
-//        
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alertView show];
+        if (isManualClicked) {
+            NSString *msg;
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                msg = @"No recorded audio on the question card";
+            } else {
+                msg = @"No recorded audio on the answer card";
+            }
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
     }
 }
 
@@ -6996,33 +6998,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) soundRecordButtonClicked:(id)sender {
     [iConsole info:@"%s",__FUNCTION__];
-    if (_isPlayingCard) {
-        //play sound
-        [self playAudio];
+    
+    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+        
+        CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
+        createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
+        createSoundViewController.card = _currentCard;
+        createSoundViewController.pack = _currentPack;
+        
+        if (isFromNewCreatedCard) {
+            createSoundViewController.isFromNewCreatedCard = YES;
+        } else {
+            createSoundViewController.isFromNewCreatedCard = NO;
+        }
+        
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
         
     } else {
-        
-        if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
-            
-            CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
-            createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
-            createSoundViewController.card = _currentCard;
-            createSoundViewController.pack = _currentPack;
-            
-            if (isFromNewCreatedCard) {
-                createSoundViewController.isFromNewCreatedCard = YES;
-            } else {
-                createSoundViewController.isFromNewCreatedCard = NO;
-            }
-            
-            UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
-            navController.modalPresentationStyle = UIModalPresentationFormSheet;
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
-            
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Audio play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-        }
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Audio play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
     }
     
 }

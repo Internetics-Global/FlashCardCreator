@@ -147,6 +147,20 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (_isMute == FALSE) {
+        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        if (currentCard) {
+            [currentCard playAudio:NO];
+        } else {
+            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+        };
+    }
+    
+}
+
 
 - (void) setupViews {
     
@@ -414,7 +428,7 @@
             [currentFlashCardView textToSpeechAllContentNow];
         });;
     } else {
-        [currentFlashCardView playAudio];
+        [currentFlashCardView playAudio:NO];
     }
 }
 
@@ -459,20 +473,14 @@
 
 - (void) playButtonClicked:(UIButton *) button {
     
-    if (_isMute) {
-        return;
+    if (_isMute == FALSE) {
+        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        if (currentCard) {
+            [currentCard playAudio:YES];
+        } else {
+            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+        };
     }
-    
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
-    if (currentCard) {
-        [currentCard playAudio];
-    } else {
-         [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
-    }
-    
-    
-    
-    
 }
 
 - (void) muteButtonClicked:(UIButton *) button {

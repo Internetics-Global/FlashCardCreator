@@ -448,7 +448,7 @@
             [_currentFlashCardView textToSpeechAllContentNow];
         });;
     } else {
-        [_currentFlashCardView playAudio];
+        [_currentFlashCardView playAudio:NO];
     }
     
 }
@@ -493,7 +493,7 @@
             [_currentFlashCardView textToSpeechAllContentNow];
         });;
     } else {
-        [_currentFlashCardView playAudio];
+        [_currentFlashCardView playAudio:NO];
     }
 }
 
