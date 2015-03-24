@@ -14,6 +14,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "SharkfoodMuteSwitchDetector.h"
 #import "UIButton+Extensions.h"
+#import "UIAlertView+Blocks.h"
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate> {
     CycleScrollView *_scrollView;
@@ -237,7 +238,7 @@
     UISlider *autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
     autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
-    autoPlayDelaySlider.minimumValue = 4;
+    autoPlayDelaySlider.minimumValue = 3;
     autoPlayDelaySlider.maximumValue = 10.0;
     autoPlayDelaySlider.continuous = NO;
     autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
@@ -461,13 +462,41 @@
         [button setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     }
     
-    if (_isAutoScroll) {
-        _scrollView.userInteractionEnabled = NO;
-        _scrollView.isAutoScroll = YES;
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Not_Show_AutoScroll_Alert"];
+    if (val) {
+        
+        if (_isAutoScroll) {
+            _scrollView.userInteractionEnabled = NO;
+            _scrollView.isAutoScroll = YES;
+        } else {
+            _scrollView.userInteractionEnabled = YES;
+            _scrollView.isAutoScroll = NO;
+        }
+        
     } else {
-        _scrollView.userInteractionEnabled = YES;
-        _scrollView.isAutoScroll = NO;
+        [UIAlertView showWithTitle:@"Alert" message:@"In auto mode, the card will not accept any touch event until you click auto play button again" cancelButtonTitle:@"Got it" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 0) {
+                
+            } else {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setBool:YES  forKey:@"K_Not_Show_AutoScroll_Alert"];
+                [defaults synchronize];
+            }
+            
+            if (_isAutoScroll) {
+                _scrollView.userInteractionEnabled = NO;
+                _scrollView.isAutoScroll = YES;
+            } else {
+                _scrollView.userInteractionEnabled = YES;
+                _scrollView.isAutoScroll = NO;
+            }
+            
+        }];
     }
+    
+    
+    
     
 }
 

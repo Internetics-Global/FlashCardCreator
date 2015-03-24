@@ -265,6 +265,7 @@
 		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
 		88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */; };
 		88EA2ACF1AC1329600A3663E /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */; };
+		88EA2B4A1AC15ADF00A3663E /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */; };
 		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
 		88F47F661793FBE200EE068F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F47F651793FBE200EE068F /* Media.xcassets */; };
 		88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */; };
@@ -644,6 +645,8 @@
 		88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewControllerV2.m; sourceTree = "<group>"; };
 		88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extensions.h"; sourceTree = "<group>"; };
 		88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Extensions.m"; sourceTree = "<group>"; };
+		88EA2B481AC15ADF00A3663E /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
+		88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		88F47F651793FBE200EE068F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = FlashCardCreator/Media.xcassets; sourceTree = "<group>"; };
 		88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_recorded_sound_button.png; path = Resources/play_recorded_sound_button.png; sourceTree = "<group>"; };
@@ -1012,6 +1015,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				88620B561AB103BE0046B64E /* Parse */,
 				88BADB3C1A6CCCF500D6CA9F /* Reachability */,
 				88E93D541A634C85007CB7A2 /* SoundSwitch */,
@@ -1479,6 +1483,16 @@
 			name = SoundSwitch;
 			sourceTree = "<group>";
 		};
+		88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				88EA2B481AC15ADF00A3663E /* UIAlertView+Blocks.h */,
+				88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */,
+			);
+			name = "UIAlertView-Blocks";
+			path = "Libraries/UIAlertView-Blocks";
+			sourceTree = "<group>";
+		};
 		88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1787,6 +1801,7 @@
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
 				2D5C17E216D1A56A00E1E785 /* AFURLConnectionOperation.m in Sources */,
 				88F5CE7219B40B4B00107075 /* UIImage+PECrop.m in Sources */,
+				88EA2B4A1AC15ADF00A3663E /* UIAlertView+Blocks.m in Sources */,
 				2D5C17E316D1A56A00E1E785 /* AFXMLRequestOperation.m in Sources */,
 				2D5C17E416D1A56A00E1E785 /* UIImageView+AFNetworking.m in Sources */,
 				889131D51A123DED0011B7ED /* iConsole.m in Sources */,

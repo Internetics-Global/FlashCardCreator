@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define k_Default_AutoPlayDelaySeconds  6.0
+#define k_Default_AutoPlayDelaySeconds  3.0
 
 @protocol CycleScrollViewDelegate;
 @protocol CycleScrollViewDatasource;

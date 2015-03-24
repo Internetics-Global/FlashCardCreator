@@ -16,7 +16,6 @@
 }
 
 @property (nonatomic,readonly) UIScrollView   *scrollView;
-@property (nonatomic,assign) NSInteger         currentPage;
 
 @end
 
@@ -291,8 +290,16 @@
 
 - (void)autoScrollView
 {
-    NSInteger page = _currentPage;
-    [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(page+2),0) animated:YES];
+    if (_isCycle) {
+        [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+    } else {
+        if (_curPage < _totalPages -1) {
+            [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+        } else {
+            
+        }
+    }
+    
 }
 
 #pragma mark – view.frame
