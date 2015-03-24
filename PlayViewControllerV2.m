@@ -197,7 +197,11 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     //step4: control panel
-    _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 25 -30, 400, 30)];
+    if (isUserInterfaceIdiomPhone) {
+        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 5 -30, 400, 30)];
+    } else {
+        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 25 -30, 400, 30)];
+    }
     _controlPanel.layer.cornerRadius = 3;
     _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
     [self.view addSubview:_controlPanel];
