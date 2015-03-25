@@ -527,8 +527,6 @@
 
 - (void) autoPlayDelaySliderClicked:(UISlider *) slider {
     
-    NSLog(@"test");
-    
     _scrollView.autoPlayDelaySeconds = slider.value;
     
 }

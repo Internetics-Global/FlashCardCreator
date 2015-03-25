@@ -44,6 +44,8 @@
 
 #import "iConsole.h"
 
+#import "UIButton+Extensions.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -271,7 +273,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) loadQuestionAnswerViewForiPad {
     [iConsole info:@"%s",__FUNCTION__];
     if (_templateBackgroundImageView == nil) {
-        _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        if (_templateBackgroundImageName) {
+           _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        } else {
+            _templateBackgroundImageView = [[UIImageView alloc] init];
+        }
+        
         _templateBackgroundImageView.contentMode = UIViewContentModeScaleToFill;
         _templateBackgroundImageView.frame = CGRectMake(0, 0, 800, kFlashCardViewHeight_Detail_iPad_Pure);
         _templateBackgroundImageView.backgroundColor = [UIColor clearColor];
@@ -704,6 +711,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_soundButton == nil) {
             _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
             _soundButton.frame = CGRectMake(114, 8, 24, 24);
+            [_soundButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
             [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
             [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             _soundButton.backgroundColor = [UIColor clearColor];
@@ -714,6 +722,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_backgroundImageSelectButton == nil) {
             _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
             _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
+            [_backgroundImageSelectButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
             _backgroundImageSelectButton.frame = CGRectMake(68, 8, 24, 24);
             [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_backgroundImageSelectButton];
@@ -726,6 +735,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_changeTemplateButton == nil) {
             _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
             _changeTemplateButton.frame = CGRectMake(18, 8, 24, 24);
+            [_changeTemplateButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
             [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_changeTemplateButton];
@@ -744,7 +754,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) loadQuestionAnswerViewForiPhone {
     [iConsole info:@"%s",__FUNCTION__];
     if (_templateBackgroundImageView == nil) {
-        _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        if (_templateBackgroundImageName) {
+          _templateBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_templateBackgroundImageName]];
+        } else {
+            _templateBackgroundImageView = [[UIImageView alloc] init];
+        }
         _templateBackgroundImageView.contentMode = UIViewContentModeScaleToFill;
         _templateBackgroundImageView.backgroundColor = [UIColor clearColor];
         _templateBackgroundImageView.frame = CGRectMake(0, 0, kFlashCardViewWidth_Detail_iPhone, kFlashCardViewHeight_Detail_iPhone_Pure);
