@@ -476,7 +476,7 @@
         }
         
     } else {
-        [UIAlertView showWithTitle:@"Alert" message:@"In auto mode, the card will not accept any touch event until you click auto play button again" cancelButtonTitle:@"Got it" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [UIAlertView showWithTitle:@"Alert" message:@"You are in auto mode, so you cannot manually operate cards until you switch off Auto" cancelButtonTitle:@"Got it" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex == 0) {
                 
             } else {

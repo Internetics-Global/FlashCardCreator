@@ -5612,9 +5612,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (isManualClicked) {
             NSString *msg;
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                msg = @"No recorded audio on the question card";
+                msg = @"There is no audio on the question card";
             } else {
-                msg = @"No recorded audio on the answer card";
+                msg = @"There is no audio on the answer card";
             }
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
