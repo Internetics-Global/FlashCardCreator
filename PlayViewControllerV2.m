@@ -491,24 +491,26 @@
         }
         
     } else {
-        [UIAlertView showWithTitle:@"Alert" message:@"You are in auto mode, so you cannot manually operate cards until you switch off Auto" cancelButtonTitle:@"Got it" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            if (buttonIndex == 0) {
+        if (_isAutoScroll) {
+            [UIAlertView showWithTitle:@"Autoplay enabled" message:@"You are in Auto Play mode, so you cannot manually operate the cards until you switch off Auto Play" cancelButtonTitle:@"OK" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 0) {
+                    
+                } else {
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setBool:YES  forKey:@"K_Not_Show_AutoScroll_Alert"];
+                    [defaults synchronize];
+                }
                 
-            } else {
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setBool:YES  forKey:@"K_Not_Show_AutoScroll_Alert"];
-                [defaults synchronize];
-            }
-            
-            if (_isAutoScroll) {
-                _scrollView.userInteractionEnabled = NO;
-                _scrollView.isAutoScroll = YES;
-            } else {
-                _scrollView.userInteractionEnabled = YES;
-                _scrollView.isAutoScroll = NO;
-            }
-            
-        }];
+                if (_isAutoScroll) {
+                    _scrollView.userInteractionEnabled = NO;
+                    _scrollView.isAutoScroll = YES;
+                } else {
+                    _scrollView.userInteractionEnabled = YES;
+                    _scrollView.isAutoScroll = NO;
+                }
+                
+            }];
+        }
     }
     
     

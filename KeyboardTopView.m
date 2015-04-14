@@ -14,7 +14,7 @@
 #define K_NominalSizeArray @[@12,@14,@16,@18,@20,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
 #define K_ColorArray       @[@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White"]
 #define K_AlignArray       @[@"Left",@"Center",@"Right",@"Justify",@"Vertical"]
-#define K_FontArray        @[@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus"]
+#define K_FontArray        @[@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus",@"Zapfino"]
 
 #define K_FontScale_iPhone     1.0
 #define K_FontScale_iPad       2.0
