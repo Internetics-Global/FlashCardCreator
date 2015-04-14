@@ -199,6 +199,7 @@ typedef enum{
 - (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val;  //Re-screenshot all cards under current pack
 
 - (void) playAudio:(BOOL) isManualClicked;
+- (void) stopAudio;
 
 - (void) textToSpeechAllContentNow;
 - (void) stopTextToSpeechNow;

@@ -423,14 +423,16 @@
     }
     
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-        double delayInSeconds = 0.5;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [currentFlashCardView textToSpeechAllContentNow];
-        });;
-    } else {
-        [currentFlashCardView playAudio:NO];
+    if (_isMute == FALSE) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [currentFlashCardView textToSpeechAllContentNow];
+            });;
+        } else {
+            [currentFlashCardView playAudio:NO];
+        }
     }
 }
 
@@ -521,6 +523,12 @@
     } else {
         _isMute = YES;
         [button setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
+        
+        FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+        [currentFlashCardView stopAudio];
+        
+        
+        
     }
     
 }

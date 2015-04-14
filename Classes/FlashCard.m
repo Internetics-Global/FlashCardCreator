@@ -5574,6 +5574,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+- (void) stopAudio {
+    
+    if ([_audioPlayer isPlaying]) {
+        [_audioPlayer stop];
+    }
+    
+}
+
 - (void) playAudio:(BOOL) isManualClicked {
     [iConsole info:@"%s",__FUNCTION__];
     
