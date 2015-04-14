@@ -411,9 +411,10 @@ enum popover_enum {
         }
         _backgroundOfCreateCardView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.8];
         _backgroundOfCreateCardView.layer.opacity = 0;
+        __weak __typeof(&*self)weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^{
             _backgroundOfCreateCardView.layer.opacity = 1;
-            [self.navigationController.view addSubview:_backgroundOfCreateCardView];
+            [weakSelf.navigationController.view addSubview:_backgroundOfCreateCardView];
         }];
         [_backgroundOfCreateCardView addTarget:self action:@selector(dismissCreateCardView:) forControlEvents:UIControlEventTouchDown];
         
@@ -427,7 +428,7 @@ enum popover_enum {
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             _backgroundOfCreateCardView.enabled = YES;
             _addCardButton.enabled = YES;
-            self.view.userInteractionEnabled = YES;
+            weakSelf.view.userInteractionEnabled = YES;
         });
         
     }
@@ -460,14 +461,14 @@ extern BOOL isFromNewCreatedCard;
     _backgroundOfCreateCardView.enabled = NO;
     self.view.userInteractionEnabled = NO;
     
-    
+    __weak __typeof(&*self)weakSelf = self;
     double delayInSeconds = 0.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [_backgroundOfCreateCardView removeFromSuperview];
         _addCardButton.enabled = YES;
         _backgroundOfCreateCardView.enabled = YES;
-        self.view.userInteractionEnabled = YES;
+        weakSelf.view.userInteractionEnabled = YES;
     });
 }
 
@@ -1484,6 +1485,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) updateDownloadLimitCount {
+    __weak __typeof(&*self)weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         NSString *defaultDomain = [AmazonClientManager defaultDomain];
@@ -2178,7 +2180,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark – Tooltips
 
 - (void) showTooltips {
-    
+    __weak __typeof(&*self)weakSelf = self;
     double delayInSeconds = 0.2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -2186,19 +2188,19 @@ extern BOOL isFromNewCreatedCard;
         //1.
         CGRect rect = _addCardButton.frame;
         rect.origin.y = rect.origin.y - 30;
-        [[TipHelper defaultHelper] showTipForCreateCardInView:self.view fromFrame:rect];
+        [[TipHelper defaultHelper] showTipForCreateCardInView:weakSelf.view fromFrame:rect];
         
         //2.
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:self.view fromFrame:CGRectMake(140, 0, 0, 0)];
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:self.view fromFrame:CGRectMake(90, 0, 0, 0)];
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:self.view fromFrame:CGRectMake(40, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(140, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(90, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:weakSelf.view fromFrame:CGRectMake(40, 0, 0, 0)];
         
         //3.
         if (isUserInterfaceIdiomPhone) {
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 40, 0, 0, 0)];;
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 90, 0, 0, 0)];
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 190, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 40, 0, 0, 0)];;
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 90, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 190, 0, 0, 0)];
     
         }
         

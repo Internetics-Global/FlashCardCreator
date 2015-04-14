@@ -173,10 +173,11 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
             
             [_recorder record];
             
+            __weak __typeof(&*self)weakSelf = self;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
-                _playButton.hidden = YES;
-                _saveButton.hidden = YES;
+                weakSelf.playButton.hidden = YES;
+                weakSelf.saveButton.hidden = YES;
                 
                 usleep(500000);
                 
@@ -191,18 +192,18 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [_alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",k_Max_Record_Second - executionTime]];
+                        [weakSelf.alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",k_Max_Record_Second - executionTime]];
                     
                     });
                 }
                 
                 usleep(200000);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
-                    [_startButton setTitle:@"Record" forState:UIControlStateNormal];
+                    [weakSelf.alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
+                    [weakSelf.startButton setTitle:@"Record" forState:UIControlStateNormal];
                     
-                    _playButton.hidden = NO;
-                    _saveButton.hidden = NO;
+                    weakSelf.playButton.hidden = NO;
+                    weakSelf.saveButton.hidden = NO;
                 });
                 
                 
@@ -217,12 +218,13 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
         case Enum_Status_Record_Recording: {
             _recordStatus = Enum_Status_Record_Stop;
             
+            __weak __typeof(&*self)weakSelf = self;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
-                [_startButton setTitle:@"Record" forState:UIControlStateNormal];
+                [weakSelf.alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
+                [weakSelf.startButton setTitle:@"Record" forState:UIControlStateNormal];
                 
-                _playButton.hidden = NO;
-                _saveButton.hidden = NO;
+                weakSelf.playButton.hidden = NO;
+                weakSelf.saveButton.hidden = NO;
             });
             
             usleep(200000);

@@ -1493,10 +1493,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (APP_DELEGATE.isAllowToShowTooltip) {
         double delayInSeconds = 0.2;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        __weak __typeof(&*self)weakSelf = self;
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
             if (val == FALSE) {
-                [self showTooltips];
+                [weakSelf showTooltips];
             }
         });
     }
@@ -5349,11 +5350,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _isUITextViewFocused = NO;
     [_lastBecomeFirstRespondTextView resignFirstResponder];
     
-    
+    __weak __typeof(&*self)weakSelf = self;
     double delayInSeconds = 0.2;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
+        if ([weakSelf isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
             //由于vertical center是通过改变contentOffSet改变的，所以不能重置为CGPointMake(0, 0)
             [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, self.contentYOffsetForVerticalAlignment) animated:YES];
         } else {
@@ -5977,10 +5978,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [_imagePickerPopover dismissPopoverAnimated:YES];
             }
             
+            __weak __typeof(&*self)weakSelf = self;
             double delayInSeconds = 0.6;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self openEditor:origialmage];
+                [weakSelf openEditor:origialmage];
             });
         }
     }

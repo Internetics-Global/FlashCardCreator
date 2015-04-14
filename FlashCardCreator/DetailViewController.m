@@ -184,11 +184,13 @@ enum popover_enum {
         
         if ([_currentPack cards].count !=0) {
             //Load card view when not:1. downloading;2. not every time
+            __weak __typeof(&*self)weakSelf = self;
+            
             BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
             if (isExamplePackDownloadedSuccessful == TRUE) {
                 static dispatch_once_t oncetoken;
                 dispatch_once(&oncetoken, ^{
-                    [self showCurrentCardInScrollView:NO];
+                    [weakSelf showCurrentCardInScrollView:NO];
                 });
             }
         }
@@ -205,12 +207,13 @@ enum popover_enum {
     [super viewDidAppear:animated];
     
     static dispatch_once_t onceToken;
+    __weak __typeof(&*self)weakSelf = self;
     dispatch_once(&onceToken, ^{
         
         if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
             //show pack info rather than first card
             if (isUserInterfaceIdiomPhone == FALSE) {
-                [self showPackInfoView];
+                [weakSelf showPackInfoView];
             }
         }
         

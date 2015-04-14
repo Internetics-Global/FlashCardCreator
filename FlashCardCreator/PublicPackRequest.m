@@ -16,18 +16,19 @@
 
 - (void) requestPublicPack {
     __block NSArray *jsonDict;
+    __weak __typeof(&*self)weakSelf = self;
     NSURL *url = [NSURL URLWithString:PUBLIC_PACK_JSON_FILE];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
                                                                                         success:
                                          ^(NSURLRequest *req, NSHTTPURLResponse *response, id JSON) {
                                              jsonDict = (NSArray *) JSON[@"public_packs"];
-                                             [_delegate performSelector:@selector(didReceiveJSONResponse:) withObject:jsonDict];
+                                             [weakSelf.delegate performSelector:@selector(didReceiveJSONResponse:) withObject:jsonDict];
                                          }
                                                                                         failure:
                                          ^(NSURLRequest *req , NSURLResponse *response , NSError *error , id JSON) {
                                              [iConsole error:@"Failed: %@",[error localizedDescription]];
-                                             [_delegate performSelector:@selector(didNotReceiveJSONResponse)];
+                                             [weakSelf.delegate performSelector:@selector(didNotReceiveJSONResponse)];
                                          }
                                          ];
     [operation start];

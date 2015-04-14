@@ -39,11 +39,11 @@
 @implementation TipHelper
 
 + (instancetype)defaultHelper {
+    __weak __typeof(&*self)weakSelf = self;
     static id sharedInstance = nil;
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
+        sharedInstance = [[weakSelf alloc] init];
         
     });
     
