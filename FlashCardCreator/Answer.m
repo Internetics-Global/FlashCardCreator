@@ -69,8 +69,12 @@
     if (_movieFullPath.length == 0) {
         return nil;
     } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath lastPathComponent]];
-        return fullPath;
+        if ([_movieFullPath rangeOfString:@"http"].location == NSNotFound) {
+            NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath lastPathComponent]];
+            return fullPath;
+        } else {
+            return _movieFullPath;
+        }
     }
 }
 
@@ -78,8 +82,12 @@
     if (_movieFullPath2.length == 0) {
         return nil;
     } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath2 lastPathComponent]];
-        return fullPath;
+        if ([_movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
+            NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath2 lastPathComponent]];
+            return fullPath;
+        } else {
+            return _movieFullPath2;
+        }
     }
 }
 
@@ -111,16 +119,25 @@
 - (void)setMovieFullPath:(NSString *)movieFullPath {
     if (movieFullPath.length == 0) {
     } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath lastPathComponent]];
-        _movieFullPath = fullPath;
+        //we don't convert when it's an http/https url
+        if ([movieFullPath rangeOfString:@"http"].location == NSNotFound) {
+            NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath lastPathComponent]];
+            _movieFullPath = fullPath;
+        } else {
+            _movieFullPath = movieFullPath;
+        }
     }
 }
 
 - (void)setMovieFullPath2:(NSString *)movieFullPath2 {
     if (movieFullPath2.length == 0) {
     } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];
-        _movieFullPath2 = fullPath;
+        if ([movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
+            NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];
+            _movieFullPath2 = fullPath;
+        } else {
+            _movieFullPath2 = movieFullPath2;
+        }
     }
 }
 
