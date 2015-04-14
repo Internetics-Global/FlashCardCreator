@@ -33,6 +33,8 @@
     BOOL  _isCyclePlay;
     BOOL  _isMute;
     
+    FlashCard *_previousCard;
+    
     UIView *_controlPanel;
     
 }
@@ -148,10 +150,20 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    _previousCard = currentCard;
+    
     if (_isMute == FALSE) {
-        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
         if (currentCard) {
-            [currentCard playAudio:NO];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [currentCard textToSpeechAllContentNow];
+                });;
+            } else {
+                [currentCard playAudio:NO];
+            }
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
@@ -566,14 +578,33 @@
 
 - (void)didScrollToPage:(NSInteger)index {
      [iConsole info:@"%s",__FUNCTION__];
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
     if (_isMute == FALSE) {
-        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        
         if (currentCard) {
-            [currentCard playAudio:NO];
+            
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+                
+                if (_previousCard) {
+                    [_previousCard stopTextToSpeechNow];
+                }
+                
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [currentCard textToSpeechAllContentNow];
+                });;
+            } else {
+                [currentCard playAudio:NO];
+            }
+            
+            
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
     }
+    
+    _previousCard = currentCard;
 }
 
 
