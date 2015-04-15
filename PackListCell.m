@@ -54,7 +54,7 @@
     
     
     self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playButton.frame = CGRectMake(130, 120, 60, 60);
+    self.playButton.frame = CGRectMake(145, 150, 50, 50);
     self.playButton.backgroundColor = [UIColor clearColor];
     [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
     self.playButton.autoresizingMask = UIViewAutoresizingNone;
