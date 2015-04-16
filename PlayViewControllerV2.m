@@ -225,7 +225,7 @@
     [cyclePlayButton setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
     [cyclePlayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cyclePlayButton addTarget:self action:@selector(cyclePlayButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    cyclePlayButton.showsTouchWhenHighlighted =YES;
+    //cyclePlayButton.showsTouchWhenHighlighted =YES;
     [cyclePlayButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:cyclePlayButton];
     
@@ -234,7 +234,7 @@
     [autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
     [autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    autoScrollButton.showsTouchWhenHighlighted =YES;
+    //autoScrollButton.showsTouchWhenHighlighted =YES;
     [autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:autoScrollButton];
     
@@ -284,7 +284,7 @@
     [playButton setImage:[UIImage imageNamed:@"play25"] forState:UIControlStateNormal];
     [playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    playButton.showsTouchWhenHighlighted =YES;
+    //playButton.showsTouchWhenHighlighted =YES;
     [playButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:playButton];
     
@@ -293,7 +293,7 @@
     [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
     [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    muteButton.showsTouchWhenHighlighted =YES;
+    //muteButton.showsTouchWhenHighlighted =YES;
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
     
