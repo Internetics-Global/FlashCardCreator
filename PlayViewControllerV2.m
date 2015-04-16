@@ -241,7 +241,7 @@
     
     UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 5, 90, 20)];
     autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
-    autoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    autoPlayDelayLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
     autoPlayDelayLabel.text = @"Auto Play Speed";
     autoPlayDelayLabel.numberOfLines = 1;
     autoPlayDelayLabel.textColor = [UIColor whiteColor];
