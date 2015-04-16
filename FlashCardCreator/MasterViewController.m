@@ -2191,8 +2191,8 @@ extern BOOL isFromNewCreatedCard;
         [[TipHelper defaultHelper] showTipForCreateCardInView:weakSelf.view fromFrame:rect];
         
         //2.
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(140, 0, 0, 0)];
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(90, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(145, 0, 0, 0)];
+        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(95, 0, 0, 0)];
         [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:weakSelf.view fromFrame:CGRectMake(40, 0, 0, 0)];
         
         //3.
