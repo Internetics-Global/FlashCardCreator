@@ -118,22 +118,9 @@
         v.frame = CGRectOffset(v.frame, self.frame.size.width * i, 0);
         [_scrollView addSubview:v];
         [self addGesture:v];
-        
-        //v.backgroundColor = [UIColor redColor];
-        //NSLog(@"_scrollView = %@, v = %@",NSStringFromCGRect(_scrollView.frame),NSStringFromCGRect(v.frame));
     }
-
     
-    //it's quite a tricky/experimental way now, we will improve it later
-    if (self.isAutoScroll) {
-        if (isUserInterfaceIdiomPhone) {
-            [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width-4, 0)];
-        } else {
-            [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width-7, 0)];
-        }
-    } else {
-        [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
-    }
+    [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
     
 }
 
@@ -222,21 +209,45 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
-    int x = aScrollView.contentOffset.x;
-    
-    if (self.isCycle == FALSE) {
+    //如果没有dispatch_async，则会导致view jolt的表现的
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
         
-        if (((_curPage == 0) && (x < self.frame.size.width)) ||
-            ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
+        int x = aScrollView.contentOffset.x;
+        
+        if (self.isCycle == FALSE) {
             
-            [aScrollView setScrollEnabled:NO];
-            double delayInSeconds = 0.8;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [aScrollView setScrollEnabled:YES];
-            });
+            if (((_curPage == 0) && (x < self.frame.size.width)) ||
+                ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
+                
+                [aScrollView setScrollEnabled:NO];
+                double delayInSeconds = 0.8;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [aScrollView setScrollEnabled:YES];
+                });
+                
+            } else {
+                if(x >= (2*self.frame.size.width)) {
+                    _curPage = [self validPageValue:_curPage+1];
+                    [self loadData];
+                    if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                        [self.delegate didScrollToPage:_curPage];
+                    }
+                }
+                
+                //previous page
+                if(x <= 0) {
+                    _curPage = [self validPageValue:_curPage-1];
+                    [self loadData];
+                    if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                        [self.delegate didScrollToPage:_curPage];
+                    }
+                }
+            }
+            
             
         } else {
+            //next page
             if(x >= (2*self.frame.size.width)) {
                 _curPage = [self validPageValue:_curPage+1];
                 [self loadData];
@@ -255,26 +266,9 @@
             }
         }
         
-        
-    } else {
-        //next page
-        if(x >= (2*self.frame.size.width)) {
-            _curPage = [self validPageValue:_curPage+1];
-            [self loadData];
-            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
-                [self.delegate didScrollToPage:_curPage];
-            }
-        }
-        
-        //previous page
-        if(x <= 0) {
-            _curPage = [self validPageValue:_curPage-1];
-            [self loadData];
-            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
-                [self.delegate didScrollToPage:_curPage];
-            }
-        }
-    }
+    });
+    
+    
     
     
 }
