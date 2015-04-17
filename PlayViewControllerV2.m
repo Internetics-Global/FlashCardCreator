@@ -55,16 +55,17 @@
     _startDate =[NSDate date];
     
     //check silence mode
-    _silenceDetector = [SharkfoodMuteSwitchDetector shared];
-    __weak __typeof(&*self)weakSelf = self;
-    _silenceDetector.silentNotify = ^(BOOL silent){
-        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
-        if (silent && b && (weakSelf != nil)) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Silent Mode is On. You may possibly could not hear text speech" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            
-        }
-    };
+    //There's a problem for SharkfoodMuteSwitchDetector, which could make noise intermittly. so we have disable it.
+//    _silenceDetector = [SharkfoodMuteSwitchDetector shared];
+//    __weak __typeof(&*self)weakSelf = self;
+//    _silenceDetector.silentNotify = ^(BOOL silent){
+//        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+//        if (silent && b && (weakSelf != nil)) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Silent Mode is On. You may possibly could not hear text speech" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            
+//        }
+//    };
     
     
     if isUserInterfaceIdiomPhone {
