@@ -266,7 +266,7 @@
     autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
     autoPlayDelaySlider.minimumValue = 3;
-    autoPlayDelaySlider.maximumValue = 10.0;
+    autoPlayDelaySlider.maximumValue = 60.0;
     autoPlayDelaySlider.continuous = NO;
     autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
     autoPlayDelaySlider.tintColor = [UIColor greenColor];
@@ -286,7 +286,7 @@
     UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(autoPlayDelaySlider.frame), 5, 20, 20)];
     maxLabel.textAlignment = NSTextAlignmentLeft;
     maxLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    maxLabel.text = @"10";
+    maxLabel.text = @"60";
     maxLabel.numberOfLines = 1;
     maxLabel.textColor = [UIColor whiteColor];
     maxLabel.backgroundColor = [UIColor clearColor];

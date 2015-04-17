@@ -118,9 +118,23 @@
         v.frame = CGRectOffset(v.frame, self.frame.size.width * i, 0);
         [_scrollView addSubview:v];
         [self addGesture:v];
+        
+        //v.backgroundColor = [UIColor redColor];
+        //NSLog(@"_scrollView = %@, v = %@",NSStringFromCGRect(_scrollView.frame),NSStringFromCGRect(v.frame));
+    }
+
+    
+    //it's quite a tricky/experimental way now, we will improve it later
+    if (self.isAutoScroll) {
+        if (isUserInterfaceIdiomPhone) {
+            [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width-4, 0)];
+        } else {
+            [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width-7, 0)];
+        }
+    } else {
+        [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
     }
     
-    [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
 }
 
 - (void)getPageViewAtIndex:(NSInteger)page {
