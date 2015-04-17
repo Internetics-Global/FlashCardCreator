@@ -514,10 +514,10 @@
     if (val) {
         
         if (_isAutoScroll) {
-            _scrollView.userInteractionEnabled = NO;
+            //_scrollView.userInteractionEnabled = NO;
             _scrollView.isAutoScroll = YES;
         } else {
-            _scrollView.userInteractionEnabled = YES;
+            //_scrollView.userInteractionEnabled = YES;
             _scrollView.isAutoScroll = NO;
         }
         
@@ -533,20 +533,20 @@
                 }
                 
                 if (_isAutoScroll) {
-                    _scrollView.userInteractionEnabled = NO;
+                    //_scrollView.userInteractionEnabled = NO;
                     _scrollView.isAutoScroll = YES;
                 } else {
-                    _scrollView.userInteractionEnabled = YES;
+                    //_scrollView.userInteractionEnabled = YES;
                     _scrollView.isAutoScroll = NO;
                 }
                 
             }];
         } else {
             if (_isAutoScroll) {
-                _scrollView.userInteractionEnabled = NO;
+                //_scrollView.userInteractionEnabled = NO;
                 _scrollView.isAutoScroll = YES;
             } else {
-                _scrollView.userInteractionEnabled = YES;
+                //_scrollView.userInteractionEnabled = YES;
                 _scrollView.isAutoScroll = NO;
             }
         }
