@@ -15,6 +15,9 @@
 #import "SharkfoodMuteSwitchDetector.h"
 #import "UIButton+Extensions.h"
 #import "UIAlertView+Blocks.h"
+#import "Question.h"
+#import "Answer.h"
+#import "Common.h"
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate> {
     CycleScrollView *_scrollView;
@@ -36,6 +39,8 @@
     FlashCard *_previousCard;
     
     UIView *_controlPanel;
+    
+    UIButton *_playButton;
     
 }
 
@@ -169,6 +174,14 @@
         };
     }
     
+    
+    NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
+    if (recordSoundFile.length == 0) {
+        [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
+    } else {
+        [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
+    }
+    
 }
 
 
@@ -279,17 +292,17 @@
     [_controlPanel addSubview:maxLabel];
     
     
-    UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    playButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -20, 5, 20, 20);
-    [playButton setImage:[UIImage imageNamed:@"play25"] forState:UIControlStateNormal];
-    [playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    //playButton.showsTouchWhenHighlighted =YES;
-    [playButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
-    [_controlPanel addSubview:playButton];
+    _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _playButton.frame = CGRectMake(CGRectGetWidth(_controlPanel.frame)- 20 -20, 5, 20, 20);
+    [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
+    [_playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //_playButton.showsTouchWhenHighlighted =YES;
+    [_playButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
+    [_controlPanel addSubview:_playButton];
     
     UIButton *muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    muteButton.frame = CGRectOffset(playButton.frame, -30, 0);
+    muteButton.frame = CGRectOffset(_playButton.frame, -30, 0);
     [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
     [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -424,11 +437,28 @@
             [currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
             [currentFlashCardView refreshAll];
             [currentFlashCardView disableCardEdit];
+            
+            
+            NSString *recordSoundFile = currentFlashCardView.currentCard.question.recordedSoundFullPath;
+            if (recordSoundFile.length == 0) {
+                [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
+            } else {
+                [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
+            }
+            
         } else {
             [currentFlashCardView.segmentedControl setSelectedSegmentIndex:1];
             [currentFlashCardView refreshAll];
             [currentFlashCardView disableCardEdit];
+            
+            NSString *recordSoundFile = currentFlashCardView.currentCard.answer.recordedSoundFullPath;
+            if (recordSoundFile.length == 0) {
+                [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
+            } else {
+                [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
+            }
         }
+        
         
     } else {
         [iConsole info:@"%s:current FlashCardView is empty",__FUNCTION__];
@@ -607,6 +637,14 @@
                 });;
             } else {
                 [currentCard playAudio:NO];
+            }
+            
+            
+            NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
+            if (recordSoundFile.length == 0) {
+                [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
+            } else {
+                [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
             }
             
             
