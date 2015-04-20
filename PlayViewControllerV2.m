@@ -92,6 +92,10 @@
     [self prepareData];
     [self setupViews];
     
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchControlPanelVisibility)];
+    oneTap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:oneTap];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(landscapeLeftRightOrientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
@@ -529,7 +533,7 @@
     
     if (_isAutoScroll == FALSE) {
         [PopoverView showPopoverAtPoint:_autoScrollButton.center
-                                 inView:self.view
+                                 inView:_controlPanel
                               withTitle:@"Option"
                         withStringArray:[NSArray arrayWithObjects:@"Show question only",@"Both question and answer", nil]
                                delegate:self];
@@ -674,6 +678,10 @@
         _autoSwitchQATimer = nil;
         _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
     }
+}
+
+- (void) switchControlPanelVisibility {
+    [_controlPanel setHidden:!(_controlPanel.hidden)];
 }
 
 
