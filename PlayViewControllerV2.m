@@ -18,8 +18,9 @@
 #import "Question.h"
 #import "Answer.h"
 #import "Common.h"
+#import "PopoverView.h"
 
-@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate> {
+@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate> {
     CycleScrollView *_scrollView;
     UIButton        *_closeButton;
     
@@ -41,6 +42,11 @@
     UIView *_controlPanel;
     
     UIButton *_playButton;
+    UISlider *_autoPlayDelaySlider;
+    UIButton *_autoScrollButton;
+    
+    NSTimer *_autoSwitchQATimer; //auto switch question/answer card timer
+    BOOL     _isAutoShowQuestionOnly;  //used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
     
 }
 
@@ -51,6 +57,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _isAutoShowQuestionOnly = YES;
     
     _startDate =[NSDate date];
     
@@ -183,6 +191,10 @@
         [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
     }
     
+    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
+    }
+    
 }
 
 
@@ -243,14 +255,14 @@
     [cyclePlayButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:cyclePlayButton];
     
-    UIButton *autoScrollButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    autoScrollButton.frame = CGRectOffset(cyclePlayButton.frame, 20 + 20, 0);
-    [autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
-    [autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    //autoScrollButton.showsTouchWhenHighlighted =YES;
-    [autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
-    [_controlPanel addSubview:autoScrollButton];
+    _autoScrollButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _autoScrollButton.frame = CGRectOffset(cyclePlayButton.frame, 20 + 20, 0);
+    [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
+    [_autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //_autoScrollButton.showsTouchWhenHighlighted =YES;
+    [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
+    [_controlPanel addSubview:_autoScrollButton];
     
     
     UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 5, 90, 20)];
@@ -262,19 +274,19 @@
     autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:autoPlayDelayLabel];
     
-    UISlider *autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
-    autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
+    _autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
+    _autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
-    autoPlayDelaySlider.minimumValue = 3;
-    autoPlayDelaySlider.maximumValue = 60.0;
-    autoPlayDelaySlider.continuous = NO;
-    autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
-    autoPlayDelaySlider.tintColor = [UIColor greenColor];
-    [autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
-    [autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
-    [_controlPanel addSubview: autoPlayDelaySlider];
+    _autoPlayDelaySlider.minimumValue = 4;
+    _autoPlayDelaySlider.maximumValue = 60.0;
+    _autoPlayDelaySlider.continuous = NO;
+    _autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
+    _autoPlayDelaySlider.tintColor = [UIColor greenColor];
+    [_autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
+    [_autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
+    [_controlPanel addSubview: _autoPlayDelaySlider];
     
-    UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
+    UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
     minLabel.textAlignment = NSTextAlignmentRight;
     minLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
     minLabel.text = @"4";
@@ -283,7 +295,7 @@
     minLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:minLabel];
     
-    UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(autoPlayDelaySlider.frame), 5, 20, 20)];
+    UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_autoPlayDelaySlider.frame), 5, 20, 20)];
     maxLabel.textAlignment = NSTextAlignmentLeft;
     maxLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
     maxLabel.text = @"60";
@@ -417,6 +429,10 @@
     
 }
 
+- (void) switchQAFromTimer {
+    [self switchQuestionAnswerView];
+}
+
 
 
 - (void) switchQuestionAnswerView{
@@ -433,6 +449,8 @@
     
     if (currentFlashCardView) {
         
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
         
         if (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
@@ -493,6 +511,7 @@
     
     if (_isCyclePlay) {
         _scrollView.isCycle = YES;
+        
     } else {
         _scrollView.isCycle = NO;
     }
@@ -501,55 +520,42 @@
 
 - (void) autoScrollButtonClicked:(UIButton *) button {
     
-    if (_isAutoScroll) {
+    if (_isAutoScroll == FALSE) {
+        [PopoverView showPopoverAtPoint:_autoScrollButton.center
+                                 inView:self.view
+                              withTitle:@"Option"
+                        withStringArray:[NSArray arrayWithObjects:@"Show question only",@"Both question and answer", nil]
+                               delegate:self];
+        
+    } else {
+        
         _isAutoScroll = NO;
-        [button setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
-    } else {
-        _isAutoScroll = YES;
-        [button setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
+        [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
+        
+        //_scrollView.userInteractionEnabled = YES;
+        _scrollView.isAutoScroll = NO;
+        
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
     }
+}
+
+
+- (void) autoScrollPopoverviewItemSelected{
     
+    _isAutoScroll = YES;
+    [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Not_Show_AutoScroll_Alert"];
-    if (val) {
-        
-        if (_isAutoScroll) {
-            //_scrollView.userInteractionEnabled = NO;
-            _scrollView.isAutoScroll = YES;
-        } else {
-            //_scrollView.userInteractionEnabled = YES;
-            _scrollView.isAutoScroll = NO;
-        }
-        
+    //_scrollView.userInteractionEnabled = NO;
+    _scrollView.isAutoScroll = YES;
+    
+    if (_isAutoShowQuestionOnly == NO) {
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
     } else {
-        if (_isAutoScroll) {
-            [UIAlertView showWithTitle:@"Autoplay enabled" message:@"You are in Auto Play mode, so you cannot manually operate the cards until you switch off Auto Play" cancelButtonTitle:@"OK" otherButtonTitles:@[@"Don't show me this again"] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex == 0) {
-                    
-                } else {
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setBool:YES  forKey:@"K_Not_Show_AutoScroll_Alert"];
-                    [defaults synchronize];
-                }
-                
-                if (_isAutoScroll) {
-                    //_scrollView.userInteractionEnabled = NO;
-                    _scrollView.isAutoScroll = YES;
-                } else {
-                    //_scrollView.userInteractionEnabled = YES;
-                    _scrollView.isAutoScroll = NO;
-                }
-                
-            }];
-        } else {
-            if (_isAutoScroll) {
-                //_scrollView.userInteractionEnabled = NO;
-                _scrollView.isAutoScroll = YES;
-            } else {
-                //_scrollView.userInteractionEnabled = YES;
-                _scrollView.isAutoScroll = NO;
-            }
-        }
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
     }
     
     
@@ -655,6 +661,12 @@
     }
     
     _previousCard = currentCard;
+    
+    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
+    }
 }
 
 
@@ -675,12 +687,32 @@
     return UIInterfaceOrientationMaskLandscape;
 }
 
+
+#pragma mark – PopoverViewDelegate
+
+-(void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index {
+    
+    [popoverView dismiss];
+    
+    if (index ==0) {
+        _isAutoShowQuestionOnly = YES;
+        
+    } else {
+        _isAutoShowQuestionOnly = NO;
+    }
+    
+    [self autoScrollPopoverviewItemSelected];
+}
+
 #pragma mark -
 #pragma mark - Memory Management
 
 - (void)dealloc {
     
     [iConsole info:@"%s",__FUNCTION__];
+    
+    [_autoSwitchQATimer invalidate];
+    _autoSwitchQATimer = nil;
     
     _silenceDetector.silentNotify = nil;
     _silenceDetector = nil;
