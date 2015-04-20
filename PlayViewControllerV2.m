@@ -20,7 +20,7 @@
 #import "Common.h"
 #import "PopoverView.h"
 
-@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate> {
+@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate> {
     CycleScrollView *_scrollView;
     UIButton        *_closeButton;
     
@@ -94,6 +94,7 @@
     
     UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchControlPanelVisibility)];
     oneTap.numberOfTapsRequired = 1;
+    oneTap.delegate = self;
     [self.view addGestureRecognizer:oneTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -610,6 +611,13 @@
     
     _scrollView.autoPlayDelaySeconds = slider.value;
     
+    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+        [_autoSwitchQATimer invalidate];
+        _autoSwitchQATimer = nil;
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
+    }
+
+    
     _currentPack.autoPlaySpeed = slider.value;
     
 }
@@ -722,6 +730,24 @@
     
     [self autoScrollPopoverviewItemSelected];
 }
+
+//avoid _controlpanel and its subview touch event is intercepted by gesture
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (touch.view == _controlPanel) {
+        return FALSE;
+    }  else {
+        
+        for (UIView *myView in [_controlPanel subviews]) {
+            if (touch.view == myView) {
+                return FALSE;
+            }
+        }
+        
+        return TRUE;
+    }
+}
+
+
 
 #pragma mark -
 #pragma mark - Memory Management
