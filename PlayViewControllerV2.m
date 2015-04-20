@@ -404,6 +404,8 @@
     
     _scrollView = nil;
     
+    [_currentPack savePackOnly];
+    
 
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -607,6 +609,8 @@
 - (void) autoPlayDelaySliderClicked:(UISlider *) slider {
     
     _scrollView.autoPlayDelaySeconds = slider.value;
+    
+    _currentPack.autoPlaySpeed = slider.value;
     
 }
 
