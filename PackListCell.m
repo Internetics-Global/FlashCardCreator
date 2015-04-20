@@ -83,7 +83,7 @@
     self.changeImageButton.tag = index;
     self.changeImageButton.userInteractionEnabled = TRUE;
     self.changeImageButton.frame = CGRectMake(130.0f, 205.0f, 80.0, 25);
-    [self.changeImageButton setImage:[UIImage imageNamed:@"chang_image"] forState:UIControlStateNormal];
+    [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button"] forState:UIControlStateNormal];
     [contentView addSubview:self.changeImageButton];
     
     [self.contentView addSubview:contentView];

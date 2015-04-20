@@ -24,7 +24,7 @@
 #import "PackListViewControllerV2.h"
 #import "DataManager.h"
 #import "UIImageView+AFNetworking.h"
-#import "CreatePackViewController2.h"
+#import "CreateEditPackViewController2.h"
 #import "UINavigationController+DismissKeyboard.h"
 #import "DataManager.h"
 #import "FileOperationHelper.h"
@@ -81,6 +81,8 @@ enum popover_enum {
         //1. Setup notification
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundAfterCardCreatedNotification:) name:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
 
@@ -348,11 +350,11 @@ enum popover_enum {
 #pragma mark - Create or select Pack
 
 - (void) createNewPack:(id)sender {
-    CreatePackViewController2 * createPackController;
+    CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
-        createPackController = [[CreatePackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
     } else {
-        createPackController = [[CreatePackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
     }
 	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -651,6 +653,27 @@ extern BOOL isFromNewCreatedCard;
     if (!isUserInterfaceIdiomPhone) {
         [_backgroundOfCreateCardView removeFromSuperview];
     }
+}
+
+
+-(void)editPackFinishedNotification:(NSNotification *)notification {
+  self.currentPack = (Pack *)[notification object];
+
+  AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+  appDelegate.packIDForMasterViewPack = self.currentPack.packID;
+    
+  _indexCard = 0;
+    
+  [self.tableView reloadData];
+  NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+  [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+  if (isUserInterfaceIdiomPhone) {
+    self.title = _currentPack.packName;
+  } else {
+    self.detailViewController.title = _currentPack.packName;
+    [self.detailViewController showPackInfoView];
+  }
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{

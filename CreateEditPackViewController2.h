@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreatePackViewController2 : UIViewController
+@class Pack;
+
+@interface CreateEditPackViewController2 : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 
@@ -17,5 +19,15 @@
 @property (weak, nonatomic) IBOutlet UITextField *creatorTextField;
 @property (weak, nonatomic) IBOutlet UITextField *jobTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *autoPlaySpeedTextField;
+
+
+@property (strong, nonatomic)  Pack *currentPack;
+
+/*
+ * this is used to determine whether it's a new pack(create pack) nor existing pack (edit pack)
+ * if false, or no assignment, new pack
+ * if true, editing a current pack
+ */
+@property (assign, nonatomic)  BOOL isEditPack;
 
 @end

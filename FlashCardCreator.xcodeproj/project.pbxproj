@@ -223,9 +223,9 @@
 		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
-		886D8FDF1AE48C0300865101 /* CreatePackViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */; };
-		886D8FE01AE48C0300865101 /* CreatePackViewController2_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */; };
-		886D8FE21AE48D4F00865101 /* CreatePackViewController2_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */; };
+		886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FDD1AE48C0300865101 /* CreateEditPackViewController2.m */; };
+		886D8FE01AE48C0300865101 /* CreateEditPackViewController2_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FDE1AE48C0300865101 /* CreateEditPackViewController2_iPhone.xib */; };
+		886D8FE21AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FE11AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib */; };
 		886D8FEE1AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FE71AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m */; };
 		886D8FEF1AE4975E00865101 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FE91AE4975E00865101 /* TPKeyboardAvoidingScrollView.m */; };
 		886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FEB1AE4975E00865101 /* TPKeyboardAvoidingTableView.m */; };
@@ -588,10 +588,10 @@
 		88620B5F1AB104120046B64E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
-		886D8FDC1AE48C0300865101 /* CreatePackViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePackViewController2.h; sourceTree = "<group>"; };
-		886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePackViewController2.m; sourceTree = "<group>"; };
-		886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePackViewController2_iPhone.xib; sourceTree = "<group>"; };
-		886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePackViewController2_iPad.xib; sourceTree = "<group>"; };
+		886D8FDC1AE48C0300865101 /* CreateEditPackViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateEditPackViewController2.h; sourceTree = "<group>"; };
+		886D8FDD1AE48C0300865101 /* CreateEditPackViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEditPackViewController2.m; sourceTree = "<group>"; };
+		886D8FDE1AE48C0300865101 /* CreateEditPackViewController2_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateEditPackViewController2_iPhone.xib; sourceTree = "<group>"; };
+		886D8FE11AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateEditPackViewController2_iPad.xib; sourceTree = "<group>"; };
 		886D8FE61AE4975E00865101 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
 		886D8FE71AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
 		886D8FE81AE4975E00865101 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -733,10 +733,10 @@
 		2D09AF1316A5046900B1C0C9 /* CreatePack */ = {
 			isa = PBXGroup;
 			children = (
-				886D8FDC1AE48C0300865101 /* CreatePackViewController2.h */,
-				886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */,
-				886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */,
-				886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */,
+				886D8FDC1AE48C0300865101 /* CreateEditPackViewController2.h */,
+				886D8FDD1AE48C0300865101 /* CreateEditPackViewController2.m */,
+				886D8FDE1AE48C0300865101 /* CreateEditPackViewController2_iPhone.xib */,
+				886D8FE11AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib */,
 			);
 			name = CreatePack;
 			sourceTree = "<group>";
@@ -1673,7 +1673,7 @@
 				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
 				88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */,
 				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
-				886D8FE01AE48C0300865101 /* CreatePackViewController2_iPhone.xib in Resources */,
+				886D8FE01AE48C0300865101 /* CreateEditPackViewController2_iPhone.xib in Resources */,
 				2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */,
 				2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */,
 				8813908F193560FD00E04251 /* icon~100.png in Resources */,
@@ -1714,7 +1714,7 @@
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
 				881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
-				886D8FE21AE48D4F00865101 /* CreatePackViewController2_iPad.xib in Resources */,
+				886D8FE21AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib in Resources */,
 				88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
 				8813908C193560FD00E04251 /* icon~29.png in Resources */,
@@ -1874,7 +1874,7 @@
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
 				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
-				886D8FDF1AE48C0300865101 /* CreatePackViewController2.m in Sources */,
+				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,

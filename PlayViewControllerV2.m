@@ -280,7 +280,14 @@
     _autoPlayDelaySlider.minimumValue = 4;
     _autoPlayDelaySlider.maximumValue = 60.0;
     _autoPlayDelaySlider.continuous = NO;
-    _autoPlayDelaySlider.value = k_Default_AutoPlayDelaySeconds;
+    if ((self.currentPack.autoPlaySpeed == 0)
+        || (self.currentPack.autoPlaySpeed > kMAX_Auto_Play_Speed)
+        || (self.currentPack.autoPlaySpeed < kMIN_Auto_Play_Speed)) {
+      _autoPlayDelaySlider.value = kDefault_Auto_Play_Speed;
+    } else {
+        _autoPlayDelaySlider.value = self.currentPack.autoPlaySpeed;
+    }
+    
     _autoPlayDelaySlider.tintColor = [UIColor greenColor];
     [_autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
     [_autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
@@ -289,7 +296,7 @@
     UILabel *minLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
     minLabel.textAlignment = NSTextAlignmentRight;
     minLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    minLabel.text = @"4";
+    minLabel.text = [NSString stringWithFormat:@"%d",kMIN_Auto_Play_Speed];
     minLabel.numberOfLines = 1;
     minLabel.textColor = [UIColor whiteColor];
     minLabel.backgroundColor = [UIColor clearColor];
@@ -298,7 +305,7 @@
     UILabel *maxLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_autoPlayDelaySlider.frame), 5, 20, 20)];
     maxLabel.textAlignment = NSTextAlignmentLeft;
     maxLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    maxLabel.text = @"60";
+    maxLabel.text = [NSString stringWithFormat:@"%d",kMAX_Auto_Play_Speed];;
     maxLabel.numberOfLines = 1;
     maxLabel.textColor = [UIColor whiteColor];
     maxLabel.backgroundColor = [UIColor clearColor];

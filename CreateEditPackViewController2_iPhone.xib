@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreatePackViewController2">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateEditPackViewController2">
             <connections>
                 <outlet property="autoPlaySpeedTextField" destination="SkL-oG-Xeh" id="bcJ-6a-Cc0"/>
                 <outlet property="coverImageView" destination="LuL-CI-jWR" id="CjL-Le-6Eb"/>
@@ -82,7 +82,7 @@
                         </textField>
                     </subviews>
                 </scrollView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_pack_cover_image_transparent.png" id="LuL-CI-jWR">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_pack_cover_image_transparent.png" id="LuL-CI-jWR">
                     <rect key="frame" x="316" y="49" width="189" height="202"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                 </imageView>

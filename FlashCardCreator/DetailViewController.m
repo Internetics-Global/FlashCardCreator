@@ -77,6 +77,8 @@ enum popover_enum {
                                                    object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
     }
     return self;
 }
@@ -586,6 +588,22 @@ enum popover_enum {
 }
 
 
+-(void)editPackFinishedNotification:(NSNotification *)notification{
+    [iConsole info:@"%s",__FUNCTION__];
+    self.currentPack = (Pack *)[notification object];
+    
+    if (isUserInterfaceIdiomPhone) {
+        //iPhone中并不存在如下的逻辑
+        return;
+    }
+    
+    [self updateRightPackInfoView];
+    
+    
+    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+    titleLabel.text = self.currentPack.packName;
+}
+
 -(void)newPackAddedNotification:(NSNotification *)notification{
     [iConsole info:@"%s",__FUNCTION__];
     self.currentPack = (Pack *)[notification object];
@@ -598,6 +616,17 @@ enum popover_enum {
     UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
     titleLabel.text = self.currentPack.packName;
     
+    [self updateRightPackInfoView];
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
+    if (val == FALSE) {
+        [self showTooltips];
+    }
+    
+    
+}
+
+- (void) updateRightPackInfoView {
     for (UIView *myView in [_rightPackView subviews]) {
         if ([myView isKindOfClass:[UILabel class]]) {
             
@@ -615,7 +644,7 @@ enum popover_enum {
                 } else {
                     myView.hidden = YES;
                 }
-
+                
                 
             }
             
@@ -631,13 +660,6 @@ enum popover_enum {
             
         }
     }
-    
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-    if (val == FALSE) {
-        [self showTooltips];
-    }
-    
-    
 }
 
 

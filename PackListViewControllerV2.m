@@ -16,17 +16,16 @@
 #import "User.h"
 #import "FileOperationHelper.h"
 #import "OpenUDID.h"
+#import "CreateEditPackViewController2.h"
 
-@interface PackListViewControllerV2() <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
-    UIImagePickerController * _picker;
-    UIPopoverController     * _imagePickerPopover;
+@interface PackListViewControllerV2() <UITextFieldDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
 
     UIBarButtonItem         * _createNewPackBtnItem;
     UIBarButtonItem         * _backBtnItem;
     UIBarButtonItem         * _editBtnItem;
 
     Pack                    * _currentPack;
-    int                     _currentIndex;
+    NSInteger                 _currentIndex;
     BOOL                    _isCollectionViewEditing;
 }
 
@@ -53,7 +52,7 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sortTypeEnum"] == nil) {
         _sortTypeEnum = SortTypeLastVisitedDescend; //default value
     } else {
-        _sortTypeEnum = [[NSUserDefaults standardUserDefaults] integerForKey:@"sortTypeEnum"];
+        _sortTypeEnum = (SortTypeEnum) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortTypeEnum"];
     }
     
     
@@ -78,21 +77,6 @@
     
     _createNewPackBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
     self.navigationItem.rightBarButtonItem = _createNewPackBtnItem;
-    
-    
-    _picker = [[UIImagePickerController alloc] init];
-    _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    _picker.contentSizeForViewInPopover = CGSizeMake(320, 400);
-    _picker.delegate = self;
-    
-    
-    if (isUserInterfaceIdiomPhone) {
-        
-    } else {
-        if (_imagePickerPopover == nil) {
-            _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
-        }
-    }
     
     _currentIndex = -1;
     
@@ -191,7 +175,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    int count =  [[User defaultUser].packs count] + 1;
+    NSInteger count =  [[User defaultUser].packs count] + 1;
     return count;
 }
 
@@ -202,7 +186,7 @@
         return cell;
     } else {
         
-        int index = indexPath.row - 1;
+        NSInteger index = indexPath.row - 1;
         
         Pack *pack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
@@ -238,7 +222,7 @@
         cell.packNameText.delegate = self;
         
         cell.changeImageButton.tag = index;
-        [cell.changeImageButton addTarget:self action:@selector(selectFromImageLibrary:) forControlEvents:UIControlEventTouchDown];
+        [cell.changeImageButton addTarget:self action:@selector(editPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
         
         cell.playButton.tag = index;
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];
@@ -262,9 +246,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    int index = indexPath.row;
+    NSInteger index = indexPath.row;
     
-    [iConsole info:@"Selected item at index %d", indexPath.row];
+    [iConsole info:@"Selected item at index %ld", indexPath.row];
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -279,7 +263,7 @@
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack savePackOnly];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",indexPath.row -1]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%ld",indexPath.row -1]];
     }
 }
 
@@ -304,9 +288,9 @@
 
 -  (void) playButtonClicked:(id) sender {
     
-    int index = ((UIButton *) sender).tag;
+    NSInteger index = ((UIButton *) sender).tag;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInt:index]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInteger:index]];
     
     Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
@@ -320,7 +304,7 @@
         //dismiss popover view in notification
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%ld",index]];
 }
 
 - (void) resetPackContent {
@@ -438,22 +422,29 @@
     
 }
 
-- (void) selectFromImageLibrary: (id) sender {
+- (void) editPackButtonClicked: (id) sender {
     
-    int index = ((UIButton *) sender).tag;
-    
+    NSInteger index = ((UIButton *) sender).tag;
     _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+    
+    CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_picker animated:YES];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
     } else {
-        CGPoint point = ((UIButton *)sender).frame.origin;
-        CGRect rect = CGRectMake(point.x, point.y, 50, 50);
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
+    }
+    createPackController.isEditPack = YES;
+    createPackController.currentPack = _currentPack;
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:createPackController animated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     }
     
-    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
-    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-    [selectedPack savePackOnly];
 }
 
 
@@ -465,33 +456,6 @@
     [self.collectionView reloadData];
 }
 
-
-#pragma mark -
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    if (isUserInterfaceIdiomPhone) {
-        [_picker dismissModalViewControllerAnimated:YES];
-    } else {
-        [_imagePickerPopover dismissPopoverAnimated:YES];
-    }
-    
-    UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-    
-    if (_currentPack) {
-        if ([Common isDefaultPath:_currentPack.coverImageURL]) {
-            _currentPack.coverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
-        }
-        [imageData writeToFile:_currentPack.coverImageURL atomically:YES];
-        [_currentPack savePackOnly];
-        [self resetPackContent];
-        [self.collectionView reloadData];
-    } else {
-        [Common alertViewCommon:@"error: _currentPack is nil"];
-    }
-    
-    
-}
 
 #pragma mark -
 #pragma mark - UIAlertViewDelegate

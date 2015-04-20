@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Internetics. All rights reserved.
 //
 
-#import "CreatePackViewController2.h"
+#import "CreateEditPackViewController2.h"
 #import "OpenUDID.h"
 #import "FCCBarButton.h"
 #import "Pack.h"
@@ -14,8 +14,7 @@
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
 
-@interface CreatePackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate>{
-    Pack *_newPack;
+@interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate>{
     
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
@@ -23,7 +22,7 @@
 
 @end
 
-@implementation CreatePackViewController2
+@implementation CreateEditPackViewController2
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,7 +40,6 @@
     
     _coverImageView.layer.borderWidth = 1;
     _coverImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
     _coverImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     _coverImageView.backgroundColor = [UIColor clearColor];
     CAShapeLayer *styleLayer = [CAShapeLayer layer];
@@ -49,13 +47,46 @@
     styleLayer.path = shadowPath.CGPath;
     _coverImageView.layer.mask = styleLayer;
     
-    _newPack = [[Pack alloc] init];
-    
     UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
     _coverImageView.userInteractionEnabled = YES;
     [_coverImageView addGestureRecognizer:imageSingeTap];
     
+    if (self.isEditPack == FALSE) {
+        _currentPack = [[Pack alloc] init];
+        _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
+    } else {
+        _packNameTextField.text = _currentPack.packName;
+        _sidebarTextField.text = _currentPack.sidebarTitle;
+        _creatorTextField.text = _currentPack.creatorNickName;
+        _jobTitleTextField.text = _currentPack.jobTitle;
+        if (_currentPack.autoPlaySpeed == 0) {
+            _autoPlaySpeedTextField.text = @"10";
+        } else {
+            _autoPlaySpeedTextField.text = [NSString stringWithFormat:@"%d",_currentPack.autoPlaySpeed];
+        }
+        
+        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
+        BOOL isDirectory;
+        BOOL isFileExist = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
+        if (isDirectory || isFileExist == FALSE) {
+            _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
+        } else {
+            _coverImageView.image =[UIImage imageWithContentsOfFile:path];
+        }
+
+        
+        
+    }
     
+    
+}
+
+- (void) viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGRect rect = _coverImageView.frame;
+    rect.origin.y = CGRectGetHeight(self.view.frame) - CGRectGetHeight(_coverImageView.frame) - 30;
+    [_coverImageView setFrame:rect];
     
     
 }
@@ -82,7 +113,12 @@
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor]; // change this color
-    label.text = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
+    
+    if (self.isEditPack) {
+        label.text = @"Edit Pack";
+    } else {
+        label.text = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
+    }
     [label sizeToFit];
     [self.navigationItem setTitleView:label];
 }
@@ -107,7 +143,7 @@
         if (!_imagePickerPopover) {
             _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_picker];
         }
-        [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        [_imagePickerPopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
     }
     
 }
@@ -124,13 +160,21 @@
     NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
     [imageData writeToFile:savedFullPath atomically:YES];
     _coverImageView.image = [UIImage imageWithContentsOfFile:savedFullPath];
-    _newPack.coverImageURL = savedFullPath;
+    _currentPack.coverImageURL = savedFullPath;
 }
 
 
 - (void) closeCreatePackView {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [self dismissModalViewControllerAnimated:YES];
+    if (self.isEditPack) {
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
 }
 
 - (void) saveAndCloseCreatePackView {
@@ -140,36 +184,54 @@
         return;
     }
     
-    if ([self isNewPack]) {
-        _newPack.packName = _packNameTextField.text;
-        _newPack.sidebarTitle = _sidebarTextField.text;
-        _newPack.creator = [OpenUDID value];
-        _newPack.createDate = (int)[[NSDate date] timeIntervalSince1970];
-        _newPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-        _newPack.creatorNickName = _creatorTextField.text;
-        _newPack.jobTitle = _jobTitleTextField.text;
-        _newPack.autoPlaySpeed = [_autoPlaySpeedTextField.text intValue];
-        [[User defaultUser] addPack:_newPack];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_newPack];
-        
-        [[NSUserDefaults standardUserDefaults] setInteger:_newPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
-        //Update_date info
-        NSString *updateDate = [FileOperationHelper getTodayString];
-        NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_newPack.packName];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-        [dict setObject:updateDate forKey:@"update_date"];
-        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_newPack.packName];
-        
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [self dismissModalViewControllerAnimated:YES];
-    } else {
-        
+    if ((_isEditPack == FALSE) && ([self isNewPack] == FALSE)) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_EXISTING_PACK_NAME",@"")];
+        return;
+        
+    }
+    
+    _currentPack.packName = _packNameTextField.text;
+    _currentPack.sidebarTitle = _sidebarTextField.text;
+    _currentPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    _currentPack.creatorNickName = _creatorTextField.text;
+    _currentPack.jobTitle = _jobTitleTextField.text;
+    _currentPack.autoPlaySpeed = [_autoPlaySpeedTextField.text intValue];
+    
+    if (_isEditPack) {
+       [_currentPack savePackOnly];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EDIT_PACK_FINISHED_NOTIFICATION object:_currentPack];
+    } else {
+        _currentPack.creator = [OpenUDID value];
+        _currentPack.createDate = (int)[[NSDate date] timeIntervalSince1970];
+        [[User defaultUser] addPack:_currentPack];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NEW_PACK_ADDED_NOTIFICATION object:_currentPack];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:_currentPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
+    //Update_date info
+    NSString *updateDate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:updateDate forKey:@"update_date"];
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (self.isEditPack) {
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else {
+            [self dismissModalViewControllerAnimated:YES];
+        }
+    } else {
+        [self dismissModalViewControllerAnimated:YES];
     }
     
 }
 
+/*
+ * Check the pack name is already in the packs list
+*/
 - (BOOL) isNewPack {
     if (_packNameTextField.text == nil) {
         return NO;
