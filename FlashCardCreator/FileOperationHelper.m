@@ -258,7 +258,7 @@
         pack.creator = [OpenUDID value];
     }
     
-    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent]?:@"",@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",platformStr,@"platform",nil];
+    NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent]?:@"",@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",[NSString stringWithFormat:@"%d",pack.autoPlaySpeed],@"auto_play_speed",platformStr,@"platform",nil];
     
     [iConsole info:@"%s:packDict = %@",__FUNCTION__,packDict];
     

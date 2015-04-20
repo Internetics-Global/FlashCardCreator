@@ -21,6 +21,7 @@
     NSString *_jobTitle;
     int       _lastVisitDate;
     int       _createDate;
+    int       _autoPlaySpeed;  //in second
     NSMutableArray *_cards;
     
     /**
@@ -42,6 +43,7 @@
 @property (nonatomic, copy) NSString *jobTitle;
 @property (assign, nonatomic) int createDate;
 @property (assign, nonatomic) int lastVisitDate;
+@property (assign, nonatomic) int autoPlaySpeed;
 
 @property (nonatomic, assign) BOOL isAllowShare;
 

@@ -1372,6 +1372,7 @@ extern BOOL isFromNewCreatedCard;
             
             pack.packName = packDict[@"pack_name"];
             pack.sidebarTitle = packDict[@"sidebar_title"];
+            pack.autoPlaySpeed = [packDict[@"auto_play_speed"] intValue];
             pack.creator = packDict[@"creator"];
             pack.createDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];

@@ -93,7 +93,7 @@
 	}
     
 	if (![SQLiteHelper tableExists:@"Packs_Tables"]) {
-		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text,create_date integer,last_visit_date integer, job_title text);"];
+		sqlite3_stmt *createItems = [SQLiteHelper prepareStatementForQuery:@"create table Packs_Tables (pack_id integer, pack_name text, sidebar_title text, user_id integer, language_name text, is_public text, cover_image text, creator text, creator_nick_name text,create_date integer,last_visit_date integer, job_title text, auto_play_speed integer);"];
 		sqlite3_step(createItems);
 		sqlite3_finalize(createItems);
         
@@ -103,8 +103,8 @@
         
         [iConsole info:@"%s:Create Packs_Tables",__FUNCTION__];
 	}else {
-        if (([Common currentInstalledSqliteVersion] != 4) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForPackFrom3To4];
+        if (([Common currentInstalledSqliteVersion] <= 5) && ([Common newUpdatingSqliteVersion] == 6)) {
+            [self AddFieldForPackFrom5To6];
         }
     }
     
@@ -132,25 +132,7 @@
         
         [iConsole info:@"%s:Create Question_Tables",__FUNCTION__];
         
-	} else {
-        if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
-            [self AddFieldForQuestionFrom1To2];
-        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
-            [self AddFieldForQuestionFrom2To3];
-        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
-            [self AddFieldForQuestionFrom1To2];
-            [self AddFieldForQuestionFrom2To3];
-        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForQuestionFrom1To2];
-            [self AddFieldForQuestionFrom2To3];
-            [self AddFieldForQuestionFrom3To4];
-        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForQuestionFrom2To3];
-            [self AddFieldForQuestionFrom3To4];
-        } else if (([Common currentInstalledSqliteVersion] == 3) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForQuestionFrom3To4];
-        }
-    }
+	}
     
     
     if (![SQLiteHelper tableExists:@"Answer_Tables"]) {
@@ -164,26 +146,7 @@
         
         [iConsole info:@"%s:Create Answer_Tables",__FUNCTION__];
         
-	} else {
-        if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 2)) {
-            [self AddFieldForAnswerFrom1To2];
-        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 3)) {
-            [self AddFieldForAnswerFrom2To3];
-        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 3)) {
-            [self AddFieldForAnswerFrom1To2];
-            [self AddFieldForAnswerFrom2To3];
-        } else if (([Common currentInstalledSqliteVersion] == 1) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForAnswerFrom1To2];
-            [self AddFieldForAnswerFrom2To3];
-            [self AddFieldForAnswerFrom3To4];
-        } else if (([Common currentInstalledSqliteVersion] == 2) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForAnswerFrom2To3];
-            [self AddFieldForAnswerFrom3To4];
-        } else if (([Common currentInstalledSqliteVersion] == 3) && ([Common newUpdatingSqliteVersion] == 4)) {
-            [self AddFieldForAnswerFrom3To4];
-        }
-    
-    }
+	}
     
     if (![SQLiteHelper tableExists:@"CSS_Tables"]) {
 		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text, subheading_font text, main_font text, sub_font text, subheading_align_vertical text,main_align_vertical text, sub_align_vertical text);"];
@@ -195,32 +158,7 @@
 		sqlite3_finalize(createIndex);
         
         [iConsole info:@"%s:Create CSS_Tables",__FUNCTION__];
-	} else {
-        if ([Common currentInstalledSqliteVersion] == 2) {
-            
-            if (([Common newUpdatingSqliteVersion] == 3) || ([Common newUpdatingSqliteVersion] == 4)) {
-              [self AddFieldForCSSFrom2To3];
-            } else if (([Common newUpdatingSqliteVersion] == 5)) {
-                [self AddFieldForCSSFrom2To3];
-                [self AddFieldForCSSFrom4To5];
-            }
-        } else if ([Common currentInstalledSqliteVersion] == 3) {
-            
-            if (([Common newUpdatingSqliteVersion] == 4)) {
-                //do nothing
-            } else if (([Common newUpdatingSqliteVersion] == 5)) {
-                [self AddFieldForCSSFrom4To5];
-            }
-
-            
-        } else if ([Common currentInstalledSqliteVersion] == 4) {
-            
-            if (([Common newUpdatingSqliteVersion] == 5)) {
-                [self AddFieldForCSSFrom4To5];
-            }
-            
-        }
-    }
+	}
     
     
     if ([Common currentInstalledSqliteVersion] != [Common newUpdatingSqliteVersion]) {
@@ -230,133 +168,11 @@
     
 }
 
-+ (void) AddFieldForQuestionFrom1To2 {
-    //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_subheading integer "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_main integer "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN line_number_sub integer "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    [iConsole info:@"%s",__FUNCTION__];
-}
 
 
-+ (void) AddFieldForAnswerFrom1To2 {
-    //在version2中，我们在question/answer table中增加了三个字段，以跟踪行数
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_subheading integer "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
++ (void) AddFieldForPackFrom5To6 {
     
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_main integer "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN line_number_sub integer "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    
-    [iConsole info:@"%s",__FUNCTION__];
-    
-}
-
-+ (void) AddFieldForQuestionFrom2To3 {
-
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN background_image text "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN movie text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN audio text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-
-    
-    [iConsole info:@"%s",__FUNCTION__];
-
-}
-
-
-+ (void) AddFieldForAnswerFrom2To3 {
-
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN background_image text "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN movie text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN audio text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-
-    
-    [iConsole info:@"%s",__FUNCTION__];
-
-    
-}
-
-+ (void) AddFieldForCSSFrom2To3 {
-    
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN subheading_font text "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN main_font text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN sub_font text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    
-    [iConsole info:@"%s",__FUNCTION__];
-    
-}
-
-
-+ (void) AddFieldForQuestionFrom3To4 {
-    
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Question_Tables ADD COLUMN autoresize_flag integer "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-
-    [iConsole info:@"%s",__FUNCTION__];
-    
-}
-
-
-+ (void) AddFieldForAnswerFrom3To4 {
-    
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Answer_Tables ADD COLUMN autoresize_flag integer "];
+    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Packs_Tables ADD COLUMN auto_play_speed integer "];
     sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_step(queryStatement);
     sqlite3_finalize(queryStatement);
@@ -365,42 +181,6 @@
     
     
 }
-
-+ (void) AddFieldForPackFrom3To4 {
-    
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE Packs_Tables ADD COLUMN job_title text "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    [iConsole info:@"%s",__FUNCTION__];
-    
-    
-}
-
-
-+ (void) AddFieldForCSSFrom4To5 {
-    
-    NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN subheading_align_vertical text "];
-    sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN main_align_vertical text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN sub_align_vertical text "];
-    queryStatement = [SQLiteHelper prepareStatementForQuery:query];
-    sqlite3_step(queryStatement);
-    sqlite3_finalize(queryStatement);
-    
-    
-    [iConsole info:@"%s",__FUNCTION__];
-    
-}
-
 
 
 + (BOOL)booleanForInt:(NSInteger)integer{
