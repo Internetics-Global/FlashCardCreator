@@ -24,7 +24,7 @@
 #import "PackListViewControllerV2.h"
 #import "DataManager.h"
 #import "UIImageView+AFNetworking.h"
-#import "CreatePackViewController.h"
+#import "CreatePackViewController2.h"
 #import "UINavigationController+DismissKeyboard.h"
 #import "DataManager.h"
 #import "FileOperationHelper.h"
@@ -348,7 +348,12 @@ enum popover_enum {
 #pragma mark - Create or select Pack
 
 - (void) createNewPack:(id)sender {
-    CreatePackViewController * createPackController = [[CreatePackViewController alloc] init];
+    CreatePackViewController2 * createPackController;
+    if (isUserInterfaceIdiomPhone) {
+        createPackController = [[CreatePackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
+    } else {
+        createPackController = [[CreatePackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
+    }
 	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

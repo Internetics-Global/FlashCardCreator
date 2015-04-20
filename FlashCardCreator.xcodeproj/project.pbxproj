@@ -62,7 +62,6 @@
 		2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181716D1A62700E1E785 /* UIImage+Scale.m */; };
 		2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */; };
 		2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */; };
-		2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */; };
 		2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183A16D1A66400E1E785 /* CreateCardViewController.m */; };
 		2D5C184216D1A69200E1E785 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183D16D1A69200E1E785 /* AboutView.m */; };
 		2D5C184316D1A69200E1E785 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183F16D1A69200E1E785 /* AboutViewController.m */; };
@@ -224,6 +223,13 @@
 		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
+		886D8FDF1AE48C0300865101 /* CreatePackViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */; };
+		886D8FE01AE48C0300865101 /* CreatePackViewController2_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */; };
+		886D8FE21AE48D4F00865101 /* CreatePackViewController2_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */; };
+		886D8FEE1AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FE71AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m */; };
+		886D8FEF1AE4975E00865101 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FE91AE4975E00865101 /* TPKeyboardAvoidingScrollView.m */; };
+		886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FEB1AE4975E00865101 /* TPKeyboardAvoidingTableView.m */; };
+		886D8FF11AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FED1AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		887A45B71929E36B007C94FB /* change_card_background_image_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B31929E36B007C94FB /* change_card_background_image_button.png */; };
 		887A45B81929E36B007C94FB /* change_card_background_image_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */; };
 		887A45B91929E36B007C94FB /* change_card_layout_template.png in Resources */ = {isa = PBXBuildFile; fileRef = 887A45B51929E36B007C94FB /* change_card_layout_template.png */; };
@@ -374,8 +380,6 @@
 		2D5C181916D1A62700E1E785 /* UIImagePickerController+NoRotate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImagePickerController+NoRotate.m"; path = "Classes/UIImagePickerController+NoRotate.m"; sourceTree = "<group>"; };
 		2D5C181A16D1A62700E1E785 /* UINavigationController+DismissKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+DismissKeyboard.h"; path = "Classes/UINavigationController+DismissKeyboard.h"; sourceTree = "<group>"; };
 		2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+DismissKeyboard.m"; path = "Classes/UINavigationController+DismissKeyboard.m"; sourceTree = "<group>"; };
-		2D5C183616D1A65B00E1E785 /* CreatePackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreatePackViewController.h; path = Classes/CreatePackViewController.h; sourceTree = "<group>"; };
-		2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreatePackViewController.m; path = Classes/CreatePackViewController.m; sourceTree = "<group>"; };
 		2D5C183916D1A66400E1E785 /* CreateCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateCardViewController.h; path = Classes/CreateCardViewController.h; sourceTree = "<group>"; };
 		2D5C183A16D1A66400E1E785 /* CreateCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateCardViewController.m; path = Classes/CreateCardViewController.m; sourceTree = "<group>"; };
 		2D5C183C16D1A69200E1E785 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutView.h; path = Classes/AboutView.h; sourceTree = "<group>"; };
@@ -584,6 +588,18 @@
 		88620B5F1AB104120046B64E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
+		886D8FDC1AE48C0300865101 /* CreatePackViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePackViewController2.h; sourceTree = "<group>"; };
+		886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePackViewController2.m; sourceTree = "<group>"; };
+		886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePackViewController2_iPhone.xib; sourceTree = "<group>"; };
+		886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePackViewController2_iPad.xib; sourceTree = "<group>"; };
+		886D8FE61AE4975E00865101 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
+		886D8FE71AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingCollectionView.m; sourceTree = "<group>"; };
+		886D8FE81AE4975E00865101 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		886D8FE91AE4975E00865101 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		886D8FEA1AE4975E00865101 /* TPKeyboardAvoidingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingTableView.h; sourceTree = "<group>"; };
+		886D8FEB1AE4975E00865101 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
+		886D8FEC1AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		886D8FED1AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		887A45B31929E36B007C94FB /* change_card_background_image_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_background_image_button.png; path = Resources/change_card_background_image_button.png; sourceTree = "<group>"; };
 		887A45B41929E36B007C94FB /* change_card_background_image_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_card_background_image_button@2x.png"; path = "Resources/change_card_background_image_button@2x.png"; sourceTree = "<group>"; };
 		887A45B51929E36B007C94FB /* change_card_layout_template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = change_card_layout_template.png; path = Resources/change_card_layout_template.png; sourceTree = "<group>"; };
@@ -717,8 +733,10 @@
 		2D09AF1316A5046900B1C0C9 /* CreatePack */ = {
 			isa = PBXGroup;
 			children = (
-				2D5C183616D1A65B00E1E785 /* CreatePackViewController.h */,
-				2D5C183716D1A65B00E1E785 /* CreatePackViewController.m */,
+				886D8FDC1AE48C0300865101 /* CreatePackViewController2.h */,
+				886D8FDD1AE48C0300865101 /* CreatePackViewController2.m */,
+				886D8FDE1AE48C0300865101 /* CreatePackViewController2_iPhone.xib */,
+				886D8FE11AE48D4F00865101 /* CreatePackViewController2_iPad.xib */,
 			);
 			name = CreatePack;
 			sourceTree = "<group>";
@@ -1015,6 +1033,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				88620B561AB103BE0046B64E /* Parse */,
 				88BADB3C1A6CCCF500D6CA9F /* Reachability */,
@@ -1416,6 +1435,22 @@
 			path = Libraries/Parse;
 			sourceTree = "<group>";
 		};
+		886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */ = {
+			isa = PBXGroup;
+			children = (
+				886D8FE61AE4975E00865101 /* TPKeyboardAvoidingCollectionView.h */,
+				886D8FE71AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m */,
+				886D8FE81AE4975E00865101 /* TPKeyboardAvoidingScrollView.h */,
+				886D8FE91AE4975E00865101 /* TPKeyboardAvoidingScrollView.m */,
+				886D8FEA1AE4975E00865101 /* TPKeyboardAvoidingTableView.h */,
+				886D8FEB1AE4975E00865101 /* TPKeyboardAvoidingTableView.m */,
+				886D8FEC1AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				886D8FED1AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+			);
+			name = TPKeyboardAvoiding;
+			path = Libraries/TPKeyboardAvoiding;
+			sourceTree = "<group>";
+		};
 		889131CF1A123DED0011B7ED /* iConsole */ = {
 			isa = PBXGroup;
 			children = (
@@ -1638,6 +1673,7 @@
 				2D1A053A16EDEB2100527311 /* popoverArrowRight.png in Resources */,
 				88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */,
 				2D1A053B16EDEB2100527311 /* popoverArrowRight@2x.png in Resources */,
+				886D8FE01AE48C0300865101 /* CreatePackViewController2_iPhone.xib in Resources */,
 				2D1A053C16EDEB2100527311 /* popoverArrowUp.png in Resources */,
 				2D1A053D16EDEB2100527311 /* popoverArrowUp@2x.png in Resources */,
 				8813908F193560FD00E04251 /* icon~100.png in Resources */,
@@ -1678,6 +1714,7 @@
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
 				881131AC1703CC8700C7D5A8 /* Default@2x.png in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
+				886D8FE21AE48D4F00865101 /* CreatePackViewController2_iPad.xib in Resources */,
 				88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */,
 				8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */,
 				8813908C193560FD00E04251 /* icon~29.png in Resources */,
@@ -1785,6 +1822,7 @@
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
+				886D8FEE1AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */,
 				2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */,
 				88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */,
@@ -1795,6 +1833,7 @@
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
+				886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */,
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
 				2D5C17E016D1A56A00E1E785 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1826,7 +1865,6 @@
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
-				2D5C183816D1A65B00E1E785 /* CreatePackViewController.m in Sources */,
 				2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */,
 				2D5C184216D1A69200E1E785 /* AboutView.m in Sources */,
 				2D5C184316D1A69200E1E785 /* AboutViewController.m in Sources */,
@@ -1836,6 +1874,7 @@
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
 				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
+				886D8FDF1AE48C0300865101 /* CreatePackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
@@ -1847,11 +1886,13 @@
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
 				889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */,
+				886D8FF11AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				884DE1AF18FBA94F00C09067 /* RequestUtils.m in Sources */,
 				88123DF5192F00480062CA84 /* Constant.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
 				88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */,
+				886D8FEF1AE4975E00865101 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
 				88D2005B1985ED980022E8E9 /* UIViewController+LandscapeOnly.m in Sources */,
 				880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */,

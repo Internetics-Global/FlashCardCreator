@@ -20,7 +20,6 @@
 
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
-#import "CreatePackViewController.h"
 #import <Parse/Parse.h>
 #import <ParseCrashReporting/ParseCrashReporting.h>
 
