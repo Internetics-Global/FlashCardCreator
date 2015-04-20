@@ -30,7 +30,7 @@
         self.isAutoScroll = NO;
         self.isCycle = YES;
         _curPage = 0;
-        self.autoPlayDelaySeconds = k_Default_AutoPlayDelaySeconds;
+        self.autoPlayDelaySeconds = kDefault_Auto_Play_Speed;
         
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.delegate = self;
@@ -211,7 +211,6 @@
     
     //如果没有dispatch_async，则会导致view jolt的表现的
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        
         int x = aScrollView.contentOffset.x;
         
         if (self.isCycle == FALSE) {
@@ -265,10 +264,7 @@
                 }
             }
         }
-        
     });
-    
-    
     
     
 }
