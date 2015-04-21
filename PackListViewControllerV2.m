@@ -248,12 +248,13 @@
     
     NSInteger index = indexPath.row;
     
-    [iConsole info:@"Selected item at index %ld", indexPath.row];
+    [iConsole info:@"Selected item at index %d", indexPath.row];
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        //dismiss popover view in notification
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
     }
     
     if (index == 0) {
@@ -263,7 +264,7 @@
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack savePackOnly];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%ld",indexPath.row -1]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",indexPath.row -1]];
     }
 }
 
@@ -301,10 +302,11 @@
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        //dismiss popover view in notification
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%ld",index]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",index]];
 }
 
 - (void) resetPackContent {
@@ -351,7 +353,9 @@
     if (isUserInterfaceIdiomPhone) {
     } else {
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        [self dismissModalViewControllerAnimated:YES];
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_VIDEO_NOTIFICATION object:self];
@@ -384,7 +388,8 @@
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        [self dismissModalViewControllerAnimated:YES];
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
     }
     
     [self performSelector:@selector(sendNotificationAfterCreateNewPack) withObject:nil afterDelay:0.5]; // only in iOS7, you can not directly call without delay, otherwise, you will not be able to click navigation bar again
@@ -437,9 +442,9 @@
     
     CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
-        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPhone" bundle:nil];
     } else {
-        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPad" bundle:nil];
     }
     createPackController.isEditPack = YES;
     createPackController.currentPack = _currentPack;
@@ -447,7 +452,10 @@
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController pushViewController:createPackController animated:YES];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+        
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];

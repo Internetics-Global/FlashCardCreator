@@ -102,8 +102,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:PLAY_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListAfterDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         if (isUserInterfaceIdiomPhone == false) {
             //在iPhone中，不需要这逻辑
@@ -396,6 +396,7 @@ enum popover_enum {
                 _packListPickerPopover.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:.3];
             }
         }
+        packListViewController.popController = _packListPickerPopover;
         
         [_packListPickerPopover presentPopoverFromRect:CGRectMake(0, 0, 50, 50) inView:self.navigationController.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     }
@@ -611,6 +612,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
+        _packListPickerPopover = nil;
         self.detailViewController.title = _currentPack.packName;
     } else {
         self.title = _currentPack.packName;
@@ -751,7 +753,7 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
-- (void) showPackListNotification :(NSNotification *) notification {
+- (void) showPackListAfterDidBecomeActiveNotification :(NSNotification *) notification {
     //avoid this kind of issue: [UIPopoverController _commonPresentPopoverFromRect:inView:permittedArrowDirections:animated:]: Popovers cannot be presented from a view which does not have a window.
     
     if (APP_DELEGATE.isAllowToShowPackList) {
@@ -777,7 +779,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-- (void) dismissPackListNotification :(NSNotification *) notification {
+- (void) dismissPackListAfterDidEnterBackgroundNotification :(NSNotification *) notification {
     
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -801,6 +803,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (isUserInterfaceIdiomPhone == FALSE) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
+        _packListPickerPopover = nil;
     } else {
         //[self.navigationController popToRootViewControllerAnimated:TRUE];
     }
@@ -824,6 +827,7 @@ extern BOOL isFromNewCreatedCard;
     
     if (isUserInterfaceIdiomPhone == false) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
+        _packListPickerPopover = nil;
     }
     
     [self createNewPack:nil];
@@ -2249,7 +2253,12 @@ extern BOOL isFromNewCreatedCard;
 //当通过dismissPopoverAnimated执行时，不会call到这个method
 //当点击popover外面区域时，会调用这个方法
 //具体见这里：http://stackoverflow.com/questions/3567033/dismissing-uipopovercontroller-with-dismisspopoveranimated-wont-call-delegate
+//为了让这个方法能被called，我们的做法是：[self.popController.delegate popoverControllerDidDismissPopover:self.popController];
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        _packListPickerPopover = nil;
+    }
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
     
@@ -2257,9 +2266,6 @@ extern BOOL isFromNewCreatedCard;
     if (val == FALSE) {
         [self showTooltips];
     }
-    
-    //在iPad中我们需要告诉detail
-    [self.detailViewController dismissPackListNotification];
     
 }
 

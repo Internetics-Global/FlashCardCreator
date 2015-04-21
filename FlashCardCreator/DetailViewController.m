@@ -663,13 +663,6 @@ enum popover_enum {
 }
 
 
-- (void) dismissPackListNotification {
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-    if (val == FALSE) {
-        [self showTooltips];
-    }
-}
-
 - (void) selectedPackNotification:(NSNotification *) notification {
     [iConsole info:@"%s",__FUNCTION__];
     _isResizedArray = nil;

@@ -12,4 +12,6 @@
 
 @property (nonatomic, assign) NSInteger packIDInMasterView;
 
+@property (weak, nonatomic) UIPopoverController *popController;
+
 @end

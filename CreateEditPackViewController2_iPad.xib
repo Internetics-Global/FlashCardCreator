@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="p68-Ob-bar" customClass="TPKeyboardAvoidingScrollView">
-                    <rect key="frame" x="98" y="8" width="344" height="255"/>
+                    <rect key="frame" x="98" y="27" width="344" height="255"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name or title" textAlignment="center" minimumFontSize="17" id="IXR-nE-HNh">
@@ -84,7 +84,7 @@
                     </subviews>
                 </scrollView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_pack_cover_image_transparent.png" id="oFq-Ff-Jda">
-                    <rect key="frame" x="176" y="290" width="189" height="209"/>
+                    <rect key="frame" x="176" y="306" width="189" height="209"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
