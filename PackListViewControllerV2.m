@@ -209,7 +209,7 @@
             cell.deleteButton.hidden = YES;
         }
         
-        if ((_isCollectionViewEditing) && ([pack.creator isEqualToString:[OpenUDID value]])) {
+        if (_isCollectionViewEditing) {
             cell.changeImageButton.hidden = NO;
         } else {
             cell.changeImageButton.hidden = YES;
@@ -426,6 +426,14 @@
     
     NSInteger index = ((UIButton *) sender).tag;
     _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
+    
+    if (([_currentPack.creator isEqualToString:[OpenUDID value]]) == FALSE) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"You can not edit packs that are not created by you" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
+    
     
     CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {

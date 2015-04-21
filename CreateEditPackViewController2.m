@@ -81,15 +81,6 @@
     
 }
 
-- (void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    
-    CGRect rect = _coverImageView.frame;
-    rect.origin.y = CGRectGetHeight(self.view.frame) - CGRectGetHeight(_coverImageView.frame) - 30;
-    [_coverImageView setFrame:rect];
-    
-    
-}
 
 
 

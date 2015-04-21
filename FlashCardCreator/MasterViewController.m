@@ -352,9 +352,9 @@ enum popover_enum {
 - (void) createNewPack:(id)sender {
     CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
-        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPhone" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPhone" bundle:nil];
     } else {
-        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreatePackViewController2_iPad" bundle:nil];
+        createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPad" bundle:nil];
     }
 	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;

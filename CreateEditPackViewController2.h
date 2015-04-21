@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class Pack;
+@class TPKeyboardAvoidingScrollView;
 
 @interface CreateEditPackViewController2 : UIViewController
+
+@property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollview;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 

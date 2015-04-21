@@ -12,6 +12,7 @@
                 <outlet property="creatorTextField" destination="IJ5-lQ-f2v" id="jzg-g8-Cau"/>
                 <outlet property="jobTitleTextField" destination="Axg-es-DMn" id="gMj-dU-IIo"/>
                 <outlet property="packNameTextField" destination="Abb-ch-NYQ" id="Ms1-D8-oai"/>
+                <outlet property="scrollview" destination="S6x-8Y-YyC" id="81h-bU-Zf5"/>
                 <outlet property="sidebarTextField" destination="ntf-UC-DNm" id="f6C-B4-tQd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
