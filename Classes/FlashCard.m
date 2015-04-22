@@ -612,7 +612,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                   500,
                                   kSegmentHeightForiPad);
         _segmentedControl.frame = frame;
-        [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+        [_segmentedControl addTarget:self action:@selector(segmentedControlQAClicked:) forControlEvents:UIControlEventValueChanged];
         _segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
         _segmentedControl.selectedSegmentIndex = 0;
         [self addSubview:_segmentedControl];
@@ -1063,7 +1063,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                   180,
                                   kSegmentHeightForiPhone);
         _segmentedControl.frame = frame;
-        [_segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+        [_segmentedControl addTarget:self action:@selector(segmentedControlQAClicked:) forControlEvents:UIControlEventValueChanged];
         _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
         _segmentedControl.selectedSegmentIndex = 0;
         [self addSubview:_segmentedControl];
@@ -1881,7 +1881,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void)segmentAction:(id)sender
+- (void)segmentedControlQAClicked:(id)sender
 {
     [self refreshAll];
 }
@@ -5225,6 +5225,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else {
             [self saveEdittedCard];
         }
+    } else {
+        //只是关闭键盘
+        //每当只是关闭键盘时，这时如果是NEW_FLASHCARDVIEW_TAG，我们需要把数据暂存一下，以免segement QA切换会引起数据丢失
+        if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+            [self commitQuestionAndAnswerData];
+        }
+        
     }
     
     if ([self isVerticalAlignment:_lastBecomeFirstRespondTextView]) {

@@ -192,7 +192,7 @@ typedef enum{
  */
 - (void) saveEdittedCard;
 
-- (void)segmentAction:(id)sender;
+- (void)segmentedControlQAClicked:(id)sender;
 
 - (UIImage *)captureWholeViewAsImage;
 
