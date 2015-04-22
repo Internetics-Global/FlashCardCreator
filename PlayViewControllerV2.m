@@ -48,6 +48,8 @@
     NSTimer *_autoSwitchQATimer; //auto switch question/answer card timer
     BOOL     _isAutoShowQuestionOnly;  //used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
     
+    NSTimer *_autoHideControlPanelTimer;
+    
 }
 
 @end
@@ -199,6 +201,8 @@
     if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
         _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
     }
+    
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
     
 }
 
@@ -448,6 +452,11 @@
 }
 
 
+- (void) autoHideControlerPanel {
+    _controlPanel.hidden = YES;
+}
+
+
 
 - (void) switchQuestionAnswerView{
     [iConsole info:@"%s",__FUNCTION__];
@@ -693,6 +702,10 @@
 }
 
 - (void) switchControlPanelVisibility {
+    if (_autoHideControlPanelTimer) {
+        [_autoHideControlPanelTimer invalidate];
+        _autoHideControlPanelTimer = nil;
+    }
     [_controlPanel setHidden:!(_controlPanel.hidden)];
 }
 
