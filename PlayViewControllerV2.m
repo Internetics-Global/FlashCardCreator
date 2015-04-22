@@ -19,6 +19,7 @@
 #import "Answer.h"
 #import "Common.h"
 #import "PopoverView.h"
+#import "ASValueTrackingSlider.h"
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate> {
     CycleScrollView *_scrollView;
@@ -39,14 +40,14 @@
     
     FlashCard *_previousCard;
     
-    UIView *_controlPanel;
+    UIView    *_controlPanel;
     
-    UIButton *_playButton;
-    UISlider *_autoPlayDelaySlider;
-    UIButton *_autoScrollButton;
+    UIButton              *_playButton;
+    ASValueTrackingSlider *_autoPlayDelaySlider;
+    UIButton              *_autoScrollButton;
     
-    NSTimer *_autoSwitchQATimer; //auto switch question/answer card timer
-    BOOL     _isAutoShowQuestionOnly;  //used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
+    NSTimer  *_autoSwitchQATimer; //auto switch question/answer card timer
+    BOOL      _isAutoShowQuestionOnly;  //used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
     
     NSTimer *_autoHideControlPanelTimer;
     
@@ -283,7 +284,16 @@
     autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:autoPlayDelayLabel];
     
-    _autoPlayDelaySlider= [[UISlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
+    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectOffset(autoPlayDelayLabel.frame, 110, 0)];
+    [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
+    _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
+    _autoPlayDelaySlider.font = [UIFont systemFontOfSize:12];
+    _autoPlayDelaySlider.popUpViewWidthPaddingFactor = 1.5;
+    _autoPlayDelaySlider.popUpViewCornerRadius = 3;
+    _autoPlayDelaySlider.popUpViewHeightPaddingFactor = 1;
+    _autoPlayDelaySlider.popUpViewArrowLength = 8;
+    _autoPlayDelaySlider.popUpViewAnimatedColors = @[[UIColor orangeColor]];
+    _autoPlayDelaySlider.textColor = [UIColor whiteColor];
     _autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
     _autoPlayDelaySlider.minimumValue = 4;
