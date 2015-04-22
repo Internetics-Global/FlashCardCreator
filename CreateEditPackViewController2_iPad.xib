@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateEditPackViewController2">
             <connections>
-                <outlet property="autoPlaySpeedTextField" destination="6vc-ys-KVR" id="M8S-mD-Cos"/>
+                <outlet property="autoPlaySpeedSlider" destination="0vM-Tj-lgb" id="3FF-Ud-tMf"/>
                 <outlet property="coverImageView" destination="oFq-Ff-Jda" id="Ons-uT-mpA"/>
                 <outlet property="creatorTextField" destination="SGN-2M-Wbp" id="vuI-EY-noM"/>
                 <outlet property="jobTitleTextField" destination="IXR-nE-HNh" id="OHg-zQ-xgg"/>
@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="p68-Ob-bar" customClass="TPKeyboardAvoidingScrollView">
-                    <rect key="frame" x="98" y="27" width="344" height="255"/>
+                    <rect key="frame" x="98" y="27" width="344" height="298"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name or title" textAlignment="center" minimumFontSize="17" id="IXR-nE-HNh">
@@ -59,17 +59,6 @@
                                 <outlet property="delegate" destination="-1" id="BcM-EL-86f"/>
                             </connections>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Auto play speed" textAlignment="center" minimumFontSize="17" id="6vc-ys-KVR">
-                            <rect key="frame" x="72" y="215" width="200" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="tintColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="numberPad" returnKeyType="done"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="tC3-kJ-YSF"/>
-                            </connections>
-                        </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Side bar title" textAlignment="center" minimumFontSize="17" id="8zj-bc-P9N">
                             <rect key="frame" x="72" y="65" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -81,10 +70,35 @@
                                 <outlet property="delegate" destination="-1" id="zNX-xM-Kyx"/>
                             </connections>
                         </textField>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="4" maxValue="60" id="0vM-Tj-lgb" customClass="ASValueTrackingSlider">
+                            <rect key="frame" x="82" y="223" width="174" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AQc-Rn-Xdd">
+                            <rect key="frame" x="72" y="230" width="17" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pd9-uI-evk">
+                            <rect key="frame" x="257" y="230" width="17" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto play speed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VWs-VY-N9z">
+                            <rect key="frame" x="110" y="253" width="125" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                 </scrollView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_pack_cover_image_transparent.png" id="oFq-Ff-Jda">
-                    <rect key="frame" x="176" y="306" width="189" height="209"/>
+                    <rect key="frame" x="176" y="333" width="189" height="209"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>

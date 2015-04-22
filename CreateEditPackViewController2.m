@@ -13,6 +13,7 @@
 #import "User.h"
 #import "FileOperationHelper.h"
 #import "UIImage+Scale.h"
+#import "ASValueTrackingSlider.h"
 
 @interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate>{
     
@@ -51,6 +52,18 @@
     _coverImageView.userInteractionEnabled = YES;
     [_coverImageView addGestureRecognizer:imageSingeTap];
     
+    //configure UISlider
+    [_autoPlaySpeedSlider setMaxFractionDigitsDisplayed:0];
+    _autoPlaySpeedSlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
+    _autoPlaySpeedSlider.font = [UIFont systemFontOfSize:12];
+    _autoPlaySpeedSlider.popUpViewWidthPaddingFactor = 1.5;
+    _autoPlaySpeedSlider.popUpViewCornerRadius = 3;
+    _autoPlaySpeedSlider.popUpViewHeightPaddingFactor = 1;
+    _autoPlaySpeedSlider.popUpViewArrowLength = 8;
+    _autoPlaySpeedSlider.popUpViewAnimatedColors = @[[UIColor orangeColor]];
+    [_autoPlaySpeedSlider showPopUpViewAnimated:NO];
+    _autoPlaySpeedSlider.textColor = [UIColor whiteColor];
+    
     if (self.isEditPack == FALSE) {
         _currentPack = [[Pack alloc] init];
         _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
@@ -60,9 +73,9 @@
         _creatorTextField.text = _currentPack.creatorNickName;
         _jobTitleTextField.text = _currentPack.jobTitle;
         if (_currentPack.autoPlaySpeed == 0) {
-            _autoPlaySpeedTextField.text = @"10";
+            _autoPlaySpeedSlider.value = 10.0;
         } else {
-            _autoPlaySpeedTextField.text = [NSString stringWithFormat:@"%d",_currentPack.autoPlaySpeed];
+            _autoPlaySpeedSlider.value = _currentPack.autoPlaySpeed;
         }
         
         NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
@@ -170,7 +183,7 @@
 
 - (void) saveAndCloseCreatePackView {
     
-    if ([_autoPlaySpeedTextField.text intValue] > 60 || [_autoPlaySpeedTextField.text intValue] < 4) {
+    if (_autoPlaySpeedSlider.value > 60 || _autoPlaySpeedSlider.value < 4) {
         [Common alertViewCommon:@"The value of auto play speed should be between 4 and 60 seconds"];
         return;
     }
@@ -186,7 +199,7 @@
     _currentPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
     _currentPack.creatorNickName = _creatorTextField.text;
     _currentPack.jobTitle = _jobTitleTextField.text;
-    _currentPack.autoPlaySpeed = [_autoPlaySpeedTextField.text intValue];
+    _currentPack.autoPlaySpeed = _autoPlaySpeedSlider.value;
     
     if (_isEditPack) {
        [_currentPack savePackOnly];

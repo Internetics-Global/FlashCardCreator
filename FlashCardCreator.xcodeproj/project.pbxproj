@@ -250,6 +250,8 @@
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
 		88B405071A3824D200D8C218 /* background_navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B405061A3824D200D8C218 /* background_navigationbar.png */; };
 		88BADB3F1A6CCCF500D6CA9F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BADB3E1A6CCCF500D6CA9F /* Reachability.m */; };
+		88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */; };
+		88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE31AE72A040089D7F6 /* ASValueTrackingSlider.m */; };
 		88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD6134197771F500834D72 /* PackListViewControllerV2.m */; };
 		88BD61591977727400834D72 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD61581977727400834D72 /* LineLayout.m */; };
 		88BD615C1977732200834D72 /* PackListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD615B1977732200834D72 /* PackListCell.m */; };
@@ -624,6 +626,10 @@
 		88B405061A3824D200D8C218 /* background_navigationbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_navigationbar.png; path = Resources/background_navigationbar.png; sourceTree = "<group>"; };
 		88BADB3D1A6CCCF500D6CA9F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		88BADB3E1A6CCCF500D6CA9F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		88BB8FE01AE72A040089D7F6 /* ASValuePopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValuePopUpView.h; sourceTree = "<group>"; };
+		88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValuePopUpView.m; sourceTree = "<group>"; };
+		88BB8FE21AE72A040089D7F6 /* ASValueTrackingSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValueTrackingSlider.h; sourceTree = "<group>"; };
+		88BB8FE31AE72A040089D7F6 /* ASValueTrackingSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValueTrackingSlider.m; sourceTree = "<group>"; };
 		88BD6133197771F500834D72 /* PackListViewControllerV2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackListViewControllerV2.h; sourceTree = "<group>"; };
 		88BD6134197771F500834D72 /* PackListViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackListViewControllerV2.m; sourceTree = "<group>"; };
 		88BD61571977727400834D72 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
@@ -1033,6 +1039,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				88620B561AB103BE0046B64E /* Parse */,
@@ -1492,6 +1499,18 @@
 			path = Libraries/Reachability;
 			sourceTree = "<group>";
 		};
+		88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */ = {
+			isa = PBXGroup;
+			children = (
+				88BB8FE01AE72A040089D7F6 /* ASValuePopUpView.h */,
+				88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */,
+				88BB8FE21AE72A040089D7F6 /* ASValueTrackingSlider.h */,
+				88BB8FE31AE72A040089D7F6 /* ASValueTrackingSlider.m */,
+			);
+			name = ASValueTrackingSlider;
+			path = Libraries/ASValueTrackingSlider;
+			sourceTree = "<group>";
+		};
 		88BC6BAD17764CD8006DEF79 /* Symbols */ = {
 			isa = PBXGroup;
 			children = (
@@ -1831,6 +1850,7 @@
 				88EA2ACF1AC1329600A3663E /* UIButton+Extensions.m in Sources */,
 				2D5C17C316D1A54200E1E785 /* OpenUDID.m in Sources */,
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
+				88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
 				886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -1878,6 +1898,7 @@
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
+				88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */,
 				88F5CE7119B40B4B00107075 /* PEResizeControl.m in Sources */,
 				88F5CE6F19B40B4B00107075 /* PECropView.m in Sources */,
 				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,

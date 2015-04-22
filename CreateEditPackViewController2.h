@@ -10,6 +10,7 @@
 
 @class Pack;
 @class TPKeyboardAvoidingScrollView;
+@class ASValueTrackingSlider;
 
 @interface CreateEditPackViewController2 : UIViewController
 
@@ -22,7 +23,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *sidebarTextField;
 @property (weak, nonatomic) IBOutlet UITextField *creatorTextField;
 @property (weak, nonatomic) IBOutlet UITextField *jobTitleTextField;
-@property (weak, nonatomic) IBOutlet UITextField *autoPlaySpeedTextField;
+
+@property (weak, nonatomic) IBOutlet ASValueTrackingSlider *autoPlaySpeedSlider;
+
+
 
 
 @property (strong, nonatomic)  Pack *currentPack;
