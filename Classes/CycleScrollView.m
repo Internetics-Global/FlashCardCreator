@@ -7,8 +7,9 @@
 //
 
 #import "CycleScrollView.h"
+#import "FlashCard.h"
 
-@interface CycleScrollView () {
+@interface CycleScrollView () <UIGestureRecognizerDelegate> {
     NSInteger         _totalPages;
     NSInteger         _curPage;
     NSMutableArray   *_curViews;
@@ -290,6 +291,7 @@
     [v addGestureRecognizer:recognizerDown];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDownAction:)];
+    tapGestureRecognizer.delegate = self;
     [v addGestureRecognizer:tapGestureRecognizer];
 }
 
@@ -314,6 +316,20 @@
     
     if([keyPath isEqualToString:@"frame"]) {
         _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
+    }
+}
+
+#pragma mark – UIGestureRecognizerDelegate
+/*
+ * why we need this:
+ * In Play mode, there's an segmented control under the card.
+ * If no this logic, click that part of card could switch question/answer card, rather than hide/show expected control panel 
+*/
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[FlashCard class]] || [touch.view isKindOfClass:[UISegmentedControl class]]) {
+        return false;
+    } else {
+        return true;
     }
 }
 
