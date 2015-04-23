@@ -183,7 +183,7 @@
 
 - (void) saveAndCloseCreatePackView {
     
-    if (_autoPlaySpeedSlider.value > 60 || _autoPlaySpeedSlider.value < 4) {
+    if (_autoPlaySpeedSlider.value > kMAX_Auto_Play_Speed || _autoPlaySpeedSlider.value < kMIN_Auto_Play_Speed) {
         [Common alertViewCommon:@"The value of auto play speed should be between 4 and 60 seconds"];
         return;
     }
