@@ -198,7 +198,7 @@
  *	an unique name will be generated and will be under directory of "Images"
  *
  */
-+ (NSString *) generateUniqueJPEGImageFilePathUnderImagesFolder {
++ (NSString *) generateUniquePNGImageFilePathUnderImagesFolder {
     NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {

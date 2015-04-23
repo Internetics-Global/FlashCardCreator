@@ -5899,7 +5899,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
             if ([Common isDefaultPath:_logoImageFullPath]) {
-                _logoImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                _logoImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             
             [imageData writeToFile:_logoImageFullPath atomically:YES];
@@ -5928,13 +5928,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
                 if ([Common isDefaultPath:_questionImageFullPath]) {
-                    _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                    _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_questionImageFullPath atomically:YES];
                 _imageQuestion.image = [UIImage imageWithData:imageData];
             } else {
                 if ([Common isDefaultPath:_answerImageFullPath]) {
-                    _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                    _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_answerImageFullPath atomically:YES];
                 _imageAnswer.image = [UIImage imageWithData:imageData];
@@ -5954,13 +5954,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
                 if ([Common isDefaultPath:_questionImageFullPath2]) {
-                    _questionImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                    _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_questionImageFullPath2 atomically:YES];
                 _imageQuestion2.image = [UIImage imageWithData:imageData];
             } else {
                 if ([Common isDefaultPath:_answerImageFullPath2]) {
-                    _answerImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                    _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 }
                 [imageData writeToFile:_answerImageFullPath2 atomically:YES];
                 _imageAnswer2.image = [UIImage imageWithData:imageData];
@@ -6984,7 +6984,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         UIImage *origialmage = [self captureWholeViewAsImage];
         NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
         if ([Common isDefaultPath:_currentCard.coverImageURL]) {
-            NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             [imageData writeToFile:savedFullPath atomically:YES];
             _currentCard.coverImageURL = savedFullPath;
         } else {
@@ -7190,13 +7190,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (imageSoucrType == Type_Image_Source_Image) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if ([Common isDefaultPath:_questionImageFullPath]) {
-                _questionImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath atomically:YES];
             _imageQuestion.image = compositeThumbNail;
         } else {
             if ([Common isDefaultPath:_answerImageFullPath]) {
-                _answerImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath atomically:YES];
             _imageAnswer.image = compositeThumbNail;
@@ -7204,13 +7204,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if (imageSoucrType == Type_Image_Source_Image2) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if ([Common isDefaultPath:_questionImageFullPath2]) {
-                _questionImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath2 atomically:YES];
             _imageQuestion2.image = compositeThumbNail;
         } else {
             if ([Common isDefaultPath:_answerImageFullPath2]) {
-                _answerImageFullPath2 = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath2 atomically:YES];
             _imageAnswer2.image = compositeThumbNail;
@@ -7278,7 +7278,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             UIImage *origialmage = [tempCardView captureWholeViewAsImage];
             NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
             if ([Common isDefaultPath:card.coverImageURL]) {
-                NSString *savedFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                NSString *savedFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 [imageData writeToFile:savedFullPath atomically:YES];
                 card.coverImageURL = savedFullPath;
             } else {
@@ -8515,6 +8515,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark - PECropViewControllerDelegate methods
 
+/*
+ * Only question/card background  image will be cropped and call this delegate.
+ */
 - (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
     float downScaleWidth = CGRectGetWidth(_questionBackgroundImageView.frame);
@@ -8529,7 +8532,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         if ([Common isDefaultPath:_questionBackgroundImageFullPath]) {
-            _questionBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            //虽然最终保存的是JPG格式，但是我们统一以PNG作为后缀（整个Pack的所有图片资源的后缀都是PNG格式的）
+            _questionBackgroundImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
         } else {
             //当之前已经有图片时，我们才操作
             //step1: 拷贝一份更改前的图片到undoCardBackGroundImageForQuestionPath
@@ -8570,7 +8574,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
     } else {
         if ([Common isDefaultPath:_answerBackgroundImageFullPath]) {
-            _answerBackgroundImageFullPath = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            //虽然最终保存的是JPG格式，但是我们统一以PNG作为后缀（整个Pack的所有图片资源的后缀都是PNG格式的）
+            _answerBackgroundImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
         }else {
             
             NSError *error;

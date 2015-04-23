@@ -1418,7 +1418,7 @@ extern BOOL isFromNewCreatedCard;
                 
                 error = nil;
                 NSString *currentcoverImageURL = [[FileOperationHelper downloadedPackFileDirectory ] stringByAppendingPathComponent:[packDict[@"cover_image"] lastPathComponent]];
-                NSString *newCoverImageURL = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+                NSString *newCoverImageURL = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                 
                 if (![[NSFileManager defaultManager] fileExistsAtPath:newCoverImageURL]) {
                     [[NSFileManager defaultManager] moveItemAtPath:currentcoverImageURL toPath:newCoverImageURL error:&error];
@@ -1582,7 +1582,7 @@ extern BOOL isFromNewCreatedCard;
             [assembledCard question].logoURLLinkage = questionDict[@"logo_url"];
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"logo"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1596,7 +1596,7 @@ extern BOOL isFromNewCreatedCard;
             
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"image"] length] >0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1609,7 +1609,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"image2"] length] >0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1622,7 +1622,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"cover_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"cover_image"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1635,7 +1635,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"background_image"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1855,7 +1855,7 @@ extern BOOL isFromNewCreatedCard;
             
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image"] length] > 0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1868,7 +1868,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image2"] length] > 0) {
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1881,7 +1881,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"logo"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"logo"]] toPath:newFileName error:&error];
                 if (error) {
@@ -1894,7 +1894,7 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniqueJPEGImageFilePathUnderImagesFolder];
+            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"background_image"] length] >0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"background_image"]] toPath:newFileName error:&error];
                 if (error) {

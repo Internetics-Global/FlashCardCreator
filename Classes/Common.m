@@ -228,6 +228,9 @@
     
 }
 
+/*
+ * all non-default file name will be a format like: 1429666171755881310.png
+*/
 + (BOOL) isDefaultPath :(NSString *) pathStr {
     
     if (pathStr.length == 0) {
