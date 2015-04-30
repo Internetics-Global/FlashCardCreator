@@ -469,6 +469,8 @@
         card = [self cardForiPad:index withPosition:position];
     }
     
+
+    
     return card;
     
 }

@@ -203,4 +203,7 @@ typedef enum{
 
 - (void) textToSpeechAllContentNow;
 - (void) stopTextToSpeechNow;
+
+- (void) updateQuestionAnswerAllTextViewVeriticalAlignment;
+
 @end

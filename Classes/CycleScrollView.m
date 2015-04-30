@@ -17,6 +17,8 @@
     
     UIView           *_previousCard;
     UIView           *_nextCard;
+    
+    BOOL              _notAllowReloadData;
 }
 
 @property (nonatomic,readonly) UIScrollView   *scrollView;
@@ -122,6 +124,8 @@
         v.frame = CGRectOffset(v.frame, self.frame.size.width * i, 0);
         [_scrollView addSubview:v];
         [self addGesture:v];
+        
+        NSLog(@"xbox:%@ -- %d",NSStringFromCGRect(v.frame),i);
     }
     
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
@@ -142,32 +146,37 @@
     if (isToNextPage) {
         
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
-        [_curViews addObject:[_datasource pageAtIndex:pre withPosition:-1]];
+        [_curViews addObject:_previousCard];
         
         if (_nextCard != nil) {
             _nextCard.tag = CURRENT_FLASHCARDVIEW_TAG;
+            _nextCard.frame = _previousCard.frame; //this is very important
+            [(FlashCard *)_nextCard updateQuestionAnswerAllTextViewVeriticalAlignment];
             [_curViews addObject:_nextCard];
         } else {
             [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
         }
         
         _nextCard = [_datasource pageAtIndex:last withPosition:1];
-        [_curViews addObject:[_datasource pageAtIndex:last withPosition:1]];
+        [_curViews addObject:_nextCard];
         
     } else {
         
+        _nextCard = [_datasource pageAtIndex:last withPosition:1];
+        [_curViews addObject:_nextCard];
+        
         if (_previousCard != NULL) {
             _previousCard.tag = CURRENT_FLASHCARDVIEW_TAG;
-            [_curViews addObject:_previousCard];
+            _previousCard.frame = _nextCard.frame; //this is very important
+            [(FlashCard *)_previousCard updateQuestionAnswerAllTextViewVeriticalAlignment];
+            [_curViews insertObject:_previousCard atIndex:0];
         } else {
-            [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
+            [_curViews insertObject:[_datasource pageAtIndex:page withPosition:0] atIndex:0];
         }
         
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
-        [_curViews insertObject:[_datasource pageAtIndex:pre withPosition:-1] atIndex:0];
+        [_curViews insertObject:_previousCard atIndex:0];
         
-        _nextCard = [_datasource pageAtIndex:last withPosition:1];
-        [_curViews addObject:[_datasource pageAtIndex:last withPosition:1]];
     }
     
 }
@@ -190,20 +199,6 @@
     
 }
 
-- (void)setViewContent:(UIView *)view atIndex:(NSInteger)index
-{
-    if (index == _curPage) {
-        [_curViews replaceObjectAtIndex:1 withObject:view];
-        for (int i = 0; i < 3; i++) {
-            UIView *v = [_curViews objectAtIndex:i];
-            
-            [self addGesture:v];
-            
-            v.frame = CGRectOffset(v.frame, v.frame.size.width * i, 0);
-            [_scrollView addSubview:v];
-        }
-    }
-}
 
 
 #pragma mark – CycleScrollViewDelegate
@@ -241,45 +236,27 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
-    //如果没有dispatch_async，则会导致view jolt的表现的
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        int x = aScrollView.contentOffset.x;
+    if (_notAllowReloadData) {
+        return;
+    }
+    
+    int x = aScrollView.contentOffset.x;
+    
+    if (self.isCycle == FALSE) {
         
-        if (self.isCycle == FALSE) {
+        if (((_curPage == 0) && (x < self.frame.size.width)) ||
+            ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
             
-            if (((_curPage == 0) && (x < self.frame.size.width)) ||
-                ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
-                
-                [aScrollView setScrollEnabled:NO];
-                double delayInSeconds = 0.8;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [aScrollView setScrollEnabled:YES];
-                });
-                
-            } else {
-                if(x >= (2*self.frame.size.width)) {
-                    _curPage = [self validPageValue:_curPage+1];
-                    [self loadDataWithDirection:YES];
-                    if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
-                        [self.delegate didScrollToPage:_curPage];
-                    }
-                }
-                
-                //previous page
-                if(x <= 0) {
-                    _curPage = [self validPageValue:_curPage-1];
-                    [self loadDataWithDirection:NO];
-                    if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
-                        [self.delegate didScrollToPage:_curPage];
-                    }
-                }
-            }
-            
+            [aScrollView setScrollEnabled:NO];
+            double delayInSeconds = 0.8;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [aScrollView setScrollEnabled:YES];
+            });
             
         } else {
-            //next page
-            if(x >= (2*self.frame.size.width)) {
+            if (x >= (2*self.frame.size.width)) {
+                _notAllowReloadData = TRUE;
                 _curPage = [self validPageValue:_curPage+1];
                 [self loadDataWithDirection:YES];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
@@ -288,7 +265,8 @@
             }
             
             //previous page
-            if(x <= 0) {
+            if (x <= 0) {
+                _notAllowReloadData = TRUE;
                 _curPage = [self validPageValue:_curPage-1];
                 [self loadDataWithDirection:NO];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
@@ -296,7 +274,29 @@
                 }
             }
         }
-    });
+        
+        
+    } else {
+        //next page
+        if (x >= (2*self.frame.size.width)) {
+            _notAllowReloadData = TRUE;
+            _curPage = [self validPageValue:_curPage+1];
+            [self loadDataWithDirection:YES];
+            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                [self.delegate didScrollToPage:_curPage];
+            }
+        }
+        
+        //previous page
+        if (x <= 0) {
+            _notAllowReloadData = TRUE;
+            _curPage = [self validPageValue:_curPage-1];
+            [self loadDataWithDirection:NO];
+            if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
+                [self.delegate didScrollToPage:_curPage];
+            }
+        }
+    }
     
     
 }
@@ -308,6 +308,10 @@
         [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0) animated:YES];
     }
     
+}
+
+- (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    _notAllowReloadData = FALSE;
 }
 
 #pragma mark – Gesture function
