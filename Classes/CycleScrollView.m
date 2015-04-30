@@ -14,6 +14,9 @@
     NSInteger         _curPage;
     NSMutableArray   *_curViews;
     NSTimer          *_autoScrollTimer;
+    
+    UIView           *_previousCard;
+    UIView           *_nextCard;
 }
 
 @property (nonatomic,readonly) UIScrollView   *scrollView;
@@ -100,10 +103,10 @@
     if (_totalPages == 0) {
         return;
     }
-    [self loadData];
+    [self loadDataWithDirection:YES];
 }
 
-- (void)loadData
+- (void)loadDataWithDirection:(BOOL) isToNextPage;
 {
     
     NSArray *subViews = [_scrollView subviews];
@@ -111,7 +114,7 @@
         [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
-    [self getPageViewAtIndex:_curPage];
+    [self getPageViewAtIndex:_curPage withDirection:isToNextPage];
     
     for (int i = 0; i < 3; i++) {
         UIView *v = [_curViews objectAtIndex:i];
@@ -125,7 +128,7 @@
     
 }
 
-- (void)getPageViewAtIndex:(NSInteger)page {
+- (void)getPageViewAtIndex:(NSInteger)page withDirection:(BOOL) isToNextPage {
     
     NSInteger pre = [self validPageValue:_curPage-1];
     NSInteger last = [self validPageValue:_curPage+1];
@@ -136,9 +139,37 @@
     
     [_curViews removeAllObjects];
     
-    [_curViews addObject:[_datasource pageAtIndex:pre]];
-    [_curViews addObject:[_datasource pageAtIndex:page]];
-    [_curViews addObject:[_datasource pageAtIndex:last]];
+    if (isToNextPage) {
+        
+        _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        [_curViews addObject:[_datasource pageAtIndex:pre withPosition:-1]];
+        
+        if (_nextCard != nil) {
+            _nextCard.tag = CURRENT_FLASHCARDVIEW_TAG;
+            [_curViews addObject:_nextCard];
+        } else {
+            [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
+        }
+        
+        _nextCard = [_datasource pageAtIndex:last withPosition:1];
+        [_curViews addObject:[_datasource pageAtIndex:last withPosition:1]];
+        
+    } else {
+        
+        if (_previousCard != NULL) {
+            _previousCard.tag = CURRENT_FLASHCARDVIEW_TAG;
+            [_curViews addObject:_previousCard];
+        } else {
+            [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
+        }
+        
+        _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        [_curViews insertObject:[_datasource pageAtIndex:pre withPosition:-1] atIndex:0];
+        
+        _nextCard = [_datasource pageAtIndex:last withPosition:1];
+        [_curViews addObject:[_datasource pageAtIndex:last withPosition:1]];
+    }
+    
 }
 
 - (UIView *) getCurrentView {
@@ -229,7 +260,7 @@
             } else {
                 if(x >= (2*self.frame.size.width)) {
                     _curPage = [self validPageValue:_curPage+1];
-                    [self loadData];
+                    [self loadDataWithDirection:YES];
                     if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                         [self.delegate didScrollToPage:_curPage];
                     }
@@ -238,7 +269,7 @@
                 //previous page
                 if(x <= 0) {
                     _curPage = [self validPageValue:_curPage-1];
-                    [self loadData];
+                    [self loadDataWithDirection:NO];
                     if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                         [self.delegate didScrollToPage:_curPage];
                     }
@@ -250,7 +281,7 @@
             //next page
             if(x >= (2*self.frame.size.width)) {
                 _curPage = [self validPageValue:_curPage+1];
-                [self loadData];
+                [self loadDataWithDirection:YES];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                     [self.delegate didScrollToPage:_curPage];
                 }
@@ -259,7 +290,7 @@
             //previous page
             if(x <= 0) {
                 _curPage = [self validPageValue:_curPage-1];
-                [self loadData];
+                [self loadDataWithDirection:NO];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                     [self.delegate didScrollToPage:_curPage];
                 }

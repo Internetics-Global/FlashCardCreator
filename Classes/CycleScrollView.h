@@ -45,6 +45,10 @@
 
 @required
 - (NSInteger)numberOfPages;
-- (UIView *)pageAtIndex:(NSInteger)index;
+
+/**
+ *  position: -1 previous card; 0 current card; 1 next card
+ */
+- (UIView *)pageAtIndex:(NSInteger)index withPosition:(int) position;
 
 @end

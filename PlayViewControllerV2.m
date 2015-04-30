@@ -367,7 +367,7 @@
 }
 
 
-- (FlashCard *)cardForiPad:(NSInteger)index
+- (FlashCard *)cardForiPad:(NSInteger)index withPosition:(int)position
 {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -376,7 +376,16 @@
     
     FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
                                                  defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
-    currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    
+    if (position == -1) {
+        currentFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
+    } else if (position == 1) {
+        currentFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
+    } else {
+        currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    }
+    
+    
     currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
     [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
     [currentFlashCardView disableCardEdit];
@@ -387,7 +396,7 @@
 }
 
 
-- (FlashCard *)cardForiPhone:(NSInteger)index
+- (FlashCard *)cardForiPhone:(NSInteger)index withPosition:(int)position
 {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -398,7 +407,14 @@
     FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
     //[self addGestureSupport]; :TODO:XXXX
 
-    currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    if (position == -1) {
+        currentFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
+    } else if (position == 1) {
+        currentFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
+    } else {
+        currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    }
+    
     currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
     [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
     [currentFlashCardView disableCardEdit];
@@ -442,15 +458,15 @@
     return [_shuffledCardArray count];
 }
 
-- (UIView *)pageAtIndex:(NSInteger)index
+- (UIView *)pageAtIndex:(NSInteger)index withPosition:(int)position
 {
     
     FlashCard *card;
     
     if (isUserInterfaceIdiomPhone) {
-        card = [self cardForiPhone:index];
+        card = [self cardForiPhone:index withPosition:position];
     } else {
-        card = [self cardForiPad:index];
+        card = [self cardForiPad:index withPosition:position];
     }
     
     return card;
