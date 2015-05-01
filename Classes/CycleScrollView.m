@@ -236,7 +236,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
-    
+    //Be careful, don't put any logic that could take time here like "loadDataWithDirection". This will be called by system multiple during scrolling and could result into jigging
     
     
 }
@@ -337,10 +337,14 @@
 - (void)autoScrollView
 {
     if (_isCycle) {
+        _notAllowReloadData = FALSE;
         [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+        [self scrollViewDidEndDecelerating:_scrollView];
     } else {
         if (_curPage < _totalPages -1) {
+            _notAllowReloadData = FALSE;
             [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+            [self scrollViewDidEndDecelerating:_scrollView];
         } else {
             
         }
