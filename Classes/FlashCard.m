@@ -6949,9 +6949,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     float size = textView.font.pointSize;
     if (size < 12) {
-        return 0.5;
-    }
-    if (size < 20) {
+        return 0.2;
+    } else if (size < 15) {
+        return 0.3;
+    }else if (size < 20) {
         return 1.0;
     } else {
         return 0;

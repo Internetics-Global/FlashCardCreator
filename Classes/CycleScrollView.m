@@ -236,6 +236,14 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
+    
+    
+    
+}
+
+//scrollViewDidEndDecelerating won't be called for scrollRectToVisible or setContentOffset (i.e, scrolling programmatically)
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
+    
     if (_notAllowReloadData) {
         return;
     }
@@ -297,12 +305,6 @@
             }
         }
     }
-    
-    
-}
-
-//scrollViewDidEndDecelerating won't be called for scrollRectToVisible or setContentOffset (i.e, scrolling programmatically)
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
     
     if (self.isAutoScroll == FALSE) {
         [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0) animated:YES];
