@@ -1435,30 +1435,36 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //_functionAreaView.hidden = YES;
     }
     
-    
-    if (_segmentedControl.selectedSegmentIndex == 1) {
-        [self adjustAllTextViewsToFitIfNecessary];
-    } else {
-        if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
-            //当不可编辑时，我们将限制adjustAllTextViewsToFitIfNecessary执行。主要原因时这时我们将通过前后页来预加载，而非当前页执行adjustAllTextViewsToFitIfNecessary
-            //几种情况
-            //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
-            //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
-            if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
-                || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
-                
-                BOOL isFontResized = [self adjustAllTextViewsToFitIfNecessary];
-                
-                if ((isFontResized)) {
-                    
-                    [iConsole warn:@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN];
-                    
-                }
-            }
-        } else {
+    if (0) {
+        //deprecated logic
+        if (_segmentedControl.selectedSegmentIndex == 1) {
             [self adjustAllTextViewsToFitIfNecessary];
+        } else {
+            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+                //当不可编辑时，我们将限制adjustAllTextViewsToFitIfNecessary执行。主要原因时这时我们将通过前后页来预加载，而非当前页执行adjustAllTextViewsToFitIfNecessary
+                //几种情况
+                //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
+                //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
+                if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
+                    || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
+                    
+                    BOOL isFontResized = [self adjustAllTextViewsToFitIfNecessary];
+                    
+                    if ((isFontResized)) {
+                        
+                        [iConsole warn:@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN];
+                        
+                    }
+                }
+            } else {
+                [self adjustAllTextViewsToFitIfNecessary];
+            }
         }
+    } else {
+        [self adjustAllTextViewsToFitIfNecessary];
+
     }
+    
     
     //当可编辑时，我们不进行自动autoresize的notification
     //当为CURRENT_FLASHCARDVIEW_TAG，我们也不作处理
@@ -2014,6 +2020,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (int) lineNumberWithUITextView:(UITextView *) textView
 {
+    
     float textHeight = [self getTextSizeHeight:textView];
     float lineHeight = textView.font.lineHeight;
     
@@ -6632,34 +6639,36 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int i = 0;
     int kMax = 40;
     int lineNumber;
+    BOOL isToAddMore = FALSE;
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
         if (_currentCard.question.autoresizeFlag == 1) { //1表示允许
             
+            
             i = 0;
-            //行数不一致时，增大字体
+            //行数不一致时，增大字体 （初调，步长大）
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
                 [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber];
                 i++;
-                usleep(5000);
+                usleep(1000);
             }
             
             i = 0;
-            //行数不一致时，增大字体
+            //行数不一致时，增大字体（初调，步长大）
             lineNumber = [self lineNumberWithUITextView:_mainQuestion];
             while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber];
                 i++;
-                usleep(5000);
+                usleep(1000);
             }
             
-            //行数不一致时，增大字体
+            //行数不一致时，增大字体（初调，步长大）
             i = 0;
             lineNumber = [self lineNumberWithUITextView:_subQuestion];
             while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
@@ -6667,7 +6676,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 lineNumber = [self lineNumberWithUITextView:_subQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber];
                 i++;
-                usleep(5000);
+                usleep(1000);
             }
         }
         
@@ -6686,76 +6695,93 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //这时，有有可能导致行数变小，这时需要重新微调
         if (true) {
             
+            //行数不一致时，增大字体（精细，步长小）
             i = 0;
-            //减少字体大小
-            lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
-            while ((_currentCard.question.lineNoSubheading < lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
-                [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize -0.3)]];
-                lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
-                //[iConsole info:@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber];
-                i++;
-                usleep(5000);
-            }
-            
-            i = 0;
-            //减少字体大小
-            lineNumber = [self lineNumberWithUITextView:_mainQuestion];
-            while ((_currentCard.question.lineNoMain < lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize -0.3)]];
-                lineNumber = [self lineNumberWithUITextView:_mainQuestion];
-                //[iConsole info:@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber];
-                i++;
-                usleep(5000);
-            }
-            
-            
-            i = 0;
-            //减少字体大小
-            lineNumber = [self lineNumberWithUITextView:_subQuestion];
-            while ((_currentCard.question.lineNoSub < lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize -0.3)]];
-                lineNumber = [self lineNumberWithUITextView:_subQuestion];
-                //[iConsole info:@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber];
-                i++;
-                usleep(5000);
-            }
-            
-            i = 0;
-            //行数不一致时，增大字体
+            isToAddMore = FALSE;
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
                 [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber];
                 i++;
-                usleep(5000);
+                isToAddMore = TRUE;
+                usleep(1000);
+            }
+            if (isToAddMore) {
+                //see evernote comment with title "FCC text auto fit"
+                [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize + [self fontSizeAdded:_subheadingQuestion])]];
             }
             
+            //行数不一致时，增大字体（精细，步长小）
             i = 0;
-            
-            //行数不一致时，增大字体
+            isToAddMore = FALSE;
             lineNumber = [self lineNumberWithUITextView:_mainQuestion];
             while ((_currentCard.question.lineNoMain > lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_mainQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber];
                 i++;
-                usleep(5000);
+                isToAddMore = TRUE;
+                usleep(1000);
+            }
+            if (isToAddMore) {
+                //see evernote comment with title "FCC text auto fit"
+                [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize + [self fontSizeAdded:_mainQuestion])]];
             }
             
-            //行数不一致时，增大字体
+            //行数不一致时，增大字体（精细，步长小）
             i = 0;
+            isToAddMore = FALSE;
             lineNumber = [self lineNumberWithUITextView:_subQuestion];
             while ((_currentCard.question.lineNoSub > lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize *1.1)]];
                 lineNumber = [self lineNumberWithUITextView:_subQuestion];
                 //[iConsole info:@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber];
                 i++;
-                usleep(5000);
+                isToAddMore = TRUE;
+                usleep(1000);
+            }
+            if (isToAddMore) {
+                //see evernote comment with title "FCC text auto fit"
+                [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize + [self fontSizeAdded:_subQuestion])]];
+            }
+            
+            //减少字体大小（精细，步长小）
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
+            while ((_currentCard.question.lineNoSubheading < lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
+                [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize -0.3)]];
+                lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
+                //[iConsole info:@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber];
+                i++;
+                usleep(1000);
+            }
+            
+            //减少字体大小（精细，步长小）
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_mainQuestion];
+            while ((_currentCard.question.lineNoMain < lineNumber) && (_currentCard.question.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_mainQuestion setFont:[_mainQuestion.font fontWithSize:(_mainQuestion.font.pointSize -0.3)]];
+                lineNumber = [self lineNumberWithUITextView:_mainQuestion];
+                //[iConsole info:@"%s:_currentCard.question.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoMain,lineNumber];
+                i++;
+                usleep(1000);
             }
             
             
+            //减少字体大小（精细，步长小）
+            i = 0;
+            lineNumber = [self lineNumberWithUITextView:_subQuestion];
+            while ((_currentCard.question.lineNoSub < lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize -0.3)]];
+                lineNumber = [self lineNumberWithUITextView:_subQuestion];
+                //[iConsole info:@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber];
+                i++;
+                usleep(1000);
+            }
+            
         }
+    
         
         
 //        //这样下次就不会进行autoresize操作了 （除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
@@ -6771,7 +6797,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_currentCard.answer.autoresizeFlag == 1) { //1表示允许
             
             i = 0;
-            //行数不一致时，增大字体
+            //行数太小时，增大字体 （粗调，步长大）
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
             while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize*1.1)]];
@@ -6782,7 +6808,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
-            //行数不一致时，增大字体
+            //行数太小时，增大字体 （粗调，步长大）
             lineNumber = [self lineNumberWithUITextView:_mainAnswer];
             while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize*1.1)]];
@@ -6793,7 +6819,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
-            //行数不一致时，增大字体
+            //行数太小时，增大字体 （粗调，步长大）
             lineNumber = [self lineNumberWithUITextView:_subAnswer];
             while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize*1.1)]];
@@ -6817,7 +6843,58 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (true) { //adjustFontToFit会有可能导致行数变小，这时需要微调
             
             i = 0;
-            //减少字体大小
+            isToAddMore = FALSE;
+            //行数太小时，增大字体 （精调，步长小）
+            lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
+            while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize + 0.2)]];
+                lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
+                //[iConsole info:@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber];
+                i++;
+                isToAddMore = TRUE;
+                usleep(1000);
+            }
+            if (isToAddMore) {
+                //see evernote comment with title "FCC text auto fit"
+                [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize + [self fontSizeAdded:_subheadingAnswer])]];
+            }
+            
+            i = 0;
+            isToAddMore = FALSE;
+            //行数太小时，增大字体 （精调，步长小）
+            lineNumber = [self lineNumberWithUITextView:_mainAnswer];
+            while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize + 0.2)]];
+                lineNumber = [self lineNumberWithUITextView:_mainAnswer];
+                //[iConsole info:@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber];
+                i++;
+                isToAddMore = TRUE;
+                usleep(5000);
+            }
+            if (isToAddMore) {
+                //see evernote comment with title "FCC text auto fit"
+                [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize + [self fontSizeAdded:_mainAnswer])]];
+            }
+            
+            i = 0;
+            isToAddMore = FALSE;
+            //行数太小时，增大字体 （精调，步长小）
+            lineNumber = [self lineNumberWithUITextView:_subAnswer];
+            while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
+                [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize + 0.2)]];
+                lineNumber = [self lineNumberWithUITextView:_subAnswer];
+                //[iConsole info:@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber];
+                i++;
+                isToAddMore = TRUE;
+                usleep(5000);
+            }
+            if (isToAddMore) {
+               //see evernote comment with title "FCC text auto fit"
+              [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize + [self fontSizeAdded:_subAnswer])]];
+            }
+            
+            i = 0;
+            //行数太多，减少字体大小 （精调，步长小）
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
             while ((_currentCard.answer.lineNoSubheading < lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize - 0.3)]];
@@ -6828,7 +6905,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
-            //减少字体大小
+            //行数太多，减少字体大小 （精调，步长小）
             lineNumber = [self lineNumberWithUITextView:_mainAnswer];
             while ((_currentCard.answer.lineNoMain < lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize - 0.3)]];
@@ -6839,7 +6916,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             i = 0;
-            //减少字体大小
+            //行数太多，减少字体大小 （精调，步长小）
             lineNumber = [self lineNumberWithUITextView:_subAnswer];
             while ((_currentCard.answer.lineNoSub < lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
                 [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize - 0.3)]];
@@ -6848,40 +6925,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 i++;
                 usleep(5000);
             }
-            
-            i = 0;
-            //行数不一致时，增大字体
-            lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
-            while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize*1.1)]];
-                lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
-                //[iConsole info:@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber];
-                i++;
-                usleep(5000);
-            }
-            
-            i = 0;
-            //行数不一致时，增大字体
-            lineNumber = [self lineNumberWithUITextView:_mainAnswer];
-            while ((_currentCard.answer.lineNoMain > lineNumber)&& (_currentCard.answer.lineNoMain != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize*1.1)]];
-                lineNumber = [self lineNumberWithUITextView:_mainAnswer];
-                //[iConsole info:@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber];
-                i++;
-                usleep(5000);
-            }
-            
-            i = 0;
-            //行数不一致时，增大字体
-            lineNumber = [self lineNumberWithUITextView:_subAnswer];
-            while ((_currentCard.answer.lineNoSub > lineNumber)&& (_currentCard.answer.lineNoSub != 0)&& (i<kMax)&& (lineNumber > 0)) {
-                [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize*1.1)]];
-                lineNumber = [self lineNumberWithUITextView:_subAnswer];
-                //[iConsole info:@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber];
-                i++;
-                usleep(5000);
-            }
         }
+        
         
         
         //这样下次就不会进行autoresize操作了。除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
@@ -6892,6 +6937,26 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     return result;
+}
+
+
+/**
+ *  这只是一个经验值
+ *  我们的困难在于无法有效获取“number of lines in text view", 在这个方法getTextSizeHeight中，我们使用了经验值（来自stackoverflow)
+ *  在实际中，我们发现会出现实际行数比计算出多，所以需要通过这个经验值进行补偿。
+ */
+- (float) fontSizeAdded:(UITextView *) textView {
+    
+    float size = textView.font.pointSize;
+    if (size < 12) {
+        return 0.5;
+    }
+    if (size < 20) {
+        return 1.0;
+    } else {
+        return 0;
+    }
+    
 }
 
 /**
@@ -7002,11 +7067,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //必须把auto resize的最终字体大小限制在离散值内
     //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
-    int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
-    if (index == - 1) {
-        [iConsole error:@"%s:return - 1 when execut [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize]",__FUNCTION__];
+    if (textView.font.pointSize > [[_keyboardTopViewV2.realSizeArray firstObject] intValue]) {
+        
+        int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
+        if (index == - 1) {
+            [iConsole error:@"%s:return - 1 when execut [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize]",__FUNCTION__];
+        } else {
+            [textView.font fontWithSize:[[_keyboardTopViewV2.realSizeArray objectAtIndex:index] integerValue]];
+        }
+        
     } else {
-        [textView.font fontWithSize:[[_keyboardTopViewV2.realSizeArray objectAtIndex:index] integerValue]];
+        [textView.font fontWithSize:(int)textView.font.pointSize];
     }
     
     
