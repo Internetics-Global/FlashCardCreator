@@ -619,8 +619,6 @@
         _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
     
-    _autoPlayDelaySlider.enabled = FALSE;
-    
     
 }
 
@@ -776,6 +774,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     _isAutoScroll = YES;
+    _autoPlayDelaySlider.enabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
     //client's special requirement to request a pause after entry into play mode
@@ -788,10 +787,15 @@
     if (_countDownLabel) {
        [_countDownLabel removeFromSuperview];
     }
-    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame) - 60, 80, 50)];
+    if (isUserInterfaceIdiomPhone) {
+        _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
+        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 30, 30, 20)];
+    } else {
+        _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:46];
+        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 60, 80, 50)];
+    }
     _countDownLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
     _countDownLabel.textAlignment = NSTextAlignmentCenter;
-    _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:46];
     _countDownLabel.numberOfLines = 1;
     _countDownLabel.textColor = [UIColor whiteColor];
     _countDownLabel.backgroundColor = [UIColor clearColor];
