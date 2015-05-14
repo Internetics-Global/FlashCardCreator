@@ -49,9 +49,6 @@
         _scrollView.pagingEnabled = YES;
         [self addSubview:_scrollView];
         
-        //Auto scroll function
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
-        
         [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionOld context:NULL];
     }
     return self;
@@ -343,7 +340,9 @@
     } else {
         if (_curPage < _totalPages -1) {
             _notAllowReloadData = FALSE;
-            [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+            });
             [self scrollViewDidEndDecelerating:_scrollView];
         } else {
             

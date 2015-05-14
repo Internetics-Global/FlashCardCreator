@@ -599,6 +599,7 @@
     
     //_scrollView.userInteractionEnabled = NO;
     _scrollView.isAutoScroll = YES;
+    _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
     
     if (_isAutoShowQuestionOnly == NO) {
         [_autoSwitchQATimer invalidate];
