@@ -14,22 +14,21 @@
 @interface CycleScrollView : UIView<UIScrollViewDelegate>
 
 
+@property (nonatomic,assign,setter = setDataSource:          ) id<CycleScrollViewDatasource> datasource;
+@property (nonatomic,assign,setter = setDelegate:            ) id<CycleScrollViewDelegate  > delegate;
 
-@property (nonatomic,assign,setter = setDataSource:) id<CycleScrollViewDatasource> datasource;
-@property (nonatomic,assign,setter = setDelegate:)  id<CycleScrollViewDelegate>   delegate;
+@property (nonatomic,assign,setter = setCycle:               ) BOOL                      isCycle;
+@property (nonatomic,assign,setter = setAutoScroll:          ) BOOL                      isAutoScroll;
+@property (nonatomic,assign,setter = setAutoPlayDelaySeconds:) float                     autoPlayDelaySeconds;
 
-@property (nonatomic,assign,setter = setCycle:)       BOOL      isCycle;
-@property (nonatomic,assign,setter = setAutoScroll:)  BOOL      isAutoScroll;
-@property (nonatomic,assign,setter = setAutoPlayDelaySeconds:)  float     autoPlayDelaySeconds;
-
-@property (nonatomic,readonly) UIScrollView   *scrollView;
+@property (nonatomic,readonly                                ) UIScrollView              *scrollView;
 
 - (UIView *) getCurrentView;
 
 /**
  *  This is not an elegant way to clean resource, especially for NSTimer, but this is the only way we can do currently.
  */
-- (void) clean;
+- (void) cleanup;
 
 @end
 

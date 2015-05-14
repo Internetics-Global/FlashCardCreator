@@ -10,17 +10,21 @@
 #import "FlashCard.h"
 
 @interface CycleScrollView () <UIGestureRecognizerDelegate> {
-    NSInteger         _totalPages;
-    NSInteger         _curPage;
-    NSMutableArray   *_curViews;
-    NSTimer          *_autoScrollTimer;
     
-    UIView           *_previousCard;
-    UIView           *_nextCard;
+    NSInteger      _totalPages;
+    NSInteger      _curPage;
+    NSMutableArray * _curViews;
     
-    BOOL              _notAllowReloadData;
-}
+    NSTimer        * _autoScrollTimer;
 
+    UIView         * _previousCard;
+    UIView         * _nextCard;
+
+    /**
+     *  used to avoid multiple excution
+     */
+    BOOL           _notAllowReloadData;
+}
 
 @end
 
@@ -31,11 +35,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.isAutoScroll = NO;
         self.isCycle = YES;
-        _curPage = 0;
         self.autoPlayDelaySeconds = kDefault_Auto_Play_Speed;
+        
+        _curPage = 0;
         
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.delegate = self;
@@ -62,34 +66,27 @@
 
 - (void) setCycle:(BOOL)isCycle {
     _isCycle = isCycle;
-    
-    
 }
 
 - (void) setAutoScroll:(BOOL)isAutoScroll {
-    
     _isAutoScroll = isAutoScroll;
-    
-    [self resetTimer];
-    
+    [self resetAutoScrollTimer];
 }
 
 - (void)setAutoPlayDelaySeconds:(float)autoPlayDelaySeconds {
-    
     _autoPlayDelaySeconds = autoPlayDelaySeconds;
-    
-    [self resetTimer];
+    [self resetAutoScrollTimer];
     
 }
 
-- (void) resetTimer {
+- (void) resetAutoScrollTimer {
     if (_autoScrollTimer) {
         [_autoScrollTimer invalidate];
         _autoScrollTimer = nil;
     }
     
     if (_isAutoScroll) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:_autoPlayDelaySeconds target:self selector:@selector(autoScrollView) userInfo:nil repeats:YES];
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:_autoPlayDelaySeconds target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
     }
 
 }
@@ -101,18 +98,20 @@
     if (_totalPages == 0) {
         return;
     }
-    [self loadDataWithDirection:YES];
+    [self loadDataWithDirectionToNextPage:YES];
 }
 
-- (void)loadDataWithDirection:(BOOL) isToNextPage;
+/**
+ *  @param isToNextPage: swipe to next page or previous page
+ */
+- (void)loadDataWithDirectionToNextPage:(BOOL) isToNextPage;
 {
-    
     NSArray *subViews = [_scrollView subviews];
     if([subViews count] != 0) {
         [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
-    [self getPageViewAtIndex:_curPage withDirection:isToNextPage];
+    [self getPageViewAtIndex:_curPage withDirectionToNextPage:isToNextPage];
     
     for (int i = 0; i < 3; i++) {
         UIView *v = [_curViews objectAtIndex:i];
@@ -121,17 +120,20 @@
         [_scrollView addSubview:v];
         [self addGesture:v];
         
-        NSLog(@"xbox:%@ -- %d",NSStringFromCGRect(v.frame),i);
+        //NSLog(@"xbox:%@ -- %d",NSStringFromCGRect(v.frame),i);
     }
     
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
     
 }
 
-- (void)getPageViewAtIndex:(NSInteger)page withDirection:(BOOL) isToNextPage {
+/**
+ *  @param isToNextPage:swipe to next page or previous page
+ */
+- (void)getPageViewAtIndex:(NSInteger)page withDirectionToNextPage:(BOOL) isToNextPage {
     
     NSInteger pre = [self validPageValue:_curPage-1];
-    NSInteger last = [self validPageValue:_curPage+1];
+    NSInteger next = [self validPageValue:_curPage+1];
     
     if (!_curViews) {
         _curViews = [[NSMutableArray alloc] init];
@@ -141,9 +143,11 @@
     
     if (isToNextPage) {
         
+        //previous
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
         [_curViews addObject:_previousCard];
         
+        //current
         if (_nextCard != nil) {
             _nextCard.tag = CURRENT_FLASHCARDVIEW_TAG;
             _nextCard.frame = _previousCard.frame; //this is very important
@@ -153,14 +157,17 @@
             [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
         }
         
-        _nextCard = [_datasource pageAtIndex:last withPosition:1];
+        //next
+        _nextCard = [_datasource pageAtIndex:next withPosition:1];
         [_curViews addObject:_nextCard];
         
     } else {
         
-        _nextCard = [_datasource pageAtIndex:last withPosition:1];
+        //next
+        _nextCard = [_datasource pageAtIndex:next withPosition:1];
         [_curViews addObject:_nextCard];
         
+        //current
         if (_previousCard != NULL) {
             _previousCard.tag = CURRENT_FLASHCARDVIEW_TAG;
             _previousCard.frame = _nextCard.frame; //this is very important
@@ -170,6 +177,7 @@
             [_curViews insertObject:[_datasource pageAtIndex:page withPosition:0] atIndex:0];
         }
         
+        //previous
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
         [_curViews insertObject:_previousCard atIndex:0];
         
@@ -186,15 +194,21 @@
     }
 }
 
-- (NSInteger)validPageValue:(NSInteger)value {
+/**
+ *
+ */
+- (NSInteger)validPageValue:(NSInteger)rawPage {
     
-    if(value == -1) value = _totalPages - 1;
-    if(value == _totalPages) value = 0;
+    if(rawPage == -1) {
+      rawPage = _totalPages - 1;
+    }
+    if(rawPage == _totalPages) {
+      rawPage = 0;
+    }
     
-    return value;
+    return rawPage;
     
 }
-
 
 
 #pragma mark – CycleScrollViewDelegate
@@ -232,7 +246,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
-    //Be careful, don't put any logic that could take time here like "loadDataWithDirection". This will be called by system multiple during scrolling and could result into jigging
+    //Be careful, don't put any logic that could take time here like "loadDataWithDirectionToNextPage". This will be called by system multiple during scrolling and could result into jigging
     
     
 }
@@ -240,6 +254,7 @@
 //scrollViewDidEndDecelerating won't be called for scrollRectToVisible or setContentOffset (i.e, scrolling programmatically)
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView {
     
+    //make sure scrollViewDidEndDecelerating is executed only once
     if (_notAllowReloadData) {
         return;
     }
@@ -251,6 +266,7 @@
         if (((_curPage == 0) && (x < self.frame.size.width)) ||
             ((_curPage == _totalPages - 1) && (x > self.frame.size.width))){
             
+            //avoid empty page
             [aScrollView setScrollEnabled:NO];
             double delayInSeconds = 0.8;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -262,7 +278,7 @@
             if (x >= (2*self.frame.size.width)) {
                 _notAllowReloadData = TRUE;
                 _curPage = [self validPageValue:_curPage+1];
-                [self loadDataWithDirection:YES];
+                [self loadDataWithDirectionToNextPage:YES];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                     [self.delegate didScrollToPage:_curPage];
                 }
@@ -272,7 +288,7 @@
             if (x <= 0) {
                 _notAllowReloadData = TRUE;
                 _curPage = [self validPageValue:_curPage-1];
-                [self loadDataWithDirection:NO];
+                [self loadDataWithDirectionToNextPage:NO];
                 if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                     [self.delegate didScrollToPage:_curPage];
                 }
@@ -285,7 +301,7 @@
         if (x >= (2*self.frame.size.width)) {
             _notAllowReloadData = TRUE;
             _curPage = [self validPageValue:_curPage+1];
-            [self loadDataWithDirection:YES];
+            [self loadDataWithDirectionToNextPage:YES];
             if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                 [self.delegate didScrollToPage:_curPage];
             }
@@ -295,7 +311,7 @@
         if (x <= 0) {
             _notAllowReloadData = TRUE;
             _curPage = [self validPageValue:_curPage-1];
-            [self loadDataWithDirection:NO];
+            [self loadDataWithDirectionToNextPage:NO];
             if ([self.delegate respondsToSelector:@selector(didScrollToPage:)]) {
                 [self.delegate didScrollToPage:_curPage];
             }
@@ -330,9 +346,8 @@
 
 #pragma mark – Autoscroll NSTimer
 
-- (void)autoScrollView
+- (void)autoScrollViewTimer
 {
-
     //cleanup 
     for (UIView *myView in _curViews) {
         if ([myView isKindOfClass:[FlashCard class]]) {
@@ -377,7 +392,7 @@
 
 #pragma mark – UIGestureRecognizerDelegate
 /*
- * why we need this:
+ * Why we need this:
  * In Play mode, there's an segmented control under the card.
  * If no this logic, click that part of card could switch question/answer card, rather than hide/show expected control panel 
 */
@@ -392,7 +407,7 @@
 
 #pragma mark – Memory management
 
-- (void) clean {
+- (void) cleanup {
     [_autoScrollTimer invalidate];
     _autoScrollTimer = nil;
 }

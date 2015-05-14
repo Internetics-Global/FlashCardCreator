@@ -428,7 +428,7 @@
 - (void) dismiss {
     [iConsole info:@"%s",__FUNCTION__];
     
-    [_scrollView clean];
+    [_scrollView cleanup];
     
     FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
     [currentFlashCardView stopTextToSpeechNow];

@@ -31,7 +31,6 @@
 #import "MoreInfoTableViewController.h"
 #import "FCCBarButton.h"
 #import "DropboxShareKitHelper.h"
-#import "PlayViewController.h"
 #import "PlayViewControllerV2.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"

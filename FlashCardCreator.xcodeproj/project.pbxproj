@@ -95,7 +95,6 @@
 		2DA97ED716CB7E04004E7FAB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97ED916CB7E04004E7FAB /* Localizable.strings */; };
 		2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC0628E167FFF5600F2EA07 /* Security.framework */; };
 		2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */; };
-		2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC177B616E49B8600939E61 /* PlayViewController.m */; };
 		2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0B16798E04007A8CAD /* UIKit.framework */; };
 		2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0D16798E04007A8CAD /* Foundation.framework */; };
 		2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */; };
@@ -421,8 +420,6 @@
 		2DA97F1116CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		2DC177B516E49B8600939E61 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = Classes/PlayViewController.h; sourceTree = "<group>"; };
-		2DC177B616E49B8600939E61 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = Classes/PlayViewController.m; sourceTree = "<group>"; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DCE0B0B16798E04007A8CAD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2DCE0B0D16798E04007A8CAD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -870,8 +867,6 @@
 		2D4E4EB616B2768100E75257 /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				2DC177B516E49B8600939E61 /* PlayViewController.h */,
-				2DC177B616E49B8600939E61 /* PlayViewController.m */,
 				88EA2ACA1ABFC24800A3663E /* PlayViewControllerV2.h */,
 				88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */,
 				88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */,
@@ -1808,7 +1803,6 @@
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
-				2DC177B716E49B8600939E61 /* PlayViewController.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
@@ -1986,8 +1980,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
-				"PROVISIONING_PROFILE[sdk=*]" = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
+				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2025,8 +2019,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
-				"PROVISIONING_PROFILE[sdk=*]" = "dc64b1ce-c870-47c4-833c-9d58fde6c42e";
+				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
