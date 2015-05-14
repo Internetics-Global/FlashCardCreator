@@ -13,6 +13,8 @@
 
 @interface CycleScrollView : UIView<UIScrollViewDelegate>
 
+
+
 @property (nonatomic,assign,setter = setDataSource:) id<CycleScrollViewDatasource> datasource;
 @property (nonatomic,assign,setter = setDelegate:)  id<CycleScrollViewDelegate>   delegate;
 
@@ -20,6 +22,7 @@
 @property (nonatomic,assign,setter = setAutoScroll:)  BOOL      isAutoScroll;
 @property (nonatomic,assign,setter = setAutoPlayDelaySeconds:)  float     autoPlayDelaySeconds;
 
+@property (nonatomic,readonly) UIScrollView   *scrollView;
 
 - (UIView *) getCurrentView;
 

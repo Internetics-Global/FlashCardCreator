@@ -21,7 +21,6 @@
     BOOL              _notAllowReloadData;
 }
 
-@property (nonatomic,readonly) UIScrollView   *scrollView;
 
 @end
 
@@ -333,17 +332,34 @@
 
 - (void)autoScrollView
 {
+
+    //cleanup 
+    for (UIView *myView in _curViews) {
+        if ([myView isKindOfClass:[FlashCard class]]) {
+            [(FlashCard *) myView  stopTextToSpeechNow];
+            [(FlashCard *) myView  stopAudio];
+        }
+    }
+    
     if (_isCycle) {
         _notAllowReloadData = FALSE;
-        [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
-        [self scrollViewDidEndDecelerating:_scrollView];
+        [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:TRUE];
+        //这段delay是关键，因为setContentOffset是个动画过程，需要一段时间
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self scrollViewDidEndDecelerating:_scrollView];
+        });
     } else {
         if (_curPage < _totalPages -1) {
             _notAllowReloadData = FALSE;
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:YES];
+            [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:TRUE];
+            //这段delay是关键，因为setContentOffset是个动画过程，需要一段时间
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self scrollViewDidEndDecelerating:_scrollView];
             });
-            [self scrollViewDidEndDecelerating:_scrollView];
         } else {
             
         }

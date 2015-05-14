@@ -131,7 +131,7 @@
                 if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
                     if (motion.attitude.roll < -0.3) {
                         if (enableSwitch == YES) {
-                            [safeSelf switchQuestionAnswerView];
+                            [safeSelf switchQuestionAnswerViewWithHand:TRUE];
                             enableSwitch = NO;
                         }
                         
@@ -147,7 +147,7 @@
                 } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
                     if (motion.attitude.roll > 0.3) {
                         if (enableSwitch == YES) {
-                            [safeSelf switchQuestionAnswerView];
+                            [safeSelf switchQuestionAnswerViewWithHand:TRUE];
                             enableSwitch = NO;
                         }
                         
@@ -197,10 +197,6 @@
         [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
     } else {
         [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
-    }
-    
-    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
     }
     
     _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
@@ -476,7 +472,7 @@
 }
 
 - (void) switchQAFromTimer {
-    [self switchQuestionAnswerView];
+    [self switchQuestionAnswerViewWithHand:FALSE];
 }
 
 
@@ -486,7 +482,7 @@
 
 
 
-- (void) switchQuestionAnswerView{
+- (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     [iConsole info:@"%s",__FUNCTION__];
     
     FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
@@ -500,8 +496,10 @@
     
     if (currentFlashCardView) {
         
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
+        if (isManually) {
+            [_autoSwitchQATimer invalidate];
+            _autoSwitchQATimer = nil;
+        }
         
         if (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
             [currentFlashCardView.segmentedControl setSelectedSegmentIndex:0];
@@ -538,7 +536,7 @@
     if (_isMute == FALSE) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
             [currentFlashCardView stopTextToSpeechNow];
-            double delayInSeconds = 0.5;
+            double delayInSeconds = 0.2;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [currentFlashCardView textToSpeechAllContentNow];
@@ -579,7 +577,8 @@
                                delegate:self];
         
     } else {
-        
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+        _autoPlayDelaySlider.enabled = TRUE;
         _isAutoScroll = NO;
         [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
         
@@ -601,16 +600,15 @@
     _scrollView.isAutoScroll = YES;
     _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
     
-    if (_isAutoShowQuestionOnly == NO) {
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
-    } else {
+    if (_autoSwitchQATimer) {
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
     }
+    if (_isAutoShowQuestionOnly == NO) {
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
+    }
     
-    
+    _autoPlayDelaySlider.enabled = FALSE;
     
     
 }
@@ -648,14 +646,6 @@
 - (void) autoPlayDelaySliderClicked:(UISlider *) slider {
     
     _scrollView.autoPlayDelaySeconds = slider.value;
-    
-    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
-    }
-
-    
     _currentPack.autoPlaySpeed = slider.value;
     
 }
@@ -666,14 +656,14 @@
 
 - (void)tapDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
-    [self switchQuestionAnswerView];
+    [self switchQuestionAnswerViewWithHand:TRUE];
 }
 
 - (void)gestureUpAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
     if ((currentFlashCardView != nil) && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
-        [self switchQuestionAnswerView];
+        [self switchQuestionAnswerViewWithHand:TRUE];
     }
 }
 
@@ -681,7 +671,7 @@
     [iConsole info:@"%s",__FUNCTION__];
     FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
     if ((currentFlashCardView != nil) && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 0)) {
-        [self switchQuestionAnswerView];
+        [self switchQuestionAnswerViewWithHand:TRUE];
     }
 }
 
@@ -698,7 +688,7 @@
                     [_previousCard stopTextToSpeechNow];
                 }
                 
-                double delayInSeconds = 0.5;
+                double delayInSeconds = 0.2;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     [currentCard textToSpeechAllContentNow];
@@ -723,10 +713,12 @@
     
     _previousCard = currentCard;
     
-    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+    if (_autoSwitchQATimer) {
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:YES];
+    }
+    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
 }
 
@@ -769,6 +761,8 @@
     } else {
         _isAutoShowQuestionOnly = NO;
     }
+    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     [self autoScrollPopoverviewItemSelected];
 }

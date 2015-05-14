@@ -31,8 +31,6 @@ BOOL _isDownloadingSamplePack;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    
     [self setupLog];
     
     [ParseCrashReporting enable];
