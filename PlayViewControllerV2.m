@@ -51,6 +51,10 @@
     
     NSTimer *_autoHideControlPanelTimer;
     
+    NSTimer  *_firstPageDelayTimer;  //used in auto mode. pause for seconds on the first page before auto play
+    NSTimer  *_countDownTick;
+    UILabel *_countDownLabel;
+    
 }
 
 @end
@@ -579,6 +583,16 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         _autoPlayDelaySlider.enabled = TRUE;
+        
+        [_countDownLabel removeFromSuperview];
+        _countDownLabel = nil;
+        
+        [_countDownTick invalidate];
+        _countDownTick = nil;
+        
+        [_firstPageDelayTimer invalidate];
+        _firstPageDelayTimer = nil;
+        
         _isAutoScroll = NO;
         [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
         
@@ -591,10 +605,7 @@
 }
 
 
-- (void) autoScrollPopoverviewItemSelected{
-    
-    _isAutoScroll = YES;
-    [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
+- (void) beginAutoScroll{
     
     //_scrollView.userInteractionEnabled = NO;
     _scrollView.isAutoScroll = YES;
@@ -764,7 +775,29 @@
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    [self autoScrollPopoverviewItemSelected];
+    _isAutoScroll = YES;
+    [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
+    
+    //client's special requirement to request a pause after entry into play mode
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    [currentCard stopAudio];
+    [currentCard stopTextToSpeechNow];
+    [_firstPageDelayTimer invalidate];
+    _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO];
+    
+    if (_countDownLabel) {
+       [_countDownLabel removeFromSuperview];
+    }
+    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame) - 60, 80, 50)];
+    _countDownLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+    _countDownLabel.textAlignment = NSTextAlignmentCenter;
+    _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:46];
+    _countDownLabel.numberOfLines = 1;
+    _countDownLabel.textColor = [UIColor whiteColor];
+    _countDownLabel.backgroundColor = [UIColor clearColor];
+    _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_autoPlayDelaySlider.value];
+    [self.view addSubview:_countDownLabel];
+    _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
 }
 
 //avoid _controlpanel and its subview touch event is intercepted by gesture
@@ -783,10 +816,21 @@
     }
 }
 
-
+- (void) countDownTick {
+    int value = [_countDownLabel.text intValue];
+    if (value == 0) {
+        [_countDownLabel removeFromSuperview];
+        _countDownLabel = nil;
+        [_countDownTick invalidate];
+        _countDownTick = nil;
+    } else {
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",value - 1];
+    }
+}
 
 #pragma mark -
 #pragma mark - Memory Management
+
 
 - (void)dealloc {
     
@@ -794,6 +838,12 @@
     
     [_autoSwitchQATimer invalidate];
     _autoSwitchQATimer = nil;
+    
+    [_firstPageDelayTimer invalidate];
+    _firstPageDelayTimer = nil;
+    
+    [_countDownTick invalidate];
+    _countDownTick = nil;
     
     _silenceDetector.silentNotify = nil;
     _silenceDetector = nil;
