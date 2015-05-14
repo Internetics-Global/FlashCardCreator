@@ -176,25 +176,9 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
-    
-    if (_isMute == FALSE) {
-        if (currentCard) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-                double delayInSeconds = 0.5;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [currentCard textToSpeechAllContentNow];
-                });;
-            } else {
-                [currentCard playAudio:NO];
-            }
-        } else {
-            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
-        };
-    }
-    
+    [self playbackOnCard:currentCard];
     
     NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
     if (recordSoundFile.length == 0) {
@@ -430,8 +414,9 @@
     
     [_scrollView cleanup];
     
-    FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
     [currentFlashCardView stopTextToSpeechNow];
+    [currentFlashCardView stopAudio];
     
     _scrollView = nil;
     
@@ -489,7 +474,7 @@
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     [iConsole info:@"%s",__FUNCTION__];
     
-    FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
     
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
@@ -537,18 +522,8 @@
     }
     
     
-    if (_isMute == FALSE) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-            [currentFlashCardView stopTextToSpeechNow];
-            double delayInSeconds = 0.2;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [currentFlashCardView textToSpeechAllContentNow];
-            });;
-        } else {
-            [currentFlashCardView playAudio:NO];
-        }
-    }
+    [self playbackOnCard:currentFlashCardView];
+    
 }
 
 
@@ -604,12 +579,46 @@
     }
 }
 
+/*
+ * execute textToSpeechAllContentNow or playAudio according to setting
+*/
+- (void) playbackOnCard:(FlashCard *) currentCard {
+    
+    if (_isMute == FALSE) {
+        if (currentCard) {
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+                if (_previousCard) {
+                    [_previousCard stopTextToSpeechNow];
+                }
+                double delayInSeconds = 0.3;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [currentCard textToSpeechAllContentNow];
+                });;
+            } else {
+                [currentCard playAudio:NO];
+            }
+        } else {
+            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+        };
+    }
+}
+
+- (FlashCard *) getCurrrentCard {
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    return currentCard;
+}
+
 
 - (void) beginAutoScroll{
     
     //_scrollView.userInteractionEnabled = NO;
     _scrollView.isAutoScroll = YES;
     _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
+    
+    FlashCard *currentCard = [self getCurrrentCard];
+    _previousCard = currentCard;
+    [self playbackOnCard:currentCard];
     
     if (_autoSwitchQATimer) {
         [_autoSwitchQATimer invalidate];
@@ -643,7 +652,7 @@
         _isMute = YES;
         [button setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
         
-        FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+        FlashCard *currentFlashCardView = [self getCurrrentCard];
         [currentFlashCardView stopAudio];
         
         
@@ -670,7 +679,7 @@
 
 - (void)gestureUpAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
-    FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
     if ((currentFlashCardView != nil) && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
         [self switchQuestionAnswerViewWithHand:TRUE];
     }
@@ -678,7 +687,7 @@
 
 - (void)gestureDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
-    FlashCard *currentFlashCardView = (FlashCard *)[_scrollView getCurrentView];
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
     if ((currentFlashCardView != nil) && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 0)) {
         [self switchQuestionAnswerViewWithHand:TRUE];
     }
@@ -686,41 +695,11 @@
 
 - (void)didScrollToPage:(NSInteger)index {
      [iConsole info:@"%s",__FUNCTION__];
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
-    if (_isMute == FALSE) {
-        
-        if (currentCard) {
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
-                
-                if (_previousCard) {
-                    [_previousCard stopTextToSpeechNow];
-                }
-                
-                double delayInSeconds = 0.2;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [currentCard textToSpeechAllContentNow];
-                });;
-            } else {
-                [currentCard playAudio:NO];
-            }
-            
-            
-            NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
-            if (recordSoundFile.length == 0) {
-                [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
-            } else {
-                [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
-            }
-            
-            
-        } else {
-            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
-        };
-    }
     
+    FlashCard *currentCard = [self getCurrrentCard];
+    [self playbackOnCard:currentCard];
     _previousCard = currentCard;
+    
     
     if (_autoSwitchQATimer) {
         [_autoSwitchQATimer invalidate];
@@ -788,11 +767,11 @@
        [_countDownLabel removeFromSuperview];
     }
     if (isUserInterfaceIdiomPhone) {
-        _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:24];
         _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 30, 30, 20)];
+        _countDownLabel.font = [UIFont systemFontOfSize:24];
     } else {
-        _countDownLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:46];
         _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 60, 80, 50)];
+        _countDownLabel.font = [UIFont systemFontOfSize:56];
     }
     _countDownLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
     _countDownLabel.textAlignment = NSTextAlignmentCenter;
@@ -852,6 +831,7 @@
     _silenceDetector.silentNotify = nil;
     _silenceDetector = nil;
     _scrollView.delegate = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     
