@@ -721,6 +721,7 @@
         [_autoHideControlPanelTimer invalidate];
         _autoHideControlPanelTimer = nil;
     }
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
     [_controlPanel setHidden:!(_controlPanel.hidden)];
 }
 
