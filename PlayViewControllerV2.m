@@ -559,6 +559,8 @@
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         _autoPlayDelaySlider.enabled = TRUE;
         
+        _scrollView.userInteractionEnabled = YES;
+        
         [_countDownLabel removeFromSuperview];
         _countDownLabel = nil;
         
@@ -754,6 +756,7 @@
     
     _isAutoScroll = YES;
     _autoPlayDelaySlider.enabled = FALSE;
+    _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
     //client's special requirement to request a pause after entry into play mode
