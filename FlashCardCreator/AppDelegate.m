@@ -311,6 +311,10 @@ BOOL _isDownloadingSamplePack;
     [iConsole info:@"%s",__FUNCTION__];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
+    
+    if ([UIApplication sharedApplication].idleTimerDisabled == YES) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    }
 }
 
 - (void) setupLog {

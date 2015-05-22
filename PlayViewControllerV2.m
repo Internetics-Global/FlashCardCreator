@@ -412,6 +412,10 @@
 - (void) dismiss {
     [iConsole info:@"%s",__FUNCTION__];
     
+    if ([UIApplication sharedApplication].idleTimerDisabled == YES) {
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    }
+    
     [_scrollView cleanup];
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
