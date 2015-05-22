@@ -788,6 +788,8 @@
     _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_autoPlayDelaySlider.value];
     [self.view addSubview:_countDownLabel];
     _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
+    
+    [self playbackOnCard:currentCard];
 }
 
 //avoid _controlpanel and its subview touch event is intercepted by gesture
