@@ -20,7 +20,6 @@
     MBProgressHUD *_HUD;
     
     float _progressivePercent;
-    BOOL _isCreatingShareLinkage;
     
     NSString *_finalShareLinkBeforeRedirect;
 }

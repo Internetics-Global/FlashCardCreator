@@ -218,7 +218,7 @@
     uploadRequest.bucket = S3BucketName;
     
     //2. show indicator
-    [self showProgressIndicator];
+    [self showUploadingIndicator];
 
     //3. 执行upload
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
@@ -240,6 +240,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [iConsole error:@"File upload failed with error - %@", task.error];
                 [_HUD hide:YES];
+                [_HUD removeFromSuperview];//we need to clean up _HUD
                 [Common alertViewCommon:@"Failure to upload, please try again"];
             });
             
@@ -295,22 +296,6 @@
                     
                 });
             };
-            break;
-        }
-            
-        case AWSS3TransferManagerRequestStateCanceling:
-        {
-            //we don't use this function in FCC
-            [_HUD hide:YES];
-            [iConsole info:@"Upload cancelled"];
-            break;
-        }
-            
-        case AWSS3TransferManagerRequestStatePaused:
-        {
-            //we don't use this function in FCC
-            [_HUD hide:YES];
-            [iConsole info:@"Upload pause"];
             break;
         }
             
@@ -379,50 +364,58 @@
             
         case 2: {
             [[alertView textFieldAtIndex:0] resignFirstResponder];
-            NSString *maxNoString = [alertView textFieldAtIndex:0].text;
             
-            int maxNo;
-            if (buttonIndex == 1) {
-                //unlimited
-                maxNo = 9999999;
-            } else {
-                maxNo = [maxNoString integerValue];
-            }
+            _HUD.labelText = @"Creating short linkage...";
+            [_HUD show:YES];
             
-            NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
-            if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
-                [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
-                return;
-            }
-            
-            // insert this record in amazon singleDB for pack download limit control
-            // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
-            // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-            NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-            NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
-            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            __weak AWSS3UploadHelper *safeSelf = self;
-            dispatch_async(queue, ^{
-                [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+            double delayInSeconds = 0.4;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                
+                //1.生成short linkage
+                NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
+                if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                    _HUD.hidden = YES;
+                    [_HUD removeFromSuperview];//we need to clean up _HUD
+                    [Common alertViewCommon:@"Redirect sevice is not available now, please try again"];
+                    return;
+                }
+                _HUD.hidden = YES;
+                [_HUD removeFromSuperview]; //we need to clean up _HUD
+                
+                //2. save meta info in background
+                // insert this record in amazon singleDB for pack download limit control
+                // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
+                // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+                NSString *maxNoString = [alertView textFieldAtIndex:0].text;
+                int maxNo;
+                if (buttonIndex == 1) {
+                    //unlimited
+                    maxNo = 9999999;
+                } else {
+                    maxNo = [maxNoString integerValue];
+                }
+                NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+                NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+                dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                __weak AWSS3UploadHelper *safeSelf = self;
+                dispatch_async(queue, ^{
+                    [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
+                    [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                });
+                
+                //3. 分享
+                _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+                
+                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                              @"Facebook",
+                                              @"Twitter",
+                                              @"Email",
+                                              @"Copy",
+                                              nil];
+                [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
             });
             
-            
-            
-            _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
-            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
-//            SHKItem *item = [SHKItem text:finalPostMessage];
-//            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
-//            [SHK setRootViewController:self.baseViewController];
-//            [actionSheet showFromToolbar:self.baseViewController.navigationController.toolbar];
-            
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                                          @"Facebook",
-                                          @"Twitter",
-                                          @"Email",
-                                          @"Copy",
-                                          nil];
-            [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
         }
             
             break;
@@ -442,14 +435,13 @@
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
-- (void)showProgressIndicator {
+- (void)showUploadingIndicator {
 	
 	_HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
     _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
 ;
-    _isCreatingShareLinkage = NO;
     [_HUD showWhileExecuting:@selector(uploadProgressTask) onTarget:self withObject:nil animated:YES];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
@@ -466,18 +458,15 @@
     _progressivePercent = 0;
     
     _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelText = NSLocalizedString(@"Indicator_Create_Share_Link",@"")
 ;
     
-    while (_isCreatingShareLinkage == YES) {
-        usleep(50000);
-    }
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [iConsole info:@"%s",__FUNCTION__];
-	[_HUD removeFromSuperview];
+	//[_HUD removeFromSuperview];  //我们需要多次的hide/show，所以需要comment out这段默认的逻辑
 }
+
 
 /**
  *  生成短连接，通过tinyurl.com
