@@ -102,7 +102,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -110,15 +110,13 @@
     if (section == 0) {
         return 1;
     } else if (section == 1) {
-        return 1;
-    } else if (section == 2) {
 #ifdef CLIENT_DEBUG_MODE
         return (3);
 #else
         return (2);
 #endif
-    } else if (section == 3) {
-        return 2;
+    } else if (section == 2) {
+        return 1;
     } else {
         return 0;
     }
