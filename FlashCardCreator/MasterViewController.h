@@ -16,7 +16,7 @@
 @class DetailViewController;
 @class Pack;
 @class Card;
-@class DropboxSharekitHelper;
+@class AWSS3UploadHelper;
 
 @interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource, UIAlertViewDelegate,PopoverViewDelegate> {
     
@@ -56,7 +56,7 @@
     int       _currentDownloadCount;
     int       _maxDownloadCount;
     
-    DropboxSharekitHelper *_shareHelper;
+    AWSS3UploadHelper *_shareHelper;
     
     NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
 }

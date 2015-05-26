@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <DropboxSDK/DropboxSDK.h>
 #import "MBProgressHUD.h"
 
 #import "PopoverView.h"
@@ -18,7 +17,7 @@
 @class Card;
 @class Pack;
 @class FlashCard;
-@class DropboxSharekitHelper;
+@class AWSS3UploadHelper;
 
 
 @interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopoverViewDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
@@ -45,7 +44,7 @@
     
     MBProgressHUD *_HUD;
     
-    DropboxSharekitHelper *_shareHelper;
+    AWSS3UploadHelper *_shareHelper;
     
     /**
      *  General pack info (like pack image and no of cards) on the right.

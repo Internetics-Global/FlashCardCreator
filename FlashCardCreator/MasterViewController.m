@@ -30,11 +30,11 @@
 #import "FileOperationHelper.h"
 #import "MoreInfoTableViewController.h"
 #import "FCCBarButton.h"
-#import "DropboxShareKitHelper.h"
+#import "AWSS3UploadHelper.h"
 #import "PlayViewControllerV2.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
-#import "AmazonClientManager.h"
+#import "SimpleDBHelper.h"
 #import "SimpleWebBrowserController.h"
 #import "AppDelegate.h"
 #import "OpenUDID.h"
@@ -1215,15 +1215,15 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    //urlStr is kind of "fcc://www.dropbox.com/s/xdkukqr6ezjntu7/Pack1374148414-1884690931.zip?from=Microsoft"
+    //urlStr is kind of "fcc://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip?from=Microsoft"
     //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
     NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
     NSString *simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
     BOOL isAllowedToDownload = [self checkDownloadable:simpleDBItemName];
     if (isAllowedToDownload) {
         [self showProgressIndicator:type withSource:from];
-        NSString *downloadableDropboxURL = [ZipFileDownloadHelper convertToDropboxDownloadURL:urlStr];
-        [_zipFileDownloadHelper downloadZipFile:downloadableDropboxURL];
+        NSString *downloadableURL = [ZipFileDownloadHelper convertToDownloadableURL:urlStr];
+        [_zipFileDownloadHelper downloadZipFile:downloadableURL];
         _zipFileDownloadHelper.delegate = self;
     }  else {
         [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
@@ -1235,10 +1235,10 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL) checkDownloadable: (NSString *) itemName{
     BOOL result = false;
     
-    NSString *defaultDomain = [AmazonClientManager defaultDomain];
+    NSString *defaultDomain = [SimpleDBHelper defaultDomain];
     //itemName = @"Pack1374144082-185879295"; //only for test, will be removed
     _amazonSimpleDBItemName = itemName;
-    NSMutableDictionary *dict = [AmazonClientManager fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
+    NSMutableDictionary *dict = [SimpleDBHelper fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
     
     _currentDownloadCount = [[dict objectForKey:@"currentNo"] integerValue];
     _maxDownloadCount = [[dict objectForKey:@"maxNo"] integerValue];
@@ -1520,10 +1520,10 @@ extern BOOL isFromNewCreatedCard;
     __weak __typeof(&*self)weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        NSString *defaultDomain = [AmazonClientManager defaultDomain];
+        NSString *defaultDomain = [SimpleDBHelper defaultDomain];
         NSString *currentNo = [NSString stringWithFormat:@"%d",_currentDownloadCount + 1];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:currentNo, @"currentNo", nil];
-        [AmazonClientManager insertOrUpdateItem:dict withItemName:_amazonSimpleDBItemName withDomainName:defaultDomain];
+        [SimpleDBHelper insertOrUpdateItem:dict withItemName:_amazonSimpleDBItemName withDomainName:defaultDomain];
     });
 }
 
@@ -2186,7 +2186,7 @@ extern BOOL isFromNewCreatedCard;
                 
                 if (_currentPack.isAllowShare) {
                     if ((_currentPack) && (_currentCard)) {
-                        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_shareHelper shareAction];
                     } else {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];

@@ -18,7 +18,7 @@
 #import "Reachability.h"
 #import "PlayViewControllerV2.h"
 #import "FCCBarButton.h"
-#import "DropboxShareKitHelper.h"
+#import "AWSS3UploadHelper.h"
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
 #import "OpenUDID.h"
@@ -725,7 +725,7 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare) {
                     if ((_currentPack) && (_currentCard)) {
-                        _shareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_shareHelper shareAction];
                     } else {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];

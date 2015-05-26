@@ -51,7 +51,7 @@
         [iConsole error:@"Error download: %@", error];
         [weakSelf.delegate downloadFail];
         //[Common alertViewCommon:[error description]];
-        [Common alertViewCommon:@"Check your download linkage or Dropbox sever is temporarily unavailable"];
+        [Common alertViewCommon:@"Check your download linkage or sever is temporarily unavailable"];
     }];
     [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
         [iConsole info:@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile];
@@ -69,13 +69,10 @@
     return path;
 }
 
-//The reson why to do it: https://www.dropbox.com/help/201/en
-+ (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr{
+
++ (NSString *) convertToDownloadableURL:(NSString *) urlStr{
     [iConsole info:@"%s",__FUNCTION__];
-    NSString *temp = [urlStr stringByReplacingOccurrencesOfString:@"fcc://dropbox.com" withString:@"fcc://www.dropbox.com"];
-    NSString *downloadableURL = [temp stringByReplacingOccurrencesOfString:@"fcc://www" withString:@"https://dl"];
-    downloadableURL = [downloadableURL stringByReplacingOccurrencesOfString:@"https://www" withString:@"https://dl"];
-    downloadableURL = [downloadableURL stringByReplacingOccurrencesOfString:@"http://www" withString:@"https://dl"];
+    NSString *downloadableURL = [urlStr stringByReplacingOccurrencesOfString:@"fcc://" withString:@"https://"];
     return downloadableURL;
 }
 

@@ -11,10 +11,10 @@
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "からパックをダウンロード ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "ご自身で作成されただけのカードに変更を加えることができます";
 "DIALOG_EXISTING_PACK_NAME"                = "パックの名前、既存の入力に別のものをしてください";
-"DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "切断されたDropboxのリンク";
+
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "グループを作成する必要はありませんので、私は新しいカードを作成することはできません";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "作成は、グループの設立に先立って必要とされる";
-"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropboxのアカウントが失敗をログに記録する";
+
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "パッケージをダウンロードします...";
 "DIALOG_ENTER_VALID_URL"       = "有効なURL/Emailを入力してください";
 "DIALOG_APPLY_TO_ALL_CARD"       = "すべてのカードに適用されます";
@@ -31,7 +31,6 @@
 "NavigationBarItem_More" = "詳細";
 "NavigationBarItem_Back"= "戻る";
 
-"NavigationBarItem_More_Dropbox" = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "ランダム再生";
 "NavigationBarItem_More_Register" = "登録";
 "NavigationBarItem_More_Logo_In"   = "ログイン";

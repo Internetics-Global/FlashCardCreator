@@ -7,14 +7,11 @@
 //
 
 #import "MoreInfoTableViewController.h"
-#import <DropboxSDK/DropboxSDK.h>
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
 #import "FileOperationHelper.h"
 
 #import "ZipArchive.h"
-
-BOOL isLoggingDropboxInSettingView = NO;
 
 @interface MoreInfoTableViewController ()
 
@@ -149,23 +146,12 @@ BOOL isLoggingDropboxInSettingView = NO;
     }
 
     
-    if (_dropboxSwitch == nil) {
-        _dropboxSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [_dropboxSwitch addTarget:self action:@selector(dropboxSwitchAction) forControlEvents:UIControlEventValueChanged];
-    }
-    
     if (_playModeSwitch == nil) {
         _playModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [_playModeSwitch addTarget:self action:@selector(playModeSwitchAction) forControlEvents:UIControlEventValueChanged];
     }
     
     if (indexPath.section ==0) {
-        cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Dropbox",nil);
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        [_dropboxSwitch setOn:[[DBSession sharedSession] isLinked]];
-        cell.accessoryView = _dropboxSwitch;
-
-    } else if (indexPath.section ==1) {
         BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
         if (isRandomPlayMode) {
             [_playModeSwitch setOn:YES];
@@ -176,21 +162,8 @@ BOOL isLoggingDropboxInSettingView = NO;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.accessoryView = _playModeSwitch;
         
-//    } else if (indexPath.section ==2) {
-//        if ([self isUserHasLoginInternectics] == YES) {
-//            cell.textLabel.text = @"Submit new listing";
-//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        } else {
-//            if (indexPath.row ==0) {
-//                cell.textLabel.text = @"Register";
-//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//            } else if (indexPath.row ==1) {
-//                cell.textLabel.text = @"Submit new listing";
-//                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//            }
-//        }
         
-    } else if (indexPath.section ==2) {
+    } else if (indexPath.section ==1) {
         if (indexPath.row ==0) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -207,7 +180,7 @@ BOOL isLoggingDropboxInSettingView = NO;
             [editableSwitch setOn:b];
             
         }
-    } else if (indexPath.section ==3) {
+    } else if (indexPath.section ==2) {
         if (indexPath.row ==0) {
             cell.textLabel.text = @"Text to Speech";
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -227,15 +200,6 @@ BOOL isLoggingDropboxInSettingView = NO;
     return cell;
 }
 
-- (void) dropboxSwitchAction {
-    if (!_dropboxSwitch.on) {
-        [[DBSession sharedSession] unlinkAll];
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_DROPBOX_HAS_BEEN_UNLINKED",@"")];
-    } else {
-        [[DBSession sharedSession] linkFromController:self];
-        isLoggingDropboxInSettingView = YES;
-    }
-}
 
 - (void) playModeSwitchAction {
     
@@ -271,44 +235,7 @@ BOOL isLoggingDropboxInSettingView = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section ==0) {
-        
-    }else if (indexPath.section ==1) {
-        
-//    }else if (indexPath.section ==2) {
-//        if (indexPath.row == 0) {
-//            NSURL *url;
-//            if ([self isUserHasLoginInternectics] == YES) {
-//                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
-//                
-//            } else {
-//                url = [NSURL URLWithString:@"http://internetics.net.au/fcc/register/"];
-//            }
-//            
-//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-//            controller.hidesToolbar = NO;
-//            
-//            if (isUserInterfaceIdiomPhone) {
-//                [self.navigationController pushViewController:controller animated:YES];
-//            } else {
-//                UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:controller];
-//                navController.modalPresentationStyle = UIModalPresentationFormSheet;
-//                [self presentModalViewController:navController animated:YES];
-//            }
-//            
-//        } else {
-//            NSURL *url = [NSURL URLWithString:@"http://internetics.net.au/fcc/add-new/"];
-//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-//            controller.hidesToolbar = NO;
-//            if (isUserInterfaceIdiomPhone) {
-//                [self.navigationController pushViewController:controller animated:YES];
-//            } else {
-//                controller.modalPresentationStyle = UIModalPresentationFormSheet;
-//                [self presentModalViewController:controller animated:YES];
-//            }
-//        }
-        
-    }else if (indexPath.section ==2) {
+    if (indexPath.section ==1) {
         if (indexPath.row ==0) {
             NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
             SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];

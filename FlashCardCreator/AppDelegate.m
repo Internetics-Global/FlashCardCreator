@@ -12,7 +12,6 @@
 #import "SQLiteHelper.h"
 #import "AFJSONRequestOperation.h"
 #import "DataManager.h"
-#import <DropboxSDK/DropboxSDK.h>
 
 #import "Card.h"
 #import "Pack.h"
@@ -23,7 +22,9 @@
 #import <Parse/Parse.h>
 #import <ParseCrashReporting/ParseCrashReporting.h>
 
-extern BOOL isLoggingDropboxInSettingView; //we have two places log into dropbox: 1. from setting; 2. from share button
+#import <AWSCore/AWSCore.h>
+#import "AWS_Constants.h"
+
 BOOL _isDownloadingSamplePack;
 
 
@@ -39,6 +40,8 @@ BOOL _isDownloadingSamplePack;
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     self.isAllowToShowPackList = YES;
+    
+    [self setupAWS];
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
     
@@ -72,13 +75,6 @@ BOOL _isDownloadingSamplePack;
     
     //2. check user has opened app (once open, a default user will be setup)
     [SQLiteHelper checkUserExist];
-    
-    //3. set notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
-    
-    //4. Initialized Dropbox session
-    DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
-    [DBSession setSharedSession:dbSession];
     
     //5. Initialize user interface
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -217,7 +213,7 @@ BOOL _isDownloadingSamplePack;
 #pragma mark -
 #pragma mark - Handle when call from outside like safari
 
-//url is kind of: fcc://www.dropbox.com/s/pe2v96gaxpsrety/A.zip?from=Clive&cardname=Happy New Year&packname=hello
+//url is kind of: fcc://s3.amazonaws.com/internetics.flashcardcreator/Pack1432614117-1358153070.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     [iConsole info:@"%s",__FUNCTION__];
@@ -230,22 +226,6 @@ BOOL _isDownloadingSamplePack;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
         
-        
-        
-        
-        
-    } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
-        if ([[DBSession sharedSession] handleOpenURL:url])
-        {
-            if ([[DBSession sharedSession] isLinked])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"linked"]];
-            } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"linked"]];
-            }
-            return YES;
-        }
-    
     }
     
     return YES;
@@ -277,32 +257,6 @@ BOOL _isDownloadingSamplePack;
 #pragma mark -
 #pragma mark - Notification
 
-- (void) dropboxLinkedNotification:(id)notification
-{
-    [iConsole info:@"%s",__FUNCTION__];
-    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
-    
-    if(![linkedNum boolValue])
-    {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-    } else
-    {
-        //[Common alertViewCommon:@"Dropbox is linked now"];
-        
-        if (isLoggingDropboxInSettingView == NO) {
-            
-//            if (isUserInterfaceIdiomPhone) {
-//                [self.masterViewController shareButtonClicked:nil];
-//            }  else {
-//                [self.detailViewController shareButtonClicked:nil];
-//            }
-            
-        }
-    }
-    
-    isLoggingDropboxInSettingView = NO;
-}
-
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
 }
@@ -323,6 +277,14 @@ BOOL _isDownloadingSamplePack;
     
     [[iConsole sharedConsole] setMaxLogItems:1000];
 
+}
+
+- (void) setupAWS {
+    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:CognitoRegionType
+                                                                                                    identityPoolId:CognitoIdentityPoolId];
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:DefaultServiceRegionType
+                                                                         credentialsProvider:credentialsProvider];
+    AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {

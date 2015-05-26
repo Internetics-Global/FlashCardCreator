@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AC7AA83697FD47C0F6FA7D /* libPods.a */; };
 		2D1A051816EDDF1D00527311 /* card_background_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051316EDDF1D00527311 /* card_background_red.png */; };
 		2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051416EDDF1D00527311 /* card_background_purple.png */; };
 		2D1A051A16EDDF1D00527311 /* card_background_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051516EDDF1D00527311 /* card_background_gray.png */; };
@@ -112,7 +113,7 @@
 		2DD0590316E8453E00F779BD /* segment_unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD0590016E8453E00F779BD /* segment_unselected.png */; };
 		2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C516DF679200B7959A /* selected_table_cell.png */; };
 		2DE809C816DF679300B7959A /* selected_table_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DE809C616DF679300B7959A /* selected_table_cell@2x.png */; };
-		2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE809E816E0811C00B7959A /* DropboxSharekitHelper.m */; };
+		2DE809E916E0811C00B7959A /* AWSS3UploadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE809E816E0811C00B7959A /* AWSS3UploadHelper.m */; };
 		2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */; };
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
@@ -197,7 +198,6 @@
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
-		88620B5A1AB103BE0046B64E /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B571AB103BE0046B64E /* Bolts.framework */; };
 		88620B5B1AB103BF0046B64E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B581AB103BE0046B64E /* Parse.framework */; };
 		88620B5C1AB103BF0046B64E /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B591AB103BE0046B64E /* ParseCrashReporting.framework */; };
 		88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5D1AB104050046B64E /* StoreKit.framework */; };
@@ -220,16 +220,16 @@
 		887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94418D66DDE00E4DA21 /* templateScreenshot6_question.png */; };
 		887BD94B18D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94518D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png */; };
 		887BD94C18D66DDE00E4DA21 /* templateScreenshot7_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */; };
+		887FF2B31B13F77D00D998FA /* AWS_Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 887FF2B21B13F77D00D998FA /* AWS_Constants.m */; };
 		889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D11A123DED0011B7ED /* GTMStackTrace.m */; };
 		889131D51A123DED0011B7ED /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D31A123DED0011B7ED /* iConsole.m */; };
-		88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* AmazonClientManager.m */; };
+		88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* SimpleDBHelper.m */; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
 		88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */; };
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
 		88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
 		88B405071A3824D200D8C218 /* background_navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B405061A3824D200D8C218 /* background_navigationbar.png */; };
-		88BADB3F1A6CCCF500D6CA9F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BADB3E1A6CCCF500D6CA9F /* Reachability.m */; };
 		88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */; };
 		88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE31AE72A040089D7F6 /* ASValueTrackingSlider.m */; };
 		88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BD6134197771F500834D72 /* PackListViewControllerV2.m */; };
@@ -246,7 +246,6 @@
 		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
-		88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E739E61797C2F7004160F5 /* AWSRuntime.framework */; };
 		88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */; };
 		88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */; };
 		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
@@ -267,8 +266,6 @@
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */; };
-		9A7E451318274AB900A05C05 /* AWSSimpleDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */; };
-		9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7E451218274AB900A05C05 /* DropboxSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -443,14 +440,16 @@
 		2DD0590016E8453E00F779BD /* segment_unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = segment_unselected.png; path = Resources/segment_unselected.png; sourceTree = "<group>"; };
 		2DE809C516DF679200B7959A /* selected_table_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected_table_cell.png; path = Resources/selected_table_cell.png; sourceTree = "<group>"; };
 		2DE809C616DF679300B7959A /* selected_table_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected_table_cell@2x.png"; path = "Resources/selected_table_cell@2x.png"; sourceTree = "<group>"; };
-		2DE809E716E0811C00B7959A /* DropboxShareKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxShareKitHelper.h; sourceTree = "<group>"; };
-		2DE809E816E0811C00B7959A /* DropboxSharekitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxSharekitHelper.m; sourceTree = "<group>"; };
+		2DE809E716E0811C00B7959A /* AWSS3UploadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AWSS3UploadHelper.h; path = FlashCardCreator/AWSS3UploadHelper.h; sourceTree = "<group>"; };
+		2DE809E816E0811C00B7959A /* AWSS3UploadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AWSS3UploadHelper.m; path = FlashCardCreator/AWSS3UploadHelper.m; sourceTree = "<group>"; };
 		2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		2DEDA1F91683100D0074AC9E /* ZipFileDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFileDownloadHelper.h; sourceTree = "<group>"; };
 		2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFileDownloadHelper.m; sourceTree = "<group>"; };
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
+		795B4BEF418E66C476B617D1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		84AC7AA83697FD47C0F6FA7D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880025ED17C3297F00A485CE /* FMMoveTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMMoveTableView.h; path = Libraries/FMFramework/FMMoveTableView.h; sourceTree = "<group>"; };
 		880025EE17C3297F00A485CE /* FMMoveTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMMoveTableView.m; path = Libraries/FMFramework/FMMoveTableView.m; sourceTree = "<group>"; };
 		880025EF17C3297F00A485CE /* FMMoveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMMoveTableViewCell.h; path = Libraries/FMFramework/FMMoveTableViewCell.h; sourceTree = "<group>"; };
@@ -571,20 +570,20 @@
 		887BD94418D66DDE00E4DA21 /* templateScreenshot6_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_question.png; path = Resources/templateScreenshot6_question.png; sourceTree = "<group>"; };
 		887BD94518D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question_iPad.png; path = Resources/templateScreenshot7_question_iPad.png; sourceTree = "<group>"; };
 		887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question.png; path = Resources/templateScreenshot7_question.png; sourceTree = "<group>"; };
+		887FF2B11B13F77D00D998FA /* AWS_Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWS_Constants.h; sourceTree = "<group>"; };
+		887FF2B21B13F77D00D998FA /* AWS_Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWS_Constants.m; sourceTree = "<group>"; };
 		889131D01A123DED0011B7ED /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
 		889131D11A123DED0011B7ED /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
 		889131D21A123DED0011B7ED /* iConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iConsole.h; sourceTree = "<group>"; };
 		889131D31A123DED0011B7ED /* iConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iConsole.m; sourceTree = "<group>"; };
-		88A175271797C3BD00FE778C /* AmazonClientManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonClientManager.h; sourceTree = "<group>"; };
-		88A175281797C3BD00FE778C /* AmazonClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonClientManager.m; sourceTree = "<group>"; };
+		88A175271797C3BD00FE778C /* SimpleDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleDBHelper.h; path = FlashCardCreator/SimpleDBHelper.h; sourceTree = "<group>"; };
+		88A175281797C3BD00FE778C /* SimpleDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleDBHelper.m; path = FlashCardCreator/SimpleDBHelper.m; sourceTree = "<group>"; };
 		88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_highlight.png; path = Resources/uibarbuttonitem_highlight.png; sourceTree = "<group>"; };
 		88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_highlight@2x.png"; path = "Resources/uibarbuttonitem_highlight@2x.png"; sourceTree = "<group>"; };
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
 		88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_normal@2x.png"; path = "Resources/uibarbuttonitem_normal@2x.png"; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
 		88B405061A3824D200D8C218 /* background_navigationbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_navigationbar.png; path = Resources/background_navigationbar.png; sourceTree = "<group>"; };
-		88BADB3D1A6CCCF500D6CA9F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		88BADB3E1A6CCCF500D6CA9F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		88BB8FE01AE72A040089D7F6 /* ASValuePopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValuePopUpView.h; sourceTree = "<group>"; };
 		88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValuePopUpView.m; sourceTree = "<group>"; };
 		88BB8FE21AE72A040089D7F6 /* ASValueTrackingSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValueTrackingSlider.h; sourceTree = "<group>"; };
@@ -615,7 +614,6 @@
 		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
-		88E739E61797C2F7004160F5 /* AWSRuntime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSRuntime.framework; path = Libraries/AWSRuntime.framework; sourceTree = "<group>"; };
 		88E93D761A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharkfoodMuteSwitchDetector.h; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.h; sourceTree = "<group>"; };
 		88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharkfoodMuteSwitchDetector.m; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.m; sourceTree = "<group>"; };
 		88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -646,8 +644,7 @@
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SQLiteVersion.plist; sourceTree = "<group>"; };
-		9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSSimpleDB.framework; path = Libraries/AWSSimpleDB.framework; sourceTree = "<group>"; };
-		9A7E451218274AB900A05C05 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
+		FB943473AEB151745BBBF04B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -673,22 +670,19 @@
 				2D66C18016A6B39A00795CF9 /* Twitter.framework in Frameworks */,
 				2D66C17C16A6B38A00795CF9 /* CFNetwork.framework in Frameworks */,
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
-				88620B5A1AB103BE0046B64E /* Bolts.framework in Frameworks */,
 				2DC0628F167FFF5700F2EA07 /* Security.framework in Frameworks */,
 				2D5F3D51167B537D009D2ADC /* SystemConfiguration.framework in Frameworks */,
-				9A7E451418274AB900A05C05 /* DropboxSDK.framework in Frameworks */,
 				2D75DF88169D07CC00337B10 /* MobileCoreServices.framework in Frameworks */,
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
 				2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */,
-				9A7E451318274AB900A05C05 /* AWSSimpleDB.framework in Frameworks */,
 				2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */,
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
 				2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */,
-				88E739E81797C2F7004160F5 /* AWSRuntime.framework in Frameworks */,
 				88620B5C1AB103BF0046B64E /* ParseCrashReporting.framework in Frameworks */,
+				0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,10 +908,6 @@
 				2D5F3CF81679D334009D2ADC /* FileOperationHelper.m */,
 				2D89234816806BF200B43BCD /* PublicPackRequest.h */,
 				2D89234916806BF200B43BCD /* PublicPackRequest.m */,
-				2DE809E716E0811C00B7959A /* DropboxShareKitHelper.h */,
-				2DE809E816E0811C00B7959A /* DropboxSharekitHelper.m */,
-				88A175271797C3BD00FE778C /* AmazonClientManager.h */,
-				88A175281797C3BD00FE778C /* AmazonClientManager.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -973,7 +963,6 @@
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				88620B561AB103BE0046B64E /* Parse */,
-				88BADB3C1A6CCCF500D6CA9F /* Reachability */,
 				88E93D541A634C85007CB7A2 /* SoundSwitch */,
 				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
@@ -981,7 +970,6 @@
 				886075001932B167009C16EE /* DKCircleButton */,
 				885C3DCF1926281C0090F63C /* PopoverView */,
 				880025CB17C3294F00A485CE /* FMFramework */,
-				88E739C31797C2DB004160F5 /* Amazon */,
 				2D1A051F16EDEAD300527311 /* PopupListComponent */,
 				2DA794CD16B4C1AB009FBD71 /* MGSplitViewController */,
 				2DDF5A3316B0F72700191C43 /* OpenUDID */,
@@ -996,6 +984,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				887FF2B01B13F76800D998FA /* AWS */,
 				881E9E6F18F7AF1B00ECC523 /* SoundRecord */,
 				2D26343F16C2066D001A024D /* SelectTemplate */,
 				2D4E4EB616B2768100E75257 /* Play */,
@@ -1176,6 +1165,7 @@
 				88F47F651793FBE200EE068F /* Media.xcassets */,
 				2DCE0B0816798E04007A8CAD /* Products */,
 				2D5F3D081679EFA8009D2ADC /* Resources */,
+				71578ABC275FD5FFC2ACBDAB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1193,8 +1183,6 @@
 				88620B5F1AB104120046B64E /* libstdc++.6.dylib */,
 				88620B5D1AB104050046B64E /* StoreKit.framework */,
 				88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */,
-				9A7E451118274AB900A05C05 /* AWSSimpleDB.framework */,
-				9A7E451218274AB900A05C05 /* DropboxSDK.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
 				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
 				880E6721182720710054DDD0 /* AVFoundation.framework */,
@@ -1220,6 +1208,7 @@
 				2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */,
 				2D7A8CE61691100F002EDF77 /* libz.dylib */,
 				2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */,
+				84AC7AA83697FD47C0F6FA7D /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1257,6 +1246,15 @@
 				2D5C17C216D1A54200E1E785 /* OpenUDID.m */,
 			);
 			name = OpenUDID;
+			sourceTree = "<group>";
+		};
+		71578ABC275FD5FFC2ACBDAB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				795B4BEF418E66C476B617D1 /* Pods.debug.xcconfig */,
+				FB943473AEB151745BBBF04B /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		880025CB17C3294F00A485CE /* FMFramework */ = {
@@ -1388,6 +1386,19 @@
 			path = Libraries/TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
+		887FF2B01B13F76800D998FA /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				2DE809E716E0811C00B7959A /* AWSS3UploadHelper.h */,
+				2DE809E816E0811C00B7959A /* AWSS3UploadHelper.m */,
+				88A175271797C3BD00FE778C /* SimpleDBHelper.h */,
+				88A175281797C3BD00FE778C /* SimpleDBHelper.m */,
+				887FF2B11B13F77D00D998FA /* AWS_Constants.h */,
+				887FF2B21B13F77D00D998FA /* AWS_Constants.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
 		889131CF1A123DED0011B7ED /* iConsole */ = {
 			isa = PBXGroup;
 			children = (
@@ -1419,16 +1430,6 @@
 			name = Emotion;
 			sourceTree = "<group>";
 		};
-		88BADB3C1A6CCCF500D6CA9F /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				88BADB3D1A6CCCF500D6CA9F /* Reachability.h */,
-				88BADB3E1A6CCCF500D6CA9F /* Reachability.m */,
-			);
-			name = Reachability;
-			path = Libraries/Reachability;
-			sourceTree = "<group>";
-		};
 		88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1448,14 +1449,6 @@
 				88D04E4B178D39170058A0D9 /* emotions.txt */,
 			);
 			name = Symbols;
-			sourceTree = "<group>";
-		};
-		88E739C31797C2DB004160F5 /* Amazon */ = {
-			isa = PBXGroup;
-			children = (
-				88E739E61797C2F7004160F5 /* AWSRuntime.framework */,
-			);
-			name = Amazon;
 			sourceTree = "<group>";
 		};
 		88E93D541A634C85007CB7A2 /* SoundSwitch */ = {
@@ -1503,11 +1496,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2DCE0B3716798E04007A8CAD /* Build configuration list for PBXNativeTarget "FlashCardCreator" */;
 			buildPhases = (
+				AF84FFAE808038A1D185DCA6 /* Check Pods Manifest.lock */,
 				2DCE0B0316798E04007A8CAD /* Sources */,
 				2DCE0B0416798E04007A8CAD /* Frameworks */,
 				2DCE0B0516798E04007A8CAD /* Resources */,
 				889DD7BD184D321900D99C56 /* ShellScript */,
 				885B60FD1AB10710006D6D98 /* Run Script (Parse) */,
+				146131C688B1A7C98795391E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1696,6 +1691,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		146131C688B1A7C98795391E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		885B60FD1AB10710006D6D98 /* Run Script (Parse) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1723,6 +1733,21 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION == Debug ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n#increment the build number (ie 115 to 116)\nbuildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nexit 2\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\nfi";
 		};
+		AF84FFAE808038A1D185DCA6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1736,7 +1761,7 @@
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
 				2DCE0B2516798E04007A8CAD /* MasterViewController.m in Sources */,
 				2DCE0B2816798E04007A8CAD /* DetailViewController.m in Sources */,
-				88A175291797C3BD00FE778C /* AmazonClientManager.m in Sources */,
+				88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */,
 				886075031932B167009C16EE /* DKCircleButton.m in Sources */,
 				2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */,
 				2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */,
@@ -1747,13 +1772,13 @@
 				2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */,
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
-				88BADB3F1A6CCCF500D6CA9F /* Reachability.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
 				886D8FEE1AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				2D5C17BE16D1A53600E1E785 /* MGSplitCornersView.m in Sources */,
+				887FF2B31B13F77D00D998FA /* AWS_Constants.m in Sources */,
 				2D5C17BF16D1A53600E1E785 /* MGSplitDividerView.m in Sources */,
 				88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */,
 				2D5C17C016D1A53600E1E785 /* MGSplitViewController.m in Sources */,
@@ -1802,7 +1827,7 @@
 				2D5C184416D1A69200E1E785 /* MoreInfoTableViewController.m in Sources */,
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
-				2DE809E916E0811C00B7959A /* DropboxSharekitHelper.m in Sources */,
+				2DE809E916E0811C00B7959A /* AWSS3UploadHelper.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
@@ -1952,6 +1977,7 @@
 		};
 		2DCE0B3816798E04007A8CAD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 795B4BEF418E66C476B617D1 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1978,6 +2004,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
@@ -1990,6 +2017,7 @@
 		};
 		2DCE0B3916798E04007A8CAD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB943473AEB151745BBBF04B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2017,6 +2045,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";

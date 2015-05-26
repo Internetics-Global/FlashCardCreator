@@ -28,6 +28,6 @@
 
 +(instancetype)sharedInstance;
 - (NSString *) downloadZipFile:(NSString *)URLStr;
-+ (NSString *) convertToDropboxDownloadURL:(NSString *) urlStr;
++ (NSString *) convertToDownloadableURL:(NSString *) urlStr;
 
 @end

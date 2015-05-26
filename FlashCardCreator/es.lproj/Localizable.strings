@@ -11,10 +11,10 @@
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Descarga de paquete de ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Usted puede hacer cambios solamente en aquellas tarjetas que son creados por usted mismo";
 "DIALOG_EXISTING_PACK_NAME"                = "Nombre actual del paquete, por favor ingrese una diferente";
-"DIALOG_DROPBOX_HAS_BEEN_UNLINKED"         = "Desconectado Dropbox enlace";
+
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
-"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Registrarse cuenta de Dropbox no";
+
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Descargue el paquete ...";
 "DIALOG_ENTER_VALID_URL"       = "Por favor, introduzca una válida URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Aplicar a todas las tarjetas";
@@ -31,7 +31,6 @@
 "NavigationBarItem_More" = "Más";
 "NavigationBarItem_Back" = "Volver";
 
-"NavigationBarItem_More_Dropbox" = "Dropbox";
 "NavigationBarItem_More_RandomPlay" = "Reproducción aleatoria";
 "NavigationBarItem_More_Register" = "Registro";
 "NavigationBarItem_More_Logo_In"   = "Login";
