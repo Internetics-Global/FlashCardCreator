@@ -1219,9 +1219,15 @@ extern BOOL isFromNewCreatedCard;
     //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
     NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
     NSString *simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
-    BOOL isAllowedToDownload = [self checkDownloadable:simpleDBItemName];
+    BOOL isAllowedToDownload;
+    
+    [self showDownloadProgressIndicator:type withSource:from];
+    if ([type.lowercaseString isEqualToString:@"demo"]) {
+        isAllowedToDownload = YES;
+    } else {
+        isAllowedToDownload = [self checkDownloadable:simpleDBItemName];
+    }
     if (isAllowedToDownload) {
-        [self showProgressIndicator:type withSource:from];
         NSString *downloadableURL = [ZipFileDownloadHelper convertToDownloadableURL:urlStr];
         [_zipFileDownloadHelper downloadZipFile:downloadableURL];
         _zipFileDownloadHelper.delegate = self;
@@ -2077,7 +2083,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
-- (void)showProgressIndicator:(NSString *) type withSource:(NSString *) from {
+- (void)showDownloadProgressIndicator:(NSString *) type withSource:(NSString *) from {
     
     _progressivePercent = 0;
 	

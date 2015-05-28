@@ -725,8 +725,12 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare) {
                     if ((_currentPack) && (_currentCard)) {
-                        _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_shareHelper shareAction];
+                        double delayInSeconds = 0.4;
+                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                            _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                            [_shareHelper shareAction];
+                        });
                     } else {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }
