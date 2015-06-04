@@ -127,6 +127,7 @@
 		880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6721182720710054DDD0 /* AVFoundation.framework */; };
 		880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6726182720CE0054DDD0 /* CoreVideo.framework */; };
 		880E85E61A9DA39F00EB3926 /* default_pack_cover_image_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 880E85E51A9DA39F00EB3926 /* default_pack_cover_image_transparent.png */; };
+		8810ED2B1B1FED55003140FC /* CryptorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8810ED2A1B1FED55003140FC /* CryptorHelper.m */; };
 		8810F484170BA06400D40562 /* template_background_change_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8810F483170BA06400D40562 /* template_background_change_button@2x.png */; };
 		88123D4F192DCA670062CA84 /* card_cover_image_placeholder_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */; };
 		88123DF5192F00480062CA84 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DF4192F00480062CA84 /* Constant.m */; };
@@ -462,6 +463,8 @@
 		880E6723182720BF0054DDD0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		880E6726182720CE0054DDD0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		880E85E51A9DA39F00EB3926 /* default_pack_cover_image_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image_transparent.png; path = Resources/default_pack_cover_image_transparent.png; sourceTree = "<group>"; };
+		8810ED291B1FED55003140FC /* CryptorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptorHelper.h; sourceTree = "<group>"; };
+		8810ED2A1B1FED55003140FC /* CryptorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptorHelper.m; sourceTree = "<group>"; };
 		8810F483170BA06400D40562 /* template_background_change_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "template_background_change_button@2x.png"; path = "Resources/template_background_change_button@2x.png"; sourceTree = "<group>"; };
 		88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder_title.png; path = Resources/card_cover_image_placeholder_title.png; sourceTree = "<group>"; };
 		88123DF3192F00480062CA84 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
@@ -908,6 +911,8 @@
 				2D5F3CF81679D334009D2ADC /* FileOperationHelper.m */,
 				2D89234816806BF200B43BCD /* PublicPackRequest.h */,
 				2D89234916806BF200B43BCD /* PublicPackRequest.m */,
+				8810ED291B1FED55003140FC /* CryptorHelper.h */,
+				8810ED2A1B1FED55003140FC /* CryptorHelper.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -1826,6 +1831,7 @@
 				2D5C184316D1A69200E1E785 /* AboutViewController.m in Sources */,
 				2D5C184416D1A69200E1E785 /* MoreInfoTableViewController.m in Sources */,
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,
+				8810ED2B1B1FED55003140FC /* CryptorHelper.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* AWSS3UploadHelper.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,

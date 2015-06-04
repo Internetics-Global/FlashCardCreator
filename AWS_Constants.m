@@ -15,10 +15,11 @@
 
 #import "AWS_Constants.h"
 
-#warning To run this sample correctly, you must set an appropriate constants.
 AWSRegionType const CognitoRegionType = AWSRegionUSEast1; // e.g. AWSRegionUSEast1
 AWSRegionType const DefaultServiceRegionType = AWSRegionUSEast1; // e.g. AWSRegionUSEast1
 NSString *const CognitoIdentityPoolId = @"us-east-1:55b5aa55-921e-49d0-b4d3-673793805862";
 NSString *const S3BucketName = @"internetics.flashcardcreator";
 
 NSString *const S3BaseURL = @"https://s3.amazonaws.com";
+
+NSString *const S3SamplePackURL = @"https://s3.amazonaws.com/internetics.flashcardcreator/Sample_25052015_Encripted.zip?type=demo";

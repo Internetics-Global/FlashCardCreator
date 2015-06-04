@@ -21,6 +21,8 @@
 #import <AWSS3/AWSS3.h>
 #import "AWS_Constants.h"
 
+#import "CryptorHelper.h"
+
 @interface AWSS3UploadHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
 }
@@ -183,6 +185,12 @@
         
         if (generatedZipFilePath == nil) {
             [Common alertViewCommon:@"Failure to create zipped share file."];
+            return;
+        }
+        
+        BOOL success = [CryptorHelper encryptFileWithSameOutput:generatedZipFilePath];
+        if (success == false) {
+            [Common alertViewCommon:@"Failure to encrypt zipped share file."];
             return;
         }
         

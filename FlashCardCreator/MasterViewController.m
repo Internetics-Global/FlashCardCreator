@@ -44,6 +44,8 @@
 
 #import "TipHelper.h"
 
+#import "CryptorHelper.h"
+
 extern BOOL _isDownloadingSamplePack;
 
 @interface MasterViewController () <UIPopoverControllerDelegate>
@@ -1354,6 +1356,13 @@ extern BOOL isFromNewCreatedCard;
     
     ZipArchive* za = [[ZipArchive alloc] init];
     NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
+    
+    BOOL success = [CryptorHelper decryptFileWithSameOutput:downloadedZipPackFileFixedPath];
+    if (success == false) {
+        [Common alertViewCommon:@"Failure to decrypt zipped share file."];
+        return;
+    }
+    
     [za UnzipOpenFile:downloadedZipPackFileFixedPath];
     if( [za UnzipIsEncrypted]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil

@@ -32,6 +32,7 @@ PODS:
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
   - Reachability (3.2)
+  - RNCryptor (2.2)
   - TMCache (1.2.4)
   - UICKeyChainStore (2.0.4)
   - XMLDictionary (1.4)
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - AWSCore
   - AWSS3 (~> 2.1.0)
   - AWSSimpleDB
+  - RNCryptor
 
 SPEC CHECKSUMS:
   AWSCognito: c251f1f166c74343493451e238ca7157e1e33dda
@@ -51,6 +53,7 @@ SPEC CHECKSUMS:
   GZIP: f0863fda354e8f83316508c0a2c7bbe385e39129
   Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
   UICKeyChainStore: 69eb0c3a6f669bccf16ba88de3b9069b71501361
   XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
