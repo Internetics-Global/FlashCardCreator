@@ -1248,8 +1248,8 @@ extern BOOL isFromNewCreatedCard;
     _amazonSimpleDBItemName = itemName;
     NSMutableDictionary *dict = [SimpleDBHelper fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
     
-    _currentDownloadCount = [[dict objectForKey:@"currentNo"] integerValue];
-    _maxDownloadCount = [[dict objectForKey:@"maxNo"] integerValue];
+    _currentDownloadCount = [[dict objectForKey:@"currentNo"] intValue];
+    _maxDownloadCount = [[dict objectForKey:@"maxNo"] intValue];
     
     if ((_currentDownloadCount < _maxDownloadCount)  || (_maxDownloadCount == 0)) {  //maxNo = 0 means no record in AmazonSDB
         result = TRUE;
@@ -1752,9 +1752,9 @@ extern BOOL isFromNewCreatedCard;
             
             
             //Deal with font size difference between iPhone and iPad
-            int subheadingSize = [questionDict[@"subheading_size"] integerValue];;
-            int mainSize = [questionDict[@"main_size"] integerValue];
-            int subSize = [questionDict[@"sub_size"] integerValue];
+            int subheadingSize = [questionDict[@"subheading_size"] intValue];;
+            int mainSize = [questionDict[@"main_size"] intValue];
+            int subSize = [questionDict[@"sub_size"] intValue];
             
             if (subheadingSize == 0) {
                 //this occur when no subheading_size field in json file, then we use default value
@@ -1998,9 +1998,9 @@ extern BOOL isFromNewCreatedCard;
             }
             
             //Deal with font size difference between iPhone and iPad
-            int subheadingSize = [answerDict[@"subheading_size"] integerValue];;
-            int mainSize = [answerDict[@"main_size"] integerValue];
-            int subSize = [answerDict[@"sub_size"] integerValue];
+            int subheadingSize = [answerDict[@"subheading_size"] intValue];;
+            int mainSize = [answerDict[@"main_size"] intValue];
+            int subSize = [answerDict[@"sub_size"] intValue];
             
             if (subheadingSize == 0) {
                 //this occur when no subheading_size field in json file, then we use default value 

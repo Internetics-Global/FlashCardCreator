@@ -475,7 +475,16 @@
 
 
 
+/**
+ *  if isManulally == YES, indicate it's manually switched
+ */
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
+    
+    if (_isAutoScroll && isManually) {
+        return; //we don't allow to switch manually during auto play mode
+    }
+    
+    
     [iConsole info:@"%s",__FUNCTION__];
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
@@ -739,7 +748,6 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    
     return UIInterfaceOrientationMaskLandscape;
 }
 
@@ -769,7 +777,7 @@
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     [_firstPageDelayTimer invalidate];
-    _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO];
+    _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
     
     if (_countDownLabel) {
        [_countDownLabel removeFromSuperview];
@@ -786,7 +794,11 @@
     _countDownLabel.numberOfLines = 1;
     _countDownLabel.textColor = [UIColor whiteColor];
     _countDownLabel.backgroundColor = [UIColor clearColor];
-    _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_autoPlayDelaySlider.value];
+    if (_isAutoShowQuestionOnly) {
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_autoPlayDelaySlider.value];
+    } else {
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",((int)_autoPlayDelaySlider.value)/2-1];
+    }
     [self.view addSubview:_countDownLabel];
     _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
     
