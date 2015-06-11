@@ -59,22 +59,6 @@
 "ToolbarItem_Align_Right" = "Derecha";
 "ToolbarItem_Align_Justify"        = "Justify";
 
-"ToolbarItem_Size12"        = " 12 ";
-"ToolbarItem_Size18"        = " 18 ";
-"ToolbarItem_Size24"        = " 24 ";
-"ToolbarItem_Size28"        = " 28 ";
-"ToolbarItem_Size32"        = " 32 ";
-"ToolbarItem_Size36"        = " 36 ";
-"ToolbarItem_Size40"        = " 40 ";
-"ToolbarItem_Size45"        = " 45 ";
-"ToolbarItem_Size50"        = " 50 ";
-"ToolbarItem_Size55"        = " 55 ";
-"ToolbarItem_Size60"        = " 60 ";
-"ToolbarItem_Size80"        = " 80 ";
-"ToolbarItem_Size100"        = " 100 ";
-"ToolbarItem_Size160"        = " 160 ";
-"ToolbarItem_Size260"        = " 260 ";
-
 
 "ToolbarItem_Color_Red" = "Red";
 "ToolbarItem_Color_Green" = "Verde";
