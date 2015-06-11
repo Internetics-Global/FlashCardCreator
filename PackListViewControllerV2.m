@@ -114,7 +114,7 @@
     
     
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"recently created",@"recently viewed", nil]];
-    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 240 -5, CGRectGetHeight(self.view.frame) - 40, 240, 29);
+    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 -5, CGRectGetHeight(self.view.frame) - 40, 250, 29);
     self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sortSegmentedControl];
     
