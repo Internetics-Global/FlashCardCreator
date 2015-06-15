@@ -13,4 +13,7 @@
 
 @property (strong, nonatomic) Pack *currentPack;
 
+
+- (void) text2SpeechFinished:(NSNumber*)isQuestionShowing;
+
 @end

@@ -46,8 +46,16 @@
     ASValueTrackingSlider *_autoPlayDelaySlider;
     UIButton              *_autoScrollButton;
     
-    NSTimer  *_autoSwitchQATimer; //auto switch question/answer card timer
-    BOOL      _isAutoShowQuestionOnly;  //used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
+    
+    /**
+     *  如果是SmartDelay，则忽略_autoSwitchQATimer。而是通过text2SpeechFinished回调来自动切换
+     */
+    NSTimer  *_autoSwitchQATimer;
+    
+    /**
+     * used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
+     */
+    BOOL      _isAutoShowQuestionOnly;
     
     NSTimer *_autoHideControlPanelTimer;
     
@@ -211,6 +219,7 @@
     //step2: uiscroll view
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView.isSmartDelay = [self isSmartDelay];
     _scrollView.isCycle = NO;
     _scrollView.isAutoScroll = NO;
     
@@ -332,6 +341,13 @@
     //muteButton.showsTouchWhenHighlighted =YES;
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
+    
+    if ([self isSmartDelay]) {
+        _autoPlayDelaySlider.hidden = YES;
+        maxLabel.hidden = YES;
+        minLabel.hidden = YES;
+        autoPlayDelayLabel.hidden = YES;
+    }
     
 
 }
@@ -639,7 +655,7 @@
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
     }
-    if (_isAutoShowQuestionOnly == NO) {
+    if ((_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
         _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
     
@@ -720,7 +736,7 @@
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
     }
-    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO)) {
+    if (_isAutoScroll && (_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
         _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
 }
@@ -800,7 +816,13 @@
         _countDownLabel.text = [NSString stringWithFormat:@"%d",((int)_autoPlayDelaySlider.value)/2-1];
     }
     [self.view addSubview:_countDownLabel];
-    _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
+    
+    if ([self isSmartDelay]) {
+        _countDownLabel.hidden = YES;
+    } else {
+        _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
+        _countDownLabel.hidden = NO;
+    }
     
     [self playbackOnCard:currentCard];
 }
@@ -831,6 +853,35 @@
     } else {
         _countDownLabel.text = [NSString stringWithFormat:@"%d",value - 1];
     }
+}
+
+#pragma mark – Text to speech callback from FlashCard
+
+
+/**
+ *  This method is only called when setting SmartDelay = YES
+ */
+- (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
+    if ([self isSmartDelay] && _isAutoScroll) {
+        if (_isAutoShowQuestionOnly) {
+            [_scrollView scrollNow];
+        } else {
+            if ([isQuestionShowing boolValue]) {
+                [self switchQuestionAnswerViewWithHand:NO];
+            } else {
+                [_scrollView scrollNow];
+            }
+        }
+    } else {
+        //do nothing
+    }
+    
+    
+}
+
+- (BOOL) isSmartDelay {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
+    return b;
 }
 
 #pragma mark -

@@ -18,7 +18,16 @@
 @property (nonatomic,assign,setter = setDelegate:            ) id<CycleScrollViewDelegate  > delegate;
 
 @property (nonatomic,assign,setter = setCycle:               ) BOOL                      isCycle;
+
+
+
 @property (nonatomic,assign,setter = setAutoScroll:          ) BOOL                      isAutoScroll;
+
+/**
+ * 如果是smartDelay，则autoScroll是在text2speech结束后，调用scrollNow执行，而不是通过_autoScrollTimer进行执行
+ */
+@property (assign, nonatomic)                                  BOOL                      isSmartDelay;
+
 @property (nonatomic,assign,setter = setAutoPlayDelaySeconds:) float                     autoPlayDelaySeconds;
 
 @property (nonatomic,readonly                                ) UIScrollView              *scrollView;
@@ -29,6 +38,11 @@
  *  This is not an elegant way to clean resource, especially for NSTimer, but this is the only way we can do currently.
  */
 - (void) cleanup;
+
+/**
+ *  trigger and scroll to next page
+ */
+- (void) scrollNow;
 
 @end
 
@@ -52,5 +66,6 @@
  *  position: -1 previous card; 0 current card; 1 next card
  */
 - (UIView *)pageAtIndex:(NSInteger)index withPosition:(int) position;
+
 
 @end

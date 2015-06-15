@@ -8064,7 +8064,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     } else {
-        //[self playAudio];
+        if ([_textToSpeechArray count] > 0) {
+            //all text-to-speechs are done
+            if (self.calledViewController) {
+                SEL selector = @selector(text2SpeechFinished:);
+                if ([self.calledViewController respondsToSelector:selector]) {
+                    BOOL isQuestionShowing = (_segmentedControl.selectedSegmentIndex == 0)?YES:NO;
+                    [self.calledViewController performSelector:selector withObject:[NSNumber numberWithBool:isQuestionShowing]];
+                } else {
+                    [iConsole info:@"%s: can not repsonss to select text2SpeechFinished ",__FUNCTION__];
+                }
+                
+            }
+        }
     }
     
 }
