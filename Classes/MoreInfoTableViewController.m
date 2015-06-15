@@ -175,7 +175,7 @@
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
         } else if (indexPath.row ==1) {
-            cell.textLabel.text = @"Smart Delay in Play";
+            cell.textLabel.text = @"Auto Delay";
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *delaySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
             [delaySwitch addTarget:self action:@selector(smartDelayAction) forControlEvents:UIControlEventValueChanged];
