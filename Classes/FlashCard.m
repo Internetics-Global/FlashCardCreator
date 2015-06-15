@@ -1250,17 +1250,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (BOOL)checkCardEditable {
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result;
-#ifdef CLIENT_DEBUG_MODE
-    result = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
-    BOOL flag = [_currentCard.creator isEqualToString:[OpenUDID value]];
-    return (result || flag);
-#else
     if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
         result = YES;
     } else {
         result = NO;
     }
-#endif
     return result;
     
 }

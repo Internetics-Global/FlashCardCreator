@@ -102,7 +102,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -110,11 +110,7 @@
     if (section == 0) {
         return 1;
     } else if (section == 1) {
-#ifdef CLIENT_DEBUG_MODE
-        return (3);
-#else
         return (2);
-#endif
     } else if (section == 2) {
         return 1;
     } else {
@@ -168,15 +164,6 @@
         } else if (indexPath.row == 1) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (indexPath.row == 2){
-            cell.textLabel.text = @"Always editable";
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *editableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [editableSwitch addTarget:self action:@selector(editableSwitchAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = editableSwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
-            [editableSwitch setOn:b];
-            
         }
     } else if (indexPath.section ==2) {
         if (indexPath.row ==0) {
@@ -206,15 +193,6 @@
     
 }
 
-
-
-- (void) editableSwitchAction {
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isCardEditableForDebugMode"];
-    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isCardEditableForDebugMode"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [Common alertViewCommon:@"Note: re-select packs to take effect."];
-}
 
 - (void) textToSpeechSwitchAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
