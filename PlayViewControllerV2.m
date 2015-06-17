@@ -774,6 +774,14 @@
     
     [popoverView dismiss];
     
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    if ([currentCard isTextToSpeeching]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Wait until text to speech is finished" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+
+    
     if (index ==0) {
         _isAutoShowQuestionOnly = YES;
         
@@ -789,7 +797,6 @@
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
     //client's special requirement to request a pause after entry into play mode
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     [_firstPageDelayTimer invalidate];

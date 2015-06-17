@@ -8013,6 +8013,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
+- (BOOL) isTextToSpeeching {
+    if ([_synth isSpeaking]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void) stopTextToSpeechNow {
     if ([_synth isSpeaking]) {
         [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
