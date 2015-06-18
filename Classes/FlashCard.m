@@ -5108,6 +5108,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    
     [iConsole info:@"%s",__FUNCTION__];
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
@@ -5201,6 +5202,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
+    
     [iConsole info:@"%s",__FUNCTION__];
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
@@ -6029,6 +6031,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
+    
+    
     BOOL isEditable = [self checkCardEditable];
     if (isEditable == YES) {
         [self disableCardEdit];
@@ -6040,6 +6044,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _logoImage.hidden = false;
         }
         
+    }
+    
+    if (_keyboardShown) {
+        [self endEditing:YES];
+        usleep(400000);
+        [self endEditing:FALSE];
     }
     
     CGRect screenRect = self.bounds;
