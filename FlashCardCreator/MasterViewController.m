@@ -83,7 +83,7 @@ enum popover_enum {
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundAfterCardCreatedNotification:) name:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
 
@@ -731,6 +731,14 @@ extern BOOL isFromNewCreatedCard;
 - (void) updateMasterAfterSaveCardNotification:(NSNotification *) notification {
     
     NSString *notificationStr = (NSString *)[notification object];
+    
+    //Update current pack and all cards in packs
+    NSMutableArray *packs = [[User defaultUser] packs]; //重新获所有的pack
+    for (Pack *pack in packs) {
+        if (pack.packID == self.currentPack.packID) {
+            self.currentPack = pack;
+        }
+    }
     
     [self.tableView reloadData];
     if ((isUserInterfaceIdiomPhone) || (![notificationStr isEqualToString:@"SENT_FROM_NEW_CARD"])) {
