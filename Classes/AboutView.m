@@ -31,7 +31,7 @@
 		textView.backgroundColor = [UIColor clearColor];
 		textView.font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
 		//textView.text = @"Direct Digital is a smart publisher that publishes smart things like this app. Based in Brisbane, Australia, Direct Digital likes doing things that other people like us doing. Another thing that people seem to like is the\n\n\nwebsite. Check it out and see if you like to too.";
-		textView.text = @"Flip Card Creator has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in Flash Card Creator and Flip Flash Cards Pty Ltd.";
+		textView.text = @"Flip Card Creator has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in the Flash Card Creator app and Flip Flash Cards Pty Ltd.";
 		textView.textColor = [UIColor whiteColor];
         textView.userInteractionEnabled = false;
 		[self addSubview:textView];
