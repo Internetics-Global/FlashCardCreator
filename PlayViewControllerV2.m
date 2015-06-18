@@ -799,8 +799,6 @@
     //client's special requirement to request a pause after entry into play mode
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
-    [_firstPageDelayTimer invalidate];
-    _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
     
     if (_countDownLabel) {
        [_countDownLabel removeFromSuperview];
@@ -831,7 +829,15 @@
         _countDownLabel.hidden = NO;
     }
     
-    [self playbackOnCard:currentCard];
+    //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
+    //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
+    if ([self isSmartDelay] == false) {
+        [_firstPageDelayTimer invalidate];
+        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
+    } {
+      [self playbackOnCard:currentCard];
+    }
+    
 }
 
 //avoid _controlpanel and its subview touch event is intercepted by gesture
