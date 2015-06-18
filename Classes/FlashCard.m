@@ -5591,7 +5591,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (void) playAudio:(BOOL) isManualClicked {
+- (void) playAudioWithManualClick:(BOOL) isManualClicked {
     [iConsole info:@"%s",__FUNCTION__];
     
     
@@ -8045,6 +8045,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:_textToSpeechArray[0]];
         utterance.rate = 0.02;
+        
+        if (self.isMuteText2Speech) {
+            [utterance setVolume:0];
+        } else {
+            [utterance setVolume:1];
+        }
+        
         self.textToSpeechContentArrayIndex = 0;
         [self.synth speakUtterance:utterance];
     } else {
@@ -8052,6 +8059,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
+
 
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
@@ -8063,7 +8071,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         utterance.rate = 0.02;
         
+        if (self.isMuteText2Speech) {
+            [utterance setVolume:0];
+        } else {
+            [utterance setVolume:1];
+        }
+        
         //utterance.postUtteranceDelay = 0.3;
+        
         
         if ([_textToSpeechArray count] > 0) {
             [self.synth speakUtterance:utterance];

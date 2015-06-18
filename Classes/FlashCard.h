@@ -168,6 +168,8 @@ typedef enum{
 @property (nonatomic, assign) BOOL isPlayingCard;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 
+@property (nonatomic, assign) BOOL isMuteText2Speech; //if YES, still text to speech but mute
+
 @property (nonatomic, strong) UIView *functionAreaView;
 
 @property (nonatomic, strong) UITextField   *questionTitle;
@@ -198,7 +200,7 @@ typedef enum{
 
 - (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val;  //Re-screenshot all cards under current pack
 
-- (void) playAudio:(BOOL) isManualClicked;
+- (void) playAudioWithManualClick:(BOOL) isManualClicked;
 - (void) stopAudio;
 
 - (void) textToSpeechAllContentNow;

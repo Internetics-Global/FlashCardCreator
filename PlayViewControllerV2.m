@@ -617,7 +617,14 @@
     
     if (_isMute == FALSE) {
         if (currentCard) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"]) {
+            if ([self isText2Speech] || [self isSmartDelay]) {
+                
+                if ([self isText2Speech] == FALSE) {
+                    currentCard.isMuteText2Speech = YES;  //这时我们进行mute播放
+                } else {
+                    currentCard.isMuteText2Speech = NO;
+                }
+                
                 if (_previousCard) {
                     [_previousCard stopTextToSpeechNow];
                 }
@@ -627,7 +634,8 @@
                     [currentCard textToSpeechAllContentNow];
                 });;
             } else {
-                [currentCard playAudio:NO];
+                
+                [currentCard playAudioWithManualClick:NO];
             }
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
@@ -667,7 +675,7 @@
     if (_isMute == FALSE) {
         FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
         if (currentCard) {
-            [currentCard playAudio:YES];
+            [currentCard playAudioWithManualClick:YES];
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
@@ -775,12 +783,6 @@
     [popoverView dismiss];
     
     FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
-    if ([currentCard isTextToSpeeching]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Wait until text to speech is finished" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-
     
     if (index ==0) {
         _isAutoShowQuestionOnly = YES;
@@ -892,14 +894,13 @@
     
 }
 
-- (BOOL) isSmartDelay {
-    
+- (BOOL) isText2Speech {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
-    if (b == false) {
-        return false;
-    }
-    
-    b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
+    return b;
+}
+
+- (BOOL) isSmartDelay {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
     return b;
 }
 
