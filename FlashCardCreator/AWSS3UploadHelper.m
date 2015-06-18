@@ -100,7 +100,7 @@
                 return;
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out!",redirectedStr];
 //            //SHKItem *item = [SHKItem URL:[NSURL URLWithString:redirectedStr] title:@"example" contentType:SHKURLContentTypeUndefined];
 //            SHKItem *item = [SHKItem text:finalPostMessage];
 //            SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
@@ -413,7 +413,7 @@
                 });
                 
                 //3. 分享
-                _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out!",redirectedStr];
+                _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out!",redirectedStr];
                 
                 UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                               @"Facebook",
