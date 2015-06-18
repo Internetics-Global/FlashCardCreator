@@ -8139,6 +8139,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    if ([myArray count] == 0) {
+        [myArray addObject:@"   "]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
+    }
+    
     return myArray;
 }
 
