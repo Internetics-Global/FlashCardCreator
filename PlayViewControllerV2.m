@@ -893,7 +893,13 @@
 }
 
 - (BOOL) isSmartDelay {
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
+    
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+    if (b == false) {
+        return false;
+    }
+    
+    b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
     return b;
 }
 
