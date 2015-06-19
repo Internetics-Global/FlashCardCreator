@@ -48,7 +48,10 @@
 
 extern BOOL _isDownloadingSamplePack;
 
-@interface MasterViewController () <UIPopoverControllerDelegate>
+@interface MasterViewController () <UIPopoverControllerDelegate> {
+    
+    UIButton * _editButton; //used for UIBarbuttonItem
+}
 
 @end
 
@@ -159,9 +162,8 @@ enum popover_enum {
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)]];
     
     
-    UIButton * editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
-    editButton.tag = 0;
-    UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:editButton];
+    _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
     self.navigationItem.leftBarButtonItems = @[_selectPackButton,editBarButtonItem, newPackBarButtonItem];
@@ -565,13 +567,11 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    if (((UIButton *)sender).tag == 0) {
+    if (self.tableView.editing == FALSE) {
         self.tableView.editing = TRUE;
         [((UIButton *)sender) setImage:[UIImage imageNamed:@"done_button"] forState:UIControlStateNormal];
-        ((UIButton *)sender).tag = 1;
     } else {
         self.tableView.editing = FALSE;
-        ((UIButton *)sender).tag = 0;
         [((UIButton *)sender) setImage:[UIImage imageNamed:@"edit_button"] forState:UIControlStateNormal];
         
         if (!isUserInterfaceIdiomPhone) {
@@ -619,6 +619,8 @@ extern BOOL isFromNewCreatedCard;
         self.title = _currentPack.packName;
     }
     
+    [self.tableView setEditing:NO];
+    [_editButton setImage:[UIImage imageNamed:@"edit_button.png"] forState:UIControlStateNormal];
     [self.tableView reloadData];
     
     //每次选择新的pack都需要初始化
