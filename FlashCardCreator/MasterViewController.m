@@ -1367,8 +1367,9 @@ extern BOOL isFromNewCreatedCard;
     
     BOOL success = [CryptorHelper decryptFileWithSameOutput:downloadedZipPackFileFixedPath];
     if (success == false) {
-        [Common alertViewCommon:@"Failure to decrypt zipped share file."];
-        return;
+//        [Common alertViewCommon:@"Failure to decrypt zipped share file."];
+//        return;
+        [iConsole warn:@"%s:Possiblly you are using a old version without zip file encripted",__FUNCTION__];
     }
     
     [za UnzipOpenFile:downloadedZipPackFileFixedPath];
