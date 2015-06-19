@@ -36,10 +36,6 @@
     NSInteger _lineNoSubheading;
     NSInteger _lineNoMain;
     NSInteger _lineNoSub;
-    
-    NSString *_backgroundImageFullPath;
-    
-    NSString *_recordedSoundFullPath;
 }
 
 @property (nonatomic, assign) NSInteger answerID;
@@ -54,6 +50,9 @@
 @property (nonatomic, copy, getter=getImageFullPath2) NSString *imageFullPath2;
 @property (nonatomic, copy,getter=getMovieFullPath) NSString *movieFullPath;
 @property (nonatomic, copy,getter=getMovieFullPath2) NSString *movieFullPath2;
+
+@property (nonatomic, copy,getter=getBackgroundImageFullPath) NSString *backgroundImageFullPath;
+@property (nonatomic, copy,getter=getRecordedSoundFullPath) NSString *recordedSoundFullPath;
 
 @property (nonatomic, copy,getter=getLogoFullPath) NSString *logoFullPath;
 
@@ -72,9 +71,6 @@
 
 @property (strong, nonatomic) CSS *css;
 
-@property (copy, nonatomic) NSString *backgroundImageFullPath;
-
-@property (copy, nonatomic) NSString *recordedSoundFullPath;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)save;

@@ -55,6 +55,9 @@
 @property (nonatomic, copy, getter=getMovieFullPath) NSString *movieFullPath;
 @property (nonatomic, copy, getter=getMovieFullPath2) NSString *movieFullPath2;
 
+@property (nonatomic, copy,getter=getBackgroundImageFullPath) NSString *backgroundImageFullPath;
+@property (nonatomic, copy,getter=getRecordedSoundFullPath) NSString *recordedSoundFullPath;
+
 @property (nonatomic, copy, getter=getLogoFullPath) NSString *logoFullPath;
 @property (nonatomic, copy) NSString *logoURLLinkage;
 @property (nonatomic, assign) NSInteger templateID;
@@ -68,10 +71,6 @@
 @property (assign, nonatomic) NSInteger lineNoSubheading;
 @property (assign, nonatomic) NSInteger lineNoMain;
 @property (assign, nonatomic) NSInteger lineNoSub;
-
-@property (copy, nonatomic) NSString *backgroundImageFullPath;
-
-@property (copy, nonatomic) NSString *recordedSoundFullPath;
 
 @property (strong, nonatomic) CSS *css;
 

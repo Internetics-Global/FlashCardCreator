@@ -42,6 +42,43 @@
 #pragma mark -
 #pragma mark Initialization
 
+
+- (NSString *)getBackgroundImageFullPath {
+    if (_backgroundImageFullPath.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_backgroundImageFullPath lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (NSString *)getRecordedSoundFullPath {
+    if (_recordedSoundFullPath.length == 0) {
+        return nil;
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_recordedSoundFullPath lastPathComponent]];
+        return fullPath;
+    }
+}
+
+- (void)setBackgroundImageFullPath:(NSString *)backgroundImageFullPath {
+    if (backgroundImageFullPath.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[backgroundImageFullPath lastPathComponent]];
+        _backgroundImageFullPath = fullPath;
+    }
+}
+
+- (void)setRecordedSoundFullPath:(NSString *)recordedSoundFullPath {
+    
+    if (_recordedSoundFullPath.length == 0) {
+    } else {
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_recordedSoundFullPath lastPathComponent]];
+        _recordedSoundFullPath = fullPath;
+    }
+    
+}
+
 - (NSString *)getImageFullPath {
     if (_imageFullPath.length == 0) {
         return nil;
