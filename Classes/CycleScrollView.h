@@ -29,6 +29,7 @@
 @property (assign, nonatomic)                                  BOOL                      isSmartDelay;
 
 @property (nonatomic,assign,setter = setAutoPlayDelaySeconds:) float                     autoPlayDelaySeconds;
+@property (nonatomic,assign                                  ) float                     pauseForAnswerSeconds;
 
 @property (nonatomic,readonly                                ) UIScrollView              *scrollView;
 
@@ -40,7 +41,7 @@
 - (void) cleanup;
 
 /**
- *  trigger and scroll to next page
+ *  Trigger to scroll right now manually
  */
 - (void) scrollNow;
 

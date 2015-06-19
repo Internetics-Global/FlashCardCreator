@@ -86,7 +86,7 @@
     }
     
     if (_isAutoScroll && (self.isSmartDelay == false)) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:_autoPlayDelaySeconds target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySeconds + _pauseForAnswerSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
     } else {
        //当self.isSmartDelay == YES时，在text2Speech 完成后，callback进行scroll，而不是采用NSTimer的方式
     }
@@ -348,9 +348,13 @@
 
 #pragma mark – Autoscroll NSTimer
 
+/**
+ *  User timer to trigger
+ */
 - (void) autoScrollViewTimer {
     [self scrollNow];
 }
+
 
 - (void)scrollNow
 {
