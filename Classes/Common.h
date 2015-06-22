@@ -51,6 +51,6 @@
  * default path is kind of answer_placeholder_content,question_placeholder_logo,default_pack_cover_image, etc
  * 在本项目中，所有非default图片都是由数字组成
  */
-+ (BOOL) isDefaultPath :(NSString *) pathStr;
++ (BOOL) isPlaceholderFilePathOrDirectory :(NSString *) pathStr;
 
 @end

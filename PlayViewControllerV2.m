@@ -246,10 +246,11 @@
     _scrollView.backgroundColor =[UIColor clearColor];
     
     //step4: control panel
+    
     if (isUserInterfaceIdiomPhone) {
-        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 5 -30, 460, 30)];
+        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 460)/2, CGRectGetHeight(self.view.frame) - 5 -30, 460, 30)];
     } else {
-        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 400)/2, CGRectGetHeight(self.view.frame) - 25 -30, 460, 30)];
+        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 460)/2, CGRectGetHeight(self.view.frame) - 25 -30, 460, 30)];
     }
     _controlPanel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     _controlPanel.layer.cornerRadius = 3;

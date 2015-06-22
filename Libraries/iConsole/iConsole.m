@@ -314,7 +314,8 @@ static void exceptionHandler(NSException *exception)
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
-{	
+{
+    
 	CGRect frame = [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 	CGFloat duration = [[notification.userInfo valueForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
 	UIViewAnimationCurve curve = [[notification.userInfo valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];

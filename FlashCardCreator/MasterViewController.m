@@ -245,7 +245,7 @@ enum popover_enum {
         }
         
         NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-        if ([Common isDefaultPath:fileName]) {
+        if ([Common isPlaceholderFilePathOrDirectory:fileName]) {
             _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image"];
         } else {
             NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
@@ -948,7 +948,7 @@ extern BOOL isFromNewCreatedCard;
 
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[card.coverImageURL lastPathComponent]];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
-    if (([Common isDefaultPath:card.coverImageURL] == FALSE) && (image != NULL)) {
+    if (([Common isPlaceholderFilePathOrDirectory:card.coverImageURL] == FALSE) && (image != NULL)) {
         cell.cellImageView.image = image;
     } else {
         if (self.currentPack.sidebarTitle.length > 0) {

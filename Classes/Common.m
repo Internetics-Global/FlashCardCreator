@@ -229,12 +229,28 @@
 }
 
 /*
- * all non-default file name will be a format like: 1429666171755881310.png
+ * return YES if:
+ * 1. it's a placeholder image path
+ * 2. it's not a valid image path but a directory
+ * All non-default image path will be a format like: 1429666171755881310.png
 */
-+ (BOOL) isDefaultPath :(NSString *) pathStr {
++ (BOOL) isPlaceholderFilePathOrDirectory :(NSString *) pathStr {
+    
+    BOOL directoryFlag;
+    [[NSFileManager defaultManager] fileExistsAtPath:pathStr
+                                         isDirectory:&directoryFlag];
+    
+    if (directoryFlag) {
+        return YES;
+    }
     
     if (pathStr.length == 0) {
         return YES;
+    }
+    
+    //parameter check
+    if ([pathStr rangeOfString:@"/"].location == NSNotFound) {
+        [NSException raise:@"Should be a whole path" format:@"pathStr is :%@", pathStr];
     }
     
     if ([[pathStr lastPathComponent] rangeOfString:@"placeholder"].location != NSNotFound) {

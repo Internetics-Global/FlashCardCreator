@@ -649,11 +649,10 @@ enum popover_enum {
             
         } else if ([myView isKindOfClass:[UIImageView class]]) {
             
-            NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-            if ([Common isDefaultPath:fileName]) {
+            if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
                 ((UIImageView *)myView).image = [UIImage imageNamed:@"default_pack_cover_image"];
             } else {
-                NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+                NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
                 ((UIImageView *)myView).image = [UIImage imageWithContentsOfFile:path];
             }
             
@@ -1003,11 +1002,10 @@ enum popover_enum {
         
         [_rightPackView addSubview:rightPackImageView];
         
-        NSString *fileName = [_currentPack.coverImageURL lastPathComponent];
-        if ([Common isDefaultPath:fileName]) {
+        if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
             rightPackImageView.image = [UIImage imageNamed:@"default_pack_cover_image_transparent"];
         } else {
-            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:fileName];
+            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
             rightPackImageView.image = [UIImage imageWithContentsOfFile:path];
         }
         
