@@ -49,6 +49,8 @@
     UIButton              *_autoScrollButton;
     
     ASValueTrackingSlider *_pauseForAnswerSlider;
+    
+    float _pauseBetweenQuestion2Answer;   //seconds, currently, it's set to 0. I bet client would ask for this function later
 
     
     
@@ -536,6 +538,9 @@
     
 }
 
+/**
+ *  仅适用于：NSTimer scheduledTimerWithTimeInterval
+ */
 - (void) switchQAFromTimer {
     [self switchQuestionAnswerViewWithHand:FALSE];
 }
@@ -724,7 +729,7 @@
         _autoSwitchQATimer = nil;
     }
     if ((_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5 + _pauseBetweenQuestion2Answer) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
     
     
@@ -957,7 +962,13 @@
             });
         } else {
             if ([isQuestionShowing boolValue]) {
-                [self switchQuestionAnswerViewWithHand:NO];
+                double delayInSeconds = _pauseBetweenQuestion2Answer;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    if (_isShuttingDown == FALSE) {
+                        [self switchQuestionAnswerViewWithHand:NO];
+                    }
+                });
             } else {
                 double delayInSeconds = _pauseForAnswerSlider.value;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
