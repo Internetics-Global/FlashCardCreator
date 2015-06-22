@@ -38,6 +38,8 @@
     BOOL  _isCyclePlay;
     BOOL  _isMute;
     
+    BOOL _isShuttingDown;
+    
     FlashCard *_previousCard;
     
     UIView    *_controlPanel;
@@ -480,6 +482,8 @@
 - (void) dismiss {
     [iConsole info:@"%s",__FUNCTION__];
     
+    _isShuttingDown = YES;
+    
     if ([UIApplication sharedApplication].idleTimerDisabled == YES) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
@@ -683,7 +687,10 @@
                 double delayInSeconds = 0.3;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [currentCard textToSpeechAllContentNow];
+                    if (_isShuttingDown == FALSE) {
+                      [currentCard textToSpeechAllContentNow];
+                    }
+                    
                 });;
             } else {
                 
@@ -944,7 +951,9 @@
             double delayInSeconds = _pauseForAnswerSlider.value;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [_scrollView scrollNow];
+                if (_isShuttingDown == FALSE) {
+                    [_scrollView scrollNow];
+                }
             });
         } else {
             if ([isQuestionShowing boolValue]) {
@@ -953,7 +962,9 @@
                 double delayInSeconds = _pauseForAnswerSlider.value;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [_scrollView scrollNow];
+                    if (_isShuttingDown == FALSE) {
+                        [_scrollView scrollNow];
+                    }
                 });
             }
         }
