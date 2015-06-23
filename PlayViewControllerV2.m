@@ -36,7 +36,15 @@
     NSDate                      *_startDate;
     SharkfoodMuteSwitchDetector *_silenceDetector;
     
+    
+    /**
+     *  实际中，auto scroll分两种
+     *  1. 通过定时器控制的固定间隔的auto scroll
+     *  2. 通过Text2Speech回调控制的smart delay的auto scroll
+     */
     BOOL  _isAutoScroll;
+    
+    
     BOOL  _isCyclePlay;
     BOOL  _isMute;
     
@@ -238,7 +246,7 @@
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
     _scrollView.isSmartDelay = [self isSmartDelay];
     _scrollView.isCycle = NO;
-    _scrollView.isAutoScroll = NO;
+    _scrollView.isFixedDelayAutoScroll = NO;
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
@@ -706,7 +714,7 @@
         [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
         
         //_scrollView.userInteractionEnabled = YES;
-        _scrollView.isAutoScroll = NO;
+        _scrollView.isFixedDelayAutoScroll = NO;
         
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
@@ -733,14 +741,9 @@
                 if (_previousCard) {
                     [_previousCard stopTextToSpeechNow];
                 }
-                double delayInSeconds = 0.3;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if (_isShuttingDown == FALSE) {
-                      [currentCard textToSpeechAllContentNow];
-                    }
-                    
-                });;
+                if (_isShuttingDown == FALSE) {
+                    [currentCard textToSpeechAllContentNow];
+                }
             } else {
                 
                 [currentCard playAudioWithManualClick:NO];
@@ -757,13 +760,11 @@
 }
 
 
-/**
- *  Only triggered by [NSTimer scheduledTimerWithTimeInterval]
- */
-- (void) beginAutoScroll{
+
+- (void) beginFixedDelayAutoScrollTimer{
     
     //_scrollView.userInteractionEnabled = NO;
-    _scrollView.isAutoScroll = YES;
+    _scrollView.isFixedDelayAutoScroll = YES;
     _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
     
     //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
@@ -771,7 +772,7 @@
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
-    [self playbackOnCard:currentCard];
+    [self playbackOnCard:currentCard]; //这时，只是播放，而没有回调(自动切换到下一个page）的功能
     
     if (_autoSwitchQATimer) {
         [_autoSwitchQATimer invalidate];
@@ -834,6 +835,21 @@
     _currentPack.autoPlaySpeed = slider.value;
     
     [self resetAutoHideControlPanelTimer];
+    
+    
+    //client's special requirement to request a pause after entry into play mode
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    [currentCard stopAudio];
+    [currentCard stopTextToSpeechNow];
+    
+    //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
+    //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
+    if ([self isSmartDelay] == false) {
+        [_firstPageDelayTimer invalidate];
+        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginFixedDelayAutoScrollTimer) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
+    } {
+        [self playbackOnCard:currentCard];
+    }
 
     
 }
@@ -918,7 +934,7 @@
     
     [popoverView dismiss];
     
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    [self resetAutoHideControlPanelTimer];
     
     if (index ==0) {
         _isAutoShowQuestionOnly = YES;
@@ -932,18 +948,18 @@
     _isAutoScroll = YES;
     
     [self showAutoPlayDelaySlider];
-    [self showPauseForAnswerSlider];
+    if ([self isSmartDelay]) {
+        [self showPauseForAnswerSlider];
+    } else {
+        [self hidePauseForAnswerSlider];
+    }
     
     
     _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
-    //client's special requirement to request a pause after entry into play mode
-    [currentCard stopAudio];
-    [currentCard stopTextToSpeechNow];
-    
     if (_countDownLabel) {
-       [_countDownLabel removeFromSuperview];
+        [_countDownLabel removeFromSuperview];
     }
     if (isUserInterfaceIdiomPhone) {
         _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 30, 30, 20)];
@@ -971,11 +987,16 @@
         _countDownLabel.hidden = NO;
     }
     
+    //client's special requirement to request a pause after entry into play mode
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    [currentCard stopAudio];
+    [currentCard stopTextToSpeechNow];
+    
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
         [_firstPageDelayTimer invalidate];
-        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginAutoScroll) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
+        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginFixedDelayAutoScrollTimer) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
     } {
       [self playbackOnCard:currentCard];
     }
@@ -1076,8 +1097,16 @@
     NSString *s;
     if (value == kMIN_Auto_Play_Speed) {
         s = @"Auto";
+        _scrollView.isFixedDelayAutoScroll = NO;
+        if (_isAutoScroll) {
+            [self showPauseForAnswerSlider];
+        }
     } else {
+        _scrollView.isFixedDelayAutoScroll = YES;
         s = [NSString stringWithFormat:@"%d",(int)value];
+        if (_isAutoScroll) {
+            [self hidePauseForAnswerSlider];
+        }
     }
     return s;
 }

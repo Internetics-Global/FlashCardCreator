@@ -35,7 +35,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.isAutoScroll = NO;
+        self.isFixedDelayAutoScroll = NO;
         self.isCycle = YES;
         self.autoPlayDelaySeconds = kDefault_Auto_Play_Speed;
         
@@ -68,8 +68,8 @@
     _isCycle = isCycle;
 }
 
-- (void) setAutoScroll:(BOOL)isAutoScroll {
-    _isAutoScroll = isAutoScroll;
+- (void) setFixedDelayAutoScroll:(BOOL)isAutoScroll {
+    _isFixedDelayAutoScroll = isAutoScroll;
     [self resetAutoScrollTimer];
 }
 
@@ -85,10 +85,10 @@
         _autoScrollTimer = nil;
     }
     
-    if (_isAutoScroll && (self.isSmartDelay == false)) {
+    if (_isFixedDelayAutoScroll && (self.isSmartDelay == false)) {
         _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySeconds + _pauseForAnswerSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
     } else {
-       //当self.isSmartDelay == YES时，在text2Speech 完成后，callback进行scroll，而不是采用NSTimer的方式
+       //当self.isSmartDelay == YES时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
     }
 
 }
@@ -320,7 +320,7 @@
         }
     }
     
-    if (self.isAutoScroll == FALSE) {
+    if (self.isFixedDelayAutoScroll == FALSE) {
         [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0) animated:YES];
     }
     

@@ -21,7 +21,7 @@
 
 
 
-@property (nonatomic,assign,setter = setAutoScroll:          ) BOOL                      isAutoScroll;
+@property (nonatomic,assign,setter = setFixedDelayAutoScroll:) BOOL                      isFixedDelayAutoScroll;
 
 /**
  * 如果是smartDelay，则autoScroll是在text2speech结束后，调用scrollNow执行，而不是通过_autoScrollTimer进行执行
