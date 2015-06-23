@@ -21,6 +21,8 @@
 #import "PopoverView.h"
 #import "ASValueTrackingSlider.h"
 
+#define K_AutoHideControlPanelSeconds  5
+
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     CycleScrollView *_scrollView;
     UIButton        *_closeButton;
@@ -210,7 +212,7 @@
         [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
     }
     
-    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
     
 }
 
@@ -283,7 +285,7 @@
     [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:_autoScrollButton];
     
-    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(130, 5, 70, 20)];
+    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(135, 5, 70, 20)];
     [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
     _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _autoPlayDelaySlider.font = [UIFont systemFontOfSize:12];
@@ -312,10 +314,10 @@
     _autoPlayDelaySlider.dataSource = self;
     [_controlPanel addSubview: _autoPlayDelaySlider];
     
-    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 65, 5, 60, 20)];
+    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 75, 5, 70, 20)];
     _minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
     _minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    _minAutoPlayDelayLabel.text = @"Auto Delay";
+    _minAutoPlayDelayLabel.text = @"Reading timer";
     _minAutoPlayDelayLabel.numberOfLines = 1;
     _minAutoPlayDelayLabel.textColor = [UIColor whiteColor];
     _minAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
@@ -334,7 +336,7 @@
     _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(215, 5, 90, 20)];
     _pauseForAnswerLabel.textAlignment = NSTextAlignmentCenter;
     _pauseForAnswerLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
-    _pauseForAnswerLabel.text = @"Pause for Answer";
+    _pauseForAnswerLabel.text = @"Question pause";
     _pauseForAnswerLabel.numberOfLines = 1;
     _pauseForAnswerLabel.textColor = [UIColor whiteColor];
     _pauseForAnswerLabel.backgroundColor = [UIColor clearColor];
@@ -669,6 +671,9 @@
         _scrollView.isCycle = NO;
     }
     
+    [self resetAutoHideControlPanelTimer];
+    
+    
 }
 
 - (void) autoScrollButtonClicked:(UIButton *) button {
@@ -706,6 +711,8 @@
         [_autoSwitchQATimer invalidate];
         _autoSwitchQATimer = nil;
     }
+    
+    [self resetAutoHideControlPanelTimer];
 }
 
 /*
@@ -787,6 +794,8 @@
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
     }
+    
+    [self resetAutoHideControlPanelTimer];
 }
 
 - (void) muteButtonClicked:(UIButton *) button {
@@ -801,9 +810,9 @@
         FlashCard *currentFlashCardView = [self getCurrrentCard];
         [currentFlashCardView stopAudio];
         
-        
-        
     }
+    
+    [self resetAutoHideControlPanelTimer];
     
 }
 
@@ -812,6 +821,8 @@
     
     //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
     //_scrollView.pauseForAnswerSeconds = slider.value;
+    
+    [self resetAutoHideControlPanelTimer];
 
     
 }
@@ -821,6 +832,8 @@
     
     _scrollView.autoPlayDelaySeconds = slider.value;
     _currentPack.autoPlaySpeed = slider.value;
+    
+    [self resetAutoHideControlPanelTimer];
 
     
 }
@@ -868,12 +881,17 @@
 }
 
 - (void) switchControlPanelVisibility {
+    [self resetAutoHideControlPanelTimer];
+    [_controlPanel setHidden:!(_controlPanel.hidden)];
+}
+
+
+- (void) resetAutoHideControlPanelTimer {
     if (_autoHideControlPanelTimer) {
         [_autoHideControlPanelTimer invalidate];
         _autoHideControlPanelTimer = nil;
     }
-    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
-    [_controlPanel setHidden:!(_controlPanel.hidden)];
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
 }
 
 
@@ -1057,7 +1075,7 @@
 {
     NSString *s;
     if (value == kMIN_Auto_Play_Speed) {
-        s = @"Auto delay";
+        s = @"Auto";
     } else {
         s = [NSString stringWithFormat:@"%d",(int)value];
     }
