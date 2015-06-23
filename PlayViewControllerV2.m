@@ -24,17 +24,17 @@
 #define K_AutoHideControlPanelSeconds  5
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
-    CycleScrollView *_scrollView;
-    UIButton        *_closeButton;
+    CycleScrollView              *_scrollView;
+    UIButton                     *_closeButton;
     
-    NSArray        *_shuffledCardArray;
+    NSArray                      *_shuffledCardArray;
     
-    NSMutableArray *_isResizedArray; //用于判断是否已经被autoresize
+    NSMutableArray               *_isResizedArray; //用于判断是否已经被autoresize
 
-    CMMotionManager *_motionManager;
+    CMMotionManager              *_motionManager;
     
-    NSDate                      *_startDate;
-    SharkfoodMuteSwitchDetector *_silenceDetector;
+    NSDate                       *_startDate;
+    SharkfoodMuteSwitchDetector  *_silenceDetector;
     
     
     /**
@@ -48,16 +48,21 @@
     BOOL  _isCyclePlay;
     BOOL  _isMute;
     
-    BOOL _isShuttingDown;
+    BOOL  _isShuttingDown;
     
     FlashCard *_previousCard;
     
     UIView    *_controlPanel;
-    
     UIButton              *_playButton;
     UIButton              *_autoScrollButton;
     
     ASValueTrackingSlider *_pauseForAnswerSlider;
+    
+    /**
+     *  包含两种情况
+     *  1. 如果 == 最小值，则是[self isSmartDelay] = YES
+     *  2. 否则其它情况，则为一般固定间隔
+     */
     ASValueTrackingSlider *_autoPlayDelaySlider;
     
     
@@ -68,6 +73,12 @@
     UILabel               *_minAutoPlayDelayLabel;
     UILabel               *_maxAutoPlayDelayLabel;
     
+    /**
+     *  在本应用中，我们遇到了几种间隔的概念
+     *  1._pauseBetweenQuestion2Answer （question和answer之间的间隔）
+     *  2.pauseForAnswer（卡片结束到下一张开片开始的间隔）
+     *  3.autoPlayDelay (一个卡片的播放时间）
+     */
     float _pauseBetweenQuestion2Answer;   //seconds, currently, it's set to 0. I bet client would ask for this function later
 
     
@@ -83,9 +94,9 @@
     BOOL      _isAutoShowQuestionOnly;
     
     NSTimer *_autoHideControlPanelTimer;
-    
     NSTimer  *_firstPageDelayTimer;  //used in auto mode. pause for seconds on the first page before auto play
     NSTimer  *_countDownTick;
+    
     UILabel *_countDownLabel;
     
 }
