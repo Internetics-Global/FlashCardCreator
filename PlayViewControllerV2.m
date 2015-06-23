@@ -401,9 +401,29 @@
     [_controlPanel addSubview:muteButton];
     
     if ([self isSmartDelay]) {
-        _autoPlayDelaySlider.enabled = NO;
+        _autoPlayDelaySlider.hidden = NO;
+        _pauseForAnswerSlider.hidden = NO;
+        
+        autoPlayDelayLabel.hidden = NO;
+        minAutoPlayDelayLabel.hidden = NO;
+        maxAutoPlayDelayLabel.hidden = NO;
+        
+        pauseForAnswerLabel.hidden = NO;
+        minPauseForAnswerLabel.hidden = NO;
+        maxPauseForAnswerLabel.hidden = NO;
+        
+        
     } else {
-        _autoPlayDelaySlider.enabled = YES;
+        _autoPlayDelaySlider.hidden = YES;
+        _pauseForAnswerSlider.hidden = YES;
+        
+        autoPlayDelayLabel.hidden = YES;
+        minAutoPlayDelayLabel.hidden = YES;
+        maxAutoPlayDelayLabel.hidden = YES;
+        
+        pauseForAnswerLabel.hidden = YES;
+        minPauseForAnswerLabel.hidden = YES;
+        maxPauseForAnswerLabel.hidden = YES;
     }
     
 
@@ -649,6 +669,7 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         _autoPlayDelaySlider.enabled = TRUE;
+        _pauseForAnswerSlider.enabled = TRUE;
         
         _scrollView.userInteractionEnabled = YES;
         
@@ -714,12 +735,17 @@
 }
 
 
+/**
+ *  Only triggered by [NSTimer scheduledTimerWithTimeInterval]
+ */
 - (void) beginAutoScroll{
     
     //_scrollView.userInteractionEnabled = NO;
     _scrollView.isAutoScroll = YES;
     _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
-    _scrollView.pauseForAnswerSeconds = _pauseForAnswerSlider.value;
+    
+    //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
+    //_scrollView.pauseForAnswerSeconds = _pauseForAnswerSlider.value;
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
@@ -768,7 +794,9 @@
 
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
-    _scrollView.pauseForAnswerSeconds = slider.value;
+    
+    //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
+    //_scrollView.pauseForAnswerSeconds = slider.value;
 
     
 }
@@ -869,6 +897,7 @@
     
     _isAutoScroll = YES;
     _autoPlayDelaySlider.enabled = FALSE;
+    _pauseForAnswerSlider.enabled = FALSE;
     _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
@@ -992,6 +1021,9 @@
     return b;
 }
 
+/**
+ *  Same meaning as Auto Delay or Auto Mode for history reason
+ */
 - (BOOL) isSmartDelay {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
     return b;

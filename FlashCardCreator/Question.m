@@ -42,7 +42,6 @@
 #pragma mark -
 #pragma mark Initialization
 
-
 - (NSString *)getBackgroundImageFullPath {
     if (_backgroundImageFullPath.length == 0) {
         return nil;
@@ -60,6 +59,7 @@
         return fullPath;
     }
 }
+
 
 - (void)setBackgroundImageFullPath:(NSString *)backgroundImageFullPath {
     if (backgroundImageFullPath.length == 0) {
