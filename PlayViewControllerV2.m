@@ -45,10 +45,19 @@
     UIView    *_controlPanel;
     
     UIButton              *_playButton;
-    ASValueTrackingSlider *_autoPlayDelaySlider;
     UIButton              *_autoScrollButton;
     
     ASValueTrackingSlider *_pauseForAnswerSlider;
+    ASValueTrackingSlider *_autoPlayDelaySlider;
+    
+    
+    UILabel               *_pauseForAnswerLabel;
+    UILabel               *_minPauseForAnswerLabel;;
+    UILabel               *_maxPauseForAnswerLabel;
+    
+    UILabel               *_autoPlayDelayLabel;
+    UILabel               *_minAutoPlayDelayLabel;
+    UILabel               *_maxAutoPlayDelayLabel;
     
     float _pauseBetweenQuestion2Answer;   //seconds, currently, it's set to 0. I bet client would ask for this function later
 
@@ -276,14 +285,14 @@
     [_controlPanel addSubview:_autoScrollButton];
     
     
-    UILabel *autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 70, 20)];
-    autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
-    autoPlayDelayLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
-    autoPlayDelayLabel.text = @"Auto Delay";
-    autoPlayDelayLabel.numberOfLines = 1;
-    autoPlayDelayLabel.textColor = [UIColor whiteColor];
-    autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:autoPlayDelayLabel];
+    _autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 70, 20)];
+    _autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
+    _autoPlayDelayLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
+    _autoPlayDelayLabel.text = @"Auto Delay";
+    _autoPlayDelayLabel.numberOfLines = 1;
+    _autoPlayDelayLabel.textColor = [UIColor whiteColor];
+    _autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_autoPlayDelayLabel];
     
     _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(130, 5, 70, 20)];
     [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
@@ -313,33 +322,33 @@
     [_autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
     [_controlPanel addSubview: _autoPlayDelaySlider];
     
-    UILabel *minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
-    minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
-    minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    minAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMIN_Auto_Play_Speed];
-    minAutoPlayDelayLabel.numberOfLines = 1;
-    minAutoPlayDelayLabel.textColor = [UIColor whiteColor];
-    minAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:minAutoPlayDelayLabel];
+    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
+    _minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
+    _minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _minAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMIN_Auto_Play_Speed];
+    _minAutoPlayDelayLabel.numberOfLines = 1;
+    _minAutoPlayDelayLabel.textColor = [UIColor whiteColor];
+    _minAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_minAutoPlayDelayLabel];
     
-    UILabel *maxAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_autoPlayDelaySlider.frame), 5, 20, 20)];
-    maxAutoPlayDelayLabel.textAlignment = NSTextAlignmentLeft;
-    maxAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    maxAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMAX_Auto_Play_Speed];;
-    maxAutoPlayDelayLabel.numberOfLines = 1;
-    maxAutoPlayDelayLabel.textColor = [UIColor whiteColor];
-    maxAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:maxAutoPlayDelayLabel];
+    _maxAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_autoPlayDelaySlider.frame), 5, 20, 20)];
+    _maxAutoPlayDelayLabel.textAlignment = NSTextAlignmentLeft;
+    _maxAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _maxAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMAX_Auto_Play_Speed];;
+    _maxAutoPlayDelayLabel.numberOfLines = 1;
+    _maxAutoPlayDelayLabel.textColor = [UIColor whiteColor];
+    _maxAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_maxAutoPlayDelayLabel];
     
     
-    UILabel *pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(215, 5, 90, 20)];
-    pauseForAnswerLabel.textAlignment = NSTextAlignmentCenter;
-    pauseForAnswerLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
-    pauseForAnswerLabel.text = @"Pause for Answer";
-    pauseForAnswerLabel.numberOfLines = 1;
-    pauseForAnswerLabel.textColor = [UIColor whiteColor];
-    pauseForAnswerLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:pauseForAnswerLabel];
+    _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(215, 5, 90, 20)];
+    _pauseForAnswerLabel.textAlignment = NSTextAlignmentCenter;
+    _pauseForAnswerLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
+    _pauseForAnswerLabel.text = @"Pause for Answer";
+    _pauseForAnswerLabel.numberOfLines = 1;
+    _pauseForAnswerLabel.textColor = [UIColor whiteColor];
+    _pauseForAnswerLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_pauseForAnswerLabel];
     
     _pauseForAnswerSlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(315, 5, 70, 20)];
     [_pauseForAnswerSlider setMaxFractionDigitsDisplayed:0];
@@ -363,23 +372,23 @@
     [_pauseForAnswerSlider setBackgroundColor:[UIColor clearColor]];
     [_controlPanel addSubview: _pauseForAnswerSlider];
     
-    UILabel *minPauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_pauseForAnswerSlider.frame)- 20, 5, 20, 20)];
-    minPauseForAnswerLabel.textAlignment = NSTextAlignmentRight;
-    minPauseForAnswerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    minPauseForAnswerLabel.text = [NSString stringWithFormat:@"%d",kMIN_Pause_For_Answer];
-    minPauseForAnswerLabel.numberOfLines = 1;
-    minPauseForAnswerLabel.textColor = [UIColor whiteColor];
-    minPauseForAnswerLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:minPauseForAnswerLabel];
+    _minPauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_pauseForAnswerSlider.frame)- 20, 5, 20, 20)];
+    _minPauseForAnswerLabel.textAlignment = NSTextAlignmentRight;
+    _minPauseForAnswerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _minPauseForAnswerLabel.text = [NSString stringWithFormat:@"%d",kMIN_Pause_For_Answer];
+    _minPauseForAnswerLabel.numberOfLines = 1;
+    _minPauseForAnswerLabel.textColor = [UIColor whiteColor];
+    _minPauseForAnswerLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_minPauseForAnswerLabel];
     
-    UILabel *maxPauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_pauseForAnswerSlider.frame), 5, 20, 20)];
-    maxPauseForAnswerLabel.textAlignment = NSTextAlignmentLeft;
-    maxPauseForAnswerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    maxPauseForAnswerLabel.text = [NSString stringWithFormat:@"%d",kMAX_Pause_For_Answer];;
-    maxPauseForAnswerLabel.numberOfLines = 1;
-    maxPauseForAnswerLabel.textColor = [UIColor whiteColor];
-    maxPauseForAnswerLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:maxPauseForAnswerLabel];
+    _maxPauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_pauseForAnswerSlider.frame), 5, 20, 20)];
+    _maxPauseForAnswerLabel.textAlignment = NSTextAlignmentLeft;
+    _maxPauseForAnswerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _maxPauseForAnswerLabel.text = [NSString stringWithFormat:@"%d",kMAX_Pause_For_Answer];;
+    _maxPauseForAnswerLabel.numberOfLines = 1;
+    _maxPauseForAnswerLabel.textColor = [UIColor whiteColor];
+    _maxPauseForAnswerLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_maxPauseForAnswerLabel];
     
     
     _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -401,32 +410,55 @@
     [_controlPanel addSubview:muteButton];
     
     if ([self isSmartDelay]) {
-        _autoPlayDelaySlider.hidden = NO;
-        _pauseForAnswerSlider.hidden = NO;
-        
-        autoPlayDelayLabel.hidden = NO;
-        minAutoPlayDelayLabel.hidden = NO;
-        maxAutoPlayDelayLabel.hidden = NO;
-        
-        pauseForAnswerLabel.hidden = NO;
-        minPauseForAnswerLabel.hidden = NO;
-        maxPauseForAnswerLabel.hidden = NO;
-        
+        [self hideAutoPlayDelaySlider];
+        [self showPauseForAnswerSlider];
         
     } else {
-        _autoPlayDelaySlider.hidden = YES;
-        _pauseForAnswerSlider.hidden = YES;
         
-        autoPlayDelayLabel.hidden = YES;
-        minAutoPlayDelayLabel.hidden = YES;
-        maxAutoPlayDelayLabel.hidden = YES;
-        
-        pauseForAnswerLabel.hidden = YES;
-        minPauseForAnswerLabel.hidden = YES;
-        maxPauseForAnswerLabel.hidden = YES;
+        [self showAutoPlayDelaySlider];
+        [self hidePauseForAnswerSlider];
     }
     
 
+}
+
+- (void) showPauseForAnswerSlider {
+    
+    _pauseForAnswerSlider.hidden = NO;
+    
+    _pauseForAnswerLabel.hidden = NO;
+    _minPauseForAnswerLabel.hidden = NO;
+    _maxPauseForAnswerLabel.hidden = NO;
+    
+}
+
+- (void) showAutoPlayDelaySlider {
+    
+    _autoPlayDelaySlider.hidden = NO;
+    
+    _autoPlayDelayLabel.hidden = NO;
+    _minAutoPlayDelayLabel.hidden = NO;
+    _maxAutoPlayDelayLabel.hidden = NO;
+    
+}
+
+- (void) hidePauseForAnswerSlider {
+    _pauseForAnswerSlider.hidden = YES;
+    
+    _pauseForAnswerLabel.hidden = YES;
+    _minPauseForAnswerLabel.hidden = YES;
+    _maxPauseForAnswerLabel.hidden = YES;
+    
+}
+
+- (void) hideAutoPlayDelaySlider {
+    
+    _autoPlayDelaySlider.hidden = YES;
+    
+    _autoPlayDelayLabel.hidden = YES;
+    _minAutoPlayDelayLabel.hidden = YES;
+    _maxAutoPlayDelayLabel.hidden = YES;
+    
 }
 
 - (void) prepareData {
@@ -668,8 +700,14 @@
         
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-        _autoPlayDelaySlider.enabled = TRUE;
-        _pauseForAnswerSlider.enabled = TRUE;
+        
+        if ([self isSmartDelay]) {
+            [self showPauseForAnswerSlider];
+            [self hideAutoPlayDelaySlider];
+        } else {
+            [self hidePauseForAnswerSlider];
+            [self showAutoPlayDelaySlider];
+        }
         
         _scrollView.userInteractionEnabled = YES;
         
@@ -896,8 +934,11 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     _isAutoScroll = YES;
-    _autoPlayDelaySlider.enabled = FALSE;
-    _pauseForAnswerSlider.enabled = FALSE;
+    
+    [self hideAutoPlayDelaySlider];
+    [self hidePauseForAnswerSlider];
+    
+    
     _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
