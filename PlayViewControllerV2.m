@@ -21,7 +21,7 @@
 #import "PopoverView.h"
 #import "ASValueTrackingSlider.h"
 
-@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate> {
+@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     CycleScrollView *_scrollView;
     UIButton        *_closeButton;
     
@@ -55,7 +55,6 @@
     UILabel               *_minPauseForAnswerLabel;;
     UILabel               *_maxPauseForAnswerLabel;
     
-    UILabel               *_autoPlayDelayLabel;
     UILabel               *_minAutoPlayDelayLabel;
     UILabel               *_maxAutoPlayDelayLabel;
     
@@ -284,16 +283,6 @@
     [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:_autoScrollButton];
     
-    
-    _autoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 5, 70, 20)];
-    _autoPlayDelayLabel.textAlignment = NSTextAlignmentCenter;
-    _autoPlayDelayLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
-    _autoPlayDelayLabel.text = @"Auto Delay";
-    _autoPlayDelayLabel.numberOfLines = 1;
-    _autoPlayDelayLabel.textColor = [UIColor whiteColor];
-    _autoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:_autoPlayDelayLabel];
-    
     _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(130, 5, 70, 20)];
     [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
     _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
@@ -320,12 +309,13 @@
     _autoPlayDelaySlider.tintColor = [UIColor greenColor];
     [_autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
     [_autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
+    _autoPlayDelaySlider.dataSource = self;
     [_controlPanel addSubview: _autoPlayDelaySlider];
     
-    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 20, 5, 20, 20)];
+    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 65, 5, 60, 20)];
     _minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
     _minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    _minAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMIN_Auto_Play_Speed];
+    _minAutoPlayDelayLabel.text = @"Auto Delay";
     _minAutoPlayDelayLabel.numberOfLines = 1;
     _minAutoPlayDelayLabel.textColor = [UIColor whiteColor];
     _minAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
@@ -409,15 +399,8 @@
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
     
-    if ([self isSmartDelay]) {
-        [self hideAutoPlayDelaySlider];
-        [self showPauseForAnswerSlider];
-        
-    } else {
-        
-        [self showAutoPlayDelaySlider];
-        [self hidePauseForAnswerSlider];
-    }
+    [self hideAutoPlayDelaySlider];
+    [self hidePauseForAnswerSlider];
     
 
 }
@@ -436,13 +419,13 @@
     
     _autoPlayDelaySlider.hidden = NO;
     
-    _autoPlayDelayLabel.hidden = NO;
     _minAutoPlayDelayLabel.hidden = NO;
     _maxAutoPlayDelayLabel.hidden = NO;
     
 }
 
 - (void) hidePauseForAnswerSlider {
+    
     _pauseForAnswerSlider.hidden = YES;
     
     _pauseForAnswerLabel.hidden = YES;
@@ -455,7 +438,6 @@
     
     _autoPlayDelaySlider.hidden = YES;
     
-    _autoPlayDelayLabel.hidden = YES;
     _minAutoPlayDelayLabel.hidden = YES;
     _maxAutoPlayDelayLabel.hidden = YES;
     
@@ -701,13 +683,8 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
-        if ([self isSmartDelay]) {
-            [self showPauseForAnswerSlider];
-            [self hideAutoPlayDelaySlider];
-        } else {
-            [self hidePauseForAnswerSlider];
-            [self showAutoPlayDelaySlider];
-        }
+        [self hidePauseForAnswerSlider];
+        [self hideAutoPlayDelaySlider];
         
         _scrollView.userInteractionEnabled = YES;
         
@@ -840,10 +817,11 @@
 }
 
 
-- (void) autoPlayDelaySliderClicked:(UISlider *) slider {
+- (void) autoPlayDelaySliderClicked:(ASValueTrackingSlider *) slider {
     
     _scrollView.autoPlayDelaySeconds = slider.value;
     _currentPack.autoPlaySpeed = slider.value;
+
     
 }
 
@@ -935,8 +913,8 @@
     
     _isAutoScroll = YES;
     
-    [self hideAutoPlayDelaySlider];
-    [self hidePauseForAnswerSlider];
+    [self showAutoPlayDelaySlider];
+    [self showPauseForAnswerSlider];
     
     
     _scrollView.userInteractionEnabled = FALSE;
@@ -1066,8 +1044,24 @@
  *  Same meaning as Auto Delay or Auto Mode for history reason
  */
 - (BOOL) isSmartDelay {
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
-    return b;
+    //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
+    if ((int)_autoPlayDelaySlider.value == kMIN_Auto_Play_Speed) {
+        return YES;
+    } else {
+        return FALSE;
+    }
+}
+
+#pragma mark – ASValueTrackingSliderDataSource
+- (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
+{
+    NSString *s;
+    if (value == kMIN_Auto_Play_Speed) {
+        s = @"Auto delay";
+    } else {
+        s = [NSString stringWithFormat:@"%d",(int)value];
+    }
+    return s;
 }
 
 #pragma mark -

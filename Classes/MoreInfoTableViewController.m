@@ -112,7 +112,7 @@
     } else if (section == 1) {
         return (2);
     } else if (section == 2) {
-        return 2;
+        return 1;
     } else {
         return 0;
     }
@@ -174,14 +174,6 @@
             cell.accessoryView = textToSpeechSwitch;
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
-        } else if (indexPath.row ==1) {
-            cell.textLabel.text = @"Auto Delay";
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *delaySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [delaySwitch addTarget:self action:@selector(smartDelayAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = delaySwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
-            [delaySwitch setOn:b];
         }
     }
     
@@ -202,14 +194,6 @@
     
 }
 
-
-- (void) smartDelayAction {
-    
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSmartDelay"];
-    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isSmartDelay"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-}
 
 - (void) textToSpeechSwitchAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
