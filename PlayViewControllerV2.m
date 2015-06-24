@@ -20,8 +20,8 @@
 #import "PopoverView.h"
 #import "ASValueTrackingSlider.h"
 
-#define K_AutoHideControlPanelSeconds  5
-#define K_PauseBetweenCard             2
+#define K_AutoHideControlPanelDwellSeconds         5
+#define K_IntervalBetweenCardSeconds               2
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
@@ -65,6 +65,7 @@
      *  包含两种情况
      *  1. 如果 == 最小值，则是[self isSmartDelay] = YES
      *  2. 否则其它情况，则为一般固定间隔
+     *  _autoPlayDelaySlider.value + _pauseForAnswerSlider.value 为整个卡片的停留时间
      */
     ASValueTrackingSlider *_autoPlayDelaySlider;
     UILabel               *_minAutoPlayDelayLabel;
@@ -72,20 +73,20 @@
     
     
     /**
-     *  如果是SmartDelay，则忽略_autoSwitchQATimer。而是通过text2SpeechFinished回调来自动切换
+     *  如果是SmartDelay，则忽略_autoSwitchQATimerForFixedDelay。而是通过text2SpeechFinished回调来自动切换
      */
-    NSTimer  *_autoSwitchQATimer;
+    NSTimer  *_autoSwitchQATimerForFixedDelay;
     
     /**
-     * used together with _autoSwitchQATimer, if _autoShowQuestionOnly = YES, to show question only
+     * used together with _autoSwitchQATimerForFixedDelay, if _autoShowQuestionOnly = YES, to show question only
      */
     BOOL      _isAutoShowQuestionOnly;
     
-    NSTimer *_autoHideControlPanelTimer;
+    NSTimer  *_autoHideControlPanelTimer;
     NSTimer  *_firstPageDelayTimer;  //used in auto mode. pause for seconds on the first page before auto play
     NSTimer  *_countDownTick;
     
-    UILabel *_countDownLabel;
+    UILabel  *_countDownLabel;
     
 }
 
@@ -203,7 +204,7 @@
         [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
     }
     
-    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelDwellSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
     
 }
 
@@ -566,10 +567,24 @@
     
 }
 
+
 /**
- *  仅适用于：NSTimer scheduledTimerWithTimeInterval
+ *  由于是个延时调用，我们必须重新check
  */
-- (void) switchQAFromTimer {
+- (void) switchQAFromTimerForFixedDelay {
+    
+    if (_isAutoScroll == FALSE) {
+        return;
+    }
+    
+    if (_isAutoShowQuestionOnly == YES) {
+        return;
+    }
+    
+    if (_isAutoScroll&& [self isSmartDelay]) {
+        return;
+    }
+    
     [self switchQuestionAnswerViewWithHand:FALSE];
 }
 
@@ -605,8 +620,8 @@
     if (currentFlashCardView) {
         
         if (isManually) {
-            [_autoSwitchQATimer invalidate];
-            _autoSwitchQATimer = nil;
+            [_autoSwitchQATimerForFixedDelay invalidate];
+            _autoSwitchQATimerForFixedDelay = nil;
         }
         
         if (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1) {
@@ -700,8 +715,8 @@
         //_scrollView.userInteractionEnabled = YES;
         _scrollView.isFixedDelayAutoScroll = NO;
         
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
+        [_autoSwitchQATimerForFixedDelay invalidate];
+        _autoSwitchQATimerForFixedDelay = nil;
     }
     
     [self resetAutoHideControlPanelTimer];
@@ -746,23 +761,28 @@
 
 - (void) beginFixedDelayAutoScrollTimer{
     
+    if ([self isSmartDelay]) {
+        return;
+    }
+    
     //_scrollView.userInteractionEnabled = NO;
     _scrollView.isFixedDelayAutoScroll = YES;
-    _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
     
-    _scrollView.pauseForAnswerSeconds = _pauseForAnswerSlider.value;
+    if (_isAutoShowQuestionOnly) {
+        _scrollView.dwellSeconds = _autoPlayDelaySlider.value;
+    } else {
+        _scrollView.dwellSeconds = _autoPlayDelaySlider.value + _pauseForAnswerSlider.value;
+    }
+    
+    _scrollView.intervalBetweenCardSeconds = K_IntervalBetweenCardSeconds;
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
     [self playbackOnCard:currentCard]; //这时，只是播放，而没有回调(自动切换到下一个page）的功能
     
-    if (_autoSwitchQATimer) {
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
-    }
-    if ((_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.2 + _pauseForAnswerSlider.value) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
-    }
+    [self resetQASwitchTimer];
+    
+    
     
     
 }
@@ -802,7 +822,12 @@
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
     
-    _scrollView.pauseForAnswerSeconds = slider.value;
+    if (_isAutoShowQuestionOnly) {
+        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value);
+    } else {
+        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value + _pauseForAnswerSlider.value);
+    }
+    
     
     [self resetAutoHideControlPanelTimer];
     
@@ -811,7 +836,13 @@
 
 - (void) autoPlayDelaySliderClicked:(ASValueTrackingSlider *) slider {
     
-    _scrollView.autoPlayDelaySeconds = slider.value;
+    if (_isAutoShowQuestionOnly) {
+        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value);
+    } else {
+        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value + _pauseForAnswerSlider.value);
+    }
+    
+    
     _currentPack.autoPlaySpeed = slider.value;
     
     [self resetAutoHideControlPanelTimer];
@@ -867,13 +898,21 @@
     _previousCard = currentCard;
     
     
-    if (_autoSwitchQATimer) {
-        [_autoSwitchQATimer invalidate];
-        _autoSwitchQATimer = nil;
+    [self resetQASwitchTimer];
+}
+
+- (void) resetQASwitchTimer {
+    
+    float seconds = (_autoPlayDelaySlider.value/2 + _pauseForAnswerSlider.value);
+    
+    if (_autoSwitchQATimerForFixedDelay) {
+        [_autoSwitchQATimerForFixedDelay invalidate];
+        _autoSwitchQATimerForFixedDelay = nil;
     }
     if (_isAutoScroll && (_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.2 + _pauseForAnswerSlider.value) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
+        _autoSwitchQATimerForFixedDelay = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(switchQAFromTimerForFixedDelay) userInfo:nil repeats:NO];
     }
+    
 }
 
 - (void) switchControlPanelVisibility {
@@ -887,7 +926,7 @@
         [_autoHideControlPanelTimer invalidate];
         _autoHideControlPanelTimer = nil;
     }
-    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
+    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelDwellSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
 }
 
 
@@ -1021,7 +1060,7 @@
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
-            double delayInSeconds = K_PauseBetweenCard;
+            double delayInSeconds = K_IntervalBetweenCardSeconds;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 if ((_isShuttingDown == FALSE) && _isAutoScroll) {
@@ -1038,7 +1077,7 @@
                     }
                 });
             } else {
-                double delayInSeconds = K_PauseBetweenCard;
+                double delayInSeconds = K_IntervalBetweenCardSeconds;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     if ((_isShuttingDown == FALSE) && _isAutoScroll) {
@@ -1094,8 +1133,8 @@
     
     [iConsole info:@"%s",__FUNCTION__];
     
-    [_autoSwitchQATimer invalidate];
-    _autoSwitchQATimer = nil;
+    [_autoSwitchQATimerForFixedDelay invalidate];
+    _autoSwitchQATimerForFixedDelay = nil;
     
     [_firstPageDelayTimer invalidate];
     _firstPageDelayTimer = nil;

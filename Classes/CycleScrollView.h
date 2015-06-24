@@ -35,15 +35,16 @@
 
 /**
  *  在某一张卡片上的停留时间
+ *  注意，它包括_pauseForAnswer的值
  */
-@property (nonatomic,assign,setter = setAutoPlayDelaySeconds:) float                     autoPlayDelaySeconds;
+@property (nonatomic,assign,setter = setDwellSeconds:) float                              dwellSeconds;
 
 /**
  *  两张卡片之间的停留时间
  */
-@property (nonatomic,assign,setter = setPauseForAnswerSeconds:) float                     pauseForAnswerSeconds;
+@property (nonatomic,assign,setter = setIntervalBetweenCardSeconds:) float                intervalBetweenCardSeconds;
 
-@property (nonatomic,readonly                                ) UIScrollView              *scrollView;
+@property (nonatomic,readonly                                ) UIScrollView               *scrollView;
 
 - (UIView *) getCurrentView;
 

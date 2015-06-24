@@ -40,7 +40,7 @@
     if (self) {
         self.isFixedDelayAutoScroll = NO;
         self.isCycle = YES;
-        self.autoPlayDelaySeconds = kDefault_Auto_Play_Speed;
+        self.dwellSeconds = kDefault_Auto_Play_Speed;
         
         _curPage = 0;
         
@@ -76,14 +76,14 @@
     [self resetAutoScrollTimer];
 }
 
-- (void)setAutoPlayDelaySeconds:(float)autoPlayDelaySeconds {
-    _autoPlayDelaySeconds = autoPlayDelaySeconds;
+- (void)setDwellSeconds:(float)dwellSeconds{
+    _dwellSeconds = dwellSeconds;
     [self resetAutoScrollTimer];
     
 }
 
-- (void)setPauseForAnswerSeconds:(float)pauseForAnswerSeconds {
-    _pauseForAnswerSeconds = pauseForAnswerSeconds;
+- (void)setIntervalBetweenCardSeconds:(float)intervalBetweenCardSeconds{
+    _intervalBetweenCardSeconds = intervalBetweenCardSeconds;
     [self resetAutoScrollTimer];
 }
 
@@ -94,7 +94,7 @@
     }
     
     if (_isFixedDelayAutoScroll && (self.isSmartDelay == false)) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySeconds + _pauseForAnswerSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSeconds + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
     } else {
        //当self.isSmartDelay == YES时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
     }
