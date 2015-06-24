@@ -180,7 +180,7 @@
 #define kFlashCardSidebarWidth_iPhone      (25.0)
 #define kFlashCardHeaderHeight_iPhone      (47.0)   //title view part
 
-#define kDefault_Auto_Play_Speed            (10.0)  //in seconds
+#define kDefault_Auto_Play_Speed            (kMIN_Auto_Play_Speed)  //in seconds
 #define kMAX_Auto_Play_Speed                (60)
 #define kMIN_Auto_Play_Speed                (4)
 
