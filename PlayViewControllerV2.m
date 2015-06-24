@@ -24,6 +24,7 @@
 #define K_AutoHideControlPanelSeconds  5
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
+    
     CycleScrollView              *_scrollView;
     UIButton                     *_closeButton;
     
@@ -57,6 +58,9 @@
     UIButton              *_autoScrollButton;
     
     ASValueTrackingSlider *_pauseForAnswerSlider;
+    UILabel               *_pauseForAnswerLabel;
+    UILabel               *_minPauseForAnswerLabel;;
+    UILabel               *_maxPauseForAnswerLabel;
     
     /**
      *  包含两种情况
@@ -64,12 +68,6 @@
      *  2. 否则其它情况，则为一般固定间隔
      */
     ASValueTrackingSlider *_autoPlayDelaySlider;
-    
-    
-    UILabel               *_pauseForAnswerLabel;
-    UILabel               *_minPauseForAnswerLabel;;
-    UILabel               *_maxPauseForAnswerLabel;
-    
     UILabel               *_minAutoPlayDelayLabel;
     UILabel               *_maxAutoPlayDelayLabel;
     
@@ -304,7 +302,7 @@
     [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:_autoScrollButton];
     
-    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(135, 5, 60, 20)];
+    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(145, 5, 60, 20)];
     [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
     _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _autoPlayDelaySlider.font = [UIFont systemFontOfSize:12];
@@ -319,7 +317,6 @@
     _autoPlayDelaySlider.minimumValue = kMIN_Auto_Play_Speed;
     _autoPlayDelaySlider.maximumValue = kMAX_Auto_Play_Speed;
     _autoPlayDelaySlider.continuous = NO;
-    [_autoPlayDelaySlider showPopUpViewAnimated:YES];
     if ((self.currentPack.autoPlaySpeed == 0)
         || (self.currentPack.autoPlaySpeed > kMAX_Auto_Play_Speed)
         || (self.currentPack.autoPlaySpeed < kMIN_Auto_Play_Speed)) {
@@ -378,7 +375,6 @@
     _pauseForAnswerSlider.maximumValue = kMAX_Pause_For_Answer;
     _pauseForAnswerSlider.continuous = NO;
     _pauseForAnswerSlider.value = kDefault_Pause_For_Answer;
-    [_pauseForAnswerSlider showPopUpViewAnimated:YES];
     
     _pauseForAnswerSlider.tintColor = [UIColor greenColor];
     [_pauseForAnswerSlider addTarget:self action:@selector(pauseForAnswerSliderClicked:) forControlEvents:UIControlEventValueChanged];
@@ -422,47 +418,48 @@
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
     
-    [self hideAutoPlayDelaySlider];
-    [self hidePauseForAnswerSlider];
+    [self disableAutoPlayDelaySlider];
+    [self disablePauseForAnswerSlider];
     
 
 }
 
-- (void) showPauseForAnswerSlider {
+- (void) enablePauseForAnswerSlider {
     
-    _pauseForAnswerSlider.hidden = NO;
+    _pauseForAnswerSlider.enabled = YES;
     
-    _pauseForAnswerLabel.hidden = NO;
-    _minPauseForAnswerLabel.hidden = NO;
-    _maxPauseForAnswerLabel.hidden = NO;
-    
-}
-
-- (void) showAutoPlayDelaySlider {
-    
-    _autoPlayDelaySlider.hidden = NO;
-    
-    _minAutoPlayDelayLabel.hidden = NO;
-    _maxAutoPlayDelayLabel.hidden = NO;
+    _pauseForAnswerLabel.enabled = YES;
+    _minPauseForAnswerLabel.enabled = YES;
+    _maxPauseForAnswerLabel.enabled = YES;
     
 }
 
-- (void) hidePauseForAnswerSlider {
+- (void) enableAutoPlayDelaySlider {
     
-    _pauseForAnswerSlider.hidden = YES;
+    _autoPlayDelaySlider.enabled = YES;
+    [_autoPlayDelaySlider showPopUpViewAnimated:YES];
     
-    _pauseForAnswerLabel.hidden = YES;
-    _minPauseForAnswerLabel.hidden = YES;
-    _maxPauseForAnswerLabel.hidden = YES;
+    _minAutoPlayDelayLabel.enabled = YES;
+    _maxAutoPlayDelayLabel.enabled = YES;
+}
+
+- (void) disablePauseForAnswerSlider {
+    
+    _pauseForAnswerSlider.enabled = NO;
+    
+    _pauseForAnswerLabel.enabled = NO;
+    _minPauseForAnswerLabel.enabled = NO;
+    _maxPauseForAnswerLabel.enabled = NO;
     
 }
 
-- (void) hideAutoPlayDelaySlider {
+- (void) disableAutoPlayDelaySlider {
     
-    _autoPlayDelaySlider.hidden = YES;
+    _autoPlayDelaySlider.enabled = NO;
+    [_autoPlayDelaySlider hidePopUpViewAnimated:NO];
     
-    _minAutoPlayDelayLabel.hidden = YES;
-    _maxAutoPlayDelayLabel.hidden = YES;
+    _minAutoPlayDelayLabel.enabled = NO;
+    _maxAutoPlayDelayLabel.enabled = NO;
     
 }
 
@@ -709,8 +706,8 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
-        [self hidePauseForAnswerSlider];
-        [self hideAutoPlayDelaySlider];
+        [self disablePauseForAnswerSlider];
+        [self disableAutoPlayDelaySlider];
         
         _scrollView.userInteractionEnabled = YES;
         
@@ -780,8 +777,7 @@
     _scrollView.isFixedDelayAutoScroll = YES;
     _scrollView.autoPlayDelaySeconds = _autoPlayDelaySlider.value;
     
-    //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
-    //_scrollView.pauseForAnswerSeconds = _pauseForAnswerSlider.value;
+    _scrollView.pauseForAnswerSeconds = _pauseForAnswerSlider.value;
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
@@ -833,11 +829,9 @@
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
     
-    //no pauseForAnswerSeconds in auto mode. However, I do believe client would request this function since he is changeable
-    //_scrollView.pauseForAnswerSeconds = slider.value;
+    _scrollView.pauseForAnswerSeconds = slider.value;
     
     [self resetAutoHideControlPanelTimer];
-
     
 }
 
@@ -960,11 +954,11 @@
     
     _isAutoScroll = YES;
     
-    [self showAutoPlayDelaySlider];
+    [self enableAutoPlayDelaySlider];
     if ([self isSmartDelay]) {
-        [self showPauseForAnswerSlider];
+        [self enablePauseForAnswerSlider];
     } else {
-        [self hidePauseForAnswerSlider];
+        [self enablePauseForAnswerSlider];
     }
     
     
@@ -1057,7 +1051,7 @@
             double delayInSeconds = _pauseForAnswerSlider.value;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                if (_isShuttingDown == FALSE) {
+                if ((_isShuttingDown == FALSE) && _isAutoScroll) {
                     [_scrollView scrollNow];
                 }
             });
@@ -1066,7 +1060,7 @@
                 double delayInSeconds = _pauseBetweenQuestion2Answer;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if (_isShuttingDown == FALSE) {
+                    if ((_isShuttingDown == FALSE) && _isAutoScroll) {
                         [self switchQuestionAnswerViewWithHand:NO];
                     }
                 });
@@ -1074,7 +1068,7 @@
                 double delayInSeconds = _pauseForAnswerSlider.value;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if (_isShuttingDown == FALSE) {
+                    if ((_isShuttingDown == FALSE) && _isAutoScroll) {
                         [_scrollView scrollNow];
                     }
                 });
