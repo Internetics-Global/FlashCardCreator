@@ -304,7 +304,7 @@
     [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:_autoScrollButton];
     
-    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(135, 5, 70, 20)];
+    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(135, 5, 60, 20)];
     [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
     _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _autoPlayDelaySlider.font = [UIFont systemFontOfSize:12];
@@ -319,6 +319,7 @@
     _autoPlayDelaySlider.minimumValue = kMIN_Auto_Play_Speed;
     _autoPlayDelaySlider.maximumValue = kMAX_Auto_Play_Speed;
     _autoPlayDelaySlider.continuous = NO;
+    [_autoPlayDelaySlider showPopUpViewAnimated:YES];
     if ((self.currentPack.autoPlaySpeed == 0)
         || (self.currentPack.autoPlaySpeed > kMAX_Auto_Play_Speed)
         || (self.currentPack.autoPlaySpeed < kMIN_Auto_Play_Speed)) {
@@ -333,7 +334,7 @@
     _autoPlayDelaySlider.dataSource = self;
     [_controlPanel addSubview: _autoPlayDelaySlider];
     
-    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 75, 5, 70, 20)];
+    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 70, 5, 70, 20)];
     _minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
     _minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
     _minAutoPlayDelayLabel.text = @"Reading timer";
@@ -352,7 +353,7 @@
     [_controlPanel addSubview:_maxAutoPlayDelayLabel];
     
     
-    _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(215, 5, 90, 20)];
+    _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 5, 90, 20)];
     _pauseForAnswerLabel.textAlignment = NSTextAlignmentCenter;
     _pauseForAnswerLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
     _pauseForAnswerLabel.text = @"Question pause";
@@ -361,7 +362,7 @@
     _pauseForAnswerLabel.backgroundColor = [UIColor clearColor];
     [_controlPanel addSubview:_pauseForAnswerLabel];
     
-    _pauseForAnswerSlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(315, 5, 70, 20)];
+    _pauseForAnswerSlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(315, 5, 60, 20)];
     [_pauseForAnswerSlider setMaxFractionDigitsDisplayed:0];
     _pauseForAnswerSlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _pauseForAnswerSlider.font = [UIFont systemFontOfSize:12];
@@ -377,6 +378,7 @@
     _pauseForAnswerSlider.maximumValue = kMAX_Pause_For_Answer;
     _pauseForAnswerSlider.continuous = NO;
     _pauseForAnswerSlider.value = kDefault_Pause_For_Answer;
+    [_pauseForAnswerSlider showPopUpViewAnimated:YES];
     
     _pauseForAnswerSlider.tintColor = [UIColor greenColor];
     [_pauseForAnswerSlider addTarget:self action:@selector(pauseForAnswerSliderClicked:) forControlEvents:UIControlEventValueChanged];
@@ -1109,15 +1111,9 @@
     if (value == kMIN_Auto_Play_Speed) {
         s = @"Auto";
         _scrollView.isFixedDelayAutoScroll = NO;
-        if (_isAutoScroll) {
-            [self showPauseForAnswerSlider];
-        }
     } else {
         _scrollView.isFixedDelayAutoScroll = YES;
         s = [NSString stringWithFormat:@"%d",(int)value];
-        if (_isAutoScroll) {
-            [self hidePauseForAnswerSlider];
-        }
     }
     return s;
 }
