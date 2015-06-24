@@ -23,26 +23,36 @@
 @property (nonatomic,assign,setter = setCycle:               ) BOOL                      isCycle;
 
 /**
- *  auto play的其中一种： 固定时间间隔的播放。 另外一种是isSmartDelay
+ *  auto play分两种，被isAutoScroll总控制
+ *  1. YES:固定时间间隔的播放
+ *  2. NO :isSmartDelay
  */
 @property (nonatomic,assign,setter = setFixedDelayAutoScroll:) BOOL                      isFixedDelayAutoScroll;
 
-/**
- * auto play的其中一种，另外一种是固定时间间隔的播放
- * 如果是smartDelay，则autoScroll是在text2speech结束后，调用scrollNow执行，而不是通过_autoScrollTimer进行执行
- */
-@property (assign, nonatomic)                                  BOOL                      isSmartDelay;
 
 /**
- *  在某一张卡片上的停留时间
- *  注意，它包括_pauseForAnswer的值
+ *  总控制
  */
-@property (nonatomic,assign,setter = setDwellSeconds:) float                              dwellSeconds;
+@property (nonatomic,assign                                  ) BOOL                      isAutoScroll;
+
+
+/**
+ *  在某一张卡片（包括question和answer)上的停留时间
+ *  注意，包括_pauseForAnswer的值
+ */
+@property (nonatomic,assign,setter = setDwellSecondsTotally:) float                      dwellSecondsTotally;
+
+/**
+ *  仅在question上的停留时间，但注意，不包括_pauseForAnswer的值
+ */
+@property (nonatomic,assign,setter = setDwellSecondsOnQuestion:) float                   dwellSecondsOnQuestion;
 
 /**
  *  两张卡片之间的停留时间
  */
 @property (nonatomic,assign,setter = setIntervalBetweenCardSeconds:) float                intervalBetweenCardSeconds;
+
+
 
 @property (nonatomic,readonly                                ) UIScrollView               *scrollView;
 
@@ -63,11 +73,17 @@
 @protocol CycleScrollViewDelegate <NSObject>
 
 @optional
+
 - (void)tapDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 - (void)gestureUpAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 - (void)gestureDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 
 - (void)didScrollToPage:(NSInteger)index;
+
+/**
+ *  当超过dwellSecondsOnQuestion后被触发
+ */
+- (void) didFinishDwellOnQuestionCard;
 
 @end
 

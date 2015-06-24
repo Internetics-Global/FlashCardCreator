@@ -44,15 +44,14 @@
      */
     BOOL  _isAutoScroll;
     
-    
     BOOL  _isCyclePlay;
     BOOL  _isMute;
     
     BOOL  _isShuttingDown;
     
-    FlashCard *_previousCard;
+    FlashCard             *_previousCard;
     
-    UIView    *_controlPanel;
+    UIView                *_controlPanel;
     UIButton              *_playButton;
     UIButton              *_autoScrollButton;
     
@@ -62,14 +61,16 @@
     UILabel               *_maxPauseForAnswerLabel;
     
     /**
-     *  包含两种情况
+     *  _dwellTimeSlider.value + _pauseForAnswerSlider.value 为整个卡片（包括question和answer)的停留时间
+     *  如果question only,则question上的停留时间是_dwellTimeSlider.value；否则是_dwellTimeSlider.value/2
+     *  取值范围
      *  1. 如果 == 最小值，则是[self isSmartDelay] = YES
      *  2. 否则其它情况，则为一般固定间隔
-     *  _autoPlayDelaySlider.value + _pauseForAnswerSlider.value 为整个卡片的停留时间
+     *
      */
-    ASValueTrackingSlider *_autoPlayDelaySlider;
-    UILabel               *_minAutoPlayDelayLabel;
-    UILabel               *_maxAutoPlayDelayLabel;
+    ASValueTrackingSlider *_dwellTimeSlider;
+    UILabel               *_minDwellTimeLabel;
+    UILabel               *_maxDwellTimeLabel;
     
     
     /**
@@ -78,13 +79,18 @@
     NSTimer  *_autoSwitchQATimerForFixedDelay;
     
     /**
-     * used together with _autoSwitchQATimerForFixedDelay, if _autoShowQuestionOnly = YES, to show question only
+     * if _autoShowQuestionOnly = YES, to show question only
      */
     BOOL      _isAutoShowQuestionOnly;
     
     NSTimer  *_autoHideControlPanelTimer;
     NSTimer  *_firstPageDelayTimer;  //used in auto mode. pause for seconds on the first page before auto play
     NSTimer  *_countDownTick;
+    
+    /**
+     *  当dwell on answer card expire后，自动触发，比如关闭正在播放的text to speech
+     */
+    NSTimer  * _dwellOnAnswerExpireTimer;
     
     UILabel  *_countDownLabel;
     
@@ -230,9 +236,8 @@
     //step2: CycleScrollView
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
-    _scrollView.isSmartDelay = [self isSmartDelay];
     _scrollView.isCycle = NO;
-    _scrollView.isFixedDelayAutoScroll = NO;
+    _scrollView.isFixedDelayAutoScroll = (![self isSmartDelay]);
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
@@ -279,52 +284,52 @@
     [_autoScrollButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:_autoScrollButton];
     
-    _autoPlayDelaySlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(145, 5, 60, 20)];
-    [_autoPlayDelaySlider setMaxFractionDigitsDisplayed:0];
-    _autoPlayDelaySlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
-    _autoPlayDelaySlider.font = [UIFont systemFontOfSize:12];
-    _autoPlayDelaySlider.popUpViewWidthPaddingFactor = 1.5;
-    _autoPlayDelaySlider.popUpViewCornerRadius = 3;
-    _autoPlayDelaySlider.popUpViewHeightPaddingFactor = 1;
-    _autoPlayDelaySlider.popUpViewArrowLength = 8;
-    _autoPlayDelaySlider.popUpViewAnimatedColors = @[[UIColor orangeColor]];
-    _autoPlayDelaySlider.textColor = [UIColor whiteColor];
-    _autoPlayDelaySlider.backgroundColor = [UIColor grayColor];
+    _dwellTimeSlider= [[ASValueTrackingSlider alloc] initWithFrame:CGRectMake(145, 5, 60, 20)];
+    [_dwellTimeSlider setMaxFractionDigitsDisplayed:0];
+    _dwellTimeSlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
+    _dwellTimeSlider.font = [UIFont systemFontOfSize:12];
+    _dwellTimeSlider.popUpViewWidthPaddingFactor = 1.5;
+    _dwellTimeSlider.popUpViewCornerRadius = 3;
+    _dwellTimeSlider.popUpViewHeightPaddingFactor = 1;
+    _dwellTimeSlider.popUpViewArrowLength = 8;
+    _dwellTimeSlider.popUpViewAnimatedColors = @[[UIColor orangeColor]];
+    _dwellTimeSlider.textColor = [UIColor whiteColor];
+    _dwellTimeSlider.backgroundColor = [UIColor grayColor];
     [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
-    _autoPlayDelaySlider.minimumValue = kMIN_Auto_Play_Speed;
-    _autoPlayDelaySlider.maximumValue = kMAX_Auto_Play_Speed;
-    _autoPlayDelaySlider.continuous = NO;
+    _dwellTimeSlider.minimumValue = kMIN_Auto_Play_Speed;
+    _dwellTimeSlider.maximumValue = kMAX_Auto_Play_Speed;
+    _dwellTimeSlider.continuous = NO;
     if ((self.currentPack.autoPlaySpeed == 0)
         || (self.currentPack.autoPlaySpeed > kMAX_Auto_Play_Speed)
         || (self.currentPack.autoPlaySpeed < kMIN_Auto_Play_Speed)) {
-      _autoPlayDelaySlider.value = kDefault_Auto_Play_Speed;
+      _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
     } else {
-        _autoPlayDelaySlider.value = self.currentPack.autoPlaySpeed;
+        _dwellTimeSlider.value = self.currentPack.autoPlaySpeed;
     }
     
-    _autoPlayDelaySlider.tintColor = [UIColor greenColor];
-    [_autoPlayDelaySlider addTarget:self action:@selector(autoPlayDelaySliderClicked:) forControlEvents:UIControlEventValueChanged];
-    [_autoPlayDelaySlider setBackgroundColor:[UIColor clearColor]];
-    _autoPlayDelaySlider.dataSource = self;
-    [_controlPanel addSubview: _autoPlayDelaySlider];
+    _dwellTimeSlider.tintColor = [UIColor greenColor];
+    [_dwellTimeSlider addTarget:self action:@selector(dwellTimeSliderClicked:) forControlEvents:UIControlEventValueChanged];
+    [_dwellTimeSlider setBackgroundColor:[UIColor clearColor]];
+    _dwellTimeSlider.dataSource = self;
+    [_controlPanel addSubview: _dwellTimeSlider];
     
-    _minAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_autoPlayDelaySlider.frame)- 70, 5, 70, 20)];
-    _minAutoPlayDelayLabel.textAlignment = NSTextAlignmentRight;
-    _minAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    _minAutoPlayDelayLabel.text = @"Reading timer";
-    _minAutoPlayDelayLabel.numberOfLines = 1;
-    _minAutoPlayDelayLabel.textColor = [UIColor whiteColor];
-    _minAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:_minAutoPlayDelayLabel];
+    _minDwellTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_dwellTimeSlider.frame)- 70, 5, 70, 20)];
+    _minDwellTimeLabel.textAlignment = NSTextAlignmentRight;
+    _minDwellTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _minDwellTimeLabel.text = @"Reading timer";
+    _minDwellTimeLabel.numberOfLines = 1;
+    _minDwellTimeLabel.textColor = [UIColor whiteColor];
+    _minDwellTimeLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_minDwellTimeLabel];
     
-    _maxAutoPlayDelayLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_autoPlayDelaySlider.frame), 5, 20, 20)];
-    _maxAutoPlayDelayLabel.textAlignment = NSTextAlignmentLeft;
-    _maxAutoPlayDelayLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    _maxAutoPlayDelayLabel.text = [NSString stringWithFormat:@"%d",kMAX_Auto_Play_Speed];;
-    _maxAutoPlayDelayLabel.numberOfLines = 1;
-    _maxAutoPlayDelayLabel.textColor = [UIColor whiteColor];
-    _maxAutoPlayDelayLabel.backgroundColor = [UIColor clearColor];
-    [_controlPanel addSubview:_maxAutoPlayDelayLabel];
+    _maxDwellTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_dwellTimeSlider.frame), 5, 20, 20)];
+    _maxDwellTimeLabel.textAlignment = NSTextAlignmentLeft;
+    _maxDwellTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    _maxDwellTimeLabel.text = [NSString stringWithFormat:@"%d",kMAX_Auto_Play_Speed];;
+    _maxDwellTimeLabel.numberOfLines = 1;
+    _maxDwellTimeLabel.textColor = [UIColor whiteColor];
+    _maxDwellTimeLabel.backgroundColor = [UIColor clearColor];
+    [_controlPanel addSubview:_maxDwellTimeLabel];
     
     
     _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 5, 90, 20)];
@@ -415,11 +420,11 @@
 
 - (void) enableAutoPlayDelaySlider {
     
-    _autoPlayDelaySlider.enabled = YES;
-    [_autoPlayDelaySlider showPopUpViewAnimated:YES];
+    _dwellTimeSlider.enabled = YES;
+    [_dwellTimeSlider showPopUpViewAnimated:YES];
     
-    _minAutoPlayDelayLabel.enabled = YES;
-    _maxAutoPlayDelayLabel.enabled = YES;
+    _minDwellTimeLabel.enabled = YES;
+    _maxDwellTimeLabel.enabled = YES;
 }
 
 - (void) disablePauseForAnswerSlider {
@@ -436,11 +441,11 @@
 
 - (void) disableAutoPlayDelaySlider {
     
-    _autoPlayDelaySlider.enabled = NO;
-    [_autoPlayDelaySlider hidePopUpViewAnimated:NO];
+    _dwellTimeSlider.enabled = NO;
+    [_dwellTimeSlider hidePopUpViewAnimated:NO];
     
-    _minAutoPlayDelayLabel.enabled = NO;
-    _maxAutoPlayDelayLabel.enabled = NO;
+    _minDwellTimeLabel.enabled = NO;
+    _maxDwellTimeLabel.enabled = NO;
     
 }
 
@@ -592,6 +597,15 @@
     }
     
     [self switchQuestionAnswerViewWithHand:FALSE];
+    
+    if (_dwellOnAnswerExpireTimer) {
+        [_dwellOnAnswerExpireTimer invalidate];
+        _dwellOnAnswerExpireTimer = nil;
+    }
+    
+    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value/2) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:YES];
+    
+    
 }
 
 
@@ -727,6 +741,7 @@
         _firstPageDelayTimer = nil;
         
         _isAutoScroll = NO;
+        _scrollView.isAutoScroll = NO;
         [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
         
         //_scrollView.userInteractionEnabled = YES;
@@ -778,7 +793,7 @@
 
 - (void) beginFixedDelayAutoScrollTimer{
     
-    if ([self isSmartDelay]) {
+    if ([self isSmartDelay] || (_isAutoScroll == FALSE)) {
         return;
     }
     
@@ -786,9 +801,11 @@
     _scrollView.isFixedDelayAutoScroll = YES;
     
     if (_isAutoShowQuestionOnly) {
-        _scrollView.dwellSeconds = _autoPlayDelaySlider.value;
+        _scrollView.dwellSecondsTotally = _dwellTimeSlider.value;
+        _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value;
     } else {
-        _scrollView.dwellSeconds = _autoPlayDelaySlider.value + _pauseForAnswerSlider.value;
+        _scrollView.dwellSecondsTotally = _dwellTimeSlider.value + _pauseForAnswerSlider.value;
+        _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value/2;
     }
     
     _scrollView.intervalBetweenCardSeconds = K_IntervalBetweenCardSeconds;
@@ -842,9 +859,11 @@
     
     
     if (_isAutoShowQuestionOnly) {
-        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
-        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value/2);
     }
     
     
@@ -853,12 +872,14 @@
 }
 
 
-- (void) autoPlayDelaySliderClicked:(ASValueTrackingSlider *) slider {
+- (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
     if (_isAutoShowQuestionOnly) {
-        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
-        _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value/2);
     }
     
     
@@ -884,9 +905,28 @@
     
 }
 
-
+/**
+ *  在fixed delay模式中，在answer中，如果时间超过_dwellTimeSlider.value/2，则需要关闭text to speech
+ */
+- (void) didFinishDwellOnAnswerCard {
+    
+    if ([self isText2Speech]) {
+        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        [currentCard stopTextToSpeechNow];
+    }
+}
 
 #pragma mark – CycleScrollViewDelegate
+
+/**
+ *  在fixed delay模式中，在question中，如果时间超过_dwellTimeSlider.value/2，则需要关闭text to speech
+ */
+- (void)didFinishDwellOnQuestionCard {
+    if ([self isText2Speech]) {
+        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        [currentCard stopTextToSpeechNow];
+    }
+}
 
 - (void)tapDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
@@ -924,7 +964,7 @@
 
 - (void) resetQASwitchTimer {
     
-    float seconds = (_autoPlayDelaySlider.value/2 + _pauseForAnswerSlider.value);
+    float seconds = (_dwellTimeSlider.value/2 + _pauseForAnswerSlider.value);
     
     if (_autoSwitchQATimerForFixedDelay) {
         [_autoSwitchQATimerForFixedDelay invalidate];
@@ -986,6 +1026,7 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     _isAutoScroll = YES;
+    _scrollView.isAutoScroll = YES;
     
     [self enableAutoPlayDelaySlider];
     if ([self isSmartDelay]) {
@@ -1014,9 +1055,9 @@
     _countDownLabel.textColor = [UIColor whiteColor];
     _countDownLabel.backgroundColor = [UIColor clearColor];
     if (_isAutoShowQuestionOnly) {
-        _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_autoPlayDelaySlider.value];
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_dwellTimeSlider.value];
     } else {
-        _countDownLabel.text = [NSString stringWithFormat:@"%d",((int)_autoPlayDelaySlider.value)/2-1];
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",((int)_dwellTimeSlider.value)/2-1];
     }
     [self.view addSubview:_countDownLabel];
     
@@ -1128,7 +1169,7 @@
  */
 - (BOOL) isSmartDelay {
     //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
-    if ((int)_autoPlayDelaySlider.value == kMIN_Auto_Play_Speed) {
+    if ((int)_dwellTimeSlider.value == kMIN_Auto_Play_Speed) {
         return YES;
     } else {
         return NO;
@@ -1156,6 +1197,9 @@
 - (void)dealloc {
     
     [iConsole info:@"%s",__FUNCTION__];
+    
+    [_dwellOnAnswerExpireTimer invalidate];
+    _dwellOnAnswerExpireTimer = nil;
     
     [_autoSwitchQATimerForFixedDelay invalidate];
     _autoSwitchQATimerForFixedDelay = nil;

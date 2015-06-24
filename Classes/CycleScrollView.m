@@ -19,6 +19,11 @@
      *  在fixed delay模式下的使用。在smart delay模式（即文本读完后才到下一张卡片）不使用
      */
     NSTimer        * _autoScrollTimer;
+    
+    /**
+     *  triggered by dwellSeconds
+     */
+    NSTimer        * _dwellOnQuestionExpireTimer;
 
     UIView         * _previousCard;
     UIView         * _nextCard;
@@ -40,7 +45,7 @@
     if (self) {
         self.isFixedDelayAutoScroll = NO;
         self.isCycle = YES;
-        self.dwellSeconds = kDefault_Auto_Play_Speed;
+        self.dwellSecondsTotally = kDefault_Auto_Play_Speed;
         
         _curPage = 0;
         
@@ -71,15 +76,19 @@
     _isCycle = isCycle;
 }
 
-- (void) setFixedDelayAutoScroll:(BOOL)isAutoScroll {
-    _isFixedDelayAutoScroll = isAutoScroll;
+- (void) setFixedDelayAutoScroll:(BOOL)isFixedDelayAutoScroll {
+    _isFixedDelayAutoScroll = isFixedDelayAutoScroll;
     [self resetAutoScrollTimer];
 }
 
-- (void)setDwellSeconds:(float)dwellSeconds{
-    _dwellSeconds = dwellSeconds;
+- (void)setDwellSecondsTotally:(float)dwellSeconds{
+    _dwellSecondsTotally = dwellSeconds;
     [self resetAutoScrollTimer];
     
+}
+
+- (void)setDwellSecondsOnQuestion:(float)dwellSecondsOnQuestion {
+    _dwellSecondsOnQuestion = dwellSecondsOnQuestion;
 }
 
 - (void)setIntervalBetweenCardSeconds:(float)intervalBetweenCardSeconds{
@@ -93,11 +102,23 @@
         _autoScrollTimer = nil;
     }
     
-    if (_isFixedDelayAutoScroll && (self.isSmartDelay == false)) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSeconds + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
+    if (_isFixedDelayAutoScroll && self.isAutoScroll) {
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsTotally + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
     } else {
-       //当self.isSmartDelay == YES时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
+       //当_isFixedDelayAutoScroll == NO时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
     }
+    
+    if (_dwellOnQuestionExpireTimer) {
+        [_dwellOnQuestionExpireTimer invalidate];
+        _dwellOnQuestionExpireTimer = nil;
+    }
+    
+    if (_isFixedDelayAutoScroll && self.isAutoScroll) {
+        _dwellOnQuestionExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsOnQuestion) target:self selector:@selector(dwellOnQuestionExpireTimer) userInfo:nil repeats:YES];
+    } else {
+        
+    }
+    
 
 }
 
@@ -361,7 +382,19 @@
  *  在smart delay模式下，当Text2Speech完成后，调用[self scrollNow]自动切换到下张卡片
  */
 - (void) autoScrollViewTimer {
+    
+    //由于是个延时调用，所以需要重新check
+    if (self.isAutoScroll == FALSE || (self.isAutoScroll && (self.isFixedDelayAutoScroll == FALSE))) {
+        return;
+    }
+    
     [self scrollNow];
+}
+
+- (void) dwellOnQuestionExpireTimer {
+    if ([self.delegate respondsToSelector:@selector(didFinishDwellOnQuestionCard)]) {
+        [self.delegate didFinishDwellOnQuestionCard];
+    }
 }
 
 
@@ -429,12 +462,18 @@
 - (void) cleanup {
     [_autoScrollTimer invalidate];
     _autoScrollTimer = nil;
+    
+    [_dwellOnQuestionExpireTimer invalidate];
+    _dwellOnQuestionExpireTimer = nil;
 }
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"frame"];
     [_autoScrollTimer invalidate];
     _autoScrollTimer = nil;
+    
+    [_dwellOnQuestionExpireTimer invalidate];
+    _dwellOnQuestionExpireTimer = nil;
 }
 
 
