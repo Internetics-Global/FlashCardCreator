@@ -614,6 +614,12 @@
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
     
+    if (_isAutoScroll && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
+        //we don't allow to automatically switch from answer to question again
+        return;
+    }
+    
+    
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
@@ -825,6 +831,8 @@
 
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
+
+    
     
     if (_isAutoShowQuestionOnly) {
         _scrollView.dwellSeconds = (int)(_autoPlayDelaySlider.value);
