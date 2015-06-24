@@ -18,7 +18,7 @@
     /**
      *  在fixed delay模式下的使用。在smart delay模式（即文本读完后才到下一张卡片）不使用
      */
-    NSTimer        * _autoScrollTimer;
+    NSTimer        * _autoScrollTimerForFixedDelay;
     
     /**
      *  triggered by dwellSeconds
@@ -96,17 +96,7 @@
     [self resetAutoScrollTimer];
 }
 
-- (void) resetAutoScrollTimer {
-    if (_autoScrollTimer) {
-        [_autoScrollTimer invalidate];
-        _autoScrollTimer = nil;
-    }
-    
-    if (_isFixedDelayAutoScroll && self.isAutoScroll) {
-        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsTotally + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimer) userInfo:nil repeats:YES];
-    } else {
-       //当_isFixedDelayAutoScroll == NO时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
-    }
+- (void) resetDwellOnQuestionExpireTimer {
     
     if (_dwellOnQuestionExpireTimer) {
         [_dwellOnQuestionExpireTimer invalidate];
@@ -118,6 +108,22 @@
     } else {
         
     }
+    
+}
+
+- (void) resetAutoScrollTimer {
+    if (_autoScrollTimerForFixedDelay) {
+        [_autoScrollTimerForFixedDelay invalidate];
+        _autoScrollTimerForFixedDelay = nil;
+    }
+    
+    if (_isFixedDelayAutoScroll && self.isAutoScroll) {
+        _autoScrollTimerForFixedDelay = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsTotally + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimerForFixedDelay) userInfo:nil repeats:YES];
+    } else {
+       //当_isFixedDelayAutoScroll == NO时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
+    }
+    
+    [self resetDwellOnQuestionExpireTimer];
     
 
 }
@@ -381,7 +387,7 @@
  *  通过定时器调用，仅仅当_isFixedDelayAutoScroll ＝ YES下使用
  *  在smart delay模式下，当Text2Speech完成后，调用[self scrollNow]自动切换到下张卡片
  */
-- (void) autoScrollViewTimer {
+- (void) autoScrollViewTimerForFixedDelay {
     
     //由于是个延时调用，所以需要重新check
     if (self.isAutoScroll == FALSE || (self.isAutoScroll && (self.isFixedDelayAutoScroll == FALSE))) {
@@ -389,6 +395,9 @@
     }
     
     [self scrollNow];
+    
+    //每次通过定时器scroll到下一个page时，都需要重新设置
+    [self resetDwellOnQuestionExpireTimer];
 }
 
 - (void) dwellOnQuestionExpireTimer {
@@ -460,8 +469,8 @@
 #pragma mark – Memory management
 
 - (void) cleanup {
-    [_autoScrollTimer invalidate];
-    _autoScrollTimer = nil;
+    [_autoScrollTimerForFixedDelay invalidate];
+    _autoScrollTimerForFixedDelay = nil;
     
     [_dwellOnQuestionExpireTimer invalidate];
     _dwellOnQuestionExpireTimer = nil;
@@ -469,8 +478,9 @@
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"frame"];
-    [_autoScrollTimer invalidate];
-    _autoScrollTimer = nil;
+    
+    [_autoScrollTimerForFixedDelay invalidate];
+    _autoScrollTimerForFixedDelay = nil;
     
     [_dwellOnQuestionExpireTimer invalidate];
     _dwellOnQuestionExpireTimer = nil;
