@@ -17,19 +17,31 @@
 @property (nonatomic,assign,setter = setDataSource:          ) id<CycleScrollViewDatasource> datasource;
 @property (nonatomic,assign,setter = setDelegate:            ) id<CycleScrollViewDelegate  > delegate;
 
+/**
+ *  循环播放
+ */
 @property (nonatomic,assign,setter = setCycle:               ) BOOL                      isCycle;
 
-
-
+/**
+ *  auto play的其中一种： 固定时间间隔的播放。 另外一种是isSmartDelay
+ */
 @property (nonatomic,assign,setter = setFixedDelayAutoScroll:) BOOL                      isFixedDelayAutoScroll;
 
 /**
+ * auto play的其中一种，另外一种是固定时间间隔的播放
  * 如果是smartDelay，则autoScroll是在text2speech结束后，调用scrollNow执行，而不是通过_autoScrollTimer进行执行
  */
 @property (assign, nonatomic)                                  BOOL                      isSmartDelay;
 
+/**
+ *  在某一张卡片上的停留时间
+ */
 @property (nonatomic,assign,setter = setAutoPlayDelaySeconds:) float                     autoPlayDelaySeconds;
-@property (nonatomic,assign                                  ) float                     pauseForAnswerSeconds;
+
+/**
+ *  两张卡片之间的停留时间
+ */
+@property (nonatomic,assign,setter = setPauseForAnswerSeconds:) float                     pauseForAnswerSeconds;
 
 @property (nonatomic,readonly                                ) UIScrollView              *scrollView;
 

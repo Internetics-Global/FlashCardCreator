@@ -15,6 +15,9 @@
     NSInteger      _curPage;
     NSMutableArray * _curViews;
     
+    /**
+     *  在fixed delay模式下的使用。在smart delay模式（即文本读完后才到下一张卡片）不使用
+     */
     NSTimer        * _autoScrollTimer;
 
     UIView         * _previousCard;
@@ -77,6 +80,11 @@
     _autoPlayDelaySeconds = autoPlayDelaySeconds;
     [self resetAutoScrollTimer];
     
+}
+
+- (void)setPauseForAnswerSeconds:(float)pauseForAnswerSeconds {
+    _pauseForAnswerSeconds = pauseForAnswerSeconds;
+    [self resetAutoScrollTimer];
 }
 
 - (void) resetAutoScrollTimer {
@@ -349,7 +357,8 @@
 #pragma mark – Autoscroll NSTimer
 
 /**
- *  User timer to trigger
+ *  通过定时器调用，仅仅当_isFixedDelayAutoScroll ＝ YES下使用
+ *  在smart delay模式下，当Text2Speech完成后，调用[self scrollNow]自动切换到下张卡片
  */
 - (void) autoScrollViewTimer {
     [self scrollNow];

@@ -247,7 +247,6 @@
 		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
-		88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */; };
 		88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */; };
 		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
 		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
@@ -617,8 +616,6 @@
 		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
-		88E93D761A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharkfoodMuteSwitchDetector.h; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.h; sourceTree = "<group>"; };
-		88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharkfoodMuteSwitchDetector.m; path = Libraries/SoundSwitch/SharkfoodMuteSwitchDetector.m; sourceTree = "<group>"; };
 		88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		88E93D7B1A634EA2007CB7A2 /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = mute.caf; path = Resources/mute.caf; sourceTree = "<group>"; };
 		88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CycleScrollView.h; path = Classes/CycleScrollView.h; sourceTree = "<group>"; };
@@ -968,7 +965,6 @@
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				88620B561AB103BE0046B64E /* Parse */,
-				88E93D541A634C85007CB7A2 /* SoundSwitch */,
 				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
 				88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */,
@@ -1456,15 +1452,6 @@
 			name = Symbols;
 			sourceTree = "<group>";
 		};
-		88E93D541A634C85007CB7A2 /* SoundSwitch */ = {
-			isa = PBXGroup;
-			children = (
-				88E93D761A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.h */,
-				88E93D771A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m */,
-			);
-			name = SoundSwitch;
-			sourceTree = "<group>";
-		};
 		88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1821,7 +1808,6 @@
 				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
 				2D5C181F16D1A62800E1E785 /* NSString+QueryString.m in Sources */,
 				881670BB1A1DC62000832236 /* TipHelper.m in Sources */,
-				88E93D781A634CAC007CB7A2 /* SharkfoodMuteSwitchDetector.m in Sources */,
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,

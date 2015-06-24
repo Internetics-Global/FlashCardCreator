@@ -12,7 +12,6 @@
 #import "FlashCard.h"
 #import "Card.h"
 #import <CoreMotion/CoreMotion.h>
-#import "SharkfoodMuteSwitchDetector.h"
 #import "UIButton+Extensions.h"
 #import "UIAlertView+Blocks.h"
 #import "Question.h"
@@ -35,7 +34,6 @@
     CMMotionManager              *_motionManager;
     
     NSDate                       *_startDate;
-    SharkfoodMuteSwitchDetector  *_silenceDetector;
     
     
     /**
@@ -111,19 +109,6 @@
     
     _startDate =[NSDate date];
     
-    //check silence mode
-    //There's a problem for SharkfoodMuteSwitchDetector, which could make noise intermittly. so we have disable it.
-//    _silenceDetector = [SharkfoodMuteSwitchDetector shared];
-//    __weak __typeof(&*self)weakSelf = self;
-//    _silenceDetector.silentNotify = ^(BOOL silent){
-//        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
-//        if (silent && b && (weakSelf != nil)) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Silent Mode is On. You may possibly could not hear text speech" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//            [alertView show];
-//            
-//        }
-//    };
-    
     
     if isUserInterfaceIdiomPhone {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
@@ -150,10 +135,7 @@
                                              selector:@selector(landscapeLeftRightOrientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    
-    
-    
-    
+
     
 }
 
@@ -250,7 +232,7 @@
     [_closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [_closeButton setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
-    //step2: uiscroll view
+    //step2: CycleScrollView
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
     _scrollView.isSmartDelay = [self isSmartDelay];
@@ -554,7 +536,6 @@
     _scrollView = nil;
     
     [_currentPack savePackOnly];
-    
 
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -608,7 +589,8 @@
 
 
 /**
- *  if isManulally == YES, indicate it's manually switched
+ *  isManulally == YES: 来自CMMotionManager或tap或gesture action
+ *  isManulally == NO: 来自NSTimer或text2SpeechFinished自动回调
  */
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     
@@ -768,7 +750,6 @@
     FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
     return currentCard;
 }
-
 
 
 - (void) beginFixedDelayAutoScrollTimer{
@@ -991,7 +972,7 @@
         _countDownLabel.hidden = YES;
     } else {
         _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
-        _countDownLabel.hidden = NO;
+        _countDownLabel.hidden = YES; //temp hide it under any conditions
     }
     
     //client's special requirement to request a pause after entry into play mode
@@ -1087,14 +1068,15 @@
 }
 
 /**
- *  Same meaning as Auto Delay or Auto Mode for history reason
+ *  是Auto play中的其中一种（另外一种是fixed delay，就是用NSTimer进行固定时间间隔的切换卡片
+ *  这是一种智能的方式，只有文本读完了，才切换到下一个卡片
  */
 - (BOOL) isSmartDelay {
     //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
     if ((int)_autoPlayDelaySlider.value == kMIN_Auto_Play_Speed) {
         return YES;
     } else {
-        return FALSE;
+        return NO;
     }
 }
 
@@ -1129,8 +1111,6 @@
     [_countDownTick invalidate];
     _countDownTick = nil;
     
-    _silenceDetector.silentNotify = nil;
-    _silenceDetector = nil;
     _scrollView.delegate = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
