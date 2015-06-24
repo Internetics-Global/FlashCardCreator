@@ -88,6 +88,8 @@
     
     UILabel  *_countDownLabel;
     
+    int       _currentPage;
+    
 }
 
 @end
@@ -690,6 +692,11 @@
     
     [self resetAutoHideControlPanelTimer];
     
+    //当移动到最后一个卡片时，这时如果点击cycle button，则会自动触发重新开始。在fixed delay模式下，由于定时器一直在工作，所以不用加额外逻辑，而在auto delay模式下，则需要模拟一个text2SpeechFinished事件
+    if (_isAutoScroll && [self isSmartDelay] && (_currentPage == [[self.currentPack cards] count] -1)) {
+        [self text2SpeechFinished:[NSNumber numberWithBool:NO]];
+    }
+    
     
 }
 
@@ -904,6 +911,8 @@
 
 - (void)didScrollToPage:(NSInteger)index {
      [iConsole info:@"%s",__FUNCTION__];
+    
+    _currentPage = index;
     
     FlashCard *currentCard = [self getCurrrentCard];
     [self playbackOnCard:currentCard];
