@@ -603,7 +603,7 @@
         _dwellOnAnswerExpireTimer = nil;
     }
     
-    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value/2) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:YES];
+    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value/2) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:NO];
     
     
 }
@@ -910,7 +910,7 @@
  */
 - (void) didFinishDwellOnAnswerCard {
     
-    if ([self isText2Speech]) {
+    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
         FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
         [currentCard stopTextToSpeechNow];
     }
@@ -922,7 +922,7 @@
  *  在fixed delay模式中，在question中，如果时间超过_dwellTimeSlider.value/2，则需要关闭text to speech
  */
 - (void)didFinishDwellOnQuestionCard {
-    if ([self isText2Speech]) {
+    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
         FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
         [currentCard stopTextToSpeechNow];
     }

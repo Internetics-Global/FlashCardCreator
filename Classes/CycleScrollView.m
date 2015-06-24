@@ -114,7 +114,7 @@
     }
     
     if (_isFixedDelayAutoScroll && self.isAutoScroll) {
-        _dwellOnQuestionExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsOnQuestion) target:self selector:@selector(dwellOnQuestionExpireTimer) userInfo:nil repeats:YES];
+        _dwellOnQuestionExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsOnQuestion) target:self selector:@selector(dwellOnQuestionExpireTimer) userInfo:nil repeats:NO];
     } else {
         
     }
