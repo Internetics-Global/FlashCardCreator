@@ -403,6 +403,8 @@
     
     _pauseForAnswerSlider.enabled = YES;
     
+    [_pauseForAnswerSlider showPopUpViewAnimated:NO];
+    
     _pauseForAnswerLabel.enabled = YES;
     _minPauseForAnswerLabel.enabled = YES;
     _maxPauseForAnswerLabel.enabled = YES;
@@ -421,6 +423,8 @@
 - (void) disablePauseForAnswerSlider {
     
     _pauseForAnswerSlider.enabled = NO;
+    
+    [_pauseForAnswerSlider hidePopUpViewAnimated:NO];
     
     _pauseForAnswerLabel.enabled = NO;
     _minPauseForAnswerLabel.enabled = NO;
@@ -1063,7 +1067,8 @@
             double delayInSeconds = K_IntervalBetweenCardSeconds;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                if ((_isShuttingDown == FALSE) && _isAutoScroll) {
+                //我们需要这些条件，因为这是一个延时操作
+                if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                     [_scrollView scrollNow];
                 }
             });
@@ -1072,7 +1077,8 @@
                 double delayInSeconds = _pauseForAnswerSlider.value;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if ((_isShuttingDown == FALSE) && _isAutoScroll) {
+                    //我们需要这些条件，因为这是一个延时操作
+                    if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                         [self switchQuestionAnswerViewWithHand:NO];
                     }
                 });
@@ -1080,7 +1086,8 @@
                 double delayInSeconds = K_IntervalBetweenCardSeconds;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    if ((_isShuttingDown == FALSE) && _isAutoScroll) {
+                    //我们需要这些条件，因为这是一个延时操作
+                    if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                         [_scrollView scrollNow];
                     }
                 });
