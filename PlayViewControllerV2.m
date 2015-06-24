@@ -21,6 +21,7 @@
 #import "ASValueTrackingSlider.h"
 
 #define K_AutoHideControlPanelSeconds  5
+#define K_PauseBetweenCard             2
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
@@ -68,15 +69,6 @@
     ASValueTrackingSlider *_autoPlayDelaySlider;
     UILabel               *_minAutoPlayDelayLabel;
     UILabel               *_maxAutoPlayDelayLabel;
-    
-    /**
-     *  在本应用中，我们遇到了几种间隔的概念
-     *  1._pauseBetweenQuestion2Answer （question和answer之间的间隔）
-     *  2.pauseForAnswer（卡片结束到下一张开片开始的间隔）
-     *  3.autoPlayDelay (一个卡片的播放时间）
-     */
-    float _pauseBetweenQuestion2Answer;   //seconds, currently, it's set to 0. I bet client would ask for this function later
-
     
     
     /**
@@ -769,7 +761,7 @@
         _autoSwitchQATimer = nil;
     }
     if ((_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5 + _pauseBetweenQuestion2Answer) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.2 + _pauseForAnswerSlider.value) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
     
     
@@ -880,7 +872,7 @@
         _autoSwitchQATimer = nil;
     }
     if (_isAutoScroll && (_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
-        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.5) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
+        _autoSwitchQATimer = [NSTimer scheduledTimerWithTimeInterval:(_autoPlayDelaySlider.value/2-0.2 + _pauseForAnswerSlider.value) target:self selector:@selector(switchQAFromTimer) userInfo:nil repeats:NO];
     }
 }
 
@@ -1029,7 +1021,7 @@
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
-            double delayInSeconds = _pauseForAnswerSlider.value;
+            double delayInSeconds = K_PauseBetweenCard;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 if ((_isShuttingDown == FALSE) && _isAutoScroll) {
@@ -1038,7 +1030,7 @@
             });
         } else {
             if ([isQuestionShowing boolValue]) {
-                double delayInSeconds = _pauseBetweenQuestion2Answer;
+                double delayInSeconds = _pauseForAnswerSlider.value;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     if ((_isShuttingDown == FALSE) && _isAutoScroll) {
@@ -1046,7 +1038,7 @@
                     }
                 });
             } else {
-                double delayInSeconds = _pauseForAnswerSlider.value;
+                double delayInSeconds = K_PauseBetweenCard;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     if ((_isShuttingDown == FALSE) && _isAutoScroll) {
