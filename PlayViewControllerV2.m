@@ -400,13 +400,17 @@
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
     
-    [self disableAutoPlayDelaySlider];
+    [self disableDwellTimeSlider];
     [self disablePauseForAnswerSlider];
     
 
 }
 
 - (void) enablePauseForAnswerSlider {
+    
+    if ([self isPauseForAnswerSliderEnabled]) {
+        return;
+    }
     
     _pauseForAnswerSlider.enabled = YES;
     
@@ -418,7 +422,11 @@
     
 }
 
-- (void) enableAutoPlayDelaySlider {
+- (void) enableDwellTimeSlider {
+    
+    if ([self isDwellTimeSliderEnabled]) {
+        return;
+    }
     
     _dwellTimeSlider.enabled = YES;
     [_dwellTimeSlider showPopUpViewAnimated:YES];
@@ -428,6 +436,10 @@
 }
 
 - (void) disablePauseForAnswerSlider {
+    
+    if ([self isPauseForAnswerSliderEnabled] == FALSE) {
+        return;
+    }
     
     _pauseForAnswerSlider.enabled = NO;
     
@@ -439,7 +451,11 @@
     
 }
 
-- (void) disableAutoPlayDelaySlider {
+- (void) disableDwellTimeSlider {
+    
+    if ([self isDwellTimeSliderEnabled] == FALSE) {
+        return;
+    }
     
     _dwellTimeSlider.enabled = NO;
     [_dwellTimeSlider hidePopUpViewAnimated:NO];
@@ -447,6 +463,14 @@
     _minDwellTimeLabel.enabled = NO;
     _maxDwellTimeLabel.enabled = NO;
     
+}
+
+- (BOOL) isPauseForAnswerSliderEnabled {
+    return _pauseForAnswerSlider.enabled;
+}
+
+- (BOOL) isDwellTimeSliderEnabled {
+    return _dwellTimeSlider.enabled;
 }
 
 - (void) prepareData {
@@ -636,15 +660,15 @@
     }
     
     
-    if ([currentFlashCardView isQuestionShowing]) {
-        [self disableAutoPlayDelaySlider];
-    }
-    
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
-    if (executionTime <1.5) {
+    if (executionTime <1.0) {
         return;
+    }
+    
+    if ([currentFlashCardView isQuestionShowing]) {
+        [self disableDwellTimeSlider];
     }
     
     if (currentFlashCardView) {
@@ -731,7 +755,7 @@
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
         [self disablePauseForAnswerSlider];
-        [self disableAutoPlayDelaySlider];
+        [self disableDwellTimeSlider];
         
         _scrollView.userInteractionEnabled = YES;
         
@@ -957,7 +981,7 @@
      [iConsole info:@"%s",__FUNCTION__];
     
     if (_isAutoScroll) {
-        [self enableAutoPlayDelaySlider];
+        [self enableDwellTimeSlider];
     }
     
     _currentPage = index;
@@ -1036,7 +1060,7 @@
     _isAutoScroll = YES;
     _scrollView.isAutoScroll = YES;
     
-    [self enableAutoPlayDelaySlider];
+    [self enableDwellTimeSlider];
     if ([self isSmartDelay]) {
         [self enablePauseForAnswerSlider];
     } else {
@@ -1130,7 +1154,7 @@
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
     
     if (_isAutoScroll) {
-        [self enableAutoPlayDelaySlider];
+        [self enableDwellTimeSlider];
     }
     
     if ([self isSmartDelay] && _isAutoScroll) {
