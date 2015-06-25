@@ -8942,6 +8942,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self showTooltips];
 }
 
+- (BOOL) isQuestionShowing {
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 
 @end

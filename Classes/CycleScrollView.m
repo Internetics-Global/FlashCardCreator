@@ -17,6 +17,7 @@
     
     /**
      *  在fixed delay模式下的使用。在smart delay模式（即文本读完后才到下一张卡片）不使用
+
      */
     NSTimer        * _autoScrollTimerForFixedDelay;
     

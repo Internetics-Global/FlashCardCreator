@@ -209,4 +209,6 @@ typedef enum{
 
 - (void) updateQuestionAnswerAllTextViewVeriticalAlignment;
 
+- (BOOL) isQuestionShowing;
+
 @end

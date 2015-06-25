@@ -630,11 +630,15 @@
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
     
-    if (_isAutoScroll && (currentFlashCardView.segmentedControl.selectedSegmentIndex == 1)) {
+    if (_isAutoScroll && ([currentFlashCardView isQuestionShowing] == FALSE)) {
         //we don't allow to automatically switch from answer to question again
         return;
     }
     
+    
+    if ([currentFlashCardView isQuestionShowing]) {
+        [self disableAutoPlayDelaySlider];
+    }
     
     //加入这段代码的原因是为了防止误操作
     NSDate*methodFinish =[NSDate date];
@@ -952,6 +956,10 @@
 - (void)didScrollToPage:(NSInteger)index {
      [iConsole info:@"%s",__FUNCTION__];
     
+    if (_isAutoScroll) {
+        [self enableAutoPlayDelaySlider];
+    }
+    
     _currentPage = index;
     
     FlashCard *currentCard = [self getCurrrentCard];
@@ -1120,6 +1128,11 @@
  *  will delay to scroll after _pauseForAnswerSlider.value
  */
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
+    
+    if (_isAutoScroll) {
+        [self enableAutoPlayDelaySlider];
+    }
+    
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
             double delayInSeconds = K_IntervalBetweenCardSeconds;
