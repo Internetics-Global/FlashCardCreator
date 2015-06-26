@@ -62,7 +62,7 @@
     
     /**
      *  _dwellTimeSlider.value + _pauseForAnswerSlider.value 为整个卡片（包括question和answer)的停留时间
-     *  如果question only,则question上的停留时间是_dwellTimeSlider.value；否则是_dwellTimeSlider.value/2
+     *  无论是question only，还是both question and answer,则question/answer上的停留时间都是_dwellTimeSlider.value
      *  取值范围
      *  1. 如果 == 最小值，则是[self isSmartDelay] = YES
      *  2. 否则其它情况，则为一般固定间隔
@@ -627,7 +627,7 @@
         _dwellOnAnswerExpireTimer = nil;
     }
     
-    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value/2) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:NO];
+    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:NO];
     
     
 }
@@ -832,8 +832,8 @@
         _scrollView.dwellSecondsTotally = _dwellTimeSlider.value;
         _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value;
     } else {
-        _scrollView.dwellSecondsTotally = _dwellTimeSlider.value + _pauseForAnswerSlider.value;
-        _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value/2;
+        _scrollView.dwellSecondsTotally = _dwellTimeSlider.value *2 + _pauseForAnswerSlider.value;
+        _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value;
     }
     
     _scrollView.intervalBetweenCardSeconds = K_IntervalBetweenCardSeconds;
@@ -890,8 +890,8 @@
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
-        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value + _pauseForAnswerSlider.value);
-        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value/2);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value *2 + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     }
     
     
@@ -906,8 +906,8 @@
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
-        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value + _pauseForAnswerSlider.value);
-        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value/2);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value *2 + _pauseForAnswerSlider.value);
+        _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     }
     
     
@@ -934,7 +934,7 @@
 }
 
 /**
- *  在fixed delay模式中，在answer中，如果时间超过_dwellTimeSlider.value/2，则需要关闭text to speech
+ *  在fixed delay模式中，在answer中，如果时间超过_dwellTimeSlider.value，则需要关闭text to speech
  */
 - (void) didFinishDwellOnAnswerCard {
     
@@ -947,7 +947,7 @@
 #pragma mark – CycleScrollViewDelegate
 
 /**
- *  在fixed delay模式中，在question中，如果时间超过_dwellTimeSlider.value/2，则需要关闭text to speech
+ *  在fixed delay模式中，在question中，如果时间超过_dwellTimeSlider.value，则需要关闭text to speech
  */
 - (void)didFinishDwellOnQuestionCard {
     if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
@@ -996,7 +996,7 @@
 
 - (void) resetQASwitchTimer {
     
-    float seconds = (_dwellTimeSlider.value/2 + _pauseForAnswerSlider.value);
+    float seconds = (_dwellTimeSlider.value + _pauseForAnswerSlider.value);
     
     if (_autoSwitchQATimerForFixedDelay) {
         [_autoSwitchQATimerForFixedDelay invalidate];
@@ -1086,11 +1086,7 @@
     _countDownLabel.numberOfLines = 1;
     _countDownLabel.textColor = [UIColor whiteColor];
     _countDownLabel.backgroundColor = [UIColor clearColor];
-    if (_isAutoShowQuestionOnly) {
-        _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_dwellTimeSlider.value];
-    } else {
-        _countDownLabel.text = [NSString stringWithFormat:@"%d",((int)_dwellTimeSlider.value)/2-1];
-    }
+    _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_dwellTimeSlider.value];
     [self.view addSubview:_countDownLabel];
     
     if ([self isSmartDelay]) {
