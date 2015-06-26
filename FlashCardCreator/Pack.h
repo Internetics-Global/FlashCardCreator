@@ -33,7 +33,12 @@
 @property (nonatomic, assign) NSInteger packID;
 @property (nonatomic, copy) NSString *packName;
 @property (nonatomic, copy) NSString *sidebarTitle;
+
+/**
+ *  完整path,而不是只是一个文件名
+ */
 @property (nonatomic, copy,getter=getCoverImageURL) NSString *coverImageURL;
+
 @property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, copy) NSString *languageName;
 @property (nonatomic, assign) BOOL isPublic;

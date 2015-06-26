@@ -263,6 +263,38 @@
     
     
     return NO;
+    
+}
+
+
+/**
+ *  我们只检查是否是目录的字符串格式，而不检查是否存在
+ */
++ (BOOL) isDirectoryFormat:(NSString *) filePath {
+    
+//we can not use this way
+//    BOOL isDir;
+//    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir];
+//    if (exists) {
+//        /* file exists */
+//        if (isDir) {
+//            return YES;
+//        }
+//    }
+    
+    if (filePath.length == 0) {
+        return YES;
+    }
+    
+    //check extension type
+    if ([[filePath lastPathComponent] rangeOfString:@"."].location == NSNotFound) {
+        return YES;
+    }
+    
+    
+    return NO;
+
+    
 }
 
 

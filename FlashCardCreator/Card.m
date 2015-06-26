@@ -29,7 +29,7 @@
 #pragma mark Initialization
 
 - (NSString *)getCoverImageURL {
-    if (_coverImageURL.length == 0) {
+    if (_coverImageURL.length == 0 || [Common isDirectoryFormat:_coverImageURL] ) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_coverImageURL lastPathComponent]];
@@ -40,7 +40,7 @@
 
 
 - (void)setCoverImageURL:(NSString *)coverImageURL {
-    if (coverImageURL.length == 0) {
+    if (coverImageURL.length == 0 || [Common isDirectoryFormat:coverImageURL] ) {
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[coverImageURL lastPathComponent]];
         _coverImageURL = fullPath;

@@ -39,7 +39,7 @@
 #pragma mark Initialization
 
 - (NSString *)getBackgroundImageFullPath {
-    if (_backgroundImageFullPath.length == 0) {
+    if (_backgroundImageFullPath.length == 0 || [Common isDirectoryFormat:_backgroundImageFullPath]) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_backgroundImageFullPath lastPathComponent]];
@@ -48,7 +48,7 @@
 }
 
 - (NSString *)getRecordedSoundFullPath {
-    if (_recordedSoundFullPath.length == 0) {
+    if (_recordedSoundFullPath.length == 0 || [Common isDirectoryFormat:_recordedSoundFullPath] ) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_recordedSoundFullPath lastPathComponent]];
@@ -57,7 +57,8 @@
 }
 
 - (void)setBackgroundImageFullPath:(NSString *)backgroundImageFullPath {
-    if (backgroundImageFullPath.length == 0) {
+    if (backgroundImageFullPath.length == 0 || [Common isDirectoryFormat:backgroundImageFullPath] ) {
+        [iConsole error:@"%s:backgroundImageFullPath could not be nil or empty",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[backgroundImageFullPath lastPathComponent]];
         _backgroundImageFullPath = fullPath;
@@ -66,16 +67,17 @@
 
 - (void)setRecordedSoundFullPath:(NSString *)recordedSoundFullPath {
     
-    if (_recordedSoundFullPath.length == 0) {
+    if (recordedSoundFullPath.length == 0 || [Common isDirectoryFormat:recordedSoundFullPath] ) {
+        [iConsole error:@"%s: recordedSoundFullPath could not be nil or empty",__FUNCTION__];
     } else {
-        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_recordedSoundFullPath lastPathComponent]];
+        NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[recordedSoundFullPath lastPathComponent]];
         _recordedSoundFullPath = fullPath;
     }
     
 }
 
 - (NSString *)getImageFullPath {
-    if (_imageFullPath.length == 0) {
+    if (_imageFullPath.length == 0 || [Common isDirectoryFormat:_imageFullPath] ) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath lastPathComponent]];
@@ -84,7 +86,7 @@
 }
 
 - (NSString *)getImageFullPath2 {
-    if (_imageFullPath2.length == 0) {
+    if (_imageFullPath2.length == 0 || [Common isDirectoryFormat:_imageFullPath2] ) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath2 lastPathComponent]];
@@ -93,7 +95,7 @@
 }
 
 - (NSString *)getLogoFullPath {
-    if (_logoFullPath.length == 0) {
+    if (_logoFullPath.length == 0 || [Common isDirectoryFormat:_logoFullPath] ) {
         return nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_logoFullPath lastPathComponent]];
@@ -102,7 +104,7 @@
 }
 
 - (NSString *)getMovieFullPath {
-    if (_movieFullPath.length == 0) {
+    if (_movieFullPath.length == 0 || [Common isDirectoryFormat:_movieFullPath] ) {
         return nil;
     } else {
         if ([_movieFullPath rangeOfString:@"http"].location == NSNotFound) {
@@ -115,7 +117,7 @@
 }
 
 - (NSString *)getMovieFullPath2 {
-    if (_movieFullPath2.length == 0) {
+    if (_movieFullPath2.length == 0 || [Common isDirectoryFormat:_movieFullPath2] ) {
         return nil;
     } else {
         if ([_movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
@@ -128,7 +130,8 @@
 }
 
 - (void)setImageFullPath:(NSString *)imageFullPath {
-    if (imageFullPath.length == 0) {
+    if (imageFullPath.length == 0 || [Common isDirectoryFormat:imageFullPath] ) {
+        [iConsole error:@"%s: imageFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath lastPathComponent]];
         _imageFullPath = fullPath;
@@ -136,7 +139,8 @@
 }
 
 - (void)setImageFullPath2:(NSString *)imageFullPath2 {
-    if (imageFullPath2.length == 0) {
+    if (imageFullPath2.length == 0 || [Common isDirectoryFormat:imageFullPath2] ) {
+        [iConsole error:@"%s: imageFullPath2 could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath2 lastPathComponent]];
         _imageFullPath2 = fullPath;
@@ -145,7 +149,8 @@
 }
 
 - (void)setLogoFullPath:(NSString *)logoFullPath {
-    if (logoFullPath.length == 0) {
+    if (logoFullPath.length == 0 || [Common isDirectoryFormat:logoFullPath] ) {
+        [iConsole error:@"%s: logoFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[logoFullPath lastPathComponent]];
         _logoFullPath = fullPath;
@@ -153,7 +158,8 @@
 }
 
 - (void)setMovieFullPath:(NSString *)movieFullPath {
-    if (movieFullPath.length == 0) {
+    if (movieFullPath.length == 0 || [Common isDirectoryFormat:movieFullPath]  ) {
+        [iConsole error:@"%s: movieFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         //we don't convert when it's an http/https url
         if ([movieFullPath rangeOfString:@"http"].location == NSNotFound) {
@@ -166,7 +172,8 @@
 }
 
 - (void)setMovieFullPath2:(NSString *)movieFullPath2 {
-    if (movieFullPath2.length == 0) {
+    if (movieFullPath2.length == 0 || [Common isDirectoryFormat:movieFullPath2] ) {
+        [iConsole error:@"%s: movieFullPath2 could not be nil or empty or directory",__FUNCTION__];
     } else {
         if ([movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
             NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];

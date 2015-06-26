@@ -53,4 +53,6 @@
  */
 + (BOOL) isPlaceholderFilePathOrDirectory :(NSString *) pathStr;
 
++ (BOOL) isDirectoryFormat:(NSString *) filePath;
+
 @end
