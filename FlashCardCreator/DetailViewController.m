@@ -664,8 +664,14 @@ enum popover_enum {
 - (void) selectedPackNotification:(NSNotification *) notification {
     [iConsole info:@"%s",__FUNCTION__];
     _isResizedArray = nil;
-    int index = [(NSString *)[notification object] intValue];
-    self.currentPack = [[User defaultUser] packs][index];
+    Pack *pack = (Pack *)[notification object];
+    NSMutableArray *allPacks = [[User defaultUser] packs];
+    for (Pack *itempPack in allPacks) {
+        if (itempPack.packID == pack.packID) {
+            self.currentPack = itempPack;
+            break;
+        }
+    }
     
     UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
     [titleLable setText:_currentPack.packName];

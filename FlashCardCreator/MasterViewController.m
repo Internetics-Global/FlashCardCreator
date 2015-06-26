@@ -604,8 +604,15 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) selectedPackNotification:(NSNotification *) notification {
-    int index = [(NSString *)[notification object] intValue];
-    self.currentPack = [[User defaultUser] packs][index];
+    
+    Pack *pack = (Pack *)[notification object];
+    NSMutableArray *allPacks = [[User defaultUser] packs];
+    for (Pack *itempPack in allPacks) {
+        if (itempPack.packID == pack.packID) {
+            self.currentPack = itempPack;
+            break;
+        }
+    }
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.packIDForMasterViewPack = self.currentPack.packID;
