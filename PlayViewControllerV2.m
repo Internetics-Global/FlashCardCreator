@@ -288,7 +288,7 @@
     [_dwellTimeSlider setMaxFractionDigitsDisplayed:0];
     _dwellTimeSlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _dwellTimeSlider.font = [UIFont systemFontOfSize:12];
-    _dwellTimeSlider.popUpViewWidthPaddingFactor = 1.5;
+    _dwellTimeSlider.popUpViewWidthPaddingFactor = 3.5;
     _dwellTimeSlider.popUpViewCornerRadius = 3;
     _dwellTimeSlider.popUpViewHeightPaddingFactor = 1;
     _dwellTimeSlider.popUpViewArrowLength = 8;
@@ -902,6 +902,13 @@
 
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
+    int val = (int)slider.value;
+    if (val == kMIN_Auto_Play_Speed) {
+        _scrollView.isFixedDelayAutoScroll = NO;
+    } else {
+        _scrollView.isFixedDelayAutoScroll = YES;
+    }
+    
     if (_isAutoShowQuestionOnly) {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
@@ -1149,7 +1156,7 @@
  */
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
     
-    if (_isAutoScroll) {
+    if (_isAutoScroll && (isQuestionShowing == FALSE)) {
         [self enableDwellTimeSlider];
     }
     
@@ -1210,14 +1217,15 @@
 }
 
 #pragma mark – ASValueTrackingSliderDataSource
+/**
+ *  仅能用来更新indicator string，而不能做其它逻辑。原因在于这个方法会在重画/或重布局时被调用，而不是只有值改变时才被调用
+ */
 - (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
 {
     NSString *s;
     if (value == kMIN_Auto_Play_Speed) {
         s = @"Auto";
-        _scrollView.isFixedDelayAutoScroll = NO;
     } else {
-        _scrollView.isFixedDelayAutoScroll = YES;
         s = [NSString stringWithFormat:@"%d",(int)value];
     }
     return s;
