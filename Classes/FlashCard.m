@@ -8952,4 +8952,34 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 
+- (float) durationForQuestionRecordedSound {
+    
+    NSString *audioFilePath = _currentCard.question.recordedSoundFullPath;;
+    
+    if (audioFilePath.length > 0) {
+        //这是一个有效的声音文件
+    }
+    
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:audioFilePath] options:nil];
+    CMTime audioDuration = audioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    return audioDurationSeconds;
+}
+
+- (float) durationForAnswerRecordedSound {
+    
+    NSString *audioFilePath = _currentCard.answer.recordedSoundFullPath;
+    
+    if (audioFilePath.length > 0) {
+        //这是一个有效的声音文件
+    }
+    
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:audioFilePath] options:nil];
+    CMTime audioDuration = audioAsset.duration;
+    float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+    return audioDurationSeconds;
+}
+
+
+
 @end

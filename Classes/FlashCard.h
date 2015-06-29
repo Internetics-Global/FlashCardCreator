@@ -211,4 +211,7 @@ typedef enum{
 
 - (BOOL) isQuestionShowing;
 
+- (float) durationForQuestionRecordedSound;
+- (float) durationForAnswerRecordedSound;
+
 @end

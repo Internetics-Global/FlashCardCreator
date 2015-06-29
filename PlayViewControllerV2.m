@@ -288,7 +288,7 @@
     [_dwellTimeSlider setMaxFractionDigitsDisplayed:0];
     _dwellTimeSlider.popUpViewColor = [UIColor colorWithHue:0.55 saturation:0.8 brightness:0.9 alpha:0.7];
     _dwellTimeSlider.font = [UIFont systemFontOfSize:12];
-    _dwellTimeSlider.popUpViewWidthPaddingFactor = 3.5;
+    _dwellTimeSlider.popUpViewWidthPaddingFactor = 2;
     _dwellTimeSlider.popUpViewCornerRadius = 3;
     _dwellTimeSlider.popUpViewHeightPaddingFactor = 1;
     _dwellTimeSlider.popUpViewArrowLength = 8;
