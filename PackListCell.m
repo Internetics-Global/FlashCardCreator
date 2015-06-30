@@ -52,6 +52,14 @@
     self.coverImageView.autoresizingMask = UIViewAutoresizingNone;
     [contentView addSubview:self.coverImageView];
     
+    self.lockImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.coverImageView.frame) - 24, CGRectGetMinY(self.coverImageView.frame)-12, 24, 24)];
+    self.lockImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.lockImageView.layer.cornerRadius = 10;
+    self.lockImageView.layer.masksToBounds = YES;
+    [self.lockImageView setImage:[UIImage imageNamed:@"lock"]];
+    self.lockImageView.autoresizingMask = UIViewAutoresizingNone;
+    [contentView addSubview:self.lockImageView];
+    
     
     self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.playButton.frame = CGRectMake(145, 150, 50, 50);

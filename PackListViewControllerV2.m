@@ -233,6 +233,19 @@
         cell.playButton.tag = index;
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];
         
+        if (pack.packID == [self getPackIDForLastSelected]) {
+            cell.coverImageView.backgroundColor = [UIColor colorWithRed:0.3 green:0.4 blue:0.5 alpha:0.3];
+            cell.coverImageView.layer.borderColor = [UIColor colorWithRed:0.3 green:0.4 blue:0.5 alpha:0.3].CGColor;
+            cell.coverImageView.layer.borderWidth = 1;
+            cell.lockImageView.hidden = NO;
+            
+            
+        } else {
+            cell.coverImageView.backgroundColor = [UIColor clearColor];
+            cell.coverImageView.layer.borderWidth = 0;
+            cell.lockImageView.hidden = YES;
+        }
+        
         if ((self.packIDInMasterView != pack.packID) && [pack.creator isEqualToString:[OpenUDID value]] && _isCollectionViewEditing) {
             cell.packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
             cell.packNameText.layer.borderWidth = 1;
@@ -271,7 +284,12 @@
         [selectedPack savePackOnly];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
+        
+        [self setPackIDForLastSelected:selectedPack.packID];
+        
     }
+    
+    
 }
 
 #pragma mark -
@@ -303,7 +321,7 @@
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
     [selectedPack savePackOnly];
     
-    
+    [self setPackIDForLastSelected:selectedPack.packID];
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -494,7 +512,6 @@
         //Recalculate:
         Pack *latestPack = [[[User defaultUser] packs] lastObject];
         if (latestPack != nil) {
-            [[NSUserDefaults standardUserDefaults] setInteger:latestPack.packID forKey:@"lastCreatedPackID"]; //packID is a time related unique id
             //Update_date info
             NSString *updateDate = [FileOperationHelper getTodayString];
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
@@ -514,6 +531,19 @@
 }
 
 
+- (int) getPackIDForLastSelected {
+    
+    NSInteger val = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
+    return val;
+    
+}
+
+- (void) setPackIDForLastSelected:(int) packID {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:packID forKey:@"lastCreatedPackID"];
+    [defaults synchronize];
+}
 
 #pragma mark -
 #pragma mark - UITextFieldDelegate
@@ -530,6 +560,7 @@
     currentPack.packName = textField.text;
     [currentPack save];
 }
+
 
 
 
