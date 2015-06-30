@@ -234,14 +234,14 @@
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];
         
         if (pack.packID == [self getPackIDForLastSelected]) {
-            cell.coverImageView.backgroundColor = [UIColor colorWithRed:0.3 green:0.4 blue:0.5 alpha:0.15];
+            cell.maskImageView.backgroundColor = [UIColor colorWithRed:0.3 green:0.4 blue:0.5 alpha:0.3];
             cell.coverImageView.layer.borderColor = [UIColor colorWithRed:0.3 green:0.4 blue:0.5 alpha:0.15].CGColor;
             cell.coverImageView.layer.borderWidth = 1;
             cell.lockImageView.hidden = NO;
             
             
         } else {
-            cell.coverImageView.backgroundColor = [UIColor clearColor];
+            cell.maskImageView.backgroundColor = [UIColor clearColor];
             cell.coverImageView.layer.borderWidth = 0;
             cell.lockImageView.hidden = YES;
         }

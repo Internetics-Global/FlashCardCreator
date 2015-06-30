@@ -16,5 +16,6 @@
 @property (strong, nonatomic) UIButton    *changeImageButton;
 @property (strong, nonatomic) UIButton    *playButton;
 @property (strong, nonatomic) UIImageView *lockImageView;
+@property (strong, nonatomic) UIImageView *maskImageView;
 
 @end
