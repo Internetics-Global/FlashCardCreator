@@ -52,7 +52,7 @@
     self.coverImageView.autoresizingMask = UIViewAutoresizingNone;
     [contentView addSubview:self.coverImageView];
     
-    self.lockImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.coverImageView.frame) - 29, CGRectGetMinY(self.coverImageView.frame) + 5, 24, 24)];
+    self.lockImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.coverImageView.frame) - 29, CGRectGetMinY(self.coverImageView.frame) + 10, 24, 24)];
     self.lockImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.lockImageView.layer.cornerRadius = 10;
     self.lockImageView.layer.masksToBounds = YES;
