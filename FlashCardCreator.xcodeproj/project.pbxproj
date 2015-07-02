@@ -1710,7 +1710,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION == Release ]; then\nexport PATH=/usr/local/bin:$PATH\ncd ${PROJECT_DIR}/parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\nfi";
+			shellScript = "if [ $CONFIGURATION == Release ]; then\nexport PATH=/usr/local/bin:$PATH\ncd ${PROJECT_DIR}/parse\n\nparse symbols FCC --path=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\nfi";
 		};
 		889DD7BD184D321900D99C56 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
