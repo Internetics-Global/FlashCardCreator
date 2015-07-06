@@ -15,7 +15,7 @@
 #import "UIImage+Scale.h"
 #import "ASValueTrackingSlider.h"
 
-@interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate>{
+@interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate,ASValueTrackingSliderDataSource>{
     
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
@@ -60,6 +60,7 @@
     _autoPlaySpeedSlider.popUpViewCornerRadius = 3;
     _autoPlaySpeedSlider.popUpViewHeightPaddingFactor = 1;
     _autoPlaySpeedSlider.popUpViewArrowLength = 8;
+    _autoPlaySpeedSlider.dataSource = self;
     _autoPlaySpeedSlider.popUpViewAnimatedColors = @[[UIColor orangeColor]];
     [_autoPlaySpeedSlider showPopUpViewAnimated:NO];
     _autoPlaySpeedSlider.textColor = [UIColor whiteColor];
@@ -67,13 +68,14 @@
     if (self.isEditPack == FALSE) {
         _currentPack = [[Pack alloc] init];
         _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
+        _autoPlaySpeedSlider.value = kMIN_Auto_Play_Speed;
     } else {
         _packNameTextField.text = _currentPack.packName;
         _sidebarTextField.text = _currentPack.sidebarTitle;
         _creatorTextField.text = _currentPack.creatorNickName;
         _jobTitleTextField.text = _currentPack.jobTitle;
         if (_currentPack.autoPlaySpeed == 0) {
-            _autoPlaySpeedSlider.value = 10.0;
+            _autoPlaySpeedSlider.value = kMIN_Auto_Play_Speed;
         } else {
             _autoPlaySpeedSlider.value = _currentPack.autoPlaySpeed;
         }
@@ -248,6 +250,21 @@
     }
     
     return YES;
+}
+
+#pragma mark – ASValueTrackingSliderDataSource
+/**
+ *  仅能用来更新indicator string，而不能做其它逻辑。原因在于这个方法会在重画/或重布局时被调用，而不是只有值改变时才被调用
+ */
+- (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
+{
+    NSString *s;
+    if (value == kMIN_Auto_Play_Speed) {
+        s = @"Auto";
+    } else {
+        s = [NSString stringWithFormat:@"%d",(int)value];
+    }
+    return s;
 }
 
 
