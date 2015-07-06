@@ -20,6 +20,8 @@
 #import "PopoverView.h"
 #import "ASValueTrackingSlider.h"
 
+#import "NSTimer+BlocksKit.h"
+
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds               2
 
@@ -95,6 +97,13 @@
     UILabel  *_countDownLabel;
     
     int       _currentPage;
+    
+    
+    NSTimer  *_timerAForText2SpeechFinished;
+    NSTimer  *_timerBForText2SpeechFinished;
+    NSTimer  *_timerCForText2SpeechFinished;
+    
+    NSTimer  *_timerForDelayedText2Speech;
     
 }
 
@@ -744,6 +753,9 @@
 
 - (void) autoScrollButtonClicked:(UIButton *) button {
     
+    [_timerForDelayedText2Speech invalidate];
+    _timerForDelayedText2Speech = nil;
+    
     if (_isAutoScroll == FALSE) {
         [PopoverView showPopoverAtPoint:_autoScrollButton.center
                                  inView:_controlPanel
@@ -767,6 +779,15 @@
         
         [_firstPageDelayTimer invalidate];
         _firstPageDelayTimer = nil;
+        
+        [_timerAForText2SpeechFinished invalidate];
+        _timerAForText2SpeechFinished = nil;
+        
+        [_timerBForText2SpeechFinished invalidate];
+        _timerBForText2SpeechFinished = nil;
+        
+        [_timerCForText2SpeechFinished invalidate];
+        _timerCForText2SpeechFinished = nil;
         
         _isAutoScroll = NO;
         _scrollView.isAutoScroll = NO;
@@ -799,9 +820,33 @@
                 
                 if (_previousCard) {
                     [_previousCard stopTextToSpeechNow];
+                    [_previousCard stopAudio];
                 }
                 if (_isShuttingDown == FALSE) {
-                    [currentCard textToSpeechAllContentNow];
+                    
+                    int durationForRecordedSound;
+                    if ([currentCard isQuestionShowing]) {
+                        durationForRecordedSound = [currentCard durationForQuestionRecordedSound];
+                    } else {
+                        durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
+                    }
+                    if (durationForRecordedSound == 0) {
+                      [currentCard textToSpeechAllContentNow];
+                    } else {
+                        [currentCard playAudioWithManualClick:NO];
+                        double delayInSeconds = durationForRecordedSound + 1;
+                        
+                        [_timerForDelayedText2Speech invalidate];
+                        _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
+                            if (_isShuttingDown == false) {
+                                [currentCard textToSpeechAllContentNow];
+                            }
+                        } repeats:NO];
+                        
+                    }
+                    
+                    
+                    
                 }
             } else {
                 
@@ -812,6 +857,7 @@
         };
     }
 }
+
 
 - (FlashCard *) getCurrrentCard {
     FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
@@ -1010,6 +1056,7 @@
         _autoSwitchQATimerForFixedDelay = nil;
     }
     if (_isAutoScroll && (_isAutoShowQuestionOnly == NO) && ([self isSmartDelay] == FALSE)) {
+        [_autoSwitchQATimerForFixedDelay invalidate];
         _autoSwitchQATimerForFixedDelay = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(switchQAFromTimerForFixedDelay) userInfo:nil repeats:NO];
     }
     
@@ -1156,39 +1203,42 @@
  */
 - (void) text2SpeechFinished:(NSNumber *) isQuestionShowing {
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     if (_isAutoScroll && (isQuestionShowing == FALSE)) {
         [self enableDwellTimeSlider];
     }
     
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
-            double delayInSeconds = K_IntervalBetweenCardSeconds;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [_timerAForText2SpeechFinished invalidate];
+            _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:K_IntervalBetweenCardSeconds block:^(NSTimer *timer) {
                 //我们需要这些条件，因为这是一个延时操作
                 if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                     [_scrollView scrollNow];
                 }
-            });
+            } repeats:NO];
+            
         } else {
             if ([isQuestionShowing boolValue]) {
                 double delayInSeconds = _pauseForAnswerSlider.value;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [_timerBForText2SpeechFinished invalidate];
+                _timerBForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                     //我们需要这些条件，因为这是一个延时操作
                     if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
-                        [self switchQuestionAnswerViewWithHand:NO];
+                        [weakSelf switchQuestionAnswerViewWithHand:NO];
                     }
-                });
+                } repeats:NO];
+                
             } else {
                 double delayInSeconds = K_IntervalBetweenCardSeconds;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [_timerBForText2SpeechFinished invalidate];
+                _timerCForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                     //我们需要这些条件，因为这是一个延时操作
                     if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                         [_scrollView scrollNow];
                     }
-                });
+                } repeats:NO];
             }
         }
     } else {
@@ -1250,6 +1300,19 @@
     
     [_countDownTick invalidate];
     _countDownTick = nil;
+    
+    [_timerAForText2SpeechFinished invalidate];
+    _timerAForText2SpeechFinished = nil;
+    
+    [_timerBForText2SpeechFinished invalidate];
+    _timerBForText2SpeechFinished = nil;
+    
+    [_timerCForText2SpeechFinished invalidate];
+    _timerCForText2SpeechFinished = nil;
+    
+    [_timerForDelayedText2Speech invalidate];
+    _timerForDelayedText2Speech = nil;
+    
     
     _scrollView.delegate = nil;
     

@@ -181,6 +181,7 @@
 		8842A58719B00D470044C8CC /* templateScreenshot6_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A56F19B00D470044C8CC /* templateScreenshot6_answer_iPad.png */; };
 		8842A58819B00D470044C8CC /* templateScreenshot11_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A57019B00D470044C8CC /* templateScreenshot11_answer.png */; };
 		8842A58919B00D470044C8CC /* templateScreenshot11_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A57119B00D470044C8CC /* templateScreenshot11_answer_iPad.png */; };
+		88490B1E1B4A2CB100878EEB /* NSTimer+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 88490B1D1B4A2CB100878EEB /* NSTimer+BlocksKit.m */; };
 		88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B231714522300833692 /* templateScreenshot0_question_iPad.png */; };
 		88491B381714522300833692 /* templateScreenshot0_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B241714522300833692 /* templateScreenshot0_question.png */; };
 		88491B3B1714522300833692 /* templateScreenshot1_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B271714522300833692 /* templateScreenshot1_question_iPad.png */; };
@@ -521,6 +522,8 @@
 		8842A56F19B00D470044C8CC /* templateScreenshot6_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_answer_iPad.png; path = Resources/templateScreenshot6_answer_iPad.png; sourceTree = "<group>"; };
 		8842A57019B00D470044C8CC /* templateScreenshot11_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot11_answer.png; path = Resources/templateScreenshot11_answer.png; sourceTree = "<group>"; };
 		8842A57119B00D470044C8CC /* templateScreenshot11_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot11_answer_iPad.png; path = Resources/templateScreenshot11_answer_iPad.png; sourceTree = "<group>"; };
+		88490B1C1B4A2CB100878EEB /* NSTimer+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+BlocksKit.h"; sourceTree = "<group>"; };
+		88490B1D1B4A2CB100878EEB /* NSTimer+BlocksKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+BlocksKit.m"; sourceTree = "<group>"; };
 		88491B231714522300833692 /* templateScreenshot0_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot0_question_iPad.png; path = Resources/templateScreenshot0_question_iPad.png; sourceTree = "<group>"; };
 		88491B241714522300833692 /* templateScreenshot0_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot0_question.png; path = Resources/templateScreenshot0_question.png; sourceTree = "<group>"; };
 		88491B271714522300833692 /* templateScreenshot1_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot1_question_iPad.png; path = Resources/templateScreenshot1_question_iPad.png; sourceTree = "<group>"; };
@@ -819,6 +822,8 @@
 		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				88490B1C1B4A2CB100878EEB /* NSTimer+BlocksKit.h */,
+				88490B1D1B4A2CB100878EEB /* NSTimer+BlocksKit.m */,
 				88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */,
 				88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */,
 				884DE1AD18FBA94F00C09067 /* RequestUtils.h */,
@@ -1814,6 +1819,7 @@
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
 				2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */,
 				2D5C184216D1A69200E1E785 /* AboutView.m in Sources */,
+				88490B1E1B4A2CB100878EEB /* NSTimer+BlocksKit.m in Sources */,
 				2D5C184316D1A69200E1E785 /* AboutViewController.m in Sources */,
 				2D5C184416D1A69200E1E785 /* MoreInfoTableViewController.m in Sources */,
 				2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */,

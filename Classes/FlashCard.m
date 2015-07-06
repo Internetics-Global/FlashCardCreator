@@ -8956,11 +8956,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     NSString *audioFilePath = _currentCard.question.recordedSoundFullPath;;
     
-    if (audioFilePath.length > 0) {
-        //这是一个有效的声音文件
+    if (audioFilePath.length  == 0) {
+        return 0;
     }
     
-    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:audioFilePath] options:nil];
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:audioFilePath] options:nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"duration", nil];
+    __block bool loading = YES;
+    [audioAsset loadValuesAsynchronouslyForKeys:keys completionHandler:^(void) {
+        loading = NO;
+    }];
+    
+    while (loading) {
+        usleep(10000);
+    }
+    
+    
     CMTime audioDuration = audioAsset.duration;
     float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
     return audioDurationSeconds;
@@ -8970,11 +8981,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     NSString *audioFilePath = _currentCard.answer.recordedSoundFullPath;
     
-    if (audioFilePath.length > 0) {
-        //这是一个有效的声音文件
+    if (audioFilePath.length  == 0) {
+        return 0;
     }
     
-    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:audioFilePath] options:nil];
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:audioFilePath] options:nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"duration", nil];
+    __block bool loading = YES;
+    [audioAsset loadValuesAsynchronouslyForKeys:keys completionHandler:^(void) {
+        loading = NO;
+    }];
+    
+    while (loading) {
+        usleep(10000);
+    }
+    
+    
     CMTime audioDuration = audioAsset.duration;
     float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
     return audioDurationSeconds;
