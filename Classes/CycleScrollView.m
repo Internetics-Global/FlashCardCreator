@@ -284,9 +284,42 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     
-    //Be careful, don't put any logic that could take time here like "loadDataWithDirectionToNextPage". This will be called by system multiple during scrolling and could result into jigging
-    
-    
+    if (self.isCycle == false) {
+        if (_totalPages == 1) {
+            CGPoint point = _scrollView.contentOffset;
+            if (_scrollView.contentOffset.x != self.bounds.size.width) {
+                point.x = self.bounds.size.width;
+                [_scrollView setScrollEnabled:NO];
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [_scrollView setScrollEnabled:YES];
+                });
+            }
+        } else if (_curPage == 0) {
+            CGPoint point = _scrollView.contentOffset;
+            if (_scrollView.contentOffset.x <= self.bounds.size.width) {
+                point.x = self.bounds.size.width;
+                [_scrollView setScrollEnabled:NO];
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [_scrollView setScrollEnabled:YES];
+                });
+            }
+        } else if (_curPage == _totalPages - 1) {
+            CGPoint point = _scrollView.contentOffset;
+            if (_scrollView.contentOffset.x >= self.bounds.size.width) {
+                point.x = self.bounds.size.width;
+                [_scrollView setScrollEnabled:NO];
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [_scrollView setScrollEnabled:YES];
+                });
+            }
+        }
+    }
 }
 
 //scrollViewDidEndDecelerating won't be called for scrollRectToVisible or setContentOffset (i.e, scrolling programmatically)
