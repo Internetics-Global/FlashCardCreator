@@ -409,8 +409,8 @@
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
     
-    [self disableDwellTimeSlider];
-    [self disablePauseForAnswerSlider];
+    [_dwellTimeSlider showPopUpViewAnimated:NO];
+    [_pauseForAnswerSlider showPopUpViewAnimated:NO];
     
 
 }
@@ -766,8 +766,8 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
-        [self disablePauseForAnswerSlider];
-        [self disableDwellTimeSlider];
+        [_dwellTimeSlider showPopUpViewAnimated:NO];
+        [_pauseForAnswerSlider showPopUpViewAnimated:NO];
         
         _scrollView.userInteractionEnabled = YES;
         
