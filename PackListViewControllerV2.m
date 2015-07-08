@@ -234,8 +234,8 @@
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];
         
         if (pack.packID == [self getPackIDForLastSelected]) {
-            cell.maskImageView.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.7];
-            cell.coverImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+            //cell.maskImageView.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.7];
+            cell.coverImageView.layer.borderColor = [UIColor greenColor].CGColor;
             cell.coverImageView.layer.borderWidth = 1;
             cell.lockImageView.hidden = NO;
             
