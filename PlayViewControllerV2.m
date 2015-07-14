@@ -124,6 +124,21 @@
     _startDate =[NSDate date];
     
     
+    
+    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
+    if (isUserInterfaceIdiomPhone) {
+        _countDownLabel.font = [UIFont systemFontOfSize:94];
+    } else {
+        _countDownLabel.font = [UIFont systemFontOfSize:226];
+    }
+    _countDownLabel.center = self.view.center;
+    _countDownLabel.textAlignment = NSTextAlignmentCenter;
+    _countDownLabel.numberOfLines = 1;
+    _countDownLabel.textColor = [UIColor grayColor];
+    _countDownLabel.alpha = 0.5;
+    _countDownLabel.backgroundColor = [UIColor clearColor];
+    
+    
     if isUserInterfaceIdiomPhone {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"w1136"]];
     } else {
@@ -216,7 +231,14 @@
     
     FlashCard *currentCard = [self getCurrrentCard];
     
-    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1.5) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
+    const int COUNT_DOWN_SECONDS = 3; //fixed value
+    
+    _countDownLabel.text = [NSString stringWithFormat:@"%d",COUNT_DOWN_SECONDS];
+    [_countDownLabel removeFromSuperview];
+    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimer) userInfo:nil repeats:YES];
+    [self.view addSubview:_countDownLabel];
+    
+    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(COUNT_DOWN_SECONDS) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
     
     NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
     if (recordSoundFile.length == 0) {
@@ -777,7 +799,6 @@
         _scrollView.userInteractionEnabled = YES;
         
         [_countDownLabel removeFromSuperview];
-        _countDownLabel = nil;
         
         [_countDownTimer invalidate];
         _countDownTimer = nil;
@@ -885,7 +906,7 @@
     int value = [_countDownLabel.text intValue];
     if (value == 1) {
         [_countDownLabel removeFromSuperview];
-        _countDownLabel = nil;
+        
         [_countDownTimer invalidate];
         _countDownTimer = nil;
     } else {
@@ -1160,23 +1181,13 @@
         countDown = kDEFAULT_CountDown_Slider_Value;
     }
     
+    [_countDownTimer invalidate];
+    _countDownTimer = nil;
+    
     if (_countDownLabel || countDown == 0) {
         [_countDownLabel removeFromSuperview];
     }
-    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
-    if (isUserInterfaceIdiomPhone) {
-        _countDownLabel.font = [UIFont systemFontOfSize:94];
-    } else {
-        _countDownLabel.font = [UIFont systemFontOfSize:226];
-    }
-    _countDownLabel.center = self.view.center;
-    _countDownLabel.textAlignment = NSTextAlignmentCenter;
-    _countDownLabel.numberOfLines = 1;
-    _countDownLabel.textColor = [UIColor grayColor];
-    _countDownLabel.alpha = 0.5;
-    _countDownLabel.backgroundColor = [UIColor clearColor];
     _countDownLabel.text = [NSString stringWithFormat:@"%d",countDown];
-    
     if (countDown > 0) {
         _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimer) userInfo:nil repeats:YES];
         [self.view addSubview:_countDownLabel];
