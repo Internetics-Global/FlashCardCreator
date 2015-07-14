@@ -212,9 +212,16 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     FlashCard *currentCard = [self getCurrrentCard];
-    _previousCard = currentCard;
-    [self playbackOnCard:currentCard];
+    
+    double delayInSeconds = 1.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        _previousCard = currentCard;
+        [weakSelf playbackOnCard:currentCard];
+    });
     
     NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
     if (recordSoundFile.length == 0) {
@@ -813,6 +820,7 @@
 }
 
 /*
+ * if both text to speech and recording exists, we play recording firstly then text to speech
  * execute textToSpeechAllContentNow or playAudio according to setting
 */
 - (void) playbackOnCard:(FlashCard *) currentCard {
