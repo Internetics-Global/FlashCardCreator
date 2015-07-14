@@ -189,3 +189,8 @@
 #define kMIN_Pause_For_Answer                (2)
 
 
+#define kMIN_CountDown_Slider_Value 0
+#define kMAX_CountDown_Slider_Value 10
+#define kDEFAULT_CountDown_Slider_Value 3
+
+

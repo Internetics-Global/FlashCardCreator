@@ -10,7 +10,6 @@
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
 #import "FileOperationHelper.h"
-#import "MoreMoreInfoTableViewController.h"
 
 #import "ZipArchive.h"
 
@@ -113,7 +112,7 @@
     } else if (section == 1) {
         return (2);
     } else if (section == 2) {
-        return 2;
+        return 3;
     } else {
         return 0;
     }
@@ -175,9 +174,69 @@
             cell.accessoryView = textToSpeechSwitch;
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
-        } else if (indexPath.row ==1) {
-            cell.textLabel.text = @"More";
+        } else if (indexPath.row == 1) {
+            
+            cell.textLabel.text = @"Male Voice";
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [voiceSwitch addTarget:self action:@selector(voiceSwitchAction) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = voiceSwitch;
+            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+            [voiceSwitch setOn:b];
+            
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if (indexPath.row ==2) {
+            
+            UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+            baseView.backgroundColor = [UIColor clearColor];
+            
+            UISlider *countDownSlider= [[UISlider alloc] initWithFrame:CGRectMake(35, 0, 100, 40)];
+            countDownSlider.backgroundColor = [UIColor clearColor];
+            [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
+            countDownSlider.minimumValue = kMIN_CountDown_Slider_Value;
+            countDownSlider.maximumValue = kMAX_CountDown_Slider_Value;
+            countDownSlider.continuous = YES;
+            countDownSlider.tintColor = [UIColor greenColor];
+            [countDownSlider addTarget:self action:@selector(countDownSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [countDownSlider setBackgroundColor:[UIColor clearColor]];
+            [baseView addSubview:countDownSlider];
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSNumber *countDownNumber = [defaults objectForKey:@"K_CountDown_Val"];
+            if (countDownNumber) {
+                countDownSlider.value = [countDownNumber integerValue];
+                
+            } else {
+                countDownSlider.value = kDEFAULT_CountDown_Slider_Value;
+                
+                [defaults setObject:[NSNumber numberWithInt:kDEFAULT_CountDown_Slider_Value] forKey:@"K_CountDown_Val"];
+                [defaults synchronize];
+            }
+        
+            
+            UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 40)];
+            leftLabel.textAlignment = NSTextAlignmentLeft;
+            leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+            leftLabel.text = @"None";
+            leftLabel.numberOfLines = 1;
+            leftLabel.textColor = [UIColor whiteColor];
+            leftLabel.backgroundColor = [UIColor clearColor];
+            [baseView addSubview:leftLabel];
+            
+            UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(115, 0, 35, 40)];
+            rightLabel.textAlignment = NSTextAlignmentRight;
+            rightLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+            rightLabel.text = [NSString stringWithFormat:@"%d",kMAX_CountDown_Slider_Value];
+            rightLabel.numberOfLines = 1;
+            rightLabel.textColor = [UIColor whiteColor];
+            rightLabel.backgroundColor = [UIColor clearColor];
+            [baseView addSubview:rightLabel];
+            
+            cell.accessoryView = baseView;
+            
+            cell.textLabel.text = [NSString stringWithFormat:@"Count Down (%d)",(int)countDownSlider.value];
+            
         }
     }
     
@@ -188,6 +247,18 @@
     
         
     return cell;
+}
+
+
+- (void) countDownSliderValueChanged:(UISlider *) slider {
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:2]];
+    cell.textLabel.text = cell.textLabel.text = [NSString stringWithFormat:@"Count Down (%d)",(int) (slider.value)];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithInt:(int)slider.value] forKey:@"K_CountDown_Val"];
+    [defaults synchronize];
+    
 }
 
 
@@ -209,6 +280,8 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The iOS 8 simulators do not support text-to-speech. However, the iOS 7 simulators do still support text-to-speech (at least as of Xcode 6.1)," delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+    
+    
 }
 
 
@@ -233,8 +306,14 @@
             [self.navigationController pushViewController:about animated:YES];
         }
     } else if (indexPath.section == 2) {
-        MoreMoreInfoTableViewController *moreMoreInfoTableViewController = [[MoreMoreInfoTableViewController alloc] init];
-        [self.navigationController pushViewController:moreMoreInfoTableViewController animated:YES];
+        if (indexPath.row == 0) {
+            //text to speech
+        } else if (indexPath.row == 1) {
+            //counter down logic
+            
+        } else if (indexPath.row == 2) {
+            //nothing
+        }
     }
 }
 
@@ -256,6 +335,13 @@
 #pragma mark - UICtonrol Action
 - (void) backButtonClicked {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void) voiceSwitchAction {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isMaleVoice"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark -

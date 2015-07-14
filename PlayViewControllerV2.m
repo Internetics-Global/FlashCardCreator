@@ -86,15 +86,17 @@
     BOOL      _isAutoShowQuestionOnly;
     
     NSTimer  *_autoHideControlPanelTimer;
-    NSTimer  *_firstPageDelayTimer;  //used in auto mode. pause for seconds on the first page before auto play
-    NSTimer  *_countDownTick;
+    
+    NSTimer  *_firstPageDelay_FixedMode_Timer;
+    NSTimer  *_firstPageDelay_AutoDelayMode_Timer;
     
     /**
      *  当dwell on answer card expire后，自动触发，比如关闭正在播放的text to speech
      */
     NSTimer  * _dwellOnAnswerExpireTimer;
     
-    UILabel  *_countDownLabel;
+    UILabel  * _countDownLabel;
+    NSTimer  * _countDownTimer;
     
     int       _currentPage;
     
@@ -775,11 +777,17 @@
         [_countDownLabel removeFromSuperview];
         _countDownLabel = nil;
         
-        [_countDownTick invalidate];
-        _countDownTick = nil;
+        [_countDownTimer invalidate];
+        _countDownTimer = nil;
         
-        [_firstPageDelayTimer invalidate];
-        _firstPageDelayTimer = nil;
+        [_firstPageDelay_AutoDelayMode_Timer invalidate];
+        _firstPageDelay_AutoDelayMode_Timer = nil;
+        
+        [_firstPageDelay_FixedMode_Timer invalidate];
+        _firstPageDelay_FixedMode_Timer = nil;
+        
+        [_firstPageDelay_AutoDelayMode_Timer invalidate];
+        _firstPageDelay_AutoDelayMode_Timer = nil;
         
         [_timerAForText2SpeechFinished invalidate];
         _timerAForText2SpeechFinished = nil;
@@ -866,7 +874,31 @@
 }
 
 
-- (void) beginFixedDelayAutoScrollTimer{
+- (void) countDownTimer {
+    
+    int value = [_countDownLabel.text intValue];
+    if (value == 1) {
+        [_countDownLabel removeFromSuperview];
+        _countDownLabel = nil;
+        [_countDownTimer invalidate];
+        _countDownTimer = nil;
+    } else {
+        _countDownLabel.text = [NSString stringWithFormat:@"%d",value - 1];
+    }
+    
+}
+
+- (void) firstPageDelay_FixedMode_Timer {
+    [self beginFixedDelayAutoScroll];
+}
+
+- (void) firstPageDelay_AutoDelayMode_Timer {
+    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    [self playbackOnCard:currentCard];
+}
+
+
+- (void) beginFixedDelayAutoScroll{
     
     if ([self isSmartDelay] || (_isAutoScroll == FALSE)) {
         return;
@@ -978,8 +1010,7 @@
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
-        [_firstPageDelayTimer invalidate];
-        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginFixedDelayAutoScrollTimer) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
+        [self beginFixedDelayAutoScroll];
     } {
         [self playbackOnCard:currentCard];
     }
@@ -1101,6 +1132,37 @@
     
     [popoverView dismiss];
     
+    //setup count down
+    
+    NSNumber *countDownNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"K_CountDown_Val"];
+    int countDown;
+    if (countDownNumber) {
+        countDown = [countDownNumber integerValue];
+    } else {
+        countDown = kDEFAULT_CountDown_Slider_Value;
+    }
+    
+    if (_countDownLabel || countDown == 0) {
+        [_countDownLabel removeFromSuperview];
+    }
+    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
+    if (isUserInterfaceIdiomPhone) {
+        _countDownLabel.font = [UIFont systemFontOfSize:94];
+    } else {
+        _countDownLabel.font = [UIFont systemFontOfSize:226];
+    }
+    _countDownLabel.center = self.view.center;
+    _countDownLabel.textAlignment = NSTextAlignmentCenter;
+    _countDownLabel.numberOfLines = 1;
+    _countDownLabel.textColor = [UIColor grayColor];
+    _countDownLabel.backgroundColor = [UIColor clearColor];
+    _countDownLabel.text = [NSString stringWithFormat:@"%d",countDown];
+    
+    if (countDown > 0) {
+        _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimer) userInfo:nil repeats:YES];
+        [self.view addSubview:_countDownLabel];
+    }
+    
     [self resetAutoHideControlPanelTimer];
     
     if (index ==0) {
@@ -1126,43 +1188,22 @@
     _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
-    if (_countDownLabel) {
-        [_countDownLabel removeFromSuperview];
-    }
-    if (isUserInterfaceIdiomPhone) {
-        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 30, 30, 20)];
-        _countDownLabel.font = [UIFont systemFontOfSize:24];
-    } else {
-        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.view.frame)- 60, 80, 50)];
-        _countDownLabel.font = [UIFont systemFontOfSize:56];
-    }
-    _countDownLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-    _countDownLabel.textAlignment = NSTextAlignmentCenter;
-    _countDownLabel.numberOfLines = 1;
-    _countDownLabel.textColor = [UIColor whiteColor];
-    _countDownLabel.backgroundColor = [UIColor clearColor];
-    _countDownLabel.text = [NSString stringWithFormat:@"%d",(int)_dwellTimeSlider.value];
-    [self.view addSubview:_countDownLabel];
     
-    if ([self isSmartDelay]) {
-        _countDownLabel.hidden = YES;
-    } else {
-        _countDownTick = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(countDownTick) userInfo:nil repeats:YES];
-        _countDownLabel.hidden = YES; //temp hide it under any conditions
-    }
+    
     
     //client's special requirement to request a pause after entry into play mode
     FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     
-    //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
-    //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
+    
+
     if ([self isSmartDelay] == false) {
-        [_firstPageDelayTimer invalidate];
-        _firstPageDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(0) target:self selector:@selector(beginFixedDelayAutoScrollTimer) userInfo:nil repeats:NO]; //client don't want this function any more, simply set 0 from _autoPlayDelaySlider.value in case that some day client change their mind
+        [_firstPageDelay_FixedMode_Timer invalidate];
+        _firstPageDelay_FixedMode_Timer = [NSTimer scheduledTimerWithTimeInterval:(countDown) target:self selector:@selector(firstPageDelay_FixedMode_Timer) userInfo:nil repeats:NO];
     } {
-      [self playbackOnCard:currentCard];
+        [_firstPageDelay_AutoDelayMode_Timer invalidate];
+        _firstPageDelay_AutoDelayMode_Timer = [NSTimer scheduledTimerWithTimeInterval:(countDown) target:self selector:@selector(firstPageDelay_AutoDelayMode_Timer) userInfo:nil repeats:NO];
     }
     
 }
@@ -1183,17 +1224,6 @@
     }
 }
 
-- (void) countDownTick {
-    int value = [_countDownLabel.text intValue];
-    if (value == 0) {
-        [_countDownLabel removeFromSuperview];
-        _countDownLabel = nil;
-        [_countDownTick invalidate];
-        _countDownTick = nil;
-    } else {
-        _countDownLabel.text = [NSString stringWithFormat:@"%d",value - 1];
-    }
-}
 
 #pragma mark – Text to speech callback from FlashCard
 
@@ -1296,11 +1326,14 @@
     [_autoSwitchQATimerForFixedDelay invalidate];
     _autoSwitchQATimerForFixedDelay = nil;
     
-    [_firstPageDelayTimer invalidate];
-    _firstPageDelayTimer = nil;
+    [_firstPageDelay_FixedMode_Timer invalidate];
+    _firstPageDelay_FixedMode_Timer = nil;
     
-    [_countDownTick invalidate];
-    _countDownTick = nil;
+    [_firstPageDelay_AutoDelayMode_Timer invalidate];
+    _firstPageDelay_AutoDelayMode_Timer = nil;
+    
+    [_countDownTimer invalidate];
+    _countDownTimer = nil;
     
     [_timerAForText2SpeechFinished invalidate];
     _timerAForText2SpeechFinished = nil;
