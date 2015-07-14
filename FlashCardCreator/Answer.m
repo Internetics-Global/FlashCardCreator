@@ -58,7 +58,8 @@
 
 - (void)setBackgroundImageFullPath:(NSString *)backgroundImageFullPath {
     if (backgroundImageFullPath.length == 0 || [Common isDirectoryFormat:backgroundImageFullPath] ) {
-        [iConsole error:@"%s:backgroundImageFullPath could not be nil or empty",__FUNCTION__];
+        _backgroundImageFullPath = nil;
+        //[iConsole error:@"%s:backgroundImageFullPath could not be nil or empty",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[backgroundImageFullPath lastPathComponent]];
         _backgroundImageFullPath = fullPath;
@@ -68,7 +69,8 @@
 - (void)setRecordedSoundFullPath:(NSString *)recordedSoundFullPath {
     
     if (recordedSoundFullPath.length == 0 || [Common isDirectoryFormat:recordedSoundFullPath] ) {
-        [iConsole error:@"%s: recordedSoundFullPath could not be nil or empty",__FUNCTION__];
+        //[iConsole error:@"%s: recordedSoundFullPath could not be nil or empty",__FUNCTION__];
+        _recordedSoundFullPath = nil;
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[recordedSoundFullPath lastPathComponent]];
         _recordedSoundFullPath = fullPath;
