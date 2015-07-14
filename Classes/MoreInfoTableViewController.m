@@ -176,7 +176,7 @@
             [textToSpeechSwitch setOn:b];
         } else if (indexPath.row == 1) {
             
-            cell.textLabel.text = @"Male Voice";
+            cell.textLabel.text = @"Male/Female Voice";
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -220,7 +220,7 @@
             leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
             leftLabel.text = @"None";
             leftLabel.numberOfLines = 1;
-            leftLabel.textColor = [UIColor whiteColor];
+            leftLabel.textColor = [UIColor lightGrayColor];
             leftLabel.backgroundColor = [UIColor clearColor];
             [baseView addSubview:leftLabel];
             
@@ -229,7 +229,7 @@
             rightLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
             rightLabel.text = [NSString stringWithFormat:@"%d",kMAX_CountDown_Slider_Value];
             rightLabel.numberOfLines = 1;
-            rightLabel.textColor = [UIColor whiteColor];
+            rightLabel.textColor = [UIColor lightGrayColor];
             rightLabel.backgroundColor = [UIColor clearColor];
             [baseView addSubview:rightLabel];
             

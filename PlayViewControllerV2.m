@@ -893,7 +893,7 @@
 }
 
 - (void) firstPageDelay_AutoDelayMode_Timer {
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    FlashCard *currentCard = [self  getCurrrentCard];
     [self playbackOnCard:currentCard];
 }
 
@@ -931,7 +931,7 @@
 - (void) playButtonClicked:(UIButton *) button {
     
     if (_isMute == FALSE) {
-        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        FlashCard *currentCard = [self getCurrrentCard];
         if (currentCard) {
             [currentCard playAudioWithManualClick:YES];
         } else {
@@ -1003,7 +1003,7 @@
     
     
     //client's special requirement to request a pause after entry into play mode
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    FlashCard *currentCard = [self getCurrrentCard];
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     
@@ -1024,7 +1024,7 @@
 - (void) didFinishDwellOnAnswerCard {
     
     if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
-        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        FlashCard *currentCard = [self getCurrrentCard];
         [currentCard stopTextToSpeechNow];
     }
 }
@@ -1036,7 +1036,7 @@
  */
 - (void)didFinishDwellOnQuestionCard {
     if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
-        FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+        FlashCard *currentCard = [self getCurrrentCard];
         [currentCard stopTextToSpeechNow];
     }
 }
@@ -1155,6 +1155,7 @@
     _countDownLabel.textAlignment = NSTextAlignmentCenter;
     _countDownLabel.numberOfLines = 1;
     _countDownLabel.textColor = [UIColor grayColor];
+    _countDownLabel.alpha = 0.5;
     _countDownLabel.backgroundColor = [UIColor clearColor];
     _countDownLabel.text = [NSString stringWithFormat:@"%d",countDown];
     
@@ -1192,7 +1193,7 @@
     
     
     //client's special requirement to request a pause after entry into play mode
-    FlashCard *currentCard = (FlashCard*)[_scrollView getCurrentView];
+    FlashCard *currentCard = [self getCurrrentCard];
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     
