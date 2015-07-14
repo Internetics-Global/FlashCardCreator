@@ -10,6 +10,7 @@
 #import "SimpleWebBrowserController.h"
 #import "AboutViewController.h"
 #import "FileOperationHelper.h"
+#import "MoreMoreInfoTableViewController.h"
 
 #import "ZipArchive.h"
 
@@ -23,7 +24,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title =NSLocalizedString(@"Title_More",@"");
+        self.title =NSLocalizedString(@"Title_Setting",@"");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableViewNotification:) name:REFRESH_SETTING_TABLEVIEW_NOTIFICATION
  object:nil];
     }
@@ -112,7 +113,7 @@
     } else if (section == 1) {
         return (2);
     } else if (section == 2) {
-        return 1;
+        return 2;
     } else {
         return 0;
     }
@@ -174,6 +175,9 @@
             cell.accessoryView = textToSpeechSwitch;
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
+        } else if (indexPath.row ==1) {
+            cell.textLabel.text = @"More";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
     
@@ -228,6 +232,9 @@
             AboutViewController *about = [[AboutViewController alloc] init];
             [self.navigationController pushViewController:about animated:YES];
         }
+    } else if (indexPath.section == 2) {
+        MoreMoreInfoTableViewController *moreMoreInfoTableViewController = [[MoreMoreInfoTableViewController alloc] init];
+        [self.navigationController pushViewController:moreMoreInfoTableViewController animated:YES];
     }
 }
 

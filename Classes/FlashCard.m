@@ -8056,6 +8056,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[0]];
         utterance.rate = 0.02;
         
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        if (b) {
+            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
+        } else {
+            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"];
+        }
+        
         if (self.isMuteText2Speech) {
             [utterance setVolume:0];
         } else {
@@ -8079,6 +8086,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if ([_textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
+        
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        if (b) {
+            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
+        } else {
+            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"];
+        }
+        
+        //NSArray* speechVoices = [AVSpeechSynthesisVoice speechVoices];
+        
+        
         utterance.rate = 0.02;
         
         if (self.isMuteText2Speech) {
