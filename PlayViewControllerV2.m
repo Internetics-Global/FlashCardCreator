@@ -246,7 +246,6 @@
     
     _scrollView = [[CycleScrollView alloc] initWithFrame:self.view.bounds];
     _scrollView.isCycle = NO;
-    _scrollView.isFixedDelayAutoScroll = (![self isSmartDelay]);
     
     if (isUserInterfaceIdiomPhone){
         _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 0, 30, 30);
@@ -411,6 +410,8 @@
     
     [_dwellTimeSlider showPopUpViewAnimated:NO];
     [_pauseForAnswerSlider showPopUpViewAnimated:NO];
+    
+    _scrollView.isFixedDelayAutoScroll = (![self isSmartDelay]);  //call this finally  since we need _dwellTimeSlider to be inintialized firstly
     
 
 }
