@@ -87,6 +87,8 @@
     
     NSTimer  *_autoHideControlPanelTimer;
     
+    NSTimer  *_firstTimeDelayTimer; //as soon as entering play mode, we set a delay before placing recording/text to speech
+    
     NSTimer  *_firstPageDelay_FixedMode_Timer;
     NSTimer  *_firstPageDelay_AutoDelayMode_Timer;
     
@@ -212,16 +214,9 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    __weak __typeof(&*self)weakSelf = self;
-    
     FlashCard *currentCard = [self getCurrrentCard];
     
-    double delayInSeconds = 1.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        _previousCard = currentCard;
-        [weakSelf playbackOnCard:currentCard];
-    });
+    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1.5) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
     
     NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
     if (recordSoundFile.length == 0) {
@@ -796,6 +791,9 @@
         [_firstPageDelay_AutoDelayMode_Timer invalidate];
         _firstPageDelay_AutoDelayMode_Timer = nil;
         
+        [_firstTimeDelayTimer invalidate];
+        _firstTimeDelayTimer = nil;
+        
         [_timerAForText2SpeechFinished invalidate];
         _timerAForText2SpeechFinished = nil;
         
@@ -892,6 +890,16 @@
         _countDownTimer = nil;
     } else {
         _countDownLabel.text = [NSString stringWithFormat:@"%d",value - 1];
+    }
+    
+}
+
+- (void) firstTimeDelayTimer {
+    
+    FlashCard *currentCard = [self  getCurrrentCard];
+    
+    if (currentCard) {
+        [self playbackOnCard:currentCard];
     }
     
 }
@@ -1140,7 +1148,9 @@
     
     [popoverView dismiss];
     
-    //setup count down
+    //clean
+    [_firstTimeDelayTimer invalidate];
+    _firstTimeDelayTimer = nil;
     
     NSNumber *countDownNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"K_CountDown_Val"];
     int countDown;
@@ -1340,6 +1350,9 @@
     
     [_firstPageDelay_AutoDelayMode_Timer invalidate];
     _firstPageDelay_AutoDelayMode_Timer = nil;
+    
+    [_firstTimeDelayTimer invalidate];
+    _firstTimeDelayTimer = nil;
     
     [_countDownTimer invalidate];
     _countDownTimer = nil;
