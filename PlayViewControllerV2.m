@@ -231,14 +231,7 @@
     
     FlashCard *currentCard = [self getCurrrentCard];
     
-    const int COUNT_DOWN_SECONDS = 3; //fixed value
-    
-    _countDownLabel.text = [NSString stringWithFormat:@"%d",COUNT_DOWN_SECONDS];
-    [_countDownLabel removeFromSuperview];
-    _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimer) userInfo:nil repeats:YES];
-    [self.view addSubview:_countDownLabel];
-    
-    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(COUNT_DOWN_SECONDS) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
+    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
     
     NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
     if (recordSoundFile.length == 0) {
