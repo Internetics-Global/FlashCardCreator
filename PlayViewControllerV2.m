@@ -217,6 +217,24 @@
     } else {
         [iConsole info:@"%s:The gyroscope sensor is not available",__FUNCTION__];
     }
+    
+    
+    switch (self.playType) {
+        case Play_Type_Manually: {
+            break;
+        }
+            
+        case Play_Type_Auto_Play:
+            _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
+            break;
+            
+        case Play_Type_Auto_Play_Loop:
+            _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -971,6 +989,7 @@
             
         case Play_Type_Auto_Play:
             [self popoverView:_popoverView didSelectItemAtIndex:0];
+            
             break;
             
         case Play_Type_Auto_Play_Loop:
