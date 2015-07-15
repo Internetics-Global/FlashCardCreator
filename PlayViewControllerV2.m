@@ -80,16 +80,16 @@
     
     UIButton              *_cyclePlayButton;
     
+    /**
+     * if _autoShowQuestionOnly = YES, to show question only
+     */
+    BOOL      _isAutoShowQuestionOnly;
+    
     
     /**
      *  如果是SmartDelay，则忽略_autoSwitchQATimerForFixedDelay。而是通过text2SpeechFinished回调来自动切换
      */
     NSTimer  *_autoSwitchQATimerForFixedDelay;
-    
-    /**
-     * if _autoShowQuestionOnly = YES, to show question only
-     */
-    BOOL      _isAutoShowQuestionOnly;
     
     NSTimer  *_autoHideControlPanelTimer;
     
@@ -97,6 +97,8 @@
     
     NSTimer  *_firstPageDelay_FixedMode_Timer;
     NSTimer  *_firstPageDelay_AutoDelayMode_Timer;
+    
+    NSTimer  *_timerForDelayedText2Speech; //通过计算recording时间，用于recording结束后，进行自动text to speech
     
     /**
      *  当dwell on answer card expire后，自动触发，比如关闭正在播放的text to speech
@@ -112,8 +114,6 @@
     NSTimer  *_timerAForText2SpeechFinished;
     NSTimer  *_timerBForText2SpeechFinished;
     NSTimer  *_timerCForText2SpeechFinished;
-    
-    NSTimer  *_timerForDelayedText2Speech;
     
     PopoverView *_popoverView;
     
@@ -1095,23 +1095,46 @@
 }
 
 
+/**
+ *  为避免逻辑的思路，统一处理
+ *  1. 停止所有的声音播放
+ *  2. 停止所有的count down逻辑
+ *  3. 停止所有的delay timer
+ *  4. 重启
+ */
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
+    
+    FlashCard *currentCard = [self getCurrrentCard];
+    [currentCard stopAudio];
+    [currentCard stopTextToSpeechNow];
+    
+    
+    [_countDownTimer invalidate];
+    _countDownTimer = nil;
+    [_countDownLabel removeFromSuperview];
+    [_messageToastBaseView removeFromSuperview];
+    
+    [_timerForDelayedText2Speech invalidate];
+    _timerForDelayedText2Speech = nil;
     
     [_firstTimeDelayTimer invalidate];
     _firstTimeDelayTimer = nil;
     
-    [_countDownTimer invalidate];
-    _countDownTimer = nil;
+    [_firstPageDelay_AutoDelayMode_Timer invalidate];
+    _firstPageDelay_AutoDelayMode_Timer = nil;
     
-    [_countDownLabel removeFromSuperview];
-    [_messageToastBaseView removeFromSuperview];
+    [_firstPageDelay_FixedMode_Timer invalidate];
+    _firstPageDelay_FixedMode_Timer = nil;
+    
     
     int val = (int)slider.value;
     if (val == kMIN_Auto_Play_Speed) {
         _scrollView.isFixedDelayAutoScroll = NO;
     } else {
         _scrollView.isFixedDelayAutoScroll = YES;
+        self.playType = Play_Type_Unkown;
     }
+    
     
     if (_isAutoShowQuestionOnly) {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
@@ -1126,11 +1149,6 @@
     
     [self resetAutoHideControlPanelTimer];
     
-    
-    //client's special requirement to request a pause after entry into play mode
-    FlashCard *currentCard = [self getCurrrentCard];
-    [currentCard stopAudio];
-    [currentCard stopTextToSpeechNow];
     
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
