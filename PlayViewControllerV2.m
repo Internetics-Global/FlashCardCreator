@@ -1078,6 +1078,12 @@
 
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
+    [_countDownTimer invalidate];
+    _countDownTimer = nil;
+    
+    [_countDownLabel removeFromSuperview];
+    [_messageToastBaseView removeFromSuperview];
+    
     int val = (int)slider.value;
     if (val == kMIN_Auto_Play_Speed) {
         _scrollView.isFixedDelayAutoScroll = NO;
