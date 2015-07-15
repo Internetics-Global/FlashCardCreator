@@ -78,6 +78,9 @@
     UILabel               *_maxDwellTimeLabel;
     
     
+    UIButton              *_cyclePlayButton;
+    
+    
     /**
      *  如果是SmartDelay，则忽略_autoSwitchQATimerForFixedDelay。而是通过text2SpeechFinished回调来自动切换
      */
@@ -283,17 +286,17 @@
     _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
     [self.view addSubview:_controlPanel];
     
-    UIButton *cyclePlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cyclePlayButton.frame = CGRectMake(10, 5, 20, 20);
-    [cyclePlayButton setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
-    [cyclePlayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cyclePlayButton addTarget:self action:@selector(cyclePlayButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _cyclePlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _cyclePlayButton.frame = CGRectMake(10, 5, 20, 20);
+    [_cyclePlayButton setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
+    [_cyclePlayButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_cyclePlayButton addTarget:self action:@selector(cyclePlayButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     //cyclePlayButton.showsTouchWhenHighlighted =YES;
-    [cyclePlayButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
-    [_controlPanel addSubview:cyclePlayButton];
+    [_cyclePlayButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
+    [_controlPanel addSubview:_cyclePlayButton];
     
     _autoScrollButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _autoScrollButton.frame = CGRectOffset(cyclePlayButton.frame, 10 + 20, 0);
+    _autoScrollButton.frame = CGRectOffset(_cyclePlayButton.frame, 10 + 20, 0);
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
     [_autoScrollButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_autoScrollButton addTarget:self action:@selector(autoScrollButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -826,6 +829,8 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
+        self.playType = Play_Type_Unkown; //don't know
+        
         [_dwellTimeSlider showPopUpViewAnimated:NO];
         [_pauseForAnswerSlider showPopUpViewAnimated:NO];
         
@@ -970,7 +975,7 @@
             
         case Play_Type_Auto_Play_Loop:
             [self popoverView:_popoverView didSelectItemAtIndex:0];
-            [self cyclePlayButtonClicked:nil];
+            [self cyclePlayButtonClicked:_cyclePlayButton];
             break;
             
         default:
@@ -1379,6 +1384,12 @@
  */
 - (BOOL) isSmartDelay {
     //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
+    
+    if (self.playType == Play_Type_Auto_Play || self.playType == Play_Type_Auto_Play_Loop) {
+        return YES;
+    }
+    
+    
     if ((int)_dwellTimeSlider.value == kMIN_Auto_Play_Speed) {
         return YES;
     } else {

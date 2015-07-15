@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, Play_Type) {
 
 @property (strong, nonatomic) Pack *currentPack;
 
+
 @property (assign, nonatomic) Play_Type playType;
 
 - (void) text2SpeechFinished:(NSNumber*)isQuestionShowing;
