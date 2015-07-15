@@ -21,6 +21,7 @@
 #import "ASValueTrackingSlider.h"
 
 #import "NSTimer+BlocksKit.h"
+#import "OpenUDID.h"
 
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds               2
@@ -61,6 +62,8 @@
     UILabel               *_pauseForAnswerLabel;
     UILabel               *_minPauseForAnswerLabel;;
     UILabel               *_maxPauseForAnswerLabel;
+    
+    UIView                *_messageToastBaseView; //是否出现，逻辑同_countDownLabel完全一致
     
     /**
      *  _dwellTimeSlider.value + _pauseForAnswerSlider.value 为整个卡片（包括question和answer)的停留时间
@@ -109,6 +112,8 @@
     
     NSTimer  *_timerForDelayedText2Speech;
     
+    PopoverView *_popoverView;
+    
 }
 
 @end
@@ -122,21 +127,6 @@
     _isAutoShowQuestionOnly = YES;
     
     _startDate =[NSDate date];
-    
-    
-    
-    _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
-    if (isUserInterfaceIdiomPhone) {
-        _countDownLabel.font = [UIFont systemFontOfSize:94];
-    } else {
-        _countDownLabel.font = [UIFont systemFontOfSize:226];
-    }
-    _countDownLabel.center = self.view.center;
-    _countDownLabel.textAlignment = NSTextAlignmentCenter;
-    _countDownLabel.numberOfLines = 1;
-    _countDownLabel.textColor = [UIColor grayColor];
-    _countDownLabel.alpha = 0.5;
-    _countDownLabel.backgroundColor = [UIColor clearColor];
     
     
     if isUserInterfaceIdiomPhone {
@@ -430,7 +420,57 @@
     [_dwellTimeSlider showPopUpViewAnimated:NO];
     [_pauseForAnswerSlider showPopUpViewAnimated:NO];
     
+    
+    if (isUserInterfaceIdiomPhone) {
+        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 130)];
+        _countDownLabel.font = [UIFont boldSystemFontOfSize:84];
+        _countDownLabel.layer.cornerRadius = 65;
+    } else {
+        _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 230, 230)];
+        _countDownLabel.font = [UIFont boldSystemFontOfSize:206];
+        _countDownLabel.layer.cornerRadius = 115;
+    
+    }
+    _countDownLabel.layer.masksToBounds = YES;
+    _countDownLabel.center = self.view.center;
+    _countDownLabel.textAlignment = NSTextAlignmentCenter;
+    _countDownLabel.numberOfLines = 1;
+    _countDownLabel.textColor = [UIColor whiteColor];
+    _countDownLabel.alpha = 0.5;
+    _countDownLabel.backgroundColor = [UIColor grayColor];
+    
+    
+    if ((_currentPack.autoPlaySpeed != kDefault_Auto_Play_Speed)
+            && ([_currentPack.creator isEqualToString:[OpenUDID value]] == false)){
+        if (isUserInterfaceIdiomPhone) {
+            _messageToastBaseView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_controlPanel.frame) + 30, CGRectGetMinY(_controlPanel.frame) - 55, CGRectGetWidth(_controlPanel.frame) - 60, 50)];
+        } else {
+            _messageToastBaseView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_controlPanel.frame) - 85, CGRectGetMinY(_controlPanel.frame) - 170, CGRectGetWidth(_controlPanel.frame) + 85 *2, 90)];
+        }
+        _messageToastBaseView.layer.cornerRadius = 15;
+        _messageToastBaseView.layer.masksToBounds = YES;
+        
+        _messageToastBaseView.backgroundColor = [UIColor colorWithRed:183.0/255 green:183.0/255 blue:183.0/255 alpha:1];
+        
+        UILabel *messageToastLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, CGRectGetWidth(_messageToastBaseView.frame) - 10, CGRectGetHeight(_messageToastBaseView.frame) - 10)];
+        messageToastLabel.text = [NSString stringWithFormat:@"PLEASE NOTE:THIS PACK CREATOR HAS SET THE READING TIME OF EACH CARD TO %d SECONDS. YOU CAN CHANGE THIS BY CLICKING BELOW THE CARD AND SELECTING ANOTHER LENGTH",_currentPack.autoPlaySpeed];
+        messageToastLabel.numberOfLines = 3;
+        messageToastLabel.textColor = [UIColor blackColor];
+        messageToastLabel.textAlignment = NSTextAlignmentLeft;
+        messageToastLabel.backgroundColor = [UIColor clearColor];
+        if (isUserInterfaceIdiomPhone) {
+            messageToastLabel.font = [UIFont boldSystemFontOfSize:10];
+        } else {
+            messageToastLabel.font = [UIFont boldSystemFontOfSize:17];
+        }
+        
+        [_messageToastBaseView addSubview:messageToastLabel];
+    }
+    
     _scrollView.isFixedDelayAutoScroll = (![self isSmartDelay]);  //call this finally  since we need _dwellTimeSlider to be inintialized firstly
+    
+    
+    
     
 
 }
@@ -777,7 +817,7 @@
     _timerForDelayedText2Speech = nil;
     
     if (_isAutoScroll == FALSE) {
-        [PopoverView showPopoverAtPoint:_autoScrollButton.center
+        _popoverView = [PopoverView showPopoverAtPoint:_autoScrollButton.center
                                  inView:_controlPanel
                               withTitle:@"Option"
                         withStringArray:[NSArray arrayWithObjects:@"Show question only",@"Both question and answer", nil]
@@ -792,6 +832,7 @@
         _scrollView.userInteractionEnabled = YES;
         
         [_countDownLabel removeFromSuperview];
+        [_messageToastBaseView removeFromSuperview];
         
         [_countDownTimer invalidate];
         _countDownTimer = nil;
@@ -899,6 +940,7 @@
     int value = [_countDownLabel.text intValue];
     if (value == 1) {
         [_countDownLabel removeFromSuperview];
+        [_messageToastBaseView removeFromSuperview];
         
         [_countDownTimer invalidate];
         _countDownTimer = nil;
@@ -910,11 +952,31 @@
 
 - (void) firstTimeDelayTimer {
     
-    FlashCard *currentCard = [self  getCurrrentCard];
     
-    if (currentCard) {
-        [self playbackOnCard:currentCard];
+    switch (self.playType) {
+        case Play_Type_Manually: {
+            FlashCard *currentCard = [self  getCurrrentCard];
+            
+            if (currentCard) {
+                [self playbackOnCard:currentCard];
+            }
+            
+            break;
+        }   
+            
+        case Play_Type_Auto_Play:
+            [self popoverView:_popoverView didSelectItemAtIndex:0];
+            break;
+            
+        case Play_Type_Auto_Play_Loop:
+            [self popoverView:_popoverView didSelectItemAtIndex:0];
+            [self cyclePlayButtonClicked:nil];
+            break;
+            
+        default:
+            break;
     }
+
     
 }
 
@@ -1160,7 +1222,9 @@
 
 -(void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index {
     
-    [popoverView dismiss];
+    if (popoverView) {
+        [popoverView dismiss];
+    }
     
     //clean
     [_firstTimeDelayTimer invalidate];
@@ -1179,11 +1243,13 @@
     
     if (_countDownLabel || countDown == 0) {
         [_countDownLabel removeFromSuperview];
+        [_messageToastBaseView removeFromSuperview];
     }
     _countDownLabel.text = [NSString stringWithFormat:@"%d",countDown];
     if (countDown > 0) {
         _countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countDownTimer) userInfo:nil repeats:YES];
         [self.view addSubview:_countDownLabel];
+        [self.view addSubview:_messageToastBaseView];
     }
     
     [self resetAutoHideControlPanelTimer];

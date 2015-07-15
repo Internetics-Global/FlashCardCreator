@@ -36,7 +36,8 @@ enum template_color_enum {
 
 enum popover_enum {
     popover_enum_share = 0,
-    popover_enum_template_select = 1
+    popover_enum_template_select = 1,
+    popover_enum_play = 2,
 };
 
 
@@ -400,10 +401,10 @@ enum popover_enum {
     
     
     PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                  inView:self.navigationController.view
-                               withTitle:@"Please select"
-                         withStringArray:[NSArray arrayWithObjects:@"Install from the code", @"Share the pack", nil]
-                                delegate:self];
+                                                                        inView:self.navigationController.view
+                                                                     withTitle:@"Please select"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Install from the code", @"Share the pack", nil]
+                                                                      delegate:self];
     shareSelectPopupPopoverView.tag = popover_enum_share;
     
     
@@ -502,22 +503,20 @@ enum popover_enum {
 - (void)playButtonClicked:(id) sender
 {
     [iConsole info:@"%s",__FUNCTION__];
-    PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
-    playViewController.currentPack = self.currentPack;
-
-    if ((self.currentCard == nil) || (self.currentPack == nil)) {
-        [Common alertViewCommon:@"Current card or pack is nil"];
-        return;
-    }
+    
+    [self dismissKeyboardGlobally];
     
     if (!isUserInterfaceIdiomPhone) {
         [_settingPopoverController dismissPopoverAnimated:YES];
         [_helpPopoverController dismissPopoverAnimated:YES];
     }
     
-    
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    [keyWindow.rootViewController presentViewController:playViewController animated:YES completion:nil];
+    PopoverView *playSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                                                        inView:self.navigationController.view
+                                                                     withTitle:@"Please select"
+                                                               withStringArray:[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
+                                                                      delegate:self];
+    playSelectPopupPopoverView.tag = popover_enum_play;
     
 }
 
@@ -751,7 +750,7 @@ enum popover_enum {
                 break;
         }
         
-    } else {
+    } else if (popoverView.tag == popover_enum_template_select) {
         
         if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
@@ -792,6 +791,41 @@ enum popover_enum {
         _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
         [_HUD show:YES];
         [self performSelector:@selector(execTemplateBackgroundChangeTask:) withObject:templateBackgroundName afterDelay:0.01];
+    } else if (popoverView.tag == popover_enum_play) {
+        
+        PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
+        
+        //[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
+        switch (index) {
+            case 0:
+                playViewController.playType = Play_Type_Manually;
+                break;
+            case 1:
+                playViewController.playType = Play_Type_Auto_Play;
+                break;
+            case 2:
+                playViewController.playType = Play_Type_Auto_Play_Loop;
+                break;
+                
+            default:
+                break;
+        }
+        
+        playViewController.currentPack = self.currentPack;
+        
+        if ((self.currentCard == nil) || (self.currentPack == nil)) {
+            [Common alertViewCommon:@"Current card or pack is nil"];
+            return;
+        }
+        
+        if (!isUserInterfaceIdiomPhone) {
+            [_settingPopoverController dismissPopoverAnimated:YES];
+            [_helpPopoverController dismissPopoverAnimated:YES];
+        }
+        
+        
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        [keyWindow.rootViewController presentViewController:playViewController animated:YES completion:nil];
     }
     
 }
