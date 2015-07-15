@@ -1078,6 +1078,9 @@
 
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
+    [_firstTimeDelayTimer invalidate];
+    _firstTimeDelayTimer = nil;
+    
     [_countDownTimer invalidate];
     _countDownTimer = nil;
     
