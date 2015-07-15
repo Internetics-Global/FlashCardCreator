@@ -17,7 +17,6 @@
 #import "Question.h"
 #import "Answer.h"
 #import "Common.h"
-#import "PopoverView.h"
 #import "ASValueTrackingSlider.h"
 
 #import "NSTimer+BlocksKit.h"
@@ -26,7 +25,7 @@
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds               2
 
-@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,PopoverViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
+@interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
     CycleScrollView              *_scrollView;
     UIButton                     *_closeButton;
@@ -114,9 +113,6 @@
     NSTimer  *_timerAForText2SpeechFinished;
     NSTimer  *_timerBForText2SpeechFinished;
     NSTimer  *_timerCForText2SpeechFinished;
-    
-    PopoverView *_popoverView;
-    
 }
 
 @end
@@ -838,12 +834,7 @@
     _timerForDelayedText2Speech = nil;
     
     if (_isAutoScroll == FALSE) {
-        _popoverView = [PopoverView showPopoverAtPoint:_autoScrollButton.center
-                                 inView:_controlPanel
-                              withTitle:@"Option"
-                        withStringArray:[NSArray arrayWithObjects:@"Show question only",@"Both question and answer", nil]
-                               delegate:self];
-        
+        [self executeAutoPlay];
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
@@ -988,12 +979,11 @@
         }   
             
         case Play_Type_Auto_Play:
-            [self popoverView:_popoverView didSelectItemAtIndex:0];
-            
+            [self executeAutoPlay];
             break;
             
         case Play_Type_Auto_Play_Loop:
-            [self popoverView:_popoverView didSelectItemAtIndex:0];
+            [self executeAutoPlay];
             [self cyclePlayButtonClicked:_cyclePlayButton];
             break;
             
@@ -1269,13 +1259,7 @@
 }
 
 
-#pragma mark – PopoverViewDelegate
-
--(void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index {
-    
-    if (popoverView) {
-        [popoverView dismiss];
-    }
+-(void)executeAutoPlay {
     
     //clean
     [_firstTimeDelayTimer invalidate];
@@ -1305,7 +1289,8 @@
     
     [self resetAutoHideControlPanelTimer];
     
-    if (index ==0) {
+    BOOL isShowQuestionOnly = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
+    if (isShowQuestionOnly) {
         _isAutoShowQuestionOnly = YES;
         
     } else {

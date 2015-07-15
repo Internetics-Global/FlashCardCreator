@@ -112,7 +112,7 @@
     } else if (section == 1) {
         return (2);
     } else if (section == 2) {
-        return 3;
+        return 4;
     } else {
         return 0;
     }
@@ -174,7 +174,15 @@
             cell.accessoryView = textToSpeechSwitch;
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row ==1) {
+            cell.textLabel.text = @"Auto - Show Question Only";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [showQuestionOnlySwitch addTarget:self action:@selector(showQuestionOnlyAction) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = showQuestionOnlySwitch;
+            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
+            [showQuestionOnlySwitch setOn:b];
+        } else if (indexPath.row == 2) {
             
             cell.textLabel.text = @"Male/Female Voice";
             cell.textLabel.textColor = [UIColor whiteColor];
@@ -186,7 +194,7 @@
             [voiceSwitch setOn:b];
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (indexPath.row ==2) {
+        } else if (indexPath.row ==3) {
             
             UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
             baseView.backgroundColor = [UIColor clearColor];
@@ -252,7 +260,7 @@
 
 - (void) countDownSliderValueChanged:(UISlider *) slider {
     
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:2]];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:2]];
     cell.textLabel.text = cell.textLabel.text = [NSString stringWithFormat:@"Count Down (%d)",(int) (slider.value)];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -267,6 +275,12 @@
     [[NSUserDefaults standardUserDefaults] setBool:_playModeSwitch.on forKey:@"isRandomPlayMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+}
+
+- (void) showQuestionOnlyAction {
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
+    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isShowQuestionOnly"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
@@ -306,14 +320,6 @@
             [self.navigationController pushViewController:about animated:YES];
         }
     } else if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            //text to speech
-        } else if (indexPath.row == 1) {
-            //counter down logic
-            
-        } else if (indexPath.row == 2) {
-            //nothing
-        }
     }
 }
 
