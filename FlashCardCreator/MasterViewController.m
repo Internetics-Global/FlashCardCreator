@@ -2235,13 +2235,13 @@ extern BOOL isFromNewCreatedCard;
         //[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
         switch (index) {
             case 0:
-                playViewController.playType = Play_Type_Manually;
+                playViewController.oneOffPlayType = One_Off_Play_Type_Manually;
                 break;
             case 1:
-                playViewController.playType = Play_Type_Auto_Play;
+                playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play;
                 break;
             case 2:
-                playViewController.playType = Play_Type_Auto_Play_Loop;
+                playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play_Loop;
                 break;
                 
             default:

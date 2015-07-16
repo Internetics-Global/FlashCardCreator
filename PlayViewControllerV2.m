@@ -109,9 +109,19 @@
     
     int       _currentPage;
     
-    
+    /**
+     *  _isAutoShowQuestionOnly时，用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds）
+     */
     NSTimer  *_timerAForText2SpeechFinished;
+    
+    /**
+     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing时，用于切换到answer的delay(_pauseForAnswerSlider.value)
+     */
     NSTimer  *_timerBForText2SpeechFinished;
+    
+    /**
+     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds）
+     */
     NSTimer  *_timerCForText2SpeechFinished;
 }
 
@@ -215,16 +225,18 @@
     }
     
     
-    switch (self.playType) {
-        case Play_Type_Manually: {
+    //初始化_dwellTimeSlider值
+    
+    switch (self.oneOffPlayType) {
+        case One_Off_Play_Type_Manually: {
             break;
         }
             
-        case Play_Type_Auto_Play:
+        case One_Off_Play_Type_Auto_Play:
             _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
             break;
             
-        case Play_Type_Auto_Play_Loop:
+        case One_Off_Play_Type_Auto_Play_Loop:
             _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
             break;
             
@@ -838,7 +850,7 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
-        self.playType = Play_Type_Unkown; //don't know
+        self.oneOffPlayType = One_Off_Play_Type_Unkown; //因为是one off的，所以一旦有新动作，需要重置
         
         [_dwellTimeSlider showPopUpViewAnimated:NO];
         [_pauseForAnswerSlider showPopUpViewAnimated:NO];
@@ -967,8 +979,8 @@
 - (void) firstTimeDelayTimer {
     
     
-    switch (self.playType) {
-        case Play_Type_Manually: {
+    switch (self.oneOffPlayType) {
+        case One_Off_Play_Type_Manually: {
             FlashCard *currentCard = [self  getCurrrentCard];
             
             if (currentCard) {
@@ -978,11 +990,11 @@
             break;
         }   
             
-        case Play_Type_Auto_Play:
+        case One_Off_Play_Type_Auto_Play:
             [self executeAutoPlay];
             break;
             
-        case Play_Type_Auto_Play_Loop:
+        case One_Off_Play_Type_Auto_Play_Loop:
             [self executeAutoPlay];
             [self cyclePlayButtonClicked:_cyclePlayButton];
             break;
@@ -1086,45 +1098,37 @@
 
 
 /**
- *  为避免逻辑的思路，统一处理
+ *  为避免复杂的逻辑，一刀切，简单化，执行如下操作
  *  1. 停止所有的声音播放
- *  2. 停止所有的count down逻辑
- *  3. 停止所有的delay timer
+ *  2. 停止所有的count down逻辑 （包括显示和toast message）
+ *  3. 停止所有的delay timer （包括auto hide)
  *  4. 重启
  */
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
+    //1.
     FlashCard *currentCard = [self getCurrrentCard];
     [currentCard stopAudio];
     [currentCard stopTextToSpeechNow];
     
     
-    [_countDownTimer invalidate];
-    _countDownTimer = nil;
+    //2.
     [_countDownLabel removeFromSuperview];
     [_messageToastBaseView removeFromSuperview];
     
-    [_timerForDelayedText2Speech invalidate];
-    _timerForDelayedText2Speech = nil;
-    
-    [_firstTimeDelayTimer invalidate];
-    _firstTimeDelayTimer = nil;
-    
-    [_firstPageDelay_AutoDelayMode_Timer invalidate];
-    _firstPageDelay_AutoDelayMode_Timer = nil;
-    
-    [_firstPageDelay_FixedMode_Timer invalidate];
-    _firstPageDelay_FixedMode_Timer = nil;
+    //3.
+    [self invalidateAllTimers];
+    [self resetAutoHideControlPanelTimer];
     
     
+    //4.
     int val = (int)slider.value;
     if (val == kMIN_Auto_Play_Speed) {
         _scrollView.isFixedDelayAutoScroll = NO;
     } else {
         _scrollView.isFixedDelayAutoScroll = YES;
-        self.playType = Play_Type_Unkown;
+        self.oneOffPlayType = One_Off_Play_Type_Unkown;  //因为是one off的，所以一旦有新动作，需要重置
     }
-    
     
     if (_isAutoShowQuestionOnly) {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
@@ -1134,12 +1138,8 @@
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     }
     
-    
     _currentPack.autoPlaySpeed = slider.value;
-    
-    [self resetAutoHideControlPanelTimer];
-    
-    
+
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
@@ -1388,7 +1388,7 @@
                 
             } else {
                 double delayInSeconds = K_IntervalBetweenCardSeconds;
-                [_timerBForText2SpeechFinished invalidate];
+                [_timerCForText2SpeechFinished invalidate];
                 _timerCForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                     //我们需要这些条件，因为这是一个延时操作
                     if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
@@ -1416,8 +1416,10 @@
 - (BOOL) isSmartDelay {
     //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
     
-    if (self.playType == Play_Type_Auto_Play || self.playType == Play_Type_Auto_Play_Loop) {
+    if (self.oneOffPlayType == One_Off_Play_Type_Auto_Play || self.oneOffPlayType == One_Off_Play_Type_Auto_Play_Loop) {
         return YES;
+    } else {
+        //我们不check else的状态
     }
     
     
@@ -1446,11 +1448,7 @@
 #pragma mark -
 #pragma mark - Memory Management
 
-
-- (void)dealloc {
-    
-    [iConsole info:@"%s",__FUNCTION__];
-    
+- (void) invalidateAllTimers {
     [_dwellOnAnswerExpireTimer invalidate];
     _dwellOnAnswerExpireTimer = nil;
     
@@ -1480,7 +1478,14 @@
     
     [_timerForDelayedText2Speech invalidate];
     _timerForDelayedText2Speech = nil;
+}
+
+
+- (void)dealloc {
     
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    [self invalidateAllTimers];
     
     _scrollView.delegate = nil;
     

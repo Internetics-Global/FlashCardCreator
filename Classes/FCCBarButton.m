@@ -7,6 +7,7 @@
 //
 
 #import "FCCBarButton.h"
+#import "UIButton+Extensions.h"
 
 @implementation FCCBarButton
 
@@ -35,6 +36,8 @@
     rect.size.width = rect.size.width +20;
     rect.size.height = rect.size.height + 7;
     button.frame = rect;
+    
+    [button setHitTestEdgeInsets:UIEdgeInsetsMake(-10, -10, -10, -10)];
     
     [button addTarget:target action:action forControlEvents:UIControlEventTouchDown];
     return button;
