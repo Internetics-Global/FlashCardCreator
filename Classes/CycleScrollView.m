@@ -94,6 +94,9 @@
     _dwellSecondsOnQuestion = dwellSecondsOnQuestion;
 }
 
+/**
+ *  Only for fixed delay mode
+ */
 - (void)setIntervalBetweenCardSeconds:(float)intervalBetweenCardSeconds{
     _intervalBetweenCardSeconds = intervalBetweenCardSeconds;
     [self resetAutoScrollTimer];

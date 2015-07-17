@@ -23,7 +23,7 @@
 #import "OpenUDID.h"
 
 #define K_AutoHideControlPanelDwellSeconds         5
-#define K_IntervalBetweenCardSeconds               2
+#define K_IntervalBetweenCardSeconds_ForQAOnly     2
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
@@ -110,7 +110,7 @@
     int       _currentPage;
     
     /**
-     *  _isAutoShowQuestionOnly时，用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds）
+     *  _isAutoShowQuestionOnly时，用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
      */
     NSTimer  *_timerAForText2SpeechFinished;
     
@@ -120,7 +120,7 @@
     NSTimer  *_timerBForText2SpeechFinished;
     
     /**
-     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds）
+     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
      */
     NSTimer  *_timerCForText2SpeechFinished;
 }
@@ -1017,7 +1017,11 @@
         _scrollView.dwellSecondsOnQuestion = _dwellTimeSlider.value;
     }
     
-    _scrollView.intervalBetweenCardSeconds = K_IntervalBetweenCardSeconds;
+    if (_isAutoShowQuestionOnly) {
+        _scrollView.intervalBetweenCardSeconds = _pauseForAnswerSlider.value;
+    } else {
+        _scrollView.intervalBetweenCardSeconds = K_IntervalBetweenCardSeconds_ForQAOnly;
+    }
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
@@ -1065,7 +1069,10 @@
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
 
-    
+    if ([self isSmartDelay] == false) {
+        //在smart delay中，我们并没有用到这个参数
+        _scrollView.intervalBetweenCardSeconds = slider.value;
+    }
     
     if (_isAutoShowQuestionOnly) {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);  
@@ -1335,7 +1342,7 @@
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
             [_timerAForText2SpeechFinished invalidate];
-            _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:K_IntervalBetweenCardSeconds block:^(NSTimer *timer) {
+            _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:K_IntervalBetweenCardSeconds_ForQAOnly block:^(NSTimer *timer) {
                 //我们需要这些条件，因为这是一个延时操作
                 if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                     [_scrollView scrollNow];
@@ -1354,7 +1361,7 @@
                 } repeats:NO];
                 
             } else {
-                double delayInSeconds = K_IntervalBetweenCardSeconds;
+                double delayInSeconds = K_IntervalBetweenCardSeconds_ForQAOnly;
                 [_timerCForText2SpeechFinished invalidate];
                 _timerCForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                     //我们需要这些条件，因为这是一个延时操作
