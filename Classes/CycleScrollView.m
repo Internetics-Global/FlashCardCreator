@@ -84,6 +84,8 @@
 
 - (void)setDwellSecondsTotally:(float)dwellSeconds{
     _dwellSecondsTotally = dwellSeconds;
+    
+    //因为_dwellSecondsTotally会影响最终的auto scroll timer的时间计算
     [self resetAutoScrollTimer];
     
 }

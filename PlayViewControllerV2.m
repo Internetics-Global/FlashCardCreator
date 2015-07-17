@@ -840,10 +840,17 @@
     
 }
 
+/**
+ *  同dwellTimeSliderClicked逻辑一样，简单化：先停止一切运行的，然后重启
+ */
 - (void) autoScrollButtonClicked:(UIButton *) button {
     
-    [_timerForDelayedText2Speech invalidate];
-    _timerForDelayedText2Speech = nil;
+    FlashCard *currentCard = [self getCurrrentCard];
+    [currentCard stopAudio];
+    [currentCard stopTextToSpeechNow];
+    
+    [self invalidateAllTimers];
+    [self resetAutoHideControlPanelTimer];
     
     if (_isAutoScroll == FALSE) {
         [self executeAutoPlay];
@@ -860,42 +867,13 @@
         [_countDownLabel removeFromSuperview];
         [_messageToastBaseView removeFromSuperview];
         
-        [_countDownTimer invalidate];
-        _countDownTimer = nil;
-        
-        [_firstPageDelay_AutoDelayMode_Timer invalidate];
-        _firstPageDelay_AutoDelayMode_Timer = nil;
-        
-        [_firstPageDelay_FixedMode_Timer invalidate];
-        _firstPageDelay_FixedMode_Timer = nil;
-        
-        [_firstPageDelay_AutoDelayMode_Timer invalidate];
-        _firstPageDelay_AutoDelayMode_Timer = nil;
-        
-        [_firstTimeDelayTimer invalidate];
-        _firstTimeDelayTimer = nil;
-        
-        [_timerAForText2SpeechFinished invalidate];
-        _timerAForText2SpeechFinished = nil;
-        
-        [_timerBForText2SpeechFinished invalidate];
-        _timerBForText2SpeechFinished = nil;
-        
-        [_timerCForText2SpeechFinished invalidate];
-        _timerCForText2SpeechFinished = nil;
-        
         _isAutoScroll = NO;
         _scrollView.isAutoScroll = NO;
         [_autoScrollButton setImage:[UIImage imageNamed:@"auto_unselected"] forState:UIControlStateNormal];
         
         //_scrollView.userInteractionEnabled = YES;
         _scrollView.isFixedDelayAutoScroll = NO;
-        
-        [_autoSwitchQATimerForFixedDelay invalidate];
-        _autoSwitchQATimerForFixedDelay = nil;
     }
-    
-    [self resetAutoHideControlPanelTimer];
 }
 
 /*
@@ -1084,7 +1062,7 @@
     
     
     if (_isAutoShowQuestionOnly) {
-        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);  
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value *2 + _pauseForAnswerSlider.value);
@@ -1261,10 +1239,6 @@
 
 -(void)executeAutoPlay {
     
-    //clean
-    [_firstTimeDelayTimer invalidate];
-    _firstTimeDelayTimer = nil;
-    
     NSNumber *countDownNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"K_CountDown_Val"];
     int countDown;
     if (countDownNumber) {
@@ -1272,9 +1246,6 @@
     } else {
         countDown = kDEFAULT_CountDown_Slider_Value;
     }
-    
-    [_countDownTimer invalidate];
-    _countDownTimer = nil;
     
     if (_countDownLabel || countDown == 0) {
         [_countDownLabel removeFromSuperview];
@@ -1286,8 +1257,6 @@
         [self.view addSubview:_countDownLabel];
         [self.view addSubview:_messageToastBaseView];
     }
-    
-    [self resetAutoHideControlPanelTimer];
     
     BOOL isShowQuestionOnly = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
     if (isShowQuestionOnly) {
@@ -1312,14 +1281,6 @@
     
     _scrollView.userInteractionEnabled = FALSE;
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
-    
-    
-    
-    
-    //client's special requirement to request a pause after entry into play mode
-    FlashCard *currentCard = [self getCurrrentCard];
-    [currentCard stopAudio];
-    [currentCard stopTextToSpeechNow];
     
     
 
