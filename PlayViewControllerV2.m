@@ -23,7 +23,7 @@
 #import "OpenUDID.h"
 
 #define K_AutoHideControlPanelDwellSeconds         5
-#define K_IntervalBetweenCardSeconds_ForQAOnly     2
+#define K_IntervalBetweenCardSeconds_ForQAOnly     4
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
@@ -1341,8 +1341,9 @@
     
     if ([self isSmartDelay] && _isAutoScroll) {
         if (_isAutoShowQuestionOnly) {
+            double delayInSeconds = _pauseForAnswerSlider.value;
             [_timerAForText2SpeechFinished invalidate];
-            _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:K_IntervalBetweenCardSeconds_ForQAOnly block:^(NSTimer *timer) {
+            _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                 //我们需要这些条件，因为这是一个延时操作
                 if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                     [_scrollView scrollNow];

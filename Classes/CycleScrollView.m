@@ -95,7 +95,7 @@
 }
 
 /**
- *  Only for fixed delay mode
+ *  Only for fixed delay mode;在auto delay mode中，我们是另外处理
  */
 - (void)setIntervalBetweenCardSeconds:(float)intervalBetweenCardSeconds{
     _intervalBetweenCardSeconds = intervalBetweenCardSeconds;
