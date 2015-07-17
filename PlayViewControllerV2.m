@@ -248,6 +248,9 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    _controlPanel.hidden = YES;
+    _scrollView.userInteractionEnabled = NO;
+    
     FlashCard *currentCard = [self getCurrrentCard];
     
     _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
@@ -310,6 +313,7 @@
     _controlPanel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     _controlPanel.layer.cornerRadius = 3;
     _controlPanel.backgroundColor = [UIColor colorWithRed:104.0/255 green:104.0/255 blue:104.0/255 alpha:1];
+    _controlPanel.hidden = YES;
     [self.view addSubview:_controlPanel];
     
     _cyclePlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -956,6 +960,8 @@
 
 - (void) firstTimeDelayTimer {
     
+    _controlPanel.hidden = NO;
+    _scrollView.userInteractionEnabled = YES;
     
     switch (self.oneOffPlayType) {
         case One_Off_Play_Type_Manually: {
