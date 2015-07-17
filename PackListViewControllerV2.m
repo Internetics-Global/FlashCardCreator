@@ -17,8 +17,10 @@
 #import "FileOperationHelper.h"
 #import "OpenUDID.h"
 #import "CreateEditPackViewController2.h"
+#import "PlayViewControllerV2.h"
+#import "PopoverView.h"
 
-@interface PackListViewControllerV2() <UITextFieldDelegate, UINavigationControllerDelegate,UIAlertViewDelegate> {
+@interface PackListViewControllerV2() <UITextFieldDelegate, UINavigationControllerDelegate,UIAlertViewDelegate,PopoverViewDelegate> {
 
     UIBarButtonItem         * _createNewPackBtnItem;
     UIBarButtonItem         * _backBtnItem;
@@ -313,24 +315,17 @@
 
 -  (void) playButtonClicked:(id) sender {
     
-    NSInteger index = ((UIButton *) sender).tag;
+    int index = ((UIButton *) sender).tag;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:[NSNumber numberWithInteger:index]];
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index + 1 inSection:0]];
     
-    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
-    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-    [selectedPack savePackOnly];
+    PopoverView *popoverView = [PopoverView showPopoverAtPoint:((UIButton *) sender).center
+                                                                       inView:cell
+                                                                    withTitle:@"Please select"
+                                                              withStringArray:[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
+                                                                     delegate:self];
+    popoverView.tag = ((UIButton *) sender).tag;
     
-    [self setPackIDForLastSelected:selectedPack.packID];
-    
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        [self.popController dismissPopoverAnimated:YES];
-        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
 }
 
 - (void) resetPackContent {
@@ -561,6 +556,56 @@
     [currentPack save];
 }
 
+
+#pragma mark - PopoverViewDelegate Methods
+
+- (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
+{
+    [iConsole info:@"%s",__FUNCTION__];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [popoverView dismiss];
+    });
+    
+    NSInteger packIndex = popoverView.tag;
+    
+    One_Off_Play_Type oneOffType;
+    switch (index) {
+        case 0:
+            oneOffType = One_Off_Play_Type_Manually;
+            break;
+        case 1:
+            oneOffType = One_Off_Play_Type_Auto_Play;
+            break;
+        case 2:
+            oneOffType = One_Off_Play_Type_Auto_Play_Loop;
+            break;
+            
+        default:
+            oneOffType = One_Off_Play_Type_Unkown;
+            break;
+    }
+
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:@[[NSNumber numberWithInteger:oneOffType],[NSNumber numberWithInteger:packIndex]]];
+    
+    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:packIndex];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    [selectedPack savePackOnly];
+    
+    [self setPackIDForLastSelected:selectedPack.packID];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
+    
+    
+    
+}
 
 
 

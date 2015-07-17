@@ -816,10 +816,29 @@ extern BOOL isFromNewCreatedCard;
         //[self.navigationController popToRootViewControllerAnimated:TRUE];
     }
     
-    int index = [[notification object] intValue];
+    int index = [[[notification object] lastObject] intValue];
+    
+    One_Off_Play_Type oneOffType;
+    switch ([[[notification object] firstObject] intValue]) {
+        case 0:
+            oneOffType = One_Off_Play_Type_Manually;
+            break;
+        case 1:
+            oneOffType = One_Off_Play_Type_Auto_Play;
+            break;
+        case 2:
+            oneOffType = One_Off_Play_Type_Auto_Play_Loop;
+            break;
+            
+        default:
+            oneOffType = One_Off_Play_Type_Unkown;
+            break;
+    }
+    
     Pack *selectedPack = [[[User defaultUser] packs] objectAtIndex:index];
     
     PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
+    playViewController.oneOffPlayType = oneOffType;
     playViewController.currentPack = selectedPack;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"Current card or pack is nil"];
