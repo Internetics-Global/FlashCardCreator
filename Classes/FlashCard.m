@@ -5593,7 +5593,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (void) playAudioWithManualClick:(BOOL) isManualClicked {
+- (void) muteAudio {
+    _audioPlayer.volume = 0.0;
+}
+
+- (void) unMuteAudio {
+    _audioPlayer.volume = 1.0;
+}
+
+- (void) playAudioWithManualClick:(BOOL) isManualClicked withMute:(BOOL)isMute {
     [iConsole info:@"%s",__FUNCTION__];
     
     
@@ -5615,6 +5623,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_audioPlayer stop];
         
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:&error];
+        
+        if (isMute) {
+            _audioPlayer.volume = 0.0;
+        } else {
+            _audioPlayer.volume = 1.0;
+        }
         
         _audioPlayer.numberOfLoops = 0;
         _audioPlayer.delegate = self;

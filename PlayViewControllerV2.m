@@ -891,54 +891,52 @@
 */
 - (void) playbackOnCard:(FlashCard *) currentCard {
     
-    if (_isMute == FALSE) {
-        if (currentCard) {
-            if ([self isText2Speech] || [self isSmartDelay]) {
-                
-                if ([self isText2Speech] == FALSE) {
-                    currentCard.isMuteText2Speech = YES;  //这时我们进行mute播放
-                } else {
-                    currentCard.isMuteText2Speech = NO;
-                }
-                
-                if (_previousCard) {
-                    [_previousCard stopTextToSpeechNow];
-                    [_previousCard stopAudio];
-                }
-                if (_isShuttingDown == FALSE) {
-                    
-                    int durationForRecordedSound;
-                    if ([currentCard isQuestionShowing]) {
-                        durationForRecordedSound = [currentCard durationForQuestionRecordedSound];
-                    } else {
-                        durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
-                    }
-                    if (durationForRecordedSound == 0) {
-                      [currentCard textToSpeechAllContentNow];
-                    } else {
-                        [currentCard playAudioWithManualClick:NO];
-                        double delayInSeconds = durationForRecordedSound + 1;
-                        
-                        [_timerForDelayedText2Speech invalidate];
-                        _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
-                            if (_isShuttingDown == false) {
-                                [currentCard textToSpeechAllContentNow];
-                            }
-                        } repeats:NO];
-                        
-                    }
-                    
-                    
-                    
-                }
+    if (currentCard) {
+        if ([self isText2Speech] || [self isSmartDelay]) {
+            
+            if ([self isText2Speech] == FALSE) {
+                currentCard.isMuteText2Speech = YES;  //这时我们进行mute播放
             } else {
+                currentCard.isMuteText2Speech = NO;
+            }
+            
+            if (_previousCard) {
+                [_previousCard stopTextToSpeechNow];
+                [_previousCard stopAudio];
+            }
+            if (_isShuttingDown == FALSE) {
                 
-                [currentCard playAudioWithManualClick:NO];
+                int durationForRecordedSound;
+                if ([currentCard isQuestionShowing]) {
+                    durationForRecordedSound = [currentCard durationForQuestionRecordedSound];
+                } else {
+                    durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
+                }
+                if (durationForRecordedSound == 0) {
+                    [currentCard textToSpeechAllContentNow];
+                } else {
+                    [currentCard playAudioWithManualClick:NO withMute:_isMute];
+                    double delayInSeconds = durationForRecordedSound + 1;
+                    
+                    [_timerForDelayedText2Speech invalidate];
+                    _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
+                        if (_isShuttingDown == false) {
+                            [currentCard textToSpeechAllContentNow];
+                        }
+                    } repeats:NO];
+                    
+                }
+                
+                
+                
             }
         } else {
-            [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
-        };
-    }
+            
+            [currentCard playAudioWithManualClick:NO withMute:_isMute];
+        }
+    } else {
+        [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
+    };
 }
 
 
@@ -1044,7 +1042,7 @@
     if (_isMute == FALSE) {
         FlashCard *currentCard = [self getCurrrentCard];
         if (currentCard) {
-            [currentCard playAudioWithManualClick:YES];
+            [currentCard playAudioWithManualClick:YES withMute:_isMute];
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
@@ -1055,15 +1053,17 @@
 
 - (void) muteButtonClicked:(UIButton *) button {
     
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
+    
     if (_isMute) {
         _isMute = NO;
         [button setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+        [currentFlashCardView unMuteAudio];
     } else {
         _isMute = YES;
         [button setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
+        [currentFlashCardView muteAudio];
         
-        FlashCard *currentFlashCardView = [self getCurrrentCard];
-        [currentFlashCardView stopAudio];
         
     }
     

@@ -165,11 +165,11 @@
             
             BOOL isMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
             if (isMuteMode) {
-                [_muteSwitch setOn:NO];
-            } else {
                 [_muteSwitch setOn:YES];
+            } else {
+                [_muteSwitch setOn:NO];
             }
-            cell.textLabel.text = @"Recording";
+            cell.textLabel.text = @"Mute Sound Recording";
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView = _muteSwitch;
             
@@ -283,7 +283,7 @@
 }
 
 - (void) muteSwitchAction {
-    [[NSUserDefaults standardUserDefaults] setBool:(_muteSwitch.on == false) forKey:@"isMuteMode"];
+    [[NSUserDefaults standardUserDefaults] setBool:(_muteSwitch.on) forKey:@"isMuteMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
