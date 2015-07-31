@@ -11,6 +11,7 @@
 
 @interface MoreInfoTableViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
     UISwitch *_playModeSwitch;
+    UISwitch *_muteSwitch;
 }
 
 @end

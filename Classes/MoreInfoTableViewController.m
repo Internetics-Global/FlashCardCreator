@@ -159,8 +159,21 @@
         
     } else if (indexPath.section ==1) {
         if (indexPath.row ==0) {
-            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_Help",nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [_muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
+            
+            BOOL isMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
+            if (isMuteMode) {
+                [_muteSwitch setOn:NO];
+            } else {
+                [_muteSwitch setOn:YES];
+            }
+            cell.textLabel.text = @"Recording";
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.accessoryView = _muteSwitch;
+            
+            
         } else if (indexPath.row == 1) {
             cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -269,6 +282,10 @@
     
 }
 
+- (void) muteSwitchAction {
+    [[NSUserDefaults standardUserDefaults] setBool:(_muteSwitch.on == false) forKey:@"isMuteMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 - (void) playModeSwitchAction {
     
@@ -305,16 +322,16 @@
 {
     if (indexPath.section ==1) {
         if (indexPath.row ==0) {
-            NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
-            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-            controller.hidesToolbar = NO;
-            if (isUserInterfaceIdiomPhone) {
-                [self.navigationController pushViewController:controller animated:YES];
-            } else {
-                controller.modalPresentationStyle = UIModalPresentationFormSheet;
-                #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-                [self presentModalViewController:controller animated:YES];
-            }
+//            NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
+//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+//            controller.hidesToolbar = NO;
+//            if (isUserInterfaceIdiomPhone) {
+//                [self.navigationController pushViewController:controller animated:YES];
+//            } else {
+//                controller.modalPresentationStyle = UIModalPresentationFormSheet;
+//                #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+//                [self presentModalViewController:controller animated:YES];
+//            }
         } else {
             AboutViewController *about = [[AboutViewController alloc] init];
             [self.navigationController pushViewController:about animated:YES];

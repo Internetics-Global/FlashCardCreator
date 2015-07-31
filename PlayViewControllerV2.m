@@ -443,12 +443,17 @@
     
     UIButton *muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     muteButton.frame = CGRectOffset(_playButton.frame, -25, 0);
-    [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
     [muteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [muteButton addTarget:self action:@selector(muteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     //muteButton.showsTouchWhenHighlighted =YES;
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
+    _isMute = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
+    if (_isMute) {
+       [muteButton setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
+    } else {
+       [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+    }
     
     [_dwellTimeSlider showPopUpViewAnimated:NO];
     [_pauseForAnswerSlider showPopUpViewAnimated:NO];
@@ -1061,6 +1066,9 @@
         [currentFlashCardView stopAudio];
         
     }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:_isMute forKey:@"isMuteMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self resetAutoHideControlPanelTimer];
     
