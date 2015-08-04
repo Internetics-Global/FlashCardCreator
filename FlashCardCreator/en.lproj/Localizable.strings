@@ -7,7 +7,7 @@
  */
 
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your internet settings.";
-"DIALOG_DOWNLOAD_PACK"              = "Downloading sample pack";
+"DIALOG_DOWNLOAD_PACK"              = "Downloading FFC sample cards";
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Downloading pack from ";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can only make changes to cards you have created yourself.";
 "DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
@@ -15,7 +15,7 @@
 "NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
 
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download sample pack first";
+"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download FFC sample cards first";
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a passwords?";

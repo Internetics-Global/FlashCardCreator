@@ -1444,6 +1444,11 @@ extern BOOL isFromNewCreatedCard;
             [iConsole info:@"%s:packDict =%@",__FUNCTION__,packDict];
             
             pack.packName = packDict[@"pack_name"];
+            
+            if ([pack.packName.lowercaseString isEqualToString:@"sample pack test"]) {
+                pack.packName = @"FFC Sample Cards";
+            }
+            
             pack.sidebarTitle = packDict[@"sidebar_title"];
             pack.autoPlaySpeed = [packDict[@"auto_play_speed"] intValue];
             pack.creator = packDict[@"creator"];
