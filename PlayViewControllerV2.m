@@ -47,6 +47,10 @@
     BOOL  _isAutoScroll;
     
     BOOL  _isCyclePlay;
+    
+    /**
+     *  实际上不是真正的mute
+     */
     BOOL  _isMute;
     
     BOOL  _isShuttingDown;
@@ -906,24 +910,32 @@
             }
             if (_isShuttingDown == FALSE) {
                 
-                int durationForRecordedSound;
-                if ([currentCard isQuestionShowing]) {
-                    durationForRecordedSound = [currentCard durationForQuestionRecordedSound];
+                if (_isMute == false) {
+                    
+                    int durationForRecordedSound;
+                    if ([currentCard isQuestionShowing]) {
+                        durationForRecordedSound = [currentCard durationForQuestionRecordedSound];
+                    } else {
+                        durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
+                    }
+                    if (durationForRecordedSound == 0) {
+                        [currentCard textToSpeechAllContentNow];
+                    } else {
+                        [currentCard playAudioWithManualClick:NO withMute:_isMute];
+                        double delayInSeconds = durationForRecordedSound + 1;
+                        
+                        [_timerForDelayedText2Speech invalidate];
+                        _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
+                            if (_isShuttingDown == false) {
+                                [currentCard textToSpeechAllContentNow];
+                            }
+                        } repeats:NO];
+                        
+                    }
                 } else {
-                    durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
-                }
-                if (durationForRecordedSound == 0) {
-                    [currentCard textToSpeechAllContentNow];
-                } else {
-                    [currentCard playAudioWithManualClick:NO withMute:_isMute];
-                    double delayInSeconds = durationForRecordedSound + 1;
                     
                     [_timerForDelayedText2Speech invalidate];
-                    _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
-                        if (_isShuttingDown == false) {
-                            [currentCard textToSpeechAllContentNow];
-                        }
-                    } repeats:NO];
+                    [currentCard textToSpeechAllContentNow];
                     
                 }
                 
@@ -1037,6 +1049,9 @@
     
 }
 
+/**
+ *  callback when click trumpet button
+ */
 - (void) playButtonClicked:(UIButton *) button {
     
     if (_isMute == FALSE) {
