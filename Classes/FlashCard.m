@@ -3173,6 +3173,428 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             break;
         }
             
+        case 12:
+        {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(3, 10, 50, 164.5);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            //
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(58, 10, 250, 164.5);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            _imageAnswer.hidden = YES;
+            
+            _imageAnswer2.hidden = TRUE;
+            
+            break;
+        }
+            
+        case 13:
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(3, 3, 154, 156);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 20;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(3, 28 + 130, 154, 26);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(162, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageAnswer2.hidden = TRUE;
+            
+            break;
+        }
+            
+        case 14:
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(3, 3, 154, 35);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 20;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(3, 43, 154, 100);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            //dfdsfsdfsdfdsdsf
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(3, 148, 154, 35);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(162, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageAnswer2.hidden = TRUE;
+            
+            break;
+        }
+            
+        
+        case 15:
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(10, 145, 134, 24.5);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 20;
+            
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(160, 145, 134, 24.5);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 20;
+            
+            
+            
+            
+            _subAnswer.hidden = TRUE;
+            
+            _imageAnswer2.hidden = FALSE;
+            _imageAnswer2.frame = CGRectMake(10, 8, 134, 134);
+            if (self.isPlayingCard) {
+                _imageAnswer2.frame = [Common getScaledViewRect:_imageAnswer2 withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(160, 8, 134, 134);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            
+            break;
+        }
+            
+        
+        case 16:
+        {
+            _subheadingAnswer.hidden = FALSE;
+            _subheadingAnswer.frame = CGRectMake(160, 3, 154, 35);
+            if (self.isPlayingCard) {
+                _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontAnswer.length == 0) {
+                _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontAnswer.length == 0) {
+                    _subheadingAnswer.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingAnswer.font =[UIFont fontWithName:_subheadingFontAnswer size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingAnswer.textColor = [UIColor blackColor];
+            _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignAnswer = @"Left";
+            
+            _subheadingAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subheadingAnswer];
+            
+            _subheadingColorAnswer = @"Black";
+            _subheadingSizeAnswer = 20;
+            
+            _mainAnswer.hidden = FALSE;
+            _mainAnswer.frame = CGRectMake(160, 43, 154, 100);
+            if (self.isPlayingCard) {
+                _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontAnswer.length == 0) {
+                _mainAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontAnswer.length == 0) {
+                    _mainAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainAnswer.font =[UIFont fontWithName:_mainFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainAnswer.textColor = [UIColor blackColor];
+            _mainAnswer.textAlignment = NSTextAlignmentLeft;
+            _mainAlignAnswer = @"Left";
+            
+            _mainAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_mainAnswer];
+            
+            _mainColorAnswer = @"Black";
+            _mainSizeAnswer = 16;
+            
+            //dfdsfsdfsdfdsdsf
+            _subAnswer.hidden = FALSE;
+            _subAnswer.frame = CGRectMake(160, 148, 154, 35);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentLeft;
+            _subAlignAnswer = @"Left";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(3, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageAnswer2.hidden = TRUE;
+            
+            break;
+        }
+
+            
         default:
         {
             [iConsole info:@"%s:No template is selected",__FUNCTION__];
@@ -3180,6 +3602,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
             
     }
+    
+    
+    
     
     _subheadingAnswer.contentOffset = CGPointZero;
     _mainAnswer.contentOffset = CGPointZero;
@@ -5045,6 +5470,426 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeQuestion = 16;
             
             _imageQuestion.hidden = YES;
+            _imageQuestion2.hidden = TRUE;
+            
+            break;
+        }
+            
+        case 12:
+        {
+            _subheadingQuestion.hidden = YES;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(3, 10, 50, 164.5);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            //
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(58, 10, 250, 164.5);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 16;
+            
+            _imageQuestion.hidden = YES;
+            _imageQuestion2.hidden = TRUE;
+            
+            break;
+        }
+            
+        case 13:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(3, 3, 154, 156);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 20;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(3, 28 + 130, 154, 26);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(162, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageQuestion2.hidden = TRUE;
+            
+            break;
+        }
+            
+            
+        case 14:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(3, 3, 154, 35);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 20;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(3, 43, 154, 100);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            //dfdsfsdfsdfdsdsf
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(3, 148, 154, 35);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 16;
+            
+            
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(162, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageQuestion2.hidden = TRUE;
+            
+            break;
+        }
+            
+            
+        case 15:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(10, 145, 134, 24.5);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 20;
+            
+
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(160, 145, 134, 24.5);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 20;
+            
+            
+            
+            
+            _subQuestion.hidden = TRUE;
+            
+            _imageQuestion2.hidden = FALSE;
+            _imageQuestion2.frame = CGRectMake(10, 8, 134, 134);
+            if (self.isPlayingCard) {
+                _imageQuestion2.frame = [Common getScaledViewRect:_imageQuestion2 withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(160, 8, 134, 134);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            
+            break;
+        }
+
+        case 16:
+        {
+            _subheadingQuestion.hidden = FALSE;
+            _subheadingQuestion.frame = CGRectMake(160, 3, 154, 35);
+            if (self.isPlayingCard) {
+                _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subheadingFontQuestion.length == 0) {
+                _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20];
+            } else {
+                _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20];
+            }
+            if (self.isPlayingCard) {
+                if (_subheadingFontQuestion.length == 0) {
+                    _subheadingQuestion.font =[UIFont boldSystemFontOfSize:20*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:20*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subheadingQuestion.textColor = [UIColor blackColor];
+            _subheadingQuestion.textAlignment = NSTextAlignmentLeft;
+            _subheadingAlignQuestion = @"Left";
+            
+            _subheadingAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subheadingQuestion];
+            
+            _subheadingColorQuestion = @"Black";
+            _subheadingSizeQuestion = 20;
+            
+            _mainQuestion.hidden = FALSE;
+            _mainQuestion.frame = CGRectMake(160, 43, 154, 100);
+            if (self.isPlayingCard) {
+                _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_mainFontQuestion.length == 0) {
+                _mainQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_mainFontQuestion.length == 0) {
+                    _mainQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _mainQuestion.font =[UIFont fontWithName:_mainFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _mainQuestion.textColor = [UIColor blackColor];
+            _mainQuestion.textAlignment = NSTextAlignmentLeft;
+            _mainAlignQuestion = @"Left";
+            
+            _mainAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_mainQuestion];
+            
+            _mainColorQuestion = @"Black";
+            _mainSizeQuestion = 16;
+            
+            //dfdsfsdfsdfdsdsf
+            _subQuestion.hidden = FALSE;
+            _subQuestion.frame = CGRectMake(160, 148, 154, 35);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentLeft;
+            _subAlignQuestion = @"Left";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 16;
+            
+            
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(3, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
             _imageQuestion2.hidden = TRUE;
             
             break;

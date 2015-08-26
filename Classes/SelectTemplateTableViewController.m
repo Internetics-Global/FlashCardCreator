@@ -50,7 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 12; //2 is the latest added as request from client
+    return 17; //2 is the latest added as request from client
     
 }
 
@@ -76,15 +76,15 @@
     if (isUserInterfaceIdiomPhone) {
         if (_isQuestionShowing == YES) {
             //templateScreenshot0_answer.png
-            imageName= [NSString stringWithFormat:@"templateScreenshot%d_question.png",indexPath.row];     
+            imageName= [NSString stringWithFormat:@"templateScreenshot%ld_question.png",indexPath.row];
         } else {
-            imageName= [NSString stringWithFormat:@"templateScreenshot%d_answer.png",indexPath.row];     
+            imageName= [NSString stringWithFormat:@"templateScreenshot%ld_answer.png",indexPath.row];
         }
     } else {
         if (_isQuestionShowing == YES) {
-            imageName= [NSString stringWithFormat:@"templateScreenshot%d_question_iPad.png",indexPath.row];     
+            imageName= [NSString stringWithFormat:@"templateScreenshot%ld_question_iPad.png",indexPath.row];
         } else {
-            imageName= [NSString stringWithFormat:@"templateScreenshot%d_answer_iPad.png",indexPath.row];     
+            imageName= [NSString stringWithFormat:@"templateScreenshot%ld_answer_iPad.png",indexPath.row];
         }   
     }
     
