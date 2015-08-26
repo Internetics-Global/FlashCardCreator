@@ -231,6 +231,7 @@
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
 		88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */; };
 		88AC48291724BE3B0054DDCD /* add_card_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 88AC48281724BE3B0054DDCD /* add_card_background.png */; };
+		88AE4AA51B8D63B200988131 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 88AE4AA41B8D63B200988131 /* Base64.m */; };
 		88B405071A3824D200D8C218 /* background_navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 88B405061A3824D200D8C218 /* background_navigationbar.png */; };
 		88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */; };
 		88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BB8FE31AE72A040089D7F6 /* ASValueTrackingSlider.m */; };
@@ -588,6 +589,8 @@
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
 		88A53ED1179E8FD600D91782 /* uibarbuttonitem_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_normal@2x.png"; path = "Resources/uibarbuttonitem_normal@2x.png"; sourceTree = "<group>"; };
 		88AC48281724BE3B0054DDCD /* add_card_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_card_background.png; path = Resources/add_card_background.png; sourceTree = "<group>"; };
+		88AE4AA31B8D63B200988131 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		88AE4AA41B8D63B200988131 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		88B405061A3824D200D8C218 /* background_navigationbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_navigationbar.png; path = Resources/background_navigationbar.png; sourceTree = "<group>"; };
 		88BB8FE01AE72A040089D7F6 /* ASValuePopUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASValuePopUpView.h; sourceTree = "<group>"; };
 		88BB8FE11AE72A040089D7F6 /* ASValuePopUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASValuePopUpView.m; sourceTree = "<group>"; };
@@ -966,6 +969,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				88AE4AA21B8D63B200988131 /* Base64 */,
 				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
@@ -1417,6 +1421,16 @@
 			path = Libraries/iConsole;
 			sourceTree = "<group>";
 		};
+		88AE4AA21B8D63B200988131 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				88AE4AA31B8D63B200988131 /* Base64.h */,
+				88AE4AA41B8D63B200988131 /* Base64.m */,
+			);
+			name = Base64;
+			path = Libraries/Base64;
+			sourceTree = "<group>";
+		};
 		88B0F7931777BAAF00B6E83A /* Emotion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1795,6 +1809,7 @@
 				88F5CE7219B40B4B00107075 /* UIImage+PECrop.m in Sources */,
 				88EA2B4A1AC15ADF00A3663E /* UIAlertView+Blocks.m in Sources */,
 				2D5C17E316D1A56A00E1E785 /* AFXMLRequestOperation.m in Sources */,
+				88AE4AA51B8D63B200988131 /* Base64.m in Sources */,
 				2D5C17E416D1A56A00E1E785 /* UIImageView+AFNetworking.m in Sources */,
 				889131D51A123DED0011B7ED /* iConsole.m in Sources */,
 				2D5C17E716D1A57800E1E785 /* MBProgressHUD.m in Sources */,

@@ -19,6 +19,7 @@
 #import "CreateEditPackViewController2.h"
 #import "PlayViewControllerV2.h"
 #import "PopoverView.h"
+#import "Base64.h"
 
 @interface PackListViewControllerV2() <UITextFieldDelegate, UINavigationControllerDelegate,UIAlertViewDelegate,PopoverViewDelegate> {
 
@@ -549,27 +550,29 @@
     
         NSString *password = [alertView textFieldAtIndex:0].text;
         
-        if ([password isEqualToString:_currentPack.restorePassword]) {
-            [[alertView textFieldAtIndex:0] resignFirstResponder];
-            
-            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == false) {
-                _currentPack.creator = [OpenUDID value];
-                [_currentPack savePackOnly];
+        if (buttonIndex == 0) {
+            if ([password isEqualToString:[_currentPack.restorePassword base64DecodedString]]) {
+                [[alertView textFieldAtIndex:0] resignFirstResponder];
+                
+                if ([_currentPack.creator isEqualToString:[OpenUDID value]] == false) {
+                    _currentPack.creator = [OpenUDID value];
+                    [_currentPack savePackOnly];
+                }
+                
+                double delayInSeconds = 0.4;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    //do something here
+                    
+                    [self gotoPackEditView];
+                    
+                });
+                
+                
+            } else {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
             }
-            
-            double delayInSeconds = 0.4;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                //do something here
-                
-                [self gotoPackEditView];
-                
-            });
-            
-            
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
         }
     }
 }

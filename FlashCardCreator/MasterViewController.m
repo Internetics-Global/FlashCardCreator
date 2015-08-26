@@ -45,6 +45,7 @@
 #import "TipHelper.h"
 
 #import "CryptorHelper.h"
+#import "Base64.h"
 
 extern BOOL _isDownloadingSamplePack;
 
@@ -1455,8 +1456,12 @@ extern BOOL isFromNewCreatedCard;
             pack.createDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.creatorNickName = packDict[@"creator_nick_name"];
-            pack.restorePassword = packDict[@"restore_password"];
             pack.jobTitle = packDict[@"job_title"];
+            
+            pack.restorePassword = packDict[@"restore_password"];
+            if (pack.restorePassword.length == 0) {
+                pack.restorePassword = [@"" base64EncodedString];
+            }
             
             packPlatformStr = packDict[@"platform"];
             
