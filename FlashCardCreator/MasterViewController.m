@@ -1261,8 +1261,14 @@ extern BOOL isFromNewCreatedCard;
         [_zipFileDownloadHelper downloadZipFile:downloadableURL];
         _zipFileDownloadHelper.delegate = self;
     }  else {
-        [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
-        [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
+        [_HUD hide:YES];
+        
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
+            [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
+        });
     }
     
 }
