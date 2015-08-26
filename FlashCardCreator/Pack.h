@@ -24,33 +24,37 @@
     int       _autoPlaySpeed;  //in second
     NSMutableArray *_cards;
     
+    NSString *_restorePassword; //used to re-clain the ownership
+    
     /**
      *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）
      */
     BOOL     _isAllowShare;
 }
 
-@property (nonatomic, assign) NSInteger packID;
-@property (nonatomic, copy) NSString *packName;
-@property (nonatomic, copy) NSString *sidebarTitle;
+@property (nonatomic, assign                      ) NSInteger                      packID;
+@property (nonatomic, copy                        ) NSString                       *packName;
+@property (nonatomic, copy                        ) NSString                       *sidebarTitle;
 
 /**
  *  完整path,而不是只是一个文件名
  */
-@property (nonatomic, copy,getter=getCoverImageURL) NSString *coverImageURL;
+@property (nonatomic, copy,getter=getCoverImageURL) NSString                       *coverImageURL;
 
-@property (nonatomic, assign) NSInteger userID;
-@property (nonatomic, copy) NSString *languageName;
-@property (nonatomic, assign) BOOL isPublic;
-@property (nonatomic, strong) NSMutableArray *cards;
-@property (nonatomic, copy) NSString *creator;
-@property (nonatomic, copy) NSString *creatorNickName;
-@property (nonatomic, copy) NSString *jobTitle;
-@property (assign, nonatomic) int createDate;
-@property (assign, nonatomic) int lastVisitDate;
-@property (assign, nonatomic) int autoPlaySpeed;
+@property (nonatomic, assign                      ) NSInteger                      userID;
+@property (nonatomic, copy                        ) NSString                       *languageName;
+@property (nonatomic, assign                      ) BOOL                           isPublic;
+@property (nonatomic, strong                      ) NSMutableArray                 *cards;
+@property (nonatomic, copy                        ) NSString                       *creator;
+@property (nonatomic, copy                        ) NSString                       *creatorNickName;
+@property (nonatomic, copy                        ) NSString                       *jobTitle;
+@property (assign, nonatomic                      ) int                            createDate;
+@property (assign, nonatomic                      ) int                            lastVisitDate;
+@property (assign, nonatomic                      ) int                            autoPlaySpeed;
 
-@property (nonatomic, assign) BOOL isAllowShare;
+@property (nonatomic, copy                        ) NSString                       *restorePassword;
+
+@property (nonatomic, assign                      ) BOOL                           isAllowShare;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;

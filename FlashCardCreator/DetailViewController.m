@@ -458,7 +458,7 @@ enum popover_enum {
 
 - (void) selectCardBackgroundTemplate:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+    if ([Common isOwner:_currentPack] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -752,7 +752,7 @@ enum popover_enum {
         
     } else if (popoverView.tag == popover_enum_template_select) {
         
-        if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
+        if (![Common isOwner:_currentPack]) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
             return;
         }
@@ -915,7 +915,7 @@ enum popover_enum {
  */
 -(void) previousCardNotification:(NSNotification *)notification {
     [iConsole info:@"%s",__FUNCTION__];
-    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         return;
     }
     
@@ -958,7 +958,7 @@ enum popover_enum {
  */
 -(void) nextCardNotification:(NSNotification *)notification {
     [iConsole info:@"%s",__FUNCTION__];
-    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         return;
     }
     
@@ -1082,7 +1082,7 @@ enum popover_enum {
             
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
             NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if ((shareCode.length >0) && ([_currentCard.creator isEqualToString:[OpenUDID value]])) {
+            if ((shareCode.length >0) && [Common isOwner:_currentPack]) {
                 shareCodeLabel.hidden = NO;
                 shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
             } else {

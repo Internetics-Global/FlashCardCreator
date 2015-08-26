@@ -11,6 +11,8 @@
 
 #import "EmoticonHelper.h"
 #import "Emoticon.h"
+#import "Pack.h"
+#import "OpenUDID.h"
 
 @implementation Common
 
@@ -294,6 +296,16 @@
     
     return NO;
 
+    
+}
+
++ (BOOL) isOwner:(Pack *) currentPack {
+    
+    if (([currentPack.creator isEqualToString:[OpenUDID value]])) {
+        return true;
+    } else {
+        return false;
+    }
     
 }
 

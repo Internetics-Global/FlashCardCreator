@@ -185,6 +185,9 @@
 
 - (void) saveAndCloseCreatePackView {
     
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
+    
     if (_autoPlaySpeedSlider.value > kMAX_Auto_Play_Speed || _autoPlaySpeedSlider.value < kMIN_Auto_Play_Speed) {
         [Common alertViewCommon:@"The value of auto play speed should be between 4 and 60 seconds"];
         return;
@@ -202,6 +205,7 @@
     _currentPack.creatorNickName = _creatorTextField.text;
     _currentPack.jobTitle = _jobTitleTextField.text;
     _currentPack.autoPlaySpeed = _autoPlaySpeedSlider.value;
+    _currentPack.restorePassword = _adminPasswordTextField.text;
     
     if (_isEditPack) {
        [_currentPack savePackOnly];

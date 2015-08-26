@@ -483,7 +483,7 @@
     
     
     if ((_currentPack.autoPlaySpeed != kDefault_Auto_Play_Speed)
-            && ([_currentPack.creator isEqualToString:[OpenUDID value]] == false)){
+            && ([Common isOwner:_currentPack] == false)){
         if (isUserInterfaceIdiomPhone) {
             _messageToastBaseView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_controlPanel.frame) + 30, CGRectGetMinY(_controlPanel.frame) - 55, CGRectGetWidth(_controlPanel.frame) - 60, 50)];
         } else {

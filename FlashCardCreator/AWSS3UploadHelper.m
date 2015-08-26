@@ -62,7 +62,7 @@
 - (void)shareAction
 {
     [iConsole info:@"%s",__FUNCTION__];
-    if ([self checkPackEditable]) {
+    if ([Common isOwner:_currentPack]) {
         //Step1: check whether need to upload pack again
         NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
         if (!dict) {
@@ -149,19 +149,6 @@
     [alert show];
     
     APP_DELEGATE.isAllowToShowPackList = NO;
-}
-
-- (BOOL) checkPackEditable {
-    [iConsole info:@"%s",__FUNCTION__];
-    BOOL result = NO;
-    Card *firstCard = [[self.currentPack cards] objectAtIndex:0];
-    if ([firstCard.creator isEqualToString:[OpenUDID value]]) {
-        result = YES;
-    } else {
-        result = NO;
-    }
-    
-    return result;
 }
 
 

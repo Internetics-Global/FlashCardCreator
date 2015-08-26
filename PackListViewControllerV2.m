@@ -248,7 +248,7 @@
             cell.lockImageView.hidden = YES;
         }
         
-        if ((self.packIDInMasterView != pack.packID) && [pack.creator isEqualToString:[OpenUDID value]] && _isCollectionViewEditing) {
+        if ((self.packIDInMasterView != pack.packID) && [Common isOwner:pack] && _isCollectionViewEditing) {
             cell.packNameText.layer.borderColor = [[UIColor whiteColor] CGColor];
             cell.packNameText.layer.borderWidth = 1;
             cell.packNameText.userInteractionEnabled = TRUE;
@@ -435,6 +435,7 @@
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Delete",@""), nil];
         alert.delegate = self;
+        alert.tag = 1;
         [alert show];
         APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
@@ -451,13 +452,33 @@
     NSInteger index = ((UIButton *) sender).tag;
     _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
     
-    if (([_currentPack.creator isEqualToString:[OpenUDID value]]) == FALSE) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"You can not edit packs that are not created by you" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
+    if ([Common isOwner:_currentPack] == FALSE) {
+        UIAlertView *alert;
+        if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
+            alert = [[UIAlertView alloc] initWithTitle:nil
+                                               message:@"Input admin password"
+                                              delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                     otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        } else {
+            alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+                                               message:@"Input admin password"
+                                              delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                     otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        }
+        alert.tag = 2;
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        alert.delegate = self;
+        [alert show];
+        
         return;
         
     }
     
+    [self gotoPackEditView];
+}
+
+- (void) gotoPackEditView {
     
     CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
@@ -479,7 +500,6 @@
         navController.modalPresentationStyle = UIModalPresentationFormSheet;
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
     }
-    
 }
 
 
@@ -496,37 +516,66 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        //do nothing
-    } else if (buttonIndex == 1) {
-        // delete operation
-        _currentPack = [[[User defaultUser] packs] objectAtIndex:_currentIndex];
-        [[User defaultUser] removePack:_currentPack];
-        [self resetPackContent];
-        
-        //Recalculate:
-        Pack *latestPack = [[[User defaultUser] packs] lastObject];
-        if (latestPack != nil) {
-            //Update_date info
-            NSString *updateDate = [FileOperationHelper getTodayString];
-            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-            [dict setObject:updateDate forKey:@"update_date"];
-            [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            //do nothing
+        } else if (buttonIndex == 1) {
+            // delete operation
+            _currentPack = [[[User defaultUser] packs] objectAtIndex:_currentIndex];
+            [[User defaultUser] removePack:_currentPack];
+            [self resetPackContent];
+            
+            //Recalculate:
+            Pack *latestPack = [[[User defaultUser] packs] lastObject];
+            if (latestPack != nil) {
+                //Update_date info
+                NSString *updateDate = [FileOperationHelper getTodayString];
+                NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:latestPack.packName];
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+                [dict setObject:updateDate forKey:@"update_date"];
+                [[NSUserDefaults standardUserDefaults] setObject:dict forKey:latestPack.packName];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
+            _currentIndex = -1;
+            [_createNewPackBtnItem setTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"")];
+            
+            [self.collectionView reloadData];
         }
         
-        _currentIndex = -1;
-        [_createNewPackBtnItem setTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"")];
-        
-        [self.collectionView reloadData];
-    }
+        APP_DELEGATE.isAllowToShowPackList = YES;
+    } else if (alertView.tag == 2) {
     
-    APP_DELEGATE.isAllowToShowPackList = YES;
+        NSString *password = [alertView textFieldAtIndex:0].text;
+        
+        if ([password isEqualToString:_currentPack.restorePassword]) {
+            [[alertView textFieldAtIndex:0] resignFirstResponder];
+            
+            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == false) {
+                _currentPack.creator = [OpenUDID value];
+                [_currentPack savePackOnly];
+            }
+            
+            double delayInSeconds = 0.4;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                //do something here
+                
+                [self gotoPackEditView];
+                
+            });
+            
+            
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }
 }
 
 
-- (int) getPackIDForLastSelected {
+- (long) getPackIDForLastSelected {
     
     NSInteger val = [[NSUserDefaults standardUserDefaults] integerForKey:@"lastCreatedPackID"];
     return val;

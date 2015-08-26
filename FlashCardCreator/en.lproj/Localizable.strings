@@ -19,7 +19,6 @@
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a passwords?";
-"DIALOG_INPUT_PASSWORD"       = "Input a password";
 "DIALOG_AlERT"       = "Alert";
 "DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";

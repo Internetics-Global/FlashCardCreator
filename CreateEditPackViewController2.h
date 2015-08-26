@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *creatorTextField;
 @property (weak, nonatomic) IBOutlet UITextField *jobTitleTextField;
 
+@property (weak, nonatomic) IBOutlet UITextField *adminPasswordTextField;
+
+
 @property (weak, nonatomic) IBOutlet ASValueTrackingSlider *autoPlaySpeedSlider;
 
 

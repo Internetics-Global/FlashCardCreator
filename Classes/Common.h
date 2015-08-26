@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Pack;
+
 @interface Common : NSObject
 
 + (void)alertViewCommon:(NSString *) msg;
@@ -54,5 +56,7 @@
 + (BOOL) isPlaceholderFilePathOrDirectory :(NSString *) pathStr;
 
 + (BOOL) isDirectoryFormat:(NSString *) filePath;
+
++ (BOOL) isOwner:(Pack *) currentPack;
 
 @end

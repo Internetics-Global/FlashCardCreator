@@ -27,6 +27,8 @@
 @synthesize creatorNickName = _creatorNickName;
 @synthesize jobTitle = _jobTitle;
 
+@synthesize restorePassword = _restorePassword;
+
 @synthesize isAllowShare = _isAllowShare;
 @synthesize autoPlaySpeed = _autoPlaySpeed;
 
@@ -59,6 +61,7 @@
     
     _coverImageURL = @"";
     _jobTitle = @"";
+    _restorePassword = @"";
     
     _isAllowShare = YES;
     
@@ -84,6 +87,7 @@
     _languageName = [dict valueForKey:@"language_name"];
     _creator = [dict valueForKey:@"creator"];
     _creatorNickName = [dict valueForKey:@"creator_nick_name"];
+    _restorePassword = [dict valueForKey:@"restore_password"];
     _jobTitle = [dict valueForKey:@"job_title"];
     if (checkNullOrEmptyOrNullStr(_jobTitle)) {
         _jobTitle = @"";
@@ -150,7 +154,7 @@
         _jobTitle = @"Creator ";
     }
     
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d,auto_play_speed=%d WHERE pack_id=%d", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed, _packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d,auto_play_speed=%d, restore_password=\"%@\" WHERE pack_id=%d", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -173,7 +177,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date,auto_play_speed) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d)", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date,auto_play_speed,restore_password) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, \"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -256,6 +260,7 @@
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:10] forKey:@"last_visit_date"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:11] forKey:@"job_title"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:12] forKey:@"auto_play_speed"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"restore_password"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}

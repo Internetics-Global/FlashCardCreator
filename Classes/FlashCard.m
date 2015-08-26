@@ -1250,7 +1250,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (BOOL)checkCardEditable {
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result;
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         result = YES;
     } else {
         result = NO;
@@ -1434,7 +1434,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_segmentedControl.selectedSegmentIndex == 1) {
             [self adjustAllTextViewsToFitIfNecessary];
         } else {
-            if ([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE) {
+            if ([Common isOwner:_currentPack] == FALSE) {
                 //当不可编辑时，我们将限制adjustAllTextViewsToFitIfNecessary执行。主要原因时这时我们将通过前后页来预加载，而非当前页执行adjustAllTextViewsToFitIfNecessary
                 //几种情况
                 //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
@@ -1462,7 +1462,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //当可编辑时，我们不进行自动autoresize的notification
     //当为CURRENT_FLASHCARDVIEW_TAG，我们也不作处理
-    if (([_currentPack.creator isEqualToString:[OpenUDID value]] == FALSE)
+    if (([Common isOwner:_currentPack] == FALSE)
         && (self.tag != CURRENT_FLASHCARDVIEW_TAG)){
         
         if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
@@ -5410,7 +5410,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) selectFromImageLibraryByBackgroundSelectButton:(UITapGestureRecognizer *)sender {
     [iConsole info:@"%s",__FUNCTION__];
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+    if ([Common isOwner:_currentPack] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -5547,7 +5547,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         [self selectFromImageLibrary:nil withPopoverArrowUp:YES supportMov:YES];
     } else {
         if (sourceType == Type_PopoverView_SelectImage) {
@@ -7007,7 +7007,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     BOOL result = NO;
     
     //we don't do this in edit mode
-    if ([_currentPack.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         result = NO;
         return result;
     }
@@ -7201,7 +7201,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) soundRecordButtonClicked:(id)sender {
     [iConsole info:@"%s",__FUNCTION__];
     
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]]) {
+    if ([Common isOwner:_currentPack]) {
         
         CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
         createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
@@ -7229,7 +7229,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) changeTemplateButtonClick:(id)sender {
     [iConsole info:@"%s",__FUNCTION__];
     
-    if ([_currentCard.creator isEqualToString:[OpenUDID value]] == FALSE) {
+    if ([Common isOwner:_currentPack] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];

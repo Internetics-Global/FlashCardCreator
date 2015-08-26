@@ -285,7 +285,7 @@ enum popover_enum {
           
             NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
             NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if ((shareCode.length >0) && ([_currentCard.creator isEqualToString:[OpenUDID value]])) {
+            if ((shareCode.length >0) && ([Common isOwner:_currentPack])) {
               _shareCodeLabel.hidden = NO;
               _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
             } else {
@@ -410,7 +410,7 @@ enum popover_enum {
 
 - (void)createNewCard:(id)sender
 {
-    if (![_currentPack.creator isEqualToString:[OpenUDID value]]) {
+    if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
         return;
     }
@@ -552,7 +552,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)editButtonClicked:(id) sender
 {
-    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+    if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return;
     }
@@ -1039,7 +1039,7 @@ extern BOOL isFromNewCreatedCard;
     
     _currentIndexPath = indexPath;
     
-    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+    if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return;
     }
@@ -1126,7 +1126,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (BOOL)moveTableView:(FMMoveTableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![[OpenUDID value] isEqualToString:_currentPack.creator]) {
+    if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return false;
     }  else {
@@ -1455,6 +1455,7 @@ extern BOOL isFromNewCreatedCard;
             pack.createDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
             pack.creatorNickName = packDict[@"creator_nick_name"];
+            pack.restorePassword = packDict[@"restore_password"];
             pack.jobTitle = packDict[@"job_title"];
             
             packPlatformStr = packDict[@"platform"];
@@ -1552,7 +1553,7 @@ extern BOOL isFromNewCreatedCard;
     [self updateDownloadLimitCount];
     
     //Step7:
-    if ((![pack.creator isEqualToString:[OpenUDID value]])&&(_maxDownloadCount == 1)) {
+    if ((![Common isOwner:pack])&&(_maxDownloadCount == 1)) {
         pack.isAllowShare = NO;
     } else {
         pack.isAllowShare = YES;
