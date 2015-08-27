@@ -7,8 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateEditPackViewController2">
             <connections>
-                <outlet property="adminPasswordTextField" destination="Igx-Yt-AxB" id="XpW-po-2FJ"/>
+                <outlet property="adminPasswordTextField" destination="Igx-Yt-AxB" id="omo-Ls-nSc"/>
                 <outlet property="autoPlaySpeedSlider" destination="0vM-Tj-lgb" id="3FF-Ud-tMf"/>
+                <outlet property="cofirmAminPasswordTextField" destination="Y41-sb-zg2" id="5iG-JU-yZ0"/>
                 <outlet property="coverImageView" destination="oFq-Ff-Jda" id="Ons-uT-mpA"/>
                 <outlet property="creatorTextField" destination="SGN-2M-Wbp" id="vuI-EY-noM"/>
                 <outlet property="jobTitleTextField" destination="IXR-nE-HNh" id="OHg-zQ-xgg"/>
@@ -28,7 +29,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name or title" textAlignment="center" minimumFontSize="17" id="IXR-nE-HNh">
-                            <rect key="frame" x="72" y="165" width="200" height="30"/>
+                            <rect key="frame" x="72" y="129" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,7 +41,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your name" textAlignment="center" minimumFontSize="17" id="SGN-2M-Wbp">
-                            <rect key="frame" x="72" y="115" width="200" height="30"/>
+                            <rect key="frame" x="72" y="91" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,7 +65,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Side bar title" textAlignment="center" minimumFontSize="17" id="8zj-bc-P9N">
-                            <rect key="frame" x="72" y="65" width="200" height="30"/>
+                            <rect key="frame" x="72" y="53" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -104,8 +105,8 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set admin password" textAlignment="center" minimumFontSize="17" id="Igx-Yt-AxB">
-                            <rect key="frame" x="74" y="220" width="200" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Admin password" textAlignment="center" minimumFontSize="17" id="Igx-Yt-AxB">
+                            <rect key="frame" x="72" y="167" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,6 +115,18 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="BhJ-G9-vef"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm admin password" textAlignment="center" minimumFontSize="17" id="Y41-sb-zg2">
+                            <rect key="frame" x="72" y="205" width="200" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" secureTextEntry="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="L2n-no-guH"/>
                             </connections>
                         </textField>
                     </subviews>

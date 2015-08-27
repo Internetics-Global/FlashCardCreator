@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *adminPasswordTextField;
 
+@property (weak, nonatomic) IBOutlet UITextField *cofirmAminPasswordTextField;
 
 @property (weak, nonatomic) IBOutlet ASValueTrackingSlider *autoPlaySpeedSlider;
 

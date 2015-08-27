@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="adminPasswordTextField" destination="ROk-4R-u0y" id="wZw-b3-LKo"/>
                 <outlet property="autoPlaySpeedSlider" destination="Myx-R3-JlU" id="OXE-XG-Hh7"/>
+                <outlet property="cofirmAminPasswordTextField" destination="07B-RC-kW7" id="zry-IM-F8E"/>
                 <outlet property="coverImageView" destination="LuL-CI-jWR" id="CjL-Le-6Eb"/>
                 <outlet property="creatorTextField" destination="IJ5-lQ-f2v" id="jzg-g8-Cau"/>
                 <outlet property="jobTitleTextField" destination="Axg-es-DMn" id="gMj-dU-IIo"/>
@@ -28,7 +29,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New pack name" textAlignment="center" minimumFontSize="17" id="Abb-ch-NYQ">
-                            <rect key="frame" x="20" y="8" width="200" height="30"/>
+                            <rect key="frame" x="20" y="8" width="200" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,7 +41,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Side bar title" textAlignment="center" minimumFontSize="17" id="ntf-UC-DNm">
-                            <rect key="frame" x="20" y="46" width="200" height="30"/>
+                            <rect key="frame" x="20" y="41" width="200" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -52,7 +53,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Your name" textAlignment="center" minimumFontSize="17" id="IJ5-lQ-f2v">
-                            <rect key="frame" x="20" y="84" width="200" height="30"/>
+                            <rect key="frame" x="20" y="74" width="200" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,7 +65,7 @@
                             </connections>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name or title" textAlignment="center" minimumFontSize="17" id="Axg-es-DMn">
-                            <rect key="frame" x="20" y="122" width="200" height="30"/>
+                            <rect key="frame" x="20" y="107" width="200" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -104,8 +105,8 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set admin password" textAlignment="center" minimumFontSize="17" id="ROk-4R-u0y">
-                            <rect key="frame" x="20" y="160" width="200" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Admin password" textAlignment="center" minimumFontSize="17" id="ROk-4R-u0y">
+                            <rect key="frame" x="20" y="140" width="200" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,6 +115,18 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="hwy-zd-xTr"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm admin password" textAlignment="center" minimumFontSize="17" id="07B-RC-kW7">
+                            <rect key="frame" x="20" y="173" width="200" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.17254901959999999" green="0.17254901959999999" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" secureTextEntry="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="qV4-br-vi4"/>
                             </connections>
                         </textField>
                     </subviews>

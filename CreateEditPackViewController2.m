@@ -94,7 +94,9 @@
         
     }
     
-    _adminPasswordTextField.text = [_currentPack.restorePassword base64DecodedString];
+    if (self.isEditPack) {
+        _adminPasswordTextField.text = [_currentPack.restorePassword base64DecodedString];
+    }
     
     
 }
@@ -187,6 +189,12 @@
 }
 
 - (void) saveAndCloseCreatePackView {
+    
+    if (([_adminPasswordTextField.text isEqualToString:_cofirmAminPasswordTextField.text] == false)) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Passwords do not match" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
     
     if (_adminPasswordTextField.text.length == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
