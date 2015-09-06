@@ -554,7 +554,7 @@
             if ([password isEqualToString:[_currentPack.restorePassword base64DecodedString]]) {
                 [[alertView textFieldAtIndex:0] resignFirstResponder];
                 
-                if ([_currentPack.creator isEqualToString:[OpenUDID value]] == false) {
+                if ([Common isOwner:_currentPack] == false) {
                     _currentPack.creator = [OpenUDID value];
                     [_currentPack savePackOnly];
                 }

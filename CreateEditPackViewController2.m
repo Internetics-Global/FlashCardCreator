@@ -95,7 +95,9 @@
     }
     
     if (self.isEditPack) {
-        _adminPasswordTextField.text = [_currentPack.restorePassword base64DecodedString];
+        NSString *savedPassword = [_currentPack.restorePassword base64DecodedString];
+        _adminPasswordTextField.text = savedPassword;
+        _cofirmAminPasswordTextField.text = savedPassword;
     }
     
     
@@ -196,10 +198,6 @@
         return;
     }
     
-    if (_adminPasswordTextField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-    }
     
     if (_autoPlaySpeedSlider.value > kMAX_Auto_Play_Speed || _autoPlaySpeedSlider.value < kMIN_Auto_Play_Speed) {
         [Common alertViewCommon:@"The value of auto play speed should be between 4 and 60 seconds"];
@@ -250,6 +248,10 @@
         [self dismissModalViewControllerAnimated:YES];
     }
     
+    if (_adminPasswordTextField.text.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 /*
