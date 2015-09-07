@@ -154,7 +154,7 @@
         [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
-    [self getPageViewAtIndex:_curPage withDirectionToNextPage:isToNextPage];
+    [self resetPageViewAtIndex:_curPage withDirectionToNextPage:isToNextPage];
     
     for (int i = 0; i < 3; i++) {
         UIView *v = [_curViews objectAtIndex:i];
@@ -173,7 +173,9 @@
 /**
  *  @param isToNextPage:swipe to next page or previous page
  */
-- (void)getPageViewAtIndex:(NSInteger)page withDirectionToNextPage:(BOOL) isToNextPage {
+- (void)resetPageViewAtIndex:(NSInteger)page withDirectionToNextPage:(BOOL) isToNextPage {
+    
+    [self cleanupPageViews];
     
     NSInteger pre = [self validPageValue:_curPage-1];
     NSInteger next = [self validPageValue:_curPage+1];
@@ -449,12 +451,7 @@
 - (void)scrollNow
 {
     //cleanup 
-    for (UIView *myView in _curViews) {
-        if ([myView isKindOfClass:[FlashCard class]]) {
-            [(FlashCard *) myView  stopTextToSpeechNow];
-            [(FlashCard *) myView  stopAudio];
-        }
-    }
+    [self cleanupPageViews];
     
     if (_isCycle) {
         _notAllowReloadData = FALSE;
@@ -507,7 +504,21 @@
 
 #pragma mark – Memory management
 
-- (void) cleanup {
+/**
+ *  _curViews中的有些资源需要释放，尤其是在执行resetPageViewAtIndex时，因为如果不释放就会成为野指针
+ *  注意同cleanupNSTimer 区别
+ */
+- (void) cleanupPageViews {
+    
+    for (UIView *myView in _curViews) {
+        if ([myView isKindOfClass:[FlashCard class]]) {
+            [(FlashCard *) myView  stopTextToSpeechNow];
+            [(FlashCard *) myView  stopAudio];
+        }
+    }
+}
+
+- (void) cleanupNSTimer {
     [_autoScrollTimerForFixedDelay invalidate];
     _autoScrollTimerForFixedDelay = nil;
     

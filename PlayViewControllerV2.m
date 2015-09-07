@@ -666,7 +666,7 @@
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     }
     
-    [_scrollView cleanup];
+    [_scrollView cleanupNSTimer];
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
     [currentFlashCardView stopTextToSpeechNow];
