@@ -1,7 +1,10 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'AWSCore'
-pod 'AWSS3', '~> 2.1.0'
+pod 'AWSS3'
 pod 'AWSSimpleDB'
 pod 'AWSCognito'
 pod 'RNCryptor'
+pod 'Bolts'
+pod 'Reachability'
+pod 'Parse', '~> 1.8.2'

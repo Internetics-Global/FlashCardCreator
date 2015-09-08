@@ -20,7 +20,7 @@
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
 #import <Parse/Parse.h>
-#import <ParseCrashReporting/ParseCrashReporting.h>
+//#import <ParseCrashReporting/ParseCrashReporting.h>
 
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
@@ -34,7 +34,7 @@ BOOL _isDownloadingSamplePack;
 {
     [self setupLog];
     
-    [ParseCrashReporting enable];
+//    [ParseCrashReporting enable];
     [Parse setApplicationId:@"WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3"
                   clientKey:@"EN7hKNQ0B8SEG3BlRO79GB1Av8pOw4YUk5ylhd0r"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

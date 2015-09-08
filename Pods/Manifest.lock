@@ -1,61 +1,40 @@
 PODS:
-  - AWSCognito (2.1.1):
-    - AWSCore (~> 2.1.1)
-    - Bolts (~> 1.1.0)
-    - Mantle (~> 1.4)
-    - Reachability (~> 3.1)
-    - UICKeyChainStore (~> 2.0)
-  - AWSCore (2.1.1):
-    - Bolts (~> 1.1.0)
-    - GZIP (~> 1.0.3)
-    - Mantle (~> 1.4)
-    - Reachability (~> 3.1)
-    - UICKeyChainStore (~> 2.0)
-    - XMLDictionary (~> 1.4.0)
-  - AWSS3 (2.1.1):
-    - AWSCore (= 2.1.1)
-    - Bolts (~> 1.1.0)
-    - Mantle (~> 1.4)
-    - TMCache (~> 1.2.1)
-  - AWSSimpleDB (2.1.1):
-    - AWSCore (= 2.1.1)
-    - Bolts (~> 1.1.0)
-    - Mantle (~> 1.4)
-  - Bolts (1.1.5):
-    - Bolts/AppLinks (= 1.1.5)
-    - Bolts/Tasks (= 1.1.5)
-  - Bolts/AppLinks (1.1.5):
+  - AWSCognito (2.2.5):
+    - AWSCore (= 2.2.5)
+  - AWSCore (2.2.5)
+  - AWSS3 (2.2.5):
+    - AWSCore (= 2.2.5)
+  - AWSSimpleDB (2.2.5):
+    - AWSCore (= 2.2.5)
+  - Bolts (1.2.1):
+    - Bolts/AppLinks (= 1.2.1)
+    - Bolts/Tasks (= 1.2.1)
+  - Bolts/AppLinks (1.2.1):
     - Bolts/Tasks
-  - Bolts/Tasks (1.1.5)
-  - GZIP (1.0.3)
-  - Mantle (1.5.4):
-    - Mantle/extobjc (= 1.5.4)
-  - Mantle/extobjc (1.5.4)
+  - Bolts/Tasks (1.2.1)
+  - Parse (1.8.2):
+    - Bolts/Tasks (>= 1.2.1)
   - Reachability (3.2)
   - RNCryptor (2.2)
-  - TMCache (1.2.4)
-  - UICKeyChainStore (2.0.4)
-  - XMLDictionary (1.4)
 
 DEPENDENCIES:
   - AWSCognito
   - AWSCore
-  - AWSS3 (~> 2.1.0)
+  - AWSS3
   - AWSSimpleDB
+  - Bolts
+  - Parse (~> 1.8.2)
+  - Reachability
   - RNCryptor
 
 SPEC CHECKSUMS:
-  AWSCognito: c251f1f166c74343493451e238ca7157e1e33dda
-  AWSCore: 0e82eabc27a96d765b1e2ad4d30b96c1cd298300
-  AWSS3: 891d269735be0f3c63eab5a2d1ee9d788f2c64ee
-  AWSSimpleDB: e863f52f11557d8af42e5fd47e702ea01e6446e2
-  Bolts: aac24961496d504aa56fc267cde95162a71bac39
-  GZIP: f0863fda354e8f83316508c0a2c7bbe385e39129
-  Mantle: 60acd0cd363e27d945bda0a6b8e90577112d28f3
+  AWSCognito: df121e01df20a03de311a9cf708cbc25efdb3248
+  AWSCore: 101929899cea9febd4ea4fc85774a63ff17cf809
+  AWSS3: 78a5be4417c5fe1d9a1c301b05bbfbb6719d4f18
+  AWSSimpleDB: 89a6f82d45d1858030b5ee6ac7f4a801403df656
+  Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
+  Parse: 188601c6cd91fae55906badd283b513104a3a8c9
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
-  TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
-  UICKeyChainStore: 69eb0c3a6f669bccf16ba88de3b9069b71501361
-  XMLDictionary: f9f51601ba76678b594ab485f2b00ec1fed23724
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.38.2

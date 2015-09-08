@@ -18,6 +18,7 @@
 
 #import <AWSS3/AWSS3.h>
 #import "AWS_Constants.h"
+#import <Bolts/Bolts.h>
 
 #import "CryptorHelper.h"
 
@@ -215,7 +216,7 @@
 
     //3. 执行upload
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    [[transferManager upload:uploadRequest] continueWithBlock:^id(BFTask *task) {
+    [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                 switch (task.error.code) {

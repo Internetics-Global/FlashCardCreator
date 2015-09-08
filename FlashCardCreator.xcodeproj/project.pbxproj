@@ -220,8 +220,6 @@
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
-		88620B5B1AB103BF0046B64E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B581AB103BE0046B64E /* Parse.framework */; };
-		88620B5C1AB103BF0046B64E /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B591AB103BE0046B64E /* ParseCrashReporting.framework */; };
 		88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5D1AB104050046B64E /* StoreKit.framework */; };
 		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
@@ -588,9 +586,6 @@
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		886075011932B167009C16EE /* DKCircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCircleButton.h; sourceTree = "<group>"; };
 		886075021932B167009C16EE /* DKCircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCircleButton.m; sourceTree = "<group>"; };
-		88620B571AB103BE0046B64E /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		88620B581AB103BE0046B64E /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		88620B591AB103BE0046B64E /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		88620B5D1AB104050046B64E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88620B5F1AB104120046B64E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
@@ -703,7 +698,6 @@
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
-				88620B5B1AB103BF0046B64E /* Parse.framework in Frameworks */,
 				880E6724182720BF0054DDD0 /* CoreMedia.framework in Frameworks */,
 				88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */,
 				2D37280E16DDCBA00068DE31 /* CoreMotion.framework in Frameworks */,
@@ -727,7 +721,6 @@
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
 				2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */,
-				88620B5C1AB103BF0046B64E /* ParseCrashReporting.framework in Frameworks */,
 				0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1033,7 +1026,6 @@
 				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
 				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
-				88620B561AB103BE0046B64E /* Parse */,
 				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
 				88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */,
@@ -1427,17 +1419,6 @@
 			);
 			name = DKCircleButton;
 			path = Libraries/DKCircleButton;
-			sourceTree = "<group>";
-		};
-		88620B561AB103BE0046B64E /* Parse */ = {
-			isa = PBXGroup;
-			children = (
-				88620B571AB103BE0046B64E /* Bolts.framework */,
-				88620B581AB103BE0046B64E /* Parse.framework */,
-				88620B591AB103BE0046B64E /* ParseCrashReporting.framework */,
-			);
-			name = Parse;
-			path = Libraries/Parse;
 			sourceTree = "<group>";
 		};
 		886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */ = {

@@ -8,6 +8,8 @@
 
 #import "SimpleDBHelper.h"
 #import <AWSSimpleDB/AWSSimpleDB.h>
+#import <Bolts/Bolts.h>
+
 
 @implementation SimpleDBHelper
 
@@ -48,7 +50,7 @@
     AWSSimpleDBListDomainsRequest *listDomainsRequest = [AWSSimpleDBListDomainsRequest new];
     
     __block NSMutableArray  *domains;
-    [[[sdb listDomains:listDomainsRequest] continueWithBlock:^id(BFTask *task) {
+    [[[sdb listDomains:listDomainsRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
              [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
         } else {
@@ -85,7 +87,7 @@
     
     
     __block NSMutableArray       *items;
-    [[[sdb select:selectRequest] continueWithBlock:^id(BFTask *task) {
+    [[[sdb select:selectRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
             return nil;
@@ -125,7 +127,7 @@
     gar.itemName = itemName;
 
     __block NSMutableDictionary       *dict;
-    [[[sdb getAttributes:gar] continueWithBlock:^id(BFTask *task) {
+    [[[sdb getAttributes:gar] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
             return nil;
@@ -175,7 +177,7 @@
     putAttributesRequest.attributes = attributes;
     
     __block BOOL result = true;
-    [[[sdb putAttributes:putAttributesRequest]continueWithBlock:^id(BFTask *task) {
+    [[[sdb putAttributes:putAttributesRequest]continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
             result = false;
