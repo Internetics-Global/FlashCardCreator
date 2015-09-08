@@ -10,8 +10,6 @@
 #import "Pack.h"
 #import "FileOperationHelper.h"
 #import "DataManager.h"
-#import "SHKItem.h"
-#import "SHK.h"
 #import "SimpleDBHelper.h"
 #import "OpenUDID.h"
 #import "AppDelegate.h"
