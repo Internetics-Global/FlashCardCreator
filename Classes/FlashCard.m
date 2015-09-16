@@ -4463,7 +4463,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //postion part which is included in three main parts: CSS, template(position) and content
 - (void) updateQuestionViewTemplateForiPad {
     [iConsole info:@"%s",__FUNCTION__];
-    int index = _currentCard.question.templateID;
+    long index = _currentCard.question.templateID;
     
     switch (index) {
         case 0: //Template 0
