@@ -11,21 +11,14 @@
 #import "Card.h"
 #import "FCCBarButton.h"
 #import "DKCircleButton.h"
+#import "AppDelegate.h"
 
 #define k_Max_Record_Second   30
 
-typedef NS_ENUM(NSInteger, Enum_Status_Record) {
-    Enum_Status_Record_Unknow      = -1,
-    Enum_Status_Record_Recording       = 1,
-    Enum_Status_Record_Normal   = 2,
-    Enum_Status_Record_Stop    = 3,
-};
 
 @interface CreateSoundViewController () {
-    AVAudioRecorder    *_recorder;
     AVAudioPlayer      *_player;
     
-    Enum_Status_Record                _recordStatus;
 }
 
 @property (strong, nonatomic) IBOutlet DKCircleButton *startButton;
@@ -54,7 +47,6 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     
     self.title = @"Record card Sound";
     
-    _recordStatus = Enum_Status_Record_Normal;
     if (isUserInterfaceIdiomPhone) {
       self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 25,90,90)];
     } else {
@@ -71,14 +63,20 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
     [self.startButton setTitle:@"Record" forState:UIControlStateNormal];
     [self.startButton setTitle:@"Record" forState:UIControlStateSelected];
     [self.startButton setTitle:@"Record" forState:UIControlStateHighlighted];
+    
+    [self.alertLabel setText:@"When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
+
+    
     [self.startButton addTarget:self action:@selector(startButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.startButton];
     
     self.playButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.playButton.layer.borderWidth = 1;
+    self.playButton.showsTouchWhenHighlighted = YES;
     
     self.saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.saveButton.layer.borderWidth = 1;
+    self.saveButton.showsTouchWhenHighlighted = YES;
     
     _playButton.hidden = YES;
     _saveButton.hidden = YES;
@@ -94,36 +92,26 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
                                              initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(dismiss)]];
     
     
-    [self setupRecord];
+    APP_DELEGATE.recorder.delegate = self;
     
+    if (APP_DELEGATE.isRecordFinished) {
+        
+        [APP_DELEGATE.recorder stop];
+        
+        self.playButton.hidden = NO;
+        self.saveButton.hidden = NO;
+        
+    } else {
+        self.playButton.hidden = YES;
+        self.saveButton.hidden = YES;
 
-}
+        
 
-- (void) setupRecord {
-    
-    NSError *error;
-    //这个为必须的，否则无法
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-    
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-    
-    // Initiate and prepare the recorder
-    _recorder = [[AVAudioRecorder alloc] initWithURL:[self tempRecordedFilePath] settings:recordSetting error:NULL];
-    _recorder.delegate = self;
-    _recorder.meteringEnabled = YES;
-    [_recorder prepareToRecord];
-    
-    
-    BOOL success = FALSE;
-    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-    if (!success)  {
-        [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
     }
+    
+
 }
+
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -161,83 +149,12 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 
 - (IBAction)startButtonClicked:(id)sender {
     
-    switch (_recordStatus) {
-        case Enum_Status_Record_Normal: {
-            
-            _recordStatus = Enum_Status_Record_Recording;
-            
-            self.playButton.hidden = YES;
-            self.saveButton.hidden= YES;
-            
-            [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
-            
-            [_recorder record];
-            
-            __weak __typeof(&*self)weakSelf = self;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                weakSelf.playButton.hidden = YES;
-                weakSelf.saveButton.hidden = YES;
-                
-                usleep(500000);
-                
-                NSDate*start =[NSDate date];
-                while (_recordStatus == Enum_Status_Record_Recording) {
-                    usleep(10000);
-                    NSDate* methodFinish =[NSDate date];
-                    NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:start];
-                    if (executionTime > k_Max_Record_Second) {
-                        [iConsole info:@"%s:finish recording a new customized sound",__FUNCTION__];
-                        break;
-                    }
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [weakSelf.alertLabel setText:[NSString stringWithFormat:@"Time left: %.2f",k_Max_Record_Second - executionTime]];
-                    
-                    });
-                }
-                
-                usleep(200000);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf.alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
-                    [weakSelf.startButton setTitle:@"Record" forState:UIControlStateNormal];
-                    
-                    weakSelf.playButton.hidden = NO;
-                    weakSelf.saveButton.hidden = NO;
-                });
-                
-                
-                [_recorder stop];
-                
-                
-            });
-
-        }
-            break;
-        
-        case Enum_Status_Record_Recording: {
-            _recordStatus = Enum_Status_Record_Stop;
-            
-            __weak __typeof(&*self)weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.alertLabel setText:@"When you click “Record” you have a maximum of ten seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
-                [weakSelf.startButton setTitle:@"Record" forState:UIControlStateNormal];
-                
-                weakSelf.playButton.hidden = NO;
-                weakSelf.saveButton.hidden = NO;
-            });
-            
-            usleep(200000);
-            
-            [_recorder stop];
-            
-            _recordStatus = Enum_Status_Record_Normal;
-            
-        }
-            
-        default:
-            break;
-    }
+    [APP_DELEGATE.recorder record];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    APP_DELEGATE.isRecordFinished = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"K_CreateSoundViewController_Dimissed_Notification" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"is_to_recording"] userInfo:nil];
     
 }
 
@@ -344,6 +261,10 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 }
 
 - (void) dismiss {
+    
+  APP_DELEGATE.isRecordFinished = NO; //back to normal
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"K_CreateSoundViewController_Dimissed_Notification" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"is_to_recording"] userInfo:nil];
+    
   #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
   [self dismissModalViewControllerAnimated:YES];
     
@@ -379,9 +300,8 @@ typedef NS_ENUM(NSInteger, Enum_Status_Record) {
 }
 
 - (void)dealloc {
-    
+    APP_DELEGATE.recorder.delegate = nil;
     _player = nil;
-    _recorder = nil;
     
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h> 
+#import <AVFoundation/AVFoundation.h>
 
 @class MasterViewController;
 @class DetailViewController;
@@ -23,6 +24,13 @@
 @property (strong, nonatomic) MGSplitViewController *splitViewController;
 @property (strong, nonatomic) MasterViewController *masterViewController;
 @property (strong, nonatomic) DetailViewController *detailViewController;
+
+@property (strong, nonatomic) AVAudioRecorder *recorder;
+
+/**
+ *  true after finishing a record; false by default
+ */
+@property (assign, nonatomic) BOOL             isRecordFinished;
 
 @property (assign, nonatomic) int packIDForMasterViewPack;
 

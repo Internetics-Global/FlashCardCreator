@@ -114,6 +114,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
     
     NSMutableArray         *_textToSpeechArray;
+    
+    UIButton               *_recordingStopButton;
+    UIButton               *_recordingBackgroundMaskView;
 }
 
 
@@ -158,6 +161,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(createSoundViewControllerDimissed_Notification:)
+                                                     name:@"K_CreateSoundViewController_Dimissed_Notification" object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
         
@@ -6636,6 +6643,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
+
+
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
     
@@ -8629,36 +8638,111 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-/**
- *  Record or play
- *
- *  @param sender <#sender description#>
- */
+#pragma mark – K_CreateSoundViewController_Dimissed_Notification
+- (void) createSoundViewControllerDimissed_Notification:(NSNotification *)notification {
+
+    if (self.tag != CURRENT_FLASHCARDVIEW_TAG && self.tag != NEW_FLASHCARDVIEW_TAG) {
+        return;
+    }
+    
+    NSDictionary *dict = [notification object];
+    BOOL isToRecording = [[dict objectForKey:@"is_to_recording"] boolValue];
+    
+    if (isToRecording == false) {
+        
+        if (_recordingBackgroundMaskView.superview) {
+            [_recordingBackgroundMaskView removeFromSuperview];
+        }
+        _recordingBackgroundMaskView = nil;
+        
+        if ([APP_DELEGATE.recorder isRecording]) {
+            [APP_DELEGATE.recorder stop];
+        }
+        
+    } else {
+        if ([self isPlayingCard] == false) {
+            if (_recordingBackgroundMaskView == nil) {
+                
+                _recordingBackgroundMaskView = [UIButton buttonWithType:UIButtonTypeCustom];
+                _recordingBackgroundMaskView.frame = [UIApplication sharedApplication].keyWindow.rootViewController.view.frame;
+                _recordingBackgroundMaskView.backgroundColor = [UIColor clearColor];
+                _recordingBackgroundMaskView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+                
+                _recordingStopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                if (isUserInterfaceIdiomPhone == FALSE) {
+                    _recordingStopButton.frame = CGRectMake(CGRectGetWidth([UIApplication sharedApplication].keyWindow.rootViewController.view.frame)- 80, CGRectGetHeight([UIApplication sharedApplication].keyWindow.rootViewController.view.frame) - 180, 60, 60);
+                } else {
+                    _recordingStopButton.frame = CGRectMake(CGRectGetWidth([UIApplication sharedApplication].keyWindow.rootViewController.view.frame)- 80, CGRectGetHeight([UIApplication sharedApplication].keyWindow.rootViewController.view.frame) - 80, 60, 60);
+                }
+                _recordingStopButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                [_recordingStopButton titleLabel].font = [UIFont systemFontOfSize:16];
+                [_recordingStopButton setTitle:@"Stop" forState:UIControlStateNormal];
+                _recordingStopButton.layer.cornerRadius = 30;
+                _recordingStopButton.layer.masksToBounds = YES;
+                _recordingStopButton.backgroundColor = [UIColor redColor];
+                [_recordingStopButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                
+                
+                _recordingBackgroundMaskView.alpha = 0;
+                [_recordingStopButton addTarget:self action:@selector(recordingStopButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+                
+                [UIView animateWithDuration:0.6 animations:^{
+                    _recordingBackgroundMaskView.alpha = 1;
+                }];
+                
+                [_recordingBackgroundMaskView addSubview:_recordingStopButton];
+            }
+            
+            if (_recordingBackgroundMaskView.superview) {
+                [_recordingBackgroundMaskView removeFromSuperview];
+            }
+            
+            [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_recordingBackgroundMaskView];
+        }
+    }
+    
+    
+    
+}
+
+- (void) recordingStopButtonClicked {
+    
+    APP_DELEGATE.isRecordFinished = YES;
+    [self showCreateSoundViewController];
+    
+    [_recordingBackgroundMaskView removeFromSuperview];
+    _recordingBackgroundMaskView = nil;
+}
+
+
 - (void) soundRecordButtonClicked:(id)sender {
     [iConsole info:@"%s",__FUNCTION__];
     
     if ([Common isOwner:_currentPack]) {
-        
-        CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
-        createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
-        createSoundViewController.card = _currentCard;
-        createSoundViewController.pack = _currentPack;
-        
-        if (isFromNewCreatedCard) {
-            createSoundViewController.isFromNewCreatedCard = YES;
-        } else {
-            createSoundViewController.isFromNewCreatedCard = NO;
-        }
-        
-        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
-        navController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
+        [self showCreateSoundViewController];
         
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Audio play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
     }
     
+}
+
+- (void) showCreateSoundViewController {
+    CreateSoundViewController *createSoundViewController = [[CreateSoundViewController alloc] initWithNibName:nil bundle:nil];
+    createSoundViewController.isOnQuestion = (_segmentedControl.selectedSegmentIndex == 0);
+    createSoundViewController.card = _currentCard;
+    createSoundViewController.pack = _currentPack;
+    
+    if (isFromNewCreatedCard) {
+        createSoundViewController.isFromNewCreatedCard = YES;
+    } else {
+        createSoundViewController.isFromNewCreatedCard = NO;
+    }
+    
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createSoundViewController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
 }
 
 

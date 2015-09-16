@@ -207,7 +207,39 @@ BOOL _isDownloadingSamplePack;
         _isDownloadingSamplePack = FALSE;
     }
     
+    //Prepare recording function
+    [self setupRecord];
+
+    
+    
     return YES;
+}
+
+
+- (void) setupRecord {
+    
+    NSError *error;
+    //这个为必须的，否则无法
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    
+    // Initiate and prepare the recorder
+    NSURL *url = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"tmp.aac"]];;
+    self.recorder = [[AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:NULL];
+    self.recorder.meteringEnabled = YES;
+    [self.recorder prepareToRecord];
+    
+    
+    BOOL success = FALSE;
+    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+    if (!success)  {
+        [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
+    }
 }
 
 #pragma mark -
