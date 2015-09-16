@@ -132,6 +132,8 @@
 		88123D4F192DCA670062CA84 /* card_cover_image_placeholder_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 88123D4E192DCA670062CA84 /* card_cover_image_placeholder_title.png */; };
 		88123DF5192F00480062CA84 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 88123DF4192F00480062CA84 /* Constant.m */; };
 		881670BB1A1DC62000832236 /* TipHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 881670BA1A1DC62000832236 /* TipHelper.m */; };
+		881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 881DDCDF1BA908C3005EFE21 /* DACircularProgressView.m */; };
+		881DDCE31BA908C3005EFE21 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 881DDCE11BA908C3005EFE21 /* DALabeledCircularProgressView.m */; };
 		881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */; };
 		881E9E9C18F7B7CD00ECC523 /* CreateSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */; };
 		881F2717192B5C740068648D /* w2048.png in Resources */ = {isa = PBXBuildFile; fileRef = 881F2714192B5C740068648D /* w2048.png */; };
@@ -490,6 +492,10 @@
 		88123DF4192F00480062CA84 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		881670B91A1DC62000832236 /* TipHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipHelper.h; sourceTree = "<group>"; };
 		881670BA1A1DC62000832236 /* TipHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipHelper.m; sourceTree = "<group>"; };
+		881DDCDE1BA908C3005EFE21 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		881DDCDF1BA908C3005EFE21 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		881DDCE01BA908C3005EFE21 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		881DDCE11BA908C3005EFE21 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		881E9E9818F7B7CD00ECC523 /* CreateSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSoundViewController.h; sourceTree = "<group>"; };
 		881E9E9918F7B7CD00ECC523 /* CreateSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSoundViewController.m; sourceTree = "<group>"; };
 		881E9E9A18F7B7CD00ECC523 /* CreateSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateSoundViewController.xib; sourceTree = "<group>"; };
@@ -1022,6 +1028,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				881DDCDD1BA908C3005EFE21 /* DACircularProgress */,
 				88AE4AA21B8D63B200988131 /* Base64 */,
 				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
@@ -1328,6 +1335,18 @@
 				880025F017C3297F00A485CE /* FMMoveTableViewCell.m */,
 			);
 			name = FMFramework;
+			sourceTree = "<group>";
+		};
+		881DDCDD1BA908C3005EFE21 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				881DDCDE1BA908C3005EFE21 /* DACircularProgressView.h */,
+				881DDCDF1BA908C3005EFE21 /* DACircularProgressView.m */,
+				881DDCE01BA908C3005EFE21 /* DALabeledCircularProgressView.h */,
+				881DDCE11BA908C3005EFE21 /* DALabeledCircularProgressView.m */,
+			);
+			name = DACircularProgress;
+			path = Libraries/DACircularProgress;
 			sourceTree = "<group>";
 		};
 		881E9E6F18F7AF1B00ECC523 /* SoundRecord */ = {
@@ -1912,8 +1931,10 @@
 				88F5CE6F19B40B4B00107075 /* PECropView.m in Sources */,
 				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
+				881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */,
 				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
+				881DDCE31BA908C3005EFE21 /* DALabeledCircularProgressView.m in Sources */,
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
 				889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */,
 				886D8FF11AE4975E00865101 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,

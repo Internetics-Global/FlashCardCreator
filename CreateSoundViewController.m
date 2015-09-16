@@ -63,8 +63,6 @@
     [self.startButton setTitle:@"Record" forState:UIControlStateNormal];
     [self.startButton setTitle:@"Record" forState:UIControlStateSelected];
     [self.startButton setTitle:@"Record" forState:UIControlStateHighlighted];
-    
-    [self.alertLabel setText:@"When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
 
     
     [self.startButton addTarget:self action:@selector(startButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -101,11 +99,15 @@
         self.playButton.hidden = NO;
         self.saveButton.hidden = NO;
         
+        [self.alertLabel setText:@"Record is finished, you can playback or save the recorded sound"];
+
+        
     } else {
         self.playButton.hidden = YES;
         self.saveButton.hidden = YES;
 
-        
+        [self.alertLabel setText:@"When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
+
 
     }
     

@@ -46,6 +46,10 @@
 
 #import "UIButton+Extensions.h"
 
+#import "DACircularProgressView.h"
+
+#import "NSTimer+BlocksKit.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -115,8 +119,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     NSMutableArray         *_textToSpeechArray;
     
-    UIButton               *_recordingStopButton;
-    UIButton               *_recordingBackgroundMaskView;
+    UIButton                             *_recordingStopButton;
+    UIButton                             *_recordingBackgroundMaskView;
+    DACircularProgressView               *_recordingProgressView;
+    NSTimer                              *_recordCountDownTimer;
 }
 
 
@@ -8681,16 +8687,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _recordingStopButton.layer.masksToBounds = YES;
                 _recordingStopButton.backgroundColor = [UIColor redColor];
                 [_recordingStopButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [_recordingStopButton addTarget:self action:@selector(recordingStopButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+            
+                [_recordingBackgroundMaskView addSubview:_recordingStopButton];
                 
+                
+                _recordingProgressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(CGRectGetMinX(_recordingStopButton.frame)- 4, CGRectGetMinY(_recordingStopButton.frame)- 4, CGRectGetWidth(_recordingStopButton.frame)+ 8, CGRectGetWidth(_recordingStopButton.frame)+ 8)];
+                _recordingProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                _recordingProgressView.roundedCorners = YES;
+                _recordingProgressView.thicknessRatio = 0.13;
+                _recordingProgressView.trackTintColor = [UIColor orangeColor];
+                [_recordingBackgroundMaskView addSubview:_recordingProgressView];
+                
+                [_recordingBackgroundMaskView bringSubviewToFront:_recordingStopButton];
                 
                 _recordingBackgroundMaskView.alpha = 0;
-                [_recordingStopButton addTarget:self action:@selector(recordingStopButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-                
                 [UIView animateWithDuration:0.6 animations:^{
                     _recordingBackgroundMaskView.alpha = 1;
                 }];
-                
-                [_recordingBackgroundMaskView addSubview:_recordingStopButton];
             }
             
             if (_recordingBackgroundMaskView.superview) {
@@ -8698,6 +8712,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_recordingBackgroundMaskView];
+            
+            __block int COUNTDOWN_SECOND_FOR_RECORDING = 30;
+            _recordCountDownTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+                
+                COUNTDOWN_SECOND_FOR_RECORDING = COUNTDOWN_SECOND_FOR_RECORDING-1;
+                [_recordingProgressView setProgress:(30-COUNTDOWN_SECOND_FOR_RECORDING)/30.0f];
+                if (COUNTDOWN_SECOND_FOR_RECORDING <= 0) {
+                    [APP_DELEGATE.recorder stop];
+                    [_recordCountDownTimer invalidate];
+                    _recordCountDownTimer = nil;
+                }
+                
+            } repeats:YES];
         }
     }
     
@@ -8706,6 +8733,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) recordingStopButtonClicked {
+    
+    [_recordCountDownTimer invalidate];
+    _recordCountDownTimer = nil;
     
     APP_DELEGATE.isRecordFinished = YES;
     [self showCreateSoundViewController];
@@ -10402,6 +10432,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s,tag = %d,question main = %@",__FUNCTION__,self.tag,_mainQuestion.text];
     
     _synth = nil;
+    
+    [_recordCountDownTimer invalidate];
+    _recordCountDownTimer = nil;
     
     _synth.delegate = nil;
     _questionTitle.delegate = nil;
