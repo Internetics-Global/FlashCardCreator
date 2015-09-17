@@ -284,11 +284,9 @@ enum popover_enum {
           [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
           
-            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-            NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if ((shareCode.length >0) && ([Common isOwner:_currentPack])) {
+            if ((self.currentPack.shareLink.length >0)) {
               _shareCodeLabel.hidden = NO;
-              _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+              _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
             } else {
               _shareCodeLabel.hidden = YES;
             }
@@ -1467,6 +1465,16 @@ extern BOOL isFromNewCreatedCard;
             pack.restorePassword = packDict[@"restore_password"];
             if (pack.restorePassword.length == 0) {
                 pack.restorePassword = [@"" base64EncodedString];
+            }
+            
+            pack.shareLink = packDict[@"share_link"];
+            if (pack.shareLink.length == 0) {
+                pack.shareLink = @"";
+            }
+            
+            pack.fileNameOnAWS = packDict[@"file_name_on_aws"];
+            if (pack.fileNameOnAWS.length == 0) {
+                pack.fileNameOnAWS = @"";
             }
             
             packPlatformStr = packDict[@"platform"];

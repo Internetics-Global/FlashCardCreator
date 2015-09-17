@@ -245,7 +245,7 @@ BOOL _isDownloadingSamplePack;
 #pragma mark -
 #pragma mark - Handle when call from outside like safari
 
-//url is kind of: fcc://s3.amazonaws.com/internetics.flashcardcreator/Pack1432614117-1358153070.zip?from=Clive&cardname=Happy New Year&packname=hello
+//url is kind of: fcc://s3.amazonaws.com/internetics.flashcardcreator/Pack1440729625-2043618070.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     [iConsole info:@"%s",__FUNCTION__];

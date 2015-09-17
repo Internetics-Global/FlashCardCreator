@@ -975,6 +975,9 @@
 
 - (void) firstTimeDelayTimer {
     
+    [_firstTimeDelayTimer invalidate];
+    _firstTimeDelayTimer = nil;
+    
     _controlPanel.hidden = NO;
     _scrollView.userInteractionEnabled = YES;
     

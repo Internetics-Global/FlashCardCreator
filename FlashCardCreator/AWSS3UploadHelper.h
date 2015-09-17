@@ -21,6 +21,9 @@
     
     float _progressivePercent;
     
+    /**
+     *  实际上有两层可能：已经是短链接，或还未是短链接
+     */
     NSString *_finalShareLinkBeforeRedirect;
 }
 

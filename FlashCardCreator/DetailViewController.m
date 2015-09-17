@@ -634,11 +634,9 @@ enum popover_enum {
                 
             } else if (myView.tag == 1) {
                 
-                NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-                NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-                if (shareCode.length >0) {
+                if (self.currentPack.shareLink.length >0) {
                     myView.hidden = NO;
-                    ((UILabel *)myView).text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+                    ((UILabel *)myView).text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
                 } else {
                     myView.hidden = YES;
                 }
@@ -1080,11 +1078,9 @@ enum popover_enum {
         if ((rightPackImageView.image != nil) && (_currentPack != nil)) {
             [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
-            NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-            NSString *shareCode = [rawDict objectForKey:@"redirected_url"];
-            if ((shareCode.length >0) && [Common isOwner:_currentPack]) {
+            if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
                 shareCodeLabel.hidden = NO;
-                shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[shareCode lastPathComponent]];
+                shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
             } else {
                 shareCodeLabel.hidden = YES;
             }

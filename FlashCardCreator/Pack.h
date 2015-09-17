@@ -26,6 +26,9 @@
     
     NSString *_restorePassword; //used to re-clain the ownership
     
+    NSString *_shareLink;
+    NSString *_fileNameOnAWS;
+    
     /**
      *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）
      */
@@ -53,6 +56,9 @@
 @property (assign, nonatomic                      ) int                            autoPlaySpeed;
 
 @property (nonatomic, copy                        ) NSString                       *restorePassword;
+
+@property (nonatomic, copy                        ) NSString                       *shareLink;
+@property (nonatomic, copy                        ) NSString                       *fileNameOnAWS;
 
 @property (nonatomic, assign                      ) BOOL                           isAllowShare;
 
