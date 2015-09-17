@@ -68,7 +68,6 @@
 		2D5C184316D1A69200E1E785 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C183F16D1A69200E1E785 /* AboutViewController.m */; };
 		2D5C184416D1A69200E1E785 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C184016D1A69200E1E785 /* MoreInfoTableViewController.m */; };
 		2D5C188716D1A74800E1E785 /* SelectedCellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */; };
-		2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5C188A16D1A77200E1E785 /* SDWebImage.framework */; };
 		2D5C189116D1A7B700E1E785 /* CardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5C189016D1A7B700E1E785 /* CardCell.m */; };
 		2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5F3CF31679D29C009D2ADC /* SQLiteHelper.m */; };
 		2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */; };
@@ -389,7 +388,6 @@
 		2D5C183F16D1A69200E1E785 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = Classes/AboutViewController.m; sourceTree = "<group>"; };
 		2D5C184016D1A69200E1E785 /* MoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreInfoTableViewController.m; path = Classes/MoreInfoTableViewController.m; sourceTree = "<group>"; };
 		2D5C187316D1A74800E1E785 /* SelectedCellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SelectedCellBackground.png; path = Resources/SelectedCellBackground.png; sourceTree = "<group>"; };
-		2D5C188A16D1A77200E1E785 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Libraries/SDWebImage.framework; sourceTree = "<group>"; };
 		2D5C188F16D1A7B700E1E785 /* CardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardCell.h; path = Classes/CardCell.h; sourceTree = "<group>"; };
 		2D5C189016D1A7B700E1E785 /* CardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardCell.m; path = Classes/CardCell.m; sourceTree = "<group>"; };
 		2D5C189216D1A86300E1E785 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreInfoTableViewController.h; path = Classes/MoreInfoTableViewController.h; sourceTree = "<group>"; };
@@ -726,7 +724,6 @@
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
-				2D5C188B16D1A77200E1E785 /* SDWebImage.framework in Frameworks */,
 				0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1267,7 +1264,6 @@
 				2D66C17B16A6B38900795CF9 /* CFNetwork.framework */,
 				2D66C17916A6B37F00795CF9 /* MessageUI.framework */,
 				2D75DF87169D07CB00337B10 /* MobileCoreServices.framework */,
-				2D5C188A16D1A77200E1E785 /* SDWebImage.framework */,
 				2DEDA1E51682E6AD0074AC9E /* ImageIO.framework */,
 				2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */,
 				2DC0628E167FFF5600F2EA07 /* Security.framework */,
