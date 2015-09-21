@@ -1161,7 +1161,8 @@
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
         [self beginFixedDelayAutoScroll];
-    } {
+    } else
+    {
         [self playbackOnCard:currentCard];
     }
 

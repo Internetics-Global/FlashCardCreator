@@ -103,6 +103,15 @@
 	[pack destroy];
 }
 
+-(void)removePackWithPackID:(long)pack_id{
+    for (Pack *item in _packs) {
+        if (item.packID == pack_id) {
+            [self removePack:item];
+            return;
+        }
+    }
+}
+
 // Sort self.packs
 - (void) sortPacks:(SortTypeEnum) sortType {
     

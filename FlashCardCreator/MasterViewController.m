@@ -281,7 +281,7 @@ enum popover_enum {
         }
         
         if (_rightPackImage != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
           
             if ((self.currentPack.shareLink.length >0)) {
@@ -1476,6 +1476,22 @@ extern BOOL isFromNewCreatedCard;
             if (pack.fileNameOnAWS.length == 0) {
                 pack.fileNameOnAWS = @"";
             }
+            
+            NSString *packIDStr = packDict[@"pack_id"];
+            if (packIDStr.length == 0) {
+                pack.packID = -1;
+            } else {
+                pack.packID = [packIDStr integerValue];
+                
+                if (pack.packID == self.currentPack.packID) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack being downloaded should not be the same as the pack that are showing" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alertView show];
+                    return;
+                } else {
+                    [[User defaultUser] removePackWithPackID:pack.packID];
+                }
+            }
+            
             
             packPlatformStr = packDict[@"platform"];
             

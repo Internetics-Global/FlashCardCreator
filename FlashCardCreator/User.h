@@ -32,7 +32,8 @@ typedef enum {
 + (User *)defaultUser;
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addPack:(Pack *)pack;
--(void)removePack:(Pack *)pack;
+- (void)removePack:(Pack *)pack;
+- (void)removePackWithPackID:(long)pack_id;
 - (void) sortPacks:(SortTypeEnum) sortType;
 
 @end
