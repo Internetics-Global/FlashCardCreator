@@ -23,8 +23,8 @@
 "NavigationBarItem_Packs"   = "组";
 "NavigationBarItem_Create"  = "创建";
 "NavigationBarItem_Edit"    = "编辑";
-"NavigationBarItem_Edit_Cards"    = "Edit cards";
-"NavigationBarItem_Create_New_Pack"    = "Create New Pack";
+"NavigationBarItem_Edit_Cards"    = "编辑";
+"NavigationBarItem_Create_New_Pack"    = "创建新组";
 "NavigationBarItem_Delete"    = "删除";
 "NavigationBarItem_Change"    = "更改图片";
 "NavigationBarItem_Done"    = "完成";
@@ -48,6 +48,7 @@
 "Keyboard_Set" = "设置";
 "Keyboard_No_Needed" = "不需要";
 
+"ToolbarItem_Font"        = "字体";
 "ToolbarItem_Align"        = "对齐";
 "ToolbarItem_Size"         = "尺寸";
 "ToolbarItem_Color"        = "颜色";
@@ -59,6 +60,7 @@
 "ToolbarItem_Align_Center"        = "居中";
 "ToolbarItem_Align_Right"        = "右对齐";
 "ToolbarItem_Align_Justify"        = "Justify";
+"ToolbarItem_Align_Vertical"        = "垂直";
 
 
 "ToolbarItem_Color_Red"        = "红色";
@@ -66,23 +68,83 @@
 "ToolbarItem_Color_Blue"        = "蓝色";
 "ToolbarItem_Color_Black"        = "黑色";
 "ToolbarItem_Color_Yellow"        = "黄色";
+"ToolbarItem_Color_White"        = "白色";
 
 "Label_Question"      = "问题";
 "Label_Answer"        = "答案";
 "Label_New_Pack_Name" = "新组";
 "Label_Creator"       = "您的昵称";
+"Label_New_User"      = "新用户?";
 
 "Title_Add_A_New_Pack" = "添加新组";
 "Title_Create_A_New_Card" = "创建一个新卡片";
 "Title_About" = "关于我们";
 "Title_Setting" = "设置";
+"Title_Edit_Pack" = "编辑组";
 "Title_Help" = "帮助";
 "Title_Total_Number_Card" = "总卡片数";
 "Title_Select_Template" = "选择模板";
+"Title_Pack_List" = "组列表";
+"Label_Visit_Store"      = "访问商店";
+"Label_Recently_Created"      = "最近创建";
+"Label_Recently_Viewed"      = "最近访问";
+"Label_Please_Select"      = "请选择";
+"Label_Color_Select"      = "选择颜色";
+"Title_Auto" = "自动";
+
+"Optional_Play_Manually" = "手动播放";
+"Optional_Play_Auto" = "自动播放";
+"Optional_Play_Auto_Loop" = "自动循环播放";
+
+"Optional_Blue" = "蓝色";
+"Optional_Coffee" = "咖啡色";
+"Optional_Gray" = "灰色";
+"Optional_Purple" = "紫色";
+"Optional_Red" = "红色";
+
+"Optional_Install_From_The_Code" = "从代码安装";
+"Optional_Share_The_Pack" = "分享";
+
+"Table_Item_TTS" = "文本朗读";
+"Table_Item_Show_Question_Only" = "仅显示问题";
+"Table_Item_Male_Female" = "男女声";
+"Table_Item_Mute_Sound_Recording" = "禁音回放";
+"Table_Item_Count_Down" = "倒计数";
+
+"Tip_Open_Pack_Viewer"  = "Open pack viewer";
+"Tip_Edit_Pack"  = "Edit a pack";
+"Tip_Create_New_Pack"  = "Create a new pack";
+"Tip_Question"  = "Click to see the question side of the card";
+"Tip_Answer"  = "Click to see the answer side of the card";
+"Tip_Template"  = "Change Template";
+"Tip_Background"  = "Change background";
+"Tip_Record"  = "Record sound/voice";
+"Tip_Play"  = "Play these cards";
+"Tip_Share"  = "Share this pack";
+"Tip_Edit_Logo"  = "Edit logo";
+"Tip_App_Setting"  = "App setting";
+"Tip_Link"  = "Add a link";
+"Tip_Toggle"  = "Toggle help tips on and off";
+"Tip_Palette"  = "Change the color palette";
+"Tip_Create_Card"  = "Create a new card";
+"Title_Record_Card_Sound" = "录制声音";
+"Title_Record_Start" = "录制";
+"Title_Record_Stop" = "停止";
+"Title_Playback" = "播放";
+"Title_Save" = "保存";
 
 "UIButton_Save_Card"  = "保存";
 
 "Indicator_Upload"  = "上传中...";
 "Indicator_Create_Share_Link"  = "创建分享链接...";
+
+"Copyright" = "Flip Card Creator has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in the Flash Card Creator app and Flip Flash Cards Pty Ltd.";
+
+"Record_Introduction_Text" = "When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card.";
+
+"Record_Introduction_Text2" = "Record is finished, you can playback or save the recorded sound";
+
+"Sample_Cards" = "FFC 例子";
+
 
 

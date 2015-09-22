@@ -1440,7 +1440,7 @@
 {
     NSString *s;
     if (value == kMIN_Auto_Play_Speed) {
-        s = @"Auto";
+        s = NSLocalizedString(@"Title_Auto",@"");
     } else {
         s = [NSString stringWithFormat:@"%d",(int)value];
     }

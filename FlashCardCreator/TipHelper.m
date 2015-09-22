@@ -67,7 +67,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipCreateNewCard showText:@"Create a new card" direction:AMPopTipDirectionUp maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipCreateNewCard showText:NSLocalizedString(@"Tip_Create_Card",@"") direction:AMPopTipDirectionUp maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -90,7 +90,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipLogo showText:@"Edit logo" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipLogo showText:NSLocalizedString(@"Tip_Edit_Logo",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -133,7 +133,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipToolbarBottomRightChangeTemplate showText:@"Change template" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightChangeTemplate showText:NSLocalizedString(@"Tip_Template",@"") direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -155,7 +155,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipToolbarBottomRightChangeBackground showText:@"Change background" direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightChangeBackground showText:NSLocalizedString(@"Tip_Background",@"") direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -177,7 +177,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipToolbarBottomRightRecordSound showText:@"Record sound/voice" direction:AMPopTipDirectionUp maxWidth:100 inView:view fromFrame:frame duration:0];
+    [_popTipToolbarBottomRightRecordSound showText:NSLocalizedString(@"Tip_Record",@"") direction:AMPopTipDirectionUp maxWidth:100 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -199,7 +199,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipLinkButton showText:@"Add a link" direction:AMPopTipDirectionLeft maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipLinkButton showText:NSLocalizedString(@"Tip_Link",@"") direction:AMPopTipDirectionLeft maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -223,7 +223,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipLeftNaviBarItemOpenPack showText:@"Open pack viewer" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipLeftNaviBarItemOpenPack showText:NSLocalizedString(@"Tip_Open_Pack_Viewer",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -246,7 +246,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipLeftNaviBarItemCreatePack showText:@"Create a new pack" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipLeftNaviBarItemCreatePack showText:NSLocalizedString(@"Tip_Create_New_Pack",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -269,7 +269,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipLeftNaviBarItemEditPack showText:@"Edit a pack" direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    [_popTipLeftNaviBarItemEditPack showText:NSLocalizedString(@"Tip_Edit_Pack",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -291,7 +291,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentQuestion showText:@"Click to see the question side of the card" direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentQuestion showText:NSLocalizedString(@"Tip_Question",@"") direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -313,7 +313,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
-    [_popTipSegmentAnswer showText:@"Click to see the answer side of the card" direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
+    [_popTipSegmentAnswer showText:NSLocalizedString(@"Tip_Answer",@"") direction:AMPopTipDirectionUp maxWidth:160 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -411,7 +411,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
         };
     }
-    [_popTipRightNaviBarItemPalette showText:@"Change the color palette" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemPalette showText:NSLocalizedString(@"Tip_Palette",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -437,7 +437,7 @@
             }
         };
     }
-    [_popTipRightNaviBarItemHelp showText:@"Toggle help tips on and off" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemHelp showText:NSLocalizedString(@"Tip_Toggle",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -463,7 +463,7 @@
             }
         };
     }
-    [_popTipRightNaviBarItemSetting showText:@"App setting" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemSetting showText:NSLocalizedString(@"Tip_App_Setting",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -494,7 +494,7 @@
             
         };
     }
-    [_popTipRightNaviBarItemShare showText:@"Share this pack" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemShare showText:NSLocalizedString(@"Tip_Share",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -524,7 +524,7 @@
             }
         };
     }
-    [_popTipRightNaviBarItemPlay showText:@"Play these cards" direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemPlay showText:NSLocalizedString(@"Tip_Play",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
     
 }
 

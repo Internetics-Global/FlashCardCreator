@@ -490,8 +490,8 @@ extern BOOL isFromNewCreatedCard;
     
     PopoverView *playSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
-                                                                     withTitle:@"Please select"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
+                                                                     withTitle:NSLocalizedString(@"Label_Please_Select",@"")
+                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Play_Manually",@""), NSLocalizedString(@"Optional_Play_Auto",@""),NSLocalizedString(@"Optional_Play_Auto_Loop",@""), nil]
                                                                       delegate:self];
     playSelectPopupPopoverView.tag = popover_enum_play;
 
@@ -502,8 +502,8 @@ extern BOOL isFromNewCreatedCard;
 
     PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
-                                                                     withTitle:@"Please select"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Install from the code", @"Share the pack", nil]
+                                                                     withTitle:NSLocalizedString(@"Label_Please_Select",@"")
+                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
                                                                       delegate:self];
     shareSelectPopupPopoverView.tag = popover_enum_share;
 
@@ -1451,7 +1451,7 @@ extern BOOL isFromNewCreatedCard;
             pack.packName = packDict[@"pack_name"];
             
             if ([pack.packName.lowercaseString isEqualToString:@"sample pack test"]) {
-                pack.packName = @"FFC Sample Cards";
+                pack.packName = NSLocalizedString(@"Sample_Cards",@"");;
             }
             
             pack.sidebarTitle = packDict[@"sidebar_title"];

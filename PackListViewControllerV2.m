@@ -98,7 +98,7 @@
             break;
     }
     
-    self.title = @"Pack List";
+    self.title = NSLocalizedString(@"Title_Pack_List",@"");;
     
     [self resetPackContent];
     
@@ -111,12 +111,12 @@
     self.userNewButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
     self.userNewButton.frame = CGRectMake(14, CGRectGetHeight(self.view.frame) - 40, 84, 30);
     [self.userNewButton titleLabel].font = [UIFont systemFontOfSize:16];
-    [self.userNewButton setTitle:@"New User?" forState:UIControlStateNormal];
+    [self.userNewButton setTitle:NSLocalizedString(@"Label_New_User",@"") forState:UIControlStateNormal];
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
     
-    self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"recently created",@"recently viewed", nil]];
+    self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:NSLocalizedString(@"Label_Recently_Created",@""),NSLocalizedString(@"Label_Recently_Viewed",@""), nil]];
     self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 -5, CGRectGetHeight(self.view.frame) - 40, 250, 29);
     self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sortSegmentedControl];
@@ -143,7 +143,7 @@
         self.visitStoreButton.frame = CGRectMake((CGRectGetMaxX(self.userNewButton.frame) + CGRectGetMinX(self.sortSegmentedControl.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
     }
     [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
-    [self.visitStoreButton setTitle:@"Visit Store" forState:UIControlStateNormal];
+    [self.visitStoreButton setTitle:NSLocalizedString(@"Label_New_User",@"") forState:UIControlStateNormal];
     [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.visitStoreButton];
     
@@ -322,8 +322,8 @@
     
     PopoverView *popoverView = [PopoverView showPopoverAtPoint:((UIButton *) sender).center
                                                                        inView:cell
-                                                                    withTitle:@"Please select"
-                                                              withStringArray:[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
+                                                                    withTitle:NSLocalizedString(@"Label_Please_Select",@"")
+                                                              withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Play_Manually",@""), NSLocalizedString(@"Optional_Play_Auto",@""),NSLocalizedString(@"Optional_Play_Auto_Loop",@""), nil]
                                                                      delegate:self];
     popoverView.tag = ((UIButton *) sender).tag;
     

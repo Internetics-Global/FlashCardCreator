@@ -361,7 +361,7 @@
     if (_saveButton == nil) {
         _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10, 0, K_Item_Width - 20, CGRectGetHeight(self.frame));
-        [_saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [_saveButton setTitle:NSLocalizedString(@"Title_Save",@"") forState:UIControlStateNormal];
         _saveButton.backgroundColor = [UIColor clearColor];
         [_saveButton addTarget:self action:@selector(didClickedSaveButton:) forControlEvents:UIControlEventTouchDown];
     }

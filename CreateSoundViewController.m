@@ -45,7 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.title = @"Record card Sound";
+    self.title = NSLocalizedString(@"Title_Record_Card_Sound",@"");
     
     if (isUserInterfaceIdiomPhone) {
       self.startButton = [[DKCircleButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2 - 45, 25,90,90)];
@@ -60,9 +60,9 @@
     [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateSelected];
     [self.startButton setTitleColor:[UIColor colorWithWhite:1 alpha:1.0] forState:UIControlStateHighlighted];
     
-    [self.startButton setTitle:@"Record" forState:UIControlStateNormal];
-    [self.startButton setTitle:@"Record" forState:UIControlStateSelected];
-    [self.startButton setTitle:@"Record" forState:UIControlStateHighlighted];
+    [self.startButton setTitle:NSLocalizedString(@"Title_Record_Start",@"") forState:UIControlStateNormal];
+    [self.startButton setTitle:NSLocalizedString(@"Title_Record_Start",@"") forState:UIControlStateSelected];
+    [self.startButton setTitle:NSLocalizedString(@"Title_Record_Start",@"") forState:UIControlStateHighlighted];
 
     
     [self.startButton addTarget:self action:@selector(startButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -99,14 +99,14 @@
         self.playButton.hidden = NO;
         self.saveButton.hidden = NO;
         
-        [self.alertLabel setText:@"Record is finished, you can playback or save the recorded sound"];
+        [self.alertLabel setText:NSLocalizedString(@"Record_Introduction_Text2",@"")];
 
         
     } else {
         self.playButton.hidden = YES;
         self.saveButton.hidden = YES;
 
-        [self.alertLabel setText:@"When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card."];
+        [self.alertLabel setText:NSLocalizedString(@"Record_Introduction_Text",@"")];
 
 
     }

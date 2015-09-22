@@ -86,19 +86,74 @@
 "Label_Creator"       = "Your name";
 "Label_Creator_Hint"       = "Created by";
 "Job_Title"       = "Name or title";
+"Label_New_User"      = "New User?";
+"Label_Visit_Store"      = "Visit Store";
+"Label_Recently_Created"      = "recently created";
+"Label_Recently_Viewed"      = "recently viewed";
+"Label_Please_Select"      = "Please Select";
+"Label_Color_Select"      = "Select Color";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";
 "Title_About" = "About us";
+"Title_Edit_Pack" = "Edit Pack";
 "Title_Setting" = "Settings";
 "Title_Help" = "Help";
 "Title_Total_Number_Card" = "Total cards";
 "Title_Select_Template" = "Select Template";
+"Title_Pack_List" = "Pack List";
+"Title_Auto" = "Auto";
+"Title_Record_Card_Sound" = "Record Card Sound";
+"Title_Record_Start" = "Record";
+"Title_Record_Stop" = "Stop";
+"Title_Playback" = "Play";
+"Title_Save" = "Save";
+
+"Optional_Play_Manually" = "Play Manually";
+"Optional_Auto_Play" = "Auto Play";
+"Optional_Auto_Play_Loop" = "Auto Play and Loop";
+
+"Optional_Blue" = "Blue";
+"Optional_Coffee" = "Coffee";
+"Optional_Gray" = "Gray";
+"Optional_Purple" = "Purple";
+"Optional_Red" = "Red";
+
+"Optional_Install_From_The_Code" = "Install from the Code";
+"Optional_Share_The_Pack" = "Share the Pack";
+
+"Optional_Play_Manually" = "Play Manually";
+"Optional_Play_Auto" = "Auto Play";
+"Optional_Play_Auto_Loop" = "Auto Play and Loop";
+
+"Table_Item_TTS" = "Text to Speech";
+"Table_Show_Questio_Only" = "Auto-Show Question Only";
+"Table_Male_Female" = "Male/Female Voice";
+"Table_Item_Mute_Sound_Recording" = "Mute Sound Recording";
+"Table_Item_Count_Down" = "Count Down";
 
 "UIButton_Save_Card"  = "Save";
 
 "Indicator_Upload"  = "Uploading first…";
 "Indicator_Create_Share_Link"  = "Then create share linkage...";
+
+"Tip_Open_Pack_Viewer"  = "Open pack viewer";
+"Tip_Edit_Pack"  = "Edit a pack";
+"Tip_Create_New_Pack"  = "Create a new pack";
+"Tip_Question"  = "Click to see the question side of the card";
+"Tip_Answer"  = "Click to see the answer side of the card";
+"Tip_Template"  = "Change Template";
+"Tip_Background"  = "Change background";
+"Tip_Record"  = "Record sound/voice";
+"Tip_Play"  = "Play these cards";
+"Tip_Share"  = "Share this pack";
+"Tip_Edit_Logo"  = "Edit logo";
+"Tip_App_Setting"  = "App setting";
+"Tip_Link"  = "Add a link";
+"Tip_Toggle"  = "Toggle help tips on and off";
+"Tip_Palette"  = "Change the color palette";
+"Tip_Create_Card"  = "Create a new card";
+
 
 "HelpText1"  = "1. Click the packs button to show the packs you've created or have access to\n2. Click the edit button to delete a card in the current pack\n3. Click the plus symbol to create a new pack";
 "HelpText2"  = "1. Click the paint brush to change the colour palette of your cards\n2. Click the information symbol to get to this screen\n3. Click the settings button to access the settings of the app";
@@ -110,5 +165,13 @@
 "HelpText6"  = "1. Click the card you want to edit\n2. Click anywhere in the card to edit the text, or click on an image to choose a new image,video, or even insert a youtube linkage";
 "HelpText6_iPhone"  = "1. Click on an image to choose a new image,video, or even insert a youtube linkage\n2. Click anywhere in the card to edit the text";
 "HelpText7"  = "When you are editing you can change the alignment, size, colour, font and symbol of the text by clicking these buttons";
+
+"Copyright" = "Flip Card Creator has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in the Flash Card Creator app and Flip Flash Cards Pty Ltd.";
+
+"Record_Introduction_Text" = "When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card.";
+
+"Record_Introduction_Text2" = "Record is finished, you can playback or save the recorded sound";
+
+"Sample_Cards" = "FFC Sample Cards";
 
 

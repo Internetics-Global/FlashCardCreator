@@ -8682,7 +8682,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 }
                 _recordingStopButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
                 [_recordingStopButton titleLabel].font = [UIFont systemFontOfSize:16];
-                [_recordingStopButton setTitle:@"Stop" forState:UIControlStateNormal];
+                [_recordingStopButton setTitle:NSLocalizedString(@"Title_Record_Stop",@"") forState:UIControlStateNormal];
                 _recordingStopButton.layer.cornerRadius = 30;
                 _recordingStopButton.layer.masksToBounds = YES;
                 _recordingStopButton.backgroundColor = [UIColor redColor];

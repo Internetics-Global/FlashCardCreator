@@ -128,7 +128,7 @@
     label.textColor = [UIColor whiteColor]; // change this color
     
     if (self.isEditPack) {
-        label.text = @"Edit Pack";
+        label.text = NSLocalizedString(@"Title_Edit_Pack",@"");
     } else {
         label.text = NSLocalizedString(@"Title_Add_A_New_Pack", nil);
     }
@@ -279,7 +279,7 @@
 {
     NSString *s;
     if (value == kMIN_Auto_Play_Speed) {
-        s = @"Auto";
+        s = NSLocalizedString(@"Title_Auto",@"");
     } else {
         s = [NSString stringWithFormat:@"%d",(int)value];
     }

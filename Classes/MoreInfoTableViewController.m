@@ -169,7 +169,7 @@
             } else {
                 [_muteSwitch setOn:NO];
             }
-            cell.textLabel.text = @"Mute Sound Recording";
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_Mute_Sound_Recording",@"");
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.accessoryView = _muteSwitch;
             
@@ -180,7 +180,7 @@
         }
     } else if (indexPath.section ==2) {
         if (indexPath.row ==0) {
-            cell.textLabel.text = @"Text to Speech";
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_TTS",@"");
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *textToSpeechSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
             [textToSpeechSwitch addTarget:self action:@selector(textToSpeechSwitchAction) forControlEvents:UIControlEventValueChanged];
@@ -188,7 +188,7 @@
             BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
             [textToSpeechSwitch setOn:b];
         } else if (indexPath.row ==1) {
-            cell.textLabel.text = @"Auto - Show Question Only";
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_Show_Question_Only",@"");
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
             [showQuestionOnlySwitch addTarget:self action:@selector(showQuestionOnlyAction) forControlEvents:UIControlEventValueChanged];
@@ -197,7 +197,7 @@
             [showQuestionOnlySwitch setOn:b];
         } else if (indexPath.row == 2) {
             
-            cell.textLabel.text = @"Male/Female Voice";
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_Male_Female",@"");
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryType = UITableViewCellAccessoryNone;
             UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -256,7 +256,7 @@
             
             cell.accessoryView = baseView;
             
-            cell.textLabel.text = [NSString stringWithFormat:@"Count Down (%d)",(int)countDownSlider.value];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
             
         }
     }
@@ -274,7 +274,7 @@
 - (void) countDownSliderValueChanged:(UISlider *) slider {
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:2]];
-    cell.textLabel.text = cell.textLabel.text = [NSString stringWithFormat:@"Count Down (%d)",(int) (slider.value)];
+    cell.textLabel.text = cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int) (slider.value)];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[NSNumber numberWithInt:(int)slider.value] forKey:@"K_CountDown_Val"];
