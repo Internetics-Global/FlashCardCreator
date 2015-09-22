@@ -25,12 +25,6 @@
 @property (strong, nonatomic) MasterViewController *masterViewController;
 @property (strong, nonatomic) DetailViewController *detailViewController;
 
-@property (strong, nonatomic) AVAudioRecorder *recorder;
-
-/**
- *  true after finishing a record; false by default
- */
-@property (assign, nonatomic) BOOL             isRecordFinished;
 
 @property (assign, nonatomic) int packIDForMasterViewPack;
 
@@ -39,6 +33,16 @@
 @property (assign, nonatomic) BOOL isAllowToShowTooltip; //在第一次启动下载sample,packlist等对话框存在下，不允许显示
 
 @property (assign, nonatomic) BOOL isAllowToShowPackList;
+
+
+@property (strong, nonatomic) AVAudioRecorder *recorder;
+
+/**
+ *  true after finishing a record; false by default
+ */
+@property (assign, nonatomic) BOOL             isRecordFinished;
+
+@property (strong, nonatomic) NSMutableArray   *rawMatchedText2SpeechArray;
 
 
 - (UIView *)progressHUDHolderView;

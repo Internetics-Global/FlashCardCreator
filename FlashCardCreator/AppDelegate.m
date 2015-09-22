@@ -34,6 +34,8 @@ BOOL _isDownloadingSamplePack;
 {
     [self setupLog];
     
+    self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];
+    
 //    [ParseCrashReporting enable];
     [Parse setApplicationId:@"WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3"
                   clientKey:@"EN7hKNQ0B8SEG3BlRO79GB1Av8pOw4YUk5ylhd0r"];
@@ -331,6 +333,30 @@ BOOL _isDownloadingSamplePack;
     } else {
         return self.splitViewController.view;
     }
+}
+
+/**
+ *  这个是粗糙的结果，还需要进一步的过滤
+ */
+- (NSMutableArray *) rawText2SpeechLanguage {
+    
+    NSMutableArray *returnArray = [NSMutableArray array];
+    
+    NSString * language2RegionStr = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSString *languageStr = [[language2RegionStr componentsSeparatedByString:@"-"] objectAtIndex:0];
+    
+    NSArray *text2SpeechArray = [AVSpeechSynthesisVoice speechVoices];
+    for (AVSpeechSynthesisVoice *item in text2SpeechArray) {
+        NSString *text2SpeechLanguageStr = [[item.language componentsSeparatedByString:@"-"] objectAtIndex:0];
+        
+        if ([text2SpeechLanguageStr isEqualToString:languageStr]) {
+            [returnArray addObject:item.language];
+        }
+        
+    }
+    
+    return returnArray;
+    
 }
 
 - (void) dealloc {

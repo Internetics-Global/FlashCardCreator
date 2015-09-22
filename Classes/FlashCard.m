@@ -9609,6 +9609,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return ;
     }
     
+    
     if ([_synth isSpeaking]) {
         [self.synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     }
@@ -9620,12 +9621,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[0]];
         utterance.rate = 0.02;
         
-        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
-        if (b) {
-            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
-        } else {
-            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"];
-        }
+        NSString *text2SpeechLanguage = [self getText2SpeechVoiceLanguage];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechLanguage];
         
         if (self.isMuteText2Speech) {
             [utterance setVolume:0];
@@ -9642,6 +9639,60 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
+- (NSString *) getText2SpeechVoiceLanguage {
+    
+    NSMutableArray *rawArray = APP_DELEGATE.rawMatchedText2SpeechArray;
+    
+    if ([rawArray count] == 0) {
+        return @"en-GB";
+    }
+    
+    if ([[[[rawArray objectAtIndex:0] componentsSeparatedByString:@"-"] firstObject] isEqualToString:@"nl"]) {
+        
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        if (b) {
+            return @"nl-NL";
+        } else {
+            return @"nl-BE";
+        }
+    }
+    
+    
+    if ([[[[rawArray objectAtIndex:0] componentsSeparatedByString:@"-"] firstObject] isEqualToString:@"fr"]) {
+        
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        if (b) {
+            return @"fr-FR";
+        } else {
+            return @"fr-CA";
+        }
+    }
+    
+    if ([[[[rawArray objectAtIndex:0] componentsSeparatedByString:@"-"] firstObject] isEqualToString:@"en"]) {
+        
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        if (b) {
+            return @"en-GB";
+        } else {
+            return @"en-au";
+        }
+    }
+    
+    
+    NSString * language2RegionStr = [[NSLocale preferredLanguages] objectAtIndex:0];
+    NSString *countryCode= [[language2RegionStr componentsSeparatedByString:@"-"] lastObject];
+    
+    for (NSString *item in rawArray) {
+        NSString *itemStr = [[item componentsSeparatedByString:@"-"] lastObject];
+        if ([itemStr.lowercaseString isEqualToString:countryCode.lowercaseString]) {
+            return item;
+        }
+    }
+    
+    
+    return [rawArray firstObject];
+}
+
 
 - (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance {
     [iConsole info:@"%s",__FUNCTION__];
@@ -9651,12 +9702,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         
-        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
-        if (b) {
-            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-GB"];
-        } else {
-            utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-au"];
-        }
+        NSString *text2SpeechStr = [self getText2SpeechVoiceLanguage];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechStr];
         
         //NSArray* speechVoices = [AVSpeechSynthesisVoice speechVoices];
         
