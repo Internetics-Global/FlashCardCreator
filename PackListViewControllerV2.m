@@ -143,7 +143,7 @@
         self.visitStoreButton.frame = CGRectMake((CGRectGetMaxX(self.userNewButton.frame) + CGRectGetMinX(self.sortSegmentedControl.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
     }
     [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
-    [self.visitStoreButton setTitle:NSLocalizedString(@"Label_New_User",@"") forState:UIControlStateNormal];
+    [self.visitStoreButton setTitle:NSLocalizedString(@"Label_Visit_Store",@"") forState:UIControlStateNormal];
     [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.visitStoreButton];
     

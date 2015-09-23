@@ -1482,14 +1482,7 @@ extern BOOL isFromNewCreatedCard;
                 pack.packID = -1;
             } else {
                 pack.packID = [packIDStr integerValue];
-                
-                if (pack.packID == self.currentPack.packID) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack being downloaded should not be the same as the pack that are showing" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alertView show];
-                    return;
-                } else {
-                    [[User defaultUser] removePackWithPackID:pack.packID];
-                }
+                [[User defaultUser] removePackWithPackID:pack.packID];
             }
             
             

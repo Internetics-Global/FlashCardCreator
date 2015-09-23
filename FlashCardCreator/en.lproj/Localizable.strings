@@ -127,8 +127,8 @@
 "Optional_Play_Auto_Loop" = "Auto Play and Loop";
 
 "Table_Item_TTS" = "Text to Speech";
-"Table_Show_Questio_Only" = "Auto-Show Question Only";
-"Table_Male_Female" = "Male/Female Voice";
+"Table_Item_Show_Question_Only" = "Auto-Show Question Only";
+"Table_Item_Male_Female" = "Male/Female Voice";
 "Table_Item_Mute_Sound_Recording" = "Mute Sound Recording";
 "Table_Item_Count_Down" = "Count Down";
 
