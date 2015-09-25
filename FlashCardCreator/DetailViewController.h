@@ -17,7 +17,6 @@
 @class Card;
 @class Pack;
 @class FlashCard;
-@class AWSS3UploadHelper;
 
 
 @interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopoverViewDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
@@ -43,8 +42,6 @@
     UIBarButtonItem *_helpButton;
     
     MBProgressHUD *_HUD;
-    
-    AWSS3UploadHelper *_shareHelper;
     
     /**
      *  General pack info (like pack image and no of cards) on the right.

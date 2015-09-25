@@ -25,8 +25,9 @@
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
 
-BOOL _isDownloadingSamplePack;
+#import <DropboxSDK/DropboxSDK.h>
 
+BOOL _isDownloadingSamplePack;
 
 @implementation AppDelegate
 
@@ -77,6 +78,10 @@ BOOL _isDownloadingSamplePack;
     
     //2. check user has opened app (once open, a default user will be setup)
     [SQLiteHelper checkUserExist];
+    
+    //3. Initialized Dropbox session
+    DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
+    [DBSession setSharedSession:dbSession];
     
     //5. Initialize user interface
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -260,6 +265,18 @@ BOOL _isDownloadingSamplePack;
         
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
         
+    } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
+        if ([[DBSession sharedSession] handleOpenURL:url])
+        {
+            if ([[DBSession sharedSession] isLinked])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"linked"]];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"linked"]];
+            }
+            return YES;
+        }
+        
     }
     
     return YES;
@@ -358,6 +375,12 @@ BOOL _isDownloadingSamplePack;
     return returnArray;
     
 }
+
+
+
+
+
+#pragma mark – Memory Managment
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

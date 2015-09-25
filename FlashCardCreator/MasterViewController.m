@@ -30,7 +30,10 @@
 #import "FileOperationHelper.h"
 #import "MoreInfoTableViewController.h"
 #import "FCCBarButton.h"
+
 #import "AWSS3UploadHelper.h"
+#import "DropboxShareKitHelper.h"
+
 #import "PlayViewControllerV2.h"
 #import "NSArray+Randomised.h"
 #import "NSString+QueryString.h"
@@ -52,6 +55,9 @@ extern BOOL _isDownloadingSamplePack;
 @interface MasterViewController () <UIPopoverControllerDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
+    
+    AWSS3UploadHelper        *_amazonShareHelper;
+    DropboxSharekitHelper    *_dropboxShareHelper;
 }
 
 @end
@@ -2262,8 +2268,19 @@ extern BOOL isFromNewCreatedCard;
                 
                 if (_currentPack.isAllowShare) {
                     if ((_currentPack) && (_currentCard)) {
-                        _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_shareHelper shareAction];
+                        
+                        
+                        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+                        if (b) {
+                            _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                            [_dropboxShareHelper shareAction];
+                        } else {
+                            _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                            [_amazonShareHelper shareAction];
+                        }
+                        
+                        
+                        
                     } else {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }

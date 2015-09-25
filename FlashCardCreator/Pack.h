@@ -27,7 +27,7 @@
     NSString *_restorePassword; //used to re-clain the ownership
     
     NSString *_shareLink;
-    NSString *_fileNameOnAWS;
+    NSString *_fileNameOnAWS;  //AWS or Dropbox
     
     /**
      *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）

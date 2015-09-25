@@ -51,7 +51,7 @@
         [iConsole error:@"Error download: %@", error];
         [weakSelf.delegate downloadFail];
         //[Common alertViewCommon:[error description]];
-        [Common alertViewCommon:@"Check your download linkage or sever is temporarily unavailable"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_LINK_ERROR",@"")];
     }];
     [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
         [iConsole info:@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile];

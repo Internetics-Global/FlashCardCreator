@@ -61,6 +61,7 @@
 #define REFRESH_SETTING_TABLEVIEW_NOTIFICATION @"REFRESH_SETTING_TABLEVIEW_NOTIFICATION"
 #define SAVE_NEW_CREATED_CARD_NOTIFICATION @"SAVE_NEW_CREATED_CARD_NOTIFICATION"
 #define SHOW_TOOLTIPS_NOTIFICATION @"SHOW_TOOLTIPS_NOTIFICATION"
+#define DROPBOX_LINKED_NOTIFICATION @"DROPBOX_LINKED_NOTIFICATION"
 
 //Special symbol
 #define K_No_Doulbe_Width      3       //占据2个普通宽度的symbol的数目，这里是3个
@@ -73,6 +74,11 @@
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"
+
+//Dropbox APP_KEY and APP_SECRET
+#define DROPBOX_APP_KEY @"1sn1igzypb8udmy"
+#define DROPBOX_APP_SECRET @"sy3sdmu93rcxjt1"
+#define DROPBOX_APP_ROOT kDBRootDropbox
 
 //Public Pack （or Example Pack）
 #define PUBLIC_PACK_ID 31415

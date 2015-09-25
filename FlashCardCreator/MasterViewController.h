@@ -56,8 +56,6 @@
     int       _currentDownloadCount;
     int       _maxDownloadCount;
     
-    AWSS3UploadHelper *_shareHelper;
-    
     NSIndexPath *_currentIndexPath;//only used during deleting a card (commitEditingStyle)
 }
 

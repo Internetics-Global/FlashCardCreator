@@ -13,7 +13,9 @@
 
 #import "ZipArchive.h"
 
-@interface MoreInfoTableViewController ()
+#import <DropboxSDK/DropboxSDK.h>
+
+@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate>
 
 @end
 
@@ -55,6 +57,8 @@
     UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendLog)];
     fiveTap.numberOfTapsRequired = 5;
     [self.view addGestureRecognizer:fiveTap];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,50 +106,42 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 1;
-    } else if (section == 1) {
-        return (2);
-    } else if (section == 2) {
-        return 4;
-    } else {
-        return 0;
-    }
+    return 8;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SwitchCell";
     
-    if ((indexPath.section == 0) || (indexPath.section == 1)) {
-        CellIdentifier = @"SwitchCell";    
+    if (indexPath.row == 2) {
+        CellIdentifier = @"CommonCell";
+    } else if (indexPath.row == 6) {
+        CellIdentifier = @"SlideCell";
     } else {
-        CellIdentifier = @"CommonCell";  
+        CellIdentifier = @"SwitchCell";
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
     if (cell == nil) {
-        if ([CellIdentifier isEqualToString:@"SwitchCell"]) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"SwitchCell"];
-        } else {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CommonCell"];    
-        }
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellIdentifier"];
         cell.backgroundColor = [UIColor whiteColor];
     }
 
     
-    if (_playModeSwitch == nil) {
-        _playModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [_playModeSwitch addTarget:self action:@selector(playModeSwitchAction) forControlEvents:UIControlEventValueChanged];
-    }
     
-    if (indexPath.section ==0) {
+    if (indexPath.row ==0) {
+        
+        if (_playModeSwitch == nil) {
+            _playModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+            [_playModeSwitch addTarget:self action:@selector(playModeSwitchAction) forControlEvents:UIControlEventValueChanged];
+        }
+        
         BOOL isRandomPlayMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isRandomPlayMode"];
         if (isRandomPlayMode) {
             [_playModeSwitch setOn:YES];
@@ -157,108 +153,116 @@
         cell.accessoryView = _playModeSwitch;
         
         
-    } else if (indexPath.section ==1) {
-        if (indexPath.row ==0) {
-            
-            _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [_muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
-            
-            BOOL isMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
-            if (isMuteMode) {
-                [_muteSwitch setOn:YES];
-            } else {
-                [_muteSwitch setOn:NO];
-            }
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_Mute_Sound_Recording",@"");
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = _muteSwitch;
-            
-            
-        } else if (indexPath.row == 1) {
-            cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-    } else if (indexPath.section ==2) {
-        if (indexPath.row ==0) {
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_TTS",@"");
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *textToSpeechSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [textToSpeechSwitch addTarget:self action:@selector(textToSpeechSwitchAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = textToSpeechSwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
-            [textToSpeechSwitch setOn:b];
-        } else if (indexPath.row ==1) {
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_Show_Question_Only",@"");
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [showQuestionOnlySwitch addTarget:self action:@selector(showQuestionOnlyAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = showQuestionOnlySwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
-            [showQuestionOnlySwitch setOn:b];
-        } else if (indexPath.row == 2) {
-            
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_Male_Female",@"");
-            cell.textLabel.textColor = [UIColor whiteColor];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-            [voiceSwitch addTarget:self action:@selector(voiceSwitchAction) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = voiceSwitch;
-            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
-            [voiceSwitch setOn:b];
-            
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (indexPath.row ==3) {
-            
-            UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
-            baseView.backgroundColor = [UIColor clearColor];
-            
-            UISlider *countDownSlider= [[UISlider alloc] initWithFrame:CGRectMake(35, 0, 100, 40)];
-            countDownSlider.backgroundColor = [UIColor clearColor];
-            [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
-            countDownSlider.minimumValue = kMIN_CountDown_Slider_Value;
-            countDownSlider.maximumValue = kMAX_CountDown_Slider_Value;
-            countDownSlider.continuous = YES;
-            countDownSlider.tintColor = [UIColor greenColor];
-            [countDownSlider addTarget:self action:@selector(countDownSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-            [countDownSlider setBackgroundColor:[UIColor clearColor]];
-            [baseView addSubview:countDownSlider];
-            
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSNumber *countDownNumber = [defaults objectForKey:@"K_CountDown_Val"];
-            if (countDownNumber) {
-                countDownSlider.value = [countDownNumber integerValue];
-                
-            } else {
-                countDownSlider.value = kDEFAULT_CountDown_Slider_Value;
-                
-                [defaults setObject:[NSNumber numberWithInt:kDEFAULT_CountDown_Slider_Value] forKey:@"K_CountDown_Val"];
-                [defaults synchronize];
-            }
+    } else if (indexPath.row ==1) {
         
-            
-            UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 40)];
-            leftLabel.textAlignment = NSTextAlignmentLeft;
-            leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-            leftLabel.text = @"None";
-            leftLabel.numberOfLines = 1;
-            leftLabel.textColor = [UIColor lightGrayColor];
-            leftLabel.backgroundColor = [UIColor clearColor];
-            [baseView addSubview:leftLabel];
-            
-            UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(115, 0, 35, 40)];
-            rightLabel.textAlignment = NSTextAlignmentRight;
-            rightLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-            rightLabel.text = [NSString stringWithFormat:@"%d",kMAX_CountDown_Slider_Value];
-            rightLabel.numberOfLines = 1;
-            rightLabel.textColor = [UIColor lightGrayColor];
-            rightLabel.backgroundColor = [UIColor clearColor];
-            [baseView addSubview:rightLabel];
-            
-            cell.accessoryView = baseView;
-            
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
-            
+        _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [_muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
+        
+        BOOL isMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
+        if (isMuteMode) {
+            [_muteSwitch setOn:YES];
+        } else {
+            [_muteSwitch setOn:NO];
         }
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Mute_Sound_Recording",@"");
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = _muteSwitch;
+        
+        
+    } else if (indexPath.row == 2) {
+        cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (indexPath.row == 3) {
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_TTS",@"");
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *textToSpeechSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [textToSpeechSwitch addTarget:self action:@selector(textToSpeechSwitchAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = textToSpeechSwitch;
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
+        [textToSpeechSwitch setOn:b];
+    } else if (indexPath.row == 4) {
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Show_Question_Only",@"");
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [showQuestionOnlySwitch addTarget:self action:@selector(showQuestionOnlyAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = showQuestionOnlySwitch;
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
+        [showQuestionOnlySwitch setOn:b];
+    } else if (indexPath.row == 5) {
+        
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Male_Female",@"");
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [voiceSwitch addTarget:self action:@selector(voiceSwitchAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = voiceSwitch;
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
+        [voiceSwitch setOn:b];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (indexPath.row == 6) {
+        
+        UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+        baseView.backgroundColor = [UIColor clearColor];
+        
+        UISlider *countDownSlider= [[UISlider alloc] initWithFrame:CGRectMake(35, 0, 100, 40)];
+        countDownSlider.backgroundColor = [UIColor clearColor];
+        [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"slide_thumb"] forState:UIControlStateNormal];
+        countDownSlider.minimumValue = kMIN_CountDown_Slider_Value;
+        countDownSlider.maximumValue = kMAX_CountDown_Slider_Value;
+        countDownSlider.continuous = YES;
+        countDownSlider.tintColor = [UIColor greenColor];
+        [countDownSlider addTarget:self action:@selector(countDownSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [countDownSlider setBackgroundColor:[UIColor clearColor]];
+        [baseView addSubview:countDownSlider];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *countDownNumber = [defaults objectForKey:@"K_CountDown_Val"];
+        if (countDownNumber) {
+            countDownSlider.value = [countDownNumber integerValue];
+            
+        } else {
+            countDownSlider.value = kDEFAULT_CountDown_Slider_Value;
+            
+            [defaults setObject:[NSNumber numberWithInt:kDEFAULT_CountDown_Slider_Value] forKey:@"K_CountDown_Val"];
+            [defaults synchronize];
+        }
+        
+        
+        UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 40)];
+        leftLabel.textAlignment = NSTextAlignmentLeft;
+        leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        leftLabel.text = @"None";
+        leftLabel.numberOfLines = 1;
+        leftLabel.textColor = [UIColor lightGrayColor];
+        leftLabel.backgroundColor = [UIColor clearColor];
+        [baseView addSubview:leftLabel];
+        
+        UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(115, 0, 35, 40)];
+        rightLabel.textAlignment = NSTextAlignmentRight;
+        rightLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        rightLabel.text = [NSString stringWithFormat:@"%d",kMAX_CountDown_Slider_Value];
+        rightLabel.numberOfLines = 1;
+        rightLabel.textColor = [UIColor lightGrayColor];
+        rightLabel.backgroundColor = [UIColor clearColor];
+        [baseView addSubview:rightLabel];
+        
+        cell.accessoryView = baseView;
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
+        
+    } else if (indexPath.row == 7) {
+        
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Amazon_Or_Dropbox",@"");
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [storageProviderSwitch addTarget:self action:@selector(storageProviderAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = storageProviderSwitch;
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+        [storageProviderSwitch setOn:b];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -266,7 +270,7 @@
         cell.textLabel.textColor = [UIColor whiteColor];
     }
     
-        
+    
     return cell;
 }
 
@@ -360,6 +364,39 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) storageProviderAction {
+    
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    
+    if (!b) {
+        if (![[DBSession sharedSession] isLinked]) {
+            [DBSession sharedSession].delegate = self;
+            [[DBSession sharedSession] linkFromController:self];
+        } else {
+            
+            [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isDropboxAsStorage"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [self.tableView reloadData];
+        }
+    } else {
+        
+        [[DBSession sharedSession] unlinkAll];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self.tableView reloadData];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Use Amazon Cloud as storage" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+    
+    
+
+    
+}
 
 - (void) voiceSwitchAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
@@ -371,6 +408,60 @@
 #pragma mark - Notification
 
 - (void) refreshTableViewNotification:(NSNotification *) notification {
+    [self.tableView reloadData];
+}
+
+
+#pragma mark -
+#pragma mark DBSessionDelegate methods
+
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+}
+
+
+#pragma mark -
+#pragma mark DBNetworkRequestDelegate methods
+
+static int outstandingRequests;
+
+- (void)networkRequestStarted {
+    outstandingRequests++;
+    if (outstandingRequests == 1) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+}
+
+- (void)networkRequestStopped {
+    outstandingRequests--;
+    if (outstandingRequests == 0) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }
+}
+
+
+#pragma mark -
+#pragma mark - DROPBOX_LINKED_NOTIFICATION
+
+- (void) dropboxLinkedNotification:(id)notification
+{
+    [iConsole info:@"%s",__FUNCTION__];
+    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
+    
+    if(![linkedNum boolValue])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+    } else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isDropboxAsStorage"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     [self.tableView reloadData];
 }
 

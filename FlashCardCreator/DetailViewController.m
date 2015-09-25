@@ -18,7 +18,10 @@
 #import "Reachability.h"
 #import "PlayViewControllerV2.h"
 #import "FCCBarButton.h"
+
 #import "AWSS3UploadHelper.h"
+#import "DropboxShareKitHelper.h"
+
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
 #import "OpenUDID.h"
@@ -40,6 +43,14 @@ enum popover_enum {
     popover_enum_play = 2,
 };
 
+
+@interface DetailViewController () {
+    AWSS3UploadHelper        *_amazonShareHelper;
+    DropboxSharekitHelper    *_dropboxShareHelper;
+    
+}
+
+@end
 
 
 @implementation DetailViewController
@@ -730,8 +741,16 @@ enum popover_enum {
                         double delayInSeconds = 0.4;
                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                            _shareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                            [_shareHelper shareAction];
+                            
+                            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+                            if (b) {
+                                _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                                [_dropboxShareHelper shareAction];
+                            } else {
+                                _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                                [_amazonShareHelper shareAction];
+                            }
+                            
                         });
                     } else {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];

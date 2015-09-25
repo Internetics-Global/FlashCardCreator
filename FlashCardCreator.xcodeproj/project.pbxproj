@@ -244,6 +244,8 @@
 		887FF2B31B13F77D00D998FA /* AWS_Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 887FF2B21B13F77D00D998FA /* AWS_Constants.m */; };
 		889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D11A123DED0011B7ED /* GTMStackTrace.m */; };
 		889131D51A123DED0011B7ED /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D31A123DED0011B7ED /* iConsole.m */; };
+		889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */; };
+		889C9B161BB4F12A00BE77AB /* DropboxSharekitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */; };
 		88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* SimpleDBHelper.m */; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
 		88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */; };
@@ -621,6 +623,9 @@
 		889131D11A123DED0011B7ED /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
 		889131D21A123DED0011B7ED /* iConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iConsole.h; sourceTree = "<group>"; };
 		889131D31A123DED0011B7ED /* iConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iConsole.m; sourceTree = "<group>"; };
+		889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = Libraries/DropboxSDK.framework; sourceTree = "<group>"; };
+		889C9B141BB4F12A00BE77AB /* DropboxShareKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DropboxShareKitHelper.h; path = FlashCardCreator/DropboxShareKitHelper.h; sourceTree = "<group>"; };
+		889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropboxSharekitHelper.m; path = FlashCardCreator/DropboxSharekitHelper.m; sourceTree = "<group>"; };
 		88A175271797C3BD00FE778C /* SimpleDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleDBHelper.h; path = FlashCardCreator/SimpleDBHelper.h; sourceTree = "<group>"; };
 		88A175281797C3BD00FE778C /* SimpleDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleDBHelper.m; path = FlashCardCreator/SimpleDBHelper.m; sourceTree = "<group>"; };
 		88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_highlight.png; path = Resources/uibarbuttonitem_highlight.png; sourceTree = "<group>"; };
@@ -723,6 +728,7 @@
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
+				889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
 				0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */,
 			);
@@ -1025,6 +1031,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */,
 				881DDCDD1BA908C3005EFE21 /* DACircularProgress */,
 				88AE4AA21B8D63B200988131 /* Base64 */,
 				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
@@ -1050,6 +1057,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				889C9B131BB4F11F00BE77AB /* Dropbox */,
 				887FF2B01B13F76800D998FA /* AWS */,
 				881E9E6F18F7AF1B00ECC523 /* SoundRecord */,
 				2D26343F16C2066D001A024D /* SelectTemplate */,
@@ -1475,6 +1483,15 @@
 			);
 			name = iConsole;
 			path = Libraries/iConsole;
+			sourceTree = "<group>";
+		};
+		889C9B131BB4F11F00BE77AB /* Dropbox */ = {
+			isa = PBXGroup;
+			children = (
+				889C9B141BB4F12A00BE77AB /* DropboxShareKitHelper.h */,
+				889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */,
+			);
+			name = Dropbox;
 			sourceTree = "<group>";
 		};
 		88AE4AA21B8D63B200988131 /* Base64 */ = {
@@ -1907,6 +1924,7 @@
 				2D5C182116D1A62800E1E785 /* SimpleWebBrowserController.m in Sources */,
 				2D5C182216D1A62800E1E785 /* UIImage+Scale.m in Sources */,
 				2D5C182316D1A62800E1E785 /* UIImagePickerController+NoRotate.m in Sources */,
+				889C9B161BB4F12A00BE77AB /* DropboxSharekitHelper.m in Sources */,
 				2D5C182416D1A62800E1E785 /* UINavigationController+DismissKeyboard.m in Sources */,
 				2D5C183B16D1A66400E1E785 /* CreateCardViewController.m in Sources */,
 				2D5C184216D1A69200E1E785 /* AboutView.m in Sources */,
@@ -2081,6 +2099,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",
 					"$(PROJECT_DIR)/Libraries/Parse",
+					"$(PROJECT_DIR)/Libraries",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2122,6 +2141,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",
 					"$(PROJECT_DIR)/Libraries/Parse",
+					"$(PROJECT_DIR)/Libraries",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

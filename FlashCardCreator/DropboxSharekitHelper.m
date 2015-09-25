@@ -1,34 +1,29 @@
 //
-//  AWSS3UploadHelper.m
+//  DropboxSharekitHelper.m
 //  FlashCardCreator
 //
 //  Created by Wang Bourne on 1/03/13.
 //  Copyright (c) 2013 Internetics. All rights reserved.
 //
 
-#import "AWSS3UploadHelper.h"
+#import "DropboxSharekitHelper.h"
 #import "Pack.h"
 #import "FileOperationHelper.h"
 #import "DataManager.h"
 #import "SimpleDBHelper.h"
 #import "OpenUDID.h"
 #import "AppDelegate.h"
+#import "CryptorHelper.h"
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 
-#import <AWSS3/AWSS3.h>
-#import "AWS_Constants.h"
-#import <Bolts/Bolts.h>
-
-#import "CryptorHelper.h"
-
-@interface AWSS3UploadHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
+@interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
 }
 
 @end
 
-@implementation AWSS3UploadHelper
+@implementation DropboxSharekitHelper
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
@@ -48,7 +43,7 @@
 
 
 #pragma mark -
-#pragma mark - Upload and Share related
+#pragma mark - Dropbox and Share related
 
 /**
  *  when user clicks the "share the pack" button
@@ -82,8 +77,7 @@
             }
         }
         
-        //Step2:
-        [self showPasswordInputDialog];
+        [self showPasswordInputDialog]; //go through: password input, upload, create share link, etc
         
     } else {
         NSDictionary *downloadLinkageDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"savedDownloadLinkage"];
@@ -94,7 +88,6 @@
         
         if (finalLinkage.length > 0) {
             NSString *redirectedStr =[self redirectURL:finalLinkage];
-            
             if ((redirectedStr == nil) || (redirectedStr.length == 0) || ([redirectedStr containsString:@"http://tinyurl.com/"] == false)) {
                 [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
                 return;
@@ -105,7 +98,7 @@
                 }
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
             
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                           @"Facebook",
@@ -152,8 +145,19 @@
 }
 
 
-- (void) uploadToAWSS3:(NSString *) password {
+- (DBRestClient *)restClient {
     [iConsole info:@"%s",__FUNCTION__];
+    if (!_restClient) {
+        _restClient =
+        [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
+    return _restClient;
+}
+
+- (void) uploadToDropbox:(NSString *) password {
+    [iConsole info:@"%s",__FUNCTION__];
+    
     
     if ([DataManager apiReachable] == NO) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
@@ -187,116 +191,25 @@
         return;
     }
     
-    
     //step2: update local meta info
     if (self.currentPack.fileNameOnAWS.length == 0) {
         self.currentPack.fileNameOnAWS = [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
-        
         [self.currentPack savePackOnly];
     }
     
-    
-    //step3: upload to S3
-    [self upload:generatedZipFilePath withFileName:self.currentPack.fileNameOnAWS];
-    
-}
-
-
-- (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
-    
-    //1. setup
-    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-    uploadRequest.body = [NSURL fileURLWithPath:generatedZipFilePath];
-    uploadRequest.key = saveName;
-    uploadRequest.bucket = S3BucketName;
-    
-    //2. show indicator
-    [self showUploadingIndicator];
-
-    //3. 执行upload
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
-        if (task.error) {
-            if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                        break;
-                    default:
-                        NSLog(@"Upload failed: [%@]", task.error);
-                        break;
-                }
-            } else {
-                NSLog(@"Upload failed: [%@]", task.error);
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [iConsole error:@"File upload failed with error - %@", task.error];
-                [_HUD hide:YES];
-                [_HUD removeFromSuperview];//we need to clean up _HUD
-                [Common alertViewCommon:@"Failure to upload, please try again"];
-            });
-            
-        } else {
-            
-        }
-        
-        //5. 执行完毕后，进行操作
-        if (task.result) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [_HUD hide:YES];
-                [iConsole info:@"Upload complete"];
-                
-                
-                //save local meta info
-                NSString *link = [NSString stringWithFormat:@"%@/%@/%@",S3BaseURL,S3BucketName,saveName];
-                NSString *sharedate = [FileOperationHelper getTodayString];
-                NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-                [dict setObject:sharedate forKey:@"share_date"];
-                [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                //share action
-                [self shareAction:link];
-                
-            });
-            
-        }
-        
-        return nil;
-    }];
-    
-    
-    //4.在uploadProgress中自动更新进度
-    switch (uploadRequest.state) {
-        case AWSS3TransferManagerRequestStateRunning: {
-            
-            uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (totalBytesExpectedToSend > 0) {
-                        float progress = (float)((double) totalBytesSent / totalBytesExpectedToSend);
-                        
-                        _progressivePercent = progress;
-                        _HUD.progress = progress;
-                        
-                    }
-                    
-                    
-                });
-            };
-            break;
-        }
-            
-        default:
-        {
-            [_HUD hide:YES];
-            [iConsole info:@"go to default here"];
-            break;
-        }
+    //Step3: upload
+    if (!_restClient) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     }
+    _restClient.delegate = self;
+    
+    //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
+    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    [_restClient uploadFile:self.currentPack.fileNameOnAWS toPath:@"/FlashCardCreator2016"
+                   fromPath:generatedZipFilePath];
+    [self showProgressIndicator];
+    
+    //step3: create dropbox linkage which locate in uploadedFile:
     
 }
 
@@ -337,25 +250,17 @@
     
 }
 
-- (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName withMaxNo: (int) maxNo {
-    [iConsole info:@"%s",__FUNCTION__];
-    BOOL result = false;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
-    NSString *defaultDomain = [SimpleDBHelper defaultDomain];
-    result = [SimpleDBHelper insertOrUpdateItem:dict withItemName:itemName withDomainName:defaultDomain];
-    return result;
-}
 
-#pragma mark – UIAlertView delegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [iConsole info:@"%s",__FUNCTION__];
     
     switch (alertView.tag) {
         case 1: {
+            //Password input finished
             [[alertView textFieldAtIndex:0] resignFirstResponder];
             NSString *password = [alertView textFieldAtIndex:0].text;
-            [self uploadToAWSS3:password];
+            [self uploadToDropbox:password];
             
         }
             
@@ -402,7 +307,7 @@
                     NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
                     NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
                     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                    __weak AWSS3UploadHelper *safeSelf = self;
+                    __weak DropboxSharekitHelper *safeSelf = self;
                     dispatch_async(queue, ^{
                         [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
                         [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
@@ -438,7 +343,6 @@
                                               nil];
                 [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
             }
-            
         }
             
             break;
@@ -454,25 +358,92 @@
 }
 
 
+- (BOOL) insertIntoAmazonSingleDB: (NSString *) itemName withMaxNo: (int) maxNo {
+    [iConsole info:@"%s",__FUNCTION__];
+    BOOL result = false;
+    NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
+    NSString *defaultDomain = [SimpleDBHelper defaultDomain];
+    result = [SimpleDBHelper insertOrUpdateItem:dict withItemName:itemName withDomainName:defaultDomain];
+    return result;
+}
+
+#pragma mark -
+#pragma mark - DBRestClientDelegate related
+
+- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
+              from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+    
+    [iConsole info:@"File uploaded successfully to path: %@", metadata.path];
+    
+    _isCreatingShareLinkage = YES;
+    
+    //step3: create dropbox linkage
+    [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
+    
+    //step4: share via sharekit, which locate in loadedSharableLink:
+}
+
+- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
+    [iConsole error:@"File upload failed with error - %@", error];
+    [_HUD hide:YES];
+    [Common alertViewCommon:@"Failure to upload, please try again"];
+}
+
+- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
+           forFile:(NSString*)destPath from:(NSString*)srcPath {
+    _progressivePercent = progress;
+    _HUD.progress = progress;
+    
+    if (progress == 1)
+        _isCreatingShareLinkage = YES;
+}
+
+- (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
+    [iConsole info:@"Share linkage create successfully with linkage - %@", link];
+    [_HUD hide:YES];
+    
+    _isCreatingShareLinkage = NO;
+    
+    //share_date info
+    NSString *sharedate = [FileOperationHelper getTodayString];
+    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+    [dict setObject:sharedate forKey:@"share_date"];
+    [dict setObject:link forKey:@"share_link"];
+    [dict setObject:[[path componentsSeparatedByString:@"/"]lastObject] forKey:@"share_filename"];  // similiar like like card1361507800.569792-1108896928.zip
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self shareAction:link];
+    
+}
+
+- (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
+    [iConsole error:@"%s",__FUNCTION__];
+    _HUD.labelText = @"Fail to create share linkage";
+    _isCreatingShareLinkage = NO;
+    [iConsole error:@"Share linkage create failed with error - %@", error];
+}
 
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
-- (void)showUploadingIndicator {
+- (void)showProgressIndicator {
 	
 	_HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
     _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
 ;
-    [_HUD showWhileExecuting:@selector(uploadProgressTask) onTarget:self withObject:nil animated:YES];
+    _isCreatingShareLinkage = NO;
+    [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
     [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
     
 }
 
-- (void)uploadProgressTask {
+- (void)myProgressTask {
     [iConsole info:@"%s",__FUNCTION__];
 	while (_progressivePercent < 1.0f) {
 		_HUD.progress = _progressivePercent;
@@ -481,25 +452,25 @@
     _progressivePercent = 0;
     
     _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = NSLocalizedString(@"Indicator_Create_Share_Link",@"")
 ;
     
+    while (_isCreatingShareLinkage == YES) {
+        usleep(50000);
+    }
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [iConsole info:@"%s",__FUNCTION__];
-	//[_HUD removeFromSuperview];  //我们需要多次的hide/show，所以需要comment out这段默认的逻辑
+	[_HUD removeFromSuperview];
 }
 
-
-/**
- *  生成短连接，通过tinyurl.com
- */
 - (NSString *) redirectURL:(NSString *)urlStr {
     [iConsole info:@"%s, url to be redirected:%@",__FUNCTION__,urlStr];
     NSString *returnURL;
     NSString *requestURL = [NSString stringWithFormat:@"%@%@",URL_REDIRECT_API,urlStr];
     
-    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10]; //the default timeout interval is 60 seconds.
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5]; //the default timeout interval is 60 seconds.
     NSURLResponse * response = nil;
     NSError * error = nil;
     NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
@@ -621,6 +592,7 @@
 }
 
 - (void) dealloc {
+    _restClient.delegate = nil;
 }
 
 
