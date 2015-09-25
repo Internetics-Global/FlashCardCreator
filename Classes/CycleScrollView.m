@@ -102,7 +102,10 @@
     [self resetAutoScrollTimer];
 }
 
-- (void) resetDwellOnQuestionExpireTimer {
+/**
+ *  Used in fixed delay mode only
+ */
+- (void) resetDwellOnQuestionExpireTimerForFixedDelay {
     
     if (_dwellOnQuestionExpireTimer) {
         [_dwellOnQuestionExpireTimer invalidate];
@@ -110,7 +113,7 @@
     }
     
     if (_isFixedDelayAutoScroll && self.isAutoScroll) {
-        _dwellOnQuestionExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsOnQuestion) target:self selector:@selector(dwellOnQuestionExpireTimer) userInfo:nil repeats:NO];
+        _dwellOnQuestionExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsOnQuestion) target:self selector:@selector(dwellOnQuestionExpireTimerForFixedDelay) userInfo:nil repeats:NO];
     } else {
         
     }
@@ -129,7 +132,7 @@
        //当_isFixedDelayAutoScroll == NO时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
     }
     
-    [self resetDwellOnQuestionExpireTimer];
+    [self resetDwellOnQuestionExpireTimerForFixedDelay];
     
 
 }
@@ -438,10 +441,10 @@
     [self scrollNow];
     
     //每次通过定时器scroll到下一个page时，都需要重新设置
-    [self resetDwellOnQuestionExpireTimer];
+    [self resetDwellOnQuestionExpireTimerForFixedDelay];
 }
 
-- (void) dwellOnQuestionExpireTimer {
+- (void) dwellOnQuestionExpireTimerForFixedDelay {
     if ([self.delegate respondsToSelector:@selector(didFinishDwellOnQuestionCard)]) {
         [self.delegate didFinishDwellOnQuestionCard];
     }

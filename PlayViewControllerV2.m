@@ -106,7 +106,7 @@
     /**
      *  当dwell on answer card expire后，自动触发，比如关闭正在播放的text to speech
      */
-    NSTimer  * _dwellOnAnswerExpireTimer;
+    NSTimer  * _timerForDwellOnAnswerExpire_FixedDelayModeOnly;
     
     UILabel  * _countDownLabel;
     NSTimer  * _countDownTimer;
@@ -733,12 +733,12 @@
     
     [self switchQuestionAnswerViewWithHand:FALSE];
     
-    if (_dwellOnAnswerExpireTimer) {
-        [_dwellOnAnswerExpireTimer invalidate];
-        _dwellOnAnswerExpireTimer = nil;
+    if (_timerForDwellOnAnswerExpire_FixedDelayModeOnly) {
+        [_timerForDwellOnAnswerExpire_FixedDelayModeOnly invalidate];
+        _timerForDwellOnAnswerExpire_FixedDelayModeOnly = nil;
     }
     
-    _dwellOnAnswerExpireTimer = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value) target:self selector:@selector(didFinishDwellOnAnswerCard) userInfo:nil repeats:NO];
+    _timerForDwellOnAnswerExpire_FixedDelayModeOnly = [NSTimer scheduledTimerWithTimeInterval:(_dwellTimeSlider.value) target:self selector:@selector(didFinishDwellOnAnswerCard_FixedDelayModeOnly) userInfo:nil repeats:NO];
     
     
 }
@@ -865,7 +865,8 @@
     [self invalidateAllTimers];
     [self resetAutoHideControlPanelTimer];
     
-    if (_isAutoScroll == FALSE) {
+    if (_isAutoScroll == NO) {
+        _isAutoScroll = YES;
         [self executeAutoPlay];
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
@@ -922,7 +923,7 @@
                         [currentCard textToSpeechAllContentNow];
                     } else {
                         [currentCard playAudioWithManualClick:NO withMute:_isMute];
-                        double delayInSeconds = durationForRecordedSound + 1;
+                        double delayInSeconds = durationForRecordedSound + 1;  ////这里1秒是适当的，因为_pauseForAnswerSlider或K_IntervalBetweenCardSeconds_ForQAOnly都远大于这个数
                         
                         [_timerForDelayedText2Speech invalidate];
                         _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
@@ -983,8 +984,8 @@
     
     switch (self.oneOffPlayType) {
         case One_Off_Play_Type_Manually: {
+            _isAutoScroll = NO;
             FlashCard *currentCard = [self  getCurrrentCard];
-            
             if (currentCard) {
                 [self playbackOnCard:currentCard];
             }
@@ -993,10 +994,12 @@
         }   
             
         case One_Off_Play_Type_Auto_Play:
+            _isAutoScroll = YES;
             [self executeAutoPlay];
             break;
             
         case One_Off_Play_Type_Auto_Play_Loop:
+            _isAutoScroll = YES;
             [self executeAutoPlay];
             [self cyclePlayButtonClicked:_cyclePlayButton];
             break;
@@ -1160,7 +1163,9 @@
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
-        [self beginFixedDelayAutoScroll];
+        if (_isAutoScroll) {
+            [self beginFixedDelayAutoScroll];
+        }
     } else
     {
         [self playbackOnCard:currentCard];
@@ -1172,7 +1177,7 @@
 /**
  *  在fixed delay模式中，在answer中，如果时间超过_dwellTimeSlider.value，则需要关闭text to speech
  */
-- (void) didFinishDwellOnAnswerCard {
+- (void) didFinishDwellOnAnswerCard_FixedDelayModeOnly {
     
     if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
         FlashCard *currentCard = [self getCurrrentCard];
@@ -1230,6 +1235,9 @@
     [self resetQASwitchTimer];
 }
 
+/**
+ *  仅仅用于fixed delay mode
+ */
 - (void) resetQASwitchTimer {
     
     float seconds = (_dwellTimeSlider.value + _pauseForAnswerSlider.value);
@@ -1308,14 +1316,13 @@
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    _isAutoScroll = YES;
     _scrollView.isAutoScroll = YES;
     
     [self enableDwellTimeSlider];
     if ([self isSmartDelay]) {
         [self enablePauseForAnswerSlider];
     } else {
-        [self enablePauseForAnswerSlider];
+        [self enablePauseForAnswerSlider];  //we don't use disablePauseForAnswerSlider any more
     }
     
     
@@ -1451,8 +1458,8 @@
 #pragma mark - Memory Management
 
 - (void) invalidateAllTimers {
-    [_dwellOnAnswerExpireTimer invalidate];
-    _dwellOnAnswerExpireTimer = nil;
+    [_timerForDwellOnAnswerExpire_FixedDelayModeOnly invalidate];
+    _timerForDwellOnAnswerExpire_FixedDelayModeOnly = nil;
     
     [_autoSwitchQATimerForFixedDelay invalidate];
     _autoSwitchQATimerForFixedDelay = nil;
