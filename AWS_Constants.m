@@ -22,4 +22,5 @@ NSString *const S3BucketName = @"internetics.flashcardcreator";
 
 NSString *const S3BaseURL = @"https://s3.amazonaws.com";
 
+//NSString *const S3SamplePackURL = @"http://7o51o0.com1.z0.glb.clouddn.com/Pack1443533218-452091650.zip?from=Flipflashcards&type=demo"; //large test pack
 NSString *const S3SamplePackURL = @"https://s3.amazonaws.com/internetics.flashcardcreator/Pack1440729625-2043618070.zip?from=Flipflashcards&type=demo";
