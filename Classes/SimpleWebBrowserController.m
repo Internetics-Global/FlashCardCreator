@@ -198,7 +198,7 @@
     [iConsole error:@"error:%@",error];
     if (!([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102)) {
         if (_isViewShowing) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
                                                             message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"

@@ -5,7 +5,7 @@
  Created by Wang Bourne on 13/02/13.
  Copyright (c) 2013 Internetics. All rights reserved.
  */
-
+"DIALOG_TITLE_NO_NETWORK"  = "No internet connection";
 "DIALOG_PLEASE_CHECK_YOUR_NETWORK"  = "Please check your internet settings.";
 "DIALOG_DOWNLOAD_PACK"              = "Downloading FFC sample cards";
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Downloading pack from ";

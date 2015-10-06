@@ -160,7 +160,7 @@
     
     
     if ([DataManager apiReachable] == NO) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
                                                         message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
