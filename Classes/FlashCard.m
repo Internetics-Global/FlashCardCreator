@@ -8753,7 +8753,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self showCreateSoundViewController];
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_AUDIO_PLAY_ONLY_SUPPORTED_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_PLAY_ONLY_SUPPORTED_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     

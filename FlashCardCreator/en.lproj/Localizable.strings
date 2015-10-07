@@ -19,11 +19,12 @@
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a passwords?";
-"DIALOG_ALERT"       = "Alert";
-"DIALOG_CLOSE"       = "Close";
-"DIALOG_OK"       = "OK";
+"DIALOG_ALERT"        = "Alert";
+"DIALOG_CLOSE"        = "Close";
+"DIALOG_OK"           = "OK";
+"DIALOG_SET"          = "Set";
 "DIALOG_CANCEL"       = "Cancel";
-"DIALOG_DONE"       = "Done";
+"DIALOG_DONE"         = "Done";
 "DIALOG_SHARE"       = "Share";
 "DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";
@@ -72,7 +73,9 @@
 "DIALOG_ERROR_WHEN_PARSING_QUESTION_JSON" = "Error when parsing questionTextContent.json";
 "DIALOG_REACH_MAX_DOWNLOAD_LIMIT" = "You have reached the limit of downloads for this pack";
 "DIALOG_UPLOAD_FAILURE" = "Failure to upload, please try again";
-"DIALOG_AUDIO_PLAY_ONLY_SUPPORTED_IN_PLAY" = "Audio play is only supported in play mode.";
+"DIALOG_PLAY_ONLY_SUPPORTED_IN_PLAY" = "Only supported in play mode";
+
+"DIALOG_INPUT_ADMIN_PASSWORD" = "Input admin password";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
