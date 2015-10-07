@@ -292,7 +292,7 @@ enum popover_enum {
           
             if ((self.currentPack.shareLink.length >0)) {
               _shareCodeLabel.hidden = NO;
-              _shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
+              _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
             } else {
               _shareCodeLabel.hidden = YES;
             }
@@ -416,7 +416,7 @@ enum popover_enum {
 - (void)createNewCard:(id)sender
 {
     if (![Common isOwner:_currentPack]) {
-        [Common alertViewCommon:NSLocalizedString(@"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
         return;
     }
     
@@ -1050,7 +1050,7 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                                         message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"")
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
@@ -1224,7 +1224,7 @@ extern BOOL isFromNewCreatedCard;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
                                                         message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"")
                                               otherButtonTitles:nil];
         [alert show];
         
@@ -1270,7 +1270,7 @@ extern BOOL isFromNewCreatedCard;
         double delayInSeconds = 0.3;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [Common alertViewCommon:@"You have reached the limit of downloads for this pack"];
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_REACH_MAX_DOWNLOAD_LIMIT",@"")];
             [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
         });
     }
@@ -1325,7 +1325,7 @@ extern BOOL isFromNewCreatedCard;
                     if (( NO==ret ) || (fileSize == 0)) {
                         //when password encripted, will go into here to
                         [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
-                        [Common alertViewCommon:@"Wrong password"];
+                        [Common alertViewCommon:NSLocalizedString(@"DIALOG_WRONG_PASSWORD",@"")];
                         [za UnzipCloseFile];
                     } else {
                         [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
@@ -1404,7 +1404,7 @@ extern BOOL isFromNewCreatedCard;
     [za UnzipOpenFile:downloadedZipPackFileFixedPath];
     if( [za UnzipIsEncrypted]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"Input a password"
+                                                        message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
                                                        delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                               otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -1643,7 +1643,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *questionJsonPath = [temporaryImagesDir stringByAppendingPathComponent:@"questionTextContent.json"];
     NSData *questionData = [NSData dataWithContentsOfFile:questionJsonPath];
     if (!questionData) {
-        [Common alertViewCommon:@"Error when parsing questionTextContent.json"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_WHEN_PARSING_QUESTION_JSON",@"")];
         return nil;
     }
     id questionJsonObject = [NSJSONSerialization JSONObjectWithData:questionData options:NSJSONReadingMutableContainers error:&error];
@@ -1912,7 +1912,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *answerJsonPath = [temporaryImagesDir stringByAppendingPathComponent:@"answerTextContent.json"];
     NSData *answerData = [NSData dataWithContentsOfFile:answerJsonPath];
     if (!answerData) {
-        [Common alertViewCommon:@"Error when parsing answerTextContent.json"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_WHEN_PARSING_ANSWER_JSON",@"")];
         return nil;
     }
     id answerJsonObject = [NSJSONSerialization JSONObjectWithData:answerData options:
@@ -2251,7 +2251,7 @@ extern BOOL isFromNewCreatedCard;
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"")
                                                                 message:nil
                                                                delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                                       otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
@@ -2285,7 +2285,7 @@ extern BOOL isFromNewCreatedCard;
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }
                 } else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }
                 

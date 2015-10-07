@@ -370,7 +370,7 @@
     _minDwellTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_dwellTimeSlider.frame)- 70, 5, 70, 20)];
     _minDwellTimeLabel.textAlignment = NSTextAlignmentRight;
     _minDwellTimeLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
-    _minDwellTimeLabel.text = @"Reading timer";
+    _minDwellTimeLabel.text = NSLocalizedString(@"Title_Reading_Timer",@"");
     _minDwellTimeLabel.numberOfLines = 1;
     _minDwellTimeLabel.textColor = [UIColor whiteColor];
     _minDwellTimeLabel.backgroundColor = [UIColor clearColor];
@@ -389,7 +389,7 @@
     _pauseForAnswerLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 5, 90, 20)];
     _pauseForAnswerLabel.textAlignment = NSTextAlignmentCenter;
     _pauseForAnswerLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:10];
-    _pauseForAnswerLabel.text = @"Question pause";
+    _pauseForAnswerLabel.text = NSLocalizedString(@"Title_Question_Pause",@"");
     _pauseForAnswerLabel.numberOfLines = 1;
     _pauseForAnswerLabel.textColor = [UIColor whiteColor];
     _pauseForAnswerLabel.backgroundColor = [UIColor clearColor];

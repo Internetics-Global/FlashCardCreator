@@ -17,10 +17,10 @@
 @implementation Common
 
 + (void)alertViewCommon:(NSString *) msg {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                                     message:msg
                                                    delegate:self
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"")
                                           otherButtonTitles:nil];
     [alert show];
     

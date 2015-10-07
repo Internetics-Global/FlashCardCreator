@@ -107,7 +107,7 @@
             
             _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
             
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
                                           @"Facebook",
                                           @"Twitter",
                                           @"Email",
@@ -117,7 +117,7 @@
             
             
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                                message:@"Packs downloaded before current version of FlashCardCreator are no more supported to share"
                                               delegate:nil cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                      otherButtonTitles:nil];
@@ -133,12 +133,12 @@
     UIAlertView *alert;
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
-                                   message:@"Set a password?"
+                                   message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
     } else {
-        alert = [[UIAlertView alloc] initWithTitle:@"Alert"
-                                           message:@"Set a password?"
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
+                                           message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
     }
@@ -159,7 +159,7 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
                                                         message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
                                                        delegate:nil
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"")
                                               otherButtonTitles:nil];
         [alert show];
         return;
@@ -182,7 +182,7 @@
         }
         
     } else {
-        [Common alertViewCommon:@"You need to select a pack first"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_SELECT_PACK_BEFOREHAND",@"")];
         [iConsole info:@"%s:Pack to share is nil or public pack",__FUNCTION__];
         return;
     }
@@ -234,7 +234,7 @@
                 [iConsole error:@"File upload failed with error - %@", task.error];
                 [_HUD hide:YES];
                 [_HUD removeFromSuperview];//we need to clean up _HUD
-                [Common alertViewCommon:@"Failure to upload, please try again"];
+                [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
             });
             
         } else {
@@ -322,7 +322,7 @@
                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
     } else {
-        alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                    message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
                                   delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                          otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
@@ -365,7 +365,7 @@
             [[alertView textFieldAtIndex:0] resignFirstResponder];
             
             if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
-                _HUD.labelText = @"Creating short linkage...";
+                _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Short_Linkage",@"");
                 [_HUD show:YES];
                 
                 double delayInSeconds = 0.4;
@@ -411,7 +411,7 @@
                     //3. 分享
                     _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
                     
-                    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
                                                   @"Facebook",
                                                   @"Twitter",
                                                   @"Email",
@@ -430,7 +430,7 @@
                 
                 _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
                 
-                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
                                               @"Facebook",
                                               @"Twitter",
                                               @"Email",
@@ -546,7 +546,7 @@
                 [_baseViewController presentViewController:controller animated:YES completion:Nil];
             } else {
                 //iOS6下，会自动提示，iOS7则需要手工加入
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Facebook Account" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_FACEBOOK",@"") message:NSLocalizedString(@"DIALOG_NO_FACEBOOK_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                 [alertView show];
             }
             
@@ -563,7 +563,7 @@
                 [_baseViewController presentViewController:controller animated:YES completion:nil];
             } else {
                 //iOS6下，会自动提示，iOS7则需要手工加入
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Twitter Account" message:@"There are no Twitter accounts configured. You can add or create a Facebook account in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                 [alertView show];
             }
             
@@ -581,7 +581,7 @@
                 
                 [_baseViewController presentViewController:composeViewController animated:YES completion:nil];
             } else {
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please configure your mail in setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_CONFIG_MAIL_REQUIRED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
             }
 
             
@@ -595,7 +595,7 @@
             double delayInSeconds = 0.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [[[UIAlertView alloc] initWithTitle:@"Message" message:@"Copy done" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
             });
             
             

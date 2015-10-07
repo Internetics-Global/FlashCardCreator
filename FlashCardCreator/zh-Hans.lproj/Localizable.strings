@@ -12,7 +12,7 @@
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "只有那些自己所创建的卡，您可以更改";
 "DIALOG_EXISTING_PACK_NAME"                = "名称已存在，请重新输入";
 
-"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
+"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "创建前需先建立一个组";
 
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "下载包中...";
@@ -84,7 +84,7 @@
 "Title_Add_A_New_Pack" = "添加新组";
 "Title_Create_A_New_Card" = "创建一个新卡片";
 "Title_About" = "关于我们";
-"Title_Setting" = "设置";
+"Title_Settings" = "设置";
 "Title_Edit_Pack" = "编辑组";
 "Title_Help" = "帮助";
 "Title_Total_Number_Card" = "总卡片数";
@@ -138,8 +138,6 @@
 "Title_Record_Stop" = "停止";
 "Title_Playback" = "播放";
 "Title_Save" = "保存";
-
-"UIButton_Save_Card"  = "保存";
 
 "Indicator_Upload"  = "上传中...";
 "Indicator_Create_Share_Link"  = "创建分享链接...";

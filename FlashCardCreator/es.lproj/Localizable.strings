@@ -12,7 +12,7 @@
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Usted puede hacer cambios solamente en aquellas tarjetas que son creados por usted mismo";
 "DIALOG_EXISTING_PACK_NAME"                = "Nombre actual del paquete, por favor ingrese una diferente";
 
-"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
+"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Descargue el paquete ...";
@@ -74,12 +74,10 @@
 "Title_Add_A_New_Pack" = "Añadir un nuevo paquete";
 "Title_Create_A_New_Card" = "Crear una nueva tarjeta";
 "Title_About" = "Sobre nosotros";
-"Title_Setting" = "Más";
+"Title_Settings" = "Más";
 "Title_Help" = "Ayudar";
 "Title_Total_Number_Card" = "Número total de tarjetas";
 "Title_Select_Template" = "Seleccione una plantilla";
-
-"UIButton_Save_Card" = "Guardar";
 
 "Indicator_Upload"  = "Carga de primera ...";
 "Indicator_Create_Share_Link"  = "Cree compartir enlaces ...";

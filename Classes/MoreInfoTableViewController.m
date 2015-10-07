@@ -25,7 +25,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.title =NSLocalizedString(@"Title_Setting",@"");
+        self.title =NSLocalizedString(@"Title_Settings",@"");
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableViewNotification:) name:REFRESH_SETTING_TABLEVIEW_NOTIFICATION
  object:nil];
     }
@@ -232,7 +232,7 @@
         UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 40)];
         leftLabel.textAlignment = NSTextAlignmentLeft;
         leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        leftLabel.text = @"None";
+        leftLabel.text = NSLocalizedString(@"Title_None",@"");
         leftLabel.numberOfLines = 1;
         leftLabel.textColor = [UIColor lightGrayColor];
         leftLabel.backgroundColor = [UIColor clearColor];
@@ -312,7 +312,7 @@
     
     //see here
     if ((TARGET_IPHONE_SIMULATOR) && (SYSTEM_VERSION_GREATER_THAN(@"8.0"))) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The iOS 8 simulators do not support text-to-speech. However, the iOS 7 simulators do still support text-to-speech (at least as of Xcode 6.1)," delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"The iOS 8 simulators do not support text-to-speech. However, the iOS 7 simulators do still support text-to-speech (at least as of Xcode 6.1)," delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil];
         [alert show];
     }
     
@@ -388,7 +388,7 @@
         
         [self.tableView reloadData];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Use Amazon Cloud as storage" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_USE_AMAZON_AS_STORAGE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     

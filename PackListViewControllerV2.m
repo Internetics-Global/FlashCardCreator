@@ -364,7 +364,7 @@
 }
 
 - (void) visitStoreButtonClicked:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Not implemented" message:@"Not implemented" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Not implemented" message:@"Not implemented" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
     [alertView show];
 }
 
@@ -440,7 +440,7 @@
         [alert show];
         APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The pack is currently being used" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_PACK_IS_BEING_USED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -461,7 +461,7 @@
                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
         } else {
-            alert = [[UIAlertView alloc] initWithTitle:@"Alert"
+            alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                                message:@"Input admin password"
                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
@@ -570,7 +570,7 @@
                 
                 
             } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Wrong password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_WRONG_PASSWORD",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                 [alertView show];
             }
         }

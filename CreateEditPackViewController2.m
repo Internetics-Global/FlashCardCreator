@@ -70,6 +70,14 @@
         _currentPack = [[Pack alloc] init];
         _coverImageView.image =[UIImage imageNamed:@"default_pack_cover_image_transparent"];
         _autoPlaySpeedSlider.value = kMIN_Auto_Play_Speed;
+        
+        _packNameTextField.placeholder = NSLocalizedString(@"Label_New_Pack_Name",@"");
+        _sidebarTextField.placeholder = NSLocalizedString(@"Label_Sidebar_Title",@"");
+        _creatorTextField.placeholder = NSLocalizedString(@"Label_Creator",@"");
+        _jobTitleTextField.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
+        _adminPasswordTextField.placeholder = NSLocalizedString(@"Label_Admin_Password",@"");
+        _cofirmAminPasswordTextField.placeholder = NSLocalizedString(@"Label_Confirm_Admin_Password",@"");
+        
     } else {
         _packNameTextField.text = _currentPack.packName;
         _sidebarTextField.text = _currentPack.sidebarTitle;
@@ -193,7 +201,7 @@
 - (void) saveAndCloseCreatePackView {
     
     if (([_adminPasswordTextField.text isEqualToString:_cofirmAminPasswordTextField.text] == false)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Passwords do not match" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_WRONG_PASSWORD",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -249,7 +257,7 @@
     }
     
     if (_adminPasswordTextField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_NO_ADMIN_PASSWORD_WARNING",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
 }

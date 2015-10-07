@@ -12,7 +12,7 @@
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "Sie können Änderungen nur auf diesen Karten, die Sie selbst erstellt werden machen";
 "DIALOG_EXISTING_PACK_NAME"                = "Bestehende Pack Namen, geben Sie bitte eine andere";
 
-"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Sie haben noch um die Gruppe zu erstellen, so kann ich nicht erstellen Sie eine neue Karte";
+"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Sie haben noch um die Gruppe zu erstellen, so kann ich nicht erstellen Sie eine neue Karte";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Angelegt wird, bevor die Errichtung einer Gruppe erforderlich";
 
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download Paket";
@@ -73,12 +73,10 @@
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Erstellen Sie eine neue Karte";
 "Title_About" = "Wir über uns";
-"Title_Setting" = "Mehr";
+"Title_Settings" = "Mehr";
 "Title_Help" = "Hilfe";
 "Title_Total_Number_Card" = "Gesamtzahl der Karten";
 "Title_Select_Template" = "Wählen Sie eine Vorlage";
-
-"UIButton_Save_Card" = "Speichern";
 
 
 "Indicator_Upload"  = "Hochladen erste ...";

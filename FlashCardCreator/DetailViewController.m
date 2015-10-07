@@ -471,7 +471,7 @@ enum popover_enum {
     [iConsole info:@"%s",__FUNCTION__];
     if ([Common isOwner:_currentPack] == FALSE) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
         
@@ -647,7 +647,7 @@ enum popover_enum {
                 
                 if (self.currentPack.shareLink.length >0) {
                     myView.hidden = NO;
-                    ((UILabel *)myView).text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
+                    ((UILabel *)myView).text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
                 } else {
                     myView.hidden = YES;
                 }
@@ -719,7 +719,7 @@ enum popover_enum {
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input download code"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"")
                                                                 message:nil
                                                                delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                                       otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
@@ -756,7 +756,7 @@ enum popover_enum {
                         [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
                     }
                 } else {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Share function is forbidden by the pack creator" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }
                 
@@ -1099,7 +1099,7 @@ enum popover_enum {
             
             if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
                 shareCodeLabel.hidden = NO;
-                shareCodeLabel.text = [NSString stringWithFormat:@"Share code:  %@",[self.currentPack.shareLink lastPathComponent]];
+                shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
             } else {
                 shareCodeLabel.hidden = YES;
             }

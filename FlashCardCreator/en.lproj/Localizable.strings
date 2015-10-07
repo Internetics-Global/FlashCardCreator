@@ -12,14 +12,19 @@
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can only make changes to cards you have created yourself.";
 "DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
 
-"NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
+"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
 
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download FFC sample cards first";
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a passwords?";
-"DIALOG_AlERT"       = "Alert";
+"DIALOG_ALERT"       = "Alert";
+"DIALOG_CLOSE"       = "Close";
+"DIALOG_OK"       = "OK";
+"DIALOG_CANCEL"       = "Cancel";
+"DIALOG_DONE"       = "Done";
+"DIALOG_SHARE"       = "Share";
 "DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS"       = "Set max number of downloads";
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";
 "DIALOG_DELETE_PACK"       = "Are you sure you want to delete?";
@@ -29,10 +34,50 @@
 "DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED" = "Failure to create zipped share file.";
 "DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED" = "Failure to encrypt zipped share file.";
 "DIALOG_REDIRECT_SERVICE_UNAVAILABLE" = "Redirect service is not available now, please try again";
+"DIALOG_WARN"       = "Warning";
+"DIALOG_PACK_IS_BEING_USED"       = "The pack is currently being used";
+"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR" = "Share function is forbidden by the pack creator";
+
+"DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video selection";
+"DIALOG_INSERT_YOUTUBE_URL" = "Insert a YouTube url";
+"DIALOG_SELECT_FROM_LIBRARY" = "Select from library";
+"DIALOG_REMOVE_VIDEO_IMAGE" = "Remove video/image";
+"DIALOG_INVALID_YOUTUBE_URL" = "Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY";
+"DIALOG_INPUT_DOWNLOAD_CODE" = "Input download code";
+"DIALOG_USE_AMAZON_AS_STORAGE" = "Use Amazon Cloud as storage";
+"DIALOG_SYMBOL_NOT_SUPPORTED_BY_FONT" = "Symbol could possibly not be supported by selected font,when considering to be used on Android platform";
+
+"DIALOG_ARE_YOU_SURE_YOU_WANT_TO_EXIT"       = "Are you sure you want to exit?";
+"DIALOG_SELECT_CARD_BEFOREHAND"           = "You need to select a card first";
+"DIALOG_SELECT_PACK_BEFOREHAND"           = "You need to select a pack first";
+"DIALOG_NO_CARD_AVAILABLE"               = "No card available";
+"DIALOG_NOT_SUPPORTED"                   = "Not supported";
+"DIALOG_NO_AUDIO_ON_QUESTION_CARD"       = "There is no audio on the question card";
+"DIALOG_NO_AUDIO_ON_ANSWER_CARD"         = "There is no audio on the answer card";
+"DIALOG_SET_MAIL_ADDRESS"                = "Please set your mail address!";
+"DIALOG_INCORRECT_URL_OR_EMAIL"          = "Incorrect URL or Email format";
+"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY" = "Video play is only available in play mode";
+"DIALOG_POST_FACEBOOK_SUCCESSFULLY"       = "Posted to Facebook successfully";
+"DIALOG_NO_ADMIN_PASSWORD_WARNING"        = "No admin password set. Setting an admin password allows you to edit this pack on on another device, or retrieve your editing rights on a pack that has been deleted off the device.";
+"DIALOG_RECORDED_SOUND_REMOVED" = "Recorded sound is removed";
+
+"DIALOG_NO_FACEBOOK"  = "No Facebook Account";
+"DIALOG_NO_FACEBOOK_DETAIL" = "There are no Facebook accounts configured. You can add or create a Facebook account in Settings";
+"DIALOG_NO_Twitter"  = "No Twitter Account";
+"DIALOG_NO_TWITTER_DETAIL" = "There are no Twitter accounts configured. You can add or create a Twitter account in Settings";
+"DIALOG_CONFIG_MAIL_REQUIRED" = "Please configure your mail in setting";
+"DIALOG_COPY_DONE" = "Copy done";
+
+"DIALOG_ERROR_WHEN_PARSING_ANSWER_JSON" = "Error when parsing answerTextContent.json";
+"DIALOG_ERROR_WHEN_PARSING_QUESTION_JSON" = "Error when parsing questionTextContent.json";
+"DIALOG_REACH_MAX_DOWNLOAD_LIMIT" = "You have reached the limit of downloads for this pack";
+"DIALOG_UPLOAD_FAILURE" = "Failure to upload, please try again";
+"DIALOG_AUDIO_PLAY_ONLY_SUPPORTED_IN_PLAY" = "Audio play is only supported in play mode.";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = " Edit ";
+"NavigationBarItem_Close"    = "Close";
 "NavigationBarItem_Edit_Cards"    = "Edit cards";
 "NavigationBarItem_Create_New_Pack"    = "Create New Pack";
 "NavigationBarItem_Delete"    = "Delete";
@@ -42,6 +87,7 @@
 "NavigationBarItem_More"    = "More";
 "NavigationBarItem_Back"    = " Back ";
 "NavigationBarItem_Play"    = "Play";
+"NavigationBarItem_Save"    = "Save";
 
 "NavigationBarItem_More_RandomPlay" = "Random Play";
 "NavigationBarItem_More_Register"   = "Register";
@@ -76,7 +122,6 @@
 "ToolbarItem_Align_Justify"        = "Justify";
 "ToolbarItem_Align_Vertical"        = "Vertical";
 
-
 "ToolbarItem_Color_Red"        = "Red";
 "ToolbarItem_Color_Green"        = "Green";
 "ToolbarItem_Color_Blue"        = "Blue";
@@ -87,23 +132,28 @@
 "Label_Question"      = "Question";
 "Label_Answer"        = "Answer";
 "Label_New_Pack_Name" = "New pack name";
+"Label_Sidebar_Title" = "Side bar title";
 "Label_Creator"       = "Your name";
+"Label_Admin_Password"       = "Admin password";
+"Label_Confirm_Admin_Password"       = "Confirm admin password";
 "Label_Creator_Hint"       = "Created by";
-"Job_Title"       = "Name or title";
+"Label_Job_Title"       = "Name or title";
 "Label_New_User"      = "New User?";
 "Label_Visit_Store"      = "Visit Store";
 "Label_Recently_Created"      = "recently created";
 "Label_Recently_Viewed"      = "recently viewed";
 "Label_Please_Select"      = "Please Select";
+"Label_Select"      = "Select";
 "Label_Color_Select"      = "Select Color";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
 "Title_Create_A_New_Card" = "Create a new card";
 "Title_About" = "About us";
 "Title_Edit_Pack" = "Edit Pack";
-"Title_Setting" = "Settings";
+"Title_Settings" = "Settings";
 "Title_Help" = "Help";
 "Title_Total_Number_Card" = "Total cards";
+"Title_Share_Code" = "Share Code";
 "Title_Select_Template" = "Select Template";
 "Title_Pack_List" = "Pack List";
 "Title_Auto" = "Auto";
@@ -112,6 +162,14 @@
 "Title_Record_Stop" = "Stop";
 "Title_Playback" = "Play";
 "Title_Save" = "Save";
+"Title_Delete" = "Delete";
+"Title_Reading_Timer" = "Reading Timer";
+"Title_Question_Pause" = "Question Pause";
+"Title_None" = "None";
+
+"Title_HANDSET_UNPLUGGED" = "You have handset unplugged";
+"Title_HANDSET_PLUGGED" = "You have handset plugged";
+"Title_HANDSET_CHANGE_MESSAGE" = "In order to play normally, please exit and reenter play mode";
 
 "Optional_Play_Manually" = "Play Manually";
 "Optional_Auto_Play" = "Auto Play";
@@ -122,6 +180,11 @@
 "Optional_Gray" = "Gray";
 "Optional_Purple" = "Purple";
 "Optional_Red" = "Red";
+
+"Optional_Edit_Or_Remove" = "Edit/Remove";
+"Optional_Remove_Background_Image" = "Remove background image";
+"Optional_Change_Background_Image" = "Change background image";
+"Optional_Undo_Last_Operation" = "Undo last operation";
 
 "Optional_Install_From_The_Code" = "Install from the Code";
 "Optional_Share_The_Pack" = "Share the Pack";
@@ -137,10 +200,10 @@
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";
 
-"UIButton_Save_Card"  = "Save";
-
 "Indicator_Upload"  = "Uploading first…";
+"Indicator_Creating_Short_Linkage" = "Creating short linkage";
 "Indicator_Create_Share_Link"  = "Then create share linkage...";
+"Indicator_Creating_Share_Linkage_Failure"  = "Fail to create share linkage";
 
 "Tip_Open_Pack_Viewer"  = "Open pack viewer";
 "Tip_Edit_Pack"  = "Edit a pack";
@@ -153,23 +216,14 @@
 "Tip_Play"  = "Play these cards";
 "Tip_Share"  = "Share this pack";
 "Tip_Edit_Logo"  = "Edit logo";
+"Tip_Edit_Link"  = "Edit link";
 "Tip_App_Setting"  = "App setting";
 "Tip_Link"  = "Add a link";
 "Tip_Toggle"  = "Toggle help tips on and off";
 "Tip_Palette"  = "Change the color palette";
 "Tip_Create_Card"  = "Create a new card";
+"Tip_Image" = "Click to select an image/video from library, or insert a YouTube video linkage";
 
-
-"HelpText1"  = "1. Click the packs button to show the packs you've created or have access to\n2. Click the edit button to delete a card in the current pack\n3. Click the plus symbol to create a new pack";
-"HelpText2"  = "1. Click the paint brush to change the colour palette of your cards\n2. Click the information symbol to get to this screen\n3. Click the settings button to access the settings of the app";
-"HelpText2_iPhone"  = "1. Click the paint brush to change the colour palette of your cards\n2. Click the play button to play the card!";
-"HelpText3"  = "1. Click the share button to upload your pack to drop box and share with others\n2. Click the play button to play the card!";
-"HelpText3_iPhone"  = "1. Click the information symbol to get to this screen\n2. Click the settings button to access the settings of the app\n3. Click the share button to upload your pack to drop box and share with others\n4. Click the play button to play the card!";
-"HelpText4"  = "Click the plus symbol to add a new card to your current pack";
-"HelpText5"  = "Other buttons:\n1. You can click on the template button to change the template\n2.You can click on it and choose an image as the card's background from your image library\n3. You can record a sound here";
-"HelpText6"  = "1. Click the card you want to edit\n2. Click anywhere in the card to edit the text, or click on an image to choose a new image,video, or even insert a youtube linkage";
-"HelpText6_iPhone"  = "1. Click on an image to choose a new image,video, or even insert a youtube linkage\n2. Click anywhere in the card to edit the text";
-"HelpText7"  = "When you are editing you can change the alignment, size, colour, font and symbol of the text by clicking these buttons";
 
 "Copyright" = "Flip Card Creator has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in the Flash Card Creator app and Flip Flash Cards Pty Ltd.";
 

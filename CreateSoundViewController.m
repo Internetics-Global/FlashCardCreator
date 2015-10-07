@@ -250,7 +250,7 @@
       [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
     }
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Recorded sound is removed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_RECORDED_SOUND_REMOVED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
     [alertView show];
     
     self.navigationItem.rightBarButtonItem = nil;

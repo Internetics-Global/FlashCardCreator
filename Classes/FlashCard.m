@@ -1635,7 +1635,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_isPlayingCard) {
-        if ([_jobTitleText.text isEqualToString:NSLocalizedString(@"Job_Title", nil)]) {
+        if ([_jobTitleText.text isEqualToString:NSLocalizedString(@"Label_Job_Title", nil)]) {
             _jobTitleText.text = @"";
         }
     }
@@ -1923,14 +1923,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (isAllowUndo) {
             backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
                                                                         inView:self
-                                                                     withTitle:@"Edit/Remove"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image",@"Undo last operation", nil]
+                                                                     withTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"")
+                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""),NSLocalizedString(@"Optional_Undo_Last_Operation",@""), nil]
                                                                       delegate:self];
         } else {
             backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
                                                                         inView:self
-                                                                     withTitle:@"Edit/Remove"
-                                                               withStringArray:[NSArray arrayWithObjects:@"Remove background image", @"Change background image", nil]
+                                                                     withTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"")
+                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""), nil]
                                                                       delegate:self];
         }
         backgroundImageSelectPopoverView.tag = Type_PopoverView_SelectBackground;
@@ -6863,7 +6863,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     if ([Common isOwner:_currentPack] == FALSE) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
         
@@ -6914,7 +6914,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         targetStr = _currentCard.answer.movieFullPath;
     }
     if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only available in play mode" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -6928,8 +6928,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
                                                                    inView:self
-                                                                withTitle:@"Image/video selection"
-                                                          withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library",@"Remove video/image", nil]
+                                                                withTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"")
+                                                          withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil]
                                                                  delegate:self];
     
     imageSelectPopoverView.tag = Type_PopoverView_SelectImage;
@@ -6966,7 +6966,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         targetStr = _currentCard.answer.movieFullPath2;
     }
     if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only available in play mode" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -6980,8 +6980,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
                                                                    inView:self
-                                                                withTitle:@"Image/video selection"
-                                                          withStringArray:[NSArray arrayWithObjects:@"Insert YouTube url", @"Select from library",@"Remove video/image", nil]
+                                                                withTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"")
+                                                          withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil]
                                                                  delegate:self];
     
     imageSelectPopoverView.tag = Type_PopoverView_SelectImage2;
@@ -7005,14 +7005,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (_segmentedControl.selectedSegmentIndex == 0) {
                 if ([_currentCard.question.movieFullPath hasSuffix:@".3gp"]) {
                     
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                     
                 }
                 
             } else {
                 if ([_currentCard.answer.movieFullPath hasSuffix:@".3gp"]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }
             }
@@ -7020,14 +7020,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (_segmentedControl.selectedSegmentIndex == 0) {
                 if ([_currentCard.question.movieFullPath2 hasSuffix:@".3gp"]) {
                     
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                     
                 }
                 
             } else {
                 if ([_currentCard.answer.movieFullPath2 hasSuffix:@".3gp"]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Video play is only supported in play mode." delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }
             }
@@ -7096,12 +7096,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (isManualClicked) {
             NSString *msg;
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                msg = @"There is no audio on the question card";
+                
+                msg = NSLocalizedString(@"DIALOG_NO_AUDIO_ON_QUESTION_CARD",@"");
             } else {
-                msg = @"There is no audio on the answer card";
+                msg = NSLocalizedString(@"DIALOG_NO_AUDIO_ON_ANSWER_CARD",@"");
             }
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:msg delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
         }
     }
@@ -7228,7 +7229,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         CMTime duration = sourceAsset.duration;
         float seconds = CMTimeGetSeconds(duration);
         if (seconds > 30) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
             return;
         }
@@ -7565,7 +7566,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             //do nothing
             
         } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Symbol could possibly not be supported by selected font,when considering to be used on Android platform" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SYMBOL_NOT_SUPPORTED_BY_FONT",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
         }
         
@@ -8049,12 +8050,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:mailer animated:YES];
             }
         } else {
-            [Common alertViewCommon:@"Please set your mail address!"];
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_SET_MAIL_ADDRESS",@"")];
         }
         
         
     } else {
-        [Common alertViewCommon:@"Incorrect URL or Email format"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_INCORRECT_URL_OR_EMAIL",@"")];
     }
 }
 
@@ -8752,7 +8753,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self showCreateSoundViewController];
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Audio play is only supported in play mode." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_AUDIO_PLAY_ONLY_SUPPORTED_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -8781,7 +8782,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if ([Common isOwner:_currentPack] == FALSE) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You can only edit card that you have created it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
         return;
         
@@ -8874,7 +8875,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             pickerImageView = _imageAnswer2;
         }
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error on thumbnailImageFromURL" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:@"Error on thumbnailImageFromURL" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -8931,7 +8932,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _imageAnswer2.image = compositeThumbNail;
         }
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error on thumbnailImageFromURL2" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:@"Error on thumbnailImageFromURL2" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     
@@ -9091,7 +9092,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
                     [iConsole info:@"%s:unvalid url adress",__FUNCTION__];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_INVALID_YOUTUBE_URL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
                     
@@ -9127,7 +9128,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 NSString *youtbueLinkage = [alertView textFieldAtIndex:0].text;
                 if (![Common isValidYoutubeLinkage:youtbueLinkage]) {
                     [iConsole info:@"%s:unvalid url adress",__FUNCTION__];
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_INVALID_YOUTUBE_URL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 } else {
                     
@@ -9191,7 +9192,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (index == 1) {
             [self selectImageOrVideoFromLibraryWithImageType:sourceType];
         } else if (index == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
                                                             message:nil
                                                            delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                                   otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
@@ -9285,7 +9286,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (index == 1) {
             [self selectImageOrVideoFromLibraryWithImageType:sourceType];
         } else if (index == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter your YouTube url"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
                                                             message:nil
                                                            delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
                                                   otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
