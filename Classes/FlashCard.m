@@ -876,10 +876,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (self.isPlayingCard) {
             _verticalScrollView.frame = [Common getScaledViewRect:_verticalScrollView withProportion:kFlashCardViewProporation_iPhone];
         }
+        
         _verticalScrollView.contentSize = _verticalScrollView.frame.size;
         //_verticalScrollView.backgroundColor = [UIColor blueColor];
         _verticalScrollView.scrollEnabled = TRUE;
         [self addSubview:_verticalScrollView];
+        
     }
     
     
@@ -1243,9 +1245,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (int) setTextViewTopPadding: (int) fontSize {
+- (long) setTextViewTopPadding: (int) fontSize {
     
-    int val = 0;
+    long val = 0;
     
     if (val < 40) {
         val = -(fontSize/6) -1;
@@ -1459,7 +1461,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     
                     if ((isFontResized)) {
                         
-                        [iConsole warn:@"%s:card(sn=%d) is font resized",__FUNCTION__,_currentCard.cardSN];
+                        [iConsole warn:@"%s:card(sn=%ld) is font resized",__FUNCTION__,_currentCard.cardSN];
                         
                     }
                 }
@@ -1526,6 +1528,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGPoint offset = _verticalScrollView.contentOffset;
     offset.y = 0;
     [_verticalScrollView setContentOffset:offset animated:YES];
+    
+    if (self.isPlayingCard || [Common isOwner:self.currentPack] == FALSE) {
+        _verticalScrollView.scrollEnabled = FALSE;
+    } else {
+        _verticalScrollView.scrollEnabled = TRUE;
+    }
 }
 
 
@@ -1546,7 +1554,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self refreshQuestionContent];
     [self refreshAnswerContent];
     
-    _cardSNText.badgeText= [NSString stringWithFormat:@"%d",_currentCard.cardSN];
+    _cardSNText.badgeText= [NSString stringWithFormat:@"%ld",_currentCard.cardSN];
     
     //it's quite strange logic below, but it indeed
     if ((_currentPack.sidebarTitle.length == 0) || ([_currentPack.sidebarTitle rangeOfString:@"null"].length != 0)) {
@@ -3626,7 +3634,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) updateAnswerViewTemplateForiPad {
     [iConsole info:@"%s",__FUNCTION__];
-    int index = _currentCard.answer.templateID;
+    long index = _currentCard.answer.templateID;
     
     switch (index) {
         case 10: //Template 0
@@ -5326,7 +5334,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) updateQuestionViewTemplateForiPhone {
     [iConsole info:@"%s",__FUNCTION__];
-    int index = _currentCard.question.templateID;
+    long index = _currentCard.question.templateID;
     
     switch (index) {
         case 0: //Template 0
@@ -7626,7 +7634,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) changeFontSizeBarButtonItemClicked:(id) sender{
     [iConsole info:@"%s",__FUNCTION__];
     
-    int index = ((UIButton *) sender).tag;
+    long index = ((UIButton *) sender).tag;
     
     NSArray *realFontSizeArray = _keyboardTopViewV2.realSizeArray;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
@@ -7906,7 +7914,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     
     static CGFloat height = 0;
-    static int tag = -1;
+    static long tag = -1;
     
     if (tag != textView.tag) {
         height = 0;
@@ -7942,7 +7950,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     CGPoint offset = _verticalScrollView.contentOffset;
-    CGFloat gap;  //
+    float gap;  //
     if (isUserInterfaceIdiomPhone) {
         gap = _keyboardHeight -(IPHONE_UI_HEIGHT - yInScrren - cursorY);
     } else {
@@ -8561,7 +8569,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (outputFlag) {
-        [iConsole info:@"CardSN %d:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize];
+        [iConsole info:@"CardSN %ld:text(%@).\n---Original value: height(%f), font size(%f);\n---Final value:height(%f), font size(%f)",_currentCard.cardSN,textView.text,originalTextHeight, orginalFontSize,textView.contentSize.height, textView.font.pointSize];
     }
     
     
@@ -8837,7 +8845,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _currentCard.answer.templateID = [templateIDString integerValue];
     }
     
-    [iConsole info:@"%s,tag = %d,selected templateID = %@",__FUNCTION__,self.tag, templateIDString];
+    [iConsole info:@"%s,tag = %ld,selected templateID = %@",__FUNCTION__,self.tag, templateIDString];
     
     [self updateQuestionOrAnswerTemplate];//we will do other side's update when clicking segment
     
@@ -9012,7 +9020,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) emoticonSelectionViewController:(EmoticonSelectionViewController *)emoticonSelectionViewController didSelectEmoticon:(Emoticon *)emoticon {
     [iConsole info:@"%s",__FUNCTION__];
     
-    int  location =_lastBecomeFirstRespondTextView.selectedRange.location;
+    long  location =_lastBecomeFirstRespondTextView.selectedRange.location;
     NSString *beforeStr = @"";
     NSString *afterStr = @"";
     
@@ -9052,7 +9060,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         _lastBecomeFirstRespondTextView.text = newValue;
         
-        int symbolLength = insertVal.length;
+        long symbolLength = insertVal.length;
         NSRange range = _lastBecomeFirstRespondTextView.selectedRange;
         range.location = location + symbolLength;
         [_lastBecomeFirstRespondTextView setSelectedRange:range];
