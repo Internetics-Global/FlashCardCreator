@@ -6793,15 +6793,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
     }
     
-    //reset contentSize which is used by user for manually scroll up/down
-    CGSize size = _verticalScrollView.contentSize;
-    size.height = _verticalScrollView.frame.size.height;
-    _verticalScrollView.contentSize = size;
-    
-    //reset offset
-    [self resetVerticalScrollViewOffset];
-    
-    
     //step1:close keyboard and related view
     _keyboardSwitchButtonType = KeyboardSwitchButtonTypeSystem;
     [_lastBecomeFirstRespondTextView setInputAccessoryView:_keyboardTopViewV2];
@@ -6809,7 +6800,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //step2:
     _isUITextViewFocused = NO;
-    [_lastBecomeFirstRespondTextView resignFirstResponder];
+    [_lastBecomeFirstRespondTextView resignFirstResponder];  //这个必须在前面，因为resignFirstResponder会导致调用shouldChangeTextInRange
+    
+    //reset contentSize which is used by user for manually scroll up/down
+    CGSize size = _verticalScrollView.contentSize;
+    size.height = _verticalScrollView.frame.size.height;
+    _verticalScrollView.contentSize = size;
+    
+    //reset offset
+    [self resetVerticalScrollViewOffset];
     
     __weak __typeof(&*self)weakSelf = self;
     double delayInSeconds = 0.2;
