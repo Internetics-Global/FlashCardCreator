@@ -29,6 +29,8 @@
     NSString *_shareLink;
     NSString *_fileNameOnAWS;  //AWS or Dropbox
     
+    NSString *_platform;
+    
     /**
      *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）
      */
@@ -61,6 +63,8 @@
 @property (nonatomic, copy                        ) NSString                       *fileNameOnAWS;
 
 @property (nonatomic, assign                      ) BOOL                           isAllowShare;
+
+@property (nonatomic, copy                        ) NSString                       *platform;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
 - (void)addCard:(Card *)card;

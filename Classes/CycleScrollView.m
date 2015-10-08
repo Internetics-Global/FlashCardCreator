@@ -193,6 +193,7 @@
         
         //previous
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        _previousCard.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_curViews addObject:_previousCard];
         
         //current
@@ -202,17 +203,21 @@
             [(FlashCard *)_nextCard updateQuestionAnswerAllTextViewVeriticalAlignment];
             [_curViews addObject:_nextCard];
         } else {
-            [_curViews addObject:[_datasource pageAtIndex:page withPosition:0]];
+            UIView *card = [_datasource pageAtIndex:page withPosition:0];
+            card.tag = CURRENT_FLASHCARDVIEW_TAG;
+            [_curViews addObject:card];
         }
         
         //next
         _nextCard = [_datasource pageAtIndex:next withPosition:1];
+        _nextCard.tag = NEXT_FLASHCARDVIEW_TAG;
         [_curViews addObject:_nextCard];
         
     } else {
         
         //next
         _nextCard = [_datasource pageAtIndex:next withPosition:1];
+        _nextCard.tag = NEXT_FLASHCARDVIEW_TAG;
         [_curViews addObject:_nextCard];
         
         //current
@@ -222,11 +227,14 @@
             [(FlashCard *)_previousCard updateQuestionAnswerAllTextViewVeriticalAlignment];
             [_curViews insertObject:_previousCard atIndex:0];
         } else {
-            [_curViews insertObject:[_datasource pageAtIndex:page withPosition:0] atIndex:0];
+            UIView *card = [_datasource pageAtIndex:page withPosition:0];
+            card.tag = CURRENT_FLASHCARDVIEW_TAG;
+            [_curViews insertObject:card atIndex:0];
         }
         
         //previous
         _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        _previousCard.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_curViews insertObject:_previousCard atIndex:0];
         
     }

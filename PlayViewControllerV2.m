@@ -598,7 +598,9 @@
     }
 }
 
-
+/*
+ * position = -1, 前一张;position = 0, 当前; position =1, 后一张
+ */
 - (FlashCard *)cardForiPad:(NSInteger)index withPosition:(int)position
 {
     [iConsole info:@"%s",__FUNCTION__];
@@ -771,7 +773,7 @@
     }
     
     
-    //加入这段代码的原因是为了防止误操作
+    //加入这段代码的原因是为了防止误操作 (进入play mode后，1秒内不准切换到answer)
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
     if (executionTime <1.0) {

@@ -964,7 +964,7 @@ extern BOOL isFromNewCreatedCard;
         [card save];
     }
     
-    cell.indexLabel.text = [NSString stringWithFormat:@"%d",card.cardSN];
+    cell.indexLabel.text = [NSString stringWithFormat:@"%ld",card.cardSN];
     
 
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[card.coverImageURL lastPathComponent]];
@@ -1105,7 +1105,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         //Update right pack info
         if (_rightPackImage.image != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
         }
         
     }
@@ -1434,8 +1434,6 @@ extern BOOL isFromNewCreatedCard;
  */
 - (void) assemblePack {
     
-    NSString *packPlatformStr;
-    
     //Step2: buid pack
     Pack *pack = [[Pack alloc] init];
     NSError *error = nil;
@@ -1483,6 +1481,11 @@ extern BOOL isFromNewCreatedCard;
                 pack.fileNameOnAWS = @"";
             }
             
+            pack.platform = packDict[@"platform"];
+            if (pack.platform.length == 0) {
+                pack.platform = @"";
+            }
+            
             NSString *packIDStr = packDict[@"pack_id"];
             if (packIDStr.length == 0) {
                 pack.packID = -1;
@@ -1490,9 +1493,7 @@ extern BOOL isFromNewCreatedCard;
                 pack.packID = [packIDStr integerValue];
                 [[User defaultUser] removePackWithPackID:pack.packID];
             }
-            
-            
-            packPlatformStr = packDict[@"platform"];
+        
             
             //We need to move cover image to imagesDirectory
             if ([packDict[@"cover_image"] lastPathComponent].length > 0) {
@@ -1537,7 +1538,7 @@ extern BOOL isFromNewCreatedCard;
         Card *assembledCard;
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
-            assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:packPlatformStr];
+            assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
             if (assembledCard)
                 [array addObject:assembledCard];
             else {
@@ -1578,7 +1579,7 @@ extern BOOL isFromNewCreatedCard;
     if (_zipFileDownloadHelper.downloadedURL == nil) {
       _zipFileDownloadHelper.downloadedURL = @"";
     }
-    [downloadLinkageMutableDict setObject:_zipFileDownloadHelper.downloadedURL forKey:[NSString stringWithFormat:@"%d",pack.packID]];
+    [downloadLinkageMutableDict setObject:_zipFileDownloadHelper.downloadedURL forKey:[NSString stringWithFormat:@"%ld",pack.packID]];
     [[NSUserDefaults standardUserDefaults] setObject:downloadLinkageMutableDict forKey:@"savedDownloadLinkage"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1599,7 +1600,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) updateDownloadLimitCount {
-    __weak __typeof(&*self)weakSelf = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         NSString *defaultDomain = [SimpleDBHelper defaultDomain];

@@ -130,7 +130,7 @@
 }
 
 -(void)insert{
-	if (_cssID == -1) {
+    if (_cssID == -1) {
         _cssID = [[NSDate date] timeIntervalSince1970];
         while ([SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"]) {
             [iConsole error:@"%s:css has already existed, regenerate",__FUNCTION__];

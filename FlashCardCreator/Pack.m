@@ -35,6 +35,8 @@
 @synthesize isAllowShare = _isAllowShare;
 @synthesize autoPlaySpeed = _autoPlaySpeed;
 
+@synthesize platform = _platform;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -68,6 +70,8 @@
     _shareLink = @"";
     _fileNameOnAWS = @"";
     
+    _platform = @"";
+    
     _isAllowShare = YES;
     
 	return self;
@@ -95,6 +99,7 @@
     _restorePassword = [dict valueForKey:@"restore_password"];
     _shareLink = [dict valueForKey:@"share_link"];
     _fileNameOnAWS = [dict valueForKey:@"file_name_on_aws"];
+    _platform = [dict valueForKey:@"platform"];
     _jobTitle = [dict valueForKey:@"job_title"];
     if (checkNullOrEmptyOrNullStr(_jobTitle)) {
         _jobTitle = @"";
@@ -161,7 +166,7 @@
         _jobTitle = @"Creator ";
     }
     
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d,auto_play_speed=%d, restore_password=\"%@\", share_link=\"%@\", file_name_on_aws =\"%@\" WHERE pack_id=%d", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_shareLink,_fileNameOnAWS,_packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Packs_Tables SET pack_name=\"%@\", language_name=\"%@\", is_public=%d, cover_image=\"%@\", creator=\"%@\", creator_nick_name=\"%@\",job_title=\"%@\", sidebar_title=\"%@\",create_date=%d,last_visit_date=%d,auto_play_speed=%d, restore_password=\"%@\", share_link=\"%@\", file_name_on_aws =\"%@\", platform =\"%@\" WHERE pack_id=%ld", _packName, _languageName,0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_shareLink,_fileNameOnAWS,_platform,_packID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -184,7 +189,7 @@
 		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date,auto_play_speed,restore_password,share_link,file_name_on_aws) VALUES (%d, \"%@\", %d, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, \"%@\", \"%@\",\"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_shareLink,_fileNameOnAWS];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date,auto_play_speed,restore_password,share_link,file_name_on_aws,platform) VALUES (%ld, \"%@\", %ld, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, \"%@\", \"%@\",\"%@\",\"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_shareLink,_fileNameOnAWS,_platform];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -270,6 +275,7 @@
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:13] forKey:@"restore_password"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:14] forKey:@"share_link"];
         [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:15] forKey:@"file_name_on_aws"];
+        [packDict setValue:[SQLiteHelper getStringFromQuery:queryStatement inColumn:16] forKey:@"platform"];
         [packDict setValue:[Card cardsForPackID:[[packDict valueForKey:@"pack_id"] intValue]] forKey:@"cards"];
 		[returnArray addObject:packDict];
 	}
