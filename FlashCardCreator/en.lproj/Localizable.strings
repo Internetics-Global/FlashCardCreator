@@ -74,8 +74,11 @@
 "DIALOG_REACH_MAX_DOWNLOAD_LIMIT" = "You have reached the limit of downloads for this pack";
 "DIALOG_UPLOAD_FAILURE" = "Failure to upload, please try again";
 "DIALOG_PLAY_ONLY_SUPPORTED_IN_PLAY" = "Only supported in play mode";
-
 "DIALOG_INPUT_ADMIN_PASSWORD" = "Input admin password";
+"DIALOG_UPLOAD_SUCCESSFULLY" = "Pack successfully uploaded";
+"Title_Copy_To_Clipboard" = "Copy to clipboard";
+"DIALOG_NETWORK_TIMEOUT" = "Network timeout, please try again";
+"DIALOG_NO_TWITTER_CLIENT_INSTALLED" = "Share is allowed only when Twitter app is installed";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -169,6 +172,7 @@
 "Title_Reading_Timer" = "Reading Timer";
 "Title_Question_Pause" = "Question Pause";
 "Title_None" = "None";
+"Title_Copy_To_Clipboard" = "Copy to clipboard";
 
 "Title_HANDSET_UNPLUGGED" = "You have handset unplugged";
 "Title_HANDSET_PLUGGED" = "You have handset plugged";

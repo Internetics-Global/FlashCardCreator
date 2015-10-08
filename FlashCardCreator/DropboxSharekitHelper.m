@@ -104,7 +104,7 @@
                                           @"Facebook",
                                           @"Twitter",
                                           @"Email",
-                                          @"Copy",
+                                          NSLocalizedString(@"Title_Copy_To_Clipboard",@""),
                                           nil];
             [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
             
