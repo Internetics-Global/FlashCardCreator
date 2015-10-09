@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, Type_Card_Position) {
+    Type_Card_Position_Previous = -1,
+    Type_Card_Position_Current = 0,
+    Type_Card_Position_Next = 1
+};
+
 @protocol CycleScrollViewDelegate;
 @protocol CycleScrollViewDatasource;
 
@@ -95,7 +101,7 @@
 /**
  *  position: -1 previous card; 0 current card; 1 next card
  */
-- (UIView *)pageAtIndex:(NSInteger)index withPosition:(int) position;
+- (UIView *)pageAtIndex:(NSInteger)index withPosition:(Type_Card_Position) position;
 
 
 @end

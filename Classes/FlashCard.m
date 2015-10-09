@@ -1474,28 +1474,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     }
     
-    
-    //当可编辑时，我们不进行自动autoresize的notification
-    //当为CURRENT_FLASHCARDVIEW_TAG，我们也不作处理
-    if (([Common isOwner:_currentPack] == FALSE)
-        && (self.tag != CURRENT_FLASHCARDVIEW_TAG)){
-        
-        if (self.tag == PREVIOUS_FLASHCARDVIEW_TAG) {
-            NSArray *myArray = [NSArray arrayWithObjects:
-                                [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
-                                [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
-                                [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
-        }
-        
-        if (self.tag == NEXT_FLASHCARDVIEW_TAG) {
-            NSArray *myArray = [NSArray arrayWithObjects:
-                                [NSNumber numberWithFloat:_subheadingQuestion.font.pointSize],
-                                [NSNumber numberWithFloat:_mainQuestion.font.pointSize],
-                                [NSNumber numberWithFloat:_subQuestion.font.pointSize], nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION" object:myArray];
-        }
-    }
 
     
     [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后

@@ -61,8 +61,6 @@
 @property (nonatomic, strong) UIPopoverController *settingPopoverController;
 @property (nonatomic, strong) UIPopoverController *helpPopoverController;
 
-@property (strong, nonatomic) NSMutableArray *isResizedArray; //用于判断是否已经被autoresize
-
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment;
 
 - (void)shareButtonClicked:(id) sender;

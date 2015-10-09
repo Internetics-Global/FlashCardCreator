@@ -625,11 +625,6 @@ extern BOOL isFromNewCreatedCard;
     [_editButton setImage:[UIImage imageNamed:@"edit_button.png"] forState:UIControlStateNormal];
     [self.tableView reloadData];
     
-    //每次选择新的pack都需要初始化
-    if (isUserInterfaceIdiomPhone == FALSE) {
-        self.detailViewController.isResizedArray = nil;
-    }
-    
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         self.detailViewController.currentPack = _currentPack;
         [self.detailViewController showPackInfoView];

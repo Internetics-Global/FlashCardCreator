@@ -183,6 +183,8 @@ enum popover_enum {
     _scrollView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:_scrollView];
     
+    _scrollView.scrollEnabled = false;
+    
 }
 
 
@@ -304,7 +306,7 @@ enum popover_enum {
     _currentCardView.frame = rect;
     [_scrollView addSubview:_currentCardView];
 
-    [_currentCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
+    [_currentCardView refreshAll:false withIndexPlaying:_indexCard];
     
     //3. Set previous
     _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
@@ -316,7 +318,7 @@ enum popover_enum {
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
         [_scrollView addSubview:_previousCardView]; 
-        [_previousCardView refreshAll:[_isResizedArray[_indexCard-1] boolValue] withIndexPlaying:_indexCard-1];
+        [_previousCardView refreshAll:false withIndexPlaying:_indexCard-1];
     }
     
     //5. Set next
@@ -330,7 +332,7 @@ enum popover_enum {
         _nextCardView.frame = rect;
         [_scrollView addSubview:_nextCardView]; 
         
-        [_nextCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
+        [_nextCardView refreshAll:false withIndexPlaying:_indexCard+1];
     }
 
 }
@@ -364,7 +366,7 @@ enum popover_enum {
         [_scrollView addSubview:_currentCardView];    
     }
     
-    [_currentCardView refreshAll:[_isResizedArray[_indexCard] boolValue] withIndexPlaying:_indexCard];
+    [_currentCardView refreshAll:false withIndexPlaying:_indexCard];
 
     
     //3. Set previous
@@ -378,7 +380,7 @@ enum popover_enum {
         if (_previousCardView.superview == nil) {
             [_scrollView addSubview:_previousCardView];    
         }
-        [_previousCardView refreshAll:[_isResizedArray[_indexCard-1] boolValue] withIndexPlaying:_indexCard-1];
+        [_previousCardView refreshAll:false withIndexPlaying:_indexCard-1];
     }
     
     //5. Set next
@@ -392,7 +394,7 @@ enum popover_enum {
         if (_nextCardView.superview == nil) {
             [_scrollView addSubview:_nextCardView];
         }
-        [_nextCardView refreshAll:[_isResizedArray[_indexCard+1] boolValue] withIndexPlaying:_indexCard+1];
+        [_nextCardView refreshAll:false withIndexPlaying:_indexCard+1];
     }
 
 }
@@ -580,12 +582,12 @@ enum popover_enum {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [iConsole info:@"%s",__FUNCTION__];
     //Step1: calculate page(index)
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
     if ((page == _indexCard +1) || (page == _indexCard -1)) {
+        [iConsole info:@"%s: _indexCard = %d",__FUNCTION__,_indexCard];
         _indexCard = page;
         _currentCard = [_currentPack cards][page];
         [self showCurrentCardInScrollView:NO];
@@ -671,7 +673,6 @@ enum popover_enum {
 
 - (void) selectedPackNotification:(NSNotification *) notification {
     [iConsole info:@"%s",__FUNCTION__];
-    _isResizedArray = nil;
     Pack *pack = (Pack *)[notification object];
     NSMutableArray *allPacks = [[User defaultUser] packs];
     for (Pack *itempPack in allPacks) {
@@ -923,90 +924,6 @@ enum popover_enum {
     self.helpPopoverController = nil;
 }
 
-#pragma mark –  PREVIOUS_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION and NEXT_CARD_UPDATE_IN_PLAYMODE_NOTIFICATION
-
-/**
- *  PlayViewController也有类似的逻辑
- *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
- *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
- */
--(void) previousCardNotification:(NSNotification *)notification {
-    [iConsole info:@"%s",__FUNCTION__];
-    if ([Common isOwner:_currentPack]) {
-        return;
-    }
-    
-    if (_isResizedArray == nil) {
-        _isResizedArray = [NSMutableArray array];
-        for (int i = 0;i<[[_currentPack cards] count];i++) {
-            _isResizedArray[i]= @"NO";
-        }
-    }
-    
-    
-    NSArray *myArray = [notification object];
-    
-    if (_indexCard >0) {
-        
-        if ([_isResizedArray[_indexCard - 1] boolValue] == YES) {
-            return;
-        }
-        
-        Card *card = [_currentPack cards][_indexCard - 1];
-        //与play mode不同的是，这里我们不需要加入：kFlashCardViewProporation_iPhone
-        card.question.css.subheadingSize = [myArray[0] floatValue];
-        card.question.css.mainSize = [myArray[1] floatValue] ;
-        card.question.css.subSize = [myArray[2] floatValue] ;
-        
-        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
-        
-        _isResizedArray[_indexCard - 1] = @YES;
-        
-    }
-    
-    
-}
-
-/** 
- *  PlayViewController也有类似的逻辑
- *  previousCardNotification和nextCardNotification方法体逻辑基本一样，
- *  分开写虽然逻辑有些啰嗦，但是思路更清晰，
- */
--(void) nextCardNotification:(NSNotification *)notification {
-    [iConsole info:@"%s",__FUNCTION__];
-    if ([Common isOwner:_currentPack]) {
-        return;
-    }
-    
-    if (_isResizedArray == nil) {
-        _isResizedArray = [NSMutableArray array];
-        for (int i = 0;i<[[_currentPack cards] count];i++) {
-            _isResizedArray[i]= @"NO";
-        }
-    }
-    
-    NSArray *myArray = [notification object];
-    
-    if (_indexCard < [[_currentPack cards] count] - 1) {
-        
-        if ([_isResizedArray[_indexCard + 1] boolValue] == YES) {
-            return;
-        }
-        
-        Card *card = [_currentPack cards][_indexCard + 1];
-        //与play mode不同的是，这里我们不需要加入：kFlashCardViewProporation_iPhone
-        card.question.css.subheadingSize = [myArray[0] floatValue] ;
-        card.question.css.mainSize = [myArray[1] floatValue] ;
-        card.question.css.subSize = [myArray[2] floatValue] ;
-        
-        [iConsole info:@"%s:css.subheadingSize = %f, css.mainSize = %f and css.subSize = %f",__FUNCTION__,
-              card.question.css.subheadingSize,card.question.css.mainSize,card.question.css.subSize];
-        
-        _isResizedArray[_indexCard + 1] = @YES;
-    }
-    
-}
 
 
 /**

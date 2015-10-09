@@ -174,7 +174,7 @@
 }
 
 /**
- *  @param isToNextPage:swipe to next page or previous page
+ *  实际上会load 3个卡片，其中前后作为一种缓存形式（用于提前auto resize)
  */
 - (void)resetPageViewAtIndex:(NSInteger)page withDirectionToNextPage:(BOOL) isToNextPage {
     
@@ -192,7 +192,7 @@
     if (isToNextPage) {
         
         //previous
-        _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        _previousCard = [_datasource pageAtIndex:pre withPosition:Type_Card_Position_Previous];
         _previousCard.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_curViews addObject:_previousCard];
         
@@ -203,20 +203,20 @@
             [(FlashCard *)_nextCard updateQuestionAnswerAllTextViewVeriticalAlignment];
             [_curViews addObject:_nextCard];
         } else {
-            UIView *card = [_datasource pageAtIndex:page withPosition:0];
+            UIView *card = [_datasource pageAtIndex:page withPosition:Type_Card_Position_Current];
             card.tag = CURRENT_FLASHCARDVIEW_TAG;
             [_curViews addObject:card];
         }
         
         //next
-        _nextCard = [_datasource pageAtIndex:next withPosition:1];
+        _nextCard = [_datasource pageAtIndex:next withPosition:Type_Card_Position_Next];
         _nextCard.tag = NEXT_FLASHCARDVIEW_TAG;
         [_curViews addObject:_nextCard];
         
     } else {
         
         //next
-        _nextCard = [_datasource pageAtIndex:next withPosition:1];
+        _nextCard = [_datasource pageAtIndex:next withPosition:Type_Card_Position_Next];
         _nextCard.tag = NEXT_FLASHCARDVIEW_TAG;
         [_curViews addObject:_nextCard];
         
@@ -227,13 +227,13 @@
             [(FlashCard *)_previousCard updateQuestionAnswerAllTextViewVeriticalAlignment];
             [_curViews insertObject:_previousCard atIndex:0];
         } else {
-            UIView *card = [_datasource pageAtIndex:page withPosition:0];
+            UIView *card = [_datasource pageAtIndex:page withPosition:Type_Card_Position_Current];
             card.tag = CURRENT_FLASHCARDVIEW_TAG;
             [_curViews insertObject:card atIndex:0];
         }
         
         //previous
-        _previousCard = [_datasource pageAtIndex:pre withPosition:-1];
+        _previousCard = [_datasource pageAtIndex:pre withPosition:Type_Card_Position_Previous];
         _previousCard.tag = PREVIOUS_FLASHCARDVIEW_TAG;
         [_curViews insertObject:_previousCard atIndex:0];
         

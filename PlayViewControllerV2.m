@@ -22,6 +22,7 @@
 #import "NSTimer+BlocksKit.h"
 #import "OpenUDID.h"
 
+
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds_ForQAOnly     4
 
@@ -31,8 +32,6 @@
     UIButton                     *_closeButton;
     
     NSArray                      *_shuffledCardArray;
-    
-    NSMutableArray               *_isResizedArray; //用于判断是否已经被autoresize
 
     CMMotionManager              *_motionManager;
     
@@ -592,45 +591,56 @@
         //Bubble Sorting
         _shuffledCardArray = [[_currentPack cards] cardSNOrdered];
     }
-    _isResizedArray = [NSMutableArray array];
-    for (int i = 0;i<[_shuffledCardArray count];i++) {
-        _isResizedArray[i]= @"NO";
-    }
 }
 
-/*
- * position = -1, 前一张;position = 0, 当前; position =1, 后一张
- */
-- (FlashCard *)cardForiPad:(NSInteger)index withPosition:(int)position
+
+- (FlashCard *)cardForiPad:(NSInteger)index withPosition:(Type_Card_Position)position
 {
     [iConsole info:@"%s",__FUNCTION__];
     
     //2. Set current
     float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this
     
-    FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
+    FlashCard *flashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
                                                  defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
     
-    if (position == -1) {
-        currentFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
-    } else if (position == 1) {
-        currentFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
-    } else {
-        currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    BOOL isDisableAutoResize = false;
+    
+    switch (position) {
+        case Type_Card_Position_Previous: {
+            flashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
+            isDisableAutoResize = false;
+            break;
+        }
+            
+        case Type_Card_Position_Next: {
+            flashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
+            isDisableAutoResize = false;
+            break;
+        }
+            
+        case Type_Card_Position_Current: {
+            flashCardView.tag = Type_Card_Position_Current;
+            isDisableAutoResize = true;
+            break;
+        }
+            
+        default:
+            break;
     }
     
     
-    currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
-    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
-    [currentFlashCardView disableCardEdit];
-    [currentFlashCardView.segmentedControl setHidden:YES];
+    flashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    [flashCardView refreshAll:isDisableAutoResize withIndexPlaying:(int)index];
+    [flashCardView disableCardEdit];
+    [flashCardView.segmentedControl setHidden:YES];
     
-    return currentFlashCardView;
+    return flashCardView;
     
 }
 
 
-- (FlashCard *)cardForiPhone:(NSInteger)index withPosition:(int)position
+- (FlashCard *)cardForiPhone:(NSInteger)index withPosition:(Type_Card_Position)position
 {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -638,23 +648,38 @@
                              (IPHONE_UI_HEIGHT-kFlashCardViewHeight_PlayMode_iPhone)/2,
                              kFlashCardViewWidth_PlayMode_iPhone,
                              kFlashCardViewHeight_PlayMode_iPhone);
-    FlashCard *currentFlashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
+    FlashCard *flashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
     //[self addGestureSupport]; :TODO:XXXX
 
-    if (position == -1) {
-        currentFlashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
-    } else if (position == 1) {
-        currentFlashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
-    } else {
-        currentFlashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+    BOOL isDisableAutoResize = false;
+    
+    switch (position) {
+        case Type_Card_Position_Previous: {
+            isDisableAutoResize = false;
+            flashCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
+            break;
+        }
+        case Type_Card_Position_Next: {
+            isDisableAutoResize = false;
+            flashCardView.tag = NEXT_FLASHCARDVIEW_TAG;
+            break;
+        }
+        case Type_Card_Position_Current: {
+            isDisableAutoResize = true;
+            flashCardView.tag = CURRENT_FLASHCARDVIEW_TAG;
+            break;
+        }
+            
+        default:
+            break;
     }
     
-    currentFlashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
-    [currentFlashCardView refreshAll:[_isResizedArray[index] boolValue] withIndexPlaying:(int)index];
-    [currentFlashCardView disableCardEdit];
-    [currentFlashCardView.segmentedControl setHidden:YES];
+    flashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    [flashCardView refreshAll:isDisableAutoResize withIndexPlaying:(int)index];
+    [flashCardView disableCardEdit];
+    [flashCardView.segmentedControl setHidden:YES];
     
-    return currentFlashCardView;
+    return flashCardView;
     
 }
 
@@ -698,7 +723,7 @@
     return [_shuffledCardArray count];
 }
 
-- (UIView *)pageAtIndex:(NSInteger)index withPosition:(int)position
+- (UIView *)pageAtIndex:(NSInteger)index withPosition:(Type_Card_Position)position
 {
     
     FlashCard *card;
@@ -709,7 +734,6 @@
         card = [self cardForiPad:index withPosition:position];
     }
     
-
     
     return card;
     
