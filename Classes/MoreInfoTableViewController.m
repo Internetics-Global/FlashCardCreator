@@ -11,11 +11,17 @@
 #import "AboutViewController.h"
 #import "FileOperationHelper.h"
 
+#import "AWSIdentityManager.h"
+
 #import "ZipArchive.h"
+
+#import "AppDelegate.h"
+
+#import <Social/Social.h>
 
 #import <DropboxSDK/DropboxSDK.h>
 
-@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate>
+@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate>
 
 @end
 
@@ -111,7 +117,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return 9;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -263,6 +269,15 @@
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (indexPath.row == 8) {        
+        if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
+        }
+        if (![[AWSIdentityManager sharedInstance] isLoggedIn]) {
+            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_In_Social_Network",@"");
+        }
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -324,24 +339,116 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section ==1) {
-        if (indexPath.row ==0) {
-//            NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com.au"];
-//            SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
-//            controller.hidesToolbar = NO;
-//            if (isUserInterfaceIdiomPhone) {
-//                [self.navigationController pushViewController:controller animated:YES];
-//            } else {
-//                controller.modalPresentationStyle = UIModalPresentationFormSheet;
-//                #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//                [self presentModalViewController:controller animated:YES];
-//            }
+    if (indexPath.row == 2) {
+        AboutViewController *about = [[AboutViewController alloc] init];
+        [self.navigationController pushViewController:about animated:YES];
+    } else if (indexPath.row == 8) {
+        
+        if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
+            
+            [[AWSIdentityManager sharedInstance] logoutWithCompletionHandler:^(id result, NSError *error) {
+                
+                NSString *message = @"";
+                if (error) {
+                    message = NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE",@"");
+                } else {
+                    message = NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"");
+                }
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+                
+                [self.tableView reloadData];
+                
+            }];
+            
         } else {
-            AboutViewController *about = [[AboutViewController alloc] init];
-            [self.navigationController pushViewController:about animated:YES];
+            
+            if (isUserInterfaceIdiomPhone) {
+                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
+                                                                         delegate:self
+                                                                cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                                           destructiveButtonTitle:nil
+                                                                otherButtonTitles:@"Facebook", @"Twitter", nil];
+                [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+            } else {
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
+                                                                             delegate:self
+                                                                    cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                                               destructiveButtonTitle:nil
+                                                                    otherButtonTitles:@"Facebook", @"Twitter", nil];
+                    [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+                }];
+            }
+            
+            
+            
         }
-    } else if (indexPath.section == 2) {
+        
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark – UIActionSheet
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:{ //facebook
+            double delayInSeconds = 0.7;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                APP_DELEGATE.isAllowToShowPackList = false;
+                [self handleLoginWithSignInProvider:AWSSignInProviderTypeFacebook];
+            });
+            break;
+        }
+        case 1:{ //twitter
+            APP_DELEGATE.isAllowToShowPackList = false;
+            [self handleLoginWithSignInProvider:AWSSignInProviderTypeTwitter];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+/**
+ *  如果是twitter，走的是系统的configuration; facebook是无论何种情况，都是跳webview
+ */
+- (void)handleLoginWithSignInProvider:(AWSSignInProviderType)signInProviderType {
+    
+    if (AWSSignInProviderTypeTwitter == signInProviderType) {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == false)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+    }
+    
+    [[AWSIdentityManager sharedInstance] loginWithSignInProvider:signInProviderType
+                                               completionHandler:^(id result, NSError *error) {
+                                                   if (!error) {
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           
+                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                                           [alertView show];
+                                                           
+                                                       });
+                                                   } else {
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           
+                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                                           [alertView show];
+                                                           
+                                                       });
+                                                   }
+                                
+                                               }];
 }
 
 #pragma mark -

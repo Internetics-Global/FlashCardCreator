@@ -25,6 +25,11 @@
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
 
+#import "AWSMobileClient.h"
+
+#import <TwitterKit/TwitterKit.h>
+#import <Fabric/Fabric.h>
+
 #import <DropboxSDK/DropboxSDK.h>
 
 BOOL _isDownloadingSamplePack;
@@ -41,6 +46,10 @@ BOOL _isDownloadingSamplePack;
     [Parse setApplicationId:@"WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3"
                   clientKey:@"EN7hKNQ0B8SEG3BlRO79GB1Av8pOw4YUk5ylhd0r"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    
+    [[Twitter sharedInstance] startWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg" consumerSecret:@"CZHdQXJIVGtLlBnvh6T1eEZ2WJgWPSfNUdju6jXEs"];
+    [Fabric with:@[[Twitter sharedInstance]]]; //Need to config in plist
     
     self.isAllowToShowPackList = YES;
     
@@ -219,7 +228,9 @@ BOOL _isDownloadingSamplePack;
 
     
     
-    return YES;
+    // Override point for customization after application launch.
+    return [[AWSMobileClient sharedInstance] didFinishLaunching:application
+                                                    withOptions:launchOptions];
 }
 
 
@@ -252,6 +263,8 @@ BOOL _isDownloadingSamplePack;
 #pragma mark -
 #pragma mark - Handle when call from outside like safari
 
+
+
 //url is kind of: fcc://s3.amazonaws.com/internetics.flashcardcreator/Pack1440729625-2043618070.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -279,7 +292,10 @@ BOOL _isDownloadingSamplePack;
         
     }
     
-    return YES;
+    return [[AWSMobileClient sharedInstance] withApplication:application
+                                                     withURL:url
+                                       withSourceApplication:sourceApplication
+                                              withAnnotation:annotation];
 }
 
 

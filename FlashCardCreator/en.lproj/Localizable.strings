@@ -79,6 +79,10 @@
 "Title_Copy_To_Clipboard" = "Copy to clipboard";
 "DIALOG_NETWORK_TIMEOUT" = "Network timeout, please try again";
 "DIALOG_NO_TWITTER_CLIENT_INSTALLED" = "Share is allowed only when Twitter app is installed";
+"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS" = "You have successfully signed out.";
+"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE" = "Failed, please try again later.";
+"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS" = "You have successfully sign in.";
+"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE" = "Failed, please try again later.";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -173,6 +177,7 @@
 "Title_Question_Pause" = "Question Pause";
 "Title_None" = "None";
 "Title_Copy_To_Clipboard" = "Copy to clipboard";
+"Title_Log_Into" = "Log into";
 
 "Title_HANDSET_UNPLUGGED" = "You have handset unplugged";
 "Title_HANDSET_PLUGGED" = "You have handset plugged";
@@ -206,6 +211,8 @@
 "Table_Item_Mute_Sound_Recording" = "Mute Sound Recording";
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";
+"Table_Item_Log_In_Social_Network" = "Sign in Twitter/Facebook";
+"Table_Item_Log_Out_Social_Network" = "Sign out";
 
 "Indicator_Upload"  = "Uploading first…";
 "Indicator_Creating_Short_Linkage" = "Creating short linkage";
