@@ -1103,7 +1103,6 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				887C52E41BCE389B0001129F /* AWS_Cognito */,
 				889C9B131BB4F11F00BE77AB /* Dropbox */,
 				887FF2B01B13F76800D998FA /* AWS */,
 				881E9E6F18F7AF1B00ECC523 /* SoundRecord */,
@@ -1555,10 +1554,9 @@
 		887FF2B01B13F76800D998FA /* AWS */ = {
 			isa = PBXGroup;
 			children = (
-				2DE809E716E0811C00B7959A /* AWSS3UploadHelper.h */,
-				2DE809E816E0811C00B7959A /* AWSS3UploadHelper.m */,
-				88A175271797C3BD00FE778C /* SimpleDBHelper.h */,
-				88A175281797C3BD00FE778C /* SimpleDBHelper.m */,
+				88D3D4591BCF187D0021E9BA /* AWS_SimpleDB */,
+				88D3D4581BCF18750021E9BA /* AWS_S3 */,
+				887C52E41BCE389B0001129F /* AWS_Cognito */,
 				887FF2B11B13F77D00D998FA /* AWS_Constants.h */,
 				887FF2B21B13F77D00D998FA /* AWS_Constants.m */,
 			);
@@ -1634,6 +1632,24 @@
 				88D04E4B178D39170058A0D9 /* emotions.txt */,
 			);
 			name = Symbols;
+			sourceTree = "<group>";
+		};
+		88D3D4581BCF18750021E9BA /* AWS_S3 */ = {
+			isa = PBXGroup;
+			children = (
+				2DE809E716E0811C00B7959A /* AWSS3UploadHelper.h */,
+				2DE809E816E0811C00B7959A /* AWSS3UploadHelper.m */,
+			);
+			name = AWS_S3;
+			sourceTree = "<group>";
+		};
+		88D3D4591BCF187D0021E9BA /* AWS_SimpleDB */ = {
+			isa = PBXGroup;
+			children = (
+				88A175271797C3BD00FE778C /* SimpleDBHelper.h */,
+				88A175281797C3BD00FE778C /* SimpleDBHelper.m */,
+			);
+			name = AWS_SimpleDB;
 			sourceTree = "<group>";
 		};
 		88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */ = {

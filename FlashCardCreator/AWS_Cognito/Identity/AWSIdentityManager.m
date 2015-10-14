@@ -13,7 +13,7 @@
 #import "AWSIdentityManager.h"
 #import "AWSSignInProvider.h"
 #import "AWSTask+CheckExceptions.h"
-#import "AWSConfiguration.h"
+#import "AWS_Constants.h"
 #import "AWSFacebookSignInProvider.h"
 #import "AWSTwitterSignInProvider.h"
 
@@ -62,10 +62,10 @@ typedef void (^AWSIdentityManagerCompletionBlock)(id result, NSError *error);
     NSLog(@"initializing clients...");
     [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
 
-    self.credentialsProvider =[[AWSCognitoCredentialsProvider alloc] initWithRegionType:AMAZON_COGNITO_REGION
-                                                                         identityPoolId:AMAZON_COGNITO_IDENTITY_POOL_ID];
+    self.credentialsProvider =[[AWSCognitoCredentialsProvider alloc] initWithRegionType:CognitoRegionType
+                                                                         identityPoolId:CognitoIdentityPoolId];
 
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AMAZON_COGNITO_REGION
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:CognitoRegionType
                                                                          credentialsProvider:self.credentialsProvider];
 
     [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;

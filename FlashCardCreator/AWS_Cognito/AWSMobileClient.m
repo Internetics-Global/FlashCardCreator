@@ -9,7 +9,6 @@
 //
 
 #import "AWSMobileClient.h"
-#import "AWSConfiguration.h"
 #import "AWSIdentityManager.h"
 
 @interface AWSMobileClient ()
