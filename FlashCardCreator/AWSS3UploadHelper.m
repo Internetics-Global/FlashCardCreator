@@ -22,8 +22,17 @@
 
 #import "CryptorHelper.h"
 
+#import "AWSIdentityManager.h"
+
+typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
+    Type_ActionSheet_Share      = -1,
+    Type_ActionSheet_AWS       = 1,
+};
+
 @interface AWSS3UploadHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
+    
+    NSString *_generatedZipFilePath;
 }
 
 @end
@@ -113,6 +122,7 @@
                                           @"Email",
                                           @"Copy",
                                           nil];
+            actionSheet.tag = Type_ActionSheet_Share;
             [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
             
             
@@ -166,16 +176,15 @@
     }
     
     //step1: create zip file
-    NSString *generatedZipFilePath = nil;
     if (_currentPack) {
-        generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
+        _generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
         
-        if (generatedZipFilePath == nil) {
+        if (_generatedZipFilePath == nil) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED",@"")];
             return;
         }
         
-        BOOL success = [CryptorHelper encryptFileWithSameOutput:generatedZipFilePath];
+        BOOL success = [CryptorHelper encryptFileWithSameOutput:_generatedZipFilePath];
         if (success == false) {
             [Common alertViewCommon:NSLocalizedString(@"DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED",@"")];
             return;
@@ -197,21 +206,119 @@
     
     
     //step3: upload to S3
-    [self upload:generatedZipFilePath withFileName:self.currentPack.fileNameOnAWS];
+    __weak __typeof(&*self)weakSelf = self;
+    if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
+        [self showUploadingIndicator];
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
+        });
+    } else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
+                                                                 delegate:self
+                                                        cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Facebook", @"Twitter", nil];
+        actionSheet.tag = Type_ActionSheet_AWS;
+        [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+    }
     
 }
 
 
 - (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
     
+    NSString *expectedBucketName = [AWSIdentityManager sharedInstance].bucketName;
+    
+    AWSS3 *s3 = [AWSS3 defaultS3];
+    
+    AWSS3ListObjectsRequest *listObjectReq = [AWSS3ListObjectsRequest new];
+    listObjectReq.bucket = expectedBucketName;
+    __block BOOL existing = NO;
+    [[[s3 listObjects:listObjectReq] continueWithBlock:^id(AWSTask *task) {
+        AWSS3ListObjectsOutput *listObjectsOutput = task.result;
+        NSString *name = listObjectsOutput.name;
+        if ([name isEqualToString:expectedBucketName]) {
+            existing = YES;
+        } else {
+            existing = NO;
+        }
+        
+        return nil;
+    }] waitUntilFinished];
+    
+    if (existing == NO) {
+        
+        AWSS3CreateBucketRequest *createBucketReq = [AWSS3CreateBucketRequest new];
+        createBucketReq.bucket = expectedBucketName;
+        __block BOOL success = NO;
+        [[[s3 createBucket:createBucketReq] continueWithBlock:^id(AWSTask *task) {
+            if (task.error) {
+                success = NO;
+            } else {
+                success = YES;
+            }
+            return nil;
+        }] waitUntilFinished];
+        
+        if (success == NO) {
+            
+            [self hideHud];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_FAILURE_TO_CREATE_BUCKET",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+        
+//        AWSS3Grantee *granteeOne = [AWSS3Grantee new];
+//        granteeOne.URI = @"http://acs.amazonaws.com/groups/global/AllUsers";
+//        granteeOne.types = AWSS3TypesGroup;
+//        
+//        AWSS3Grant *grantOne = [AWSS3Grant new];
+//        grantOne.permission = AWSS3PermissionFullControl;
+//        grantOne.grantee = granteeOne;
+//        
+//        NSArray *grantsList = [NSArray arrayWithObjects:grantOne, nil];
+//        
+//        AWSS3Owner *s3Owner = [AWSS3Owner new];
+//        s3Owner.displayName = @"jackyccaa";
+//        s3Owner.identifier = @"255052dd94bf53e48d6c71d003b1b25cd95bd411c96683275cd43a0efde8cfc1";
+//        
+//        
+//        AWSS3AccessControlPolicy *accessControlPolicy = [AWSS3AccessControlPolicy new];
+//        accessControlPolicy.grants = grantsList;
+//        accessControlPolicy.owner = s3Owner;
+//        
+//        AWSS3PutBucketAclRequest *putBucketAclReq = [AWSS3PutBucketAclRequest new];
+//        putBucketAclReq.bucket = expectedBucketName;
+//        putBucketAclReq.accessControlPolicy = accessControlPolicy;
+//        success = NO;
+//        [[[s3 putBucketAcl:putBucketAclReq] continueWithBlock:^id(AWSTask *task) {
+//            
+//            if (task.error) {
+//                success = NO;
+//            } else {
+//                success = YES;
+//            }
+//            
+//            return nil;
+//            
+//        }] waitUntilFinished];
+        
+        
+    }
+    
+    
+    
     //1. setup
     AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
     uploadRequest.body = [NSURL fileURLWithPath:generatedZipFilePath];
     uploadRequest.key = saveName;
-    uploadRequest.bucket = S3BucketName;
+    uploadRequest.ACL = AWSS3ObjectCannedACLPublicRead;
+    uploadRequest.bucket = expectedBucketName;
     
-    //2. show indicator
-    [self showUploadingIndicator];
 
     //3. 执行upload
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
@@ -232,8 +339,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [iConsole error:@"File upload failed with error - %@", task.error];
-                [_HUD hide:YES];
-                [_HUD removeFromSuperview];//we need to clean up _HUD
+                [self hideHud];
                 [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
             });
             
@@ -242,6 +348,7 @@
         }
         
         //5. 执行完毕后，进行操作
+        __weak __typeof(&*self)weakSelf = self;
         if (task.result) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -251,7 +358,7 @@
                 
                 
                 //save local meta info
-                NSString *link = [NSString stringWithFormat:@"%@/%@/%@",S3BaseURL,S3BucketName,saveName];
+                NSString *link = [NSString stringWithFormat:@"%@/%@/%@",S3BaseURL,expectedBucketName,saveName];
                 NSString *sharedate = [FileOperationHelper getTodayString];
                 NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
@@ -260,7 +367,7 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 //share action
-                [self shareAction:link];
+                [weakSelf shareAction:link];
                 
             });
             
@@ -368,6 +475,7 @@
                 _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Short_Linkage",@"");
                 [_HUD show:YES];
                 
+                __weak __typeof(&*self)weakSelf = self;
                 double delayInSeconds = 0.4;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -375,17 +483,15 @@
                     //1.生成short linkage
                     NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
                     if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
-                        _HUD.hidden = YES;
-                        [_HUD removeFromSuperview];//we need to clean up _HUD
+                        [weakSelf hideHud];
                         [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
                         return;
                     }
-                    _HUD.hidden = YES;
-                    [_HUD removeFromSuperview]; //we need to clean up _HUD
+                    [weakSelf hideHud];
                     
                     
-                    self.currentPack.shareLink = redirectedStr;
-                    [self.currentPack savePackOnly];
+                    weakSelf.currentPack.shareLink = redirectedStr;
+                    [weakSelf.currentPack savePackOnly];
                     
                     //2. save meta info in background
                     // insert this record in amazon singleDB for pack download limit control
@@ -402,10 +508,9 @@
                     NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
                     NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
                     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                    __weak AWSS3UploadHelper *safeSelf = self;
                     dispatch_async(queue, ^{
                         [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                        [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                        [weakSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
                     });
                     
                     //3. 分享
@@ -417,6 +522,7 @@
                                                   @"Email",
                                                   @"Copy",
                                                   nil];
+                    actionSheet.tag = Type_ActionSheet_Share;
                     [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
                 });
             } else {
@@ -436,6 +542,7 @@
                                               @"Email",
                                               NSLocalizedString(@"Title_Copy_To_Clipboard",@""),
                                               nil];
+                actionSheet.tag = Type_ActionSheet_Share;
                 [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
             }
             
@@ -490,6 +597,13 @@
 	//[_HUD removeFromSuperview];  //我们需要多次的hide/show，所以需要comment out这段默认的逻辑
 }
 
+- (void) hideHud {
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];//we need to clean up _HUD
+    }
+}
+
 
 /**
  *  生成短连接，通过tinyurl.com
@@ -536,75 +650,142 @@
 
 #pragma mark – UIActionSheet
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0: {
-            
-            if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-                SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-                [controller setInitialText:_finalPostMessage];
-                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
-                [_baseViewController presentViewController:controller animated:YES completion:Nil];
-            } else {
-                //iOS6下，会自动提示，iOS7则需要手工加入
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_FACEBOOK",@"") message:NSLocalizedString(@"DIALOG_NO_FACEBOOK_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-            
-        }
-            break;
-        case 1: {
-            
-            if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-            {
-                SLComposeViewController *controller = [SLComposeViewController
-                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
-                [controller setInitialText:_finalPostMessage];
-                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
-                [_baseViewController presentViewController:controller animated:YES completion:nil];
-            } else {
-                //iOS6下，会自动提示，iOS7则需要手工加入
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-            
-        }
-            break;
-        case 2: {
-            
-            if ([MFMailComposeViewController canSendMail]) {
-                MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
-                composeViewController.mailComposeDelegate = self;
-                composeViewController.navigationBar.tintColor = [UIColor whiteColor];
-                [composeViewController setSubject:@"Hi"];
-                [composeViewController setMessageBody:_finalPostMessage isHTML:YES];
-                [composeViewController setToRecipients:nil];
+    
+    if (actionSheet.tag == Type_ActionSheet_Share) {
+        
+        switch (buttonIndex) {
+            case 0: {
                 
-                [_baseViewController presentViewController:composeViewController animated:YES completion:nil];
-            } else {
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_CONFIG_MAIL_REQUIRED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
+                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+                    SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                    [controller setInitialText:_finalPostMessage];
+                    //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
+                    [_baseViewController presentViewController:controller animated:YES completion:Nil];
+                } else {
+                    //iOS6下，会自动提示，iOS7则需要手工加入
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_FACEBOOK",@"") message:NSLocalizedString(@"DIALOG_NO_FACEBOOK_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+                
             }
-
-            
+                break;
+            case 1: {
+                
+                if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+                {
+                    SLComposeViewController *controller = [SLComposeViewController
+                                                           composeViewControllerForServiceType:SLServiceTypeTwitter];
+                    [controller setInitialText:_finalPostMessage];
+                    //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
+                    [_baseViewController presentViewController:controller animated:YES completion:nil];
+                } else {
+                    //iOS6下，会自动提示，iOS7则需要手工加入
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+                
+            }
+                break;
+            case 2: {
+                
+                if ([MFMailComposeViewController canSendMail]) {
+                    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+                    composeViewController.mailComposeDelegate = self;
+                    composeViewController.navigationBar.tintColor = [UIColor whiteColor];
+                    [composeViewController setSubject:@"Hi"];
+                    [composeViewController setMessageBody:_finalPostMessage isHTML:YES];
+                    [composeViewController setToRecipients:nil];
+                    
+                    [_baseViewController presentViewController:composeViewController animated:YES completion:nil];
+                } else {
+                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_CONFIG_MAIL_REQUIRED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
+                }
+                
+                
+            }
+                break;
+            case 3: {
+                
+                UIPasteboard *pb = [UIPasteboard generalPasteboard];
+                [pb setString:_finalPostMessage];
+                
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
+                });
+                
+                
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 3: {
-            
-            UIPasteboard *pb = [UIPasteboard generalPasteboard];
-            [pb setString:_finalPostMessage];
-            
-            double delayInSeconds = 0.5;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
-            });
-            
-            
+    } else if (actionSheet.tag == Type_ActionSheet_AWS) {
+        switch (buttonIndex) {
+            case 0:{ //facebook
+                double delayInSeconds = 0.7;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    APP_DELEGATE.isAllowToShowPackList = false;
+                    [self handleLoginWithSignInProvider:AWSSignInProviderTypeFacebook];
+                });
+                break;
+            }
+            case 1:{ //twitter
+                APP_DELEGATE.isAllowToShowPackList = false;
+                [self handleLoginWithSignInProvider:AWSSignInProviderTypeTwitter];
+                break;
+            }
+            default:
+                break;
         }
-            break;
-        default:
-            break;
     }
 }
+
+
+/**
+ *  如果是twitter，走的是系统的configuration; facebook是无论何种情况，都是跳webview
+ */
+- (void)handleLoginWithSignInProvider:(AWSSignInProviderType)signInProviderType {
+    
+    if (AWSSignInProviderTypeTwitter == signInProviderType) {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == false)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    [[AWSIdentityManager sharedInstance] loginWithSignInProvider:signInProviderType
+                                               completionHandler:^(id result, NSError *error) {
+                                                   if (!error) {
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           
+                                                           [weakSelf showUploadingIndicator];
+                                                           
+                                                           double delayInSeconds = 0.4;
+                                                           dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                                                           dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                                               [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
+                                                           });
+                                                           
+                                                       });
+                                                   } else {
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           
+                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                                           [alertView show];
+                                                           
+                                                       });
+                                                   }
+                                                   
+                                               }];
+}
+
 
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -621,6 +802,7 @@
 }
 
 - (void) dealloc {
+    _generatedZipFilePath = nil;
 }
 
 
