@@ -16,6 +16,7 @@
 
 NSString *const AWSTwitterSignInProviderKey = @"Twitter";
 NSString *const AWSTwitterSignInProviderUserNameKey = @"Twitter.userName";
+NSString *const AWSTwitterSignInProviderUserIDKey = @"Twitter.userID";
 
 @interface AWSIdentityManager()
 
@@ -56,6 +57,16 @@ NSString *const AWSTwitterSignInProviderUserNameKey = @"Twitter.userName";
 }
 
 
+- (NSString *)userID {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:AWSTwitterSignInProviderUserIDKey];
+}
+
+- (void)setUserID:(NSString *)userID {
+    [[NSUserDefaults standardUserDefaults] setObject:userID
+                                              forKey:AWSTwitterSignInProviderUserIDKey];
+}
+
+
 - (void)reloadSession {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:AWSTwitterSignInProviderKey]
         && [Twitter sharedInstance].session) {
@@ -72,6 +83,7 @@ NSString *const AWSTwitterSignInProviderUserNameKey = @"Twitter.userName";
     [[AWSIdentityManager sharedInstance] completeLogin:@{@"api.twitter.com": value}];
     
     self.userName = session.userName;
+    self.userID = session.userID;
     
 
 }

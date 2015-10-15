@@ -50,12 +50,25 @@ typedef void (^AWSIdentityManagerCompletionBlock)(id result, NSError *error);
     return self.currentSignInProvider.isLoggedIn;
 }
 
-- (NSURL *)imageURL {
-    return self.currentSignInProvider.imageURL;
-}
-
 - (NSString *)userName {
     return self.currentSignInProvider.userName;
+}
+
+- (NSString *)bucketName {
+    
+    if (self.currentSignInProvider.userID.length == 0) {
+        return @"";
+    }
+    
+    NSString *prefix = @"";
+    if ([self.currentSignInProvider isKindOfClass:[AWSTwitterSignInProvider class]]) {
+        prefix = @"tw";
+    } else {
+        prefix = @"fb";
+    }
+    
+    NSString *returnStr = [NSString stringWithFormat:@"%@_%@",prefix,self.currentSignInProvider.userID];
+    return returnStr;
 }
 
 - (AWSTask *)initializeClients:(NSDictionary *)logins {

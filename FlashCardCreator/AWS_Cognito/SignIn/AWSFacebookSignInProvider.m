@@ -18,7 +18,7 @@
 
 NSString *const AWSFacebookSignInProviderKey = @"Facebook";
 NSString *const AWSFacebookSignInProviderUserNameKey = @"Facebook.userName";
-NSString *const AWSFacebookSignInProviderImageURLKey = @"Facebook.imageURL";
+NSString *const AWSFacebookSignInProviderUserIDKey = @"Facebook.userID";
 
 @interface AWSIdentityManager()
 
@@ -61,13 +61,13 @@ NSString *const AWSFacebookSignInProviderImageURLKey = @"Facebook.imageURL";
                                               forKey:AWSFacebookSignInProviderUserNameKey];
 }
 
-- (NSURL *)imageURL {
-    return [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:AWSFacebookSignInProviderImageURLKey]];
+- (NSString *)userID {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:AWSFacebookSignInProviderUserIDKey];
 }
 
-- (void)setImageURL:(NSURL *)imageURL {
-    [[NSUserDefaults standardUserDefaults] setObject:imageURL.absoluteString
-                                              forKey:AWSFacebookSignInProviderImageURLKey];
+- (void)setUserID:(NSString *)userID {
+    [[NSUserDefaults standardUserDefaults] setObject:userID
+                                              forKey:AWSFacebookSignInProviderUserIDKey];
 }
 
 - (void)reloadSession {
@@ -96,6 +96,7 @@ NSString *const AWSFacebookSignInProviderImageURLKey = @"Facebook.imageURL";
                                                  NSDictionary *result,
                                                  NSError *queryError) {
         self.userName = result[@"name"];
+        self.userID = result[@"id"];
         
     }];
 }

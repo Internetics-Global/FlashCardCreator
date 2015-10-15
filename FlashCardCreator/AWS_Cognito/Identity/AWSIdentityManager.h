@@ -34,17 +34,23 @@ typedef NS_ENUM(NSInteger, AWSSignInProviderType) {
 @property (readonly, getter=isLoggedIn) BOOL loggedIn;
 
 /**
- * URL for the user's image, if user is signed-in with a third party identity provider,
- * like Facebook or Google.
- * @return url of image file, if user is signed-in
- */
-@property (readonly) NSURL *imageURL;
-
-/**
  * User name acquired from third party identity provider, such as Facebook or Google.
  * @return user name, if user is signed-in
  */
 @property (readonly) NSString *userName;
+
+
+/**
+ * User name acquired from third party identity provider, such as Facebook or Google.
+ * @return user id, if user is signed-in
+ */
+@property (readonly) NSString *userID;
+
+
+/**
+ * 来源于userID，加上tw或fb前缀
+ */
+@property (readonly) NSString *bucketName;
 
 /**
  * Amazon Cognito User Identity ID. This uniquely identifies the user, regardless of
