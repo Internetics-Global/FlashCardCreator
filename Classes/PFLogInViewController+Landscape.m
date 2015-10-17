@@ -7,8 +7,22 @@
 //
 
 #import "PFLogInViewController+Landscape.h"
+#import <objc/runtime.h>
 
+static char const * const ObjectTagKey = "ObjectTag";
 @implementation PFLogInViewController (Landscape)
+
+- (void) setFromSetting:(BOOL)fromSetting
+{
+    NSNumber *number = [NSNumber numberWithBool: fromSetting];
+    objc_setAssociatedObject(self, ObjectTagKey, number , OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL) fromSetting
+{
+    NSNumber *number = objc_getAssociatedObject(self, ObjectTagKey);
+    return [number boolValue];
+}
 
 #pragma mark – Rotation Control
 
@@ -28,9 +42,8 @@
     return UIInterfaceOrientationLandscapeLeft;
 }
 
-// automatically called just before viewDidAppear and after viewWillAppear
-- (void) viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self.logInView.signUpButton setTitle:NSLocalizedString(@"Title_Create_Account",@"") forState:UIControlStateNormal];
 }
 

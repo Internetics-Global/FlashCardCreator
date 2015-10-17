@@ -7,8 +7,23 @@
 //
 
 #import "PFSignUpViewController+Landscape.h"
+#import <objc/runtime.h>
 
+static char const * const ObjectTagKey = "ObjectTag";
 @implementation PFSignUpViewController (Landscape)
+
+- (void) setFromSetting:(BOOL)fromSetting
+{
+    NSNumber *number = [NSNumber numberWithBool: fromSetting];
+    objc_setAssociatedObject(self, ObjectTagKey, number , OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL) fromSetting
+{
+    NSNumber *number = objc_getAssociatedObject(self, ObjectTagKey);
+    return [number boolValue];
+}
+
 
 
 //>= ios6  支持的屏幕旋转方向
@@ -27,10 +42,9 @@
     return UIInterfaceOrientationLandscapeLeft;
 }
 
-// automatically called just before viewDidAppear and after viewWillAppear
-- (void) viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self.signUpView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
 }
-
 @end

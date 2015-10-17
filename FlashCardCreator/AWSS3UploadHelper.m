@@ -247,6 +247,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         __block BOOL success = NO;
         [[[s3 createBucket:createBucketReq] continueWithBlock:^id(AWSTask *task) {
             if (task.error) {
+                 [iConsole info:@"%s:%@",__FUNCTION__,[task.error description]];
                 success = NO;
             } else {
                 success = YES;

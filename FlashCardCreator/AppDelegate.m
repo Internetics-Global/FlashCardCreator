@@ -48,10 +48,9 @@ BOOL _isDownloadingSamplePack;
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
     [PFTwitterUtils initializeWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg"
                                consumerSecret:@"CZHdQXJIVGtLlBnvh6T1eEZ2WJgWPSfNUdju6jXEs"];
+    [self setupAWS];
     
     self.isAllowToShowPackList = YES;
-    
-    [self setupAWS];
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];
     
@@ -289,7 +288,10 @@ BOOL _isDownloadingSamplePack;
         
     }
     
-    return YES;
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 

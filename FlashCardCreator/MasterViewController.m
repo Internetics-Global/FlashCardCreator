@@ -52,13 +52,15 @@
 
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
+#import "PFSignUpViewController+Landscape.h"
+#import "PFLogInViewController+Landscape.h"
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 
 extern BOOL _isDownloadingSamplePack;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -1365,7 +1367,10 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView{
+/**
+ *  @param fromSetting 由于有两种可能来源：来自分享和来自setting
+ */
+- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView fromSetting: (BOOL) fromSetting{
     
     UITextField *textField = [alertView textFieldAtIndex:0];
     NSString *username = textField.text;
@@ -1375,7 +1380,12 @@ extern BOOL isFromNewCreatedCard;
     NSError *error;
     BOOL succeeded = [currentUser save:&error];
     if (succeeded) {
-        [self share];
+        if (fromSetting) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+        } else {
+            [self share];
+        }
     } else {
         
         [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
@@ -2303,7 +2313,7 @@ extern BOOL isFromNewCreatedCard;
                         [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
                         
                         logInController.delegate = self;
-                        [self presentViewController:logInController animated:YES completion:nil];
+                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
                         
                         APP_DELEGATE.isAllowToShowPackList = NO;
                     }
@@ -2439,23 +2449,31 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark PFLogInViewControllerDelegate
 
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
-        __weak __typeof(&*self)weakSelf = self;
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
-        [alertView textFieldAtIndex:0].text = @"";
-        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
-            [weakSelf didClickCreateNewAccountAlertView:alertView];
-        }];
-        [alertView show];
+    __weak __typeof(&*self)weakSelf = self;
+    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
         
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
+        PFUser *currentUser = [PFUser currentUser];
+        if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
+            
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
+            [alertView textFieldAtIndex:0].text = @"";
+            [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+            BOOL isFromSetting = logInController.fromSetting;
+            [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+                [weakSelf didClickCreateNewAccountAlertView:alertView fromSetting:isFromSetting];
+            }];
+            [alertView show];
+            
+        } else {
+            if (logInController.fromSetting) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+                [alertView show];
+            } else {
+                [weakSelf share];
+            }
+        }
+        
+    }];
     
 }
 
@@ -2476,9 +2494,18 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark PFSignUpViewControllerDelegate
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self share];
+    __weak __typeof(&*self)weakSelf = self;
+    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
+    
+        if (signUpController.fromSetting) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+        } else {
+            [weakSelf share];
+        }
+        
+    }];
     
 }
 

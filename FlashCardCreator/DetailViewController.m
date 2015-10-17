@@ -765,13 +765,13 @@ enum popover_enum {
                                                                    | PFSignUpFieldsAdditional
                                                                    | PFSignUpFieldsDismissButton
                                                                    | PFSignUpFieldsSignUpButton);
-                        logInController.signUpController.delegate = self;
+                        logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
                         
                         [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
                         [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
                         
-                        logInController.delegate = self;
-                        [self presentViewController:logInController animated:YES completion:nil];
+                        logInController.delegate = APP_DELEGATE.masterViewController;
+                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
                         
                         APP_DELEGATE.isAllowToShowPackList = NO;
                     }
@@ -947,26 +947,6 @@ enum popover_enum {
     }
 }
 
-- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView {
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    NSString *username = textField.text;
-    
-    PFUser *currentUser = [PFUser currentUser];
-    [currentUser setUsername:username];
-    NSError *error;
-    BOOL succeeded = [currentUser save:&error];
-    if (succeeded) {
-        [self share];
-    } else {
-        
-        [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-    
-}
 
 #pragma mark – UIPopoverControllerDelegate
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
@@ -1108,60 +1088,6 @@ enum popover_enum {
         
         [self resignTextSubviewsFrom:subview];
     }
-}
-
-
-#pragma mark -
-#pragma mark PFLogInViewControllerDelegate
-
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
-        
-        __weak __typeof(&*self)weakSelf = self;
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
-        [alertView textFieldAtIndex:0].text = @"";
-        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
-            [weakSelf didClickCreateNewAccountAlertView:alertView];
-        }];
-        [alertView show];
-        
-    } else {
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-//        [alertView show];
-        [self share];
-    }
-    
-}
-
-- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
-    // Do nothing, as the view controller dismisses itself
-}
-
-- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
-    
-    [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-    [alertView show];
-    
-}
-
-#pragma mark -
-#pragma mark PFSignUpViewControllerDelegate
-
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    [self share];
-    
-}
-
-- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
-    // Do nothing, as the view controller dismisses itself
 }
 
 @end

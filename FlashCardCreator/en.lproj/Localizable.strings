@@ -88,8 +88,9 @@
 "DIALOG_ACCOUNT_CREATED_FAILURE" = "Failed to create a new account.";
 "DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE" = "Create a user name";
 "DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "The user name has been registered";
+"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "Successfully ";
 
-"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failure to create an new bucket on AWS";
+"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failure to create a new bucket on AWS";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -219,8 +220,8 @@
 "Table_Item_Mute_Sound_Recording" = "Mute Sound Recording";
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";
-"Table_Item_Log_In_Social_Network" = "Sign in Twitter/Facebook";
-"Table_Item_Log_Out_Social_Network" = "Sign out";
+"Table_Item_Log_In_Social_Network" = "Sign In";
+"Table_Item_Log_Out_Social_Network" = "Sign Out";
 
 "Indicator_Upload"  = "Uploading first…";
 "Indicator_Creating_Short_Linkage" = "Creating short linkage";

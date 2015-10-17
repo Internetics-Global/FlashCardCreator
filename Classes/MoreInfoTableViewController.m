@@ -344,6 +344,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    __weak __typeof(&*self)weakSelf = self;
     if (indexPath.row == 2) {
         AboutViewController *about = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:about animated:YES];
@@ -358,7 +359,12 @@
                         
                     });
                 } else {
+                    if (isUserInterfaceIdiomPhone == false) {
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    }
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [weakSelf.tableView reloadData];
                     
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alertView show];
@@ -378,21 +384,26 @@
                                       | PFLogInFieldsTwitter
                                       | PFLogInFieldsSignUpButton
                                       | PFLogInFieldsDismissButton);
+            logInController.fromSetting = YES;
             
             logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
                                                        | PFSignUpFieldsEmail
                                                        | PFSignUpFieldsAdditional
                                                        | PFSignUpFieldsDismissButton
                                                        | PFSignUpFieldsSignUpButton);
-            logInController.signUpController.delegate = self;
+            
+            logInController.signUpController.fromSetting = YES;
             
             [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
             [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
             
+            
             if (isUserInterfaceIdiomPhone) {
+                logInController.signUpController.delegate = self;
                 logInController.delegate = self;
                 [self presentViewController:logInController animated:YES completion:nil];
             } else {
+                logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
                 logInController.delegate = APP_DELEGATE.masterViewController;
                 [self dismissViewControllerAnimated:YES completion:^{
                     

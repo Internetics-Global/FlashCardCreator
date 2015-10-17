@@ -10,4 +10,9 @@
 
 @interface PFSignUpViewController (Landscape)
 
+/**
+ *  区分来自于分享还是来自setting(MoreInfoTableViewController)
+ */
+@property (readwrite) BOOL fromSetting;
+
 @end
