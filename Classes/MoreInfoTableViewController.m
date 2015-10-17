@@ -25,7 +25,9 @@
 #import "PFLogInViewController+Landscape.h"
 #import "PFSignUpViewController+Landscape.h"
 
-@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate,UIAlertViewDelegate>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
+@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @end
 
@@ -537,15 +539,18 @@ static int outstandingRequests;
     
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
+    
+        __weak __typeof(&*self)weakSelf = self;
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
+        [alertView textFieldAtIndex:0].text = @"";
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+            [weakSelf didClickedCreatAccountAlertView:alertView];
+        }];
+        [alertView show];
+
+
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE",@"")
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                              otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].text = @"";
-        alert.delegate = self;
-        [alert show];
         
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -567,6 +572,27 @@ static int outstandingRequests;
     
 }
 
+
+- (void)didClickedCreatAccountAlertView:(UIAlertView *)alertView {
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    NSString *username = textField.text;
+    
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser setUsername:username];
+    NSError *error;
+    BOOL succeeded = [currentUser save:&error];
+    if (succeeded) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    } else {
+        
+        [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
 #pragma mark -
 #pragma mark PFSignUpViewControllerDelegate
 
@@ -582,27 +608,6 @@ static int outstandingRequests;
     // Do nothing, as the view controller dismisses itself
 }
 
-
-#pragma mark – UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    NSString *username = textField.text;
-    
-    PFUser *currentUser = [PFUser currentUser];
-    [currentUser setUsername:username];
-    NSError *error;
-    BOOL succeeded = [currentUser save:&error];
-    if (succeeded) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    } else {
-        
-         [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-}
 
 #pragma mark -
 #pragma mark - Memory Management

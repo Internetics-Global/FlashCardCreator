@@ -32,6 +32,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 
+
 #define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 
 //Release operation

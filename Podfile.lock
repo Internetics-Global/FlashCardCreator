@@ -6,6 +6,21 @@ PODS:
     - AWSCore (= 2.2.5)
   - AWSSimpleDB (2.2.5):
     - AWSCore (= 2.2.5)
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
   - Bolts (1.2.1):
     - Bolts/AppLinks (= 1.2.1)
     - Bolts/Tasks (= 1.2.1)
@@ -47,6 +62,7 @@ DEPENDENCIES:
   - AWSCore
   - AWSS3
   - AWSSimpleDB
+  - BlocksKit
   - Bolts
   - Parse (~> 1.8.2)
   - ParseFacebookUtilsV4
@@ -61,6 +77,7 @@ SPEC CHECKSUMS:
   AWSCore: 101929899cea9febd4ea4fc85774a63ff17cf809
   AWSS3: 78a5be4417c5fe1d9a1c301b05bbfbb6719d4f18
   AWSSimpleDB: 89a6f82d45d1858030b5ee6ac7f4a801403df656
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 01bce8dd3f3a26a023b0ba4ffdde7ef5062889fe

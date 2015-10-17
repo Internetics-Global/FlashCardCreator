@@ -13,7 +13,6 @@
 #import "Card.h"
 #import <CoreMotion/CoreMotion.h>
 #import "UIButton+Extensions.h"
-#import "UIAlertView+Blocks.h"
 #import "Question.h"
 #import "Answer.h"
 #import "Common.h"

@@ -30,6 +30,8 @@
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
 #import "TipHelper.h"
 
 enum template_color_enum {
@@ -45,12 +47,6 @@ enum popover_enum {
     popover_enum_template_select = 1,
     popover_enum_play = 2,
 };
-
-
-typedef enum {
-    UIAlertViewTypeEnum_Input_Download_Code = 0,
-    UIAlertViewTypeEnum_Create_New_Account = 1,
-} UIAlertViewTypeEnum;
 
 
 @interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate>{
@@ -729,16 +725,18 @@ typedef enum {
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"")
-                                                                message:nil
-                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                [alert textFieldAtIndex:0].text = @"";
-                [alert textFieldAtIndex:0].placeholder = @"p8c5cv1";
-                alert.tag = UIAlertViewTypeEnum_Input_Download_Code;
-                alert.delegate = self;
-                [alert show];
+                __weak __typeof(&*self)weakSelf = self;
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"") message:nil];
+                [alertView textFieldAtIndex:0].text = @"";
+                [alertView textFieldAtIndex:0].placeholder = @"p8c5cv1";
+                [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [alertView bk_addButtonWithTitle:NSLocalizedString(@"Keyboard_Cancel",@"") handler:nil];
+                [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+                    [weakSelf didClickDownloadFromCodeAlertView:alertView];
+                }];
+                [alertView show];
+                
+                
                 break;
             }
             case 1: {
@@ -933,53 +931,41 @@ typedef enum {
 
 #pragma mark -
 #pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
-    switch (alertView.tag) {
-        case UIAlertViewTypeEnum_Input_Download_Code : {
-            if (buttonIndex == 0) {
-                NSString *downloadCode = [alertView textFieldAtIndex:0].text;
-                if (downloadCode.length > 0) {
-                    NSString *urlStr = nil;
-                    if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
-                        urlStr = downloadCode;
-                    } else {
-                        urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
-                    }
-                    
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
-                }
-            } else {
-                //do nothing
-            }
-            break;
+
+
+- (void) didClickDownloadFromCodeAlertView:(UIAlertView *)alertView {
+    NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+    if (downloadCode.length > 0) {
+        NSString *urlStr = nil;
+        if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
+            urlStr = downloadCode;
+        } else {
+            urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
         }
-            
-        case UIAlertViewTypeEnum_Create_New_Account: {
-            
-            UITextField *textField = [alertView textFieldAtIndex:0];
-            NSString *username = textField.text;
-            
-            PFUser *currentUser = [PFUser currentUser];
-            [currentUser setUsername:username];
-            NSError *error;
-            BOOL succeeded = [currentUser save:&error];
-            if (succeeded) {
-                [self share];
-            } else {
-                
-                [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-            
-            break;
-        }
-            
-        default:
-            break;
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
     }
+}
+
+- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView {
+    
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    NSString *username = textField.text;
+    
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser setUsername:username];
+    NSError *error;
+    BOOL succeeded = [currentUser save:&error];
+    if (succeeded) {
+        [self share];
+    } else {
+        
+        [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
 }
 
 #pragma mark – UIPopoverControllerDelegate
@@ -1134,19 +1120,19 @@ typedef enum {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE",@"")
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                              otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].text = @"";
-        alert.delegate = self;
-        alert.tag = UIAlertViewTypeEnum_Create_New_Account;
-        [alert show];
+        __weak __typeof(&*self)weakSelf = self;
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
+        [alertView textFieldAtIndex:0].text = @"";
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+            [weakSelf didClickCreateNewAccountAlertView:alertView];
+        }];
+        [alertView show];
         
     } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+//        [alertView show];
+        [self share];
     }
     
 }

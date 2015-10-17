@@ -53,9 +53,12 @@
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
+
 extern BOOL _isDownloadingSamplePack;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -73,13 +76,6 @@ extern BOOL _isDownloadingSamplePack;
 @synthesize backgroundOfCreateCardView = _backgroundOfCreateCardView;
 @synthesize tableView = _tableView;
 
-
-typedef enum {
-    UIAlertViewTypeEnum_SetPassword  = 0,
-    UIAlertViewTypeEnum_DeleteCard = 1,
-    UIAlertViewTypeEnum_Download_From_Code = 2,
-    UIAlertViewTypeEnum_Create_New_Account = 3
-} UIAlertViewTypeEnum;
 
 enum popover_enum {
     popover_enum_share = 0,
@@ -1049,13 +1045,12 @@ extern BOOL isFromNewCreatedCard;
     }
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                                        message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"")
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"")
-                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-        alert.tag = UIAlertViewTypeEnum_DeleteCard;
-        alert.delegate = self;
-        [alert show];
+        
+        __weak __typeof(&*self)weakSelf = self;
+        
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"") cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"") otherButtonTitles:@[NSLocalizedString(@"Keyboard_Cancel",@"")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [weakSelf didClickDeleteCardAlertView:alertView clickedButtonAtIndex:buttonIndex];
+        }];
         
         APP_DELEGATE.isAllowToShowPackList = NO;
     }
@@ -1302,108 +1297,92 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - UIAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (alertView.tag) {
-        case UIAlertViewTypeEnum_SetPassword:{
-            NSString *password = [alertView textFieldAtIndex:0].text;
-            
-            if (password == NULL) {
-                password = @"";
-            }
-            
-            if (buttonIndex == 0) {
-                ZipArchive* za = [[ZipArchive alloc] init];
-                NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
-                if( [za UnzipOpenFile:downloadedZipPackFileFixedPath Password:password]) {
-                    BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
-                    
-                    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[FileOperationHelper unzippedPackInfoJsonFilePath] error:nil];
-                    NSNumber *fileSizeNumber = [fileAttributes objectForKey:NSFileSize];
-                    long long fileSize = [fileSizeNumber longLongValue];
-                    
-                    if (( NO==ret ) || (fileSize == 0)) {
-                        //when password encripted, will go into here to
-                        [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
-                        [Common alertViewCommon:NSLocalizedString(@"DIALOG_WRONG_PASSWORD",@"")];
-                        [za UnzipCloseFile];
-                    } else {
-                        [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
-                        [za UnzipCloseFile];
-                        
-                        [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
-                        
-                        [self assemblePack];
-                    }
-                    
-                } else {
-                    [iConsole info:@"%sFailure to unzip downloaded file(%@)",__FUNCTION__,downloadedZipPackFileFixedPath];
-                    [Common alertViewCommon:@"Failure to unzip downloaded file"];
-                    [za UnzipCloseFile];
-                }
-            } else if (buttonIndex == 1) {
-                //cancel and do nothing. For example, downloaded zip file is broken or unzippable
-            }
-            
-            break;
-        }
-            
-            
-        case UIAlertViewTypeEnum_DeleteCard: {
-            if (buttonIndex == 0) {
-                [self deleteCurrentCard:_currentIndexPath];
-            } else if (buttonIndex == 1) {
-                //do nothing
-            }
-            break;
-        }
-            
-        case UIAlertViewTypeEnum_Download_From_Code: {
-            if (buttonIndex == 0) {
-                NSString *downloadCode = [alertView textFieldAtIndex:0].text;
-                if (downloadCode.length > 0) {
-                    NSString *urlStr = nil;
-                    if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
-                        urlStr = downloadCode;
-                    } else {
-                        urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
-                    }
-                    
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
-                }
-            } else {
-                //do nothing
-            }            
-            
-            break;
-        }
-        
-        case UIAlertViewTypeEnum_Create_New_Account: {
-            
-            UITextField *textField = [alertView textFieldAtIndex:0];
-            NSString *username = textField.text;
-            
-            PFUser *currentUser = [PFUser currentUser];
-            [currentUser setUsername:username];
-            NSError *error;
-            BOOL succeeded = [currentUser save:&error];
-            if (succeeded) {
-                [self share];
-            } else {
-                
-                [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-            
-            break;
-        }
-            
-        default:
-            break;
+- (void) didClickDeleteCardAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self deleteCurrentCard:_currentIndexPath];
+    } else if (buttonIndex == 1) {
+        //do nothing
     }
     
     APP_DELEGATE.isAllowToShowPackList = YES;
+}
+
+- (void) didClickSetPasswordAlertView:(UIAlertView *)alertView{
+    NSString *password = [alertView textFieldAtIndex:0].text;
+    
+    if (password == NULL) {
+        password = @"";
+    }
+    
+    ZipArchive* za = [[ZipArchive alloc] init];
+    NSString *downloadedZipPackFileFixedPath = [FileOperationHelper downloadedZipPackFileFixedPath];
+    if( [za UnzipOpenFile:downloadedZipPackFileFixedPath Password:password]) {
+        BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
+        
+        NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[FileOperationHelper unzippedPackInfoJsonFilePath] error:nil];
+        NSNumber *fileSizeNumber = [fileAttributes objectForKey:NSFileSize];
+        long long fileSize = [fileSizeNumber longLongValue];
+        
+        if (( NO==ret ) || (fileSize == 0)) {
+            //when password encripted, will go into here to
+            [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_WRONG_PASSWORD",@"")];
+            [za UnzipCloseFile];
+        } else {
+            [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
+            [za UnzipCloseFile];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:downloadedZipPackFileFixedPath error:nil];
+            
+            [self assemblePack];
+        }
+        
+    } else {
+        [iConsole info:@"%sFailure to unzip downloaded file(%@)",__FUNCTION__,downloadedZipPackFileFixedPath];
+        [Common alertViewCommon:@"Failure to unzip downloaded file"];
+        [za UnzipCloseFile];
+    }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
+    
+}
+
+
+- (void) didClickDownloadFromCodeAlertView:(UIAlertView *)alertView{
+    NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+    if (downloadCode.length > 0) {
+        NSString *urlStr = nil;
+        if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
+            urlStr = downloadCode;
+        } else {
+            urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+        }
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+    }
+    
+    APP_DELEGATE.isAllowToShowPackList = YES;
+}
+
+
+- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView{
+    
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    NSString *username = textField.text;
+    
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser setUsername:username];
+    NSError *error;
+    BOOL succeeded = [currentUser save:&error];
+    if (succeeded) {
+        [self share];
+    } else {
+        
+        [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 
@@ -1424,15 +1403,20 @@ extern BOOL isFromNewCreatedCard;
     
     [za UnzipOpenFile:downloadedZipPackFileFixedPath];
     if( [za UnzipIsEncrypted]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].text = @"";
-        alert.tag = UIAlertViewTypeEnum_SetPassword;
-        alert.delegate = self;
-        [alert show];
+        
+        __weak __typeof(&*self)weakSelf = self;
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")];
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView textFieldAtIndex:0].text = @"";
+        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+            [weakSelf didClickSetPasswordAlertView:alertView];
+        }];
+        [alertView bk_addButtonWithTitle:NSLocalizedString(@"Keyboard_Cancel",@"") handler:nil];
+        [alertView show];
+        
+        
+        
+        
         APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
@@ -2272,16 +2256,18 @@ extern BOOL isFromNewCreatedCard;
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"")
-                                                                message:nil
-                                                               delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                                      otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                [alert textFieldAtIndex:0].text = @"";
-                [alert textFieldAtIndex:0].placeholder = @"p8c5tv6";
-                alert.tag = UIAlertViewTypeEnum_Download_From_Code;
-                alert.delegate = self;
-                [alert show];
+                
+                __weak __typeof(&*self)weakSelf = self;
+                
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"") message:nil];
+                [alertView textFieldAtIndex:0].text = @"";
+                [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+                    [weakSelf didClickDownloadFromCodeAlertView:alertView];
+                }];
+                [alertView show];
+                
+                
                 APP_DELEGATE.isAllowToShowPackList = NO;
                 break;
             }
@@ -2457,16 +2443,14 @@ extern BOOL isFromNewCreatedCard;
     
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE",@"")
-                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                              otherButtonTitles:nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].text = @"";
-        alert.delegate = self;
-        alert.tag = UIAlertViewTypeEnum_Create_New_Account;
-        [alert show];
+        __weak __typeof(&*self)weakSelf = self;
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
+        [alertView textFieldAtIndex:0].text = @"";
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
+            [weakSelf didClickCreateNewAccountAlertView:alertView];
+        }];
+        [alertView show];
         
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];

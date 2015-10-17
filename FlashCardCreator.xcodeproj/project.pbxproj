@@ -247,8 +247,8 @@
 		889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */; };
 		889C9B161BB4F12A00BE77AB /* DropboxSharekitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */; };
 		88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* SimpleDBHelper.m */; };
-		88A196781BD1C72900A4C65C /* PFLogInViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A196771BD1C72900A4C65C /* PFLogInViewController+Landscape.m */; settings = {ASSET_TAGS = (); }; };
-		88A1967B1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A1967A1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m */; settings = {ASSET_TAGS = (); }; };
+		88A196781BD1C72900A4C65C /* PFLogInViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A196771BD1C72900A4C65C /* PFLogInViewController+Landscape.m */; };
+		88A1967B1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A1967A1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m */; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
 		88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */; };
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
@@ -277,7 +277,6 @@
 		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
 		88EA2ACC1ABFC24800A3663E /* PlayViewControllerV2.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */; };
 		88EA2ACF1AC1329600A3663E /* UIButton+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */; };
-		88EA2B4A1AC15ADF00A3663E /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */; };
 		88EEEE61180E348F002AB9A1 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */; };
 		88F47F661793FBE200EE068F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F47F651793FBE200EE068F /* Media.xcassets */; };
 		88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */; };
@@ -680,8 +679,6 @@
 		88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewControllerV2.m; sourceTree = "<group>"; };
 		88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Extensions.h"; sourceTree = "<group>"; };
 		88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Extensions.m"; sourceTree = "<group>"; };
-		88EA2B481AC15ADF00A3663E /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
-		88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		88EEEE60180E348F002AB9A1 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		88F47F651793FBE200EE068F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = FlashCardCreator/Media.xcassets; sourceTree = "<group>"; };
 		88F4D005192A1D10005E4BFC /* play_recorded_sound_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_recorded_sound_button.png; path = Resources/play_recorded_sound_button.png; sourceTree = "<group>"; };
@@ -1042,7 +1039,6 @@
 				88AE4AA21B8D63B200988131 /* Base64 */,
 				88BB8FDF1AE72A040089D7F6 /* ASValueTrackingSlider */,
 				886D8FE51AE4975E00865101 /* TPKeyboardAvoiding */,
-				88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */,
 				883763E11A1C205D007FD84F /* AMPopTip */,
 				889131CF1A123DED0011B7ED /* iConsole */,
 				88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */,
@@ -1578,16 +1574,6 @@
 			name = AWS_SimpleDB;
 			sourceTree = "<group>";
 		};
-		88EA2B471AC15ADF00A3663E /* UIAlertView-Blocks */ = {
-			isa = PBXGroup;
-			children = (
-				88EA2B481AC15ADF00A3663E /* UIAlertView+Blocks.h */,
-				88EA2B491AC15ADF00A3663E /* UIAlertView+Blocks.m */,
-			);
-			name = "UIAlertView-Blocks";
-			path = "Libraries/UIAlertView-Blocks";
-			sourceTree = "<group>";
-		};
 		88F5CE6319B40B4B00107075 /* PEPhotoCropEditor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1934,7 +1920,6 @@
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
 				2D5C17E216D1A56A00E1E785 /* AFURLConnectionOperation.m in Sources */,
 				88F5CE7219B40B4B00107075 /* UIImage+PECrop.m in Sources */,
-				88EA2B4A1AC15ADF00A3663E /* UIAlertView+Blocks.m in Sources */,
 				2D5C17E316D1A56A00E1E785 /* AFXMLRequestOperation.m in Sources */,
 				88AE4AA51B8D63B200988131 /* Base64.m in Sources */,
 				2D5C17E416D1A56A00E1E785 /* UIImageView+AFNetworking.m in Sources */,
