@@ -52,37 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7651</string>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>15d82b999ac42890342ff5c3790d2a00cdf6c0d4</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict>
-					<key>consumerKey</key>
-					<string>FuVJ4UMJIeRy0d1eEq4HmmOF3</string>
-					<key>consumerSecret</key>
-					<string>9rwdhY4cNe4aAAwwZKhIzfNeBEowdIzkuMMqEC2kVRc44x9FHJ</string>
-				</dict>
-				<key>KitName</key>
-				<string>Twitter</string>
-			</dict>
-			<dict>
-				<key>KitInfo</key>
-				<dict>
-					<key>consumerKey</key>
-					<string>FuVJ4UMJIeRy0d1eEq4HmmOF3</string>
-					<key>consumerSecret</key>
-					<string>9rwdhY4cNe4aAAwwZKhIzfNeBEowdIzkuMMqEC2kVRc44x9FHJ</string>
-				</dict>
-				<key>KitName</key>
-				<string>Digits</string>
-			</dict>
-		</array>
-	</dict>
+	<string>7680</string>
 	<key>FacebookAppID</key>
 	<string>430339350417672</string>
 	<key>LSApplicationQueriesSchemes</key>

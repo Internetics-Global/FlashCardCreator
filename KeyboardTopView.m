@@ -412,7 +412,6 @@
     }
     
     if (self.delegate) {
-        //TODO
         [self.delegate keyboardTopView:self didClickedMainButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");

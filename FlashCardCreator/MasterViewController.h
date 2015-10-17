@@ -18,7 +18,7 @@
 @class Card;
 @class AWSS3UploadHelper;
 
-@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource, UIAlertViewDelegate,PopoverViewDelegate> {
+@interface MasterViewController : UIViewController <ZipFileDownloadHelperDelegate, MBProgressHUDDelegate,FMMoveTableViewDelegate,FMMoveTableViewDataSource,PopoverViewDelegate> {
     
     Pack *_currentPack;
     Card *_currentCard;

@@ -19,7 +19,7 @@
 @class FlashCard;
 
 
-@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopoverViewDelegate, UIAlertViewDelegate, UIPopoverControllerDelegate> {
+@interface DetailViewController : UIViewController <MGSplitViewControllerDelegate, UIScrollViewDelegate, PopoverViewDelegate, UIPopoverControllerDelegate> {
     UISegmentedControl *_segmentedControl;
     QuestionView *_questionView;
     AnswerView *_answerView;

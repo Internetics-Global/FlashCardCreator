@@ -11,8 +11,6 @@
 #import "AboutViewController.h"
 #import "FileOperationHelper.h"
 
-#import "AWSIdentityManager.h"
-
 #import "ZipArchive.h"
 
 #import "AppDelegate.h"
@@ -21,7 +19,13 @@
 
 #import <DropboxSDK/DropboxSDK.h>
 
-@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate>
+#import <ParseUI/ParseUI.h>
+#import <Parse/Parse.h>
+
+#import "PFLogInViewController+Landscape.h"
+#import "PFSignUpViewController+Landscape.h"
+
+@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -36,6 +40,7 @@
  object:nil];
     }
     return self;
+    
 }
 
 - (void)viewDidLoad
@@ -269,14 +274,12 @@
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 8) {        
-        if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
+    } else if (indexPath.row == 8) {
+        if ([PFUser currentUser]) {
             cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
-        }
-        if (![[AWSIdentityManager sharedInstance] isLoggedIn]) {
+        } else {
             cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_In_Social_Network",@"");
         }
-        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -344,111 +347,65 @@
         [self.navigationController pushViewController:about animated:YES];
     } else if (indexPath.row == 8) {
         
-        if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
-            
-            [[AWSIdentityManager sharedInstance] logoutWithCompletionHandler:^(id result, NSError *error) {
-                
-                NSString *message = @"";
+        if ([PFUser currentUser]) {
+            [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
                 if (error) {
-                    message = NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE",@"");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alertView show];
+                        
+                    });
                 } else {
-                    message = NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alertView show];
+                        
+                    });
                 }
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alertView show];
-                
-                [self.tableView reloadData];
-                
             }];
+            
             
         } else {
             
+            PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
+            logInController.fields = (PFLogInFieldsUsernameAndPassword
+                                      | PFLogInFieldsLogInButton
+                                      | PFLogInFieldsPasswordForgotten
+                                      | PFLogInFieldsFacebook
+                                      | PFLogInFieldsTwitter
+                                      | PFLogInFieldsSignUpButton
+                                      | PFLogInFieldsDismissButton);
+            
+            logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
+                                                       | PFSignUpFieldsEmail
+                                                       | PFSignUpFieldsAdditional
+                                                       | PFSignUpFieldsDismissButton
+                                                       | PFSignUpFieldsSignUpButton);
+            logInController.signUpController.delegate = self;
+            
+            [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
+            [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
+            
             if (isUserInterfaceIdiomPhone) {
-                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
-                                                                         delegate:self
-                                                                cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                                                           destructiveButtonTitle:nil
-                                                                otherButtonTitles:@"Facebook", @"Twitter", nil];
-                [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+                logInController.delegate = self;
+                [self presentViewController:logInController animated:YES completion:nil];
             } else {
-                
+                logInController.delegate = APP_DELEGATE.masterViewController;
                 [self dismissViewControllerAnimated:YES completion:^{
-                    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
-                                                                             delegate:self
-                                                                    cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                                                               destructiveButtonTitle:nil
-                                                                    otherButtonTitles:@"Facebook", @"Twitter", nil];
-                    [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+                    
+                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
+                    
                 }];
             }
             
             
-            
+            APP_DELEGATE.isAllowToShowPackList = NO;
         }
         
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark – UIActionSheet
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:{ //facebook
-            double delayInSeconds = 0.7;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                APP_DELEGATE.isAllowToShowPackList = false;
-                [self handleLoginWithSignInProvider:AWSSignInProviderTypeFacebook];
-            });
-            break;
-        }
-        case 1:{ //twitter
-            APP_DELEGATE.isAllowToShowPackList = false;
-            [self handleLoginWithSignInProvider:AWSSignInProviderTypeTwitter];
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-
-/**
- *  如果是twitter，走的是系统的configuration; facebook是无论何种情况，都是跳webview
- */
-- (void)handleLoginWithSignInProvider:(AWSSignInProviderType)signInProviderType {
-    
-    if (AWSSignInProviderTypeTwitter == signInProviderType) {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == false)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            return;
-        }
-        
-    }
-    
-    [[AWSIdentityManager sharedInstance] loginWithSignInProvider:signInProviderType
-                                               completionHandler:^(id result, NSError *error) {
-                                                   if (!error) {
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           
-                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                                                           [alertView show];
-                                                           
-                                                       });
-                                                   } else {
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           
-                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                                                           [alertView show];
-                                                           
-                                                       });
-                                                   }
-                                
-                                               }];
 }
 
 #pragma mark -
@@ -570,6 +527,81 @@ static int outstandingRequests;
     }
     
     [self.tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark PFLogInViewControllerDelegate
+
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE",@"")
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        alert.delegate = self;
+        [alert show];
+        
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+}
+
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
+    // Do nothing, as the view controller dismisses itself
+}
+
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
+    
+     [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+    [alertView show];
+    
+}
+
+#pragma mark -
+#pragma mark PFSignUpViewControllerDelegate
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+    [alertView show];
+    
+}
+
+- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
+    // Do nothing, as the view controller dismisses itself
+}
+
+
+#pragma mark – UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    NSString *username = textField.text;
+    
+    PFUser *currentUser = [PFUser currentUser];
+    [currentUser setUsername:username];
+    NSError *error;
+    BOOL succeeded = [currentUser save:&error];
+    if (succeeded) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    } else {
+        
+         [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 #pragma mark -

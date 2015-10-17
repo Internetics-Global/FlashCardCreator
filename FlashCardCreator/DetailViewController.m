@@ -27,6 +27,9 @@
 #import "OpenUDID.h"
 #import "AppDelegate.h"
 
+#import <ParseUI/ParseUI.h>
+#import <Parse/Parse.h>
+
 #import "TipHelper.h"
 
 enum template_color_enum {
@@ -44,7 +47,13 @@ enum popover_enum {
 };
 
 
-@interface DetailViewController () {
+typedef enum {
+    UIAlertViewTypeEnum_Input_Download_Code = 0,
+    UIAlertViewTypeEnum_Create_New_Account = 1,
+} UIAlertViewTypeEnum;
+
+
+@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate>{
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
     
@@ -727,35 +736,48 @@ enum popover_enum {
                 [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [alert textFieldAtIndex:0].text = @"";
                 [alert textFieldAtIndex:0].placeholder = @"p8c5cv1";
+                alert.tag = UIAlertViewTypeEnum_Input_Download_Code;
                 alert.delegate = self;
                 [alert show];
                 break;
             }
             case 1: {
                 
-                if ([_currentPack cards].count == 0) {
-                    return;
-                }
-                
-                if (_currentPack.isAllowShare) {
-                    if ((_currentPack) && (_currentCard)) {
-                        double delayInSeconds = 0.4;
-                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                            
-                            BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
-                            if (b) {
-                                _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                                [_dropboxShareHelper shareAction];
-                            } else {
-                                _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                                [_amazonShareHelper shareAction];
-                            }
-                            
-                        });
+                if (_currentPack.isAllowShare && _currentCard) {
+                    
+                    if ([PFUser currentUser]) {
+                        
+                        [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
+                        
+                        [self share];
+                        
                     } else {
-                        [iConsole info:@"%s:_currentPack or _currentCard is nil",__FUNCTION__];
+                        
+                        PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
+                        logInController.fields = (PFLogInFieldsUsernameAndPassword
+                                                  | PFLogInFieldsLogInButton
+                                                  | PFLogInFieldsPasswordForgotten
+                                                  | PFLogInFieldsFacebook
+                                                  | PFLogInFieldsTwitter
+                                                  | PFLogInFieldsSignUpButton
+                                                  | PFLogInFieldsDismissButton);
+                        
+                        logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
+                                                                   | PFSignUpFieldsEmail
+                                                                   | PFSignUpFieldsAdditional
+                                                                   | PFSignUpFieldsDismissButton
+                                                                   | PFSignUpFieldsSignUpButton);
+                        logInController.signUpController.delegate = self;
+                        
+                        [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
+                        [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
+                        
+                        logInController.delegate = self;
+                        [self presentViewController:logInController animated:YES completion:nil];
+                        
+                        APP_DELEGATE.isAllowToShowPackList = NO;
                     }
+                    
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
@@ -849,6 +871,19 @@ enum popover_enum {
 }
 
 
+- (void) share {
+    
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    if (b) {
+        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_dropboxShareHelper shareAction];
+    } else {
+        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_amazonShareHelper shareAction];
+    }
+}
+
+
 - (void) execTemplateBackgroundChangeTask:(NSString *)templateBackgroundName {
     [iConsole info:@"%s",__FUNCTION__];
     //Step4: Change all cards card template background, screenshot them, and save them
@@ -899,21 +934,51 @@ enum popover_enum {
 #pragma mark -
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [iConsole info:@"%s",__FUNCTION__];
-    if (buttonIndex == 0) {
-        NSString *downloadCode = [alertView textFieldAtIndex:0].text;
-        if (downloadCode.length > 0) {
-            NSString *urlStr = nil;
-            if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
-                urlStr = downloadCode;
+    
+    switch (alertView.tag) {
+        case UIAlertViewTypeEnum_Input_Download_Code : {
+            if (buttonIndex == 0) {
+                NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+                if (downloadCode.length > 0) {
+                    NSString *urlStr = nil;
+                    if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
+                        urlStr = downloadCode;
+                    } else {
+                        urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+                    }
+                    
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+                }
             } else {
-                urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+                //do nothing
+            }
+            break;
+        }
+            
+        case UIAlertViewTypeEnum_Create_New_Account: {
+            
+            UITextField *textField = [alertView textFieldAtIndex:0];
+            NSString *username = textField.text;
+            
+            PFUser *currentUser = [PFUser currentUser];
+            [currentUser setUsername:username];
+            NSError *error;
+            BOOL succeeded = [currentUser save:&error];
+            if (succeeded) {
+                [self share];
+            } else {
+                
+                [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+                [alertView show];
             }
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+            break;
         }
-    } else {
-        //do nothing
+            
+        default:
+            break;
     }
 }
 
@@ -1057,6 +1122,60 @@ enum popover_enum {
         
         [self resignTextSubviewsFrom:subview];
     }
+}
+
+
+#pragma mark -
+#pragma mark PFLogInViewControllerDelegate
+
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE",@"")
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:nil];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        alert.delegate = self;
+        alert.tag = UIAlertViewTypeEnum_Create_New_Account;
+        [alert show];
+        
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+}
+
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
+    // Do nothing, as the view controller dismisses itself
+}
+
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
+    
+    [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+    [alertView show];
+    
+}
+
+#pragma mark -
+#pragma mark PFSignUpViewControllerDelegate
+
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self share];
+    
+}
+
+- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
+    // Do nothing, as the view controller dismisses itself
 }
 
 @end

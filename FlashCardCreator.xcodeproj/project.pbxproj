@@ -241,25 +241,14 @@
 		887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94418D66DDE00E4DA21 /* templateScreenshot6_question.png */; };
 		887BD94B18D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94518D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png */; };
 		887BD94C18D66DDE00E4DA21 /* templateScreenshot7_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */; };
-		887C52D91BCE37C40001129F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52D61BCE37C40001129F /* Fabric.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52DA1BCE37C40001129F /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52D71BCE37C40001129F /* TwitterCore.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52DB1BCE37C40001129F /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52D81BCE37C40001129F /* TwitterKit.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52DD1BCE37DA0001129F /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 887C52DC1BCE37DA0001129F /* TwitterKitResources.bundle */; settings = {ASSET_TAGS = (); }; };
-		887C52E11BCE38090001129F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52DE1BCE38090001129F /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52E21BCE38090001129F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52DF1BCE38090001129F /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52E31BCE38090001129F /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C52E01BCE38090001129F /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
-		887C52F61BCE389B0001129F /* AWSMobileClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 887C52E71BCE389B0001129F /* AWSMobileClient.m */; settings = {ASSET_TAGS = (); }; };
-		887C52F71BCE389B0001129F /* AWSIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 887C52EA1BCE389B0001129F /* AWSIdentityManager.m */; settings = {ASSET_TAGS = (); }; };
-		887C52F81BCE389B0001129F /* AWSFacebookSignInProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 887C52ED1BCE389B0001129F /* AWSFacebookSignInProvider.m */; settings = {ASSET_TAGS = (); }; };
-		887C52F91BCE389B0001129F /* AWSTwitterSignInProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 887C52F01BCE389B0001129F /* AWSTwitterSignInProvider.m */; settings = {ASSET_TAGS = (); }; };
-		887C52FA1BCE389B0001129F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 887C52F11BCE389B0001129F /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
-		887C52FB1BCE389B0001129F /* AWSTask+CheckExceptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 887C52F51BCE389B0001129F /* AWSTask+CheckExceptions.m */; settings = {ASSET_TAGS = (); }; };
 		887FF2B31B13F77D00D998FA /* AWS_Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 887FF2B21B13F77D00D998FA /* AWS_Constants.m */; };
 		889131D41A123DED0011B7ED /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D11A123DED0011B7ED /* GTMStackTrace.m */; };
 		889131D51A123DED0011B7ED /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 889131D31A123DED0011B7ED /* iConsole.m */; };
 		889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */; };
 		889C9B161BB4F12A00BE77AB /* DropboxSharekitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */; };
 		88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A175281797C3BD00FE778C /* SimpleDBHelper.m */; };
+		88A196781BD1C72900A4C65C /* PFLogInViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A196771BD1C72900A4C65C /* PFLogInViewController+Landscape.m */; settings = {ASSET_TAGS = (); }; };
+		88A1967B1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A1967A1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m */; settings = {ASSET_TAGS = (); }; };
 		88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */; };
 		88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */; };
 		88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */; };
@@ -630,26 +619,6 @@
 		887BD94418D66DDE00E4DA21 /* templateScreenshot6_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot6_question.png; path = Resources/templateScreenshot6_question.png; sourceTree = "<group>"; };
 		887BD94518D66DDE00E4DA21 /* templateScreenshot7_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question_iPad.png; path = Resources/templateScreenshot7_question_iPad.png; sourceTree = "<group>"; };
 		887BD94618D66DDE00E4DA21 /* templateScreenshot7_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot7_question.png; path = Resources/templateScreenshot7_question.png; sourceTree = "<group>"; };
-		887C52D61BCE37C40001129F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Libraries/Fabric.framework; sourceTree = "<group>"; };
-		887C52D71BCE37C40001129F /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterCore.framework; path = Libraries/TwitterCore.framework; sourceTree = "<group>"; };
-		887C52D81BCE37C40001129F /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwitterKit.framework; path = Libraries/TwitterKit.framework; sourceTree = "<group>"; };
-		887C52DC1BCE37DA0001129F /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = Libraries/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
-		887C52DE1BCE38090001129F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Libraries/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		887C52DF1BCE38090001129F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Libraries/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		887C52E01BCE38090001129F /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Libraries/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		887C52E51BCE389B0001129F /* AWSConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSConfiguration.h; sourceTree = "<group>"; };
-		887C52E61BCE389B0001129F /* AWSMobileClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSMobileClient.h; sourceTree = "<group>"; };
-		887C52E71BCE389B0001129F /* AWSMobileClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSMobileClient.m; sourceTree = "<group>"; };
-		887C52E91BCE389B0001129F /* AWSIdentityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSIdentityManager.h; sourceTree = "<group>"; };
-		887C52EA1BCE389B0001129F /* AWSIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSIdentityManager.m; sourceTree = "<group>"; };
-		887C52EC1BCE389B0001129F /* AWSFacebookSignInProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSFacebookSignInProvider.h; sourceTree = "<group>"; };
-		887C52ED1BCE389B0001129F /* AWSFacebookSignInProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSFacebookSignInProvider.m; sourceTree = "<group>"; };
-		887C52EE1BCE389B0001129F /* AWSSignInProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSSignInProvider.h; sourceTree = "<group>"; };
-		887C52EF1BCE389B0001129F /* AWSTwitterSignInProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSTwitterSignInProvider.h; sourceTree = "<group>"; };
-		887C52F01BCE389B0001129F /* AWSTwitterSignInProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSTwitterSignInProvider.m; sourceTree = "<group>"; };
-		887C52F21BCE389B0001129F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		887C52F41BCE389B0001129F /* AWSTask+CheckExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AWSTask+CheckExceptions.h"; sourceTree = "<group>"; };
-		887C52F51BCE389B0001129F /* AWSTask+CheckExceptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AWSTask+CheckExceptions.m"; sourceTree = "<group>"; };
 		887FF2B11B13F77D00D998FA /* AWS_Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWS_Constants.h; sourceTree = "<group>"; };
 		887FF2B21B13F77D00D998FA /* AWS_Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWS_Constants.m; sourceTree = "<group>"; };
 		889131D01A123DED0011B7ED /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
@@ -661,6 +630,10 @@
 		889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DropboxSharekitHelper.m; path = FlashCardCreator/DropboxSharekitHelper.m; sourceTree = "<group>"; };
 		88A175271797C3BD00FE778C /* SimpleDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleDBHelper.h; path = FlashCardCreator/SimpleDBHelper.h; sourceTree = "<group>"; };
 		88A175281797C3BD00FE778C /* SimpleDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleDBHelper.m; path = FlashCardCreator/SimpleDBHelper.m; sourceTree = "<group>"; };
+		88A196761BD1C72900A4C65C /* PFLogInViewController+Landscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PFLogInViewController+Landscape.h"; path = "Classes/PFLogInViewController+Landscape.h"; sourceTree = "<group>"; };
+		88A196771BD1C72900A4C65C /* PFLogInViewController+Landscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PFLogInViewController+Landscape.m"; path = "Classes/PFLogInViewController+Landscape.m"; sourceTree = "<group>"; };
+		88A196791BD1C8A200A4C65C /* PFSignUpViewController+Landscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PFSignUpViewController+Landscape.h"; path = "Classes/PFSignUpViewController+Landscape.h"; sourceTree = "<group>"; };
+		88A1967A1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PFSignUpViewController+Landscape.m"; path = "Classes/PFSignUpViewController+Landscape.m"; sourceTree = "<group>"; };
 		88A53ECE179E8FD600D91782 /* uibarbuttonitem_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_highlight.png; path = Resources/uibarbuttonitem_highlight.png; sourceTree = "<group>"; };
 		88A53ECF179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "uibarbuttonitem_highlight@2x.png"; path = "Resources/uibarbuttonitem_highlight@2x.png"; sourceTree = "<group>"; };
 		88A53ED0179E8FD600D91782 /* uibarbuttonitem_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uibarbuttonitem_normal.png; path = Resources/uibarbuttonitem_normal.png; sourceTree = "<group>"; };
@@ -735,7 +708,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				887C52E21BCE38090001129F /* FBSDKLoginKit.framework in Frameworks */,
 				88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */,
 				88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
@@ -747,12 +719,9 @@
 				2D66C17E16A6B39200795CF9 /* CoreLocation.framework in Frameworks */,
 				2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */,
 				2D66C18B16A6B5D600795CF9 /* Accounts.framework in Frameworks */,
-				887C52DB1BCE37C40001129F /* TwitterKit.framework in Frameworks */,
-				887C52D91BCE37C40001129F /* Fabric.framework in Frameworks */,
 				2D66C18616A6B3F300795CF9 /* Social.framework in Frameworks */,
 				2D66C18416A6B3E400795CF9 /* AdSupport.framework in Frameworks */,
 				2D66C18216A6B3AA00795CF9 /* CoreFoundation.framework in Frameworks */,
-				887C52E31BCE38090001129F /* FBSDKShareKit.framework in Frameworks */,
 				2D66C18016A6B39A00795CF9 /* Twitter.framework in Frameworks */,
 				2D66C17C16A6B38A00795CF9 /* CFNetwork.framework in Frameworks */,
 				2D66C17A16A6B38000795CF9 /* MessageUI.framework in Frameworks */,
@@ -762,10 +731,8 @@
 				2D7A8CE716911010002EDF77 /* libz.dylib in Frameworks */,
 				2DEDA1E61682E6AD0074AC9E /* ImageIO.framework in Frameworks */,
 				2DC06291167FFF6000F2EA07 /* QuartzCore.framework in Frameworks */,
-				887C52E11BCE38090001129F /* FBSDKCoreKit.framework in Frameworks */,
 				2D5F3CF61679D2B0009D2ADC /* libsqlite3.dylib in Frameworks */,
 				2DCE0B0C16798E04007A8CAD /* UIKit.framework in Frameworks */,
-				887C52DA1BCE37C40001129F /* TwitterCore.framework in Frameworks */,
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
@@ -1070,13 +1037,6 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				887C52DE1BCE38090001129F /* FBSDKCoreKit.framework */,
-				887C52DF1BCE38090001129F /* FBSDKLoginKit.framework */,
-				887C52E01BCE38090001129F /* FBSDKShareKit.framework */,
-				887C52DC1BCE37DA0001129F /* TwitterKitResources.bundle */,
-				887C52D61BCE37C40001129F /* Fabric.framework */,
-				887C52D71BCE37C40001129F /* TwitterCore.framework */,
-				887C52D81BCE37C40001129F /* TwitterKit.framework */,
 				889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */,
 				881DDCDD1BA908C3005EFE21 /* DACircularProgress */,
 				88AE4AA21B8D63B200988131 /* Base64 */,
@@ -1103,6 +1063,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				88A196721BD1C4B000A4C65C /* Parse */,
 				889C9B131BB4F11F00BE77AB /* Dropbox */,
 				887FF2B01B13F76800D998FA /* AWS */,
 				881E9E6F18F7AF1B00ECC523 /* SoundRecord */,
@@ -1506,57 +1467,11 @@
 			path = Libraries/TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
-		887C52E41BCE389B0001129F /* AWS_Cognito */ = {
-			isa = PBXGroup;
-			children = (
-				887C52E51BCE389B0001129F /* AWSConfiguration.h */,
-				887C52E61BCE389B0001129F /* AWSMobileClient.h */,
-				887C52E71BCE389B0001129F /* AWSMobileClient.m */,
-				887C52E81BCE389B0001129F /* Identity */,
-				887C52EB1BCE389B0001129F /* SignIn */,
-				887C52F31BCE389B0001129F /* Utils */,
-			);
-			name = AWS_Cognito;
-			path = FlashCardCreator/AWS_Cognito;
-			sourceTree = "<group>";
-		};
-		887C52E81BCE389B0001129F /* Identity */ = {
-			isa = PBXGroup;
-			children = (
-				887C52E91BCE389B0001129F /* AWSIdentityManager.h */,
-				887C52EA1BCE389B0001129F /* AWSIdentityManager.m */,
-			);
-			path = Identity;
-			sourceTree = "<group>";
-		};
-		887C52EB1BCE389B0001129F /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				887C52EC1BCE389B0001129F /* AWSFacebookSignInProvider.h */,
-				887C52ED1BCE389B0001129F /* AWSFacebookSignInProvider.m */,
-				887C52EE1BCE389B0001129F /* AWSSignInProvider.h */,
-				887C52EF1BCE389B0001129F /* AWSTwitterSignInProvider.h */,
-				887C52F01BCE389B0001129F /* AWSTwitterSignInProvider.m */,
-				887C52F11BCE389B0001129F /* Localizable.strings */,
-			);
-			path = SignIn;
-			sourceTree = "<group>";
-		};
-		887C52F31BCE389B0001129F /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				887C52F41BCE389B0001129F /* AWSTask+CheckExceptions.h */,
-				887C52F51BCE389B0001129F /* AWSTask+CheckExceptions.m */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		887FF2B01B13F76800D998FA /* AWS */ = {
 			isa = PBXGroup;
 			children = (
 				88D3D4591BCF187D0021E9BA /* AWS_SimpleDB */,
 				88D3D4581BCF18750021E9BA /* AWS_S3 */,
-				887C52E41BCE389B0001129F /* AWS_Cognito */,
 				887FF2B11B13F77D00D998FA /* AWS_Constants.h */,
 				887FF2B21B13F77D00D998FA /* AWS_Constants.m */,
 			);
@@ -1582,6 +1497,17 @@
 				889C9B151BB4F12A00BE77AB /* DropboxSharekitHelper.m */,
 			);
 			name = Dropbox;
+			sourceTree = "<group>";
+		};
+		88A196721BD1C4B000A4C65C /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				88A196761BD1C72900A4C65C /* PFLogInViewController+Landscape.h */,
+				88A196771BD1C72900A4C65C /* PFLogInViewController+Landscape.m */,
+				88A196791BD1C8A200A4C65C /* PFSignUpViewController+Landscape.h */,
+				88A1967A1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m */,
+			);
+			name = Parse;
 			sourceTree = "<group>";
 		};
 		88AE4AA21B8D63B200988131 /* Base64 */ = {
@@ -1831,7 +1757,6 @@
 				8842A58119B00D470044C8CC /* templateScreenshot8_answer.png in Resources */,
 				88265CEB1B8DE38B00AF55A1 /* templateScreenshot12_answer.png in Resources */,
 				2D1A055116EE894800527311 /* template_background_change_button.png in Resources */,
-				887C52FA1BCE389B0001129F /* Localizable.strings in Resources */,
 				885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */,
 				882ACF92192C22E300CDAD15 /* segment_seperator@2x.png in Resources */,
 				8842A57E19B00D470044C8CC /* templateScreenshot10_answer.png in Resources */,
@@ -1851,7 +1776,6 @@
 				88265CDB1B8DE37500AF55A1 /* templateScreenshot14_question.png in Resources */,
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
-				887C52DD1BCE37DA0001129F /* TwitterKitResources.bundle in Resources */,
 				886D8FE21AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib in Resources */,
 				88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */,
 				88265CDC1B8DE37500AF55A1 /* templateScreenshot15_question_iPad.png in Resources */,
@@ -1983,7 +1907,6 @@
 				2D5F3D30167AB3D4009D2ADC /* User.m in Sources */,
 				2D5F3D36167ACA0A009D2ADC /* Pack.m in Sources */,
 				885C3DD41926281C0090F63C /* PopoverView.m in Sources */,
-				887C52FB1BCE389B0001129F /* AWSTask+CheckExceptions.m in Sources */,
 				2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */,
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
@@ -2006,9 +1929,7 @@
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
 				886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */,
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
-				887C52F91BCE389B0001129F /* AWSTwitterSignInProvider.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
-				887C52F81BCE389B0001129F /* AWSFacebookSignInProvider.m in Sources */,
 				2D5C17E016D1A56A00E1E785 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
 				2D5C17E216D1A56A00E1E785 /* AFURLConnectionOperation.m in Sources */,
@@ -2018,6 +1939,7 @@
 				88AE4AA51B8D63B200988131 /* Base64.m in Sources */,
 				2D5C17E416D1A56A00E1E785 /* UIImageView+AFNetworking.m in Sources */,
 				889131D51A123DED0011B7ED /* iConsole.m in Sources */,
+				88A1967B1BD1C8A200A4C65C /* PFSignUpViewController+Landscape.m in Sources */,
 				2D5C17E716D1A57800E1E785 /* MBProgressHUD.m in Sources */,
 				2D5C17F416D1A59300E1E785 /* ioapi.c in Sources */,
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
@@ -2051,15 +1973,14 @@
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
+				88A196781BD1C72900A4C65C /* PFLogInViewController+Landscape.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
 				88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */,
 				88F5CE7119B40B4B00107075 /* PEResizeControl.m in Sources */,
-				887C52F61BCE389B0001129F /* AWSMobileClient.m in Sources */,
 				88F5CE6F19B40B4B00107075 /* PECropView.m in Sources */,
 				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
-				887C52F71BCE389B0001129F /* AWSIdentityManager.m in Sources */,
 				881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */,
 				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
@@ -2138,14 +2059,6 @@
 				2DCE0B3316798E04007A8CAD /* en */,
 			);
 			name = DetailViewController_iPad.xib;
-			sourceTree = "<group>";
-		};
-		887C52F11BCE389B0001129F /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				887C52F21BCE389B0001129F /* en */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

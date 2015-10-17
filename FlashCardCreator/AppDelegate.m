@@ -19,16 +19,15 @@
 
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
+
 #import <Parse/Parse.h>
+#import <ParseTwitterUtils/ParseTwitterUtils.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import <FBSDKCoreKit/FBSDKApplicationDelegate.h>
 //#import <ParseCrashReporting/ParseCrashReporting.h>
 
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
-
-#import "AWSMobileClient.h"
-
-#import <TwitterKit/TwitterKit.h>
-#import <Fabric/Fabric.h>
 
 #import <DropboxSDK/DropboxSDK.h>
 
@@ -43,13 +42,12 @@ BOOL _isDownloadingSamplePack;
     self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];
     
 //    [ParseCrashReporting enable];
-    [Parse setApplicationId:@"WalahWVu4YklzCff6OgHVu7avtNuJmtzGgR8nEc3"
-                  clientKey:@"EN7hKNQ0B8SEG3BlRO79GB1Av8pOw4YUk5ylhd0r"];
+    [Parse setApplicationId:@"GrdwW4Td2T9d7hp9LvhHdXcewKycs6HM3nyUkXta"
+                  clientKey:@"qHXKXhGMkvvn4TaHyXPwLi8wUeAnbXLnwFPvFuRd"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-    
-    [[Twitter sharedInstance] startWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg" consumerSecret:@"CZHdQXJIVGtLlBnvh6T1eEZ2WJgWPSfNUdju6jXEs"];
-    [Fabric with:@[[Twitter sharedInstance]]]; //Need to config in plist
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    [PFTwitterUtils initializeWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg"
+                               consumerSecret:@"CZHdQXJIVGtLlBnvh6T1eEZ2WJgWPSfNUdju6jXEs"];
     
     self.isAllowToShowPackList = YES;
     
@@ -229,8 +227,7 @@ BOOL _isDownloadingSamplePack;
     
     
     // Override point for customization after application launch.
-    return [[AWSMobileClient sharedInstance] didFinishLaunching:application
-                                                    withOptions:launchOptions];
+    return YES;
 }
 
 
@@ -292,10 +289,7 @@ BOOL _isDownloadingSamplePack;
         
     }
     
-    return [[AWSMobileClient sharedInstance] withApplication:application
-                                                     withURL:url
-                                       withSourceApplication:sourceApplication
-                                              withAnnotation:annotation];
+    return YES;
 }
 
 

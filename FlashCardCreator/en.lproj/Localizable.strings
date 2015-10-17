@@ -84,6 +84,10 @@
 "DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE" = "Failed, please try again later.";
 "DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS" = "You have successfully sign in.";
 "DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE" = "Failed, please try again later.";
+"DIALOG_ACCOUNT_CREATED_SUCCESS" = "You have successfully created a new account.";
+"DIALOG_ACCOUNT_CREATED_FAILURE" = "Failed to create a new account.";
+"DIALOG_ACCOUNT_CREATED_ALERT_MESSAGE" = "Create a user name";
+"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "The user name has been registered";
 
 "DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failure to create an new bucket on AWS";
 
@@ -181,6 +185,7 @@
 "Title_None" = "None";
 "Title_Copy_To_Clipboard" = "Copy to clipboard";
 "Title_Log_Into" = "Log into";
+"Title_Create_Account" = "Create account";
 
 "Title_HANDSET_UNPLUGGED" = "You have handset unplugged";
 "Title_HANDSET_PLUGGED" = "You have handset plugged";

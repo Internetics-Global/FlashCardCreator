@@ -22,11 +22,11 @@
 
 #import "CryptorHelper.h"
 
-#import "AWSIdentityManager.h"
+#import <ParseUI/ParseUI.h>
+#import <Parse/Parse.h>
 
 typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     Type_ActionSheet_Share      = -1,
-    Type_ActionSheet_AWS       = 1,
 };
 
 @interface AWSS3UploadHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
@@ -207,29 +207,21 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     //step3: upload to S3
     __weak __typeof(&*self)weakSelf = self;
-    if ([[AWSIdentityManager sharedInstance] isLoggedIn]) {
-        [self showUploadingIndicator];
-        double delayInSeconds = 0.3;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
-        });
-    } else {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Title_Log_Into",@"")
-                                                                 delegate:self
-                                                        cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Facebook", @"Twitter", nil];
-        actionSheet.tag = Type_ActionSheet_AWS;
-        [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
-    }
+    [self showUploadingIndicator];
+    double delayInSeconds = 0.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
+    });
     
 }
 
 
 - (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
     
-    NSString *expectedBucketName = [AWSIdentityManager sharedInstance].bucketName;
+    NSAssert([PFUser currentUser].username.length > 0, @"PFUser currentUser].username should exist");
+
+    NSString *expectedBucketName = [PFUser currentUser].username;
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     
@@ -721,69 +713,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             default:
                 break;
         }
-    } else if (actionSheet.tag == Type_ActionSheet_AWS) {
-        switch (buttonIndex) {
-            case 0:{ //facebook
-                double delayInSeconds = 0.7;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    APP_DELEGATE.isAllowToShowPackList = false;
-                    [self handleLoginWithSignInProvider:AWSSignInProviderTypeFacebook];
-                });
-                break;
-            }
-            case 1:{ //twitter
-                APP_DELEGATE.isAllowToShowPackList = false;
-                [self handleLoginWithSignInProvider:AWSSignInProviderTypeTwitter];
-                break;
-            }
-            default:
-                break;
-        }
     }
-}
-
-
-/**
- *  如果是twitter，走的是系统的configuration; facebook是无论何种情况，都是跳webview
- */
-- (void)handleLoginWithSignInProvider:(AWSSignInProviderType)signInProviderType {
-    
-    if (AWSSignInProviderTypeTwitter == signInProviderType) {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] == false)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            return;
-        }
-        
-    }
-    
-    __weak __typeof(&*self)weakSelf = self;
-    [[AWSIdentityManager sharedInstance] loginWithSignInProvider:signInProviderType
-                                               completionHandler:^(id result, NSError *error) {
-                                                   if (!error) {
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           
-                                                           [weakSelf showUploadingIndicator];
-                                                           
-                                                           double delayInSeconds = 0.4;
-                                                           dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                                                           dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                                               [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
-                                                           });
-                                                           
-                                                       });
-                                                   } else {
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           
-                                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                                                           [alertView show];
-                                                           
-                                                       });
-                                                   }
-                                                   
-                                               }];
 }
 
 

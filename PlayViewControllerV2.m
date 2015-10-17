@@ -649,7 +649,6 @@
                              kFlashCardViewWidth_PlayMode_iPhone,
                              kFlashCardViewHeight_PlayMode_iPhone);
     FlashCard *flashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
-    //[self addGestureSupport]; :TODO:XXXX
 
     BOOL isDisableAutoResize = false;
     
