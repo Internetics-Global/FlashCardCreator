@@ -52,7 +52,7 @@
     __block NSMutableArray  *domains;
     [[[sdb listDomains:listDomainsRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-             [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
+             [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
         } else {
             if (task.result) {
                 AWSSimpleDBListDomainsResult *listDomainsResult = task.result;
@@ -89,7 +89,7 @@
     __block NSMutableArray       *items;
     [[[sdb select:selectRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-            [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
+            [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
             return nil;
         } else {
             if (task.result) {
@@ -116,7 +116,8 @@
 }
 
 /**
- Attribute and value pairs
+ *
+ *  @return <#return value description#>
  */
 + (NSMutableDictionary *) fetchAttributeValuesAtItem: (NSString *) itemName withDomainName: (NSString *) domainName{
     [iConsole info:@"%s",__FUNCTION__];
@@ -129,7 +130,11 @@
     __block NSMutableDictionary       *dict;
     [[[sdb getAttributes:gar] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-            [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
+            [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[task.error  description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+            
             return nil;
         } else {
             if (task.result) {
@@ -179,7 +184,7 @@
     __block BOOL result = true;
     [[[sdb putAttributes:putAttributesRequest]continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
-            [iConsole info:@"%s:%@",__FUNCTION__,[task.error  description]];
+            [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
             result = false;
         } else {
         }

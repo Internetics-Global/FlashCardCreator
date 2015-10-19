@@ -255,7 +255,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         __block BOOL success = NO;
         [[[s3 createBucket:createBucketReq] continueWithBlock:^id(AWSTask *task) {
             if (task.error) {
-                 [iConsole info:@"%s:%@",__FUNCTION__,[task.error description]];
+                 [iConsole error:@"%s:%@",__FUNCTION__,[task.error description]];
                 success = NO;
             } else {
                 [iConsole info:@"%s:succesfully create a new bucket with name = %@",__FUNCTION__,expectedBucketName];
@@ -327,6 +327,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
+            [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
             if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
                 switch (task.error.code) {
                     case AWSS3TransferManagerErrorCancelled:
@@ -453,6 +454,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",maxNo],@"0", nil] forKeys:[NSArray arrayWithObjects:@"maxNo",@"currentNo", nil]];
     NSString *defaultDomain = [SimpleDBHelper defaultDomain];
     result = [SimpleDBHelper insertOrUpdateItem:dict withItemName:itemName withDomainName:defaultDomain];
+    
     return result;
 }
 
@@ -513,7 +515,12 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
                     dispatch_async(queue, ^{
                         [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                        [weakSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                        BOOL succeeded = [weakSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                        if (succeeded == false) {
+                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Error to insertIntoAmazonSingleDB" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [alertView show];
+                            return;
+                        }
                     });
                     
                     //3. 分享
