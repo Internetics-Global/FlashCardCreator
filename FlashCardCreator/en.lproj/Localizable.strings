@@ -80,18 +80,19 @@
 "Title_Copy_To_Clipboard" = "Copy to clipboard";
 "DIALOG_NETWORK_TIMEOUT" = "Network timeout, please try again";
 "DIALOG_NO_TWITTER_CLIENT_INSTALLED" = "Share is allowed only when Twitter app is installed";
-"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS" = "You have successfully signed out.";
-"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE" = "Failed, please try again later.";
-"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS" = "You have successfully sign in.";
-"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE" = "Failed, please try again later.";
-"DIALOG_ACCOUNT_CREATED_SUCCESS" = "You have successfully created a new account.";
-"DIALOG_ACCOUNT_CREATED_FAILURE" = "Failed to create a new account.";
+"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS" = "You have successfully signed out";
+"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE" = "Failed, please try again later";
+"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS" = "You have successfully signed in";
+"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE" = "Failed, please try again later";
+"DIALOG_ACCOUNT_CREATED_SUCCESS" = "You have successfully created a new account";
+"DIALOG_ACCOUNT_CREATED_FAILURE" = "Failed to create a new account";
 "DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE" = "Create a user name";
 "DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "The user name has been registered";
 "DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY" = "Successfully";
 "DIALOG_SOCIAL_MEDIA_SIGNUP_OR_SIGNIN_SUCCESS" = "You now are logged in";
-"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failure to create a new bucket on AWS";
+"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failed to create a new bucket on AWS";
 "DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR" = "User name can not be empty";
+"DIALOG_INVALID_USERNAME_OR_PASSWORD" = "Invalid ID or password";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

@@ -260,6 +260,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             
             [self hideHud];
             
+            //有可能到这里，因为：The bucket namespace is shared by all users of the system. Please select a different name and try again.
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_FAILURE_TO_CREATE_BUCKET",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
             return;
