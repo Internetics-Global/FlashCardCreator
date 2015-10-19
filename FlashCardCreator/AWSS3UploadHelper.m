@@ -25,6 +25,8 @@
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
 
+#import "AWS_Constants.h"
+
 typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     Type_ActionSheet_Share      = -1,
 };
@@ -222,6 +224,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     NSAssert([PFUser currentUser].username.length > 0, @"PFUser currentUser].username should exist");
 
     NSString *expectedBucketName = [[PFUser currentUser].username lowercaseString]; //aws要求bucket必须是小写的
+    
+    expectedBucketName = [NSString stringWithFormat:@"%@_%@",expectedBucketName,BucketPostfixAfterUserName];
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     

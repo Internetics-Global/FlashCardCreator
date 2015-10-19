@@ -22,3 +22,5 @@ FOUNDATION_EXPORT NSString *const CognitoIdentityPoolId;
 
 FOUNDATION_EXPORT NSString *const S3BaseURL;
 FOUNDATION_EXPORT NSString *const S3SamplePackURL;
+
+FOUNDATION_EXPORT NSString *const BucketPostfixAfterUserName;

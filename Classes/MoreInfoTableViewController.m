@@ -601,9 +601,6 @@ static int outstandingRequests;
         return;
     }
     
-    int random = (int) ([[NSDate date] timeIntervalSince1970]);
-    username = [NSString stringWithFormat:@"%@_%d",username,random];  // 因为aws的bucket namespace is shared by all users of the system，所以需要保证我们的命名是尽可能唯一的（虽然这不是最佳方案）
-    
     PFUser *currentUser = [PFUser currentUser];
     [currentUser setUsername:username];
     NSError *error;
