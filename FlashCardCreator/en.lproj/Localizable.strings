@@ -18,7 +18,7 @@
 "DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download FFC sample cards first";
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
-"DIALOG_SET_PASSWORD"       = "Set a passwords?";
+"DIALOG_SET_PASSWORD"       = "Set a password?";
 "DIALOG_ALERT"        = "Alert";
 "DIALOG_CLOSE"        = "Close";
 "DIALOG_OK"           = "OK";
@@ -32,7 +32,7 @@
 "DIALOG_DELETE_PACK"       = "Are you sure you want to delete?";
 "DIALOG_DELETE_CARD"       = "Are you sure you want to delete?";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropbox is not linked";
-"DIALOG_DOWNLOAD_LINK_ERROR"               = "Check your download linkage or Dropbox sever is temporarily unavailable";
+"DIALOG_DOWNLOAD_LINK_ERROR"               = "Check your download link or the Dropbox server is temporarily unavailable";
 "DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED" = "Failure to create zipped share file.";
 "DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED" = "Failure to encrypt zipped share file.";
 "DIALOG_REDIRECT_SERVICE_UNAVAILABLE" = "Redirect service is not available now, please try again";
@@ -254,7 +254,7 @@
 
 "Record_Introduction_Text" = "When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card.";
 
-"Record_Introduction_Text2" = "Record is finished, you can playback or save the recorded sound";
+"Record_Introduction_Text2" = "Recording is finished, you can playback or save the recorded sound";
 
 "Sample_Cards" = "FFC Sample Cards";
 
