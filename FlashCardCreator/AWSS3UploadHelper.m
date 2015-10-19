@@ -227,7 +227,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
     
-    expectedBucketName = [NSString stringWithFormat:@"%@_%@",expectedBucketName,BucketPostfixAfterUserName];
+    expectedBucketName = [NSString stringWithFormat:@"%@-%@",expectedBucketName,BucketPostfixAfterUserName];
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     
