@@ -394,9 +394,6 @@
             
             logInController.signUpController.fromSetting = YES;
             
-            [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
-            [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
-            
             
             if (isUserInterfaceIdiomPhone) {
                 logInController.signUpController.delegate = self;

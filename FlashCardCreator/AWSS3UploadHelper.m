@@ -225,6 +225,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
     NSString *expectedBucketName = [[PFUser currentUser].username lowercaseString]; //aws要求bucket必须是小写的
     
+    [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
+    
     expectedBucketName = [NSString stringWithFormat:@"%@_%@",expectedBucketName,BucketPostfixAfterUserName];
     
     AWSS3 *s3 = [AWSS3 defaultS3];
@@ -247,6 +249,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     if (existing == NO) {
         
+        
         AWSS3CreateBucketRequest *createBucketReq = [AWSS3CreateBucketRequest new];
         createBucketReq.bucket = expectedBucketName;
         __block BOOL success = NO;
@@ -255,6 +258,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                  [iConsole info:@"%s:%@",__FUNCTION__,[task.error description]];
                 success = NO;
             } else {
+                [iConsole info:@"%s:succesfully create a new bucket with name = %@",__FUNCTION__,expectedBucketName];
                 success = YES;
             }
             return nil;

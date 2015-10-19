@@ -2308,15 +2308,13 @@ extern BOOL isFromNewCreatedCard;
                                                   | PFLogInFieldsSignUpButton
                                                   | PFLogInFieldsDismissButton);
                         
+                        
                         logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
                                                                    | PFSignUpFieldsEmail
                                                                    | PFSignUpFieldsAdditional
                                                                    | PFSignUpFieldsDismissButton
                                                                    | PFSignUpFieldsSignUpButton);
                         logInController.signUpController.delegate = self;
-                        
-                        [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
-                        [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
                         
                         logInController.delegate = self;
                         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];

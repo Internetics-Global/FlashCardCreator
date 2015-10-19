@@ -46,5 +46,13 @@ static char const * const ObjectTagKey = "ObjectTag";
     [super viewWillAppear:animated];
     
     [self.signUpView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
+    [[self.signUpView logo] setContentMode:UIViewContentModeScaleAspectFit];
 }
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    [self.signUpView.signUpButton setTitle:@"Create account" forState:UIControlStateNormal];
+}
+
 @end

@@ -44,7 +44,14 @@ static char const * const ObjectTagKey = "ObjectTag";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.logInView.signUpButton setTitle:NSLocalizedString(@"Title_Create_Account",@"") forState:UIControlStateNormal];
+    [self.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
+    [[self.logInView logo] setContentMode:UIViewContentModeScaleAspectFit];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    [self.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateNormal];
 }
 
 

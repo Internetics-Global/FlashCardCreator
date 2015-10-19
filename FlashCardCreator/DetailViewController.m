@@ -767,9 +767,6 @@ enum popover_enum {
                                                                    | PFSignUpFieldsSignUpButton);
                         logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
                         
-                        [logInController.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_auth"]]];
-                        [logInController.logInView.signUpButton setTitle:@"Create account" forState:UIControlStateHighlighted];
-                        
                         logInController.delegate = APP_DELEGATE.masterViewController;
                         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
                         
