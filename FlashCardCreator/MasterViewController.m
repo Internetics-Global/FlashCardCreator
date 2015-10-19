@@ -1375,13 +1375,19 @@ extern BOOL isFromNewCreatedCard;
     UITextField *textField = [alertView textFieldAtIndex:0];
     NSString *username = textField.text;
     
+    if (username.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    
     PFUser *currentUser = [PFUser currentUser];
     [currentUser setUsername:username];
     NSError *error;
     BOOL succeeded = [currentUser save:&error];
     if (succeeded) {
         if (fromSetting) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
             [alertView show];
         } else {
             [self share];

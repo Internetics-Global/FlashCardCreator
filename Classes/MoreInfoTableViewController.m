@@ -556,7 +556,7 @@ static int outstandingRequests;
         [alertView textFieldAtIndex:0].text = @"";
         [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
-            [weakSelf didClickedCreatAccountAlertView:alertView];
+            [weakSelf didClickCreateNewAccountAlertView:alertView];
         }];
         [alertView show];
 
@@ -584,16 +584,22 @@ static int outstandingRequests;
 }
 
 
-- (void)didClickedCreatAccountAlertView:(UIAlertView *)alertView {
+- (void)didClickCreateNewAccountAlertView:(UIAlertView *)alertView {
     UITextField *textField = [alertView textFieldAtIndex:0];
     NSString *username = textField.text;
+    
+    if (username.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
     
     PFUser *currentUser = [PFUser currentUser];
     [currentUser setUsername:username];
     NSError *error;
     BOOL succeeded = [currentUser save:&error];
     if (succeeded) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
     } else {
         

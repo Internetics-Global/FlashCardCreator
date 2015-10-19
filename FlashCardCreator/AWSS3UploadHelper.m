@@ -221,21 +221,22 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     NSAssert([PFUser currentUser].username.length > 0, @"PFUser currentUser].username should exist");
 
-    NSString *expectedBucketName = [PFUser currentUser].username;
+    NSString *expectedBucketName = [[PFUser currentUser].username lowercaseString]; //aws要求bucket必须是小写的
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     
-    AWSS3ListObjectsRequest *listObjectReq = [AWSS3ListObjectsRequest new];
-    listObjectReq.bucket = expectedBucketName;
     __block BOOL existing = NO;
-    [[[s3 listObjects:listObjectReq] continueWithBlock:^id(AWSTask *task) {
-        AWSS3ListObjectsOutput *listObjectsOutput = task.result;
-        NSString *name = listObjectsOutput.name;
-        if ([name isEqualToString:expectedBucketName]) {
-            existing = YES;
-        } else {
-            existing = NO;
+    [[[s3 listBuckets:nil] continueWithBlock:^id(AWSTask *task) {
+        
+        AWSS3ListBucketsOutput *listBucketOutput = task.result;
+        
+        NSArray *buckets = listBucketOutput.buckets;
+        for (AWSS3Bucket *item in buckets) {
+            if ([item.name isEqualToString:expectedBucketName]) {
+                existing = YES;
+            }
         }
+        
         
         return nil;
     }] waitUntilFinished];

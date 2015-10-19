@@ -88,9 +88,10 @@
 "DIALOG_ACCOUNT_CREATED_FAILURE" = "Failed to create a new account.";
 "DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE" = "Create a user name";
 "DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "The user name has been registered";
-"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "Successfully ";
-
+"DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY" = "Successfully";
+"DIALOG_SOCIAL_MEDIA_SIGNUP_OR_SIGNIN_SUCCESS" = "You now are logged in";
 "DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failure to create a new bucket on AWS";
+"DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR" = "User name can not be empty";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
