@@ -33,7 +33,13 @@
     return sharedInstance;
 }
 
+/**
+ *  历史原因，我们不得不用这种方法，在最新的SDK中，dropbox提供了更友好的方法： https://www.dropbox.com/developers-v1/core/start/ios#downloading
+ */
 - (NSString *) downloadZipFile:(NSString *)URLStr {
+    
+    URLStr = [URLStr stringByReplacingOccurrencesOfString:@"//www." withString:@"//dl."];
+    
     [iConsole info:@"%s, download url = %@",__FUNCTION__,URLStr];
     self.downloadedURL = URLStr;
     __weak __typeof(&*self)weakSelf = self;
