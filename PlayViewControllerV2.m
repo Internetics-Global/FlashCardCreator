@@ -186,36 +186,40 @@
             //[iConsole info:@"The roll of gyroscope sensor is:%f",motion.attitude.roll];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
-                if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
-                    if (motion.attitude.roll < -0.3) {
-                        if (enableSwitch == YES) {
-                            [safeSelf switchQuestionAnswerViewWithHand:TRUE];
-                            enableSwitch = NO;
+                if ((_isAutoScroll == false)
+                        && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
+                             && (_oneOffPlayType != One_Off_Play_Type_Auto_Play_Loop)) {
+                    if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
+                        if (motion.attitude.roll < -0.3) {
+                            if (enableSwitch == YES) {
+                                [safeSelf switchQuestionAnswerViewWithHand:TRUE];
+                                enableSwitch = NO;
+                            }
+                            
+                        } else if (motion.attitude.roll > 0) {
+                            if (enableSwitch == NO) {
+                                enableSwitch = YES;
+                            }
+                            
+                        } else {
+                            //do nothing
                         }
                         
-                    } else if (motion.attitude.roll > 0) {
-                        if (enableSwitch == NO) {
-                            enableSwitch = YES;
+                    } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
+                        if (motion.attitude.roll > 0.3) {
+                            if (enableSwitch == YES) {
+                                [safeSelf switchQuestionAnswerViewWithHand:TRUE];
+                                enableSwitch = NO;
+                            }
+                            
+                        } else if (motion.attitude.roll < 0) {
+                            if (enableSwitch == NO) {
+                                enableSwitch = YES;
+                            }
+                            
+                        } else {
+                            //do nothing
                         }
-                        
-                    } else {
-                        //do nothing
-                    }
-                    
-                } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
-                    if (motion.attitude.roll > 0.3) {
-                        if (enableSwitch == YES) {
-                            [safeSelf switchQuestionAnswerViewWithHand:TRUE];
-                            enableSwitch = NO;
-                        }
-                        
-                    } else if (motion.attitude.roll < 0) {
-                        if (enableSwitch == NO) {
-                            enableSwitch = YES;
-                        }
-                        
-                    } else {
-                        //do nothing
                     }
                 }
                 
