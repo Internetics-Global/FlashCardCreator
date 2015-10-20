@@ -231,21 +231,41 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     
+    
     __block BOOL existing = NO;
-    [[[s3 listBuckets:nil] continueWithBlock:^id(AWSTask *task) {
+    if (true) {
+        AWSS3ListObjectsRequest *listObjectReq2 = [AWSS3ListObjectsRequest new];
+        listObjectReq2.bucket = expectedBucketName;
         
-        AWSS3ListBucketsOutput *listBucketOutput = task.result;
         
-        NSArray *buckets = listBucketOutput.buckets;
-        for (AWSS3Bucket *item in buckets) {
-            if ([item.name isEqualToString:expectedBucketName]) {
+        [[[s3 listObjects:listObjectReq2] continueWithBlock:^id(AWSTask *task) {
+            NSError *error = task.error;
+            if (error == nil) {
                 existing = YES;
+            } else if ([error code] == AWSS3ErrorNoSuchBucket) {
+                return false;
+            } else {
+                [iConsole error:@"%s:%@",__FUNCTION__,[error description]];
             }
-        }
+            return nil;
+        }] waitUntilFinished];
         
-        
-        return nil;
-    }] waitUntilFinished];
+    } else {
+        [[[s3 listBuckets:nil] continueWithBlock:^id(AWSTask *task) {
+            
+            AWSS3ListBucketsOutput *listBucketOutput = task.result;
+            
+            NSArray *buckets = listBucketOutput.buckets;
+            for (AWSS3Bucket *item in buckets) {
+                if ([item.name isEqualToString:expectedBucketName]) {
+                    existing = YES;
+                }
+            }
+            
+            
+            return nil;
+        }] waitUntilFinished];
+    }
     
     if (existing == NO) {
         
