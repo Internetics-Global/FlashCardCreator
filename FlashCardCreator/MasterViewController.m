@@ -1437,7 +1437,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         BOOL ret = [za UnzipFileTo:[FileOperationHelper downloadedPackFileDirectory] overWrite:YES];
         if( NO==ret ) {
-            [iConsole info:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
+            [iConsole error:@"%s\nUnzip file(%@) failed",__FUNCTION__,downloadedZipPackFileFixedPath];
         } else {
             [iConsole info:@"%s\nUnzip file successfully",__FUNCTION__];
         }
@@ -1461,7 +1461,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *downloadedPackInfoFilePath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:@"packInformation.json"];
     NSData *packData = [NSData dataWithContentsOfFile:downloadedPackInfoFilePath];
     if (!packData) {
-        [Common alertViewCommon:@"Error when parsing packInformation.json"];
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_WHEN_PARSING_PACK_JSON",@"")];
         return;
     }
     id packJsonObject = [NSJSONSerialization JSONObjectWithData:packData options:

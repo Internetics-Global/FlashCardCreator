@@ -70,6 +70,7 @@
 "DIALOG_CONFIG_MAIL_REQUIRED" = "Please configure your mail in setting";
 "DIALOG_COPY_DONE" = "Copy done";
 
+"DIALOG_ERROR_WHEN_PARSING_PACK_JSON" = "Error when parsing packInformation.json";
 "DIALOG_ERROR_WHEN_PARSING_ANSWER_JSON" = "Error when parsing answerTextContent.json";
 "DIALOG_ERROR_WHEN_PARSING_QUESTION_JSON" = "Error when parsing questionTextContent.json";
 "DIALOG_REACH_MAX_DOWNLOAD_LIMIT" = "You have reached the limit of downloads for this pack";
