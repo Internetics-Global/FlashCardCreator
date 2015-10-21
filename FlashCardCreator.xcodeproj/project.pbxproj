@@ -2138,6 +2138,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
 				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
@@ -2181,6 +2182,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
 				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";

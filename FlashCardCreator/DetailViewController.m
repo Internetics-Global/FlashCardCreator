@@ -1,6 +1,6 @@
 //
 //  DetailViewController.m
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Wang Bourne on 13/12/12.
 //  Copyright (c) 2012 Internetics. All rights reserved.

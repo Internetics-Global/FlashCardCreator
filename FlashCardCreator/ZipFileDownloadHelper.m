@@ -1,6 +1,6 @@
 //
 //  ZipFileDownloadHelper.m
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Wang Bourne on 20/12/12.
 //

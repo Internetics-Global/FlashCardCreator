@@ -1,6 +1,6 @@
 //
 //  CSS.m
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Wang Bourne on 8/02/13.
 //  Copyright (c) 2013 Internetics. All rights reserved.

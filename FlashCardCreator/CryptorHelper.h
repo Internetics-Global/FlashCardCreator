@@ -1,6 +1,6 @@
 //
 //  CryptorHelper.h
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Bourne Wang on 4/06/2015.
 //  Copyright (c) 2015 Internetics. All rights reserved.

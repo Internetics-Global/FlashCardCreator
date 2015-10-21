@@ -1,6 +1,6 @@
 //
 //  Question.m
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Wang Bourne on 14/12/12.
 //  Copyright (c) 2012 Internetics. All rights reserved.

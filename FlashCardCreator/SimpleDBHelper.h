@@ -1,6 +1,6 @@
 //
 //  SimpleDBHelper.h
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Bourne Wang on 13-7-18.
 //  Copyright (c) 2013年 Internetics. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  PFSignUpViewController+Landscape.h
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Internetics on 17/10/2015.
 //  Copyright © 2015 Internetics. All rights reserved.

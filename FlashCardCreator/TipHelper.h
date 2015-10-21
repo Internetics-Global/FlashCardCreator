@@ -1,6 +1,6 @@
 //
 //  TipHelper_iPad.h
-//  FlashCardCreator
+//  FFC
 //
 //  Created by Bourne Wang on 20/11/2014.
 //  Copyright (c) 2014 Internetics. All rights reserved.
