@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B443C85DD2E9745390DD377D"
-               BuildableName = "libAWSS3.a"
-               BlueprintName = "AWSS3"
+               BlueprintIdentifier = "6805D6283F65D2001BBF6AB9"
+               BuildableName = "libParseCrashReporting.a"
+               BlueprintName = "ParseCrashReporting"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

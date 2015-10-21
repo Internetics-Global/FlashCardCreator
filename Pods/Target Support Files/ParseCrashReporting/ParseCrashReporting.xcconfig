@@ -1,0 +1,2 @@
+PARSECRASHREPORTING_LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/ParseCrashReporting"
+PARSECRASHREPORTING_OTHER_LDFLAGS = -ObjC -l"ParseCrashReportingLib" -l"sqlite3" -l"stdc++.6" -l"z" -framework "CFNetwork" -framework "Foundation" -framework "Security" -framework "SystemConfiguration"

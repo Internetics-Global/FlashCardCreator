@@ -24,7 +24,7 @@
 #import <ParseTwitterUtils/ParseTwitterUtils.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import <FBSDKCoreKit/FBSDKApplicationDelegate.h>
-//#import <ParseCrashReporting/ParseCrashReporting.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
 
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
@@ -41,7 +41,7 @@ BOOL _isDownloadingSamplePack;
     
     self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];
     
-//    [ParseCrashReporting enable];
+    [ParseCrashReporting enable];
     [Parse setApplicationId:@"GrdwW4Td2T9d7hp9LvhHdXcewKycs6HM3nyUkXta"
                   clientKey:@"qHXKXhGMkvvn4TaHyXPwLi8wUeAnbXLnwFPvFuRd"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

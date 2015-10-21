@@ -1053,6 +1053,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 See https://www.parse.com/about/terms
 
+## ParseCrashReporting
+
+See https://www.parse.com/about/terms
+
 ## ParseFacebookUtilsV4
 
 See https://www.parse.com/about/terms
