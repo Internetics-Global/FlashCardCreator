@@ -127,7 +127,9 @@
 "Keyboard_No_Needed" = "Not needed";
 "Keyboard_Delete" = "Delete";
 
+
 "ToolbarItem_Font"        = "Font";
+"ToolbarItem_Default"        = "Default";
 "ToolbarItem_Align"        = "Align";
 "ToolbarItem_Size"         = "Size";
 "ToolbarItem_Color"        = "Color";
@@ -142,6 +144,8 @@
 "ToolbarItem_Align_Right"        = "Right";
 "ToolbarItem_Align_Justify"        = "Justify";
 "ToolbarItem_Align_Vertical"        = "Vertical";
+"ToolbarItem_Align_Vertical_Center"        = "Vertical Center";
+"ToolbarItem_Align_Vertical_Top"        = "Vertical Top";
 
 "ToolbarItem_Color_Red"        = "Red";
 "ToolbarItem_Color_Green"        = "Green";
