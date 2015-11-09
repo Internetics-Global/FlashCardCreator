@@ -2291,7 +2291,7 @@ extern BOOL isFromNewCreatedCard;
                 
                 if (_currentPack.isAllowShare && _currentCard) {
                     
-                    if ([PFUser currentUser]) {
+                    if ([PFUser currentUser] || [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"]) {
                         
                          [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
