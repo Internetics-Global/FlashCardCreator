@@ -161,7 +161,7 @@
 "Label_Creator"       = "Your name";
 "Label_Admin_Password"       = "Admin password";
 "Label_Confirm_Admin_Password"       = "Confirm admin password";
-"Label_Creator_Hint"       = "Created by";
+"Label_Creator_Hint"       = "Created by:";
 "Label_Job_Title"       = "Name or title";
 "Label_New_User"      = "New User?";
 "Label_Visit_Store"      = "Visit Store";

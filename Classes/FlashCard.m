@@ -668,7 +668,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         des.backgroundColor = [UIColor clearColor];
         des.font = [UIFont systemFontOfSize:12];
         des.textColor = [UIColor grayColor];
-        des.text = @"Created by:";
+        des.text = NSLocalizedString(@"Label_Creator_Hint",@"");
         des.userInteractionEnabled = FALSE;
         [self addSubview:des];
         
@@ -1137,7 +1137,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             des.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
         }
         des.textColor = [UIColor grayColor];
-        des.text = @"Created by:";
+        des.text = NSLocalizedString(@"Label_Creator_Hint",@"");
         des.userInteractionEnabled = FALSE;
         [self addSubview:des];
         
