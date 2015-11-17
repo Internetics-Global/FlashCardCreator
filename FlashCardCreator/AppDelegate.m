@@ -336,7 +336,7 @@ BOOL _isDownloadingSamplePack;
 
 - (void) setupLog {
     
-    [iConsole sharedConsole].logLevel = iConsoleLogLevelNone;
+    [iConsole sharedConsole].logLevel = iConsoleLogLevelInfo;
     
     [[iConsole sharedConsole] setMaxLogItems:1000];
 
