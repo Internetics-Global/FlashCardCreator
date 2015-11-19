@@ -55,12 +55,14 @@
 #import "PFSignUpViewController+Landscape.h"
 #import "PFLogInViewController+Landscape.h"
 
+#import "Common.h"
+
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 
 extern BOOL _isDownloadingSamplePack;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -118,6 +120,9 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListAfterDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         
         if (isUserInterfaceIdiomPhone == false) {
             //在iPhone中，不需要这逻辑
@@ -2291,7 +2296,7 @@ extern BOOL isFromNewCreatedCard;
                 
                 if (_currentPack.isAllowShare && _currentCard) {
                     
-                    if ([PFUser currentUser] || [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"]) {
+                    if ([PFUser currentUser] || [Common isDropboxAsStorage]) {
                         
                          [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
@@ -2378,10 +2383,16 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) share {
     
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    BOOL b = [Common isDropboxAsStorage];
     if (b) {
-        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_dropboxShareHelper shareAction];
+        if (![[DBSession sharedSession] isLinked]) {
+            [DBSession sharedSession].delegate = self;
+            [[DBSession sharedSession] linkFromController:self];
+        } else {
+            _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+            [_dropboxShareHelper shareAction];
+        }
+        
     } else {
         _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
         [_amazonShareHelper shareAction];
@@ -2522,6 +2533,32 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
     // Do nothing, as the view controller dismisses itself
+}
+
+
+#pragma mark -
+#pragma mark - DROPBOX_LINKED_NOTIFICATION
+
+- (void) dropboxLinkedNotification:(id)notification
+{
+    [iConsole info:@"%s",__FUNCTION__];
+    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
+    
+    if(![linkedNum boolValue])
+    {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+    } else
+    {
+        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_dropboxShareHelper shareAction];
+    }
+}
+
+#pragma mark -
+#pragma mark DBSessionDelegate methods
+
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
 }
 
 

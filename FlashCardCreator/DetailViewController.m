@@ -49,7 +49,7 @@ enum popover_enum {
 };
 
 
-@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate>{
+@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate,DBSessionDelegate>{
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
     
@@ -95,6 +95,7 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
+        
     }
     return self;
 }
@@ -743,7 +744,7 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare && _currentCard) {
                     
-                    if ([PFUser currentUser] || [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"]) {
+                    if ([PFUser currentUser] || [Common isDropboxAsStorage]) {
                         
                         [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
@@ -868,10 +869,18 @@ enum popover_enum {
 
 - (void) share {
     
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    BOOL b = [Common isDropboxAsStorage];
     if (b) {
-        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_dropboxShareHelper shareAction];
+        if (![[DBSession sharedSession] isLinked]) {
+            [DBSession sharedSession].delegate = self;
+            //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
+            //不需要在本类中设置dropboxLinkedNotification
+            [[DBSession sharedSession] linkFromController:self];
+        } else {
+            _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+            [_dropboxShareHelper shareAction];
+        }
+        
     } else {
         _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
         [_amazonShareHelper shareAction];
@@ -1085,6 +1094,14 @@ enum popover_enum {
         
         [self resignTextSubviewsFrom:subview];
     }
+}
+
+
+#pragma mark -
+#pragma mark DBSessionDelegate methods
+
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
 }
 
 @end

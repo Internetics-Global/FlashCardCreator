@@ -310,4 +310,18 @@
 }
 
 
++ (BOOL) isDropboxAsStorage {
+#ifdef FFC_WITHOUT_SUBSCRIPTION
+    return true;
+#else
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    return b;
+#endif
+}
++ (void) setDropboxAsStorage: (BOOL) flag {
+    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:@"isDropboxAsStorage"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 @end

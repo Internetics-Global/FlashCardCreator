@@ -25,6 +25,8 @@
 #import "PFLogInViewController+Landscape.h"
 #import "PFSignUpViewController+Landscape.h"
 
+#import "Common.h"
+
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 @interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
@@ -124,7 +126,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#ifdef FFC_WITHOUT_SUBSCRIPTION
+    return 8;
+#else
     return 9;
+#endif
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -263,7 +269,21 @@
         cell.accessoryView = baseView;
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
+#ifdef FFC_WITHOUT_SUBSCRIPTION
+    } else if (indexPath.row == 7) {
         
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Dropbox_Logged_In",@"");
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [storageProviderSwitch addTarget:self action:@selector(dropboxLogInOutAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = storageProviderSwitch;
+        BOOL b = [[DBSession sharedSession] isLinked];
+        [storageProviderSwitch setOn:b];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+#else
     } else if (indexPath.row == 7) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Amazon_Or_Dropbox",@"");
@@ -272,7 +292,7 @@
         UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [storageProviderSwitch addTarget:self action:@selector(storageProviderAction) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = storageProviderSwitch;
-        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+        BOOL b = [Common isDropboxAsStorage];
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -284,6 +304,7 @@
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+#endif
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         cell.backgroundColor = [UIColor clearColor];
@@ -438,9 +459,22 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) dropboxLogInOutAction {
+    if (![[DBSession sharedSession] isLinked]) {
+        [DBSession sharedSession].delegate = self;
+        [[DBSession sharedSession] linkFromController:self];
+    } else {
+        
+        [[DBSession sharedSession] unlinkAll];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SUCCESS_TO_LOG_DROPBOX",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
 - (void) storageProviderAction {
     
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
+    BOOL b = [Common isDropboxAsStorage];
     
     if (!b) {
         if (![[DBSession sharedSession] isLinked]) {
@@ -448,8 +482,7 @@
             [[DBSession sharedSession] linkFromController:self];
         } else {
             
-            [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isDropboxAsStorage"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [Common setDropboxAsStorage:true];
             
             [self.tableView reloadData];
         }
@@ -457,8 +490,7 @@
         
         [[DBSession sharedSession] unlinkAll];
         
-        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [Common setDropboxAsStorage:false];
         
         [self.tableView reloadData];
         
@@ -490,8 +522,7 @@
 #pragma mark DBSessionDelegate methods
 
 - (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [Common setDropboxAsStorage:false];
     [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
 }
 
@@ -526,14 +557,12 @@ static int outstandingRequests;
     
     if(![linkedNum boolValue])
     {
-        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"isDropboxAsStorage"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [Common setDropboxAsStorage:false];
         
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
     } else
     {
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isDropboxAsStorage"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [Common setDropboxAsStorage:true];
     }
     
     [self.tableView reloadData];
