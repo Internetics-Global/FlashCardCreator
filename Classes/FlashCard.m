@@ -6877,13 +6877,50 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 
     __weak __typeof(&*self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         
         if (buttonIndex == 1) {
             [weakSelf selectFromImageLibrary:_logoImage withPopoverArrowUp:YES  supportMov:NO];
+        } else if (buttonIndex == 2) {
+            
+            if (([_logoImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_logoImageFullPath.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_logoImageFullPath
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _logoImageFullPath);
+                } else {
+                    _logoImageFullPath = @"";
+                    [_logoImage setImage:[UIImage imageNamed:@"question_placeholder_logo"]];
+                    
+                    _currentCard.question.logoFullPath = _logoImageFullPath;
+                    if (isFromNewCreatedCard) {
+                        //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
+                        _isAllCardsLogoNeedToBeUpdate = YES;
+                    } else {
+                        //do save operation and update all others
+                        
+                        if (!_HUD) {
+                            _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+                        }
+                        [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+                        [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+                        
+                        _HUD.mode = MBProgressHUDModeIndeterminate;
+                        [_HUD show:YES];
+                        _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+                        [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
+                    }
+                    
+                }
+            }
+            
         }
         
     }];
+    
     
     
 }
