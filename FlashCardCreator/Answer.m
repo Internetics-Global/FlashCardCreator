@@ -133,7 +133,7 @@
 
 - (void)setImageFullPath:(NSString *)imageFullPath {
     if (imageFullPath.length == 0 || [Common isDirectoryFormat:imageFullPath] ) {
-        [iConsole error:@"%s: imageFullPath could not be nil or empty or directory",__FUNCTION__];
+        //[iConsole warn:@"%s: imageFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath lastPathComponent]];
         _imageFullPath = fullPath;
@@ -142,7 +142,7 @@
 
 - (void)setImageFullPath2:(NSString *)imageFullPath2 {
     if (imageFullPath2.length == 0 || [Common isDirectoryFormat:imageFullPath2] ) {
-        [iConsole error:@"%s: imageFullPath2 could not be nil or empty or directory",__FUNCTION__];
+        //[iConsole warn:@"%s: imageFullPath2 could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath2 lastPathComponent]];
         _imageFullPath2 = fullPath;
@@ -152,7 +152,7 @@
 
 - (void)setLogoFullPath:(NSString *)logoFullPath {
     if (logoFullPath.length == 0 || [Common isDirectoryFormat:logoFullPath] ) {
-        [iConsole error:@"%s: logoFullPath could not be nil or empty or directory",__FUNCTION__];
+        //[iConsole warn:@"%s: logoFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[logoFullPath lastPathComponent]];
         _logoFullPath = fullPath;
@@ -161,7 +161,7 @@
 
 - (void)setMovieFullPath:(NSString *)movieFullPath {
     if (movieFullPath.length == 0 || [Common isDirectoryFormat:movieFullPath]  ) {
-        [iConsole error:@"%s: movieFullPath could not be nil or empty or directory",__FUNCTION__];
+        //[iConsole warn:@"%s: movieFullPath could not be nil or empty or directory",__FUNCTION__];
     } else {
         //we don't convert when it's an http/https url
         if ([movieFullPath rangeOfString:@"http"].location == NSNotFound) {
@@ -175,7 +175,7 @@
 
 - (void)setMovieFullPath2:(NSString *)movieFullPath2 {
     if (movieFullPath2.length == 0 || [Common isDirectoryFormat:movieFullPath2] ) {
-        [iConsole error:@"%s: movieFullPath2 could not be nil or empty or directory",__FUNCTION__];
+        //[iConsole warn:@"%s: movieFullPath2 could not be nil or empty or directory",__FUNCTION__];
     } else {
         if ([movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
             NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];

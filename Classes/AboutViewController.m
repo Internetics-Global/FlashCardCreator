@@ -37,6 +37,28 @@
     self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logEnableSwitch)];
+    fiveTap.numberOfTapsRequired = 5;
+    [self.view addGestureRecognizer:fiveTap];
+}
+
+- (void) logEnableSwitch {
+    if ([iConsole sharedConsole].logLevel == iConsoleLogLevelNone) {
+        [iConsole sharedConsole].logLevel = iConsoleLogLevelInfo;
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Log function is enabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    } else {
+        [iConsole sharedConsole].logLevel = iConsoleLogLevelNone;
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Log function is disabled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
 -(void)web{
 	NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
