@@ -6866,7 +6866,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     _imageSourceType = Type_Image_Source_Logo;
     
-    [self selectFromImageLibrary:[sender view] withPopoverArrowUp:YES  supportMov:NO];
+
+    __weak __typeof(&*self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        
+        if (buttonIndex == 1) {
+            [weakSelf selectFromImageLibrary:_logoImage withPopoverArrowUp:YES  supportMov:NO];
+        }
+        
+    }];
     
     
 }
