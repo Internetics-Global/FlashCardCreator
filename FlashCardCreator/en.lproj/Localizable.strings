@@ -200,6 +200,7 @@
 "Title_HANDSET_UNPLUGGED" = "You have handset unplugged";
 "Title_HANDSET_PLUGGED" = "You have handset plugged";
 "Title_HANDSET_CHANGE_MESSAGE" = "In order to play normally, please exit and reenter play mode";
+"Title_Image_Copyright" = "Images may be subject to copyright. Confirm your rights before uploading.";
 
 "Optional_Play_Manually" = "Play Manually";
 "Optional_Auto_Play" = "Auto Play";

@@ -50,6 +50,8 @@
 
 #import "NSTimer+BlocksKit.h"
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -1902,24 +1904,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (backgroundImagePath.length == 0) {
         [self selectFromImageLibraryByBackgroundSelectButton:sender];
     } else {
-        
-        CGPoint point = [_backgroundImageSelectButton convertPoint:CGPointMake(CGRectGetWidth(_backgroundImageSelectButton.frame)/2, 0) toView:self];
-        
-        PopoverView *backgroundImageSelectPopoverView;
+
         if (isAllowUndo) {
-            backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
-                                                                        inView:self
-                                                                     withTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"")
-                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""),NSLocalizedString(@"Optional_Undo_Last_Operation",@""), nil]
-                                                                      delegate:self];
+            __weak __typeof(&*self)weakSelf = self;
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""),NSLocalizedString(@"Optional_Undo_Last_Operation",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                
+                [weakSelf backgroundImageSelectAlertViewClickedAtIndex: buttonIndex];
+                
+            }];
         } else {
-            backgroundImageSelectPopoverView = [PopoverView showPopoverAtPoint:point
-                                                                        inView:self
-                                                                     withTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"")
-                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""), nil]
-                                                                      delegate:self];
+            __weak __typeof(&*self)weakSelf = self;
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                
+                [weakSelf backgroundImageSelectAlertViewClickedAtIndex: buttonIndex];
+                
+            }];
+        
         }
-        backgroundImageSelectPopoverView.tag = Type_PopoverView_SelectBackground;
+        
     }
     
 }
@@ -6904,22 +6906,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    UIImageView *pickerImageView;
-    if (self.segmentedControl.selectedSegmentIndex == 0) {
-        pickerImageView = _imageQuestion;
-    } else {
-        pickerImageView = _imageAnswer;
-    }
+    __weak __typeof(&*self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        
+        [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
+        
+    }];
     
-    PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
-                                                                   inView:self
-                                                                withTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"")
-                                                          withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil]
-                                                                 delegate:self];
-    
-    imageSelectPopoverView.tag = Type_PopoverView_SelectImage;
     
 }
+
 
 - (void)imageViewTapped2:(UITapGestureRecognizer *)sender {
     [iConsole info:@"%s",__FUNCTION__];
@@ -6956,20 +6952,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    UIImageView *pickerImageView;
-    if (self.segmentedControl.selectedSegmentIndex == 0) {
-        pickerImageView = _imageQuestion2;
-    } else {
-        pickerImageView = _imageAnswer2;
-    }
-    
-    PopoverView *imageSelectPopoverView = [PopoverView showPopoverAtPoint:pickerImageView.center
-                                                                   inView:self
-                                                                withTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"")
-                                                          withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil]
-                                                                 delegate:self];
-    
-    imageSelectPopoverView.tag = Type_PopoverView_SelectImage2;
+    __weak __typeof(&*self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        
+        [weakSelf image2SelectAlertViewClickedAtIndex: buttonIndex];
+        
+    }];
     
 }
 
@@ -7020,6 +7008,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
+
 
 - (void) stopAudio {
     
@@ -9204,300 +9193,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     APP_DELEGATE.isAllowToShowPackList = YES;
 }
 
-#pragma mark – PopoverviewDelegate
-
-/**
- *  两种情况：
- *  1. 点击image
- *  2. 点击_backgroundImageSelectButton
- */
-- (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
-{
-    [iConsole info:@"%s",__FUNCTION__];
-    
-    Type_PopoverView sourceType = popoverView.tag;
-    
-    if (sourceType == Type_PopoverView_SelectImage) {
-        [popoverView dismiss];
-        
-        if (index == 1) {
-            [self selectImageOrVideoFromLibraryWithImageType:sourceType];
-        } else if (index == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
-                                                            message:nil
-                                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-            alert.tag = Type_AlertView_VideoURL;
-            [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [alert textFieldAtIndex:0].text = @"";
-            [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
-            alert.delegate = self;
-            [alert show];
-            
-            APP_DELEGATE.isAllowToShowPackList = YES;
-            
-        } else if (index == 2) {
-            if (self.segmentedControl.selectedSegmentIndex == 0) {
-                
-                BOOL isToSetImageViewEmpty = false;
-                
-                if (([_questionImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_questionImageFullPath.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath);
-                    } else {
-                        isToSetImageViewEmpty = YES;
-                    }
-                    
-                    
-                }
-                
-                if (([_questionMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_questionMovieFullPath.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath);
-                    } else {
-                        isToSetImageViewEmpty = YES;
-                    }
-                }
-                
-                if (isToSetImageViewEmpty) {
-                    _questionImageFullPath = @"";
-                    _questionMovieFullPath = @"";
-                    
-                    _currentCard.question.movieFullPath = @"";
-                    _currentCard.question.imageFullPath = @"";
-                    [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content"]];
-                } else {
-                    [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
-                }
-                
-            } else {
-                
-                if (([_answerImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_answerImageFullPath.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _answerImageFullPath);
-                    }
-                }
-                
-                if (([_answerMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_answerMovieFullPath.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath);
-                    }
-                }
-                
-                _answerImageFullPath = @"";
-                _answerMovieFullPath = @"";
-                
-                _currentCard.answer.movieFullPath = @"";
-                _currentCard.answer.imageFullPath = @"";
-                [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
-            }
-            if (isFromNewCreatedCard == FALSE) {
-                [self saveEdittedCard];
-            }
-        }
-    }  else if (sourceType == Type_PopoverView_SelectImage2) {
-        [popoverView dismiss];
-        
-        if (index == 1) {
-            [self selectImageOrVideoFromLibraryWithImageType:sourceType];
-        } else if (index == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
-                                                            message:nil
-                                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
-            alert.tag = Type_AlertView_VideoURL2;
-            [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            [alert textFieldAtIndex:0].text = @"";
-            [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
-            alert.delegate = self;
-            [alert show];
-        } else if (index == 2) {
-            if (self.segmentedControl.selectedSegmentIndex == 0) {
-                
-                if (([_questionImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_questionImageFullPath2.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath2
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath2);
-                    }
-                }
-                
-                if (([_questionMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_questionMovieFullPath2.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath2);
-                    }
-                }
-                
-                _questionImageFullPath2 = @"";
-                _questionMovieFullPath2 = @"";
-                
-                _currentCard.question.movieFullPath2 = @"";
-                _currentCard.question.imageFullPath2 = @"";
-                
-                [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content"]];
-            } else {
-                
-                if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_answerImageFullPath2.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath2
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _answerImageFullPath2);
-                    }
-                }
-                
-                if (([_answerMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
-                    (_answerMovieFullPath2.length > 0)) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
-                                                                    error:&error])
-                    {
-                        NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath2);
-                    }
-                }
-                
-                _answerImageFullPath2 = @"";
-                _answerMovieFullPath2 = @"";
-                
-                _currentCard.answer.movieFullPath2 = @"";
-                _currentCard.answer.imageFullPath2 = @"";
-                [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
-            }
-            if (isFromNewCreatedCard == FALSE) {
-                [self saveEdittedCard];
-            }
-        }
-    }else {
-        //change card background
-        [popoverView dismiss];
-        if (index == 0) {
-            
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                _questionBackgroundImageFullPath = @"";
-                [_questionBackgroundImageView setImage:nil];
-            } else {
-                _answerBackgroundImageFullPath = @"";
-                [_answerBackgroundImageView setImage:nil];
-            }
-            
-            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-                //we will save until after we press the save button
-                if (_segmentedControl.selectedSegmentIndex == 0) {
-                    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
-                } else {
-                    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
-                }
-            } else {
-                [self saveEdittedCard];
-            }
-            
-            
-            
-        } else if (index == 1) {
-            _imageSourceType = Type_Image_Source_Background;
-            [self selectFromImageLibrary:_backgroundImageSelectButton withPopoverArrowUp:NO  supportMov:NO];
-        } else if (index == 2) {
-            
-            NSString * undoFullPath;
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                
-                //step1: 填充 _questionBackgroundImageView
-                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
-                undoFullPath = [cardDict objectForKey:@"K_Undo_Question_Background_Image_URL"];
-                [_questionBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
-                
-                //step2: 把undoFullPath内容拷贝到_questionBackgroundImageFullPath
-                if (undoFullPath.length >0) {
-                    NSError *error = nil;
-                    [[NSFileManager defaultManager] removeItemAtPath:_questionBackgroundImageFullPath error:nil];
-                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] error:&error];
-                    if (error) {
-                        [iConsole error:@"%s:Error when copyItem.%@",__FUNCTION__,[error description]];
-                    }
-                }
-                
-                
-                //step3: 我们不支持多级的undo，所以需要重置
-                NSMutableDictionary *cardMutableDict;
-                cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
-                
-                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
-                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
-                [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
-                [self setUndoForCardBackgroundImage:cardMutableDict];
-                
-                
-            } else {
-                
-                NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
-                undoFullPath = [cardDict objectForKey:@"K_Undo_Answer_Background_Image_URL"];
-                [_answerBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
-                
-                if (undoFullPath.length >0) {
-                    NSError *error = nil;
-                    [[NSFileManager defaultManager] removeItemAtPath:_answerBackgroundImageFullPath error:nil];
-                    [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] error:&error];
-                    if (error) {
-                        [iConsole error:@"%s:Error when copyItem.%@",__FUNCTION__,[error description]];
-                    }
-                }
-                
-                
-                //我们不支持多级的undo，所以需要重置
-                NSMutableDictionary *cardMutableDict;
-                cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
-                
-                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
-                [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
-                [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
-                [self setUndoForCardBackgroundImage:cardMutableDict];
-                
-            }
-            
-            //step4: 保存
-            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-                //we will save until after we press the save button
-                if (_segmentedControl.selectedSegmentIndex == 0) {
-                    
-                    _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
-                } else {
-                    _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
-                }
-            } else {
-                [self saveEdittedCard];
-            }
-            
-        }
-    }
-    
-    
-    
-    
-    
-}
 
 #pragma mark – Undo
 
@@ -10665,6 +10360,293 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     return audioDurationSeconds;
 }
 
+
+- (void) imageSelectAlertViewClickedAtIndex:(NSInteger) buttonIndex {
+    
+    //index = 0 insert youtube
+    //index = 1 select from library
+    //index = 2 remove
+    
+    
+    if (buttonIndex == 2) {
+        [self selectImageOrVideoFromLibraryWithImageType:Type_PopoverView_SelectImage];
+    } else if (buttonIndex == 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
+                                                        message:nil
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        alert.tag = Type_AlertView_VideoURL;
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
+        alert.delegate = self;
+        [alert show];
+        
+        APP_DELEGATE.isAllowToShowPackList = YES;
+        
+    } else if (buttonIndex == 3) {
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            
+            BOOL isToSetImageViewEmpty = false;
+            
+            if (([_questionImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_questionImageFullPath.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath);
+                } else {
+                    isToSetImageViewEmpty = YES;
+                }
+                
+                
+            }
+            
+            if (([_questionMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_questionMovieFullPath.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath);
+                } else {
+                    isToSetImageViewEmpty = YES;
+                }
+            }
+            
+            if (isToSetImageViewEmpty) {
+                _questionImageFullPath = @"";
+                _questionMovieFullPath = @"";
+                
+                _currentCard.question.movieFullPath = @"";
+                _currentCard.question.imageFullPath = @"";
+                [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content"]];
+            } else {
+                [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
+            }
+            
+        } else {
+            
+            if (([_answerImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_answerImageFullPath.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _answerImageFullPath);
+                }
+            }
+            
+            if (([_answerMovieFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_answerMovieFullPath.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath);
+                }
+            }
+            
+            _answerImageFullPath = @"";
+            _answerMovieFullPath = @"";
+            
+            _currentCard.answer.movieFullPath = @"";
+            _currentCard.answer.imageFullPath = @"";
+            [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
+        }
+        if (isFromNewCreatedCard == FALSE) {
+            [self saveEdittedCard];
+        }
+    }
+    
+    
+    
+}
+
+
+- (void) image2SelectAlertViewClickedAtIndex:(NSInteger) buttonIndex {
+    if (buttonIndex == 2) {
+        [self selectImageOrVideoFromLibraryWithImageType:Type_Image_Source_Image2];
+    } else if (buttonIndex == 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
+                                                        message:nil
+                                                       delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                              otherButtonTitles:NSLocalizedString(@"Keyboard_Cancel",@""), nil];
+        alert.tag = Type_AlertView_VideoURL2;
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].text = @"";
+        [alert textFieldAtIndex:0].placeholder = @"http://www.youtube.com/";
+        alert.delegate = self;
+        [alert show];
+    } else if (buttonIndex == 3) {
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            
+            if (([_questionImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_questionImageFullPath2.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath2
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath2);
+                }
+            }
+            
+            if (([_questionMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_questionMovieFullPath2.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath2);
+                }
+            }
+            
+            _questionImageFullPath2 = @"";
+            _questionMovieFullPath2 = @"";
+            
+            _currentCard.question.movieFullPath2 = @"";
+            _currentCard.question.imageFullPath2 = @"";
+            
+            [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content"]];
+        } else {
+            
+            if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_answerImageFullPath2.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath2
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _answerImageFullPath2);
+                }
+            }
+            
+            if (([_answerMovieFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
+                (_answerMovieFullPath2.length > 0)) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
+                                                                error:&error])
+                {
+                    NSLog(@"[Error] %@ (%@)", error, _answerMovieFullPath2);
+                }
+            }
+            
+            _answerImageFullPath2 = @"";
+            _answerMovieFullPath2 = @"";
+            
+            _currentCard.answer.movieFullPath2 = @"";
+            _currentCard.answer.imageFullPath2 = @"";
+            [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
+        }
+        if (isFromNewCreatedCard == FALSE) {
+            [self saveEdittedCard];
+        }
+    }
+}
+
+
+- (void) backgroundImageSelectAlertViewClickedAtIndex:(NSInteger) buttonIndex {
+    //change card background
+    
+    if (buttonIndex == 1) {
+        
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            _questionBackgroundImageFullPath = @"";
+            [_questionBackgroundImageView setImage:nil];
+        } else {
+            _answerBackgroundImageFullPath = @"";
+            [_answerBackgroundImageView setImage:nil];
+        }
+        
+        if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+            //we will save until after we press the save button
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+            } else {
+                _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+            }
+        } else {
+            [self saveEdittedCard];
+        }
+        
+        
+        
+    } else if (buttonIndex == 2) {
+        _imageSourceType = Type_Image_Source_Background;
+        [self selectFromImageLibrary:_backgroundImageSelectButton withPopoverArrowUp:NO  supportMov:NO];
+    } else if (buttonIndex == 3) {
+        
+        NSString * undoFullPath;
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            
+            //step1: 填充 _questionBackgroundImageView
+            NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+            undoFullPath = [cardDict objectForKey:@"K_Undo_Question_Background_Image_URL"];
+            [_questionBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
+            
+            //step2: 把undoFullPath内容拷贝到_questionBackgroundImageFullPath
+            if (undoFullPath.length >0) {
+                NSError *error = nil;
+                [[NSFileManager defaultManager] removeItemAtPath:_questionBackgroundImageFullPath error:nil];
+                [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error when copyItem.%@",__FUNCTION__,[error description]];
+                }
+            }
+            
+            
+            //step3: 我们不支持多级的undo，所以需要重置
+            NSMutableDictionary *cardMutableDict;
+            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+            
+            [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+            [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+            [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+            [self setUndoForCardBackgroundImage:cardMutableDict];
+            
+            
+        } else {
+            
+            NSDictionary *cardDict = [self getUndoDictForCardBackgroundImage:_currentPack.packID withCardId:_currentCard.cardID];
+            undoFullPath = [cardDict objectForKey:@"K_Undo_Answer_Background_Image_URL"];
+            [_answerBackgroundImageView setImage:[UIImage imageWithContentsOfFile:undoFullPath]];
+            
+            if (undoFullPath.length >0) {
+                NSError *error = nil;
+                [[NSFileManager defaultManager] removeItemAtPath:_answerBackgroundImageFullPath error:nil];
+                [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:undoFullPath] toURL:[NSURL fileURLWithPath:_answerBackgroundImageFullPath] error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error when copyItem.%@",__FUNCTION__,[error description]];
+                }
+            }
+            
+            
+            //我们不支持多级的undo，所以需要重置
+            NSMutableDictionary *cardMutableDict;
+            cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
+            
+            [cardMutableDict setObject:[NSNumber numberWithInteger:_currentPack.packID] forKey:@"packId"];
+            [cardMutableDict setObject:[NSNumber numberWithInteger:_currentCard.cardID] forKey:@"cardId"];
+            [cardMutableDict setObject:[NSNumber numberWithBool:NO] forKey:@"K_Is_Allow_Undo_Question_Background_Image"];
+            [self setUndoForCardBackgroundImage:cardMutableDict];
+            
+        }
+        
+        //step4: 保存
+        if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+            //we will save until after we press the save button
+            if (_segmentedControl.selectedSegmentIndex == 0) {
+                
+                _currentCard.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+            } else {
+                _currentCard.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+            }
+        } else {
+            [self saveEdittedCard];
+        }
+        
+    }
+}
 
 
 @end
