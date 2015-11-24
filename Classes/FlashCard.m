@@ -1902,7 +1902,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (backgroundImagePath.length == 0) {
-        [self selectFromImageLibraryByBackgroundSelectButton:sender];
+        
+        __weak __typeof(&*self)weakSelf = self;
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            if (buttonIndex == 1) {
+                [weakSelf selectFromImageLibraryByBackgroundSelectButton:sender];
+            }
+            
+        }];
+        
     } else {
 
         if (isAllowUndo) {
@@ -7195,6 +7204,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     [iConsole info:@"%s",__FUNCTION__];
@@ -10655,6 +10668,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
 }
+
 
 
 @end
