@@ -1642,15 +1642,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) refreshAnswerContent {
     [iConsole info:@"%s",__FUNCTION__];
-    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
-    UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
-    [iConsole info:@"%s,_answerImageFullPath = %@",__FUNCTION__,path];
+    
+    UIImage *imageTemp = nil;
+    NSString *path = @"";
+    [iConsole info:@"%s,_currentCard.answer.imageFullPath = %@",__FUNCTION__,_currentCard.answer.imageFullPath];
+    if ([_currentCard.answer.imageFullPath lastPathComponent].length != 0) {
+        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    
+    _answerImageFullPath = path;
     if (imageTemp) {
-        _answerImageFullPath = path;
         _imageAnswer.image = imageTemp;
     } else {
-        [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
-        _answerImageFullPath = @"";
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
         if (_isPlayingCard) {
@@ -1659,15 +1663,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath2 lastPathComponent]];
-    imageTemp = [UIImage imageWithContentsOfFile:path];
-    [iConsole info:@"%s,_answerImageFullPath2 = %@",__FUNCTION__,path];
+    imageTemp = nil;
+    path = @"";
+    [iConsole info:@"%s,_currentCard.answer.imageFullPath2 = %@",__FUNCTION__,_currentCard.answer.imageFullPath2];
+    if ([_currentCard.answer.imageFullPath2 lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath2 lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    
+    _answerImageFullPath2 = path;
     if (imageTemp) {
-        _answerImageFullPath2 = path;
         _imageAnswer2.image = imageTemp;
     } else {
-        [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
-        _answerImageFullPath2 = @"";
         _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
         if (_isPlayingCard) {
@@ -1676,13 +1683,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
-    imageTemp = [UIImage imageWithContentsOfFile:path];
+    imageTemp = nil;
+    path = @"";
+    [iConsole info:@"%s,_currentCard.answer.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.answer.backgroundImageFullPath];
+    if ([_currentCard.answer.backgroundImageFullPath lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    
+    _answerBackgroundImageFullPath = path;
     if (imageTemp) {
-        _answerBackgroundImageFullPath = path;
         _answerBackgroundImageView.image = imageTemp;
     } else {
-        _answerBackgroundImageFullPath = @"";
         _answerBackgroundImageView.image = nil;
     }
     
@@ -1729,15 +1741,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) refreshQuestionContent {
-    NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
-    UIImage *imageTemp = [UIImage imageWithContentsOfFile:path];
-    [iConsole info:@"%s,_questionImageFullPath = %@",__FUNCTION__,path];
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    UIImage *imageTemp = nil;
+    NSString *path = @"";
+    [iConsole info:@"%s,_currentCard.question.imageFullPath = %@",__FUNCTION__,_currentCard.question.imageFullPath];
+    if ([_currentCard.question.imageFullPath lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    _questionImageFullPath = path;
     if (imageTemp) {
-        _questionImageFullPath = path;
         _imageQuestion.image = imageTemp;
     } else {
-        [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
-        _questionImageFullPath = @"";
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content"];
         
         if (_isPlayingCard) {
@@ -1747,15 +1763,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath2 lastPathComponent]];
-    imageTemp = [UIImage imageWithContentsOfFile:path];
-    [iConsole info:@"%s,_questionImageFullPath2 = %@",__FUNCTION__,path];
+    imageTemp = nil;
+    path = @"";
+    [iConsole info:@"%s,_currentCard.question.imageFullPath2 = %@",__FUNCTION__,_currentCard.question.imageFullPath2];
+    if ([_currentCard.question.imageFullPath2 lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath2 lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    _questionImageFullPath2 = path;
     if (imageTemp) {
-        _questionImageFullPath2 = path;
         _imageQuestion2.image = imageTemp;
     } else {
-        [iConsole info:@"%s,[UIImage imageWithContentsOfFile:path] return with nil, so use placehold image",__FUNCTION__];
-        _questionImageFullPath2 = @"";
         _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content"];
         
         if (_isPlayingCard) {
@@ -1765,13 +1783,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-    imageTemp = [UIImage imageWithContentsOfFile:path];
+    imageTemp = nil;
+    path = @"";
+    [iConsole info:@"%s,_currentCard.question.logoFullPath = %@",__FUNCTION__,_currentCard.question.logoFullPath];
+    if ([_currentCard.question.logoFullPath lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
+    
+    _logoImageFullPath = path;
     if (imageTemp) {
-        _logoImageFullPath = path;
         _logoImage.image = imageTemp;
     } else {
-        _logoImageFullPath = @"";
         _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo"];
         
         if (_isPlayingCard) {
@@ -1780,14 +1803,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    imageTemp = nil;
+    path = @"";
+    [iConsole info:@"%s,_currentCard.question.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.question.backgroundImageFullPath];
+    if ([_currentCard.question.backgroundImageFullPath lastPathComponent].length != 0) {
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
+        imageTemp = [UIImage imageWithContentsOfFile:path];
+    }
     
-    path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
-    imageTemp = [UIImage imageWithContentsOfFile:path];
+    _questionBackgroundImageFullPath = path;
     if (imageTemp) {
-        _questionBackgroundImageFullPath = path;
         _questionBackgroundImageView.image = imageTemp;
     } else {
-        _questionBackgroundImageFullPath = @"";
         _questionBackgroundImageView.image = nil;
     }
     
@@ -7207,18 +7234,32 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
+        
+        UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+        
         CGPoint point;
         if (sender == nil) {
             if (self.segmentedControl.selectedSegmentIndex == 0) {
-                point = _imageQuestion.center;
+                if (_imageSourceType == Type_Image_Source_Image) {
+                    point = _imageQuestion.center;
+                    point = [_imageQuestion.superview convertPoint:point toView:rootView];
+                } else {
+                    point = _imageQuestion2.center;
+                    point = [_imageQuestion2.superview convertPoint:point toView:rootView];
+                }
             } else {
-                point = _imageAnswer.center;
+                if (_imageSourceType == Type_Image_Source_Image) {
+                    point = _imageAnswer.center;
+                    point = [_imageAnswer.superview convertPoint:point toView:rootView];
+                } else {
+                    point = _imageAnswer2.center;
+                    point = [_imageAnswer2.superview convertPoint:point toView:rootView];
+                }
             }
         }else {
             point = CGPointMake(CGRectGetWidth(sender.frame)/2, 2);
-            point = [sender convertPoint:point toView:self];
+            point = [sender.superview convertPoint:point toView:rootView];
         }
-        
         
         
         CGRect rect = CGRectMake(point.x, point.y, 50, 50);
@@ -7231,9 +7272,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:_imagePickerController];
         _imagePickerPopover.delegate = self;
         if (isArrowUp) {
-            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+            [_imagePickerPopover presentPopoverFromRect:rect inView:rootView permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         } else {
-            [_imagePickerPopover presentPopoverFromRect:rect inView:self permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+            [_imagePickerPopover presentPopoverFromRect:rect inView:rootView permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
         }
         
     }
