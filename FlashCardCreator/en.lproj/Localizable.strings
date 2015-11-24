@@ -45,7 +45,7 @@
 "DIALOG_INSERT_YOUTUBE_URL" = "Insert a YouTube url";
 "DIALOG_SELECT_FROM_LIBRARY" = "Select from library";
 "DIALOG_REMOVE_VIDEO_IMAGE" = "Remove video/image";
-"DIALOG_REMOVE_IMAGE" = "Remove image";
+"DIALOG_REMOVE_IMAGE" = "Remove logo image";
 "DIALOG_INVALID_YOUTUBE_URL" = "Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY";
 "DIALOG_INPUT_DOWNLOAD_CODE" = "Input download code";
 "DIALOG_USE_AMAZON_AS_STORAGE" = "Use Amazon Cloud as storage";
