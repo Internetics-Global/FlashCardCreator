@@ -1647,7 +1647,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *path = @"";
     [iConsole info:@"%s,_currentCard.answer.imageFullPath = %@",__FUNCTION__,_currentCard.answer.imageFullPath];
     if ([_currentCard.answer.imageFullPath lastPathComponent].length != 0) {
-        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
+        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
         imageTemp = [UIImage imageWithContentsOfFile:path];
     }
     
