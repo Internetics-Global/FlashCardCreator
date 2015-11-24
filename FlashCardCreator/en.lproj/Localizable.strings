@@ -95,6 +95,7 @@
 "DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failed to create a new bucket on AWS";
 "DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR" = "User name can not be empty";
 "DIALOG_INVALID_USERNAME_OR_PASSWORD" = "Invalid ID or password";
+"DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME" = "Invlid user name. Only alphanumeric characters are permitted.";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

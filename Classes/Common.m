@@ -324,4 +324,21 @@
 }
 
 
++ (BOOL) isValidBucketNameFromParseUserName:(NSString *) parseUserName {
+    if (parseUserName.length == 0) {
+        return false;
+    }
+    
+    NSCharacterSet *s = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyz1234567890"];
+    s = [s invertedSet];
+    NSRange r = [parseUserName rangeOfCharacterFromSet:s];
+    if (r.location != NSNotFound) {
+        return false;
+    }
+    
+    return true;
+    
+
+}
+
 @end
