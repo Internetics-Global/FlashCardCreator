@@ -186,6 +186,9 @@
     
     static BOOL enableSwitch = YES;
     
+    __block int doubleUpCount = 0;
+    __block int doubleDownCount = 0;
+    
     _motionManager.deviceMotionUpdateInterval =0.01;
     __weak PlayViewControllerV2 *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
@@ -199,13 +202,23 @@
                     if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
                         if (motion.attitude.roll < -0.3) {
                             if (enableSwitch == YES) {
-                                [safeSelf switchQuestionAnswerViewWithHand:TRUE];
+                                if (doubleUpCount == 1) {
+                                    [safeSelf switchQuestionAnswerViewWithHand:TRUE];
+                                    doubleUpCount = 0;
+                                } else {
+                                    doubleUpCount = 1;
+                                }
                                 enableSwitch = NO;
                             }
                             
                         } else if (motion.attitude.roll > 0) {
                             if (enableSwitch == NO) {
-                                enableSwitch = YES;
+                                if (doubleDownCount == 1) {
+                                    enableSwitch = YES;
+                                    doubleDownCount = 0;
+                                } else {
+                                    doubleDownCount = 1;
+                                }
                             }
                             
                         } else {
