@@ -169,6 +169,13 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [_motionManager stopDeviceMotionUpdates];
+    _motionManager = nil;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
