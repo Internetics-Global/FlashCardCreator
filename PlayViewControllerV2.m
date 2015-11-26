@@ -31,7 +31,7 @@
     UIButton                     *_closeButton;
     
     NSArray                      *_shuffledCardArray;
-
+    
     CMMotionManager              *_motionManager;
     
     NSDate                       *_startDate;
@@ -85,6 +85,13 @@
      * if _autoShowQuestionOnly = YES, to show question only
      */
     BOOL      _isAutoShowQuestionOnly;
+    
+    
+    /**
+     *  ROTATION RELATED
+     */
+    BOOL      _isDeviceRotating;
+    BOOL      _isRotationJustFinish;
     
     
     /**
@@ -165,7 +172,7 @@
                                              selector:@selector(landscapeLeftRightOrientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-
+    
     
 }
 
@@ -184,10 +191,14 @@
         _motionManager = [[CMMotionManager alloc]init];
     }
     
-    static BOOL enableSwitch = YES;
+    static BOOL resetRoll    = YES;
     
-    __block int doubleUpCount = 0;
-    __block int doubleDownCount = 0;
+    static BOOL upSwitchFlag    = NO;
+    static BOOL downSwitchFlag    = NO;
+    
+    static BOOL isQASwitching    = NO;
+    
+    static int downCount = 0;
     
     _motionManager.deviceMotionUpdateInterval =0.01;
     __weak PlayViewControllerV2 *safeSelf = self;
@@ -196,46 +207,82 @@
             //[iConsole info:@"The roll of gyroscope sensor is:%f",motion.attitude.roll];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
+                float const UP_THRESHOLD_RADIUS = 0.3;
+                float const DOWN_THRESHOLD_RADIUS = -0.3;
+                
                 if ((_isAutoScroll == false)
-                        && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
-                             && (_oneOffPlayType != One_Off_Play_Type_Auto_Play_Loop)) {
+                    && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
+                    && (_oneOffPlayType != One_Off_Play_Type_Auto_Play_Loop)) {
+                    
+                    if (_isDeviceRotating) {
+                        return;
+                    }
+                    
+                    if (isQASwitching) {
+                        return;
+                    }
+                    
+                    if (_isRotationJustFinish) {
+                        _isRotationJustFinish = NO;
+                        resetRoll = YES;
+                    }
+                    
+                    if (resetRoll == YES) {
+                        
+                        resetRoll = NO;
+                        
+                        downCount = 0;
+                        
+                        downSwitchFlag = YES;
+                        upSwitchFlag = NO;
+                        
+                    }
+                    
                     if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft) {
-                        if (motion.attitude.roll < -0.3) {
-                            if (enableSwitch == YES) {
-                                if (doubleUpCount == 1) {
-                                    [safeSelf switchQuestionAnswerViewWithHand:TRUE];
-                                    doubleUpCount = 0;
-                                } else {
-                                    doubleUpCount = 1;
-                                }
-                                enableSwitch = NO;
+                        //home button is on the right when holding the device
+                        if (motion.attitude.roll < -UP_THRESHOLD_RADIUS && upSwitchFlag) {
+                            if (downCount == 1) {
+                                
+                                downCount = 0;
+                                
+                                upSwitchFlag = NO;
+                                downSwitchFlag = YES;
+                                
+                                isQASwitching = YES;
+                                [safeSelf switchQuestionAnswerViewWithHand:TRUE];
+                                isQASwitching = NO;
+                                
                             }
                             
-                        } else if (motion.attitude.roll > 0) {
-                            if (enableSwitch == NO) {
-                                if (doubleDownCount == 1) {
-                                    enableSwitch = YES;
-                                    doubleDownCount = 0;
-                                } else {
-                                    doubleDownCount = 1;
-                                }
-                            }
+                        } else if (motion.attitude.roll > -DOWN_THRESHOLD_RADIUS && downSwitchFlag) {
+                            downCount = 1;
+                            
+                            upSwitchFlag = YES;
+                            downSwitchFlag = NO;
                             
                         } else {
                             //do nothing
                         }
                         
                     } else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight) {
-                        if (motion.attitude.roll > 0.3) {
-                            if (enableSwitch == YES) {
+                        if (motion.attitude.roll > UP_THRESHOLD_RADIUS && upSwitchFlag) {
+                            if (downCount == 1) {
+                                
+                                downCount = 0;
+                                
+                                upSwitchFlag = NO;
+                                downSwitchFlag = YES;
+                                
+                                isQASwitching = YES;
                                 [safeSelf switchQuestionAnswerViewWithHand:TRUE];
-                                enableSwitch = NO;
+                                isQASwitching = NO;
                             }
                             
-                        } else if (motion.attitude.roll < 0) {
-                            if (enableSwitch == NO) {
-                                enableSwitch = YES;
-                            }
+                        } else if (motion.attitude.roll < DOWN_THRESHOLD_RADIUS && downSwitchFlag) {
+                            downCount = 1;
+                            
+                            upSwitchFlag = YES;
+                            downSwitchFlag = NO;
                             
                         } else {
                             //do nothing
@@ -378,7 +425,7 @@
     if ((self.currentPack.autoPlaySpeed == 0)
         || (self.currentPack.autoPlaySpeed > kMAX_Auto_Play_Speed)
         || (self.currentPack.autoPlaySpeed < kMIN_Auto_Play_Speed)) {
-      _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
+        _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
     } else {
         _dwellTimeSlider.value = self.currentPack.autoPlaySpeed;
     }
@@ -476,9 +523,9 @@
     [_controlPanel addSubview:muteButton];
     _isMute = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
     if (_isMute) {
-       [muteButton setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
+        [muteButton setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
     } else {
-       [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+        [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
     }
     
     [_dwellTimeSlider showPopUpViewAnimated:NO];
@@ -493,7 +540,7 @@
         _countDownLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 230, 230)];
         _countDownLabel.font = [UIFont boldSystemFontOfSize:206];
         _countDownLabel.layer.cornerRadius = 115;
-    
+        
     }
     _countDownLabel.layer.masksToBounds = YES;
     _countDownLabel.center = self.view.center;
@@ -505,7 +552,7 @@
     
     
     if ((_currentPack.autoPlaySpeed != kDefault_Auto_Play_Speed)
-            && ([Common isOwner:_currentPack] == false)){
+        && ([Common isOwner:_currentPack] == false)){
         if (isUserInterfaceIdiomPhone) {
             _messageToastBaseView = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(_controlPanel.frame) + 30, CGRectGetMinY(_controlPanel.frame) - 55, CGRectGetWidth(_controlPanel.frame) - 60, 50)];
         } else {
@@ -536,7 +583,7 @@
     
     
     
-
+    
 }
 
 - (void) enablePauseForAnswerSlider {
@@ -625,7 +672,7 @@
     float flashCardYPositionInScrollView = (IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT-kFlashCardViewHeight_PlayMode_iPad)/2+IPAD_UI_NAVIGATION_BAR_HEIGHT/2; //Since it's horizontal movement, so this
     
     FlashCard *flashCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPAD_UI_WIDTH-kFlashCardViewWidth_PlayMode_iPad)/2,flashCardYPositionInScrollView,kFlashCardViewWidth_PlayMode_iPad,kFlashCardViewHeight_PlayMode_iPad)
-                                                 defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
+                                                    defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
     
     BOOL isDisableAutoResize = false;
     
@@ -672,7 +719,7 @@
                              kFlashCardViewWidth_PlayMode_iPhone,
                              kFlashCardViewHeight_PlayMode_iPhone);
     FlashCard *flashCardView = [[FlashCard alloc] initWithFrame:rect defaultPack:_currentPack defaultCard:_shuffledCardArray[index] isPlayingCard:YES];
-
+    
     BOOL isDisableAutoResize = false;
     
     switch (position) {
@@ -724,7 +771,7 @@
     _scrollView = nil;
     
     [_currentPack savePackOnly];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
@@ -880,7 +927,7 @@
         _isCyclePlay = NO;
         [button setImage:[UIImage imageNamed:@"repeat_unselected"] forState:UIControlStateNormal];
     } else {
-         _isCyclePlay = YES;
+        _isCyclePlay = YES;
         [button setImage:[UIImage imageNamed:@"repeat_selected"] forState:UIControlStateNormal];
     }
     
@@ -941,7 +988,7 @@
 /*
  * if both text to speech and recording exists, we play recording firstly then text to speech
  * execute textToSpeechAllContentNow or playAudio according to setting
-*/
+ */
 - (void) playbackOnCard:(FlashCard *) currentCard {
     
     if (currentCard) {
@@ -1039,7 +1086,7 @@
             }
             
             break;
-        }   
+        }
             
         case One_Off_Play_Type_Auto_Play:
             _isAutoScroll = YES;
@@ -1055,7 +1102,7 @@
         default:
             break;
     }
-
+    
     
 }
 
@@ -1145,14 +1192,14 @@
 
 
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
-
+    
     if ([self isSmartDelay] == false) {
         //在smart delay中，我们并没有用到这个参数
         _scrollView.intervalBetweenCardSeconds = slider.value;
     }
     
     if (_isAutoShowQuestionOnly) {
-        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);  
+        _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value);
         _scrollView.dwellSecondsOnQuestion = (int)(_dwellTimeSlider.value);
     } else {
         _scrollView.dwellSecondsTotally = (int)(_dwellTimeSlider.value *2 + _pauseForAnswerSlider.value);
@@ -1207,7 +1254,7 @@
     }
     
     _currentPack.autoPlaySpeed = slider.value;
-
+    
     //if isSmartDelay = YES, we use Timer to trigger scrolling to next page
     //if isSmartDelay = NO, we use speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance
     if ([self isSmartDelay] == false) {
@@ -1218,7 +1265,7 @@
     {
         [self playbackOnCard:currentCard];
     }
-
+    
     
 }
 
@@ -1267,7 +1314,7 @@
 }
 
 - (void)didScrollToPage:(NSInteger)index {
-     [iConsole info:@"%s",__FUNCTION__];
+    [iConsole info:@"%s",__FUNCTION__];
     
     if (_isAutoScroll) {
         [self enableDwellTimeSlider];
@@ -1318,6 +1365,15 @@
 
 #pragma mark -
 #pragma mark Rotate control
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    _isDeviceRotating = YES;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    _isRotationJustFinish = YES;
+    _isDeviceRotating = NO;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
@@ -1378,7 +1434,7 @@
     [_autoScrollButton setImage:[UIImage imageNamed:@"auto_selected"] forState:UIControlStateNormal];
     
     
-
+    
     if ([self isSmartDelay] == false) {
         [_firstPageDelay_FixedMode_Timer invalidate];
         _firstPageDelay_FixedMode_Timer = [NSTimer scheduledTimerWithTimeInterval:(countDown) target:self selector:@selector(firstPageDelay_FixedMode_Timer) userInfo:nil repeats:NO];
