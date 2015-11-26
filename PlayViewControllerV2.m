@@ -200,6 +200,13 @@
     
     static int downCount = 0;
     
+    /**
+     *  Timeout logic
+     */
+    __block NSDate *_startDateForTimeout =[NSDate date];
+    __block float   _lowestRollDegree = 0;
+    __block float   _highestRollDegree = 0;
+    
     _motionManager.deviceMotionUpdateInterval =0.01;
     __weak PlayViewControllerV2 *safeSelf = self;
     if (_motionManager.isDeviceMotionAvailable) {
@@ -213,6 +220,40 @@
                 if ((_isAutoScroll == false)
                     && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
                     && (_oneOffPlayType != One_Off_Play_Type_Auto_Play_Loop)) {
+                    
+                    
+                    //第一次初始化
+                    
+                    int rollRadius = motion.attitude.roll;
+                    
+                    if (_lowestRollDegree == 0) {
+                        _lowestRollDegree = rollRadius;
+                        _highestRollDegree = rollRadius;
+                    }
+                    if (rollRadius > _highestRollDegree) {
+                        _highestRollDegree = rollRadius;
+                    }
+                    if (rollRadius < _lowestRollDegree) {
+                        _lowestRollDegree = rollRadius;
+                    }
+                    
+                    NSDate*methodFinish =[NSDate date];
+                    NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDateForTimeout];
+                    if (executionTime > 2) {
+                        
+                        if (_highestRollDegree < _lowestRollDegree + 6) {
+                            resetRoll = YES;
+                            
+                            //[iConsole log:@"Timeout for flip function, reset now"];
+                        }
+                        
+                        _lowestRollDegree = 0;
+                        _highestRollDegree = 0;
+                        _startDateForTimeout =[NSDate date];
+                        
+                        
+                        
+                    }
                     
                     if (_isDeviceRotating) {
                         return;
