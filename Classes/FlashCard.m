@@ -1916,6 +1916,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) backgroundImageSelectButtonClicked:(UITapGestureRecognizer *)sender {
     
+    
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    if ([Common isOwner:_currentPack] == FALSE) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
+    
     BOOL isAllowUndo;
     
     NSString *backgroundImagePath;
