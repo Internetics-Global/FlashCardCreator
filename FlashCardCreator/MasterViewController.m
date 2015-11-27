@@ -68,6 +68,12 @@ extern BOOL _isDownloadingSamplePack;
     
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
+    
+    /**
+     *  不是当前的设备宽度，而是download时source device的宽度。
+     */
+    int       _downloadedPackSourceDeviceWidth;
+    
 }
 
 @end
@@ -1513,6 +1519,9 @@ extern BOOL isFromNewCreatedCard;
                 pack.platform = @"";
             }
             
+            //if not exist, return 0;
+            _downloadedPackSourceDeviceWidth = [packDict[@"screen_width"] integerValue];
+            
             NSString *packIDStr = packDict[@"pack_id"];
             if (packIDStr.length == 0) {
                 pack.packID = -1;
@@ -1901,10 +1910,16 @@ extern BOOL isFromNewCreatedCard;
                     baseActionDone = YES;
                 }
                 
-                if (baseActionDone) {
-                    [assembledCard question].css.subheadingSize = subheadingSize;
-                    [assembledCard question].css.mainSize = mainSize;
-                    [assembledCard question].css.subSize = subSize;
+                if (baseActionDone == NO) {
+                    
+                    float ratio = 1;
+                    if (_downloadedPackSourceDeviceWidth > 0) {
+                        ratio = (float)_downloadedPackSourceDeviceWidth/IPHONE_UI_WIDTH/K_Weight_From_Android_To_IOS;
+                    }
+                    
+                    [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                    [assembledCard question].css.mainSize = mainSize/ratio;
+                    [assembledCard question].css.subSize = subSize/ratio;
                 }
                 
                 
@@ -1935,10 +1950,16 @@ extern BOOL isFromNewCreatedCard;
                     baseActionDone = YES;
                 }
                 
-                if (baseActionDone) {
-                    [assembledCard question].css.subheadingSize = subheadingSize;
-                    [assembledCard question].css.mainSize = mainSize;
-                    [assembledCard question].css.subSize = subSize;
+                if (baseActionDone == NO) {
+                    
+                    float ratio = 1;
+                    if (_downloadedPackSourceDeviceWidth > 0) {
+                        ratio = (float)_downloadedPackSourceDeviceWidth/IPAD_UI_WIDTH/K_Weight_From_Android_To_IOS;
+                    }
+                    
+                    [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                    [assembledCard question].css.mainSize = mainSize/ratio;
+                    [assembledCard question].css.subSize = subSize/ratio;
                 }
                 
             } else {
@@ -2144,21 +2165,37 @@ extern BOOL isFromNewCreatedCard;
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
                 float factor = 0;
+                BOOL baseActionDone = NO;
                 if ((subheadingSize < 16) && (subheadingSize >0)) {
                     factor = subheadingSize/16.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
                     [assembledCard answer].css.mainSize = mainSize/factor;
                     [assembledCard answer].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((mainSize < 20) && (mainSize >0)) {
                     factor = mainSize/20.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;
                     [assembledCard answer].css.mainSize = mainSize/factor; // ==20
                     [assembledCard answer].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((subSize < 16) && (subSize >0)) {
                     factor = subSize/16.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;
                     [assembledCard answer].css.mainSize = mainSize/factor;
                     [assembledCard answer].css.subSize = subSize/factor;  // ==16
+                    baseActionDone = YES;
+                }
+                
+                if (baseActionDone == NO) {
+                    
+                    float ratio = 1;
+                    if (_downloadedPackSourceDeviceWidth > 0) {
+                        ratio = (float)_downloadedPackSourceDeviceWidth/IPHONE_UI_WIDTH/K_Weight_From_Android_To_IOS;
+                    }
+                    
+                    [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                    [assembledCard answer].css.mainSize = mainSize/ratio;
+                    [assembledCard answer].css.subSize = subSize/ratio;
                 }
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
@@ -2167,21 +2204,39 @@ extern BOOL isFromNewCreatedCard;
                 //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
                 float factor = 0;
+                BOOL baseActionDone = NO;
                 if ((subheadingSize < 32) && (subheadingSize >0)) {
                     factor = subheadingSize/32.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
                     [assembledCard answer].css.mainSize = mainSize/factor;
                     [assembledCard answer].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((mainSize < 40) && (mainSize >0)) {
                     factor = mainSize/40.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;
                     [assembledCard answer].css.mainSize = mainSize/factor; // ==40
                     [assembledCard answer].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((subSize < 32) && (subSize >0)) {
                     factor = subSize/32.0;
                     [assembledCard answer].css.subheadingSize = subheadingSize/factor;
                     [assembledCard answer].css.mainSize = mainSize/factor;
                     [assembledCard answer].css.subSize = subSize/factor;  // ==32
+                    baseActionDone = YES;
+                }
+                
+                
+                if (baseActionDone == NO) {
+                    
+                    float ratio = 1;
+                    if (_downloadedPackSourceDeviceWidth > 0) {
+                        ratio = (float)_downloadedPackSourceDeviceWidth/IPAD_UI_WIDTH / K_Weight_From_Android_To_IOS;
+                    }
+
+                    
+                    [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                    [assembledCard answer].css.mainSize = mainSize/ratio;
+                    [assembledCard answer].css.subSize = subSize/ratio;
                 }
                 
             } else {

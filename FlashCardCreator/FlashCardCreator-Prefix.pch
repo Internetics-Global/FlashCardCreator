@@ -78,6 +78,12 @@
 #define K_Line_Break_Index    21       //在sybmol表中的位置
 #define K_Delete_Index        32       //在sybmol表中的位置
 
+/**
+ * weight when resizing from Android to iOS, not including ratio
+ * 这是因为当你从Android到iOS,不是简单的屏幕宽度比 ＝ 字体大小。而是有些差异的。
+ */
+#define K_Weight_From_Android_To_IOS   1.1
+
 //Global user_id
 #define GLOBAL_USER_ID @"314"
 
