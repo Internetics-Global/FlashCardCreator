@@ -1878,23 +1878,33 @@ extern BOOL isFromNewCreatedCard;
                 [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
 
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
-                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                //如果尺寸太小，取一个为base，其它进行比例缩放
+                BOOL baseActionDone = NO;
                 float factor = 0;
                 if ((subheadingSize < 16) && (subheadingSize >0)) {
                     factor = subheadingSize/16.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
                     [assembledCard question].css.mainSize = mainSize/factor;
-                    [assembledCard question].css.subSize = subSize/factor; 
+                    [assembledCard question].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((mainSize < 20) && (mainSize >0)) {
                     factor = mainSize/20.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;
                     [assembledCard question].css.mainSize = mainSize/factor; // ==20
                     [assembledCard question].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((subSize < 16) && (subSize >0)) {
                     factor = subSize/16.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;
                     [assembledCard question].css.mainSize = mainSize/factor;
                     [assembledCard question].css.subSize = subSize/factor;  // ==16
+                    baseActionDone = YES;
+                }
+                
+                if (baseActionDone) {
+                    [assembledCard question].css.subheadingSize = subheadingSize;
+                    [assembledCard question].css.mainSize = mainSize;
+                    [assembledCard question].css.subSize = subSize;
                 }
                 
                 
@@ -1902,23 +1912,33 @@ extern BOOL isFromNewCreatedCard;
                 [iConsole info:@"You are using iPad and pack was made on non-iOS platform"];
                 
                 //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
-                //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
+                //如果尺寸太小，取一个为base，其它进行比例缩放
+                BOOL baseActionDone = NO;
                 float factor = 0;
                 if ((subheadingSize < 32) && (subheadingSize >0)) {
                     factor = subheadingSize/32.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
                     [assembledCard question].css.mainSize = mainSize/factor;
                     [assembledCard question].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((mainSize < 40) && (mainSize >0)) {
                     factor = mainSize/40.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;
                     [assembledCard question].css.mainSize = mainSize/factor; // ==40
                     [assembledCard question].css.subSize = subSize/factor;
+                    baseActionDone = YES;
                 } else if ((subSize < 32) && (subSize >0)) {
                     factor = subSize/32.0;
                     [assembledCard question].css.subheadingSize = subheadingSize/factor;
                     [assembledCard question].css.mainSize = mainSize/factor;
                     [assembledCard question].css.subSize = subSize/factor;  // ==32
+                    baseActionDone = YES;
+                }
+                
+                if (baseActionDone) {
+                    [assembledCard question].css.subheadingSize = subheadingSize;
+                    [assembledCard question].css.mainSize = mainSize;
+                    [assembledCard question].css.subSize = subSize;
                 }
                 
             } else {
