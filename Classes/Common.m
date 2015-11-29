@@ -288,6 +288,10 @@
         return YES;
     }
     
+    if ([filePath rangeOfString:@"youtube.com"].location != NSNotFound) {
+        return NO;
+    }
+    
     //check extension type
     if ([[filePath lastPathComponent] rangeOfString:@"."].location == NSNotFound) {
         return YES;
