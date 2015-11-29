@@ -84,6 +84,12 @@ extern BOOL isFromNewCreatedCard;
 
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
+typedef NS_ENUM(NSInteger, Resize_Accuracy_Type) {
+    Resize_Accuracy_Type_Low,
+    Resize_Accuracy_Type_High,
+    Resize_Accuracy_Type_Extreme
+};
+
 
 typedef NS_ENUM(NSInteger, Type_Image_Source) {
     Type_Image_Source_Logo       = 0,//when clicking the logo
@@ -1265,6 +1271,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark -
 #pragma mark - Editable related
 - (BOOL)checkCardEditable {
+    
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result;
     if ([Common isOwner:_currentPack]) {
@@ -3667,7 +3674,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 10: //Template 0
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 20, 700, 50);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 710, 52);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:30];
@@ -3687,7 +3694,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 30;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 75, 700, 350);
+            _mainAnswer.frame = CGRectMake(10, 65, 710, 362);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
@@ -3716,7 +3723,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 8: //Template 1
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 20, 500, 50);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 500, 54);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -3735,7 +3742,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 34;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 75, 700, 180);
+            _mainAnswer.frame = CGRectMake(10, 67, 710, 192);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
@@ -3754,7 +3761,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 38;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 260, 700, 160);
+            _subAnswer.frame = CGRectMake(10, 261, 710, 171);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:30];
@@ -3782,7 +3789,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 30, 700, 280);
+            _mainAnswer.frame = CGRectMake(10, 10, 710, 305);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -3801,7 +3808,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 320, 700, 100);
+            _subAnswer.frame = CGRectMake(10, 320, 710, 110);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -3829,7 +3836,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 20, 700, 200);
+            _mainAnswer.frame = CGRectMake(10, 10, 710, 215);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -3848,7 +3855,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 230, 700, 190);
+            _subAnswer.frame = CGRectMake(10, 230, 710, 205);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -3877,7 +3884,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 40, 700, 380);
+            _mainAnswer.frame = CGRectMake(10, 10, 710, 417);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -3912,7 +3919,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(10, 20, 700, 410);
+            _imageAnswer.frame = CGRectMake(10, 20, 710, 410);
             
             _imageAnswer2.hidden = TRUE;
             
@@ -3922,7 +3929,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 363, 70);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -3941,7 +3948,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 75, 360, 355);
+            _mainAnswer.frame = CGRectMake(10, 83, 363, 355);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -3974,7 +3981,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 10, 360, 420);
+            _mainAnswer.frame = CGRectMake(10, 10, 365, 425);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4005,7 +4012,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 1:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 700, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 710, 62);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4024,7 +4031,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 75, 360, 295);
+            _mainAnswer.frame = CGRectMake(10, 75, 358, 298);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:38];
@@ -4043,7 +4050,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 38;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 380, 360, 50);
+            _subAnswer.frame = CGRectMake(10, 375, 358, 50);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:38];
@@ -4071,7 +4078,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 11:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 70);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4093,7 +4100,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(30, 80, 310, 310);
+            _imageAnswer2.frame = CGRectMake(30, 90, 310, 310);
             
             _imageAnswer.hidden = FALSE;
             _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
@@ -4104,7 +4111,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 2:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 210);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 368, 210);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4123,7 +4130,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 225, 360, 210);
+            _mainAnswer.frame = CGRectMake(10, 225, 368, 210);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4155,7 +4162,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 40, 345, 380);
+            _mainAnswer.frame = CGRectMake(10, 20, 355, 413);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4174,7 +4181,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(365, 40, 345, 380);
+            _subAnswer.frame = CGRectMake(365, 20, 345, 413);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4204,7 +4211,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 40, 145, 380);
+            _mainAnswer.frame = CGRectMake(10, 10, 146, 412);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4223,7 +4230,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(165, 40, 545, 380);
+            _subAnswer.frame = CGRectMake(160, 10, 555, 412);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4251,7 +4258,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 13:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 355);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 365, 360);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4302,7 +4309,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 14:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 100);
+            _subheadingAnswer.frame = CGRectMake(10, 10, 365, 110);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4321,7 +4328,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(10, 120, 360, 180);
+            _mainAnswer.frame = CGRectMake(10, 125, 365, 198);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4341,7 +4348,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(10, 310, 360, 100);
+            _subAnswer.frame = CGRectMake(10, 325, 365, 112);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4371,7 +4378,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 15:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(30, 340, 310, 60);
+            _subheadingAnswer.frame = CGRectMake(20, 350, 328, 65);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4390,7 +4397,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(380, 340, 310, 60);
+            _mainAnswer.frame = CGRectMake(353, 350, 321, 65);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4414,11 +4421,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(30, 20, 310, 310);
+            _imageAnswer2.frame = CGRectMake(20, 20, 328, 328);
             
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(380, 20, 310, 310);
+            _imageAnswer.frame = CGRectMake(353, 20, 321, 321);
             
             
             break;
@@ -4428,7 +4435,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 16:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(370, 10, 360, 100);
+            _subheadingAnswer.frame = CGRectMake(370, 10, 355, 105);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4447,7 +4454,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(370, 120, 360, 180);
+            _mainAnswer.frame = CGRectMake(370, 120, 355, 197);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4467,7 +4474,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(370, 310, 360, 100);
+            _subAnswer.frame = CGRectMake(370, 320, 355, 113);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:34];
@@ -4486,13 +4493,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeAnswer = 34;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(10, 40, 350, 350);
+            _imageAnswer.frame = CGRectMake(10, 40, 358, 350);
             
             _imageAnswer2.hidden = TRUE;
             
             break;
         }
-
+            
             
         default:
         {
@@ -4517,7 +4524,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0: //Template 0
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 20, 700, 50);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 710, 52);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:30];
@@ -4537,7 +4544,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 30;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 75, 700, 350);
+            _mainQuestion.frame = CGRectMake(10, 65, 710, 362);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
@@ -4565,7 +4572,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 20, 500, 50);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 500, 54);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -4584,7 +4591,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 34;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 75, 700, 180);
+            _mainQuestion.frame = CGRectMake(10, 67, 710, 192);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
@@ -4603,7 +4610,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 38;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 260, 700, 160);
+            _subQuestion.frame = CGRectMake(10, 261, 710, 171);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:30];
@@ -4631,7 +4638,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 30, 700, 280);
+            _mainQuestion.frame = CGRectMake(10, 10, 710, 305);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4650,7 +4657,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 320, 700, 100);
+            _subQuestion.frame = CGRectMake(10, 320, 710, 110);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -4678,7 +4685,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 20, 700, 200);
+            _mainQuestion.frame = CGRectMake(10, 10, 710, 215);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4697,7 +4704,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 230, 700, 190);
+            _subQuestion.frame = CGRectMake(10, 230, 710, 205);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -4726,7 +4733,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 40, 700, 380);
+            _mainQuestion.frame = CGRectMake(10, 10, 710, 417);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4761,7 +4768,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(10, 20, 700, 410);
+            _imageQuestion.frame = CGRectMake(10, 20, 710, 410);
             
             _imageQuestion2.hidden = TRUE;
             
@@ -4771,7 +4778,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 6:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 363, 70);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4790,7 +4797,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 75, 360, 355);
+            _mainQuestion.frame = CGRectMake(10, 83, 363, 355);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -4823,7 +4830,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 10, 360, 420);
+            _mainQuestion.frame = CGRectMake(10, 10, 365, 425);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -4854,7 +4861,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 8:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 700, 60);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 710, 62);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4873,7 +4880,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 75, 360, 295);
+            _mainQuestion.frame = CGRectMake(10, 75, 358, 298);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:38];
@@ -4892,7 +4899,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 38;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 380, 360, 50);
+            _subQuestion.frame = CGRectMake(10, 375, 358, 50);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:38];
@@ -4920,7 +4927,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 9:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 60);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 70);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4943,7 +4950,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(30, 80, 310, 310);
+            _imageQuestion2.frame = CGRectMake(30, 90, 310, 310);
             
             
             _imageQuestion.hidden = FALSE;
@@ -4956,7 +4963,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 10:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 210);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 368, 210);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -4975,7 +4982,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 225, 360, 210);
+            _mainQuestion.frame = CGRectMake(10, 225, 368, 210);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -5008,7 +5015,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 40, 345, 380);
+            _mainQuestion.frame = CGRectMake(10, 20, 355, 413);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5027,7 +5034,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(365, 40, 345, 380);
+            _subQuestion.frame = CGRectMake(365, 20, 345, 413);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5057,7 +5064,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 40, 145, 380);
+            _mainQuestion.frame = CGRectMake(10, 10, 146, 412);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5076,7 +5083,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(165, 40, 545, 380);
+            _subQuestion.frame = CGRectMake(160, 10, 555, 412);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5104,7 +5111,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 13:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 355);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 365, 360);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5155,7 +5162,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 14:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 100);
+            _subheadingQuestion.frame = CGRectMake(10, 10, 365, 110);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5174,7 +5181,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(10, 120, 360, 180);
+            _mainQuestion.frame = CGRectMake(10, 125, 365, 198);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -5194,7 +5201,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
      
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(10, 310, 360, 100);
+            _subQuestion.frame = CGRectMake(10, 325, 365, 112);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -5224,7 +5231,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 15:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(30, 340, 310, 60);
+            _subheadingQuestion.frame = CGRectMake(20, 350, 328, 65);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5243,7 +5250,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(380, 340, 310, 60);
+            _mainQuestion.frame = CGRectMake(353, 350, 321, 65);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5267,11 +5274,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(30, 20, 310, 310);
+            _imageQuestion2.frame = CGRectMake(20, 20, 328, 328);
             
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(380, 20, 310, 310);
+            _imageQuestion.frame = CGRectMake(353, 20, 321, 321);
             
             
             break;
@@ -5281,7 +5288,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 16:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(370, 10, 360, 100);
+            _subheadingQuestion.frame = CGRectMake(370, 10, 355, 105);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5300,7 +5307,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(370, 120, 360, 180);
+            _mainQuestion.frame = CGRectMake(370, 120, 355, 197);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -5320,7 +5327,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(370, 310, 360, 100);
+            _subQuestion.frame = CGRectMake(370, 320, 355, 113);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:34];
@@ -5339,7 +5346,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeQuestion = 34;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(10, 40, 350, 350);
+            _imageQuestion.frame = CGRectMake(10, 40, 358, 350);
             
             _imageQuestion2.hidden = TRUE;
             
@@ -8069,7 +8076,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     height= textView.contentSize.height;
     tag = textView.tag;
     
-    [self adjustFontToFit:textView withHighAccuracy:NO];
+    [self adjustFontToFit:textView withHighAccuracy:Resize_Accuracy_Type_Low];
     
     return YES;
     
@@ -8202,6 +8209,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     int kMax = 40;
     int lineNumber;
     
+//    if ([_currentCard.question.main rangeOfString:@"Life is great"].location != NSNotFound) {
+//        _currentCard.question.lineNoMain = 6;
+//    }
+    
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
         //------行数不一致时，增大字体 （初调，步长大）-------
@@ -8235,16 +8247,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             usleep(1000);
         }
         
+        
         //------粗粒度的调整）-------
         
-        if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:Resize_Accuracy_Type_Low]){
             result= YES;
         }
-        if ([self adjustFontToFit:_mainQuestion withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_mainQuestion withHighAccuracy:Resize_Accuracy_Type_Low]){
             
             result= YES;
         }
-        if ([self adjustFontToFit:_subQuestion withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_subQuestion withHighAccuracy:Resize_Accuracy_Type_Low]){
             result= YES;
         }
         
@@ -8311,15 +8324,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             usleep(1000);
         }
         
+        
         //------以防万一，我们需要再做一次高粒度的fit------
-        if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
-        if ([self adjustFontToFit:_mainQuestion withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_mainQuestion withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             
             result= YES;
         }
-        if ([self adjustFontToFit:_subQuestion withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_subQuestion withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
     
@@ -8376,14 +8390,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         //---- 粗粒度的调整----
         
-        if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:Resize_Accuracy_Type_Low]){
             
             result= YES;
         }
-        if ([self adjustFontToFit:_mainAnswer withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_mainAnswer withHighAccuracy:Resize_Accuracy_Type_Low]){
             result= YES;
         }
-        if ([self adjustFontToFit:_subAnswer withHighAccuracy:NO]){
+        if ([self adjustFontToFit:_subAnswer withHighAccuracy:Resize_Accuracy_Type_Low]){
             result= YES;
         }
 
@@ -8464,13 +8478,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         //---- 以防万一，我们需要再做一次高粒度的fit----
         
-        if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
-        if ([self adjustFontToFit:_mainAnswer withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_mainAnswer withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
-        if ([self adjustFontToFit:_subAnswer withHighAccuracy:YES]){
+        if ([self adjustFontToFit:_subAnswer withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
         
@@ -8490,9 +8504,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 /**
  *  这只是一个经验值，经过仔细的样本采集
- *  在这个方法用于getTextSizeHeight中
  */
 - (float) getTextViewLeftMargin:(UITextView *) textView {
+    
+    return 0.0;  //最新逻辑
 
     int delta = 3;  //delta引入是让计算更保守，让行数的计算结果宁可比实际多，也不要少，有机会让程序通过最后的adjustFontToFit来完成
     
@@ -8569,7 +8584,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  2. textview必须有内容
  *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整，而是默认为10号字体
  */
-- (BOOL) adjustFontToFit:(UITextView *) textView withHighAccuracy:(BOOL) isHighAccuracy {
+- (BOOL) adjustFontToFit:(UITextView *) textView withHighAccuracy:(Resize_Accuracy_Type) accuracyType {
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result = NO;
     
@@ -8623,8 +8638,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         gate = 8;
     }
     
-    //确保top margin和bottom margin足够，所以用一个经验值代替frameHeight/5
-    while ((textHeight > frameHeight - frameHeight/5)&&(textHeight >0)&&(textView.font.pointSize >0)) {
+    
+    UIEdgeInsets inset = textView.textContainerInset; //之前我们只是用一个经验值代替frameHeight/5
+    while ((textHeight > frameHeight - inset.top - inset.bottom)&&(textHeight >0)&&(textView.font.pointSize >0)) {
         outputFlag = TRUE;
         result = YES;
         
@@ -8635,8 +8651,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [iConsole warn:@"%s:......textView.font.pointSize <gate:%@",__FUNCTION__,textView.text];
             break;
         }
-        float delta;
-        if (isHighAccuracy) {
+        float delta  = 0;
+        if (accuracyType == Resize_Accuracy_Type_High) {
             
             [iConsole info:@"withHighAccuracy adjustment = YES"];
             
@@ -8653,7 +8669,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }else {
                 delta = 1;
             }
-        } else {
+        } else if  (accuracyType == Resize_Accuracy_Type_Low) {
             if (pointSize < 10.0) {
                 delta = 0.25;
             } else if (pointSize < 12.0) {
@@ -8665,6 +8681,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }else {
                 delta = 2;
             }
+        } else if (accuracyType == Resize_Accuracy_Type_Extreme) {
+            if (pointSize < 10.0) {
+                delta = 0.02;
+            } else if (pointSize < 12.0) {
+                delta = 0.05;
+            } else if (pointSize < 30.0) {
+                delta = 0.05;
+            } else if (pointSize < 50.0){
+                delta = 0.05;
+            } else if (pointSize < 100.0){
+                delta = 0.05;
+            }else {
+                delta = 0.1;
+            }
+        } else {
+            delta = 1;
+            [iConsole error:@"Resize_Accuracy_Type out of range, should not be here"];
         }
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize -delta)]];
