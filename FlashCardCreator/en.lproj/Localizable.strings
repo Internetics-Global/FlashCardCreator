@@ -40,6 +40,7 @@
 "DIALOG_WARN"       = "Warning";
 "DIALOG_PACK_IS_BEING_USED"       = "The pack is currently being used";
 "DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR" = "Share function is forbidden by the pack creator";
+"DIALOG_RESUME_TO_DOWNLOAD"       = "Resume to download?";
 
 "DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video selection";
 "DIALOG_INSERT_YOUTUBE_URL" = "Insert a YouTube url";
