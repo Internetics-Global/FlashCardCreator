@@ -173,6 +173,8 @@
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActiveNotification) name:UIApplicationWillResignActiveNotification object:nil];
+    
     
 }
 
@@ -1633,6 +1635,20 @@
     [_timerForDelayedText2Speech invalidate];
     _timerForDelayedText2Speech = nil;
 }
+
+
+#pragma mark – UIApplicationWillResignActiveNotification
+- (void) willResignActiveNotification {
+    [self dismiss];
+    
+    [self invalidateAllTimers];
+    
+    _scrollView.delegate = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark – Memory management
 
 
 - (void)dealloc {
