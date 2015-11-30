@@ -163,8 +163,8 @@
 "Label_New_Pack_Name" = "New pack name";
 "Label_Sidebar_Title" = "Side bar title";
 "Label_Creator"       = "Your name";
-"Label_Admin_Password"       = "Admin password";
-"Label_Confirm_Admin_Password"       = "Confirm admin password";
+"Label_Admin_Password"       = "admin password";
+"Label_Confirm_Admin_Password"       = "confirm admin password";
 "Label_Creator_Hint"       = "Created by:";
 "Label_Job_Title"       = "Name or title";
 "Label_New_User"      = "New User?";
