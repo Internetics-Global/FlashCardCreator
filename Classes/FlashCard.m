@@ -360,7 +360,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowOpacity = 0.3f;
         _questionTitle.layer.shadowRadius = 3.5f;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
@@ -382,7 +382,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowOpacity = 0.3f;
         _answerTitle.layer.shadowRadius = 3.5f;
         _answerTitle.textColor = [UIColor redColor];
         _answerTitle.delegate = self;
@@ -620,6 +620,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             point.y = (point.y) * kFlashCardViewProporation_iPhone;
         }
         _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
+        _cardSNText.badgeTextColor = [UIColor whiteColor];
+        
         
     }
     
@@ -1742,6 +1744,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _answerTitle.text = _currentCard.answer.title;
     _answerTitle.textColor = [self colorForBackgroundTemplateID];
+    _cardSNText.badgeBackgroundColor = [self colorForBackgroundTemplateID];
+    
     
     _subheadingAnswer.text = _currentCard.answer.subheading;
     _mainAnswer.text =_currentCard.answer.main;
@@ -1862,6 +1866,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _questionTitle.text = _currentCard.question.title;
     _questionTitle.textColor = [self colorForBackgroundTemplateID];
+    _cardSNText.badgeBackgroundColor = [self colorForBackgroundTemplateID];
     
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
@@ -7977,6 +7982,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //    CGRect frame = textView.frame;
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
+    
+    
     
     
 }
