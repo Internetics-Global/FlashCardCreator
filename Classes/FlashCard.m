@@ -182,6 +182,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
         
+        
         if ((card == nil) || (pack == nil)) {
             //[iConsole info:@"%s:Check your code, it could be possiblly an issue",__FUNCTION__];
         }
@@ -1740,6 +1741,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     _answerTitle.text = _currentCard.answer.title;
+    _answerTitle.textColor = [self colorForBackgroundTemplateID];
     
     _subheadingAnswer.text = _currentCard.answer.subheading;
     _mainAnswer.text =_currentCard.answer.main;
@@ -1859,12 +1861,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     _questionTitle.text = _currentCard.question.title;
+    _questionTitle.textColor = [self colorForBackgroundTemplateID];
     
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
     _subQuestion.text =_currentCard.question.sub;
 }
 
+- (UIColor *) colorForBackgroundTemplateID{
+    
+    NSString *str = _templateBackgroundImageName.lowercaseString;
+    if ([str rangeOfString:@"red"].location != NSNotFound) {
+        return [UIColor redColor];
+    }else if ([str rangeOfString:@"purple"].location != NSNotFound) {
+        return [UIColor purpleColor];
+    }else if ([str rangeOfString:@"blue"].location != NSNotFound) {
+        return [UIColor blueColor];
+    }else if ([str rangeOfString:@"coffee"].location != NSNotFound) {
+        return [UIColor colorWithRed:128.0/255 green:0 blue:0 alpha:1];
+    }else if ([str rangeOfString:@"gray"].location != NSNotFound) {
+        return [UIColor colorWithRed:40.0/255 green:40.0/255 blue:40.0/255 alpha:1];
+    }else {
+        return [UIColor blueColor];
+    }
+    
+}
 
 #pragma mark -
 #pragma mark Segment callback
@@ -8683,7 +8704,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
         } else if (accuracyType == Resize_Accuracy_Type_Extreme) {
             if (pointSize < 10.0) {
-                delta = 0.02;
+                delta = 0.05;
             } else if (pointSize < 12.0) {
                 delta = 0.05;
             } else if (pointSize < 30.0) {
@@ -9135,6 +9156,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if (why == kReasonJobTitleChaneEnum) {
         _currentPack.jobTitle = val;
         [_currentPack save];
+    } else if (why == kReasonTemplateBackgroundChangeEnum) {
+        _templateBackgroundImageName = val;
     }
     
     for (Card *card in [_currentPack cards]) {
@@ -9558,7 +9581,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             return item;
         }
     }
-    
+
     
     return [rawArray firstObject];
 }
