@@ -1541,6 +1541,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) refreshQuestionAndAnswerContent {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    _templateBackgroundImageName = _currentCard.templateBackgroundName;
+    
     [self refreshQuestionContent];
     [self refreshAnswerContent];
     
@@ -1552,7 +1555,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         _sidebarTitle.text = _currentPack.sidebarTitle;
     }
-    _templateBackgroundImageName = _currentCard.templateBackgroundName;
     _templateBackgroundImageView.image = [UIImage imageNamed:_templateBackgroundImageName];
     
     
