@@ -217,7 +217,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 float const UP_THRESHOLD_RADIUS = 0.3;
-                float const DOWN_THRESHOLD_RADIUS = 0;
+                float const DOWN_THRESHOLD_RADIUS = -0.3;
                 
                 if ((_isAutoScroll == false)
                     && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
