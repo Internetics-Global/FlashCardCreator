@@ -8701,11 +8701,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    
-    CGRect rect = textView.frame;
-    rect.size.height = 25;
-    textView.frame = rect;
-    
     /**
      *  以下逻辑关键是提前设置了textview.textContainerInset ＝ UIEdgeInsetsZero;
      *  最早我们使用了一个经验值作为inset.top和inset.bottom的数值（frameHeight/5）
