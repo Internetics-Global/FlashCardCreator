@@ -438,12 +438,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
         
+        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero;  //很关键
+        
         if (_subheadingFontQuestion.length == 0) {
             _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
         } else {
             _subheadingQuestion.font =[UIFont fontWithName:_subheadingFontQuestion size:28];
         }
-        
         _subheadingQuestion.userInteractionEnabled = FALSE;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
@@ -457,6 +458,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_mainQuestion == nil) {
         _mainQuestion = [[UITextView alloc]init];
         _mainQuestion.tag = kTagMainQuestion;
+        
+        _mainQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
         
         if (_mainFontQuestion.length == 0) {
             _mainQuestion.font =[UIFont boldSystemFontOfSize:28];
@@ -478,6 +481,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subQuestion == nil) {
         _subQuestion = [[UITextView alloc]init];
         _subQuestion.tag = kTagSubQuestion;
+        
+        _subQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
         
         if (_subFontQuestion.length == 0) {
             _subQuestion.font =[UIFont boldSystemFontOfSize:28];
@@ -530,6 +535,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer = [[UITextView alloc]init];
         _subheadingAnswer.tag = kTagSubheadingAnswer;
         
+        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         if (_subheadingFontAnswer.length == 0) {
             _subheadingAnswer.font =[UIFont boldSystemFontOfSize:28];
         } else {
@@ -550,6 +557,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_mainAnswer == nil) {
         _mainAnswer = [[UITextView alloc]init];
         _mainAnswer.tag = kTagMainAnswer;
+        
+        _mainAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
         
         if (_mainFontAnswer.length == 0) {
             _mainAnswer.font =[UIFont boldSystemFontOfSize:28];
@@ -572,6 +581,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subAnswer == nil) {
         _subAnswer = [[UITextView alloc]init];
         _subAnswer.tag = kTagSubAnswer;
+        
+        _subAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
         
         if (_subFontAnswer.length == 0) {
             _subAnswer.font =[UIFont boldSystemFontOfSize:28];
@@ -969,6 +980,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subheadingQuestion ==  nil) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
+        
+        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _subheadingQuestion.userInteractionEnabled = FALSE;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingQuestion.returnKeyType = UIReturnKeyDefault;
@@ -982,6 +996,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_mainQuestion ==  nil) {
         _mainQuestion = [[UITextView alloc]init];
         _mainQuestion.tag = kTagMainQuestion;
+        
+        _mainQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _mainQuestion.userInteractionEnabled = FALSE;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _mainQuestion.returnKeyType = UIReturnKeyDefault;
@@ -996,6 +1013,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subQuestion ==  nil) {
         _subQuestion = [[UITextView alloc]init];
         _subQuestion.tag = kTagSubQuestion;
+        
+        _subQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _subQuestion.userInteractionEnabled = FALSE;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
@@ -1042,6 +1062,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subheadingAnswer ==  nil) {
         _subheadingAnswer = [[UITextView alloc]init];
         _subheadingAnswer.tag = kTagSubheadingAnswer;
+        
+        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _subheadingAnswer.userInteractionEnabled = FALSE;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subheadingAnswer.returnKeyType = UIReturnKeyDefault;
@@ -1055,6 +1078,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_mainAnswer ==  nil) {
         _mainAnswer = [[UITextView alloc]init];
+        
+        _mainAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _mainAnswer.tag = kTagMainAnswer;
         _mainAnswer.userInteractionEnabled = FALSE;
         _mainAnswer.keyboardType = UIKeyboardAppearanceDefault;
@@ -1070,6 +1096,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_subAnswer ==  nil) {
         _subAnswer = [[UITextView alloc]init];
         _subAnswer.tag = kTagSubAnswer;
+        
+        _subAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        
         _subAnswer.userInteractionEnabled = FALSE;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
         _subAnswer.returnKeyType = UIReturnKeyDefault;
@@ -8575,7 +8604,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (float) getTextSizeHeight:(UITextView *) textView{
     
-    [iConsole info:@"%s",__FUNCTION__];
+    //[iConsole info:@"%s",__FUNCTION__];
     float fudgeFactor = [self getTextViewLeftMargin:textView];
     CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
     
@@ -8672,13 +8701,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    UIEdgeInsets inset = textView.textContainerInset;
-    //textView.textContainerInset; 最早我们使用了一个经验值作为inset.top和inset.bottom的数值（frameHeight/5）
-    //但是最终我们发现，当文本的行数＝＝ 1时，文本可容纳的高度 !＝ textHeight + inset.top + inset.bottom。而是直接就是textHeight。至少这个是在iOS9上是正确的（其它平台还未曾验证过），所以我们最终删除了这个逻辑
-    if (textHeight < 70) {
-        inset = UIEdgeInsetsZero;
-    }
-    while ((textHeight > frameHeight - inset.top - inset.bottom)&&(textHeight >0)&&(textView.font.pointSize >0)) {
+    
+    CGRect rect = textView.frame;
+    rect.size.height = 25;
+    textView.frame = rect;
+    
+    /**
+     *  以下逻辑关键是提前设置了textview.textContainerInset ＝ UIEdgeInsetsZero;
+     *  最早我们使用了一个经验值作为inset.top和inset.bottom的数值（frameHeight/5）
+     *  但是后来我们发现，如果没有设置UIEdgeInsetsZero（默认是top/bottom margin = 8)，当高度小（比如＜40），文本可容纳的高度 != textHeight + inset.top + inset.bottom。只有在高度达到一定成都时，才成立。
+     *  最终，我们发现设置UIEdgeInsetsZero会完美解决这个问题，因为我们在任何情况以下都成立:文本可容纳的高度 ＝ textHeight
+     */
+    
+    while ((textHeight > frameHeight )&&(textHeight >0)&&(textView.font.pointSize >0)) {
         outputFlag = TRUE;
         result = YES;
         
