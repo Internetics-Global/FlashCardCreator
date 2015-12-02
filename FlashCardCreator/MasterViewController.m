@@ -2579,6 +2579,8 @@ extern BOOL isFromNewCreatedCard;
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
     
+    APP_DELEGATE.isAllowToShowPackList = YES;
+    
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
     if (val == FALSE) {
         [self showTooltips];
