@@ -1596,7 +1596,10 @@ extern BOOL isFromNewCreatedCard;
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
             if (assembledCard) {
-                assembledCard.cardSN = cardSNIndex + 1;
+                if (assembledCard.cardSN == -1) {
+                    //如果meta info无法提供，则我们需要赋值（这个出现在Android only 中）
+                    assembledCard.cardSN = cardSNIndex + 1;
+                }
                 [array addObject:assembledCard];
             }
             else {
@@ -1801,7 +1804,17 @@ extern BOOL isFromNewCreatedCard;
                 assembledCard.templateBackgroundName = @"card_background_blue.png";
             }
             assembledCard.creator = questionDict[@"creator"];
-//            assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
+            
+            if (((NSString *)questionDict[@"cardSN"]).length > 0) {
+                //表明，将使用meta info的数值（iOS的做法）
+               assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
+            } else {
+                //meta info为空，表明，我们需要后续手动赋值(见上面fileListArray部分的逻辑）。
+                assembledCard.cardSN = -1;
+                 [iConsole info:@"%s: no cardSN field in questionTextContent.json",__FUNCTION__];
+            }
+
+            
             assembledCard.question.templateID = [questionDict[@"template_id"] intValue];
             
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
