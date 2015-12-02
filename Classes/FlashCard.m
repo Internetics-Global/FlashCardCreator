@@ -855,7 +855,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + 5, 15, 200, 23);
+        _answerTitle.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + 5, 25, 200, 23);
         if (self.isPlayingCard) {
             _answerTitle.frame = [Common getScaledViewRect:_answerTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1879,7 +1879,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (UIColor *) colorForBackgroundTemplateID{
     
-    NSString *str = _templateBackgroundImageName.lowercaseString;
+    //_templateBackgroundImageName
+    NSString *str = _currentCard.templateBackgroundName.lowercaseString;
     if ([str rangeOfString:@"red"].location != NSNotFound) {
         return [UIColor redColor];
     }else if ([str rangeOfString:@"purple"].location != NSNotFound) {
