@@ -360,7 +360,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 0.3f;
+        _questionTitle.layer.shadowOpacity = 0.9f;
         _questionTitle.layer.shadowRadius = 3.5f;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
@@ -382,7 +382,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 0.3f;
+        _answerTitle.layer.shadowOpacity = 0.9f;
         _answerTitle.layer.shadowRadius = 3.5f;
         _answerTitle.textColor = [UIColor redColor];
         _answerTitle.delegate = self;
@@ -650,10 +650,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _logoImage.clipsToBounds = YES;
         _logoImage.backgroundColor = [UIColor whiteColor];
         _logoImage.userInteractionEnabled = TRUE; //alway true
-        CAShapeLayer *styleLayer = [CAShapeLayer layer];
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(25, 25.0)];
-        styleLayer.path = shadowPath.CGPath;
-        _logoImage.layer.mask = styleLayer;
+//        CAShapeLayer *styleLayer = [CAShapeLayer layer];
+//        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(25, 25.0)];
+//        styleLayer.path = shadowPath.CGPath;
+//        _logoImage.layer.mask = styleLayer;
         
         [self addSubview:_logoImage];
         //Default logic
@@ -828,7 +828,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + 5, 15, 200, 23);
+        _questionTitle.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + 5, 25, 200, 23);
         if (self.isPlayingCard) {
             _questionTitle.frame = [Common getScaledViewRect:_questionTitle withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -842,7 +842,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowOpacity = 0.9f;
         _questionTitle.layer.shadowRadius = .5f;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
@@ -869,7 +869,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowOpacity = 0.9f;
         _answerTitle.layer.shadowRadius = .5f;
         _answerTitle.textColor = [UIColor redColor];
         _answerTitle.delegate = self;
@@ -930,6 +930,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             point.y = point.y * kFlashCardViewProporation_iPhone;
         }
         _cardSNText = [[JSBadgeView alloc] initWithParentView:self offset:point];
+        
+        _cardSNText.badgeTextColor = [UIColor whiteColor];
         
     }
     
@@ -1101,16 +1103,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 54, 5, 54, 30);
+        _logoImage.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 59, 5, 54, 30);
         if (self.isPlayingCard) {
             _logoImage.frame = [Common getScaledViewRect:_logoImage withProportion:kFlashCardViewProporation_iPhone];
         }
         _logoImage.backgroundColor = [UIColor whiteColor];
-        
-        CAShapeLayer *styleLayer = [CAShapeLayer layer];
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(15, 15.0)];
-        styleLayer.path = shadowPath.CGPath;
-        _logoImage.layer.mask = styleLayer;
+//        
+//        CAShapeLayer *styleLayer = [CAShapeLayer layer];
+//        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:_logoImage.bounds byRoundingCorners:(UIRectCornerBottomRight|UIRectCornerBottomLeft|UIRectCornerTopRight|UIRectCornerTopLeft) cornerRadii:CGSizeMake(15, 15.0)];
+//        styleLayer.path = shadowPath.CGPath;
+//        _logoImage.layer.mask = styleLayer;
         
         _logoImage.userInteractionEnabled = TRUE;
         _logoImage.tag = 0;
