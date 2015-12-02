@@ -8730,43 +8730,47 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [iConsole info:@"withHighAccuracy adjustment = YES"];
             
             if (pointSize < 10.0) {
-                delta = 0.05;
+                delta = 0.15;
             } else if (pointSize < 12.0) {
-                delta = 0.1;
+                delta = 0.4;
             } else if (pointSize < 30.0) {
-                delta = 0.2;
+                delta = 0.6;
             } else if (pointSize < 50.0){
-                delta = 0.3;
+                delta = 0.8;
             } else if (pointSize < 100.0){
-                delta = 0.5;
-            }else {
                 delta = 1;
+            }else {
+                delta = 1.2;
             }
+            
         } else if  (accuracyType == Resize_Accuracy_Type_Low) {
             if (pointSize < 10.0) {
-                delta = 0.25;
+                delta = 0.3;
             } else if (pointSize < 12.0) {
-                delta = 0.5;
+                delta = 0.6;
             } else if (pointSize < 50.0){
-                delta = 1.0;
+                delta = 1.2;
             } else if (pointSize < 100.0){
-                delta = 1.5;
+                delta = 1.8;
             }else {
-                delta = 2;
+                delta = 2.4;
             }
+            
         } else if (accuracyType == Resize_Accuracy_Type_Extreme) {
+            
+            //设置成与Resize_Accuracy_Type_High一致，在实际中发现，如果粒度太小，会耗费时间（甚至模拟器上可能会花费>2秒时间）
             if (pointSize < 10.0) {
-                delta = 0.05;
+                delta = 0.15;
             } else if (pointSize < 12.0) {
-                delta = 0.05;
+                delta = 0.4;
             } else if (pointSize < 30.0) {
-                delta = 0.05;
+                delta = 0.6;
             } else if (pointSize < 50.0){
-                delta = 0.05;
+                delta = 0.8;
             } else if (pointSize < 100.0){
-                delta = 0.05;
+                delta = 1;
             }else {
-                delta = 0.1;
+                delta = 1.2;
             }
         } else {
             delta = 1;
