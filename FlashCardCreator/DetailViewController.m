@@ -949,6 +949,8 @@ enum popover_enum {
             urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
         }
         
+        APP_DELEGATE.isAllowToShowPackList = NO;
+        
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
     }
 }
