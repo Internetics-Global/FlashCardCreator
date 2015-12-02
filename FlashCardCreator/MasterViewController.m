@@ -1471,6 +1471,7 @@ extern BOOL isFromNewCreatedCard;
     Pack *pack = [[Pack alloc] init];
     NSError *error = nil;
     NSString *downloadedPackInfoFilePath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:@"packInformation.json"];
+    
     NSData *packData = [NSData dataWithContentsOfFile:downloadedPackInfoFilePath];
     if (!packData) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_WHEN_PARSING_PACK_JSON",@"")];
@@ -1889,26 +1890,28 @@ extern BOOL isFromNewCreatedCard;
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
                 //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
-                float factor = 0;
-                if ((subheadingSize < 16) && (subheadingSize >0)) {
-                    factor = subheadingSize/16.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
-                    [assembledCard question].css.mainSize = mainSize/factor;
-                    [assembledCard question].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((mainSize < 20) && (mainSize >0)) {
-                    factor = mainSize/20.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
-                    [assembledCard question].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((subSize < 16) && (subSize >0)) {
-                    factor = subSize/16.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard question].css.mainSize = mainSize/factor;
-                    [assembledCard question].css.subSize = subSize/factor;  // ==16
-                    baseActionDone = YES;
-                }
+                
+//之所以comment out，因为这不是一个make sense的逻辑
+//                float factor = 0;
+//                if ((subheadingSize < 16) && (subheadingSize >0)) {
+//                    factor = subheadingSize/16.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
+//                    [assembledCard question].css.mainSize = mainSize/factor;
+//                    [assembledCard question].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((mainSize < 20) && (mainSize >0)) {
+//                    factor = mainSize/20.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
+//                    [assembledCard question].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((subSize < 16) && (subSize >0)) {
+//                    factor = subSize/16.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard question].css.mainSize = mainSize/factor;
+//                    [assembledCard question].css.subSize = subSize/factor;  // ==16
+//                    baseActionDone = YES;
+//                }
                 
                 if (baseActionDone == NO) {
                     
@@ -1929,26 +1932,28 @@ extern BOOL isFromNewCreatedCard;
                 //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
                 //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
-                float factor = 0;
-                if ((subheadingSize < 32) && (subheadingSize >0)) {
-                    factor = subheadingSize/32.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
-                    [assembledCard question].css.mainSize = mainSize/factor;
-                    [assembledCard question].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((mainSize < 40) && (mainSize >0)) {
-                    factor = mainSize/40.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
-                    [assembledCard question].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((subSize < 32) && (subSize >0)) {
-                    factor = subSize/32.0;
-                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard question].css.mainSize = mainSize/factor;
-                    [assembledCard question].css.subSize = subSize/factor;  // ==32
-                    baseActionDone = YES;
-                }
+                
+//之所以comment out，因为这不是一个make sense的逻辑
+//                float factor = 0;
+//                if ((subheadingSize < 32) && (subheadingSize >0)) {
+//                    factor = subheadingSize/32.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
+//                    [assembledCard question].css.mainSize = mainSize/factor;
+//                    [assembledCard question].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((mainSize < 40) && (mainSize >0)) {
+//                    factor = mainSize/40.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
+//                    [assembledCard question].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((subSize < 32) && (subSize >0)) {
+//                    factor = subSize/32.0;
+//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard question].css.mainSize = mainSize/factor;
+//                    [assembledCard question].css.subSize = subSize/factor;  // ==32
+//                    baseActionDone = YES;
+//                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2166,25 +2171,27 @@ extern BOOL isFromNewCreatedCard;
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
                 float factor = 0;
                 BOOL baseActionDone = NO;
-                if ((subheadingSize < 16) && (subheadingSize >0)) {
-                    factor = subheadingSize/16.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
-                    [assembledCard answer].css.mainSize = mainSize/factor;
-                    [assembledCard answer].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((mainSize < 20) && (mainSize >0)) {
-                    factor = mainSize/20.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
-                    [assembledCard answer].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((subSize < 16) && (subSize >0)) {
-                    factor = subSize/16.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard answer].css.mainSize = mainSize/factor;
-                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
-                    baseActionDone = YES;
-                }
+                
+//之所以comment out，因为这不是一个make sense的逻辑
+//                if ((subheadingSize < 16) && (subheadingSize >0)) {
+//                    factor = subheadingSize/16.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
+//                    [assembledCard answer].css.mainSize = mainSize/factor;
+//                    [assembledCard answer].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((mainSize < 20) && (mainSize >0)) {
+//                    factor = mainSize/20.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
+//                    [assembledCard answer].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((subSize < 16) && (subSize >0)) {
+//                    factor = subSize/16.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard answer].css.mainSize = mainSize/factor;
+//                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
+//                    baseActionDone = YES;
+//                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2205,25 +2212,27 @@ extern BOOL isFromNewCreatedCard;
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
                 float factor = 0;
                 BOOL baseActionDone = NO;
-                if ((subheadingSize < 32) && (subheadingSize >0)) {
-                    factor = subheadingSize/32.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
-                    [assembledCard answer].css.mainSize = mainSize/factor;
-                    [assembledCard answer].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((mainSize < 40) && (mainSize >0)) {
-                    factor = mainSize/40.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
-                    [assembledCard answer].css.subSize = subSize/factor;
-                    baseActionDone = YES;
-                } else if ((subSize < 32) && (subSize >0)) {
-                    factor = subSize/32.0;
-                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                    [assembledCard answer].css.mainSize = mainSize/factor;
-                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
-                    baseActionDone = YES;
-                }
+                
+//之所以comment out，因为这不是一个make sense的逻辑
+//                if ((subheadingSize < 32) && (subheadingSize >0)) {
+//                    factor = subheadingSize/32.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
+//                    [assembledCard answer].css.mainSize = mainSize/factor;
+//                    [assembledCard answer].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((mainSize < 40) && (mainSize >0)) {
+//                    factor = mainSize/40.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
+//                    [assembledCard answer].css.subSize = subSize/factor;
+//                    baseActionDone = YES;
+//                } else if ((subSize < 32) && (subSize >0)) {
+//                    factor = subSize/32.0;
+//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+//                    [assembledCard answer].css.mainSize = mainSize/factor;
+//                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
+//                    baseActionDone = YES;
+//                }
                 
                 
                 if (baseActionDone == NO) {

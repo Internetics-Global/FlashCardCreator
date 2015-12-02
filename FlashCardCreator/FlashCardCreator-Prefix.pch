@@ -80,9 +80,11 @@
 
 /**
  * weight when resizing from Android to iOS, not including ratio
- * 这是因为当你从Android到iOS,不是简单的屏幕宽度比 ＝ 字体大小。而是有些差异的。
+ * This is because : ratio of text size != ratio of screen width
+ * how to get this value：my Phone's dp = 640，main size = 15; while on iPad, the best  main size = 32. So ：32/15/(1024/640)  = 1.34
+ * However, we need to set this final value a little small in reality, simply from practice, no other reason
  */
-#define K_Weight_From_Android_To_IOS   1.1
+#define K_Weight_From_Android_To_IOS   1.30
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"
