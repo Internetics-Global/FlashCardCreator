@@ -1571,26 +1571,46 @@ extern BOOL isFromNewCreatedCard;
     
     BOOL buildCardResultError = FALSE;
     NSMutableArray *array = [NSMutableArray array];
-
-    for (int i= 0; ; i++) {
-        NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"card%d.zip",i]];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:zippedCardFullPath];
-        if (fileExists == false) {
-            [iConsole info:@"%s:Last cardSN is %d",__FUNCTION__,i];
-            break; //必须保证连续
+    int cardSNIndex = 0;
+    
+    
+    NSArray *sortedFileListArray = fileListArray;
+    if ([fileListArray count] > 0) {
+        if (((NSString *)[fileListArray firstObject]).length > 10) {
+            //iOS风格的zip (历史原因）
+            //比如card14424425751939907424.zip。因为命名是按照timeIntervalSince1970的顺序排序的，所以不需要重排
+        } else {
+            //Android风格的zip (历史原因）
+            //类似这种形式：card6.zip，由于card10.zip会在card8前面，所以需要重新排序
+            sortedFileListArray = [fileListArray sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
+                long aNumber = [[a substringWithRange:NSMakeRange(4, a.length - 4 - 4)] integerValue];
+                long bNumber = [[b substringWithRange:NSMakeRange(4, b.length - 4 - 4)] integerValue];
+                return (bNumber <= aNumber);
+            }];
         }
-        
+    }
+    
+    for (NSString *zippedCardFileName in sortedFileListArray) {
         Card *assembledCard;
+        if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
+            NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
+            assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
+            if (assembledCard) {
+                assembledCard.cardSN = cardSNIndex + 1;
+                [array addObject:assembledCard];
+            }
+            else {
+                [iConsole info:@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFileName];
+                buildCardResultError = TRUE;
+            }
+            
+            cardSNIndex ++;
+            
+        } else {
+            // other files that need to be ignored
+        }
         
-        assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
-        if (assembledCard) {
-            assembledCard.cardSN = i + 1;
-            [array addObject:assembledCard];
-        }
-        else {
-            [iConsole info:@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFullPath];
-            buildCardResultError = TRUE;
-        }
+        
         
     }
     
