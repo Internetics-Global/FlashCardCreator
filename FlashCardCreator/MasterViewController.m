@@ -1571,18 +1571,29 @@ extern BOOL isFromNewCreatedCard;
     
     BOOL buildCardResultError = FALSE;
     NSMutableArray *array = [NSMutableArray array];
+    int cardSNIndex = 0;
     for (NSString *zippedCardFileName in fileListArray) {
         Card *assembledCard;
         if ([zippedCardFileName rangeOfString:@".zip"].length != 0) {
             NSString *zippedCardFullPath = [[FileOperationHelper downloadedPackFileDirectory] stringByAppendingPathComponent:zippedCardFileName];
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
-            if (assembledCard)
+            if (assembledCard) {
+                assembledCard.cardSN = cardSNIndex + 1;
                 [array addObject:assembledCard];
+            }
             else {
                 [iConsole info:@"%s:Error when unzipping %@",__FUNCTION__,zippedCardFileName];
                 buildCardResultError = TRUE;
             }
+            
+            cardSNIndex ++;
+            
+        } else {
+            // other files that need to be ignored
         }
+        
+        
+        
     }
     
     if (buildCardResultError == TRUE) {
@@ -1772,7 +1783,7 @@ extern BOOL isFromNewCreatedCard;
                 assembledCard.templateBackgroundName = @"card_background_blue.png";
             }
             assembledCard.creator = questionDict[@"creator"];
-            assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
+//            assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
             assembledCard.question.templateID = [questionDict[@"template_id"] intValue];
             
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
