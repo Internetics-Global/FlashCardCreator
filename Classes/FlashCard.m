@@ -8669,7 +8669,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    UIEdgeInsets inset = textView.textContainerInset; //之前我们只是用一个经验值代替frameHeight/5
+    UIEdgeInsets inset = textView.textContainerInset;
+    //textView.textContainerInset; 最早我们使用了一个经验值作为inset.top和inset.bottom的数值（frameHeight/5）
+    //但是最终我们发现，当文本的行数＝＝ 1时，文本可容纳的高度 !＝ textHeight + inset.top + inset.bottom。而是直接就是textHeight。至少这个是在iOS9上是正确的（其它平台还未曾验证过），所以我们最终删除了这个逻辑
+    if (textHeight < 70) {
+        inset = UIEdgeInsetsZero;
+    }
     while ((textHeight > frameHeight - inset.top - inset.bottom)&&(textHeight >0)&&(textView.font.pointSize >0)) {
         outputFlag = TRUE;
         result = YES;
