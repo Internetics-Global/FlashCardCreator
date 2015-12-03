@@ -33,7 +33,7 @@
 "DIALOG_DELETE_CARD"       = "Are you sure you want to delete?";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropbox is not linked";
 "DIALOG_SUCCESS_TO_LOG_DROPBOX"               = "Dropbox is successfully logged in";
-"DIALOG_DOWNLOAD_LINK_ERROR"               = "Check your download link or the Dropbox server is temporarily unavailable";
+"DIALOG_DOWNLOAD_LINK_ERROR"               = "Unable to download. Please check you have the correct code and please check your internet connection.";
 "DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED" = "Failure to create zipped share file.";
 "DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED" = "Failure to encrypt zipped share file.";
 "DIALOG_REDIRECT_SERVICE_UNAVAILABLE" = "Redirect service is not available now, please try again";

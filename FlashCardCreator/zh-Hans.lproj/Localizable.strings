@@ -19,7 +19,7 @@
 "DIALOG_ENTER_VALID_URL"       = "请输入有效的URL或Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "正应用到全部卡片中...";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "没有成功登陆到Dropbox";
-"DIALOG_DOWNLOAD_LINK_ERROR"               = "Check your download link or Dropbox server is temporarily unavailable";
+"DIALOG_DOWNLOAD_LINK_ERROR"               = "Unable to download. Please check you have the correct code and please check your internet connection.";
 "DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED" = "Failure to create zipped share file.";
 "DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED" = "Failure to encrypt zipped share file.";
 "DIALOG_REDIRECT_SERVICE_UNAVAILABLE" = "Redirect service is not available now, please try again";
