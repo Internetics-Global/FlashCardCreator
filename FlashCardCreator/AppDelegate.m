@@ -31,6 +31,9 @@
 
 #import <DropboxSDK/DropboxSDK.h>
 
+/**
+ *  正在download的过程中的标志，同isExamplePackDownloadedSuccessful区分
+ */
 BOOL _isDownloadingSamplePack;
 
 @implementation AppDelegate

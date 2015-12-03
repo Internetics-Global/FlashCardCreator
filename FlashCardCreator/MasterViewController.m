@@ -337,9 +337,10 @@ enum popover_enum {
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
     if (isExamplePackDownloadedSuccessful == FALSE) {
         //do nothing
-    } else if (_isDownloadingSamplePack){
-        _isDownloadingSamplePack = FALSE;
-        
+    } else {
+        if (_isDownloadingSamplePack){
+            _isDownloadingSamplePack = FALSE;
+        }
     }
     
     if ((isUserInterfaceIdiomPhone == FALSE) && ([[_currentPack cards] count] > 0)) {
@@ -1630,6 +1631,7 @@ extern BOOL isFromNewCreatedCard;
     
     //Step5: set  flag
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
+    _isDownloadingSamplePack = NO;
     
     [[NSUserDefaults standardUserDefaults] setInteger:pack.packID forKey:@"lastCreatedPackID"];
     

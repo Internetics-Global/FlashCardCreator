@@ -459,6 +459,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/**
+ *  仅适用于FFC_WITHOUT_SUBSCRIPTION
+ */
 - (void) dropboxLogInOutAction {
     if (![[DBSession sharedSession] isLinked]) {
         [DBSession sharedSession].delegate = self;
