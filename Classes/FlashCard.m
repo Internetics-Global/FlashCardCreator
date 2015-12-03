@@ -3153,7 +3153,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 2:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 90);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 88);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
