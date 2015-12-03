@@ -2328,7 +2328,8 @@ extern BOOL isFromNewCreatedCard;
     if ([type isEqualToString:@"demo"]) {
         _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");    
     } else {
-        _HUD.labelText = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@""), from];
+//        _HUD.labelText = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@""), from];
+        _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@"");
     }
     
     // myProgressTask uses the HUD instance to update progress
