@@ -463,6 +463,7 @@
     if (![[DBSession sharedSession] isLinked]) {
         [DBSession sharedSession].delegate = self;
         [[DBSession sharedSession] linkFromController:self];
+        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
     } else {
         
         [[DBSession sharedSession] unlinkAll];

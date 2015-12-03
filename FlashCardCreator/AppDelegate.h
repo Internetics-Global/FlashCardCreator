@@ -34,6 +34,8 @@
 
 @property (assign, nonatomic) BOOL isAllowToShowPackList;
 
+@property (assign, nonatomic) BOOL isAllowToShareAfterDropboxLogIn;
+
 
 @property (strong, nonatomic) AVAudioRecorder *recorder;
 

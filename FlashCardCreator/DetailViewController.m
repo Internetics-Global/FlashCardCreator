@@ -748,6 +748,7 @@ enum popover_enum {
                         
                         [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
+                        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
                         [self share];
                         
                     } else {

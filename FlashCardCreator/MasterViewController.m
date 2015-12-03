@@ -2428,6 +2428,7 @@ extern BOOL isFromNewCreatedCard;
                         
                          [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
+                        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
                         [self share];
                         
                     } else {
@@ -2696,8 +2697,10 @@ extern BOOL isFromNewCreatedCard;
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
     } else
     {
-        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_dropboxShareHelper shareAction];
+        if (APP_DELEGATE.isAllowToShareAfterDropboxLogIn) {
+            _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+            [_dropboxShareHelper shareAction];
+        }
     }
 }
 
