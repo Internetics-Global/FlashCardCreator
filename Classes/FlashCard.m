@@ -2542,7 +2542,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 10:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 5, 304, 26);
+            _subheadingAnswer.frame = CGRectMake(3, 5, 304, 22);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2571,7 +2571,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 33, 304.5, 147);
+            _mainAnswer.frame = CGRectMake(3, 29, 304.5, 153);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2609,7 +2609,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 8: //Template 1
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 4, 218.75, 21);
+            _subheadingAnswer.frame = CGRectMake(3, 4, 218.75, 23);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2637,7 +2637,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 29, 304.5, 77);
+            _mainAnswer.frame = CGRectMake(3, 29, 304.5, 79);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2665,7 +2665,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 16;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(3, 109, 304.5, 68.5);
+            _subAnswer.frame = CGRectMake(3, 110, 304.5, 70);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2703,7 +2703,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 5, 304.5, 120);
+            _mainAnswer.frame = CGRectMake(3, 5, 304.5, 129);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2731,7 +2731,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 16;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(3, 130, 304.5, 41.56);
+            _subAnswer.frame = CGRectMake(3, 138, 304.5, 47);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2769,7 +2769,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 5, 304.5, 86.5);
+            _mainAnswer.frame = CGRectMake(3, 5, 304.5, 90);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2797,7 +2797,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 16;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(3, 95, 304.5, 82);
+            _subAnswer.frame = CGRectMake(3, 98, 304.5, 86);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2834,7 +2834,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 15, 304.5, 165.5);
+            _mainAnswer.frame = CGRectMake(3, 8, 304.5, 174.5);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2878,7 +2878,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(3, 5, 304.5, 180.0);
+            _imageAnswer.frame = CGRectMake(3, 5, 304.5, 180);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2891,7 +2891,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 154, 26);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 29);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2919,7 +2919,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 28, 154, 156);
+            _mainAnswer.frame = CGRectMake(3, 34, 156, 148);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2949,7 +2949,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(162, 15, 152, 152);
+            _imageAnswer.frame = CGRectMake(161, 15, 152, 152);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2964,7 +2964,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 3, 155.5, 182);
+            _mainAnswer.frame = CGRectMake(3, 3, 157, 182);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -2995,7 +2995,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(160, 10, 153, 153);
+            _imageAnswer.frame = CGRectMake(162, 10, 153, 153);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3007,7 +3007,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 1:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 304.5, 24.5);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 304.5, 27);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3036,7 +3036,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 30, 156, 127);
+            _mainAnswer.frame = CGRectMake(3, 32, 156, 127);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3064,7 +3064,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 16;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(3, 160, 156, 21);
+            _subAnswer.frame = CGRectMake(3, 162, 156, 24);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3092,7 +3092,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeAnswer = 16;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(164, 33, 143, 143);
+            _imageAnswer.frame = CGRectMake(164, 35, 143, 143);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3105,7 +3105,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 11:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 24.5);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 30);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3136,13 +3136,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(10, 30, 134, 134);
+            _imageAnswer2.frame = CGRectMake(5, 35, 152, 152);
             if (self.isPlayingCard) {
                 _imageAnswer2.frame = [Common getScaledViewRect:_imageAnswer2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(160, 15, 152, 152);
+            _imageAnswer.frame = CGRectMake(160, 3, 152, 184);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3181,7 +3181,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 94.5, 156, 90);
+            _mainAnswer.frame = CGRectMake(3, 92.5, 156, 89);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3225,7 +3225,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 10, 150, 164.5);
+            _mainAnswer.frame = CGRectMake(5, 6, 151, 175);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3254,7 +3254,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(158, 10, 150, 164.5);
+            _subAnswer.frame = CGRectMake(158, 6, 148, 175);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3293,7 +3293,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = YES;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 10, 50, 164.5);
+            _mainAnswer.frame = CGRectMake(5, 6, 64.5, 177);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3322,7 +3322,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(58, 10, 250, 164.5);
+            _subAnswer.frame = CGRectMake(71, 6, 237, 177);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3359,7 +3359,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 13:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 154, 156);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 157, 153.5);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3387,7 +3387,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 28 + 130, 154, 26);
+            _mainAnswer.frame = CGRectMake(3, 157, 157, 27);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3430,7 +3430,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 14:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(3, 3, 154, 35);
+            _subheadingAnswer.frame = CGRectMake(3, 3, 156, 47);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3458,7 +3458,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 43, 154, 100);
+            _mainAnswer.frame = CGRectMake(3, 52, 156, 85);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3487,7 +3487,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //dfdsfsdfsdfdsdsf
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(3, 148, 154, 35);
+            _subAnswer.frame = CGRectMake(3, 139, 156, 46);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3527,11 +3527,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             break;
         }
             
-        
+            
         case 15:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 145, 134, 24.5);
+            _subheadingAnswer.frame = CGRectMake(10, 150, 146, 28);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3560,7 +3560,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(160, 145, 134, 24.5);
+            _mainAnswer.frame = CGRectMake(158, 150, 144, 28);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3593,13 +3593,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(10, 8, 134, 134);
+            _imageAnswer2.frame = CGRectMake(13, 8, 141, 141);
             if (self.isPlayingCard) {
                 _imageAnswer2.frame = [Common getScaledViewRect:_imageAnswer2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(160, 8, 134, 134);
+            _imageAnswer.frame = CGRectMake(159, 8, 141, 141);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3608,11 +3608,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             break;
         }
             
-        
+            
         case 16:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(160, 3, 154, 35);
+            _subheadingAnswer.frame = CGRectMake(158, 3, 154, 47);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3640,7 +3640,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 20;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(160, 43, 154, 100);
+            _mainAnswer.frame = CGRectMake(158, 52, 154, 85);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3669,7 +3669,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //dfdsfsdfsdfdsdsf
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(160, 148, 154, 35);
+            _subAnswer.frame = CGRectMake(158, 139, 154, 46);
             if (self.isPlayingCard) {
                 _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3708,7 +3708,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             break;
         }
-
+            
             
         default:
         {
@@ -4138,7 +4138,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 11:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 10, 360, 70);
+            _subheadingAnswer.frame = CGRectMake(10, 8, 360, 70);
             
             if (_subheadingFontAnswer.length == 0) {
                 _subheadingAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4160,10 +4160,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(30, 90, 310, 310);
+            _imageAnswer2.frame = CGRectMake(13, 83, 354, 354);;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(380, 40, 350, 350);
+            _imageAnswer.frame = CGRectMake(375, 8, 350, 75 + 354);
             
             
             break;
@@ -4241,7 +4241,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeAnswer = 42;
             
             _subAnswer.hidden = FALSE;
-            _subAnswer.frame = CGRectMake(365, 20, 345, 413);
+            _subAnswer.frame = CGRectMake(368, 20, 345, 413);
             
             if (_subFontAnswer.length == 0) {
                 _subAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4987,7 +4987,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 9:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 10, 360, 70);
+            _subheadingQuestion.frame = CGRectMake(10, 8, 360, 70);
             
             if (_subheadingFontQuestion.length == 0) {
                 _subheadingQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5010,11 +5010,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(30, 90, 310, 310);
+            _imageQuestion2.frame = CGRectMake(13, 83, 354, 354);
             
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(380, 40, 350, 350);
+            _imageQuestion.frame = CGRectMake(375, 8, 350, 75 + 354);
             
             
             break;
@@ -5094,7 +5094,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 42;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(365, 20, 345, 413);
+            _subQuestion.frame = CGRectMake(368, 20, 345, 413);
             
             if (_subFontQuestion.length == 0) {
                 _subQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5434,7 +5434,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 0: //Template 0
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 5, 304, 25.375);
+            _subheadingQuestion.frame = CGRectMake(3, 5, 304, 22);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5463,7 +5463,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 33, 304.5, 147);
+            _mainQuestion.frame = CGRectMake(3, 29, 304.5, 153);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5501,7 +5501,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 1: //Template 1
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 4, 218.75, 21);
+            _subheadingQuestion.frame = CGRectMake(3, 4, 218.75, 23);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5529,7 +5529,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 29, 304.5, 77);
+            _mainQuestion.frame = CGRectMake(3, 29, 304.5, 79);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5557,7 +5557,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(3, 109, 304.5, 68.5);
+            _subQuestion.frame = CGRectMake(3, 110, 304.5, 70);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5594,7 +5594,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 5, 304.5, 120);
+            _mainQuestion.frame = CGRectMake(3, 5, 304.5, 129);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5622,7 +5622,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(3, 130, 304.5, 41.56);
+            _subQuestion.frame = CGRectMake(3, 138, 304.5, 47);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5659,7 +5659,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 5, 304.5, 86.5);
+            _mainQuestion.frame = CGRectMake(3, 5, 304.5, 90);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5687,7 +5687,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(3, 95, 304.5, 82);
+            _subQuestion.frame = CGRectMake(3, 98, 304.5, 86);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5726,7 +5726,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 15, 304.5, 165.5);
+            _mainQuestion.frame = CGRectMake(3, 8, 304.5, 174.5);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5783,7 +5783,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 6:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 154, 26);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 29);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5811,7 +5811,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 28, 154, 156);
+            _mainQuestion.frame = CGRectMake(3, 34, 156, 148);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5841,7 +5841,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(162, 15, 152, 152);
+            _imageQuestion.frame = CGRectMake(161, 15, 152, 152);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5856,7 +5856,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 3, 155.5, 182);
+            _mainQuestion.frame = CGRectMake(3, 3, 157, 182);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5887,7 +5887,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(160, 10, 153, 153);
+            _imageQuestion.frame = CGRectMake(162, 10, 153, 153);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5900,7 +5900,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 8:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 304.5, 24.5);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 304.5, 27);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5929,7 +5929,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 30, 156, 127);
+            _mainQuestion.frame = CGRectMake(3, 32, 156, 127);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5957,7 +5957,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _mainSizeQuestion = 16;
             
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(3, 160, 156, 21);
+            _subQuestion.frame = CGRectMake(3, 162, 156, 24);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5985,7 +5985,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeQuestion = 16;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(164, 33, 143, 143);
+            _imageQuestion.frame = CGRectMake(164, 35, 143, 143);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5998,7 +5998,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 9:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 24.5);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 30);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6029,13 +6029,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(10, 30, 134, 134);
+            _imageQuestion2.frame = CGRectMake(5, 35, 152, 152);
             if (self.isPlayingCard) {
                 _imageQuestion2.frame = [Common getScaledViewRect:_imageQuestion2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(160, 15, 152, 152);
+            _imageQuestion.frame = CGRectMake(160, 3, 152, 184);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6047,7 +6047,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 10:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 90);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 88);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6075,7 +6075,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 94.5, 156, 90);
+            _mainQuestion.frame = CGRectMake(3, 92.5, 156, 89);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6119,7 +6119,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 10, 150, 164.5);
+            _mainQuestion.frame = CGRectMake(5, 6, 151, 175);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6148,7 +6148,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(158, 10, 150, 164.5);
+            _subQuestion.frame = CGRectMake(158, 6, 148, 175);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6186,7 +6186,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = YES;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 10, 50, 164.5);
+            _mainQuestion.frame = CGRectMake(5, 6, 64.5, 177);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6215,7 +6215,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(58, 10, 250, 164.5);
+            _subQuestion.frame = CGRectMake(71, 6, 237, 177);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6251,7 +6251,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 13:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 154, 156);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 157, 153.5);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6279,7 +6279,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 28 + 130, 154, 26);
+            _mainQuestion.frame = CGRectMake(3, 157, 157, 27);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6323,7 +6323,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 14:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(3, 3, 154, 35);
+            _subheadingQuestion.frame = CGRectMake(3, 3, 156, 47);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6351,7 +6351,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 43, 154, 100);
+            _mainQuestion.frame = CGRectMake(3, 52, 156, 85);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6380,7 +6380,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //dfdsfsdfsdfdsdsf
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(3, 148, 154, 35);
+            _subQuestion.frame = CGRectMake(3, 139, 156, 46);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6424,7 +6424,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 15:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 145, 134, 24.5);
+            _subheadingQuestion.frame = CGRectMake(10, 150, 146, 28);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6453,7 +6453,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
 
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(160, 145, 134, 24.5);
+            _mainQuestion.frame = CGRectMake(158, 150, 144, 28);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6486,13 +6486,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(10, 8, 134, 134);
+            _imageQuestion2.frame = CGRectMake(13, 8, 141, 141);
             if (self.isPlayingCard) {
                 _imageQuestion2.frame = [Common getScaledViewRect:_imageQuestion2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(160, 8, 134, 134);
+            _imageQuestion.frame = CGRectMake(159, 8, 141, 141);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6504,7 +6504,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 16:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(160, 3, 154, 35);
+            _subheadingQuestion.frame = CGRectMake(158, 3, 154, 47);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6532,7 +6532,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 20;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(160, 43, 154, 100);
+            _mainQuestion.frame = CGRectMake(158, 52, 154, 85);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6561,7 +6561,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             //dfdsfsdfsdfdsdsf
             _subQuestion.hidden = FALSE;
-            _subQuestion.frame = CGRectMake(160, 148, 154, 35);
+            _subQuestion.frame = CGRectMake(158, 139, 154, 46);
             if (self.isPlayingCard) {
                 _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
             }

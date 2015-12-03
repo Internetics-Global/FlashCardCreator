@@ -52,12 +52,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8346</string>
+	<string>8459</string>
 	<key>FacebookAppID</key>
 	<string>430339350417672</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbauth</string>
+		<string>dbapi-2</string>
 		<string>fbauth2</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
