@@ -98,7 +98,7 @@
                 }
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with the Flash Card Creator! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
             
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
                                           @"Facebook",
