@@ -154,9 +154,12 @@
         cell.backgroundColor = [UIColor whiteColor];
     }
 
+    if (indexPath.row == 0) {
+        
+        cell.textLabel.text = NSLocalizedString(@"Manual/Auto Play",nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    
-    if (indexPath.row ==0) {
+    } else if (indexPath.row ==1) {
         
         if (_playModeSwitch == nil) {
             _playModeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -174,7 +177,7 @@
         cell.accessoryView = _playModeSwitch;
         
         
-    } else if (indexPath.row ==1) {
+    } else if (indexPath.row ==2) {
         
         _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [_muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
@@ -190,10 +193,10 @@
         cell.accessoryView = _muteSwitch;
         
         
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 3) {
         cell.textLabel.text = NSLocalizedString(@"NavigationBarItem_More_About",nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == 4) {
         cell.textLabel.text = NSLocalizedString(@"Table_Item_TTS",@"");
         cell.accessoryType = UITableViewCellAccessoryNone;
         UISwitch *textToSpeechSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -201,7 +204,7 @@
         cell.accessoryView = textToSpeechSwitch;
         BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
         [textToSpeechSwitch setOn:b];
-    } else if (indexPath.row == 4) {
+    } else if (indexPath.row == 5) {
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Show_Question_Only",@"");
         cell.accessoryType = UITableViewCellAccessoryNone;
         UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -209,7 +212,7 @@
         cell.accessoryView = showQuestionOnlySwitch;
         BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
         [showQuestionOnlySwitch setOn:b];
-    } else if (indexPath.row == 5) {
+    } else if (indexPath.row == 6) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Male_Female",@"");
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -221,7 +224,7 @@
         [voiceSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 7) {
         
         UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
         baseView.backgroundColor = [UIColor clearColor];
@@ -270,12 +273,7 @@
         
         cell.accessoryView = baseView;
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value]; }
-    else if (indexPath.row == 7) {
-            
-        cell.textLabel.text = NSLocalizedString(@"Play Type",nil);
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
 #ifdef FFC_WITHOUT_SUBSCRIPTION
     } else if (indexPath.row == 8) {
         
@@ -373,7 +371,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __weak __typeof(&*self)weakSelf = self;
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         AboutViewController *about = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:about animated:YES];
     } else if (indexPath.row == 9) {
@@ -441,7 +439,7 @@
             APP_DELEGATE.isAllowToShowPackList = NO;
         }
         
-    } else if (indexPath.row == 7) {
+    } else if (indexPath.row == 0) {
         PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }

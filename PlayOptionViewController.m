@@ -31,7 +31,7 @@
     _alertTable.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     [self.view addSubview:_alertTable];
     
-    self.title = @"Play Option";
+    self.title = @"Manual/Auto Play";
 }
 
 - (void)didReceiveMemoryWarning {
