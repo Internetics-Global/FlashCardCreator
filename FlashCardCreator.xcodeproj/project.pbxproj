@@ -223,6 +223,7 @@
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
 		88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5D1AB104050046B64E /* StoreKit.framework */; };
 		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
+		886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886726301C1164CF007E86CE /* PlayOptionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
 		886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 886D8FDD1AE48C0300865101 /* CreateEditPackViewController2.m */; };
@@ -595,6 +596,8 @@
 		886075021932B167009C16EE /* DKCircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCircleButton.m; sourceTree = "<group>"; };
 		88620B5D1AB104050046B64E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88620B5F1AB104120046B64E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		8867262F1C1164CF007E86CE /* PlayOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayOptionViewController.h; sourceTree = "<group>"; };
+		886726301C1164CF007E86CE /* PlayOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayOptionViewController.m; sourceTree = "<group>"; };
 		8867CABF179351BE007298EF /* bar_button_black@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bar_button_black@2X.png"; path = "Resources/bar_button_black@2X.png"; sourceTree = "<group>"; };
 		8867CAE217935279007298EF /* bar_button_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar_button_black.png; path = Resources/bar_button_black.png; sourceTree = "<group>"; };
 		886D8FDC1AE48C0300865101 /* CreateEditPackViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateEditPackViewController2.h; sourceTree = "<group>"; };
@@ -1086,6 +1089,8 @@
 				2D5C183F16D1A69200E1E785 /* AboutViewController.m */,
 				2D5C189216D1A86300E1E785 /* MoreInfoTableViewController.h */,
 				2D5C184016D1A69200E1E785 /* MoreInfoTableViewController.m */,
+				8867262F1C1164CF007E86CE /* PlayOptionViewController.h */,
+				886726301C1164CF007E86CE /* PlayOptionViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1930,6 +1935,7 @@
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
 				2D5C17F616D1A59300E1E785 /* unzip.c in Sources */,
 				88BD615C1977732200834D72 /* PackListCell.m in Sources */,
+				886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */,
 				2D5C17F716D1A59300E1E785 /* zip.c in Sources */,
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
 				2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */,

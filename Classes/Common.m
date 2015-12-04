@@ -345,4 +345,28 @@
 
 }
 
+
+/**
+ *  0: manually; 1, auto play; 2. auto play with loop
+ */
++ (int) getPlayOption {
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([userDefaults objectForKey:@"PLAY_OPTION"] == nil) {
+        return 0; //manually
+    }
+    
+    int val = (int)[userDefaults integerForKey:@"PLAY_OPTION"];
+    return val;
+    
+}
+
++ (void) setPlayOption:(int) playOption {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:playOption forKey:@"PLAY_OPTION"];
+    [userDefaults synchronize];
+}
+
+
 @end

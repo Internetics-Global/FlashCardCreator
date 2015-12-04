@@ -27,6 +27,8 @@
 
 #import "Common.h"
 
+#import "PlayOptionViewController.h"
+
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 @interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
@@ -127,9 +129,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #ifdef FFC_WITHOUT_SUBSCRIPTION
-    return 8;
-#else
     return 9;
+#else
+    return 10;
 #endif
 }
 
@@ -268,9 +270,14 @@
         
         cell.accessoryView = baseView;
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value]; }
+    else if (indexPath.row == 7) {
+            
+        cell.textLabel.text = NSLocalizedString(@"Play Type",nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
 #ifdef FFC_WITHOUT_SUBSCRIPTION
-    } else if (indexPath.row == 7) {
+    } else if (indexPath.row == 8) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Dropbox_Logged_In",@"");
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -284,7 +291,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 #else
-    } else if (indexPath.row == 7) {
+    } else if (indexPath.row == 8) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Amazon_Or_Dropbox",@"");
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -296,7 +303,7 @@
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 8) {
+    } else if (indexPath.row == 9) {
         if ([PFUser currentUser]) {
             cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
         } else {
@@ -369,7 +376,7 @@
     if (indexPath.row == 2) {
         AboutViewController *about = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:about animated:YES];
-    } else if (indexPath.row == 8) {
+    } else if (indexPath.row == 9) {
         
         if ([PFUser currentUser]) {
             [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
@@ -434,6 +441,9 @@
             APP_DELEGATE.isAllowToShowPackList = NO;
         }
         
+    } else if (indexPath.row == 7) {
+        PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -508,12 +508,40 @@ extern BOOL isFromNewCreatedCard;
 - (void)playButtonClicked:(id) sender
 {
     
-    PopoverView *playSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                                        inView:self.navigationController.view
-                                                                     withTitle:NSLocalizedString(@"Label_Please_Select",@"")
-                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Play_Manually",@""), NSLocalizedString(@"Optional_Play_Auto",@""),NSLocalizedString(@"Optional_Play_Auto_Loop",@""), nil]
-                                                                      delegate:self];
-    playSelectPopupPopoverView.tag = popover_enum_play;
+    PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
+    
+    int playOption = [Common getPlayOption];
+    switch (playOption) {
+        case 0:
+            playViewController.oneOffPlayType = One_Off_Play_Type_Manually;
+            break;
+        case 1:
+            playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play;
+            break;
+        case 2:
+            playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play_Loop;
+            break;
+            
+        default:
+            break;
+    }
+    
+    playViewController.currentPack = self.currentPack;
+    //playViewController.currentCard = self.currentCard;
+    if (isUserInterfaceIdiomPhone) {
+        playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
+    } else {
+        playViewController.view.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
+    }
+    playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    if ((self.currentCard == nil) || (self.currentPack == nil)) {
+        [Common alertViewCommon:@"Current card or pack is nil"];
+        return;
+    }
+    
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
 
     
 }
@@ -2474,40 +2502,7 @@ extern BOOL isFromNewCreatedCard;
         
     } else if (popoverView.tag == popover_enum_play) {
         
-        PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
         
-        //[NSArray arrayWithObjects:@"Play Manually", @"Auto Play",@"Auto Play and Loop", nil]
-        switch (index) {
-            case 0:
-                playViewController.oneOffPlayType = One_Off_Play_Type_Manually;
-                break;
-            case 1:
-                playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play;
-                break;
-            case 2:
-                playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play_Loop;
-                break;
-                
-            default:
-                break;
-        }
-        
-        playViewController.currentPack = self.currentPack;
-        //playViewController.currentCard = self.currentCard;
-        if (isUserInterfaceIdiomPhone) {
-            playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
-        } else {
-            playViewController.view.frame = CGRectMake(0, 0, IPAD_UI_WIDTH, IPAD_UI_HEIGHT);
-        }
-        playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        if ((self.currentCard == nil) || (self.currentPack == nil)) {
-            [Common alertViewCommon:@"Current card or pack is nil"];
-            return;
-        }
-        
-        
-        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-        [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
     }
     
 }

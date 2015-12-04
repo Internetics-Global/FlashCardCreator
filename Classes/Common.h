@@ -64,4 +64,9 @@
 
 + (BOOL) isValidBucketNameFromParseUserName:(NSString *) parseUserName;
 
+
++ (int) getPlayOption;
++ (void) setPlayOption:(int) playOption;
+
+
 @end
