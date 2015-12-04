@@ -315,17 +315,51 @@
 #pragma mark – Actions
 
 -  (void) playButtonClicked:(id) sender {
+    [iConsole info:@"%s",__FUNCTION__];
     
-    int index = ((UIButton *) sender).tag;
+    NSInteger packIndex = ((UIButton *)sender).tag;
     
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index + 1 inSection:0]];
+    One_Off_Play_Type oneOffType;
     
-    PopoverView *popoverView = [PopoverView showPopoverAtPoint:((UIButton *) sender).center
-                                                                       inView:cell
-                                                                    withTitle:NSLocalizedString(@"Label_Please_Select",@"")
-                                                              withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Play_Manually",@""), NSLocalizedString(@"Optional_Play_Auto",@""),NSLocalizedString(@"Optional_Play_Auto_Loop",@""), nil]
-                                                                     delegate:self];
-    popoverView.tag = ((UIButton *) sender).tag;
+    switch ([Common getPlayOption]) {
+        case 0:
+            oneOffType = One_Off_Play_Type_Manually;
+            break;
+        case 1:
+            oneOffType = One_Off_Play_Type_Auto_Play;
+            break;
+        case 2:
+            oneOffType = One_Off_Play_Type_Auto_Play_Loop;
+            break;
+            
+        default:
+            oneOffType = One_Off_Play_Type_Unkown;
+            break;
+    }
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:@[[NSNumber numberWithInteger:oneOffType],[NSNumber numberWithInteger:packIndex]]];
+    
+    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:packIndex];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    [selectedPack savePackOnly];
+    
+    [self setPackIDForLastSelected:selectedPack.packID];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self.popController dismissPopoverAnimated:NO];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+    }
+    
+    double delayInSeconds = 0.4;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
+    });
+    
+    
     
 }
 
@@ -613,49 +647,6 @@
 
 - (void)popoverView:(PopoverView *)popoverView didSelectItemAtIndex:(NSInteger)index
 {
-    [iConsole info:@"%s",__FUNCTION__];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [popoverView dismiss];
-    });
-    
-    NSInteger packIndex = popoverView.tag;
-    
-    One_Off_Play_Type oneOffType;
-    switch (index) {
-        case 0:
-            oneOffType = One_Off_Play_Type_Manually;
-            break;
-        case 1:
-            oneOffType = One_Off_Play_Type_Auto_Play;
-            break;
-        case 2:
-            oneOffType = One_Off_Play_Type_Auto_Play_Loop;
-            break;
-            
-        default:
-            oneOffType = One_Off_Play_Type_Unkown;
-            break;
-    }
-
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:@[[NSNumber numberWithInteger:oneOffType],[NSNumber numberWithInteger:packIndex]]];
-    
-    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:packIndex];
-    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-    [selectedPack savePackOnly];
-    
-    [self setPackIDForLastSelected:selectedPack.packID];
-    
-    if (isUserInterfaceIdiomPhone) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        [self.popController dismissPopoverAnimated:YES];
-        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
-    
-    
     
 }
 
