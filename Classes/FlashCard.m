@@ -1782,7 +1782,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _answerTitle.text = _currentCard.answer.title;
     _answerTitle.textColor = [self colorForBackgroundTemplateID];
     _answerTitle.layer.shadowColor = [self colorForTitleShadowColor];
-    _cardSNText.badgeBackgroundColor = [self colorForBackgroundTemplateID];
+    _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
     
     
     _subheadingAnswer.text = _currentCard.answer.subheading;
@@ -1905,7 +1905,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _questionTitle.text = _currentCard.question.title;
     _questionTitle.textColor = [self colorForBackgroundTemplateID];
     _questionTitle.layer.shadowColor = [self colorForTitleShadowColor];
-    _cardSNText.badgeBackgroundColor = [self colorForBackgroundTemplateID];
+    _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
     
     _subheadingQuestion.text = _currentCard.question.subheading;
     _mainQuestion.text =_currentCard.question.main;
@@ -1948,6 +1948,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return [UIColor blackColor].CGColor;
     }else {
         return [UIColor blueColor].CGColor;
+    }
+    
+}
+
+
+- (UIColor *) colorForCardSNBackgroundTemplateID{
+    
+    //_templateBackgroundImageName
+    NSString *str = _currentCard.templateBackgroundName.lowercaseString;
+    if ([str rangeOfString:@"red"].location != NSNotFound) {
+        return [UIColor redColor];
+    }else if ([str rangeOfString:@"purple"].location != NSNotFound) {
+        return [UIColor purpleColor];
+    }else if ([str rangeOfString:@"blue"].location != NSNotFound) {
+        return [UIColor blueColor];
+    }else if ([str rangeOfString:@"coffee"].location != NSNotFound) {
+        return [UIColor colorWithRed:128.0/255 green:0 blue:0 alpha:1];
+    }else if ([str rangeOfString:@"gray"].location != NSNotFound) {
+        return [UIColor colorWithRed:40.0/255 green:40.0/255 blue:40.0/255 alpha:1];
+    }else {
+        return [UIColor blueColor];
     }
     
 }
