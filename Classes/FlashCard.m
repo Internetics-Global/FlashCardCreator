@@ -1780,8 +1780,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     _answerTitle.text = _currentCard.answer.title;
-    _answerTitle.textColor = [self colorForBackgroundTemplateID];
-    _answerTitle.layer.shadowColor = [self colorForTitleShadowColor];
+    _answerTitle.textColor = [self colorForAnswerTitle];
+    _answerTitle.layer.shadowColor = [self colorForAnswerTitleShadowColor];
     _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
     
     
@@ -1903,8 +1903,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     _questionTitle.text = _currentCard.question.title;
-    _questionTitle.textColor = [self colorForBackgroundTemplateID];
-    _questionTitle.layer.shadowColor = [self colorForTitleShadowColor];
+    _questionTitle.textColor = [self colorForQuestionTitle];
+    _questionTitle.layer.shadowColor = [self colorForQuestionTitleShadowColor];
     _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
     
     _subheadingQuestion.text = _currentCard.question.subheading;
@@ -1912,7 +1912,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subQuestion.text =_currentCard.question.sub;
 }
 
-- (UIColor *) colorForBackgroundTemplateID {
+- (UIColor *) colorForQuestionTitle {
+    
+    return [UIColor blueColor];
     
     //_templateBackgroundImageName
     NSString *str = _currentCard.templateBackgroundName.lowercaseString;
@@ -1932,7 +1934,41 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (CGColorRef) colorForTitleShadowColor {
+- (UIColor *) colorForAnswerTitle {
+    
+    return [UIColor redColor];
+}
+
+- (CGColorRef) colorForQuestionTitleShadowColor {
+    
+    return [UIColor whiteColor].CGColor;//to clive: if you need to control the glow color for each template,comment out this
+    
+    
+    
+    //_templateBackgroundImageName
+    NSString *str = _currentCard.templateBackgroundName.lowercaseString;
+    if ([str rangeOfString:@"red"].location != NSNotFound) {
+        return [UIColor colorWithRed:102.0/255 green:0 blue:0 alpha:1].CGColor;
+    }else if ([str rangeOfString:@"purple"].location != NSNotFound) {
+        return [UIColor colorWithRed:51.0/255 green:0 blue:25.0/255 alpha:1].CGColor;
+    }else if ([str rangeOfString:@"blue"].location != NSNotFound) {
+        return [UIColor colorWithRed:0 green:0 blue:51.0/255 alpha:1].CGColor;
+    }else if ([str rangeOfString:@"coffee"].location != NSNotFound) {
+        return [UIColor colorWithRed:25.0/255 green:0 blue:51.0/255 alpha:1].CGColor;
+    }else if ([str rangeOfString:@"gray"].location != NSNotFound) {
+        return [UIColor blackColor].CGColor;
+    }else {
+        return [UIColor blueColor].CGColor;
+    }
+    
+}
+
+
+- (CGColorRef) colorForAnswerTitleShadowColor {
+    
+    return [UIColor whiteColor].CGColor;//to clive: if you need to control the glow color for each template,comment out this
+    
+    
     
     //_templateBackgroundImageName
     NSString *str = _currentCard.templateBackgroundName.lowercaseString;
