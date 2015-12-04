@@ -27,7 +27,7 @@
 /**
  *  In order to submit a version as soon as possible, we prepare this version and remove Amazon for client uploading
  */
-//#define FFC_WITHOUT_SUBSCRIPTION
+#define FFC_WITHOUT_SUBSCRIPTION
 
 
 #define checkNullOrEmptyOrNullStr(str) (str == (id)[NSNull null] || str == nil || str.length == 0 || ([str rangeOfString:@"null"].location != NSNotFound))
