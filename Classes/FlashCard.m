@@ -352,16 +352,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_questionTitle == nil) {
         _questionTitle = [[UITextField alloc]init];
-        _questionTitle.frame = CGRectMake(80, 60, 400, 52);
+        _questionTitle.frame = CGRectMake(81, 60, 400, 52);
         _questionTitle.backgroundColor = [UIColor clearColor];
         _questionTitle.font =[UIFont systemFontOfSize:40];
         _questionTitle.textAlignment = NSTextAlignmentLeft;
         _questionTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 0.9f;
-        _questionTitle.layer.shadowRadius = 3.5f;
+        _questionTitle.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowRadius = 4.5f;
+        _questionTitle.layer.masksToBounds = NO;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
         _questionTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -374,16 +375,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_answerTitle == nil) {
         _answerTitle = [[UITextField alloc]init];
-        _answerTitle.frame = CGRectMake(80, 60, 400, 52);
+        _answerTitle.frame = CGRectMake(81, 60, 400, 52);
         _answerTitle.backgroundColor = [UIColor clearColor];
         _answerTitle.font =[UIFont systemFontOfSize:40];
         _answerTitle.textAlignment = NSTextAlignmentLeft;
         _answerTitle.text =NSLocalizedString(@"ToolbarItem_Question",nil);
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
-        _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 0.9f;
-        _answerTitle.layer.shadowRadius = 3.5f;
+        _answerTitle.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowRadius = 4.5f;
+        _answerTitle.layer.masksToBounds = NO;
         _answerTitle.textColor = [UIColor redColor];
         _answerTitle.delegate = self;
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
@@ -853,8 +855,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionTitle.userInteractionEnabled = FALSE;
         _questionTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _questionTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _questionTitle.layer.shadowOpacity = 0.9f;
-        _questionTitle.layer.shadowRadius = .5f;
+        _questionTitle.layer.shadowOpacity = 1.0f;
+        _questionTitle.layer.shadowRadius = 4.5f;
+        _questionTitle.layer.masksToBounds = NO;
         _questionTitle.textColor = [UIColor blueColor];
         _questionTitle.delegate = self;
         _questionTitle.keyboardType = UIKeyboardAppearanceDefault;
@@ -880,8 +883,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerTitle.userInteractionEnabled = FALSE;
         _answerTitle.layer.shadowColor = [[UIColor whiteColor] CGColor];
         _answerTitle.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-        _answerTitle.layer.shadowOpacity = 0.9f;
-        _answerTitle.layer.shadowRadius = .5f;
+        _answerTitle.layer.shadowOpacity = 1.0f;
+        _answerTitle.layer.shadowRadius = 4.5f;
+        _answerTitle.layer.masksToBounds = NO;
         _answerTitle.textColor = [UIColor redColor];
         _answerTitle.delegate = self;
         _answerTitle.keyboardType = UIKeyboardAppearanceDefault;
@@ -8707,6 +8711,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
      *  但是后来我们发现，如果没有设置UIEdgeInsetsZero（默认是top/bottom margin = 8)，当高度小（比如＜40），文本可容纳的高度 != textHeight + inset.top + inset.bottom。只有在高度达到一定成都时，才成立。
      *  最终，我们发现设置UIEdgeInsetsZero会完美解决这个问题，因为我们在任何情况以下都成立:文本可容纳的高度 ＝ textHeight
      */
+    
     
     while ((textHeight > frameHeight )&&(textHeight >0)&&(textView.font.pointSize >0)) {
         outputFlag = TRUE;
