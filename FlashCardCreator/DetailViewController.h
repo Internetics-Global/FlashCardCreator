@@ -68,4 +68,6 @@
 - (void) showPackInfoView;
 - (void) hidePackInfoView;
 
+- (void) switchToQuestionCard;
+
 @end

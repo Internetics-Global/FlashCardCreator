@@ -1046,6 +1046,8 @@ extern BOOL isFromNewCreatedCard;
             self.detailViewController.currentPack = _currentPack;
             self.detailViewController.indexCard = _indexCard;
             
+            [self.detailViewController switchToQuestionCard];
+            
             //We need to avoid do pushViewController twice.
             NSArray *viewControllerArray =self.navigationController.viewControllers;
             if (![[viewControllerArray objectAtIndex:[viewControllerArray count]-1] isKindOfClass:[self.detailViewController class]]) {

@@ -1094,6 +1094,19 @@ enum popover_enum {
     }
 }
 
+- (void) switchToQuestionCard {
+    
+    if (_currentCardView.segmentedControl.selectedSegmentIndex == 0) {
+        //already on question card
+        return;
+    }
+    
+    _currentCardView.segmentedControl.selectedSegmentIndex = 0;
+    
+    [_currentCardView segmentedControlQAClicked:nil];
+    
+}
+
 
 #pragma mark -
 #pragma mark DBSessionDelegate methods
