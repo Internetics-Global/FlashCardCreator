@@ -7418,7 +7418,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 }
             }
         }else {
-            point = CGPointMake(CGRectGetWidth(sender.frame)/2, 2);
+            point = CGPointMake((CGRectGetMaxX(sender.frame) + CGRectGetMinX(sender.frame))/2 - 25, 2);
             point = [sender.superview convertPoint:point toView:rootView];
         }
         
