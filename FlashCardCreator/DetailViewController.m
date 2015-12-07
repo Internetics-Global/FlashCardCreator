@@ -771,15 +771,37 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare && _currentCard) {
                     
-                    if ([PFUser currentUser] || [Common isDropboxAsStorage]) {
+#ifdef FFC_WITHOUT_SUBSCRIPTION
+                    
+                    //Dropbox only
+                    if (![[DBSession sharedSession] isLinked]) {
+                        [DBSession sharedSession].delegate = self;
+                        //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
+                        //不需要在本类中设置dropboxLinkedNotification
+                        [[DBSession sharedSession] linkFromController:self];
+                        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
+                    } else {
+                        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        [_dropboxShareHelper shareAction];
+                    }
+#else
+                    
+                    if ([DBSession sharedSession].isLinked) {  //这个必须放在else if ([PFUser currentUser])
                         
+                        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        [_dropboxShareHelper shareAction];
+                        
+                        
+                    } else if ([PFUser currentUser]) {
+
                         [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
-                        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
-                        [self share];
+                        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+                        [_amazonShareHelper shareAction];
                         
-                    } else {
                         
+                    }  else {
+                        //则表明用AWS服务，且还没有创建user
                         PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
                         logInController.fields = (PFLogInFieldsUsernameAndPassword
                                                   | PFLogInFieldsLogInButton
@@ -801,6 +823,7 @@ enum popover_enum {
                         
                         APP_DELEGATE.isAllowToShowPackList = NO;
                     }
+#endif
                     
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -862,26 +885,6 @@ enum popover_enum {
     
 }
 
-
-- (void) share {
-    
-    BOOL b = [Common isDropboxAsStorage];
-    if (b) {
-        if (![[DBSession sharedSession] isLinked]) {
-            [DBSession sharedSession].delegate = self;
-            //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
-            //不需要在本类中设置dropboxLinkedNotification
-            [[DBSession sharedSession] linkFromController:self];
-        } else {
-            _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-            [_dropboxShareHelper shareAction];
-        }
-        
-    } else {
-        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-        [_amazonShareHelper shareAction];
-    }
-}
 
 
 - (void) execTemplateBackgroundChangeTask:(NSString *)templateBackgroundName {

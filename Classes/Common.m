@@ -14,6 +14,8 @@
 #import "Pack.h"
 #import "OpenUDID.h"
 
+#import <DropboxSDK/DropboxSDK.h>
+
 @implementation Common
 
 + (void)alertViewCommon:(NSString *) msg {
@@ -312,21 +314,6 @@
     }
     
 }
-
-
-+ (BOOL) isDropboxAsStorage {
-#ifdef FFC_WITHOUT_SUBSCRIPTION
-    return true;
-#else
-    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isDropboxAsStorage"];
-    return b;
-#endif
-}
-+ (void) setDropboxAsStorage: (BOOL) flag {
-    [[NSUserDefaults standardUserDefaults] setBool:flag forKey:@"isDropboxAsStorage"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 
 + (BOOL) isValidBucketNameFromParseUserName:(NSString *) parseUserName {
     if (parseUserName.length == 0) {

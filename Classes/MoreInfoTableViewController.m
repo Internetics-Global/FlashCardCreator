@@ -297,7 +297,7 @@
         UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [storageProviderSwitch addTarget:self action:@selector(storageProviderAction) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = storageProviderSwitch;
-        BOOL b = [Common isDropboxAsStorage];
+        BOOL b = [[DBSession sharedSession] isLinked];
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -479,30 +479,23 @@
         
         [[DBSession sharedSession] unlinkAll];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SUCCESS_TO_LOG_DROPBOX",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
 
+/**
+ *  仅当FFC_WITHOUT_SUBSCRIPTION ＝ NO
+ *  因为Dropbox服务需要登陆，而AWS不需要，所以只要是[Common isDropboxAsStorage] ＝ YES，则表明使用Dropbox，否则用AWS
+ */
 - (void) storageProviderAction {
-    
-    BOOL b = [Common isDropboxAsStorage];
-    
-    if (!b) {
-        if (![[DBSession sharedSession] isLinked]) {
-            [DBSession sharedSession].delegate = self;
-            [[DBSession sharedSession] linkFromController:self];
-        } else {
-            
-            [Common setDropboxAsStorage:true];
-            
-            [self.tableView reloadData];
-        }
+
+    if ([DBSession sharedSession].isLinked == false) {
+        [DBSession sharedSession].delegate = self;
+        [[DBSession sharedSession] linkFromController:self];
     } else {
         
         [[DBSession sharedSession] unlinkAll];
-        
-        [Common setDropboxAsStorage:false];
         
         [self.tableView reloadData];
         
@@ -534,7 +527,6 @@
 #pragma mark DBSessionDelegate methods
 
 - (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [Common setDropboxAsStorage:false];
     [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
 }
 
@@ -569,12 +561,10 @@ static int outstandingRequests;
     
     if(![linkedNum boolValue])
     {
-        [Common setDropboxAsStorage:false];
         
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
     } else
     {
-        [Common setDropboxAsStorage:true];
     }
     
     [self.tableView reloadData];

@@ -59,9 +59,6 @@
 
 + (BOOL) isOwner:(Pack *) currentPack;
 
-+ (BOOL) isDropboxAsStorage;
-+ (void) setDropboxAsStorage: (BOOL) flag;
-
 + (BOOL) isValidBucketNameFromParseUserName:(NSString *) parseUserName;
 
 
