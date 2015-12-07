@@ -838,6 +838,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         if (_packListPickerPopover) {
             [_packListPickerPopover dismissPopoverAnimated:NO];
+            _packListPickerPopover = nil;
         }
     }
     
