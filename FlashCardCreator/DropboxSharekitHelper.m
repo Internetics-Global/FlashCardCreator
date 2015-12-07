@@ -100,13 +100,7 @@
             
             _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
             
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
-                                          @"Facebook",
-                                          @"Twitter",
-                                          @"Email",
-                                          NSLocalizedString(@"Title_Copy_To_Clipboard",@""),
-                                          nil];
-            [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+            [self showShareActionSheet];
             
             
         } else {
@@ -316,13 +310,7 @@
                     //3. 分享
                     _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
                     
-                    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
-                                                  @"Facebook",
-                                                  @"Twitter",
-                                                  @"Email",
-                                                  @"Copy",
-                                                  nil];
-                    [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+                    [self showShareActionSheet];
                 });
             } else {
                 //已经是短链接了，可以直接处理
@@ -335,13 +323,7 @@
                 
                 _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
                 
-                UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") destructiveButtonTitle:nil otherButtonTitles:
-                                              @"Facebook",
-                                              @"Twitter",
-                                              @"Email",
-                                              @"Copy",
-                                              nil];
-                [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
+                [self showShareActionSheet];
             }
         }
             
@@ -354,6 +336,31 @@
     APP_DELEGATE.isAllowToShowPackList = YES;
     
     
+    
+}
+
+- (void) showShareActionSheet {
+    
+    UIActionSheet *actionSheet;
+    
+    if (isUserInterfaceIdiomPhone) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:@"Exit" destructiveButtonTitle:nil otherButtonTitles:
+                       @"Facebook",
+                       @"Twitter",
+                       @"Email",
+                       @"Copy",
+                       nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:
+         @"Facebook",
+         @"Twitter",
+         @"Email",
+         @"Copy",
+         @"Exit",
+         nil];
+    }
+    
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
     
 }
 
