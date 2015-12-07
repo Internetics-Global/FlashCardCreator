@@ -85,7 +85,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 int update = [[FileOperationHelper convertStringToNSDate:updateDate] timeIntervalSince1970];
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
-                if (update < share) {
+//                if (update < share) {  //之所以disable这个逻辑，因为这个会引起误解，不如用户没有改变任何的数据，但是想改变max downloaded和password。所以，这里索性无论何种情况，都重新来一次。
+                if (false) {
                     [iConsole info:@"updateDate is earlier than shareDate"];
                     [self shareAction:shareLink];
                     return;
