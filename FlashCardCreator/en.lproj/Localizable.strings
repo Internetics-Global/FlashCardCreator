@@ -19,6 +19,7 @@
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a password?";
+"DIALOG_ENTER_PASSWORD"       = "Enter a password";
 "DIALOG_ALERT"        = "Alert";
 "DIALOG_CLOSE"        = "Close";
 "DIALOG_OK"           = "OK";

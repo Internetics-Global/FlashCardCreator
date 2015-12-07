@@ -1468,7 +1468,7 @@ extern BOOL isFromNewCreatedCard;
     if( [za UnzipIsEncrypted]) {
         
         __weak __typeof(&*self)weakSelf = self;
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_ENTER_PASSWORD",@"")];
         [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alertView textFieldAtIndex:0].text = @"";
         [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
