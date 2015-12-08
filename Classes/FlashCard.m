@@ -131,6 +131,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UIButton                             *_recordingBackgroundMaskView;
     DACircularProgressView               *_recordingProgressView;
     NSTimer                              *_recordCountDownTimer;
+    
+    BOOL                                  flag_Subheading_ResizeFinished;
+    BOOL                                  flag_Main_ResizeFinished;
+    BOOL                                  flag_Sub_ResizeFinished;
 }
 
 
@@ -1500,8 +1504,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  刷新操作，考虑：
  *  1. play mode和 edit mode下的scroll view
  *  2. 卡片可编辑，或不可编辑
- *  @param isDisableAutoResize 如果为NO，满足下面的条件执行adjustAllTextViewsToFitIfNecessary
- *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行adjustAllTextViewsToFitIfNecessary
+ *  @param isDisableAutoResize 如果为NO，满足下面的条件执行
+ *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     [iConsole info:@"%s",__FUNCTION__];
@@ -1533,7 +1537,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self adjustAllTextViewsToFitIfNecessary];
         } else {
             if ([Common isOwner:_currentPack] == FALSE) {
-                //当不可编辑时，我们将限制adjustAllTextViewsToFitIfNecessary执行。主要原因时这时我们将通过前后页来预加载，而非当前页执行adjustAllTextViewsToFitIfNecessary
                 //几种情况
                 //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
                 //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
@@ -8382,14 +8385,240 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [[NSNotificationCenter defaultCenter] postNotificationName:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
 }
 
+
+
 /**
- *  用于根据textview的frame，进行自动调节:
- *  结果不写入数据库，也就是说切换一个pack，就需要重新执行。这主要是考虑到写入数据库的严重性。
- *  1. 如果字体太小导致行数不一致，则进行字体增加措施，是的行数一致
- *  2. 如果字体太大，导致无法显示，则缩小字体
- *  返回true,表示执行了；false，表示没有任何调节
+ *  第一步
+ *  1.先确保在frame里面（减小字体大小）
+ *  maxLineNo的唯一作用是传递给triggerResizeTextToSameLineNo
  */
+- (BOOL) triggerResizeTextToFitFrame:(UITextView *) textView withMaxLineNumber: (int) maxLineNo{
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    if ((textView.contentSize.height > CGRectGetHeight(textView.frame) )
+            &&(textView.contentSize.height >0)
+                  &&(textView.font.pointSize >0)
+                       &&(textView.text.length >0)) {
+        float delta;
+        if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  3* textView.font.lineHeight) {
+            delta = 3;
+        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  2* textView.font.lineHeight) {
+            delta = 2;
+        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  textView.font.lineHeight) {
+            delta = 1;
+        } else {
+            delta = 0.3;
+        }
+        
+        NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize,textView.text);
+        
+        
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];  //是异步更新的，即如果这时去拿text height等参数时，不正确（实际中，发现即便使用setNeedDisplay, setNeedLayout,甚至layoutifneeded也不行），所以需要通过disptach到下一个runloop中去
+        
+        double delayInSeconds = 0.016;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf triggerResizeTextToFitFrame:textView withMaxLineNumber:maxLineNo];
+        });
+        
+        return NO;
+        
+    } else {
+        
+        //最终出口
+        
+        [weakSelf triggerResizeTextToSameLineNo_Bigger:textView withMaxLineNumber:maxLineNo];
+        
+        return YES;
+    }
+    
+}
+
+/**
+ *  第二步
+ *  如果行数太少1，则增大字体大小 （注意，这时需要加上：(textView.contentSize.height <= CGRectGetHeight(textView.frame) )）
+ *  先执行：triggerResizeTextToFitFrame，然后再执行triggerResizeTextToSameLineNo
+ */
+- (BOOL) triggerResizeTextToSameLineNo_Bigger:(UITextView *) textView withMaxLineNumber: (int) maxLineNo {
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    __block int lineNumber = [self lineNumberWithUITextView:textView];
+    
+    if ((maxLineNo > lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
+              && (textView.contentSize.height <= CGRectGetHeight(textView.frame))
+                     && (textView.text.length >0)) {  //文字不超过frame,这个很重要
+        
+        
+        NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize, textView.text);
+        
+        float delta = 1;
+        if (maxLineNo > lineNumber + 3) {
+            delta = 3;
+        } else if (maxLineNo > lineNumber + 2) {
+            delta = 2;
+        } else if (maxLineNo > lineNumber + 1) {
+            delta = 1;
+        } else {
+            delta = 0.3;
+        }
+        
+        
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  + delta)]];
+        
+        double delayInSeconds = 0.016;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf triggerResizeTextToSameLineNo_Bigger:textView withMaxLineNumber:maxLineNo];
+        });
+        
+        return NO;
+        
+    } else {
+        
+        //最终出口
+        
+        [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
+        
+        return YES;
+    }
+    
+}
+
+/**
+ *  第三步。
+ *  3. 再， 如果字体有点大，则缩小。
+ *  路径：
+ *  a. 有可能是先经过第一步resize，然后第二步resize，最后到这里;
+ *  b. 也有可能是直接调用
+ *  c. 也有可能是先经过第一步的resize，然后到这里
+ */
+- (BOOL) triggerResizeTextToSameLineNo_Smaller:(UITextView *) textView withMaxLineNumber: (int) maxLineNo {
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    __block int lineNumber = [self lineNumberWithUITextView:textView];
+    
+    if ((maxLineNo < lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
+                && (textView.text.length >0)) {
+        
+        NSLog(@"triggerResizeTextToSameLineNo_Smaller: font size = %f  on text = %@",textView.font.pointSize, textView.text);
+        
+        float delta = 1;
+        if (maxLineNo > lineNumber + 3) {
+            delta = 3;
+        } else if (maxLineNo > lineNumber + 2) {
+            delta = 2;
+        } else if (maxLineNo > lineNumber + 1) {
+            delta = 1;
+        } else {
+            delta = 0.3;
+        }
+        
+        
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];
+        
+        double delayInSeconds = 0.016;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
+        });
+        
+        return NO;
+        
+    } else {
+        
+        //最终出口
+        [self didFinishResizeText:textView];
+        
+        return YES;
+    }
+    
+}
+
+/**
+ *  最终出口
+ */
+- (void) didFinishResizeText:(UITextView *) textView {
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        
+        if (textView.tag == kTagSubheadingQuestion) {
+            flag_Subheading_ResizeFinished = YES;
+        } else if (textView.tag == kTagMainQuestion) {
+            flag_Main_ResizeFinished = YES;
+        } else if (textView.tag == kTagSubQuestion) {
+            flag_Sub_ResizeFinished = YES;
+        }
+        
+        
+    } else {
+        
+        if (textView.tag == kTagSubheadingAnswer) {
+            flag_Subheading_ResizeFinished = YES;
+        } else if (textView.tag == kTagMainAnswer) {
+            flag_Main_ResizeFinished = YES;
+        } else if (textView.tag == kTagSubAnswer) {
+            flag_Sub_ResizeFinished = YES;
+        }
+        
+    }
+    
+    [self setVerticalAlignment:textView];
+    
+    if (flag_Sub_ResizeFinished && flag_Main_ResizeFinished && flag_Sub_ResizeFinished) {
+        
+        _verticalScrollView.hidden = NO;
+        
+    }
+    
+}
+
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    //There's an error in orgigional pack, so we need a patch here
+    if ([_currentCard.answer.main rangeOfString:@"Knee how"].location != NSNotFound) {
+        _currentCard.answer.lineNoMain = 5;
+    }
+    
+    if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
+        ([self.currentPack.platform isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone == false))){
+        return false;
+    }
+    
+    if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
+        ([self.currentPack.platform isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone == false))){
+        return false;
+    }
+    
+    _verticalScrollView.hidden = YES;
+    flag_Subheading_ResizeFinished = NO;
+    flag_Main_ResizeFinished = NO;
+    flag_Sub_ResizeFinished = NO;
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        
+        [self triggerResizeTextToFitFrame:_subheadingQuestion withMaxLineNumber:_currentCard.question.lineNoSubheading];
+        [self triggerResizeTextToFitFrame:_mainQuestion withMaxLineNumber:_currentCard.question.lineNoMain];
+        [self triggerResizeTextToFitFrame:_subQuestion withMaxLineNumber:_currentCard.question.lineNoSub];
+        
+    } else {
+        
+        [self triggerResizeTextToFitFrame:_subheadingAnswer withMaxLineNumber:_currentCard.answer.lineNoSubheading];
+        [self triggerResizeTextToFitFrame:_mainAnswer withMaxLineNumber:_currentCard.answer.lineNoMain];
+        [self triggerResizeTextToFitFrame:_subAnswer withMaxLineNumber:_currentCard.answer.lineNoSub];
+        
+    }
+    
+    return NO;
+}
+
+/** 
+ *  Deprecated*******不再使用
+ */
+- (BOOL) adjustAllTextViewsToFitIfNecessary_Old {
     
     if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
            ([self.currentPack.platform isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone == false))){
@@ -8416,6 +8645,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
+        
         
         //------行数不一致时，增大字体 （初调，步长大）-------
         i = 0;
