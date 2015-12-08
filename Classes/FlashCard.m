@@ -454,6 +454,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         _subheadingQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subheadingQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _subheadingQuestion.contentOffset = CGPointZero;
+        _subheadingQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -476,6 +479,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         _mainQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _mainQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _mainQuestion.contentOffset = CGPointZero;
+        _mainQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -499,6 +505,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
         _subQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _subQuestion.contentOffset = CGPointZero;
+        _subQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -552,6 +561,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         _subheadingAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subheadingAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _subheadingAnswer.contentOffset = CGPointZero;
+        _subheadingAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = TRUE;
@@ -575,6 +587,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         _mainAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _mainAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _mainAnswer.contentOffset = CGPointZero;
+        _mainAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = TRUE;
@@ -599,6 +614,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
         _subAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _subAnswer.contentOffset = CGPointZero;
+        _subAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = TRUE;
@@ -994,6 +1012,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingQuestion.backgroundColor = [UIColor clearColor];
         _subheadingQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subheadingQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _subheadingQuestion.contentOffset = CGPointZero;
+        _subheadingQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingQuestion];
     }
     
@@ -1010,6 +1031,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainQuestion.backgroundColor = [UIColor clearColor];
         _mainQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _mainQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _mainQuestion.contentOffset = CGPointZero;
+        _mainQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainQuestion];
     }
     
@@ -1027,6 +1051,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.autocorrectionType = UITextAutocorrectionTypeYes;
         _subQuestion.backgroundColor = [UIColor clearColor];
         _subQuestion.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subQuestion.autoresizingMask = UIViewAutoresizingNone;
+        _subQuestion.contentOffset = CGPointZero;
+        _subQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subQuestion];
     }
     
@@ -1076,6 +1103,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subheadingAnswer.backgroundColor = [UIColor clearColor];
         _subheadingAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subheadingAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _subheadingAnswer.contentOffset = CGPointZero;
+        _subheadingAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingAnswer];
     }
     _subheadingAnswer.hidden = YES;
@@ -1093,6 +1123,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _mainAnswer.backgroundColor = [UIColor clearColor];
         _mainAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _mainAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _mainAnswer.contentOffset = CGPointZero;
+        _mainAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainAnswer];
     }
     _mainAnswer.hidden = YES;
@@ -1110,6 +1143,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.autocorrectionType = UITextAutocorrectionTypeYes;
         _subAnswer.backgroundColor = [UIColor clearColor];
         _subAnswer.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _subAnswer.autoresizingMask = UIViewAutoresizingNone;
+        _subAnswer.contentOffset = CGPointZero;
+        _subAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subAnswer];
     }
     _subAnswer.hidden = YES;
@@ -2216,9 +2252,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     float textHeight = [self getTextSizeHeight:textView];
     float lineHeight = textView.font.lineHeight;
     
-    float numLines = textHeight / lineHeight;
     
-    int returnVal = ceilf(numLines);
+    //实际中，你会看到numLines是一个非常接近整数的数值。比如如下
+    //2.030135 ---- 2
+    //3.008099 ---- 3
+    //在从2行到3行的逐渐变化中，numLines起先是在2.02附近；然后一旦到了3行，则突然跳跃到3.00附近。
+    //也就是说numLines永远不可能是一个3.5， 3.9的数，而是一个非常接近round的数
+    //以下一个真实的debug数据：
+    //font size= 24.600000,numLines = 4.019534, textHeight = 118.000000, lineHeight = 29.356640 with TextView = {{3, 29}, {304.5, 153}}
+    //font size= 24.500000,numLines = 3.009853, textHeight = 88.000000, lineHeight = 29.237305 with TextView = {{3, 29}, {304.5, 153}}
+    
+    CGFloat numLines = textHeight / lineHeight;
+    
+    int returnVal = round(numLines);
+    
+//    NSLog(@"font size= %f,numLines = %f, textHeight = %f, lineHeight = %f with TextView = %@",textView.font.pointSize
+//          ,numLines, textHeight,lineHeight,NSStringFromCGRect(textView.frame));
+
     
     return returnVal;
 }
@@ -8359,6 +8409,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //    }
     
     
+    //Debug code only
+    if ([_mainQuestion.text rangeOfString:@"What is the percentage"].location != NSNotFound) {
+        
+    }
+    
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
         //------行数不一致时，增大字体 （初调，步长大）-------
@@ -8442,7 +8498,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
         while ((_currentCard.question.lineNoSubheading < lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
-            [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize -0.1)]];
+            [_subheadingQuestion setFont:[_subheadingQuestion.font fontWithSize:(_subheadingQuestion.font.pointSize -0.2)]];
             lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
             //[iConsole info:@"%s:_currentCard.question.lineNoSubheading= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSubheading,lineNumber];
             i++;
@@ -8460,9 +8516,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         i = 0;
+        
         lineNumber = [self lineNumberWithUITextView:_subQuestion];
         while ((_currentCard.question.lineNoSub < lineNumber)&& (_currentCard.question.lineNoSub >= 0)&& (i<kMax)&& (lineNumber > 0)) {
-            [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize -0.1)]];
+            [_subQuestion setFont:[_subQuestion.font fontWithSize:(_subQuestion.font.pointSize -0.2)]];
             lineNumber = [self lineNumberWithUITextView:_subQuestion];
             //[iConsole info:@"%s:_currentCard.question.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.question.lineNoSub,lineNumber];
             i++;
@@ -8652,7 +8709,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (float) getTextViewLeftMargin:(UITextView *) textView {
     
-    return 0.0;  //最新逻辑
+    return 0.0;  //最新逻辑. 因为我们已经设置了textContainerInset ＝ UIEdgeInsetsZero;
 
     int delta = 3;  //delta引入是让计算更保守，让行数的计算结果宁可比实际多，也不要少，有机会让程序通过最后的adjustFontToFit来完成
     
@@ -8683,40 +8740,53 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 /**
- *  获取textview中文字高度，而不是frame的高度，这是迄今位置，最靠谱的做法，但仍旧没有达到高精度
+ * 用于计算行数
  */
 - (float) getTextSizeHeight:(UITextView *) textView{
     
-    //[iConsole info:@"%s",__FUNCTION__];
-    float fudgeFactor = [self getTextViewLeftMargin:textView];
-    CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
     
-    if (TRUE) {
-        //this is old way
-        CGSize stringSize;
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
-        } else {
-            stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
-        }
+    if (TRUE) { //这是正确的做法******
         
-        CGFloat textHeight = stringSize.height; //textView.contentSize.height不准确
-        return textHeight;
+        //最终我们是通过这种方法计算行数的： float rawLineNumber = (_textView.contentSize.height - _textView.textContainerInset.top - _textView.textContainerInset.bottom) / _textView.font.lineHeight;
+        //则这里需要直接返回textView.contentSize.height
+        
+        return textView.contentSize.height;
         
     } else {
-        //this is the new way, but we need to verify later
-        NSStringDrawingOptions options = NSStringDrawingTruncatesLastVisibleLine |
-        NSStringDrawingUsesLineFragmentOrigin;
-        NSDictionary *attr = @{NSFontAttributeName: textView.font};
-        CGRect labelBounds = [textView.text boundingRectWithSize:tallerSize
-                                                         options:options
-                                                      attributes:attr
-                                                         context:nil];
         
-        CGFloat textHeight = labelBounds.size.height; //textView.contentSize.height不准确
-        return textHeight;
+        //这是错误的计算方法****
+        //实践中发现，这种方法在计算行数时，会造成突变，比如从font size = 25.8到25.7这么小的一个变化时，行高会突然从120到100。这是不可接受的
+        
+        //[iConsole info:@"%s",__FUNCTION__];
+        float fudgeFactor = [self getTextViewLeftMargin:textView];
+        CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
+        
+        if (TRUE) {
+            //this is old way
+            CGSize stringSize;
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+                stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
+            } else {
+                stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
+            }
+            
+            CGFloat textHeight = stringSize.height; //textView.contentSize.height不准确
+            return textHeight;
+            
+        } else {
+            //this is the new way, but we need to verify later
+            NSStringDrawingOptions options = NSStringDrawingTruncatesLastVisibleLine |
+            NSStringDrawingUsesLineFragmentOrigin;
+            NSDictionary *attr = @{NSFontAttributeName: textView.font};
+            CGRect labelBounds = [textView.text boundingRectWithSize:tallerSize
+                                                             options:options
+                                                          attributes:attr
+                                                             context:nil];
+            
+            CGFloat textHeight = labelBounds.size.height; //textView.contentSize.height不准确
+            return textHeight;
+        }
     }
-
 
     
 }
@@ -8743,6 +8813,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         result = NO;
         return result;
     }
+    
     
     [textView layoutSubviews]; //否则textHeight可能为<0
     CGFloat frameHeight = textView.frame.size.height;
@@ -8790,6 +8861,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
      *  但是后来我们发现，如果没有设置UIEdgeInsetsZero（默认是top/bottom margin = 8)，当高度小（比如＜40），文本可容纳的高度 != textHeight + inset.top + inset.bottom。只有在高度达到一定成都时，才成立。
      *  最终，我们发现设置UIEdgeInsetsZero会完美解决这个问题，因为我们在任何情况以下都成立:文本可容纳的高度 ＝ textHeight
      */
+    
+    
     
     
     while ((textHeight > frameHeight )&&(textHeight >0)&&(textView.font.pointSize >0)) {
@@ -8864,19 +8937,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    //必须把auto resize的最终字体大小限制在离散值内
-    //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
-    if (textView.font.pointSize > [[_keyboardTopViewV2.realSizeArray firstObject] intValue]) {
+    if ([self checkCardEditable]) { //只有当Edittable才有这个必要
         
-        int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
-        if (index == - 1) {
-            [iConsole error:@"%s:return - 1 when execut [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize]",__FUNCTION__];
+        //必须把auto resize的最终字体大小限制在离散值内
+        //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
+        if (textView.font.pointSize > [[_keyboardTopViewV2.realSizeArray firstObject] intValue]) {
+            
+            int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
+            if (index == - 1) {
+                [iConsole error:@"%s:return - 1 when execut [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize]",__FUNCTION__];
+            } else {
+                [textView.font fontWithSize:[[_keyboardTopViewV2.realSizeArray objectAtIndex:index] integerValue]];
+            }
+            
         } else {
-            [textView.font fontWithSize:[[_keyboardTopViewV2.realSizeArray objectAtIndex:index] integerValue]];
+            [textView.font fontWithSize:(int)textView.font.pointSize];
         }
-        
-    } else {
-        [textView.font fontWithSize:(int)textView.font.pointSize];
     }
     
     
