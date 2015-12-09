@@ -361,9 +361,9 @@ BOOL _isDownloadingSamplePack;
 
 - (UIView *)progressHUDHolderView {
     if (isUserInterfaceIdiomPhone) {
-        return self.navigationController.view;
+        return self.navigationController.view.window;
     } else {
-        return self.splitViewController.view;
+        return self.splitViewController.view.window;
     }
 }
 
