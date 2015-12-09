@@ -235,7 +235,7 @@
 "Table_Item_Mute_Sound_Recording" = "Mute Sound Recording";
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";
-"Table_Item_Dropbox_Logged_In" = "Dropbox Logged In";
+"Table_Item_Dropbox_Logged_In" = "Dropbox storage";
 "Table_Item_Log_In_Social_Network" = "Sign In";
 "Table_Item_Log_Out_Social_Network" = "Sign Out";
 
