@@ -273,7 +273,10 @@
     //Step3: zip them
     ZipArchive* zipFile = [[ZipArchive alloc] init];
     NSString *generatePackZipFilePath = [cardAssembleDir stringByAppendingPathComponent:
-                                     [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()]];
+                                            [NSString stringWithFormat:@"Pack%@%d%d.zip",
+                                                [pack.packName stringByReplacingOccurrencesOfString:@" " withString:@""],
+                                                (int)[[NSDate date] timeIntervalSince1970],
+                                                arc4random()]];
     if ([password isEqualToString:@""]) {
         [zipFile CreateZipFile2:generatePackZipFilePath];    
     } else {

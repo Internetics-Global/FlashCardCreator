@@ -65,5 +65,7 @@
 + (int) getPlayOption;
 + (void) setPlayOption:(int) playOption;
 
++ (BOOL) isAlphanumeric:(NSString *) str;
+
 
 @end

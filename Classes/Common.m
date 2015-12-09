@@ -333,6 +333,7 @@
 }
 
 
+
 /**
  *  0: manually; 1, auto play; 2. auto play with loop
  */
@@ -353,6 +354,19 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:playOption forKey:@"PLAY_OPTION"];
     [userDefaults synchronize];
+}
+
+
++ (BOOL) isAlphanumeric:(NSString *) string {
+    
+    NSCharacterSet *s = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_ "];
+    s = [s invertedSet];
+    NSRange r = [string rangeOfCharacterFromSet:s];
+    if (r.location != NSNotFound) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 

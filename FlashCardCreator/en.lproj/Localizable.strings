@@ -100,6 +100,8 @@
 "DIALOG_INVALID_USERNAME_OR_PASSWORD" = "Invalid ID or password";
 "DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME" = "Invlid user name. Only alphanumeric characters are permitted.";
 
+"DIALOG_ONLY_ALPHANUMBER_PERMITTED"                = "Only alphanumeric characters are permitted";
+
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = " Edit ";
