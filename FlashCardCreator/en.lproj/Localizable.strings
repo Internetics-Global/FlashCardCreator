@@ -32,7 +32,7 @@
 "DIALOG_WRONG_PASSWORD"       = "Wrong password";
 "DIALOG_DELETE_PACK"       = "Are you sure you want to delete?";
 "DIALOG_DELETE_CARD"       = "Are you sure you want to delete?";
-"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Dropbox is not linked";
+"DIALOG_FAIL_TO_LOG_DROPBOX"               = "Disconnected from Dropbox";
 "DIALOG_SUCCESS_TO_LOG_DROPBOX"               = "Dropbox is successfully logged in";
 "DIALOG_DOWNLOAD_LINK_ERROR"               = "Unable to download. Please check you have the correct code and please check your internet connection.";
 "DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED" = "Failure to create zipped share file.";
