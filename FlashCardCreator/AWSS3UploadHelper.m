@@ -222,8 +222,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     
     //step2: update local meta info
-    if (self.currentPack.fileNameOnAWS.length == 0) {
-        self.currentPack.fileNameOnAWS = [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    if (self.currentPack.fileNameOnAWS.length == 0 || ([self.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
+        self.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:self.currentPack];
         
         [self.currentPack savePackOnly];
     }

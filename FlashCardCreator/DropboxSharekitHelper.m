@@ -187,8 +187,9 @@
     }
     
     //step2: update local meta info
-    if (self.currentPack.fileNameOnAWS.length == 0) {
-        self.currentPack.fileNameOnAWS = [NSString stringWithFormat:@"Pack%d%d.zip", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    //同时为了处理老版本，所以有了额外逻辑（老版本都是类似：Pack1449621320-134252191.zip）
+    if (self.currentPack.fileNameOnAWS.length == 0 || ([self.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
+        self.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:self.currentPack];
         [self.currentPack savePackOnly];
     }
     

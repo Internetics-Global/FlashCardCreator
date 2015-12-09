@@ -273,10 +273,7 @@
     //Step3: zip them
     ZipArchive* zipFile = [[ZipArchive alloc] init];
     NSString *generatePackZipFilePath = [cardAssembleDir stringByAppendingPathComponent:
-                                            [NSString stringWithFormat:@"Pack%@%d%d.zip",
-                                                [pack.packName stringByReplacingOccurrencesOfString:@" " withString:@""],
-                                                (int)[[NSDate date] timeIntervalSince1970],
-                                                arc4random()]];
+                                            [self generateUniqueFileNameOnCloud:pack]];
     if ([password isEqualToString:@""]) {
         [zipFile CreateZipFile2:generatePackZipFilePath];    
     } else {
@@ -653,6 +650,20 @@
     
     NSString *uid = [NSString stringWithFormat:@"answer_card_background_image_undo.jpg"];
     return ([path stringByAppendingPathComponent:uid]);
+}
+
+/**
+ *  Dropbox or AWS
+ */
++ (NSString *) generateUniqueFileNameOnCloud:(Pack *) pack {
+    
+    NSString *fileName = [NSString stringWithFormat:@"%@%d%d.zip",
+                          [pack.packName stringByReplacingOccurrencesOfString:@" " withString:@""],
+                          (int)[[NSDate date] timeIntervalSince1970],
+                          arc4random()];
+    
+    return fileName;
+    
 }
 
 

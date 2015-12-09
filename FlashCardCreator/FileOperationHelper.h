@@ -53,5 +53,7 @@
 + (NSString *) undoCardBackGroundImageForQuestionPath;
 + (NSString *) undoCardBackGroundImageForAnswerPath;
 
++ (NSString *) generateUniqueFileNameOnCloud:(Pack *) pack;
+
 
 @end
