@@ -13,7 +13,9 @@
 #import "Card.h"
 #import "FileOperationHelper.h"
 
-@implementation ZipFileDownloadHelper
+@implementation ZipFileDownloadHelper  {
+    AFDownloadRequestOperation *_downloadOperation;
+}
 
 @synthesize delegate = _delegate;
 @synthesize savedPath = _savedPath;
@@ -49,8 +51,8 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLStr]];
     NSString *path = [FileOperationHelper downloadedZipPackFileFixedPath];
-    AFDownloadRequestOperation *operation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _downloadOperation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
+    [_downloadOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [iConsole info:@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path];
         [weakSelf.delegate downloadSuccess:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -59,7 +61,7 @@
         //[Common alertViewCommon:[error description]];
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_LINK_ERROR",@"")];
     }];
-    [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
+    [_downloadOperation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
         [iConsole info:@"%s\nDownload percent is: %f, total byte is: %lld",__FUNCTION__, (float) totalBytesReadForFile/totalBytesExpectedToReadForFile,totalBytesExpectedToReadForFile];
         if (weakSelf.delegate != nil) {
             [weakSelf.delegate downloadProgressivePercent:totalBytesReadForFile totalLength:totalBytesExpectedToReadForFile];
@@ -67,12 +69,26 @@
         
     }];
     
+    
     if (_queue == nil) {
         _queue =[[NSOperationQueue alloc] init];
     }
-    [_queue addOperation:operation];
+    [_queue addOperation:_downloadOperation];
     
     return path;
+}
+
+- (void) cancelDownload {
+    [_downloadOperation cancel];
+    _downloadOperation = nil;
+    if ([_queue isSuspended] == false) {
+        [_queue setSuspended:YES];
+    }
+    _queue = nil;
+    
+    [self.delegate downloadFail];
+    //[Common alertViewCommon:[error description]];
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_LINK_ERROR",@"")];
 }
 
 
@@ -81,5 +97,6 @@
     NSString *downloadableURL = [urlStr stringByReplacingOccurrencesOfString:@"fcc://" withString:@"https://"];
     return downloadableURL;
 }
+
 
 @end

@@ -101,6 +101,7 @@
 "DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME" = "Invlid user name. Only alphanumeric characters are permitted.";
 
 "DIALOG_ONLY_ALPHANUMBER_PERMITTED"                = "Only alphanumeric characters are permitted";
+"DIALOG_DOWNLOAD_LINK_ERROR"                       = "Download is cancelled";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

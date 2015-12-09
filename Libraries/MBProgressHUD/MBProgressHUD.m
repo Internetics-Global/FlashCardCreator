@@ -1,6 +1,6 @@
 //
 // MBProgressHUD.m
-// Version 0.9.1
+// Version 0.9
 // Created by Matej Bukovinski on 2.4.09.
 //
 
@@ -63,12 +63,14 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	UILabel *detailsLabel;
 	BOOL isFinished;
 	CGAffineTransform rotationTransform;
+    UIButton *button;
 }
 
 @property (atomic, MB_STRONG) UIView *indicator;
 @property (atomic, MB_STRONG) NSTimer *graceTimer;
 @property (atomic, MB_STRONG) NSTimer *minShowTimer;
 @property (atomic, MB_STRONG) NSDate *showStarted;
+
 
 @end
 
@@ -106,6 +108,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 @synthesize progress;
 @synthesize size;
 @synthesize activityIndicatorColor;
+@synthesize buttonTitle;
+@synthesize buttonTitleColor;
 #if NS_BLOCKS_AVAILABLE
 @synthesize completionBlock;
 #endif
@@ -187,6 +191,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.removeFromSuperViewOnHide = NO;
 		self.minSize = CGSizeZero;
 		self.square = NO;
+        self.buttonTitle = nil;
+        self.buttonTitleColor = [UIColor whiteColor];
 		self.contentMode = UIViewContentModeCenter;
 		self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
 								| UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -245,22 +251,20 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 #pragma mark - Show & hide
 
 - (void)show:(BOOL)animated {
-    NSAssert([NSThread isMainThread], @"MBProgressHUD needs to be accessed on the main thread.");
 	useAnimation = animated;
 	// If the grace time is set postpone the HUD display
 	if (self.graceTime > 0.0) {
-        NSTimer *newGraceTimer = [NSTimer timerWithTimeInterval:self.graceTime target:self selector:@selector(handleGraceTimer:) userInfo:nil repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:newGraceTimer forMode:NSRunLoopCommonModes];
-        self.graceTimer = newGraceTimer;
+		self.graceTimer = [NSTimer scheduledTimerWithTimeInterval:self.graceTime target:self 
+						   selector:@selector(handleGraceTimer:) userInfo:nil repeats:NO];
 	} 
 	// ... otherwise show the HUD imediately 
 	else {
+		[self setNeedsDisplay];
 		[self showUsingAnimation:useAnimation];
 	}
 }
 
 - (void)hide:(BOOL)animated {
-    NSAssert([NSThread isMainThread], @"MBProgressHUD needs to be accessed on the main thread.");
 	useAnimation = animated;
 	// If the minShow time is set, calculate how long the hud was shown,
 	// and pospone the hiding operation if necessary
@@ -289,6 +293,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 - (void)handleGraceTimer:(NSTimer *)theTimer {
 	// Show the HUD only if the task is still running
 	if (taskInProgress) {
+		[self setNeedsDisplay];
 		[self showUsingAnimation:useAnimation];
 	}
 }
@@ -299,17 +304,21 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 #pragma mark - View Hierrarchy
 
+- (BOOL)shouldPerformOrientationTransform {
+	BOOL isPreiOS8 = NSFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_8_0;
+	// prior to iOS8 code needs to take care of rotation if it is being added to the window
+	return isPreiOS8 && [self.superview isKindOfClass:[UIWindow class]];
+}
+
 - (void)didMoveToSuperview {
-    [self updateForCurrentOrientationAnimated:NO];
+	if ([self shouldPerformOrientationTransform]) {
+		[self setTransformForCurrentOrientation:NO];
+	}
 }
 
 #pragma mark - Internal show & hide operations
 
 - (void)showUsingAnimation:(BOOL)animated {
-    // Cancel any scheduled hideDelayed: calls
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [self setNeedsDisplay];
-
 	if (animated && animationType == MBProgressHUDAnimationZoomIn) {
 		self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(0.5f, 0.5f));
 	} else if (animated && animationType == MBProgressHUDAnimationZoomOut) {
@@ -471,6 +480,17 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	detailsLabel.font = self.detailsLabelFont;
 	detailsLabel.text = self.detailsLabelText;
 	[self addSubview:detailsLabel];
+
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = self.bounds;
+    button.opaque = NO;
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor colorWithRed:0.0f green:122.0f/255.0f blue:255.0f alpha:1.0f] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithRed:0.0f green:122.0f/255.0f blue:255.0f alpha:0.4f] forState:UIControlStateHighlighted];
+    [button setTitle:self.buttonTitle forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+    [self addSubview:button];
 }
 
 - (void)updateIndicators {
@@ -507,9 +527,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		if (mode == MBProgressHUDModeAnnularDeterminate) {
 			[(MBRoundProgressView *)indicator setAnnular:YES];
 		}
-		[(MBRoundProgressView *)indicator setProgressTintColor:self.activityIndicatorColor];
-		[(MBRoundProgressView *)indicator setBackgroundTintColor:[self.activityIndicatorColor colorWithAlphaComponent:0.1f]];
-	}
+	} 
 	else if (mode == MBProgressHUDModeCustomView && customView != indicator) {
 		// Update custom view indicator
 		[indicator removeFromSuperview];
@@ -550,7 +568,16 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		totalSize.height += kPadding;
 	}
 
-	CGFloat remainingHeight = bounds.size.height - totalSize.height - kPadding - 4 * margin; 
+    NSDictionary *attributes = @{NSFontAttributeName:button.titleLabel.font};
+    CGSize buttonSize = [[button titleForState:UIControlStateNormal] sizeWithAttributes:attributes];
+    buttonSize.width = MIN(buttonSize.width, maxWidth);
+    totalSize.width = MAX(totalSize.width, buttonSize.width);
+    totalSize.height += buttonSize.height;
+    if (buttonSize.height > 0.f && indicatorF.size.height > 0.f) {
+        totalSize.height += kPadding;
+    }
+
+	CGFloat remainingHeight = bounds.size.height - totalSize.height - kPadding - 4 * margin;
 	CGSize maxSize = CGSizeMake(maxWidth, remainingHeight);
 	CGSize detailsLabelSize = MB_MULTILINE_TEXTSIZE(detailsLabel.text, detailsLabel.font, maxSize, detailsLabel.lineBreakMode);
 	totalSize.width = MAX(totalSize.width, detailsLabelSize.width);
@@ -579,7 +606,17 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	labelF.size = labelSize;
 	label.frame = labelF;
 	yPos += labelF.size.height;
-	
+
+    if (buttonSize.height > 0.f && indicatorF.size.height > 0.f) {
+        yPos += kPadding * 2;
+    }
+    CGRect buttonF;
+    buttonF.origin.y = yPos;
+    buttonF.origin.x = roundf((bounds.size.width - buttonSize.width) / 2) + xPos;
+    buttonF.size = buttonSize;
+    button.frame = buttonF;
+    yPos += buttonF.size.height;
+
 	if (detailsLabelSize.height > 0.f && (indicatorF.size.height > 0.f || labelSize.height > 0.f)) {
 		yPos += kPadding;
 	}
@@ -677,7 +714,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 - (NSArray *)observableKeypaths {
 	return [NSArray arrayWithObjects:@"mode", @"customView", @"labelText", @"labelFont", @"labelColor",
-			@"detailsLabelText", @"detailsLabelFont", @"detailsLabelColor", @"progress", @"activityIndicatorColor", nil];
+			@"detailsLabelText", @"detailsLabelFont", @"detailsLabelColor", @"progress", @"activityIndicatorColor",
+            @"buttonTitle", @"buttonTitleColor", nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -704,6 +742,11 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		detailsLabel.font = self.detailsLabelFont;
 	} else if ([keyPath isEqualToString:@"detailsLabelColor"]) {
 		detailsLabel.textColor = self.detailsLabelColor;
+    } else if ([keyPath isEqualToString:@"buttonTitle"]) {
+        [button setTitle:self.buttonTitle forState:UIControlStateNormal];
+    } else if ([keyPath isEqualToString:@"buttonTitleColor"]) {
+        [button setTitleColor:self.buttonTitleColor forState:UIControlStateNormal];
+        [button setTitleColor:[self.buttonTitleColor colorWithAlphaComponent:0.4f] forState:UIControlStateHighlighted];
 	} else if ([keyPath isEqualToString:@"progress"]) {
 		if ([indicator respondsToSelector:@selector(setProgress:)]) {
 			[(id)indicator setValue:@(progress) forKey:@"progress"];
@@ -717,46 +760,36 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 #pragma mark - Notifications
 
 - (void)registerForNotifications {
-#if !TARGET_OS_TV
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
 	[nc addObserver:self selector:@selector(statusBarOrientationDidChange:)
-               name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-#endif
+			   name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
 - (void)unregisterFromNotifications {
-#if !TARGET_OS_TV
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-#endif
+	[nc removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
-#if !TARGET_OS_TV
 - (void)statusBarOrientationDidChange:(NSNotification *)notification {
 	UIView *superview = self.superview;
 	if (!superview) {
 		return;
+	} else if ([self shouldPerformOrientationTransform]) {
+		[self setTransformForCurrentOrientation:YES];
 	} else {
-		[self updateForCurrentOrientationAnimated:YES];
+		self.frame = self.superview.bounds;
+		[self setNeedsDisplay];
 	}
 }
-#endif
 
-- (void)updateForCurrentOrientationAnimated:(BOOL)animated {
-    // Stay in sync with the superview in any case
-    if (self.superview) {
-        self.bounds = self.superview.bounds;
-        [self setNeedsDisplay];
-    }
-
-    // Not needed on iOS 8+, compile out when the deployment target allows,
-    // to avoid sharedApplication problems on extension targets
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < 80000
-    // Only needed pre iOS 7 when added to a window
-    BOOL iOS8OrLater = kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0;
-    if (iOS8OrLater || ![self.superview isKindOfClass:[UIWindow class]]) return;
-
+- (void)setTransformForCurrentOrientation:(BOOL)animated {
+	// Stay in sync with the superview
+	if (self.superview) {
+		self.bounds = self.superview.bounds;
+		[self setNeedsDisplay];
+	}
+	
 	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 	CGFloat radians = 0;
 	if (UIInterfaceOrientationIsLandscape(orientation)) {
@@ -778,7 +811,14 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	if (animated) {
 		[UIView commitAnimations];
 	}
-#endif
+}
+
+#pragma mark - Action
+
+- (IBAction)buttonAction:(id)sender {
+    if ([delegate respondsToSelector:@selector(hudTappedButton:)]) {
+        [delegate performSelector:@selector(hudTappedButton:) withObject:self];
+    }
 }
 
 @end
@@ -825,7 +865,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	
 	if (_annular) {
 		// Draw background
-		BOOL isPreiOS7 = kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0;
+		BOOL isPreiOS7 = NSFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_7_0;
 		CGFloat lineWidth = isPreiOS7 ? 5.f : 2.f;
 		UIBezierPath *processBackgroundPath = [UIBezierPath bezierPath];
 		processBackgroundPath.lineWidth = lineWidth;
@@ -857,7 +897,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		CGFloat radius = (allRect.size.width - 4) / 2;
 		CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
 		CGFloat endAngle = (self.progress * 2 * (float)M_PI) + startAngle;
-		[_progressTintColor setFill];
+		CGContextSetRGBFillColor(context, 1.0f, 1.0f, 1.0f, 1.0f); // white
 		CGContextMoveToPoint(context, center.x, center.y);
 		CGContextAddArc(context, center.x, center.y, radius, startAngle, endAngle, 0);
 		CGContextClosePath(context);

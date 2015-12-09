@@ -30,4 +30,6 @@
 - (NSString *) downloadZipFile:(NSString *)URLStr;
 + (NSString *) convertToDownloadableURL:(NSString *) urlStr;
 
+- (void) cancelDownload;
+
 @end

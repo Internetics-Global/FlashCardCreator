@@ -1509,6 +1509,7 @@ extern BOOL isFromNewCreatedCard;
     
     NSData *packData = [NSData dataWithContentsOfFile:downloadedPackInfoFilePath];
     if (!packData) {
+        [iConsole error:@"%s:error to parse packInformation.json and downloadedPackInfoFilePath = %@",__FUNCTION__,downloadedPackInfoFilePath];
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_WHEN_PARSING_PACK_JSON",@"")];
         return;
     }
@@ -2348,11 +2349,17 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
+- (void)hudTappedButton:(MBProgressHUD *)hud {
+    [_zipFileDownloadHelper cancelDownload];
+}
+
 - (void)showDownloadProgressIndicator:(NSString *) type withSource:(NSString *) from {
     
     _progressivePercent = 0;
 	
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+    _HUD.buttonTitle = @" Cancel ";
+    _HUD.buttonTitleColor = [UIColor blackColor];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
     [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];

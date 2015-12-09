@@ -769,7 +769,7 @@ enum popover_enum {
             }
             case 1: {
                 
-                if (_currentPack.isAllowShare && _currentCard) {
+                if (_currentPack.isAllowShare) {
                     
 #ifdef FFC_WITHOUT_SUBSCRIPTION
                     
