@@ -3100,7 +3100,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingAnswer.hidden = TRUE;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(3, 3, 157, 182);
+            _mainAnswer.frame = CGRectMake(3, 3, 157, 183);
             if (self.isPlayingCard) {
                 _mainAnswer.frame = [Common getScaledViewRect:_mainAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -5992,7 +5992,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingQuestion.hidden = TRUE;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(3, 3, 157, 182);
+            _mainQuestion.frame = CGRectMake(3, 3, 157, 183);
             if (self.isPlayingCard) {
                 _mainQuestion.frame = [Common getScaledViewRect:_mainQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -8392,9 +8392,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  1.先确保在frame里面（减小字体大小）
  *  maxLineNo的唯一作用是传递给triggerResizeTextToSameLineNo
  */
-- (BOOL) triggerResizeTextToFitFrame:(UITextView *) textView withMaxLineNumber: (int) maxLineNo{
+- (BOOL) triggerResizeTextToFitFrame:(UITextView *) textView withMaxLineNumber: (long) maxLineNo{
     
     __weak __typeof(&*self)weakSelf = self;
+    
+    //Debug purpose, leave here in case we need more adjust
+    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
+        
+    }
     
     if ((textView.contentSize.height > CGRectGetHeight(textView.frame) )
             &&(textView.contentSize.height >0)
@@ -8409,6 +8414,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             delta = 1;
         } else {
             delta = 0.3;
+        }
+        if (isUserInterfaceIdiomPhone) {
+            delta = delta/2;
         }
         
         NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize,textView.text);
@@ -8440,11 +8448,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  如果行数太少1，则增大字体大小 （注意，这时需要加上：(textView.contentSize.height <= CGRectGetHeight(textView.frame) )）
  *  先执行：triggerResizeTextToFitFrame，然后再执行triggerResizeTextToSameLineNo
  */
-- (BOOL) triggerResizeTextToSameLineNo_Bigger:(UITextView *) textView withMaxLineNumber: (int) maxLineNo {
+- (BOOL) triggerResizeTextToSameLineNo_Bigger:(UITextView *) textView withMaxLineNumber: (long) maxLineNo {
     
     __weak __typeof(&*self)weakSelf = self;
     
     __block int lineNumber = [self lineNumberWithUITextView:textView];
+    
+    //Debug purpose, leave here in case we need more adjust
+    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
+        
+    }
     
     if ((maxLineNo > lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
               && (textView.contentSize.height <= CGRectGetHeight(textView.frame))
@@ -8462,6 +8475,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             delta = 1;
         } else {
             delta = 0.3;
+        }
+        if (isUserInterfaceIdiomPhone) {
+            delta = delta/2;
         }
         
         
@@ -8500,8 +8516,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     __block int lineNumber = [self lineNumberWithUITextView:textView];
     
-    if ((maxLineNo < lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
-                && (textView.text.length >0)) {
+    //Debug purpose, leave here in case we need more adjust
+    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
+        
+    }
+    
+    if (((maxLineNo < lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
+                && (textView.text.length >0)) || (textView.contentSize.height > CGRectGetHeight(textView.frame) && (textView.text.length >0))) {
         
         NSLog(@"triggerResizeTextToSameLineNo_Smaller: font size = %f  on text = %@",textView.font.pointSize, textView.text);
         
@@ -8515,7 +8536,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else {
             delta = 0.3;
         }
-        
+        if (isUserInterfaceIdiomPhone) {
+            delta = delta/2;
+        }
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];
         
@@ -8607,7 +8630,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         
         [self triggerResizeTextToFitFrame:_subheadingAnswer withMaxLineNumber:_currentCard.answer.lineNoSubheading];
+        
         [self triggerResizeTextToFitFrame:_mainAnswer withMaxLineNumber:_currentCard.answer.lineNoMain];
+        
         [self triggerResizeTextToFitFrame:_subAnswer withMaxLineNumber:_currentCard.answer.lineNoSub];
         
     }
@@ -10531,7 +10556,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
-
+ 
 /**
  *  KVO
  *  仅适用于[self isVerticalAlignment:tv] ＝ YES
