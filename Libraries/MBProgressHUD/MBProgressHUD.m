@@ -485,7 +485,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     button.frame = self.bounds;
     button.opaque = NO;
-    button.backgroundColor = [UIColor whiteColor];
+    button.backgroundColor = [UIColor darkGrayColor];
     [button setTitleColor:[UIColor colorWithRed:0.0f green:122.0f/255.0f blue:255.0f alpha:1.0f] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithRed:0.0f green:122.0f/255.0f blue:255.0f alpha:0.4f] forState:UIControlStateHighlighted];
     [button setTitle:self.buttonTitle forState:UIControlStateNormal];
