@@ -132,6 +132,11 @@
      *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
      */
     NSTimer  *_timerCForText2SpeechFinished;
+    
+    /**
+     *  用于执行在view controller生命周期内的仅仅一次的标志。不能用disp_once，因为dis_once是application生命周期仅仅一次执行。
+     */
+    BOOL     _OneOffExecution_Flag;
 }
 
 @end
@@ -175,14 +180,26 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActiveNotification) name:UIApplicationWillResignActiveNotification object:nil];
     
+    _OneOffExecution_Flag = YES;
+    
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [_motionManager stopDeviceMotionUpdates];
-    _motionManager = nil;
+    [self cleanupMotionSensor];
+    
+    if (_isAutoScroll == false) {
+        
+        [_timerForDelayedText2Speech invalidate];
+        
+        FlashCard *currentCard = [self getCurrrentCard];
+        if (currentCard) {
+            [currentCard stopAudio];
+            [currentCard stopTextToSpeechNow];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,6 +209,69 @@
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];
     }
+    
+    [self setupMotionSensor];
+    
+    
+    //初始化_dwellTimeSlider值
+    if (_OneOffExecution_Flag) {
+        
+        switch (self.oneOffPlayType) {
+            case One_Off_Play_Type_Manually: {
+                break;
+            }
+                
+            case One_Off_Play_Type_Auto_Play:
+                _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
+                break;
+                
+            case One_Off_Play_Type_Auto_Play_Loop:
+                _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
+                break;
+                
+            default:
+                break;
+        }
+    }
+
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    
+    FlashCard *currentCard = [self getCurrrentCard];
+    
+    NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
+    if (recordSoundFile.length == 0) {
+        [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
+    } else {
+        [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
+    }
+    
+    
+    if (_OneOffExecution_Flag) {
+        
+        _controlPanel.hidden = YES;
+        _scrollView.userInteractionEnabled = NO;
+        
+        _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
+        
+        _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelDwellSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
+        
+        _OneOffExecution_Flag = NO;
+    }
+
+    
+}
+
+- (void) cleanupMotionSensor {
+    
+    [_motionManager stopDeviceMotionUpdates];
+    _motionManager = nil;
+}
+
+- (void) setupMotionSensor {
     
     static BOOL resetRoll    = YES;
     
@@ -339,47 +419,6 @@
     } else {
         [iConsole info:@"%s:The gyroscope sensor is not available",__FUNCTION__];
     }
-    
-    
-    //初始化_dwellTimeSlider值
-    
-    switch (self.oneOffPlayType) {
-        case One_Off_Play_Type_Manually: {
-            break;
-        }
-            
-        case One_Off_Play_Type_Auto_Play:
-            _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
-            break;
-            
-        case One_Off_Play_Type_Auto_Play_Loop:
-            _dwellTimeSlider.value = kDefault_Auto_Play_Speed;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    _controlPanel.hidden = YES;
-    _scrollView.userInteractionEnabled = NO;
-    
-    FlashCard *currentCard = [self getCurrrentCard];
-    
-    _firstTimeDelayTimer = [NSTimer scheduledTimerWithTimeInterval:(1) target:self selector:@selector(firstTimeDelayTimer) userInfo:nil repeats:NO];
-    
-    NSString *recordSoundFile = currentCard.currentCard.question.recordedSoundFullPath;
-    if (recordSoundFile.length == 0) {
-        [_playButton setImage:[UIImage imageNamed:@"play25_dimmed"] forState:UIControlStateNormal];
-    } else {
-        [_playButton setImage:[UIImage imageNamed:@"play25_normal"] forState:UIControlStateNormal];
-    }
-    
-    _autoHideControlPanelTimer = [NSTimer scheduledTimerWithTimeInterval:K_AutoHideControlPanelDwellSeconds target:self selector:@selector(autoHideControlerPanel) userInfo:nil repeats:NO];
-    
 }
 
 
