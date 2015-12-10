@@ -8436,7 +8436,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         //最终出口
         
-        [weakSelf triggerResizeTextToSameLineNo_Bigger:textView withMaxLineNumber:maxLineNo];
+        double delayInSeconds = 0.04;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf triggerResizeTextToSameLineNo_Bigger:textView withMaxLineNumber:maxLineNo];
+        });
         
         return YES;
     }
@@ -8455,7 +8459,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     __block int lineNumber = [self lineNumberWithUITextView:textView];
     
     //Debug purpose, leave here in case we need more adjust
-    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
+    if ([textView.text rangeOfString:@"Which gas law "].location != NSNotFound) {
         
     }
     
@@ -8493,9 +8497,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         
-        //最终出口
-        
-        [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
+        double delayInSeconds = 0.05;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
+        });
         
         return YES;
     }
@@ -8512,14 +8518,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (BOOL) triggerResizeTextToSameLineNo_Smaller:(UITextView *) textView withMaxLineNumber: (int) maxLineNo {
     
+    
+    //Debug purpose, leave here in case we need more adjust
+    if ([textView.text rangeOfString:@"Which gas law"].location != NSNotFound) {
+        
+    }
+    
     __weak __typeof(&*self)weakSelf = self;
     
     __block int lineNumber = [self lineNumberWithUITextView:textView];
     
-    //Debug purpose, leave here in case we need more adjust
-    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
-        
-    }
+    
     
     if (((maxLineNo < lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
                 && (textView.text.length >0)) || (textView.contentSize.height > CGRectGetHeight(textView.frame) && (textView.text.length >0))) {
@@ -8600,6 +8609,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    if ([self checkCardEditable]) {
+        return NO;
+    }
     
     //There's an error in orgigional pack, so we need a patch here
     if ([_currentCard.answer.main rangeOfString:@"Knee how"].location != NSNotFound) {
