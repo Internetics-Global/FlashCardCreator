@@ -1959,9 +1959,16 @@ extern BOOL isFromNewCreatedCard;
                 [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
                 [iConsole info:@"You are using iPhone and pack was made on iPad"];
-                [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                
+                if (subheadingSize <30 || mainSize < 30 || subSize < 30) { //理想情况应该是建立一个calibaration table，需要未来执行。实践发现，当字体太小时，offset就不能太大
+                    [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                    [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                    [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                } else {
+                    [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                    [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                    [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                }
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
@@ -2239,9 +2246,16 @@ extern BOOL isFromNewCreatedCard;
                 [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
                 [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
-                [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
-                [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_BETWEEN_IPAD_IPHONE;
+                
+                if (subheadingSize <30 || mainSize < 30 || subSize < 30) { //理想情况应该是建立一个calibaration table，需要未来执行。实践发现，当字体太小时，offset就不能太大
+                    [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                    [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                    [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
+                } else {
+                    [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                    [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                    [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE;
+                }
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
@@ -2358,8 +2372,8 @@ extern BOOL isFromNewCreatedCard;
     _progressivePercent = 0;
 	
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
-    _HUD.buttonTitle = @" Cancel ";
-    _HUD.buttonTitleColor = [UIColor blackColor];
+    _HUD.buttonTitle = @"    Cancel    ";
+    _HUD.buttonTitleColor = [UIColor whiteColor];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
     [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];

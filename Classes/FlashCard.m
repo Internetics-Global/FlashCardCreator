@@ -8407,16 +8407,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                        &&(textView.text.length >0)) {
         float delta;
         if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  3* textView.font.lineHeight) {
-            delta = 3;
-        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  2* textView.font.lineHeight) {
             delta = 2;
-        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  textView.font.lineHeight) {
+        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  2* textView.font.lineHeight) {
             delta = 1;
+        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  textView.font.lineHeight) {
+            delta = 0.5;
         } else {
             delta = 0.3;
         }
         if (isUserInterfaceIdiomPhone) {
-            delta = delta/2;
+            delta = delta/3;
         }
         
         NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize,textView.text);
@@ -8424,7 +8424,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];  //是异步更新的，即如果这时去拿text height等参数时，不正确（实际中，发现即便使用setNeedDisplay, setNeedLayout,甚至layoutifneeded也不行），所以需要通过disptach到下一个runloop中去
         
-        double delayInSeconds = 0.016;
+        double delayInSeconds = 0.02;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [weakSelf triggerResizeTextToFitFrame:textView withMaxLineNumber:maxLineNo];
@@ -8481,13 +8481,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             delta = 0.3;
         }
         if (isUserInterfaceIdiomPhone) {
-            delta = delta/2;
+            delta = delta/3;
         }
         
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  + delta)]];
         
-        double delayInSeconds = 0.016;
+        double delayInSeconds = 0.02;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [weakSelf triggerResizeTextToSameLineNo_Bigger:textView withMaxLineNumber:maxLineNo];
@@ -8497,7 +8497,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         
-        double delayInSeconds = 0.05;
+        double delayInSeconds = 0.04;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
@@ -8516,11 +8516,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  *  b. 也有可能是直接调用
  *  c. 也有可能是先经过第一步的resize，然后到这里
  */
-- (BOOL) triggerResizeTextToSameLineNo_Smaller:(UITextView *) textView withMaxLineNumber: (int) maxLineNo {
+- (BOOL) triggerResizeTextToSameLineNo_Smaller:(UITextView *) textView withMaxLineNumber: (long) maxLineNo {
     
     
     //Debug purpose, leave here in case we need more adjust
-    if ([textView.text rangeOfString:@"Which gas law"].location != NSNotFound) {
+    if ([textView.text rangeOfString:@"When the"].location != NSNotFound) {
         
     }
     
@@ -8546,12 +8546,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             delta = 0.3;
         }
         if (isUserInterfaceIdiomPhone) {
-            delta = delta/2;
+            delta = delta/3;
         }
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];
         
-        double delayInSeconds = 0.016;
+        double delayInSeconds = 0.020;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
@@ -8562,7 +8562,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         
         //最终出口
-        [self didFinishResizeText:textView];
+        double delayInSeconds = 0.02;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf didFinishResizeText:textView];
+        });
         
         return YES;
     }
@@ -8609,6 +8613,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
     [iConsole info:@"%s",__FUNCTION__];
+    
     
     if ([self checkCardEditable]) {
         return NO;

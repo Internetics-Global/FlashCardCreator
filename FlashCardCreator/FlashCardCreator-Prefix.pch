@@ -137,7 +137,8 @@
 
 #define FONT_FACTOR_FROM_IPAD_TO_IPHONE     0.5 //这个数字越大，表示：在iPhone上查看在iPad上制作的pack时，字体会更大；在iPad上查看iPhone制作的pack时。缩放后的字体，要比实际大一些。这样后续可以微调。但是如果太小，并不一定可以通过下一步的step1进行调整（比如同样还是三行，但是字体很小）
 #define FONT_FACTOR_FROM_IPHONE_TO_IPAD     2.3
-#define FONT_OFFSET_BETWEEN_IPAD_IPHONE     4
+#define FONT_OFFSET_FROM_IPAD_TO_IPHONE     4
+#define FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28     2     //当text size很小时
 
 #define CSS_EMOTION_VIEW_HEIGHT_IPHONE         162   
 #define CSS_EMOTION_VIEW_HEIGHT_IPAD           350
