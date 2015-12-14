@@ -1320,7 +1320,9 @@ extern BOOL isFromNewCreatedCard;
     BOOL result = false;
     
     NSString *defaultDomain = [SimpleDBHelper defaultDomain];
-    //itemName = @"Pack1374144082-185879295"; //only for test, will be removed
+    
+//    itemName = @"Pack1374144082-185879295"; //only for test, will be removed
+    
     _amazonSimpleDBItemName = itemName;
     NSMutableDictionary *dict = [SimpleDBHelper fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
     
@@ -2003,7 +2005,13 @@ extern BOOL isFromNewCreatedCard;
                     
                     float ratio = 1;
                     if (_downloadedPackSourceDeviceWidth > 0) {
-                        ratio = (float)_downloadedPackSourceDeviceWidth/IPHONE_UI_WIDTH/K_Weight_From_Android_To_IOS;
+                        //注意以下公式中不能用IPHONE_UI_WIDTH
+                        //因为相同的DP宽度，iPhone下text size更大，所以需要用K_Weight_From_Android_To_IOS修正
+                        ratio = (float)_downloadedPackSourceDeviceWidth/480 / K_Weight_From_Android_To_IOS;
+                    }
+                    
+                    if (isUserInterfaceIdiomPhone) {
+                        ratio = ratio *1.15;
                     }
                     
                     [assembledCard question].css.subheadingSize = subheadingSize/ratio;
@@ -2047,6 +2055,7 @@ extern BOOL isFromNewCreatedCard;
                     if (_downloadedPackSourceDeviceWidth > 0) {
                         ratio = (float)_downloadedPackSourceDeviceWidth/IPAD_UI_WIDTH/K_Weight_From_Android_To_IOS;
                     }
+                    
                     
                     [assembledCard question].css.subheadingSize = subheadingSize/ratio;
                     [assembledCard question].css.mainSize = mainSize/ratio;
@@ -2290,7 +2299,14 @@ extern BOOL isFromNewCreatedCard;
                     
                     float ratio = 1;
                     if (_downloadedPackSourceDeviceWidth > 0) {
-                        ratio = (float)_downloadedPackSourceDeviceWidth/IPHONE_UI_WIDTH/K_Weight_From_Android_To_IOS;
+                        //注意以下公式中不能用IPHONE_UI_WIDTH
+                        //因为相同的DP宽度，iPhone下text size更大，所以需要用K_Weight_From_Android_To_IOS修正
+                        ratio = (float)_downloadedPackSourceDeviceWidth/480/K_Weight_From_Android_To_IOS;
+                    }
+                    
+                    
+                    if (isUserInterfaceIdiomPhone) {
+                        ratio = ratio *1.15;
                     }
                     
                     [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
