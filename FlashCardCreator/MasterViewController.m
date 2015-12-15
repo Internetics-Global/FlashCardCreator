@@ -62,6 +62,10 @@
 
 extern BOOL _isDownloadingSamplePack;
 
+/**
+ ** Calibration
+ *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
+ */
 const float ZAPFINO_RATIO_FROM_NON_IOS = 3;
 const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
