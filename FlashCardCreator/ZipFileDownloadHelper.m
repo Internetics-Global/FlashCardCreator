@@ -88,7 +88,7 @@
     
     [self.delegate downloadFail];
     //[Common alertViewCommon:[error description]];
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_LINK_ERROR",@"")];
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_CANCELLED",@"")];
 }
 
 
