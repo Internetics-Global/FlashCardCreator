@@ -65,6 +65,7 @@ extern BOOL _isDownloadingSamplePack;
 const float ZAPFINO_RATIO_FROM_NON_IOS = 3;
 const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
+const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
 @interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate> {
     
@@ -2025,7 +2026,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2035,7 +2036,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard question].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard question].css.mainSize = mainSize/ratio;
+                        [assembledCard question].css.mainSize = mainSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2045,7 +2046,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard question].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard question].css.subSize = subSize/ratio;
+                        [assembledCard question].css.subSize = subSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }                }
                 
                 
@@ -2092,7 +2093,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound ) {
@@ -2102,7 +2103,7 @@ extern BOOL isFromNewCreatedCard;
                     }  else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"courier"].location!= NSNotFound) {
                         [assembledCard question].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     }  else {
-                        [assembledCard question].css.mainSize = mainSize/ratio;
+                        [assembledCard question].css.mainSize = mainSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2112,7 +2113,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard question].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard question].css.subSize = subSize/ratio;
+                        [assembledCard question].css.subSize = subSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                 }
@@ -2373,7 +2374,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2383,7 +2384,7 @@ extern BOOL isFromNewCreatedCard;
                     }  else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     }  else {
-                        [assembledCard answer].css.mainSize = mainSize/ratio;
+                        [assembledCard answer].css.mainSize = mainSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2393,7 +2394,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard answer].css.subSize = subSize/ratio;
+                        [assembledCard answer].css.subSize = subSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                         
                     
@@ -2444,7 +2445,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2454,7 +2455,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard answer].css.mainSize = mainSize/ratio;
+                        [assembledCard answer].css.mainSize = mainSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                     
                     if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2464,7 +2465,7 @@ extern BOOL isFromNewCreatedCard;
                     } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
                         [assembledCard answer].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
-                        [assembledCard answer].css.subSize = subSize/ratio;
+                        [assembledCard answer].css.subSize = subSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
                 }
                 
