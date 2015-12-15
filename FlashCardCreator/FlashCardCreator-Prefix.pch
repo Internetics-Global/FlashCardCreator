@@ -84,7 +84,7 @@
  * how to get this value：my Phone's dp = 640，main size = 15; while on iPad, the best  main size = 32. So ：32/15/(1024/640)  = 1.34
  * However, we need to set this final value a little small in reality, simply from practice, no other reason
  */
-#define K_Weight_From_Android_To_IOS   1.30
+#define K_Weight_From_Android_To_IOS   1.8
 
 //Global user_id
 #define GLOBAL_USER_ID @"314"

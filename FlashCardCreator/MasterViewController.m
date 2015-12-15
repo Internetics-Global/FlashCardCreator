@@ -62,6 +62,9 @@
 
 extern BOOL _isDownloadingSamplePack;
 
+const float ZAPFINO_RATIO_FROM_NON_IOS = 3;
+const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
+
 @interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
@@ -2014,10 +2017,29 @@ extern BOOL isFromNewCreatedCard;
                         ratio = ratio *1.15;
                     }
                     
-                    [assembledCard question].css.subheadingSize = subheadingSize/ratio;
-                    [assembledCard question].css.mainSize = mainSize/ratio;
-                    [assembledCard question].css.subSize = subSize/ratio;
-                }
+                    if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                    }
+                    
+                    if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard question].css.mainSize = mainSize/ratio;
+                    }
+                    
+                    if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard question].css.subSize = subSize/ratio;
+                    }                }
                 
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
@@ -2056,10 +2078,30 @@ extern BOOL isFromNewCreatedCard;
                         ratio = (float)_downloadedPackSourceDeviceWidth/IPAD_UI_WIDTH/K_Weight_From_Android_To_IOS;
                     }
                     
+                    if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio;
+                    }
                     
-                    [assembledCard question].css.subheadingSize = subheadingSize/ratio;
-                    [assembledCard question].css.mainSize = mainSize/ratio;
-                    [assembledCard question].css.subSize = subSize/ratio;
+                    if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound ) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    }  else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location!= NSNotFound) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    }  else {
+                        [assembledCard question].css.mainSize = mainSize/ratio;
+                    }
+                    
+                    if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard question].css.subSize = subSize/ratio;
+                    }
+                    
                 }
                 
             } else {
@@ -2307,11 +2349,35 @@ extern BOOL isFromNewCreatedCard;
                     
                     if (isUserInterfaceIdiomPhone) {
                         ratio = ratio *1.15;
+                        
+    
                     }
                     
-                    [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
-                    [assembledCard answer].css.mainSize = mainSize/ratio;
-                    [assembledCard answer].css.subSize = subSize/ratio;
+                    if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                    }
+                    
+                    if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.mainSize = mainSize/ratio;
+                    }
+                    
+                    if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.subSize = subSize/ratio;
+                    }
+                        
+                    
                 }
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
@@ -2352,9 +2418,29 @@ extern BOOL isFromNewCreatedCard;
                     }
 
                     
-                    [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
-                    [assembledCard answer].css.mainSize = mainSize/ratio;
-                    [assembledCard answer].css.subSize = subSize/ratio;
+                    if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
+                    }
+                    
+                    if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.mainSize = mainSize/ratio;
+                    }
+                    
+                    if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else {
+                        [assembledCard answer].css.subSize = subSize/ratio;
+                    }
                 }
                 
             } else {
