@@ -64,6 +64,7 @@ extern BOOL _isDownloadingSamplePack;
 
 const float ZAPFINO_RATIO_FROM_NON_IOS = 3;
 const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
+const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 
 @interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate> {
     
@@ -2021,6 +2022,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio;
                     }
@@ -2029,6 +2032,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard question].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard question].css.mainSize = mainSize/ratio;
                     }
@@ -2037,6 +2042,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard question].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard question].css.subSize = subSize/ratio;
                     }                }
@@ -2082,6 +2089,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard question].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard question].css.subheadingSize = subheadingSize/ratio;
                     }
@@ -2090,6 +2099,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     }  else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location!= NSNotFound) {
                         [assembledCard question].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    }  else if ([[assembledCard question].css.mainFont.lowercaseString rangeOfString:@"courier"].location!= NSNotFound) {
+                        [assembledCard question].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     }  else {
                         [assembledCard question].css.mainSize = mainSize/ratio;
                     }
@@ -2098,6 +2109,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard question].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard question].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard question].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard question].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard question].css.subSize = subSize/ratio;
                     }
@@ -2357,6 +2370,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
                     }
@@ -2365,7 +2380,9 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
-                    } else {
+                    }  else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
+                    }  else {
                         [assembledCard answer].css.mainSize = mainSize/ratio;
                     }
                     
@@ -2373,6 +2390,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard answer].css.subSize = subSize/ratio;
                     }
@@ -2422,6 +2441,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.subheadingSize = subheadingSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio;
                     }
@@ -2430,6 +2451,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.mainSize = mainSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.mainSize = mainSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.mainFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.mainSize = mainSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard answer].css.mainSize = mainSize/ratio;
                     }
@@ -2438,6 +2461,8 @@ extern BOOL isFromNewCreatedCard;
                         [assembledCard answer].css.subSize = subSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
                     } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"papyrus"].location != NSNotFound) {
                         [assembledCard answer].css.subSize = subSize/ratio/PAPYRUS_RATIO_FROM_NON_IOS;
+                    } else if ([[assembledCard answer].css.subFont.lowercaseString rangeOfString:@"courier"].location != NSNotFound) {
+                        [assembledCard answer].css.subSize = subSize/ratio/COURIER_RATIO_FROM_NON_IOS;
                     } else {
                         [assembledCard answer].css.subSize = subSize/ratio;
                     }
