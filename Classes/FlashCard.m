@@ -8405,21 +8405,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             &&(textView.contentSize.height >0)
                   &&(textView.font.pointSize >0)
                        &&(textView.text.length >0)) {
+        
+        float targetLineNoFloat = CGRectGetHeight(textView.frame) / textView.font.lineHeight;
+        
         float delta;
-        if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  3* textView.font.lineHeight) {
-            delta = 2;
-        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  2* textView.font.lineHeight) {
-            delta = 1;
-        } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  textView.font.lineHeight) {
-            delta = 0.5;
+        
+        if (isUserInterfaceIdiomPhone == YES) {
+            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
+            delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:targetLineNoFloat];
         } else {
-            delta = 0.3;
-        }
-        if (isUserInterfaceIdiomPhone) {
-            delta = delta/3;
+            if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  3* textView.font.lineHeight) {
+                delta = 2;
+            } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  2* textView.font.lineHeight) {
+                delta = 1;
+            } else if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  textView.font.lineHeight) {
+                delta = 0.5;
+            } else {
+                delta = 0.3;
+            }
         }
         
-        NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize,textView.text);
+        NSLog(@"triggerResizeTextToFitFrame: font size = %f on text = %@ with delta = %f",textView.font.pointSize,textView.text, delta);
         
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];  //是异步更新的，即如果这时去拿text height等参数时，不正确（实际中，发现即便使用setNeedDisplay, setNeedLayout,甚至layoutifneeded也不行），所以需要通过disptach到下一个runloop中去
@@ -8447,6 +8453,76 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+
+/**
+ *  用于resize的decrease/increase的differnce
+ *  返回永远是正数（永远不会是0）。如果目标行数与现有一致或者本身文本为空，则返回0.15
+ */
+- (float) getAbsDifferenceForResizingText:(UITextView *) textView withTargetLineNo:(float) targetLineNoFloat {
+    
+    if (textView.text.length == 0) {
+        return 0.15;
+    }
+    
+    float fontSize = textView.font.pointSize;
+    float lineHeight = textView.font.lineHeight;
+    float textHeight = [self getTrustableTextHeight:textView];
+    int   lineNo     = round(textHeight/lineHeight); //textHeight/lineHeight一定是一个接近于整数的数值，这个由getTrustableTextHeight保证
+    
+    
+    //如何得到以下公式：测试发现，当行数希望达到原来的一倍时，这时字体的大小大约为1.8-2.2之间，为了安全期间，我们设定为1.5-2.5之间。
+    float delta = fabsf(targetLineNoFloat - lineNo)/lineNo * fontSize  *0.5;
+    
+    NSLog(@"getAbsDifferenceForResizingText: targetLineNoFloat =%f,lineNo =%d,fontSize = %f, delta = %f on textView = %@",targetLineNoFloat,lineNo,fontSize,delta,textView.text);
+    
+    if (delta < 0.15) {  //为了避免无休止的循环或迭代次数太多，比如有可能delta = 0.0001
+        delta = 0.15;
+    }
+    
+    return delta;
+    
+}
+
+
+/**
+ *  返回是一个float，这个需要注意，因为这个在只有一行的情况下很重要，比如如果只有一行，则int就有可能为0
+ *  计算文本高度有4种（http://stackoverflow.com/questions/34207289/4-alternative-ways-to-calculate-text-height-in-a-uitextview-ios7-but-which-o?noredirect=1#comment56160153_34207289), 但是迄今为止，没有一种在任何情况是靠谱的，但是普遍有个规律是，只要计算得到的行数是个接近整数，就值得信任。所以有了如下的方法。
+ *  我们还没有把这种计算方法应用到全部中，因为我们没有100%的把握（虽然已经有了99%），后续会全部运用。
+ */
+- (float) getTrustableTextHeight:(UITextView *) textView {
+    
+    if (textView.text.length == 0) {
+        return 0;
+    }
+    
+    float lineHeight = textView.font.lineHeight;
+    
+    CGFloat textHeight;
+    
+    //第一种方法，实践中，我们发现，当textHeight/lineHeight足够接近一个整数时，才可以信任
+    textHeight = textView.contentSize.height;
+    if (fabs(textHeight/lineHeight - round(textHeight/lineHeight)) < 0.1) {
+        return textHeight;
+    } else {
+        NSLog(@"Untrustable textHeight calculation = %f, we will use another way",textHeight/lineHeight);
+    }
+    
+    //如果第一种方法不行，则使用第二种方法
+    float fudgeFactor = [self getTextViewLeftMargin:textView];
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
+    
+    CGSize stringSize;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
+    } else {
+        stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
+    }
+    
+    textHeight = stringSize.height;
+    return textHeight;
+
+}
+
 /**
  *  第二步
  *  如果行数太少1，则增大字体大小 （注意，这时需要加上：(textView.contentSize.height <= CGRectGetHeight(textView.frame) )）
@@ -8467,22 +8543,25 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
               && (textView.contentSize.height <= CGRectGetHeight(textView.frame))
                      && (textView.text.length >0)) {  //文字不超过frame,这个很重要
         
+    
         
-        NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@",textView.font.pointSize, textView.text);
-        
-        float delta = 1;
-        if (maxLineNo > lineNumber + 3) {
-            delta = 3;
-        } else if (maxLineNo > lineNumber + 2) {
-            delta = 2;
-        } else if (maxLineNo > lineNumber + 1) {
-            delta = 1;
+        float delta;
+        if (isUserInterfaceIdiomPhone == YES) {
+            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
+            delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:maxLineNo];
         } else {
-            delta = 0.3;
+            if (maxLineNo > lineNumber + 3) {
+                delta = 3;
+            } else if (maxLineNo > lineNumber + 2) {
+                delta = 2;
+            } else if (maxLineNo > lineNumber + 1) {
+                delta = 1;
+            } else {
+                delta = 0.3;
+            }
         }
-        if (isUserInterfaceIdiomPhone) {
-            delta = delta/3;
-        }
+        
+        NSLog(@"triggerResizeTextToSameLineNo_Bigger: font size = %f on text = %@ with delta = %f",textView.font.pointSize, textView.text,delta);
         
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  + delta)]];
@@ -8533,21 +8612,25 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (((maxLineNo < lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
                 && (textView.text.length >0)) || (textView.contentSize.height > CGRectGetHeight(textView.frame) && (textView.text.length >0))) {
         
-        NSLog(@"triggerResizeTextToSameLineNo_Smaller: font size = %f  on text = %@",textView.font.pointSize, textView.text);
         
-        float delta = 1;
-        if (maxLineNo > lineNumber + 3) {
-            delta = 3;
-        } else if (maxLineNo > lineNumber + 2) {
-            delta = 2;
-        } else if (maxLineNo > lineNumber + 1) {
-            delta = 1;
+        float delta;
+        
+        if (isUserInterfaceIdiomPhone == YES) {
+            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
+            delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:maxLineNo];
         } else {
-            delta = 0.3;
+            if (maxLineNo > lineNumber + 3) {
+                delta = 3;
+            } else if (maxLineNo > lineNumber + 2) {
+                delta = 2;
+            } else if (maxLineNo > lineNumber + 1) {
+                delta = 1;
+            } else {
+                delta = 0.3;
+            }
         }
-        if (isUserInterfaceIdiomPhone) {
-            delta = delta/3;
-        }
+        
+        NSLog(@"triggerResizeTextToSameLineNo_Smaller: font size = %f  on text = %@ with delta = %f",textView.font.pointSize, textView.text, delta);
         
         [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];
         
@@ -8601,11 +8684,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
-    [self setVerticalAlignment:textView];
+//    [self setVerticalAlignment:textView];
     
     if (flag_Sub_ResizeFinished && flag_Main_ResizeFinished && flag_Sub_ResizeFinished) {
         
-        _verticalScrollView.hidden = NO;
+        [self updateQuestionAnswerAllTextViewVeriticalAlignment];
+        
+        double delayInSeconds = 0.04;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            _verticalScrollView.hidden = NO;
+        });
         
     }
     
@@ -8613,6 +8702,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (BOOL) adjustAllTextViewsToFitIfNecessary {
     [iConsole info:@"%s",__FUNCTION__];
+    
     
     
     if ([self checkCardEditable]) {
@@ -9063,6 +9153,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     
 }
+
+
+
 
 
 /**
