@@ -99,7 +99,7 @@
                 }
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"Share a pack of Flash Cards with Flip Flash Cards! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+            _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
             
             [self showShareActionSheet];
             
