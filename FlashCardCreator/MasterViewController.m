@@ -815,8 +815,9 @@ extern BOOL isFromNewCreatedCard;
 - (void) showPackListAfterDidBecomeActiveNotification :(NSNotification *) notification {
     //avoid this kind of issue: [UIPopoverController _commonPresentPopoverFromRect:inView:permittedArrowDirections:animated:]: Popovers cannot be presented from a view which does not have a window.
     
-    if (APP_DELEGATE.isAllowToShowPackList) {
-      [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
+        [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
     }
     
 }
@@ -832,9 +833,11 @@ extern BOOL isFromNewCreatedCard;
     }
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.isDownloadingPack == FALSE) {
-        [self selectAvailablePacks:nil];
+    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
+        [self selectAvailablePacks:nil];;
     }
+    
+    
 }
 
 
@@ -941,12 +944,15 @@ extern BOOL isFromNewCreatedCard;
     //_selectPackButton.title = _currentPack.packName;
     [self.tableView reloadData];
     
-    [self selectAvailablePacks:nil];
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.isDownloadingPack = FALSE;
+    
+    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
+        [self selectAvailablePacks:nil];;
+    }
     
     if (isUserInterfaceIdiomPhone == FALSE) {
-        AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.packIDForMasterViewPack = self.currentPack.packID;
-        appDelegate.isDownloadingPack = FALSE;
         
         self.detailViewController.detailItem = _currentCard.cardName;
         self.detailViewController.currentCard = _currentCard;
