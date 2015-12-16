@@ -170,6 +170,7 @@
 		8833F40B1AAC1E7B00B62576 /* question_placeholder_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4051AAC1E7B00B62576 /* question_placeholder_logo@2x.png */; };
 		8833F40D1AAC1EDB00B62576 /* default_pack_cover_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F40C1AAC1EDB00B62576 /* default_pack_cover_image.png */; };
 		883763E41A1C205D007FD84F /* AMPopTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 883763E31A1C205D007FD84F /* AMPopTip.m */; };
+		8840788A1C1FD79A00313604 /* UIImageView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 884078891C1FD79A00313604 /* UIImageView+Extensions.m */; settings = {ASSET_TAGS = (); }; };
 		8842A52919AFF3860044C8CC /* templateScreenshot8_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */; };
 		8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */; };
 		8842A52D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png */; };
@@ -537,6 +538,8 @@
 		8833F40C1AAC1EDB00B62576 /* default_pack_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_pack_cover_image.png; path = Resources/default_pack_cover_image.png; sourceTree = "<group>"; };
 		883763E21A1C205D007FD84F /* AMPopTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTip.h; sourceTree = "<group>"; };
 		883763E31A1C205D007FD84F /* AMPopTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPopTip.m; sourceTree = "<group>"; };
+		884078881C1FD79A00313604 /* UIImageView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Extensions.h"; sourceTree = "<group>"; };
+		884078891C1FD79A00313604 /* UIImageView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Extensions.m"; sourceTree = "<group>"; };
 		8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question_iPad.png; path = Resources/templateScreenshot8_question_iPad.png; sourceTree = "<group>"; };
 		8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question.png; path = Resources/templateScreenshot8_question.png; sourceTree = "<group>"; };
 		8842A51D19AFF3860044C8CC /* templateScreenshot9_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot9_question_iPad.png; path = Resources/templateScreenshot9_question_iPad.png; sourceTree = "<group>"; };
@@ -895,6 +898,8 @@
 			children = (
 				88490B1C1B4A2CB100878EEB /* NSTimer+BlocksKit.h */,
 				88490B1D1B4A2CB100878EEB /* NSTimer+BlocksKit.m */,
+				884078881C1FD79A00313604 /* UIImageView+Extensions.h */,
+				884078891C1FD79A00313604 /* UIImageView+Extensions.m */,
 				88EA2ACD1AC1329600A3663E /* UIButton+Extensions.h */,
 				88EA2ACE1AC1329600A3663E /* UIButton+Extensions.m */,
 				884DE1AD18FBA94F00C09067 /* RequestUtils.h */,
@@ -1900,6 +1905,7 @@
 				885C3DD41926281C0090F63C /* PopoverView.m in Sources */,
 				2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */,
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
+				8840788A1C1FD79A00313604 /* UIImageView+Extensions.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,

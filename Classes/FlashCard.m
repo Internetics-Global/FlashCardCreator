@@ -52,6 +52,8 @@
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
+#import "UIImageView+Extensions.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -1749,6 +1751,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+    if ([_currentCard.answer.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+        _isPlayingCard) {
+        float width = CGRectGetWidth(_imageAnswer.frame);
+        float height = CGRectGetHeight(_imageAnswer.frame);
+        [_imageAnswer setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+    }
+    
     imageTemp = nil;
     path = @"";
     [iConsole info:@"%s,_currentCard.answer.imageFullPath2 = %@",__FUNCTION__,_currentCard.answer.imageFullPath2];
@@ -1767,6 +1777,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _imageAnswer2.hidden = YES;
         } else {
         }
+    }
+    
+    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+    if ([_currentCard.answer.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+        _isPlayingCard) {
+        float width = CGRectGetWidth(_imageAnswer2.frame);
+        float height = CGRectGetHeight(_imageAnswer2.frame);
+        [_imageAnswer2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
     imageTemp = nil;
@@ -1853,6 +1871,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
+    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+    if ([_currentCard.question.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+        _isPlayingCard) {
+        float width = CGRectGetWidth(_imageQuestion.frame);
+        float height = CGRectGetHeight(_imageQuestion.frame);
+        [_imageQuestion setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+    }
+    
     imageTemp = nil;
     path = @"";
     [iConsole info:@"%s,_currentCard.question.imageFullPath2 = %@",__FUNCTION__,_currentCard.question.imageFullPath2];
@@ -1871,6 +1897,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         } else {
         }
         
+    }
+    
+    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+    if ([_currentCard.question.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+        _isPlayingCard) {
+        float width = CGRectGetWidth(_imageQuestion2.frame);
+        float height = CGRectGetHeight(_imageQuestion2.frame);
+        [_imageQuestion2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
     imageTemp = nil;
