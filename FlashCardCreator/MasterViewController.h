@@ -47,7 +47,7 @@
     UILabel *_rightPackCardNo;
     UILabel *_shareCodeLabel;
     
-    UIBarButtonItem *_selectPackButton;
+    UIBarButtonItem *_selectPackBarButton;
     
     FMMoveTableView *_tableView;
     

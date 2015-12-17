@@ -37,7 +37,6 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 
-
 #define isUserInterfaceIdiomPhone ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
 
 //Release operation
@@ -101,6 +100,9 @@
 //URL redirect
 //For example: http://tinyurl.com/api-create.php?url=http://scripting.com/  
 #define URL_REDIRECT_API @"http://tinyurl.com/api-create.php?url="
+
+//make navigation bar items more tightly
+#define K_Navigation_Item_Inset_Offset         7.5
 
 //Based on landscape
 #define IPHONE_UI_MASTER_TABLE_WIDTH           160

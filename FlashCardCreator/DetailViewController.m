@@ -30,6 +30,8 @@
 #import <ParseUI/ParseUI.h>
 #import <Parse/Parse.h>
 
+#import "UIButton+Extensions.h"
+
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 #import "TipHelper.h"
@@ -151,30 +153,36 @@ enum popover_enum {
     [iConsole info:@"%s",__FUNCTION__];
     [super loadView];
     
-    _templateBackgroundSelectButton = [[UIBarButtonItem alloc]
-                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)]];;
+    UIButton *templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
+    _templateBackgroundSelectBarButton = [[UIBarButtonItem alloc]
+                                       initWithCustomView:templateBackgroundSelectButton];;
     
     //we don't setting button on iPhone
     _settingButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
-    UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
-                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
+    UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
+    UIBarButtonItem *playBarButton = [[UIBarButtonItem alloc]
+                                   initWithCustomView:playButton];
+    
+    UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc]
                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
     
-    _helpButton = [[UIBarButtonItem alloc]
-                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
+    UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+    _helpBarButton = [[UIBarButtonItem alloc]
+                                   initWithCustomView:helpButton];
     
     if (isUserInterfaceIdiomPhone) {
         
-        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        negativeSpace.width = -15.0;
+        templateBackgroundSelectButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset);
+        [templateBackgroundSelectButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset)];
+        helpButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2);
+        [helpButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2)];
         
         self.navigationItem.rightBarButtonItems =
-        @[negativeSpace,playButton,_templateBackgroundSelectButton,_helpButton];
+        @[playBarButton,_templateBackgroundSelectBarButton,_helpBarButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[playButton,shareButton,_settingButton,_helpButton,_templateBackgroundSelectButton];
+                                @[playBarButton,shareBarButton,_settingButton,_helpBarButton,_templateBackgroundSelectBarButton];
     }
     
     //Don't need the back button when on iPad

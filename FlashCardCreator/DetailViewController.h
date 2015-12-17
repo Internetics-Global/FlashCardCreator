@@ -37,9 +37,9 @@
     FlashCard *_currentCardView;
     FlashCard *_nextCardView;
     
-    UIBarButtonItem *_templateBackgroundSelectButton;
+    UIBarButtonItem *_templateBackgroundSelectBarButton;
     UIBarButtonItem *_settingButton;
-    UIBarButtonItem *_helpButton;
+    UIBarButtonItem *_helpBarButton;
     
     MBProgressHUD *_HUD;
     

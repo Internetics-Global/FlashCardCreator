@@ -57,6 +57,8 @@
 
 #import "Common.h"
 
+#import "UIButton+Extensions.h"
+
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
 
@@ -185,50 +187,60 @@ enum popover_enum {
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view insertSubview:self.tableView atIndex:0];
 
-    _selectPackButton = [[UIBarButtonItem alloc]
-                         initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"packs_button.png"] target:self action:@selector(selectAvailablePacks:)]];
+    UIButton *selectPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"packs_button.png"] target:self action:@selector(selectAvailablePacks:)];
+    _selectPackBarButton = [[UIBarButtonItem alloc]
+                         initWithCustomView:selectPackButton];
     
+    
+    UIButton *newPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)];
     UIBarButtonItem *newPackBarButtonItem = [[UIBarButtonItem alloc]
-                                      initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)]];
+                                      initWithCustomView:newPackButton];
     
     
     _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
-    if (isUserInterfaceIdiomPhone) {
-        
-        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        negativeSpace.width = -15.0;
-        
-        self.navigationItem.leftBarButtonItems = @[negativeSpace,_selectPackButton,editBarButtonItem, newPackBarButtonItem];
-    } else {
-        self.navigationItem.leftBarButtonItems = @[_selectPackButton,editBarButtonItem, newPackBarButtonItem];
-    }
+    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton,editBarButtonItem, newPackBarButtonItem];
     
     
     
     if (isUserInterfaceIdiomPhone) {
         
-        UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
-                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
+        newPackButton.contentEdgeInsets = UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset*2, 0, K_Navigation_Item_Inset_Offset*2);
+        [newPackButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset*2, 0, K_Navigation_Item_Inset_Offset*2)];
+        
+        _editButton.contentEdgeInsets = UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset, 0, K_Navigation_Item_Inset_Offset);
+        [_editButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset, 0, K_Navigation_Item_Inset_Offset)];
+        
+        UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
+        playButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        UIBarButtonItem *playBarButtonItem = [[UIBarButtonItem alloc]
+                                       initWithCustomView:playButton];
         
         
-        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
-                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+        UIButton *shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
+        shareButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset);
+        [shareButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset)];
+        UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc]
+                                        initWithCustomView:shareButton];
         
         
-        UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
-                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
+        UIButton *settingButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)];
+        settingButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2);
+        [settingButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2)];
+        UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc]
+                                          initWithCustomView:settingButton];
         
         
-        UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]
-                                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
-        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        negativeSpace.width = -15.0;
+        UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+        helpButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3);
+        [helpButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3)];
+        UIBarButtonItem *helpBarButtonItem = [[UIBarButtonItem alloc]
+                                          initWithCustomView:helpButton];
         
         self.navigationItem.rightBarButtonItems =
-            @[negativeSpace,playButton,shareButton,settingButton,helpButton];
+            @[playBarButtonItem,shareBarButtonItem,settingBarButtonItem,helpBarButtonItem];
     }
     
 
@@ -2596,7 +2608,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)my_viewDidUnload
 {
-    _selectPackButton = nil;
+    _selectPackBarButton = nil;
 }
 
 - (void)dealloc
