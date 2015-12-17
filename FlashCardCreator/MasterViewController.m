@@ -319,7 +319,7 @@ enum popover_enum {
           [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
           
-            if ((self.currentPack.shareLink.length >0)) {
+            if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
               _shareCodeLabel.hidden = NO;
               _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
             } else {
