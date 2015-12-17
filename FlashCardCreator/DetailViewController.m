@@ -166,8 +166,12 @@ enum popover_enum {
                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
     
     if (isUserInterfaceIdiomPhone) {
+        
+        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        negativeSpace.width = -15.0;
+        
         self.navigationItem.rightBarButtonItems =
-        @[playButton,_templateBackgroundSelectButton,_helpButton];
+        @[negativeSpace,playButton,_templateBackgroundSelectButton,_helpButton];
     } else {
         self.navigationItem.rightBarButtonItems =
                                 @[playButton,shareButton,_settingButton,_helpButton,_templateBackgroundSelectButton];

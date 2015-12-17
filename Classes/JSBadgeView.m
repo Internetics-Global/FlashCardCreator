@@ -252,7 +252,11 @@
         {
             CGContextAddPath(ctx, borderPath.CGPath);
             
-            CGContextSetLineWidth(ctx, kBadgeStrokeWidth);
+            if (([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
+                CGContextSetLineWidth(ctx, kBadgeStrokeWidth/2);
+            } else {
+                CGContextSetLineWidth(ctx, kBadgeStrokeWidth);
+            }
             CGContextSetStrokeColorWithColor(ctx, kBadgeStrokeColor.CGColor);
             
             CGContextDrawPath(ctx, kCGPathStroke);

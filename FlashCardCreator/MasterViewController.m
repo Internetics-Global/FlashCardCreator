@@ -196,23 +196,39 @@ enum popover_enum {
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
-    self.navigationItem.leftBarButtonItems = @[_selectPackButton,editBarButtonItem, newPackBarButtonItem];
+    if (isUserInterfaceIdiomPhone) {
+        
+        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        negativeSpace.width = -15.0;
+        
+        self.navigationItem.leftBarButtonItems = @[negativeSpace,_selectPackButton,editBarButtonItem, newPackBarButtonItem];
+    } else {
+        self.navigationItem.leftBarButtonItems = @[_selectPackButton,editBarButtonItem, newPackBarButtonItem];
+    }
+    
+    
+    
     if (isUserInterfaceIdiomPhone) {
         
         UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
         
+        
         UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
                                         initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+        
         
         UIBarButtonItem *settingButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
         
+        
         UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)]];
+        UIBarButtonItem *negativeSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        negativeSpace.width = -15.0;
         
         self.navigationItem.rightBarButtonItems =
-            @[playButton,shareButton,settingButton,helpButton];
+            @[negativeSpace,playButton,shareButton,settingButton,helpButton];
     }
     
 
