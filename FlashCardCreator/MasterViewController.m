@@ -201,6 +201,7 @@ enum popover_enum {
         
         UIBarButtonItem *playButton = [[UIBarButtonItem alloc]
                                        initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)]];
+        
         UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
                                         initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
         
@@ -216,6 +217,12 @@ enum popover_enum {
     
 
     if (isUserInterfaceIdiomPhone) {
+        
+        NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,
+         [UIFont boldSystemFontOfSize:14.0f],NSFontAttributeName,nil];
+        
+        self.navigationController.navigationBar.titleTextAttributes = attr;
+        
         self.title = _currentPack.packName;
     }
     [self.tableView reloadData];
