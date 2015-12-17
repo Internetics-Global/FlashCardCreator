@@ -217,12 +217,6 @@ enum popover_enum {
     
 
     if (isUserInterfaceIdiomPhone) {
-        
-        NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,
-         [UIFont boldSystemFontOfSize:14.0f],NSFontAttributeName,nil];
-        
-        self.navigationController.navigationBar.titleTextAttributes = attr;
-        
         self.title = _currentPack.packName;
     }
     [self.tableView reloadData];

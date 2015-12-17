@@ -207,6 +207,16 @@ BOOL _isDownloadingSamplePack;
                                    rightSegmentState:UIControlStateSelected
                                           barMetrics:UIBarMetricsDefault];
     
+    //Global setting
+    if (isUserInterfaceIdiomPhone) {
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,
+                              [UIFont boldSystemFontOfSize:14.0f],NSFontAttributeName,nil];
+        
+        [[UIBarButtonItem appearance] setTitleTextAttributes:attributes
+                                                    forState:UIControlStateNormal];
+        [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    }
+    
     //9.Sharekit configuration
     //not use share kit any more
     
