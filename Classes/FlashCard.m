@@ -760,7 +760,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_isPlayingCard == NO) {
         if (_functionAreaView == nil) {
-            _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
+            _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame)-0.5)];
             _functionAreaView.backgroundColor = [UIColor colorWithRed:43.0/255 green:43.0/255 blue:43.0/255 alpha:1];
             _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
             _functionAreaView.layer.borderWidth = 0;
@@ -771,7 +771,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_soundButton == nil) {
             _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _soundButton.frame = CGRectMake(114, 8, 24, 24);
+            _soundButton.frame = CGRectMake(108, 9, 24, 24);
             [_soundButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
             [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
             [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -784,7 +784,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
             _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
             [_backgroundImageSelectButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
-            _backgroundImageSelectButton.frame = CGRectMake(68, 8, 24, 24);
+            _backgroundImageSelectButton.frame = CGRectMake(66.5, 9, 24, 24);
             [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_backgroundImageSelectButton];
             UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundImageSelectButtonClicked:)];
@@ -795,7 +795,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_changeTemplateButton == nil) {
             _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _changeTemplateButton.frame = CGRectMake(18, 8, 24, 24);
+            _changeTemplateButton.frame = CGRectMake(21, 9, 24, 24);
             [_changeTemplateButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
             [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
@@ -1051,6 +1051,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
         
         _subQuestion.userInteractionEnabled = FALSE;
+        _subQuestion.contentMode = UIViewContentModeScaleAspectFit;
         _subQuestion.keyboardType = UIKeyboardAppearanceDefault;
         _subQuestion.returnKeyType = UIReturnKeyDefault;
         _subQuestion.delegate = self;
@@ -1088,6 +1089,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageAnswer2.tag = 1;
         _imageAnswer2.layer.cornerRadius = 10;
         _imageAnswer2.layer.masksToBounds = YES;
+        _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         [_verticalScrollView addSubview:_imageAnswer2];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
@@ -1293,7 +1295,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_soundButton == nil) {
             _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _soundButton.frame = CGRectMake(117, 4, 20, 20);
+            _soundButton.frame = CGRectMake(109.5, 4, 20, 20);
             [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
             [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             _soundButton.backgroundColor = [UIColor clearColor];
@@ -1315,7 +1317,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_changeTemplateButton == nil) {
             _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _changeTemplateButton.frame = CGRectMake(17, 4, 20, 20);
+            _changeTemplateButton.frame = CGRectMake(22.5, 4, 20, 20);
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
             [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_changeTemplateButton];
@@ -3701,7 +3703,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 15:
         {
             _subheadingAnswer.hidden = FALSE;
-            _subheadingAnswer.frame = CGRectMake(10, 150, 146, 28);
+            _subheadingAnswer.frame = CGRectMake(10, 150, 144, 28);
             if (self.isPlayingCard) {
                 _subheadingAnswer.frame = [Common getScaledViewRect:_subheadingAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -3763,13 +3765,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAnswer.hidden = TRUE;
             
             _imageAnswer2.hidden = FALSE;
-            _imageAnswer2.frame = CGRectMake(13, 8, 141, 141);
+            _imageAnswer2.frame = CGRectMake(10, 8, 143, 141);
             if (self.isPlayingCard) {
                 _imageAnswer2.frame = [Common getScaledViewRect:_imageAnswer2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(159, 8, 141, 141);
+            _imageAnswer.frame = CGRectMake(159, 8, 143, 141);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -4627,7 +4629,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeAnswer = 42;
             
             _mainAnswer.hidden = FALSE;
-            _mainAnswer.frame = CGRectMake(353, 350, 321, 65);
+            _mainAnswer.frame = CGRectMake(360, 350, 328, 65);
             
             if (_mainFontAnswer.length == 0) {
                 _mainAnswer.font =[UIFont boldSystemFontOfSize:42];
@@ -4655,7 +4657,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(353, 20, 321, 321);
+            _imageAnswer.frame = CGRectMake(360, 20, 328, 328);
             
             
             break;
@@ -5480,7 +5482,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subheadingSizeQuestion = 42;
             
             _mainQuestion.hidden = FALSE;
-            _mainQuestion.frame = CGRectMake(353, 350, 321, 65);
+            _mainQuestion.frame = CGRectMake(360, 350, 328, 65);
             
             if (_mainFontQuestion.length == 0) {
                 _mainQuestion.font =[UIFont boldSystemFontOfSize:42];
@@ -5508,7 +5510,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(353, 20, 321, 321);
+            _imageQuestion.frame = CGRectMake(360, 20, 328, 328);
             
             
             break;
@@ -6594,7 +6596,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         case 15:
         {
             _subheadingQuestion.hidden = FALSE;
-            _subheadingQuestion.frame = CGRectMake(10, 150, 146, 28);
+            _subheadingQuestion.frame = CGRectMake(10, 150, 144, 28);
             if (self.isPlayingCard) {
                 _subheadingQuestion.frame = [Common getScaledViewRect:_subheadingQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6656,13 +6658,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subQuestion.hidden = TRUE;
             
             _imageQuestion2.hidden = FALSE;
-            _imageQuestion2.frame = CGRectMake(13, 8, 141, 141);
+            _imageQuestion2.frame = CGRectMake(10, 8, 143, 141);
             if (self.isPlayingCard) {
                 _imageQuestion2.frame = [Common getScaledViewRect:_imageQuestion2 withProportion:kFlashCardViewProporation_iPhone];
             }
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(159, 8, 141, 141);
+            _imageQuestion.frame = CGRectMake(159, 8, 143, 141);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }

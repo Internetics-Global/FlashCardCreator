@@ -210,7 +210,7 @@ BOOL _isDownloadingSamplePack;
     //Global setting
     if (isUserInterfaceIdiomPhone) {
         NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,
-                              [UIFont boldSystemFontOfSize:14.0f],NSFontAttributeName,nil];
+                              [UIFont boldSystemFontOfSize:16.0f],NSFontAttributeName,nil];
         
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes
                                                     forState:UIControlStateNormal];

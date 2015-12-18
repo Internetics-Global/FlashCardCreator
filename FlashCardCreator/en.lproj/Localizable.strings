@@ -242,7 +242,7 @@
 
 "Indicator_Upload"  = "Uploading first…";
 "Indicator_Creating_Short_Linkage" = "Creating short linkage";
-"Indicator_Create_Share_Link"  = "Then create share linkage...";
+"Indicator_Create_Share_Link"  = "Processing the pack...";
 "Indicator_Creating_Share_Linkage_Failure"  = "Fail to create share linkage";
 
 "Tip_Open_Pack_Viewer"  = "Open pack viewer";
