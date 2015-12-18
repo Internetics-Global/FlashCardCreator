@@ -2755,19 +2755,29 @@ extern BOOL isFromNewCreatedCard;
         //1.
         CGRect rect = _addCardButton.frame;
         rect.origin.y = rect.origin.y - 30;
+    
+        
         [[TipHelper defaultHelper] showTipForCreateCardInView:weakSelf.view fromFrame:rect];
         
         //2.
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(145, 0, 0, 0)];
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(95, 0, 0, 0)];
-        [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:weakSelf.view fromFrame:CGRectMake(40, 0, 0, 0)];
+        if (isUserInterfaceIdiomPhone) {
+            
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(132, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(85, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:weakSelf.view fromFrame:CGRectMake(40, 0, 0, 0)];
+            
+        } else {
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemCreatePackInView:weakSelf.view fromFrame:CGRectMake(145, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemEditPackInView:weakSelf.view fromFrame:CGRectMake(95, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForLeftNaviBarItemOpenPackInView:weakSelf.view fromFrame:CGRectMake(40, 0, 0, 0)];
+        }
         
         //3.
         if (isUserInterfaceIdiomPhone) {
             [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 40, 0, 0, 0)];;
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 90, 0, 0, 0)];
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 140, 0, 0, 0)];
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 190, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 85, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 130, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
     
         }
         
