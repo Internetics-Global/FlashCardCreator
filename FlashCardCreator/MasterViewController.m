@@ -245,7 +245,18 @@ enum popover_enum {
     
 
     if (isUserInterfaceIdiomPhone) {
-        self.title = _currentPack.packName;
+//        self.title = _currentPack.packName;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
+        label.font = [UIFont boldSystemFontOfSize:16.0];
+        label.textAlignment = NSTextAlignmentLeft;
+        label.backgroundColor = [UIColor clearColor];
+        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        
+        label.textColor = [UIColor whiteColor]; // change this color
+        label.text = _currentPack.packName;
+        [self.navigationItem setTitleView:label];
+        
     }
     [self.tableView reloadData];
 
@@ -698,7 +709,10 @@ extern BOOL isFromNewCreatedCard;
         _packListPickerPopover = nil;
         self.detailViewController.title = _currentPack.packName;
     } else {
-        self.title = _currentPack.packName;
+//        self.title = _currentPack.packName;
+        
+        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        titleLabel.text = _currentPack.packName;;
     }
     
     [self.tableView setEditing:NO];
@@ -751,7 +765,11 @@ extern BOOL isFromNewCreatedCard;
   [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
   if (isUserInterfaceIdiomPhone) {
-    self.title = _currentPack.packName;
+//    self.title = _currentPack.packName;
+      
+      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+      titleLabel.text = _currentPack.packName;;
+      
   } else {
     self.detailViewController.title = _currentPack.packName;
     [self.detailViewController showPackInfoView];
@@ -793,7 +811,9 @@ extern BOOL isFromNewCreatedCard;
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
-        self.title = _currentPack.packName;
+//        self.title = _currentPack.packName;
+        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        titleLabel.text = _currentPack.packName;;
     } else {
         self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
