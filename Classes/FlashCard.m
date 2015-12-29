@@ -8522,8 +8522,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 /**
  *  返回是一个float，这个需要注意，因为这个在只有一行的情况下很重要，比如如果只有一行，则int就有可能为0
- *  计算文本高度有4种（http://stackoverflow.com/questions/34207289/4-alternative-ways-to-calculate-text-height-in-a-uitextview-ios7-but-which-o?noredirect=1#comment56160153_34207289), 但是迄今为止，没有一种在任何情况是靠谱的，但是普遍有个规律是，只要计算得到的行数是个接近整数，就值得信任。所以有了如下的方法。
- *  我们还没有把这种计算方法应用到全部中，因为我们没有100%的把握（虽然已经有了99%），后续会全部运用。
+ *  计算文本高度有4种（http://stackoverflow.com/questions/34207289/4-alternative-ways-to-calculate-text-height-in-a-uitextview-ios7-but-which-o?noredirect=1#comment56160153_34207289), 里面提到了以下的两种方法，但是没有一种是完全可靠的，但是有个规律，如下。
+ *  值得注意的是，最近发现sizeThatFits可能是最佳答案，因为这个方法不需要经过run loop就能更新，但是为了安全起见，我们还是使用老的。将来如果发现问题，则
+ *   我们还没有把这种计算方法应用到全部中，因为我们没有100%的把握（虽然已经有了99%），后续会全部运用。
  */
 - (float) getTrustableTextHeight:(UITextView *) textView {
     
@@ -10652,7 +10653,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
-    CGFloat topCorrect = ([textView bounds].size.height - [textView contentSize].height * [textView zoomScale])/2.0;
+    CGSize textSize = [textView sizeThatFits:textView.frame.size];
+    
+    CGFloat topCorrect = ([textView bounds].size.height - textSize.height)/2.0;
     topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
     textView.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
     
