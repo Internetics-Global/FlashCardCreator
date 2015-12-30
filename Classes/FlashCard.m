@@ -6951,7 +6951,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self commitQuestionAndAnswerData];
             [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
         } else {
-            [self saveEdittedCard];
+            __weak __typeof(&*self)weakSelf = self;
+            double delayInSeconds = 0.5;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [weakSelf saveEdittedCard];
+            });
         }
     } else {
         //只是关闭键盘
