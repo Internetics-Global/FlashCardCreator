@@ -241,8 +241,7 @@
 "Table_Item_Log_Out_Social_Network" = "Sign Out";
 
 "Indicator_Upload"  = "Uploading first…";
-"Indicator_Creating_Short_Linkage" = "Creating short linkage";
-"Indicator_Create_Share_Link"  = "Processing the pack...";
+"Indicator_Share_Process_Processing"  = "Processing the pack...";
 "Indicator_Creating_Share_Linkage_Failure"  = "Fail to create share linkage";
 
 "Tip_Open_Pack_Viewer"  = "Open pack viewer";

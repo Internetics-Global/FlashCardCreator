@@ -19,6 +19,8 @@
 
 @interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
+    
+    NSString *_generatedZipFilePath;
 }
 
 @end
@@ -122,13 +124,15 @@
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
                                    message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
+                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                            message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
+                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     }
     alert.tag = 1;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -153,7 +157,6 @@
 - (void) uploadToDropbox:(NSString *) password {
     [iConsole info:@"%s",__FUNCTION__];
     
-    
     if ([DataManager apiReachable] == NO) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
                                                         message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"")
@@ -164,48 +167,81 @@
         return;
     }
     
-    //step1: create zip file
-    NSString *generatedZipFilePath = nil;
-    if (_currentPack) {
-        generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
-        
-        if (generatedZipFilePath == nil) {
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED",@"")];
-            return;
-        }
-        
-        BOOL success = [CryptorHelper encryptFileWithSameOutput:generatedZipFilePath];
-        if (success == false) {
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED",@"")];
-            return;
-        }
-        
-    } else {
+    if (_currentPack == nil) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_SELECT_PACK_BEFOREHAND",@"")];
         [iConsole info:@"%s:Pack to share is nil or public pack",__FUNCTION__];
         return;
     }
     
-    //step2: update local meta info
-    //同时为了处理老版本，所以有了额外逻辑（老版本都是类似：Pack1449621320-134252191.zip）
-    if (self.currentPack.fileNameOnAWS.length == 0 || ([self.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
-        self.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:self.currentPack];
-        [self.currentPack savePackOnly];
-    }
     
-    //Step3: upload
-    if (!_restClient) {
-        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    }
-    _restClient.delegate = self;
+    __block int       errorCode = 0;
+    __weak __typeof(&*self)weakSelf = self;
     
-    //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [_restClient uploadFile:self.currentPack.fileNameOnAWS toPath:@"/FlashCardCreator2016"
-                   fromPath:generatedZipFilePath];
-    [self showProgressIndicator];
     
-    //step3: create dropbox linkage which locate in uploadedFile:
+    [weakSelf showZipAndEncryptpIndicator];
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+
+        
+        //step1: create zip file
+        _generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
+        
+        if (_generatedZipFilePath == nil) {
+            errorCode = 1;
+        } else {
+            BOOL success = [CryptorHelper encryptFileWithSameOutput:_generatedZipFilePath];
+            if (success == false) {
+                errorCode = 2;
+            }
+        }
+        
+    });
+    dispatch_group_notify(group,dispatch_get_main_queue(), ^ {
+        
+        if (errorCode == 1) {
+            _HUD.hidden = YES;
+            [_HUD removeFromSuperview]; //we need to clean up _HUD
+            
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED",@"")];
+            return;
+            
+        } else if (errorCode == 2) {
+            _HUD.hidden = YES;
+            [_HUD removeFromSuperview]; //we need to clean up _HUD
+            
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED",@"")];
+            return;
+            
+        } else if (errorCode == 0) {
+            
+            //step2: update local meta info
+            //同时为了处理老版本，所以有了额外逻辑（老版本都是类似：Pack1449621320-134252191.zip）
+            if (weakSelf.currentPack.fileNameOnAWS.length == 0 || ([weakSelf.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
+                weakSelf.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:weakSelf.currentPack];
+                [weakSelf.currentPack savePackOnly];
+            }
+            
+            //Step3: upload
+            if (!_restClient) {
+                _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+            }
+            _restClient.delegate = weakSelf;
+            
+            //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+            [_restClient uploadFile:weakSelf.currentPack.fileNameOnAWS toPath:@"/FlashCardCreator2016"
+                           fromPath:_generatedZipFilePath];
+            
+            [weakSelf showUploadingIndicator];
+            
+            //step3: create dropbox linkage which locate in uploadedFile:
+            
+        }
+        
+    });
+
     
 }
 
@@ -228,13 +264,15 @@
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
                                            message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
+                                                   NSLocalizedString(@"DIALOG_OK",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                    message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+                                  delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
+                                           NSLocalizedString(@"DIALOG_OK",@""), nil];
     }
     alert.tag = 2;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -253,10 +291,15 @@
     
     switch (alertView.tag) {
         case 1: {
-            //Password input finished
             [[alertView textFieldAtIndex:0] resignFirstResponder];
-            NSString *password = [alertView textFieldAtIndex:0].text;
-            [self uploadToDropbox:password];
+            if (buttonIndex == 1) {
+                //Password input finished
+                NSString *password = [alertView textFieldAtIndex:0].text;
+                [self uploadToDropbox:password];
+            } else if (buttonIndex == 2) {
+                //Password not set
+                [self uploadToDropbox:@""];
+            }
             
         }
             
@@ -265,67 +308,71 @@
         case 2: {
             [[alertView textFieldAtIndex:0] resignFirstResponder];
             
-            if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
-                _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Short_Linkage",@"");
-                [_HUD show:YES];
-                
-                double delayInSeconds = 0.4;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            if (buttonIndex != 0) {
+                if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
+                    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
+                    [_HUD show:YES];
                     
-                    //1.生成short linkage
-                    NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
-                    if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                    double delayInSeconds = 0.4;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        
+                        //1.生成short linkage
+                        NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
+                        if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                            _HUD.hidden = YES;
+                            [_HUD removeFromSuperview];//we need to clean up _HUD
+                            [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
+                            return;
+                        }
                         _HUD.hidden = YES;
-                        [_HUD removeFromSuperview];//we need to clean up _HUD
-                        [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
-                        return;
-                    }
-                    _HUD.hidden = YES;
-                    [_HUD removeFromSuperview]; //we need to clean up _HUD
-                    
-                    
-                    self.currentPack.shareLink = redirectedStr;
-                    [self.currentPack savePackOnly];
-                    
-                    //2. save meta info in background
-                    // insert this record in amazon singleDB for pack download limit control
-                    // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
-                    // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-                    NSString *maxNoString = [alertView textFieldAtIndex:0].text;
-                    int maxNo;
-                    if (buttonIndex == 1) {
-                        //unlimited
-                        maxNo = 9999999;
-                    } else {
-                        maxNo = [maxNoString integerValue];
-                    }
-                    NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-                    NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
-                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                    __weak DropboxSharekitHelper *safeSelf = self;
-                    dispatch_async(queue, ^{
-                        [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                        [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                        [_HUD removeFromSuperview]; //we need to clean up _HUD
+                        
+                        
+                        self.currentPack.shareLink = redirectedStr;
+                        [self.currentPack savePackOnly];
+                        
+                        //2. save meta info in background
+                        // insert this record in amazon singleDB for pack download limit control
+                        // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
+                        // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+                        NSString *maxNoString = [alertView textFieldAtIndex:0].text;
+                        int maxNo;
+                        if (buttonIndex == 1) {
+                            //unlimited
+                            maxNo = 9999999;
+                        } else {
+                            maxNo = [maxNoString integerValue];
+                        }
+                        NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+                        NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+                        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                        __weak DropboxSharekitHelper *safeSelf = self;
+                        dispatch_async(queue, ^{
+                            [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
+                            [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                        });
+                        
+                        //3. 分享
+                        _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                        
+                        [self showShareActionSheet];
                     });
+                } else {
+                    //已经是短链接了，可以直接处理
                     
-                    //3. 分享
-                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                    //保证shareLink存在
+                    if (self.currentPack.shareLink.length == 0) {
+                        self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
+                        [self.currentPack savePackOnly];
+                    }
+                    
+                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
                     
                     [self showShareActionSheet];
-                });
-            } else {
-                //已经是短链接了，可以直接处理
-                
-                //保证shareLink存在
-                if (self.currentPack.shareLink.length == 0) {
-                    self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
-                    [self.currentPack savePackOnly];
                 }
-                
-                _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
-                
-                [self showShareActionSheet];
+            } else {
+                [self hideHud];
             }
         }
             
@@ -392,6 +439,7 @@
     //step4: share via sharekit, which locate in loadedSharableLink:
 }
 
+
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
     [iConsole error:@"File upload failed with error - %@", error];
     [_HUD hide:YES];
@@ -437,22 +485,61 @@
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
-- (void)showProgressIndicator {
+- (void)showUploadingIndicator {
+    
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];
+        _HUD = nil;
+    }
 	
-	_HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+	//这时是有cancel button，之后的 create share link的indicator复用这个，也是有进度条的
+    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
-    _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
+    _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"");
+    
+    _HUD.buttonTitle = @"    Cancel    ";
+    _HUD.buttonTitleColor = [UIColor whiteColor];
 ;
     _isCreatingShareLinkage = NO;
-    [_HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+    [_HUD showWhileExecuting:@selector(uploadProgressTask) onTarget:self withObject:nil animated:YES];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
     [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
     
 }
 
-- (void)myProgressTask {
+- (void)showZipAndEncryptpIndicator {
+    
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];
+        _HUD = nil;
+    }
+    
+    //这时是没有cancel button或进度条的
+    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
+    [_HUD show:YES];
+    
+    [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+    [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+    
+}
+
+#pragma mark -
+#pragma mark - MBProgressHUDDelegate and related
+
+- (void)hudTappedButton:(MBProgressHUD *)hud {
+    [_restClient cancelAllRequests];  //including upload and create share link (但是不包括 shorted link，因为我们无法终止它）
+    
+    [_HUD hide:YES];
+    [_HUD removeFromSuperview];
+}
+
+- (void)uploadProgressTask {
     [iConsole info:@"%s",__FUNCTION__];
 	while (_progressivePercent < 1.0f) {
 		_HUD.progress = _progressivePercent;
@@ -460,9 +547,10 @@
 	}
     _progressivePercent = 0;
     
+    //一旦uploading完成后，就转成processing
+    ///这时是有cancel button，create share link的indicator复用这个，也是有进度条的
     _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelText = NSLocalizedString(@"Indicator_Create_Share_Link",@"")
-;
+    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
     
     while (_isCreatingShareLinkage == YES) {
         usleep(50000);
@@ -472,6 +560,13 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [iConsole info:@"%s",__FUNCTION__];
 	[_HUD removeFromSuperview];
+}
+
+- (void) hideHud {
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];//we need to clean up _HUD
+    }
 }
 
 - (NSString *) redirectURL:(NSString *)urlStr {

@@ -35,6 +35,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     NSString *_finalPostMessage; //final share message
     
     NSString *_generatedZipFilePath;
+    
+    AWSS3TransferManager *_transferManager;
 }
 
 @end
@@ -168,13 +170,15 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
                                    message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
+                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                            message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Set",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_No_Needed",@""), nil];
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
+                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     }
     alert.tag = 1;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -199,44 +203,76 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         return;
     }
     
-    //step1: create zip file
-    if (_currentPack) {
-        _generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
-        
-        if (_generatedZipFilePath == nil) {
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED",@"")];
-            return;
-        }
-        
-        BOOL success = [CryptorHelper encryptFileWithSameOutput:_generatedZipFilePath];
-        if (success == false) {
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED",@"")];
-            return;
-        }
-        
-    } else {
+    if (_currentPack == nil) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_SELECT_PACK_BEFOREHAND",@"")];
         [iConsole info:@"%s:Pack to share is nil or public pack",__FUNCTION__];
         return;
     }
     
-    
-    //step2: update local meta info
-    if (self.currentPack.fileNameOnAWS.length == 0 || ([self.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
-        self.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:self.currentPack];
-        
-        [self.currentPack savePackOnly];
-    }
-    
-    
-    //step3: upload to S3
+    //step1: create zip file
+    __block int       errorCode = 0;
     __weak __typeof(&*self)weakSelf = self;
-    [self showUploadingIndicator];
-    double delayInSeconds = 0.3;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
+    
+    
+    [weakSelf showZipAndEncryptpIndicator];
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
+        
+        
+        //step1: create zip file
+        _generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
+        
+        if (_generatedZipFilePath == nil) {
+            errorCode = 1;
+        } else {
+            BOOL success = [CryptorHelper encryptFileWithSameOutput:_generatedZipFilePath];
+            if (success == false) {
+                errorCode = 2;
+            }
+        }
+        
     });
+
+    dispatch_group_notify(group,dispatch_get_main_queue(), ^ {
+        
+        if (errorCode == 1) {
+            _HUD.hidden = YES;
+            [_HUD removeFromSuperview]; //we need to clean up _HUD
+            
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_CREATE_ZIPPED_SHARE_FILE_FAILED",@"")];
+            return;
+            
+        } else if (errorCode == 2) {
+            _HUD.hidden = YES;
+            [_HUD removeFromSuperview]; //we need to clean up _HUD
+            
+            [Common alertViewCommon:NSLocalizedString(@"DIALOG_ENCRPT_ZIPPED_SHARE_FILED_FAILED",@"")];
+            return;
+            
+        } else if (errorCode == 0) {
+            
+            //step2: update local meta info
+            if (weakSelf.currentPack.fileNameOnAWS.length == 0 || ([weakSelf.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
+                weakSelf.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:weakSelf.currentPack];
+                
+                [weakSelf.currentPack savePackOnly];
+            }
+            
+            
+            //step3: upload to S3
+            [weakSelf showUploadingIndicator];
+            double delayInSeconds = 0.3;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [weakSelf upload:_generatedZipFilePath withFileName:weakSelf.currentPack.fileNameOnAWS];
+            });
+            
+        }
+        
+    });
+    
     
 }
 
@@ -368,8 +404,9 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
 
     //3. 执行upload
-    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-    [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
+    _transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    
+    [[_transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
             [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
             if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
@@ -388,7 +425,12 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [iConsole error:@"File upload failed with error - %@", task.error];
                 [self hideHud];
-                [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+                
+                if (task.error.code != AWSS3TransferManagerErrorCancelled) {
+                    [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+                }
+                
+                
             });
             
         } else {
@@ -475,13 +517,15 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
                                            message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
+                 NSLocalizedString(@"DIALOG_OK",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                   message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""), nil];
+                                           message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
+                 NSLocalizedString(@"DIALOG_OK",@""), nil];
     }
     alert.tag = 2;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -511,8 +555,15 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     switch (alertView.tag) {
         case 1: {
             [[alertView textFieldAtIndex:0] resignFirstResponder];
-            NSString *password = [alertView textFieldAtIndex:0].text;
-            [self uploadToAWSS3:password];
+            
+            if (buttonIndex == 1) {
+                //Password input finished
+                NSString *password = [alertView textFieldAtIndex:0].text;
+                [self uploadToAWSS3:password];
+            } else if (buttonIndex == 2) {
+                //Password not set
+                [self uploadToAWSS3:@""];
+            }
             
         }
             
@@ -521,70 +572,77 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         case 2: {
             [[alertView textFieldAtIndex:0] resignFirstResponder];
             
-            if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
-                _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Short_Linkage",@"");
-                [_HUD show:YES];
-                
-                __weak __typeof(&*self)weakSelf = self;
-                double delayInSeconds = 0.4;
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            if (buttonIndex != 0) {
+                if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
                     
-                    //1.生成short linkage
-                    NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
-                    if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
-                        [weakSelf hideHud];
-                        [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
-                        return;
-                    }
-                    [weakSelf hideHud];
+                    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
+                    _HUD.buttonTitle = nil;  //与Dropbox不同的是，我们不需要有cancel逻辑（在Dropbox，我们有额外create share linkage的步骤）
+                    [_HUD show:YES];
                     
-                    
-                    weakSelf.currentPack.shareLink = redirectedStr;
-                    [weakSelf.currentPack savePackOnly];
-                    
-                    //2. save meta info in background
-                    // insert this record in amazon singleDB for pack download limit control
-                    // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
-                    // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-                    NSString *maxNoString = [alertView textFieldAtIndex:0].text;
-                    int maxNo;
-                    if (buttonIndex == 1) {
-                        //unlimited
-                        maxNo = 9999999;
-                    } else {
-                        maxNo = [maxNoString integerValue];
-                    }
-                    NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-                    NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
-                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                    dispatch_async(queue, ^{
-                        [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                        BOOL succeeded = [weakSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
-                        if (succeeded == false) {
-                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Error to insertIntoAmazonSingleDB" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [alertView show];
+                    __weak __typeof(&*self)weakSelf = self;
+                    double delayInSeconds = 0.4;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        
+                        //1.生成short linkage
+                        NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
+                        if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                            [weakSelf hideHud];
+                            [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
                             return;
                         }
+                        [weakSelf hideHud];
+                        
+                        
+                        weakSelf.currentPack.shareLink = redirectedStr;
+                        [weakSelf.currentPack savePackOnly];
+                        
+                        //2. save meta info in background
+                        // insert this record in amazon singleDB for pack download limit control
+                        // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
+                        // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+                        NSString *maxNoString = [alertView textFieldAtIndex:0].text;
+                        int maxNo;
+                        if (buttonIndex == 1) {
+                            //unlimited
+                            maxNo = 9999999;
+                        } else {
+                            maxNo = [maxNoString integerValue];
+                        }
+                        NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+                        NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+                        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                        dispatch_async(queue, ^{
+                            [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
+                            BOOL succeeded = [weakSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+                            if (succeeded == false) {
+                                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Error to insertIntoAmazonSingleDB" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                [alertView show];
+                                return;
+                            }
+                        });
+                        
+                        //3. 分享
+                        _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                        
+                        [self showShareActionSheet];
                     });
+                } else {
+                    //已经是短链接了，可以直接处理
                     
-                    //3. 分享
-                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                    //保证shareLink存在
+                    if (self.currentPack.shareLink.length == 0) {
+                        self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
+                        [self.currentPack savePackOnly];
+                    }
+                    
+                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
                     
                     [self showShareActionSheet];
-                });
-            } else {
-                //已经是短链接了，可以直接处理
-                
-                //保证shareLink存在
-                if (self.currentPack.shareLink.length == 0) {
-                    self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
-                    [self.currentPack savePackOnly];
                 }
-                
-                _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
-                
-                [self showShareActionSheet];
+            } else {
+                [self hideHud];
             }
             
         }
@@ -606,18 +664,57 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 #pragma mark -
 #pragma mark - MBProgressHUDDelegate and related
 
+
+- (void)showZipAndEncryptpIndicator {
+    
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];
+        _HUD = nil;
+    }
+    
+    //这时是没有cancel button或进度条的
+    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
+    [_HUD show:YES];
+    
+    [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+    [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+    
+}
+
+
 - (void)showUploadingIndicator {
+    
+    if (_HUD) {
+        [_HUD hide:YES];
+        [_HUD removeFromSuperview];
+        _HUD = nil;
+    }
 	
-	_HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+    ///这时是有cancel button
+    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
-    _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"")
-;
+    _HUD.labelText = NSLocalizedString(@"Indicator_Upload",@"");
+    
+    _HUD.buttonTitle = @"    Cancel    ";
+    _HUD.buttonTitleColor = [UIColor whiteColor];
+
     [_HUD showWhileExecuting:@selector(uploadProgressTask) onTarget:self withObject:nil animated:YES];
     
     [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
     [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
     
+}
+
+- (void)hudTappedButton:(MBProgressHUD *)hud {
+    
+    [_transferManager cancelAll];  //与Dropbox不同的是，AWS没有create share linkage的概念。
+    
+    [_HUD hide:YES];
+    [_HUD removeFromSuperview];
 }
 
 - (void)uploadProgressTask {
@@ -628,6 +725,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 	}
     _progressivePercent = 0;
     
+    //暂时这里保留cancel button,但是后面我们将.buttonTitle = nil.因为AWS没有create share linkage的步骤，所以没有必要有cancel逻辑（同时shorted linkage是不可以cancel的）
     _HUD.mode = MBProgressHUDModeIndeterminate;
 ;
     
