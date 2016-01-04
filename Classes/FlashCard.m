@@ -54,6 +54,8 @@
 
 #import "UIImageView+Extensions.h"
 
+#import "UITextField+AutoResizeFont.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -646,6 +648,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _sidebarTitle.returnKeyType = UIReturnKeyDone;
         _sidebarTitle.tag = kTagSidebar;
         _sidebarTitle.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        
+        _sidebarTitle.minimumFontSize = 6;
+        
         [self addSubview:_sidebarTitle];
     }
     
@@ -736,6 +741,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _creatorText.tintColor = [UIColor blackColor];
         }
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _creatorText.minimumFontSize = 6;
         [self addSubview:_creatorText];
         
         _jobTitleText = [[UITextField alloc] init];
@@ -753,6 +759,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.returnKeyType = UIReturnKeyDone;
         _jobTitleText.tag = kTagJobTitle;
         _jobTitleText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _jobTitleText.minimumFontSize = 6;
         [self addSubview:_jobTitleText];
     }
     
@@ -937,12 +944,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_sidebarTitle ==  nil) {
         _sidebarTitle = [[UITextField alloc] init];
-        _sidebarTitle.frame = CGRectMake(0, 0, 200, kFlashCardSidebarWidth_iPhone);
+        _sidebarTitle.frame = CGRectMake(0, 0, 180, kFlashCardSidebarWidth_iPhone);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-            _sidebarTitle.center = CGPointMake(kFlashCardSidebarWidth_iPhone/2, 112);
+            _sidebarTitle.center = CGPointMake(kFlashCardSidebarWidth_iPhone/2, 122);
         } else {
-            _sidebarTitle.center = CGPointMake(kFlashCardSidebarWidth_iPhone/2, 112);
+            _sidebarTitle.center = CGPointMake(kFlashCardSidebarWidth_iPhone/2, 122);
         }
         if (self.isPlayingCard) {
             _sidebarTitle.frame = [Common getScaledViewRect:_sidebarTitle withProportion:kFlashCardViewProporation_iPhone];
@@ -956,6 +963,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _sidebarTitle.keyboardType = UIKeyboardAppearanceDefault;
         _sidebarTitle.returnKeyType = UIReturnKeyDone;
         _sidebarTitle.tag = kTagSidebar;
+        
+        _sidebarTitle.minimumFontSize = 6;
+        
         [self addSubview:_sidebarTitle];
     }
     
@@ -1254,6 +1264,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.returnKeyType = UIReturnKeyDone;
         _creatorText.tag = kTagCreator;
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _creatorText.minimumFontSize = 6;
         [self addSubview:_creatorText];
         
         _jobTitleText = [[UITextField alloc] init];
@@ -1277,6 +1288,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.returnKeyType = UIReturnKeyDone;
         _jobTitleText.tag = kTagJobTitle;
         _jobTitleText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        _jobTitleText.minimumFontSize = 6;
         [self addSubview:_jobTitleText];
     }
     
@@ -1628,11 +1640,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _cardSNText.badgeText= [NSString stringWithFormat:@"%ld",_currentCard.cardSN];
     
     //it's quite strange logic below, but it indeed
+    if (isUserInterfaceIdiomPhone) {
+        _sidebarTitle.font = [UIFont systemFontOfSize:20];
+    } else {
+        _sidebarTitle.font = [UIFont systemFontOfSize:20];
+    }
     if ((_currentPack.sidebarTitle.length == 0) || ([_currentPack.sidebarTitle rangeOfString:@"null"].length != 0)) {
         _sidebarTitle.text = _currentPack.packName;
     } else {
         _sidebarTitle.text = _currentPack.sidebarTitle;
     }
+
+    [_sidebarTitle adjustFontSizeToFitVertically:YES];
     _templateBackgroundImageView.image = [UIImage imageNamed:_templateBackgroundImageName];
     
     
@@ -1694,10 +1713,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    if (isUserInterfaceIdiomPhone) {
+        _creatorText.font = [UIFont systemFontOfSize:8];
+    } else {
+        _creatorText.font = [UIFont systemFontOfSize:12];
+    }
     if (checkNullOrEmptyOrNullStr(_currentPack.creatorNickName)) {
         _creatorText.text = @"";
     } else {
         _creatorText.text = [NSString stringWithFormat:@"%@",_currentPack.creatorNickName];
+        [_creatorText adjustFontSizeToFit];
     }
     
     if (_isPlayingCard) {
@@ -1706,10 +1731,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    if (isUserInterfaceIdiomPhone) {
+        _jobTitleText.font = [UIFont systemFontOfSize:8];
+    } else {
+        _jobTitleText.font = [UIFont systemFontOfSize:12];
+    }
     if (checkNullOrEmptyOrNullStr(_currentPack.jobTitle)) {
         _jobTitleText.text = @"";
     } else {
         _jobTitleText.text = [NSString stringWithFormat:@"%@",_currentPack.jobTitle];
+        [_jobTitleText adjustFontSizeToFit];
     }
     
     if (_isPlayingCard) {
@@ -8123,6 +8154,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     [iConsole info:@"%s",__FUNCTION__];
     _isTextFieldsChanged = YES;
+    
+    if (textField.tag == kTagSidebar) {
+        [textField adjustFontSizeToFitVertically:YES];
+    } else {
+        [textField adjustFontSizeToFit];
+    }
+    
     return YES;
 }
 

@@ -16,6 +16,8 @@
 #import "ASValueTrackingSlider.h"
 #import "Base64.h"
 
+#import "UITextField+AutoResizeFont.h"
+
 @interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate,ASValueTrackingSliderDataSource>{
     
     UIPopoverController *_imagePickerPopover;
@@ -80,9 +82,13 @@
         
     } else {
         _packNameTextField.text = _currentPack.packName;
+        [_packNameTextField adjustFontSizeToFit];
         _sidebarTextField.text = _currentPack.sidebarTitle;
+        [_sidebarTextField adjustFontSizeToFit];
         _creatorTextField.text = _currentPack.creatorNickName;
+        [_creatorTextField adjustFontSizeToFit];
         _jobTitleTextField.text = _currentPack.jobTitle;
+        [_jobTitleTextField adjustFontSizeToFit];
         if (_currentPack.autoPlaySpeed == 0) {
             _autoPlaySpeedSlider.value = kMIN_Auto_Play_Speed;
         } else {
@@ -101,6 +107,11 @@
         
         
     }
+    
+    _packNameTextField.delegate = self;
+    _sidebarTextField.delegate = self;
+    _creatorTextField.delegate = self;
+    _jobTitleTextField.delegate = self;
     
     if (self.isEditPack) {
         NSString *savedPassword = [_currentPack.restorePassword base64DecodedString];
@@ -310,6 +321,11 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.text = @"";
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField adjustFontSizeToFit];
+    return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

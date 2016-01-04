@@ -160,6 +160,7 @@
 		88265CF31B8DE38B00AF55A1 /* templateScreenshot16_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 88265CE91B8DE38B00AF55A1 /* templateScreenshot16_answer.png */; };
 		882ACF91192C22E300CDAD15 /* segment_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */; };
 		882ACF92192C22E300CDAD15 /* segment_seperator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */; };
+		882D56281C39F2A900EBA68E /* UITextField+AutoResizeFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D56271C39F2A900EBA68E /* UITextField+AutoResizeFont.m */; };
 		8833F4061AAC1E7B00B62576 /* answer_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4001AAC1E7B00B62576 /* answer_placeholder_content.png */; };
 		8833F4071AAC1E7B00B62576 /* answer_placeholder_content@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4011AAC1E7B00B62576 /* answer_placeholder_content@2x.png */; };
 		8833F4081AAC1E7B00B62576 /* question_placeholder_content.png in Resources */ = {isa = PBXBuildFile; fileRef = 8833F4021AAC1E7B00B62576 /* question_placeholder_content.png */; };
@@ -523,6 +524,8 @@
 		88265CE91B8DE38B00AF55A1 /* templateScreenshot16_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot16_answer.png; path = Resources/templateScreenshot16_answer.png; sourceTree = "<group>"; };
 		882ACF8F192C22E300CDAD15 /* segment_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_selected@2x.png"; path = "Resources/segment_selected@2x.png"; sourceTree = "<group>"; };
 		882ACF90192C22E300CDAD15 /* segment_seperator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "segment_seperator@2x.png"; path = "Resources/segment_seperator@2x.png"; sourceTree = "<group>"; };
+		882D56261C39F2A900EBA68E /* UITextField+AutoResizeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+AutoResizeFont.h"; sourceTree = "<group>"; };
+		882D56271C39F2A900EBA68E /* UITextField+AutoResizeFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+AutoResizeFont.m"; sourceTree = "<group>"; };
 		8833F4001AAC1E7B00B62576 /* answer_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = answer_placeholder_content.png; path = Resources/answer_placeholder_content.png; sourceTree = "<group>"; };
 		8833F4011AAC1E7B00B62576 /* answer_placeholder_content@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "answer_placeholder_content@2x.png"; path = "Resources/answer_placeholder_content@2x.png"; sourceTree = "<group>"; };
 		8833F4021AAC1E7B00B62576 /* question_placeholder_content.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = question_placeholder_content.png; path = Resources/question_placeholder_content.png; sourceTree = "<group>"; };
@@ -916,6 +919,8 @@
 				2D5C181B16D1A62800E1E785 /* UINavigationController+DismissKeyboard.m */,
 				88D200591985ED980022E8E9 /* UIViewController+LandscapeOnly.h */,
 				88D2005A1985ED980022E8E9 /* UIViewController+LandscapeOnly.m */,
+				882D56261C39F2A900EBA68E /* UITextField+AutoResizeFont.h */,
+				882D56271C39F2A900EBA68E /* UITextField+AutoResizeFont.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1908,6 +1913,7 @@
 				88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
+				882D56281C39F2A900EBA68E /* UITextField+AutoResizeFont.m in Sources */,
 				886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */,
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
