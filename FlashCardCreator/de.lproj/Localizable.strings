@@ -14,8 +14,6 @@
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Sie haben noch um die Gruppe zu erstellen, so kann ich nicht erstellen Sie eine neue Karte";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Angelegt wird, bevor die Errichtung einer Gruppe erforderlich";
-
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download Paket";
 "DIALOG_ENTER_VALID_URL"       = "Bitte geben Sie eine gültige URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Gelten für alle";
 

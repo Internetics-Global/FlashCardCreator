@@ -14,8 +14,6 @@
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "グループを作成する必要はありませんので、私は新しいカードを作成することはできません";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "作成は、グループの設立に先立って必要とされる";
-
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "パッケージをダウンロードします...";
 "DIALOG_ENTER_VALID_URL"       = "有効なURL/Emailを入力してください";
 "DIALOG_APPLY_TO_ALL_CARD"       = "すべてのカードに適用されます";
 

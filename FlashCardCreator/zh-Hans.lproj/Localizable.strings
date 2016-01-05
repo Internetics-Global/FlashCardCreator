@@ -14,8 +14,6 @@
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "您没有创建该组，所以无法在此创建新的卡片";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "创建前需先建立一个组";
-
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "下载包中...";
 "DIALOG_ENTER_VALID_URL"       = "请输入有效的URL或Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "正应用到全部卡片中...";
 "DIALOG_FAIL_TO_LOG_DROPBOX"               = "没有成功登陆到Dropbox";

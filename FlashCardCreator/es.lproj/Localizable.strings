@@ -14,8 +14,6 @@
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Usted no tiene que crear el grupo, así que no puedo crear una nueva tarjeta";
-
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Descargue el paquete ...";
 "DIALOG_ENTER_VALID_URL"       = "Por favor, introduzca una válida URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Aplicar a todas las tarjetas";
 

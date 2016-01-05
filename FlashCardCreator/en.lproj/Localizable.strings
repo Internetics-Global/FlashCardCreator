@@ -14,8 +14,6 @@
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
-
-"DIALOG_DOWNLOAD_EXAMPLE_PACK_FIRST"       = "Download FFC sample cards first";
 "DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a password?";
