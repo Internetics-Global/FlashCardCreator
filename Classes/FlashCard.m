@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     _isUITextViewFocused = NO;
     
-    _isAllCardsLogoNeedToBeUpdate = NO;
+    _isAllCardsNeedToBeUpdateForNewCardOnly = NO;
     _isTextFieldsChanged = NO;
     _saveButtonPressed = NO;
     _templateBackgroundImageName = @"card_background_blue.png";
@@ -7211,7 +7211,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                     _currentCard.question.logoFullPath = _logoImageFullPath;
                     if (isFromNewCreatedCard) {
                         //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
-                        _isAllCardsLogoNeedToBeUpdate = YES;
+                        _isAllCardsNeedToBeUpdateForNewCardOnly = YES;
                     } else {
                         //do save operation and update all others
                         
@@ -7737,7 +7737,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _currentCard.question.logoFullPath = _logoImageFullPath;
             if (isFromNewCreatedCard) {
                 //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
-                _isAllCardsLogoNeedToBeUpdate = YES;
+                _isAllCardsNeedToBeUpdateForNewCardOnly = YES;
             } else {
                 //do save operation and update all others
                 
@@ -8159,6 +8159,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [textField adjustFontSizeToFitVertically:YES];
     } else {
         [textField adjustFontSizeToFit];
+    }
+    
+    if (isFromNewCreatedCard) {
+        if ((textField.tag == kTagSidebar) ||
+              (textField.tag == kTagJobTitle) ||
+                  (textField.tag == kTagCreator)){
+            _isAllCardsNeedToBeUpdateForNewCardOnly = YES;
+        }
     }
     
     return YES;
@@ -9457,10 +9465,26 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_currentCard save];
     }
     
-    //Update all cards logo image if possible (only applicable when creating new card)
-    if (_isAllCardsLogoNeedToBeUpdate == YES) {
-        [self updatelogoImageForAllCards:_logoImageFullPath];
-        _isAllCardsLogoNeedToBeUpdate = NO;
+    //only applicable when creating new card
+    if (_isAllCardsNeedToBeUpdateForNewCardOnly == YES && isFromNewCreatedCard) {
+        
+        if (!_HUD) {
+            _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+        }
+        [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+        [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+        
+        _HUD.mode = MBProgressHUDModeIndeterminate;
+        [_HUD show:YES];
+        _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+        
+        
+        //在creating view中，execUpdatelogoImageForAllCards适用于:job title,name, sidebar, logo引起的需要全部更新sidebar thumbnail情况。TODO:未来需要重构这段逻辑
+        [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
+        
+        _isAllCardsNeedToBeUpdateForNewCardOnly = NO;
+        
+        
     }
     
     //update_date info

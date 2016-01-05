@@ -137,7 +137,7 @@ typedef enum{
     NSMutableDictionary *_aDict;
     
     BOOL    _keyboardShown;
-    BOOL    _isAllCardsLogoNeedToBeUpdate;
+    BOOL    _isAllCardsNeedToBeUpdateForNewCardOnly;
     BOOL    _dismissKeyboardFromEmotionSwitch;
     BOOL    _isTextFieldsChanged; // when no changes, don't need to do save operation
     BOOL    _saveButtonPressed;

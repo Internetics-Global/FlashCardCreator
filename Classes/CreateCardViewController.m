@@ -192,9 +192,14 @@ BOOL isFromNewCreatedCard = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
     
     //Step5: set flag
-    isFromNewCreatedCard = NO;
-    _newCardView.tag = OTHER_FLASHCARDVIEW_TAG;
-    _newCardView = nil;
+    //涉及到一些异步任务，比如delayed execUpdatelogoImageForAllCards，需要采用这种方式
+    double delayInSeconds = .5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        isFromNewCreatedCard = NO;
+        _newCardView.tag = OTHER_FLASHCARDVIEW_TAG;
+        _newCardView = nil;
+    });
 }
 
 - (void) backAndPopCreateCardView {
