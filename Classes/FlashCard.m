@@ -1641,7 +1641,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //it's quite strange logic below, but it indeed
     if (isUserInterfaceIdiomPhone) {
-        _sidebarTitle.font = [UIFont systemFontOfSize:20];
+        _sidebarTitle.font = [UIFont systemFontOfSize:12];
     } else {
         _sidebarTitle.font = [UIFont systemFontOfSize:20];
     }
