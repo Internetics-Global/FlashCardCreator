@@ -54,4 +54,6 @@ typedef NS_ENUM(NSInteger, Where_Tooltip_Type) {
 
 - (void) hideEverything;
 
+- (BOOL) isAllInvisible;
+
 @end

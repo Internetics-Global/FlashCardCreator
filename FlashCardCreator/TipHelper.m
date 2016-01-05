@@ -660,4 +660,13 @@
     [self hideFlashCardTip];
 }
 
+- (BOOL) isAllInvisible {
+    
+    if ([self isMasterTipVisible] || [self isDetailTipVisible] || [self isFlashCardTipVisible]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 @end

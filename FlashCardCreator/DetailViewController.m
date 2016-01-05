@@ -452,7 +452,8 @@ enum popover_enum {
     BOOL isNotAllowShowTooltip_FlashCard = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_FlashCard_Not_Allow];
     
     
-    if (isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail) {
+    if ((isNotAllowShowTooltip_Master || isNotAllowShowTooltip_FlashCard || isNotAllowShowTooltip_Detail)
+        || [[TipHelper defaultHelper] isAllInvisible]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setBool:NO  forKey:K_Tooltip_FlashCard_Not_Allow];
         [defaults setBool:NO  forKey:K_Tooltip_Master_Not_Allow];
