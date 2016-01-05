@@ -92,6 +92,14 @@ BOOL _isDownloadingSamplePack;
     DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
     [DBSession setSharedSession:dbSession];
     
+    //4. we need to put this in front of windows/controller init
+    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+    if (isExamplePackDownloadedSuccessful ==NO) {
+        _isDownloadingSamplePack = TRUE;
+    } else {
+        _isDownloadingSamplePack = FALSE;
+    }
+    
     //5. Initialize user interface
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -225,12 +233,8 @@ BOOL _isDownloadingSamplePack;
     [self.window makeKeyAndVisible];
     
     //11. Get example packs (online) and save to local
-    BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-    if (isExamplePackDownloadedSuccessful ==NO) {
-        _isDownloadingSamplePack = TRUE;
+    if (_isDownloadingSamplePack) {
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:S3SamplePackURL];
-    } else {
-        _isDownloadingSamplePack = FALSE;
     }
     
     //Prepare recording function
