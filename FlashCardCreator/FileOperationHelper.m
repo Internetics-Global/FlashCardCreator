@@ -258,6 +258,12 @@
         pack.creator = [OpenUDID value];
     }
     
+    /**
+     *  在第一次上传的时候，实际上，fileNameOnAWS和shareLink是空的，因为这时还没有上传，更没有获取到sharelink.
+     *  只有后续上传时，这两个值才会真正出现在uploaded meta info中。
+     *  fileNameOnAWS和shareLink值一旦不是空值，就不会再改变，不会因为pack name的改变而改变（确定的fileNameOnAWS对应确定的share link，只要fileNameOnAWS不变，shareLink就不变）
+     *  当然，不同的tinyurl share link可以指向同一个fileNameOnAWS（比如网址稍微变化，但核心内容不变）。fileNameOnAWS确定，share link唯一。
+     */
     NSDictionary *packDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",pack.packID],@"pack_id",pack.packName,@"pack_name",pack.sidebarTitle,@"sidebar_title",[pack.coverImageURL lastPathComponent]?:@"",@"cover_image", pack.creator,@"creator", pack.creatorNickName,@"creator_nick_name", pack.jobTitle,@"job_title",[NSString stringWithFormat:@"%d",pack.autoPlaySpeed],@"auto_play_speed",platformStr,@"platform",pack.restorePassword,@"restore_password",pack.shareLink,@"share_link",pack.fileNameOnAWS,@"file_name_on_aws",nil];
     
     [iConsole info:@"%s:packDict = %@",__FUNCTION__,packDict];
