@@ -98,7 +98,12 @@
 }
 
 
--(void)removePack:(Pack *)pack{
+/**
+ *  @deprecated This method is deprecated
+ *  不再推荐这种方法，因为这种方法的缺点是pack必须是_packs中的某个成员，否则会有问题。曾经出现的一个事故是：pack是刚new的赋予了packID的值，这时就会有问题
+ */
+-(void)removePack:(Pack *)pack
+{
 	[_packs removeObject:pack];
 	[pack destroy];
 }
