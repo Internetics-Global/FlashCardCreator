@@ -42,6 +42,7 @@
 "DIALOG_RESUME_TO_DOWNLOAD"       = "Resume to download?";
 
 "DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video selection";
+"DIALOG_IMAGE_SELECTION" = "Image selection";
 "DIALOG_INSERT_YOUTUBE_URL" = "Insert a YouTube url";
 "DIALOG_SELECT_FROM_LIBRARY" = "Select from library";
 "DIALOG_REMOVE_VIDEO_IMAGE" = "Remove video/image";
