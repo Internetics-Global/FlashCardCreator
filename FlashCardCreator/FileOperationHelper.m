@@ -664,7 +664,7 @@
 + (NSString *) generateUniqueFileNameOnCloud:(Pack *) pack {
     
     NSString *fileName = [NSString stringWithFormat:@"%@%d%d.zip",
-                          [pack.packName stringByReplacingOccurrencesOfString:@" " withString:@""],
+                          [Common removeAllCharactersExceptAlphanumericFromString:pack.packName],
                           (int)[[NSDate date] timeIntervalSince1970],
                           arc4random()];
     

@@ -67,5 +67,6 @@
 
 + (BOOL) isAlphanumeric:(NSString *) str;
 
++ (NSString *) removeAllCharactersExceptAlphanumericFromString:(NSString *) str;
 
 @end

@@ -370,4 +370,12 @@
 }
 
 
++ (NSString *) removeAllCharactersExceptAlphanumericFromString:(NSString *) str {
+    
+    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    NSString *strippedReplacement = [[str componentsSeparatedByCharactersInSet:charactersToRemove] componentsJoinedByString:@""];
+    return strippedReplacement;
+}
+
+
 @end

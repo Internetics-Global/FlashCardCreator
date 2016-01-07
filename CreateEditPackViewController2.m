@@ -229,10 +229,10 @@
         
     }
     
-    if ([Common isAlphanumeric:_packNameTextField.text] == NO && _packNameTextField.text.length > 0) {
-       [Common alertViewCommon:NSLocalizedString(@"DIALOG_ONLY_ALPHANUMBER_PERMITTED",@"")];
-        return;
-    }
+//    if ([Common isAlphanumeric:_packNameTextField.text] == NO && _packNameTextField.text.length > 0) {
+//       [Common alertViewCommon:NSLocalizedString(@"DIALOG_ONLY_ALPHANUMBER_PERMITTED",@"")];
+//        return;
+//    }
     
     _currentPack.packName = _packNameTextField.text;
     _currentPack.sidebarTitle = _sidebarTextField.text;

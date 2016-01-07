@@ -285,7 +285,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
     
-    expectedBucketName = [expectedBucketName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    expectedBucketName = [Common removeAllCharactersExceptAlphanumericFromString:expectedBucketName];
     
     expectedBucketName = [NSString stringWithFormat:@"%@-%@",expectedBucketName,BucketPostfixAfterUserName];
     
@@ -786,6 +786,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     return returnURL;
 }
+
+
 
 #pragma mark – UIActionSheet
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
