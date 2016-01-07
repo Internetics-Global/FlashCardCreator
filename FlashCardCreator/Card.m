@@ -41,6 +41,7 @@
 
 - (void)setCoverImageURL:(NSString *)coverImageURL {
     if (coverImageURL.length == 0 || [Common isDirectoryFormat:coverImageURL] ) {
+        _coverImageURL = @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[coverImageURL lastPathComponent]];
         _coverImageURL = fullPath;

@@ -16,6 +16,8 @@
 #import "ASValueTrackingSlider.h"
 #import "Base64.h"
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
 #import "UITextField+AutoResizeFont.h"
 
 @interface CreateEditPackViewController2 () <UIImagePickerControllerDelegate,UITextFieldDelegate,UINavigationControllerDelegate,ASValueTrackingSliderDataSource>{
@@ -51,7 +53,7 @@
     styleLayer.path = shadowPath.CGPath;
     _coverImageView.layer.mask = styleLayer;
     
-    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibrary:)];
+    UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickedImageSelectButton:)];
     _coverImageView.userInteractionEnabled = YES;
     [_coverImageView addGestureRecognizer:imageSingeTap];
     
@@ -155,9 +157,45 @@
     [self.navigationItem setTitleView:label];
 }
 
-- (void)selectFromImageLibrary:(UITapGestureRecognizer *)sender {
+- (void) didClickedImageSelectButton:(UITapGestureRecognizer *)sender {
     
     CGPoint point = [sender locationInView:self.view];
+    
+    __weak __typeof(&*self)weakSelf = self;
+    if (self.isEditPack == NO) {
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            if (buttonIndex == 1) {
+                [weakSelf selectFromImageLibrary:point];
+            }
+            
+        }];
+    } else {
+        
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_REMOVE_IMAGE",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            if (buttonIndex == 0) {
+                //cancel button
+                
+            } else if (buttonIndex == 1) {
+                //remove
+                _coverImageView.image = nil;
+                _currentPack.coverImageURL = @"";
+                
+            } else if (buttonIndex == 2) {
+                //select
+                [weakSelf selectFromImageLibrary:point];
+                
+            }
+            
+        }];
+        
+    }
+    
+}
+
+- (void)selectFromImageLibrary:(CGPoint )point {
+    
     CGRect rect = CGRectMake(point.x, point.y, 50, 50);
     
     if (!_picker) {
