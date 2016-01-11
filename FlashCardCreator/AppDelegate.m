@@ -49,8 +49,8 @@ BOOL _isDownloadingSamplePack;
                   clientKey:@"bVGvephS1FlkuePH7Yv6GrsQmfvNDW75mKN67Ssk"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
-    [PFTwitterUtils initializeWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg"
-                               consumerSecret:@"CZHdQXJIVGtLlBnvh6T1eEZ2WJgWPSfNUdju6jXEs"];
+    [PFTwitterUtils initializeWithConsumerKey:@"uptcC5DVVmMPE25rwNDoVyG7q"
+                               consumerSecret:@"ciAdhaC2lF1hkZqnYmfoUowcBhnQN2rfcYuKoV7D9ImK8tWZzo"];
     [self setupAWS];
     
     self.isAllowToShowPackList = YES;
