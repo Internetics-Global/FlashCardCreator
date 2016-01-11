@@ -220,7 +220,6 @@
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
-		88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5D1AB104050046B64E /* StoreKit.framework */; };
 		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886726301C1164CF007E86CE /* PlayOptionViewController.m */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
@@ -593,7 +592,6 @@
 		885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_cover_image_placeholder.png; path = Resources/card_cover_image_placeholder.png; sourceTree = "<group>"; };
 		886075011932B167009C16EE /* DKCircleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCircleButton.h; sourceTree = "<group>"; };
 		886075021932B167009C16EE /* DKCircleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCircleButton.m; sourceTree = "<group>"; };
-		88620B5D1AB104050046B64E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88620B5F1AB104120046B64E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		8867262F1C1164CF007E86CE /* PlayOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayOptionViewController.h; sourceTree = "<group>"; };
 		886726301C1164CF007E86CE /* PlayOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayOptionViewController.m; sourceTree = "<group>"; };
@@ -707,7 +705,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */,
-				88620B5E1AB104050046B64E /* StoreKit.framework in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
@@ -1261,7 +1258,6 @@
 			isa = PBXGroup;
 			children = (
 				88620B5F1AB104120046B64E /* libstdc++.6.dylib */,
-				88620B5D1AB104050046B64E /* StoreKit.framework */,
 				88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */,
 				880E6726182720CE0054DDD0 /* CoreVideo.framework */,
 				880E6723182720BF0054DDD0 /* CoreMedia.framework */,
@@ -1630,6 +1626,11 @@
 				TargetAttributes = {
 					2DCE0B0616798E04007A8CAD = {
 						DevelopmentTeam = Y8HQA4YE8L;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
