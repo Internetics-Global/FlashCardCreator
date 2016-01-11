@@ -17,7 +17,7 @@
 
 AWSRegionType const CognitoRegionType = AWSRegionUSEast1; // e.g. AWSRegionUSEast1
 AWSRegionType const DefaultServiceRegionType = AWSRegionUSEast1; // e.g. AWSRegionUSEast1
-NSString *const CognitoIdentityPoolId = @"us-east-1:55b5aa55-921e-49d0-b4d3-673793805862";
+NSString *const CognitoIdentityPoolId = @"us-east-1:19efa782-177f-476a-a62b-c504d5ddcd76";
 
 NSString *const S3BaseURL = @"https://s3.amazonaws.com";
 
