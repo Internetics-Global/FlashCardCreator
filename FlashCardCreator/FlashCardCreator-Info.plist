@@ -33,7 +33,7 @@
 			<string>com.flipflash.FlashCardCreator</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb430339350417672</string>
+				<string>fb905454096190039</string>
 			</array>
 		</dict>
 		<dict>
@@ -52,9 +52,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9677</string>
+	<string>9681</string>
 	<key>FacebookAppID</key>
-	<string>430339350417672</string>
+	<string>905454096190039</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbauth</string>
