@@ -52,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9675</string>
+	<string>9676</string>
 	<key>FacebookAppID</key>
 	<string>430339350417672</string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -72,6 +72,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarTintParameters</key>
