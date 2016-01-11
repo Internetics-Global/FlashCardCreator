@@ -424,17 +424,7 @@
 		2D7A8CE61691100F002EDF77 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		2D89234816806BF200B43BCD /* PublicPackRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicPackRequest.h; sourceTree = "<group>"; };
 		2D89234916806BF200B43BCD /* PublicPackRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicPackRequest.m; sourceTree = "<group>"; };
-		2DA97ED616CB7DF9004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		2DA97ED816CB7E04004E7FAB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		2DA97EDA16CB7E09004E7FAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2DA97EDB16CB7E79004E7FAB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2DA97EDC16CB7E99004E7FAB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2DA97F0A16CC747C004E7FAB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2DA97F0B16CC747C004E7FAB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2DA97F0D16CC74B6004E7FAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2DA97F0E16CC74B6004E7FAB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2DA97F1016CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2DA97F1116CC7528004E7FAB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DC0628E167FFF5600F2EA07 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2DC06290167FFF5F00F2EA07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2DCE0B0716798E04007A8CAD /* FlashCardCreator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashCardCreator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1640,11 +1630,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				"zh-Hans",
-				fr,
-				es,
-				ja,
-				de,
 			);
 			mainGroup = 2DCE0AFC16798E04007A8CAD;
 			productRefGroup = 2DCE0B0816798E04007A8CAD /* Products */;
@@ -1979,12 +1964,7 @@
 		2DA97ED916CB7E04004E7FAB /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2DA97ED816CB7E04004E7FAB /* zh-Hans */,
 				2DA97EDA16CB7E09004E7FAB /* en */,
-				2DA97EDB16CB7E79004E7FAB /* fr */,
-				2DA97F0B16CC747C004E7FAB /* es */,
-				2DA97F0E16CC74B6004E7FAB /* ja */,
-				2DA97F1116CC7528004E7FAB /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1993,11 +1973,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				2DCE0B1516798E04007A8CAD /* en */,
-				2DA97ED616CB7DF9004E7FAB /* zh-Hans */,
-				2DA97EDC16CB7E99004E7FAB /* fr */,
-				2DA97F0A16CC747C004E7FAB /* es */,
-				2DA97F0D16CC74B6004E7FAB /* ja */,
-				2DA97F1016CC7528004E7FAB /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
