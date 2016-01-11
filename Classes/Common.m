@@ -146,16 +146,25 @@
     return ([str hasPrefix:@"http://www.youtube.com/"]
                || [str hasPrefix:@"http://m.youtube.com/"]
                    || [str hasPrefix:@"https://www.youtube.com/"]
-                       || [str hasPrefix:@"https://m.youtube.com/"]);
+                       || [str hasPrefix:@"https://m.youtube.com/"]
+                          || [str hasPrefix:@"http://youtu.be/"]      //share link from Youtube app
+                              || [str hasPrefix:@"https://youtu.be/"]);
 }
 
 /**
  *  must be like this: http://www.youtube.com/watch?v=gzsrooteAZw
  */
 + (NSString *) youtubeIDFromURL:(NSString *) str {
-    NSDictionary *param =  [str URLQueryParameters];
-    NSString *idStr = [param objectForKey:@"v"];
-    return idStr;
+    
+    if ([str rangeOfString:@"youtu.be"].location != NSNotFound) {
+        NSString *idStr = [str lastPathComponent];
+        return idStr;
+        
+    } else {
+        NSDictionary *param =  [str URLQueryParameters];
+        NSString *idStr = [param objectForKey:@"v"];
+        return idStr;
+    }
 }
 
 /**
