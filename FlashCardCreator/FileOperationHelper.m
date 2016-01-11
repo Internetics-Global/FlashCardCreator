@@ -112,6 +112,18 @@
 	return returnPath;
 }
 
+/**
+ *  Avoid to be rejected by Apple
+ */
++ (void) removeAssembleFactoryDirectory {
+    NSString *cardAssembleDir = [FileOperationHelper assembleFactoryDirectory];
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:cardAssembleDir error:&error]; //this will remove directory and files in it.
+    if (error) {
+        [iConsole error:@"Failed to remove directory at %@", cardAssembleDir];
+    }
+}
+
 + (NSString *)downloadedZipPackFileFixedPath {
     NSString *dir = [FileOperationHelper downloadedPackFileDirectory ];
     NSError *error = nil;

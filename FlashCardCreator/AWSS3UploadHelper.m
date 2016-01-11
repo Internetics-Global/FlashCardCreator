@@ -407,6 +407,9 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     _transferManager = [AWSS3TransferManager defaultS3TransferManager];
     
     [[_transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
+        
+        [FileOperationHelper removeAssembleFactoryDirectory];//因为我们在任何情况下都是需要重新上传，所以这个是没有问题的。
+        
         if (task.error) {
             [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
             if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {

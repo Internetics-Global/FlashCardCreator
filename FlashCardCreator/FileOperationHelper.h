@@ -19,6 +19,7 @@
 + (NSString *) imagesDirectory;
 + (NSString *) temporaryImagesDirectory;
 + (NSString *) assembleFactoryDirectory;
++ (void)       removeAssembleFactoryDirectory;
 
 + (NSString *) documentsPathForFileNamed:(NSString *)fileName;
 

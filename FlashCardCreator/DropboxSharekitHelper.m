@@ -431,6 +431,8 @@
     
     [iConsole info:@"File uploaded successfully to path: %@", metadata.path];
     
+    [FileOperationHelper removeAssembleFactoryDirectory];
+    
     _isCreatingShareLinkage = YES;
     
     //step3: create dropbox linkage
@@ -442,6 +444,8 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
     [iConsole error:@"File upload failed with error - %@", error];
+    
+    [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
     [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
 }
