@@ -45,8 +45,8 @@ BOOL _isDownloadingSamplePack;
     self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];
     
 //    [ParseCrashReporting enable];
-    [Parse setApplicationId:@"GrdwW4Td2T9d7hp9LvhHdXcewKycs6HM3nyUkXta"
-                  clientKey:@"qHXKXhGMkvvn4TaHyXPwLi8wUeAnbXLnwFPvFuRd"];
+    [Parse setApplicationId:@"LWnSvs6XkYqzdKd07QKowViu8axdnwsHJIpFb4gO"
+                  clientKey:@"bVGvephS1FlkuePH7Yv6GrsQmfvNDW75mKN67Ssk"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
     [PFTwitterUtils initializeWithConsumerKey:@"spW6th3vldJVq5Zjnud3Lg"
