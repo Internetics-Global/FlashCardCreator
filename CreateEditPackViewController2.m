@@ -233,6 +233,12 @@
     _currentPack.coverImageURL = savedFullPath;
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
 
 - (void) closeCreatePackView {
     if (self.isEditPack) {
