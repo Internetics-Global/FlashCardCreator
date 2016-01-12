@@ -303,6 +303,11 @@
         return NO;
     }
     
+    //Need to refactor later,TODO:
+    if ([filePath rangeOfString:@"youtu.be"].location != NSNotFound) {
+        return NO;
+    }
+    
     //check extension type
     if ([[filePath lastPathComponent] rangeOfString:@"."].location == NSNotFound) {
         return YES;
