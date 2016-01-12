@@ -2198,7 +2198,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (backgroundImagePath.length == 0) {
         
         __weak __typeof(&*self)weakSelf = self;
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_BACKGROUND_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             
             if (buttonIndex == 1) {
                 [weakSelf selectFromImageLibraryByBackgroundSelectButton:sender];
@@ -2210,14 +2210,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
         if (isAllowUndo) {
             __weak __typeof(&*self)weakSelf = self;
-            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""),NSLocalizedString(@"Optional_Undo_Last_Operation",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_BACKGROUND_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""),NSLocalizedString(@"Optional_Undo_Last_Operation",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 
                 [weakSelf backgroundImageSelectAlertViewClickedAtIndex: buttonIndex];
                 
             }];
         } else {
             __weak __typeof(&*self)weakSelf = self;
-            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_BACKGROUND_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Remove_Background_Image",@""), NSLocalizedString(@"Optional_Change_Background_Image",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 
                 [weakSelf backgroundImageSelectAlertViewClickedAtIndex: buttonIndex];
                 
@@ -7191,7 +7191,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     __weak __typeof(&*self)weakSelf = self;
     
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_LOGO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_LOGO_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_LOGO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         
         if (buttonIndex == 1) {
             [weakSelf selectFromImageLibrary:_logoImage withPopoverArrowUp:YES  supportMov:NO];

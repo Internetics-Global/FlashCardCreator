@@ -41,8 +41,11 @@
 "DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR" = "Share function is forbidden by the pack creator";
 "DIALOG_RESUME_TO_DOWNLOAD"       = "Resume to download?";
 
-"DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video selection";
+"DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video/video link selection";
 "DIALOG_IMAGE_SELECTION" = "Image selection";
+"DIALOG_PACK_LIST_IMAGE_SELECTION" = "Pack list image selection";
+"DIALOG_LOGO_IMAGE_SELECTION" = "Logo image selection";
+"DIALOG_BACKGROUND_IMAGE_SELECTION" = "Background image selection";
 "DIALOG_INSERT_YOUTUBE_URL" = "Insert a YouTube url";
 "DIALOG_SELECT_FROM_LIBRARY" = "Select from library";
 "DIALOG_REMOVE_VIDEO_IMAGE" = "Remove video/image";

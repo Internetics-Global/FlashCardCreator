@@ -162,35 +162,25 @@
     CGPoint point = [sender locationInView:self.view];
     
     __weak __typeof(&*self)weakSelf = self;
-    if (self.isEditPack == NO) {
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            
-            if (buttonIndex == 1) {
-                [weakSelf selectFromImageLibrary:point];
-            }
-            
-        }];
-    } else {
+    
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_PACK_LIST_IMAGE_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_REMOVE_IMAGE",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Optional_Edit_Or_Remove",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_REMOVE_IMAGE",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 0) {
+            //cancel button
             
-            if (buttonIndex == 0) {
-                //cancel button
-                
-            } else if (buttonIndex == 1) {
-                //remove
-                _coverImageView.image = nil;
-                _currentPack.coverImageURL = @"";
-                
-            } else if (buttonIndex == 2) {
-                //select
-                [weakSelf selectFromImageLibrary:point];
-                
-            }
+        } else if (buttonIndex == 1) {
+            //remove
+            _coverImageView.image = nil;
+            _currentPack.coverImageURL = @"";
             
-        }];
+        } else if (buttonIndex == 2) {
+            //select
+            [weakSelf selectFromImageLibrary:point];
+            
+        }
         
-    }
+    }];
+
     
 }
 
