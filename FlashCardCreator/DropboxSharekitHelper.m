@@ -605,7 +605,10 @@
                 [iConsole error:@"%s, not exist in nsuerdefault for %@",__FUNCTION__,_currentPack.packName];
             }
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:SHARE_LINK_CREATED_NOTIFICATION object:returnURL userInfo:nil];
+            
         }
+        
     }
     
     [iConsole info:@"%s, redirected url:%@",__FUNCTION__,returnURL];
@@ -701,6 +704,8 @@
 
 - (void) dealloc {
     _restClient.delegate = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

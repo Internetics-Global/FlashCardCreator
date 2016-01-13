@@ -782,6 +782,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 [iConsole error:@"%s, not exist in nsuerdefault for %@",__FUNCTION__,_currentPack.packName];
             }
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:SHARE_LINK_CREATED_NOTIFICATION object:returnURL userInfo:nil];
+            
         }
     }
     
@@ -885,6 +887,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void) dealloc {
     _generatedZipFilePath = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

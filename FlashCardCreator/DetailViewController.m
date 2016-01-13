@@ -98,6 +98,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
+        
     }
     return self;
 }
@@ -644,6 +646,14 @@ enum popover_enum {
     
 }
 
+
+-(void)shareLinkCreatedNotification:(NSNotification *)notification {
+    
+    NSString *shareLink = [notification object];
+    _currentPack.shareLink = shareLink;
+    
+    [self updateRightPackInfoView];
+}
 
 -(void)editPackFinishedNotification:(NSNotification *)notification{
     [iConsole info:@"%s",__FUNCTION__];
