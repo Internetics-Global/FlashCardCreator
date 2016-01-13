@@ -525,12 +525,13 @@ enum popover_enum {
         _settingPopoverController = [[UIPopoverController alloc] initWithContentViewController:navController];
         _settingPopoverController.delegate = self;
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-            _settingPopoverController.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
+            _settingPopoverController.backgroundColor = [UIColor colorWithRed:127.0/255 green:127.0/255 blue:127.0/255 alpha:1];
         }
     }
     
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 480);
-    [_settingPopoverController presentPopoverFromBarButtonItem:_settingButton permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    CGRect rect = CGRectOffset(_settingButton.customView.frame, 0, -49);
+    [_settingPopoverController presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }
 
