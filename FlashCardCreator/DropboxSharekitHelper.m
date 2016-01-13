@@ -101,7 +101,7 @@
                 }
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+            _finalPostMessage = [Common getShareMessage:redirectedStr];
             
             [self showShareActionSheet];
             
@@ -354,7 +354,7 @@
                         });
                         
                         //3. 分享
-                        _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                        _finalPostMessage = [Common getShareMessage:redirectedStr];
                         
                         [self showShareActionSheet];
                     });
@@ -367,7 +367,7 @@
                         [self.currentPack savePackOnly];
                     }
                     
-                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
+                    _finalPostMessage = [Common getShareMessage:_finalShareLinkBeforeRedirect];
                     
                     [self showShareActionSheet];
                 }

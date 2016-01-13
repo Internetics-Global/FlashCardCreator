@@ -27,6 +27,8 @@
 
 #import "AWS_Constants.h"
 
+#import "Common.h"
+
 typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     Type_ActionSheet_Share      = -1,
 };
@@ -119,7 +121,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 }
             }
             
-            _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+            _finalPostMessage = [Common getShareMessage:redirectedStr];
             
             [self showShareActionSheet];
             
@@ -627,7 +629,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                         });
                         
                         //3. 分享
-                        _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",redirectedStr];
+                        _finalPostMessage = [Common getShareMessage:redirectedStr];
                         
                         [self showShareActionSheet];
                     });
@@ -640,7 +642,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                         [self.currentPack savePackOnly];
                     }
                     
-                    _finalPostMessage = [NSString stringWithFormat:@"I've just created a pack of Flash Cards with Flip Flash Cards app! ( %@ ) Check it out! Get the Flip Flash Cards app http://www.apple.com",_finalShareLinkBeforeRedirect];
+                    _finalPostMessage = [Common getShareMessage:_finalShareLinkBeforeRedirect];
                     
                     [self showShareActionSheet];
                 }

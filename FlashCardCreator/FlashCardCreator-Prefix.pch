@@ -215,4 +215,6 @@
 #define kMAX_CountDown_Slider_Value 9
 #define kDEFAULT_CountDown_Slider_Value 3
 
+#define K_AppStore_Link                     @"https://itunes.apple.com/au/app/id1074183551?mt=8"
+
 

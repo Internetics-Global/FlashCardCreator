@@ -69,4 +69,6 @@
 
 + (NSString *) removeAllCharactersExceptAlphanumericFromString:(NSString *) str;
 
++ (NSString *) getShareMessage:(NSString *) shareLink;
+
 @end
