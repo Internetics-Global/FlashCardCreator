@@ -37,7 +37,7 @@
 		[self addSubview:textView];
 		UILabel *linkLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, 20)];
 		linkLabel.backgroundColor = [UIColor clearColor];
-		linkLabel.text = @"http://www.internetics.net.au";
+		linkLabel.text = @"http://www.flipflashcards.com";
         linkLabel.textAlignment = NSTextAlignmentCenter;
 		linkLabel.textColor = [UIColor colorWithRed:0.9 green:0.25 blue:0.59 alpha:1.0];
 		linkLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];

@@ -60,7 +60,7 @@
 }
 
 -(void)web{
-	NSURL *url = [NSURL URLWithString:@"http://www.internetics.net.au"];
+	NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
