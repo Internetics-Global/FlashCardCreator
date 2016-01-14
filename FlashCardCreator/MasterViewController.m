@@ -146,6 +146,9 @@ enum popover_enum {
         if (isUserInterfaceIdiomPhone == false) {
             //在iPhone中，不需要这逻辑
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
+        } else {
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
         
         
@@ -406,6 +409,28 @@ enum popover_enum {
     }
     
     
+}
+
+/**
+ *  TODO:Refactoring later
+ */
+- (void) updateRightPackInfoView {
+    
+    [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+    
+    if (self.currentPack.shareLink.length >0 && [Common isOwner:_currentPack]) {
+        _shareCodeLabel.hidden = NO;
+        _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
+    } else {
+        _shareCodeLabel.hidden = YES;
+    }
+    
+    if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
+        _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image"];
+    } else {
+        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
+        _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
+    }
 }
 
 
@@ -684,6 +709,14 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark Notfication related
+
+-(void)shareLinkCreatedNotification:(NSNotification *)notification {
+    
+    NSString *shareLink = [notification object];
+    _currentPack.shareLink = shareLink;
+    
+    [self updateRightPackInfoView];
+}
 
 - (void) downloadPackNotification:(NSNotification *) notification {
 

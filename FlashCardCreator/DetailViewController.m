@@ -98,7 +98,9 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
+        if (isUserInterfaceIdiomPhone == false) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
+        }
         
     }
     return self;
@@ -704,7 +706,7 @@ enum popover_enum {
                 
             } else if (myView.tag == 1) {
                 
-                if (self.currentPack.shareLink.length >0) {
+                if (self.currentPack.shareLink.length >0 && [Common isOwner:_currentPack]) {
                     myView.hidden = NO;
                     ((UILabel *)myView).text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
                 } else {
