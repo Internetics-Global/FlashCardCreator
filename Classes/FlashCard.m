@@ -86,6 +86,11 @@ extern BOOL isFromNewCreatedCard;
 
 #define k_Scale                   3.0
 
+/**
+ *  compared with edit mode, we make the play card bigger, so we need a compensation
+ */
+#define k_Delta_For_Play          10.0
+
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
 typedef NS_ENUM(NSInteger, Resize_Accuracy_Type) {
@@ -631,7 +636,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_sidebarTitle == nil) {
         _sidebarTitle = [[UITextField alloc] init];
-        _sidebarTitle.frame = CGRectMake(0, 0, 400, 60);
+        _sidebarTitle.frame = CGRectMake(0, 0, 400, kFlashCardViewSidebarWidth_Detail_iPad);
         [_sidebarTitle setTransform:CGAffineTransformMakeRotation(-M_PI / 2)];
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
             _sidebarTitle.center = CGPointMake(30, 275);
@@ -842,7 +847,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _questionBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone);;
+        int delta = 0;
+        if (_isPlayingCard) {
+            delta = k_Delta_For_Play;
+        }
+        _questionBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone + delta, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - delta);;
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
@@ -857,7 +866,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _answerBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone);
+        int delta = 0;
+        if (_isPlayingCard) {
+            delta = k_Delta_For_Play;
+        }
+        _answerBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone + delta, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - delta);
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
@@ -3299,7 +3312,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeAnswer = 16;
             
             _imageAnswer.hidden = FALSE;
-            _imageAnswer.frame = CGRectMake(164, 35, 143, 143);
+            _imageAnswer.frame = CGRectMake(164, 33.5, 143, 141.5);
             if (self.isPlayingCard) {
                 _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
             }
@@ -6192,7 +6205,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subSizeQuestion = 16;
             
             _imageQuestion.hidden = FALSE;
-            _imageQuestion.frame = CGRectMake(164, 35, 143, 143);
+            _imageQuestion.frame = CGRectMake(164, 33.5, 143, 141.5);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }

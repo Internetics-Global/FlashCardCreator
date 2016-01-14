@@ -177,7 +177,7 @@
 #define kFlashCardViewHeight_Detail_iPad_Pure  550.0     //only card view part
 #define kSegmentButtomMarginForiPad            10.0
 #define kSegmentHeightForiPad                  44.0
-#define kFlashCardViewSidebarWidth_Detail_iPad 41.0      //sidebar part
+#define kFlashCardViewSidebarWidth_Detail_iPad 60.0      //sidebar part
 #define kFlashCardViewHeaderHeight_Detail_iPad 112.0     //title view part
 
 #define kFlashCardViewWidth_PlayMode_iPad      800.0
