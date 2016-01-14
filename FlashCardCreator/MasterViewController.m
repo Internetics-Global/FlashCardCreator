@@ -2672,6 +2672,7 @@ extern BOOL isFromNewCreatedCard;
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"") message:nil];
                 [alertView textFieldAtIndex:0].text = @"";
                 [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                [alertView bk_addButtonWithTitle:NSLocalizedString(@"Keyboard_Cancel",@"") handler:nil];
                 [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
                     [weakSelf didClickDownloadFromCodeAlertView:alertView];
                 }];
