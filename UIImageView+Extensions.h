@@ -12,4 +12,12 @@
 
 @property(nonatomic, assign) UIEdgeInsets hitTestEdgeInsets;
 
+
+/**
+ *  if the color at the point of view is transparent, we simple ignore it.
+ *  By default, it's false. It's an addition to hitTestEdgeInsets
+ */
+@property(nonatomic, assign) BOOL     bypassTransparentColor;
+
+
 @end

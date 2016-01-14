@@ -5,8 +5,24 @@
 @implementation UIImageView (Extensions)
 
 @dynamic hitTestEdgeInsets;
+@dynamic bypassTransparentColor;
 
 static const NSString *KEY_HIT_TEST_EDGE_INSETS = @"HitTestEdgeInsets";
+
+static char const * const KEY_HIT_TEST_BYPASS_TRANSPARENT_COLOR = "BypassTransparentColor";
+
+- (void)setBypassTransparentColor:(BOOL)bypassTransparentColor {
+    NSNumber *number = [NSNumber numberWithBool: bypassTransparentColor];
+    objc_setAssociatedObject(self, KEY_HIT_TEST_BYPASS_TRANSPARENT_COLOR, number , OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL)bypassTransparentColor {
+    
+    NSNumber *number = objc_getAssociatedObject(self, KEY_HIT_TEST_BYPASS_TRANSPARENT_COLOR);
+    return [number boolValue];
+    
+}
+
 
 -(void)setHitTestEdgeInsets:(UIEdgeInsets)hitTestEdgeInsets {
     NSValue *value = [NSValue value:&hitTestEdgeInsets withObjCType:@encode(UIEdgeInsets)];
@@ -24,10 +40,13 @@ static const NSString *KEY_HIT_TEST_EDGE_INSETS = @"HitTestEdgeInsets";
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     
-    BOOL transparent = [self transparentAtPoint:point];
-    
-    if (transparent == YES) {
-        return false;
+    if (self.bypassTransparentColor) {
+        
+        BOOL transparent = [self transparentAtPoint:point];
+        
+        if (transparent == YES) {
+            return false;
+        }
     }
     
     if(UIEdgeInsetsEqualToEdgeInsets(self.hitTestEdgeInsets, UIEdgeInsetsZero) || self.hidden) {

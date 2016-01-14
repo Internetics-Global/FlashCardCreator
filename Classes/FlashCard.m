@@ -1789,6 +1789,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _isPlayingCard) {
         float width = CGRectGetWidth(_imageAnswer.frame);
         float height = CGRectGetHeight(_imageAnswer.frame);
+        _imageAnswer.bypassTransparentColor = YES;
         [_imageAnswer setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
@@ -1817,6 +1818,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _isPlayingCard) {
         float width = CGRectGetWidth(_imageAnswer2.frame);
         float height = CGRectGetHeight(_imageAnswer2.frame);
+        _imageAnswer2.bypassTransparentColor = YES;
         [_imageAnswer2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
@@ -1909,6 +1911,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _isPlayingCard) {
         float width = CGRectGetWidth(_imageQuestion.frame);
         float height = CGRectGetHeight(_imageQuestion.frame);
+        _imageQuestion.bypassTransparentColor = YES;
         [_imageQuestion setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
@@ -1937,6 +1940,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _isPlayingCard) {
         float width = CGRectGetWidth(_imageQuestion2.frame);
         float height = CGRectGetHeight(_imageQuestion2.frame);
+        _imageQuestion2.bypassTransparentColor = YES;
         [_imageQuestion2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
     }
     
