@@ -147,6 +147,7 @@
     [self.visitStoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.visitStoreButton];
     
+    
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     [self.userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
     [self.visitStoreButton addTarget:self action:@selector(visitStoreButtonClicked:) forControlEvents:UIControlEventTouchDown];
@@ -398,8 +399,15 @@
 }
 
 - (void) visitStoreButtonClicked:(id)sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Not implemented" message:@"Not implemented" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-    [alertView show];
+    if (isUserInterfaceIdiomPhone) {
+    } else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+        
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_VISIT_STORE_NOTIFICATION object:self];
 }
 
 
