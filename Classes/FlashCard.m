@@ -89,7 +89,8 @@ extern BOOL isFromNewCreatedCard;
 /**
  *  compared with edit mode, we make the play card bigger, so we need a compensation
  */
-#define k_Delta_For_Play          10.0
+#define k_Y_Delta_For_Play          10.0
+#define k_X_Delta_For_Play          5
 
 #define KEYBOARD_ANIMATION_DURATION 0.25
 
@@ -847,11 +848,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_questionBackgroundImageView == nil) {
         _questionBackgroundImageView = [[UIImageView alloc] init];
         _questionBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        int delta = 0;
+
         if (_isPlayingCard) {
-            delta = k_Delta_For_Play;
+            _questionBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + k_X_Delta_For_Play, kFlashCardHeaderHeight_iPhone + k_Y_Delta_For_Play, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone - k_X_Delta_For_Play, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - k_Y_Delta_For_Play);;
+        } else {
+            _questionBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone);;
         }
-        _questionBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone + delta, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - delta);;
+        
         _questionBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _questionBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _questionBackgroundImageView.userInteractionEnabled = NO;
@@ -866,11 +869,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_answerBackgroundImageView == nil) {
         _answerBackgroundImageView = [[UIImageView alloc] init];
         _answerBackgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        int delta = 0;
+ 
         if (_isPlayingCard) {
-            delta = k_Delta_For_Play;
+            _answerBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone + k_X_Delta_For_Play, kFlashCardHeaderHeight_iPhone + k_Y_Delta_For_Play, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone - k_X_Delta_For_Play, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - k_Y_Delta_For_Play);
+        } else {
+            _answerBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone);
         }
-        _answerBackgroundImageView.frame = CGRectMake(kFlashCardSidebarWidth_iPhone, kFlashCardHeaderHeight_iPhone + delta, CGRectGetWidth(_templateBackgroundImageView.frame) - kFlashCardSidebarWidth_iPhone, CGRectGetHeight(_templateBackgroundImageView.frame) - kFlashCardHeaderHeight_iPhone - delta);
+        
         _answerBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _answerBackgroundImageView.backgroundColor = [UIColor whiteColor];
         _answerBackgroundImageView.userInteractionEnabled = NO;
