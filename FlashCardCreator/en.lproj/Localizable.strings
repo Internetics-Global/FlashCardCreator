@@ -10,11 +10,11 @@
 "DIALOG_DOWNLOAD_PACK"              = "Downloading Flip Flash Cards Sample Cards";
 "DIALOG_DOWNLOAD_PACK_FROM_FRIENDS" = "Downloading Pack";
 "DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND"  = "You can only make changes to cards you have created yourself.";
-"DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please input a different one";
+"DIALOG_EXISTING_PACK_NAME"                = "Existing pack name, please enter a different one";
 
 "DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU"    = "You cannot create a card in pack you haven't created yourself.";
 "DIALOG_NEED_TO_CREATE_PACK_FIRST"         = "Create a group first before creating a new card";
-"DIALOG_ENTER_VALID_URL"       = "Input a valid URL/Email";
+"DIALOG_ENTER_VALID_URL"       = "Enter a valid URL/Email";
 "DIALOG_APPLY_TO_ALL_CARD"       = "Apply to all cards...";
 "DIALOG_SET_PASSWORD"       = "Set a password?";
 "DIALOG_ENTER_PASSWORD"       = "Enter a password";
@@ -39,7 +39,7 @@
 "DIALOG_WARN"       = "Warning";
 "DIALOG_PACK_IS_BEING_USED"       = "The pack is currently being used";
 "DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR" = "Share function is forbidden by the pack creator";
-"DIALOG_RESUME_TO_DOWNLOAD"       = "Resume to download?";
+"DIALOG_RESUME_TO_DOWNLOAD"       = "Resume download?";
 
 "DIALOG_IMAGE_VIDEO_SELECTION" = "Image/video/video link selection";
 "DIALOG_IMAGE_SELECTION" = "Image selection";
@@ -52,9 +52,9 @@
 "DIALOG_REMOVE_LOGO_IMAGE" = "Remove logo image";
 "DIALOG_REMOVE_IMAGE" = "Remove image";
 "DIALOG_INVALID_YOUTUBE_URL" = "Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY";
-"DIALOG_INPUT_DOWNLOAD_CODE" = "Input download code";
+"DIALOG_INPUT_DOWNLOAD_CODE" = "Enter download code";
 "DIALOG_USE_AMAZON_AS_STORAGE" = "Use Amazon Cloud as storage";
-"DIALOG_SYMBOL_NOT_SUPPORTED_BY_FONT" = "Symbol could possibly not be supported by selected font,when considering to be used on Android platform";
+"DIALOG_SYMBOL_NOT_SUPPORTED_BY_FONT" = "Symbol may not be supported by selected font, when considering use on the Android platform";
 
 "DIALOG_ARE_YOU_SURE_YOU_WANT_TO_EXIT"       = "Are you sure you want to exit?";
 "DIALOG_SELECT_CARD_BEFOREHAND"           = "You need to select a card first";
@@ -81,9 +81,9 @@
 "DIALOG_ERROR_WHEN_PARSING_ANSWER_JSON" = "Error when parsing answerTextContent.json";
 "DIALOG_ERROR_WHEN_PARSING_QUESTION_JSON" = "Error when parsing questionTextContent.json";
 "DIALOG_REACH_MAX_DOWNLOAD_LIMIT" = "You have reached the limit of downloads for this pack";
-"DIALOG_UPLOAD_FAILURE" = "Failure to upload, please try again";
+"DIALOG_UPLOAD_FAILURE" = "Failed to upload, please try again";
 "DIALOG_PLAY_ONLY_SUPPORTED_IN_PLAY" = "Only supported in play mode";
-"DIALOG_INPUT_ADMIN_PASSWORD" = "Input admin password";
+"DIALOG_INPUT_ADMIN_PASSWORD" = "Enter admin password";
 "DIALOG_UPLOAD_SUCCESSFULLY" = "Pack successfully uploaded";
 "Title_Copy_To_Clipboard" = "Copy to clipboard";
 "DIALOG_NETWORK_TIMEOUT" = "Network timeout, please try again";
@@ -264,13 +264,13 @@
 "Tip_Toggle"  = "Toggle help tips on and off";
 "Tip_Palette"  = "Change the color palette";
 "Tip_Create_Card"  = "Create a new card";
-"Tip_Image" = "Click to select an image/video from library, or insert a YouTube video linkage";
+"Tip_Image" = "Click to select an image/video from library, or insert a YouTube video URL";
 
 "Tip_Share_Message_Pre" = "I've just created a pack of Flash Cards with Flip Flash Cards app!";
 "Tip_Share_Message_Post" = "Check it out! Get the Flip Flash Cards app ";
 
 
-"Copyright" = "Flip Flash Cards has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards 2015. All rights reserved.\n\nFor information on how to use the application, please click the (i) information button above.\n\nPlease submit any technical feedback to fcc@internetics.net.au\n\nThank you for your interest in the Flip Flash Cards app and Flip Flash Cards Pty Ltd.";
+"Copyright" = "Flip Flash Cards has been developed by Flip Flash Cards Pty Ltd in conjunction with development team Internetics Pty Ltd.\n\nCopyright Flip Flash Cards Pty Ltd 2016. All rights reserved.\n\nFor information on how to use the application, please click the (?) Help button on the top toolbar.\n\nPlease submit any technical feedback to support@flipflashcards.com\n\nThank you for your interest in the Flip Flash Cards app and Flip Flash Cards Pty Ltd.";
 
 "Record_Introduction_Text" = "When you click “Record” you have a maximum of 30 seconds to record your message. \n\nClick “Stop” when ready to stop recording.\n\nYou can then click “Play” to hear it, or “Save” to save it to the card.";
 
