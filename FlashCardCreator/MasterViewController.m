@@ -903,7 +903,7 @@ extern BOOL isFromNewCreatedCard;
     //avoid this kind of issue: [UIPopoverController _commonPresentPopoverFromRect:inView:permittedArrowDirections:animated:]: Popovers cannot be presented from a view which does not have a window.
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
+    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList && (self.currentPack != nil && [self.currentPack.cards count] > 0)) {
         [self performSelector:@selector(showPackListAfterApplicationDidBecomeActive) withObject:nil afterDelay:0.5];
     }
     
