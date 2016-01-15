@@ -30,8 +30,12 @@
         realSize.height = realSize.height * finalRatio;
     }
     
-    UIGraphicsBeginImageContext(realSize);
-    [self drawInRect:CGRectMake(0, 0, realSize.width, realSize.height)];
+    CGSize roundedRealSize;
+    roundedRealSize.width = (int)realSize.width;
+    roundedRealSize.height = (int) realSize.height;
+    
+    UIGraphicsBeginImageContext(roundedRealSize);
+    [self drawInRect:CGRectMake(0, 0, roundedRealSize.width, roundedRealSize.height)];
 
     UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
