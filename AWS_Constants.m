@@ -22,7 +22,7 @@ NSString *const CognitoIdentityPoolId = @"us-east-1:19efa782-177f-476a-a62b-c504
 NSString *const S3BaseURL = @"https://s3.amazonaws.com";
 
 //NSString *const S3SamplePackURL =  @"http://7o51o0.com1.z0.glb.clouddn.com/Pack1440729625-2043618070.zip";
-NSString *const S3SamplePackURL = @"https://s3.amazonaws.com/internetics.flashcardcreator/Pack1440729625-2043618070.zip?from=Flipflashcards&type=demo";
+NSString *const S3SamplePackURL = @"https://s3.amazonaws.com/ffcbackup001/FlipFlashCards.zip?from=Flipflashcards&type=demo";
 
 /**
  *  因为aws的bucket namespace is shared by all users of the system，所以需要保证我们的命名是尽可能唯一的（虽然这不是最佳方案）
