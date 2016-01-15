@@ -61,9 +61,6 @@
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
-
-extern BOOL _isDownloadingSamplePack;
-
 /**
  ** Calibration
  *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
@@ -392,8 +389,8 @@ enum popover_enum {
     if (isExamplePackDownloadedSuccessful == FALSE) {
         //do nothing
     } else {
-        if (_isDownloadingSamplePack){
-            _isDownloadingSamplePack = FALSE;
+        if (APP_DELEGATE.isDownloadingSamplePack){
+            APP_DELEGATE.isDownloadingSamplePack = FALSE;
         }
     }
     
@@ -1782,7 +1779,7 @@ extern BOOL isFromNewCreatedCard;
     
     //Step5: set  flag
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
-    _isDownloadingSamplePack = NO;
+    APP_DELEGATE.isDownloadingSamplePack = NO;
     
     [[NSUserDefaults standardUserDefaults] setInteger:pack.packID forKey:@"lastCreatedPackID"];
     
@@ -2602,6 +2599,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)hudTappedButton:(MBProgressHUD *)hud {
     [_zipFileDownloadHelper cancelDownload];
+    
+    APP_DELEGATE.isNotAllowDownloadSamplePack = YES; //although we don't know whether it's to download sample or other packs, it does not matter
+    APP_DELEGATE.isDownloadingPack = NO;
+    APP_DELEGATE.isDownloadingSamplePack = NO;
 }
 
 - (void)showDownloadProgressIndicator:(NSString *) type withSource:(NSString *) from {

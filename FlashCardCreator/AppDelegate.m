@@ -31,10 +31,6 @@
 
 #import <DropboxSDK/DropboxSDK.h>
 
-/**
- *  正在download的过程中的标志，同isExamplePackDownloadedSuccessful区分
- */
-BOOL _isDownloadingSamplePack;
 
 @implementation AppDelegate
 
@@ -94,7 +90,7 @@ BOOL _isDownloadingSamplePack;
     
     //4. we need to put this in front of windows/controller init
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-    if (isExamplePackDownloadedSuccessful ==NO) {
+    if (isExamplePackDownloadedSuccessful ==NO && self.isNotAllowDownloadSamplePack == NO) {
         _isDownloadingSamplePack = TRUE;
     } else {
         _isDownloadingSamplePack = FALSE;
