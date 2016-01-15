@@ -1778,8 +1778,10 @@ extern BOOL isFromNewCreatedCard;
 
     
     //Step5: set  flag
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
-    APP_DELEGATE.isDownloadingSamplePack = NO;
+    if (APP_DELEGATE.isDownloadingSamplePack) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isExamplePackDownloadedSuccessful"];
+        APP_DELEGATE.isDownloadingSamplePack = NO;
+    }
     
     [[NSUserDefaults standardUserDefaults] setInteger:pack.packID forKey:@"lastCreatedPackID"];
     
