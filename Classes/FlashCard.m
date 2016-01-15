@@ -1459,6 +1459,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     _jobTitleText.userInteractionEnabled = NO;
+    _creatorText.userInteractionEnabled = NO;
 }
 
 - (void) enableCardEdit{
@@ -10940,6 +10941,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     float downScaleHeight = CGRectGetHeight(_questionBackgroundImageView.frame);
     
     CGFloat screenScale = [[UIScreen mainScreen] scale];
+    
     
     
     NSData *imageData = UIImageJPEGRepresentation([croppedImage scaleToSize:CGSizeMake(downScaleWidth *screenScale, downScaleHeight * screenScale)], kJPEGQualityFactor);
