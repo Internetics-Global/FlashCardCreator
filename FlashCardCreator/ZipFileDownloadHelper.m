@@ -52,6 +52,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLStr]];
     NSString *path = [FileOperationHelper downloadedZipPackFileFixedPath];
     _downloadOperation = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:path shouldResume:YES];
+    _downloadOperation.deleteTempFileOnCancel = YES;
     [_downloadOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [iConsole info:@"%s\nSuccessfully downloaded file to %@",__FUNCTION__,path];
         [weakSelf.delegate downloadSuccess:YES];
