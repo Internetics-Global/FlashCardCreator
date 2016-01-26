@@ -2190,6 +2190,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)segmentedControlQAClicked:(id)sender
 {
+    //这个非常重要，比如在question中，你是无法计算answer的line no的，因为这时answer中的subheading/main/sub的size不是answer的，而是question的。
+    if (sender != nil) {  //只在手动切换时执行这个
+        if (_segmentedControl.selectedSegmentIndex == 1) { //我们将切换到answer，所以计算question的
+            _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
+            _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
+            _currentCard.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
+        } else {
+            _currentCard.answer.lineNoSubheading = [self lineNumberWithUITextView:_subheadingAnswer];
+            _currentCard.answer.lineNoMain = [self lineNumberWithUITextView:_mainAnswer];
+            _currentCard.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
+        }
+    }
+    
     [self refreshAll];
 }
 
@@ -2326,13 +2339,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.mainFont = _mainFontQuestion;
     _currentCard.question.css.subFont = _subFontQuestion;
     
-    _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
-    _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
-    _currentCard.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
+    //这个非常重要，比如在question中，你是无法计算answer的line no的，因为这时answer中的subheading/main/sub的size不是answer的，而是question的。
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
+        _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
+        _currentCard.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
+    } else {
+        _currentCard.answer.lineNoSubheading = [self lineNumberWithUITextView:_subheadingAnswer];
+        _currentCard.answer.lineNoMain = [self lineNumberWithUITextView:_mainAnswer];
+        _currentCard.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
+    }
     
-    _currentCard.answer.lineNoSubheading = [self lineNumberWithUITextView:_subheadingAnswer];
-    _currentCard.answer.lineNoMain = [self lineNumberWithUITextView:_mainAnswer];
-    _currentCard.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
+//debug code
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"lineNoSubheading,lineNoMain,lineNoSub for Q/A" message:[NSString stringWithFormat:@"%d,%d,%d;%d,%d,%d",
+//                _currentCard.question.lineNoSubheading,_currentCard.question.lineNoMain,_currentCard.question.lineNoSub,
+//                _currentCard.answer.lineNoSubheading,_currentCard.answer.lineNoMain,_currentCard.answer.lineNoSub] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//    [alertView show];
     
     _currentPack.creatorNickName = _creatorText.text;
     _currentPack.jobTitle = _jobTitleText.text;
