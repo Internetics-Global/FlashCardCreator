@@ -106,6 +106,8 @@
 "DIALOG_ONLY_ALPHANUMBER_PERMITTED"                = "Only alphanumeric characters are permitted";
 "DIALOG_DOWNLOAD_CANCELLED"                       = "Download is cancelled";
 
+"DIALOG_ERROR_DROPBOX_QUOTA_FULL" = "Dropbox was unable to complete this action because of a storage quota limit";
+
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = " Edit ";

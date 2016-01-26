@@ -447,7 +447,13 @@
     
     [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+    
+    if ([error code] == 507) {  //dropbox quota is full
+       [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_DROPBOX_QUOTA_FULL",@"")];
+    } else {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+    }
+    
 }
 
 - (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
