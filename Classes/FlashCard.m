@@ -2190,8 +2190,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)segmentedControlQAClicked:(id)sender
 {
-    //这个非常重要，比如在question中，你是无法计算answer的line no的，因为这时answer中的subheading/main/sub的size不是answer的，而是question的。
-    if (sender != nil) {  //只在手动切换时执行这个
+    //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
+    //it does not matter even we can not edit the card. (we don't save card in non-edittable card)
+    if (sender != nil) {  //do it only when manually click segmented control
         if (_segmentedControl.selectedSegmentIndex == 1) { //我们将切换到answer，所以计算question的
             _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
             _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
@@ -2339,7 +2340,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.mainFont = _mainFontQuestion;
     _currentCard.question.css.subFont = _subFontQuestion;
     
-    //这个非常重要，比如在question中，你是无法计算answer的line no的，因为这时answer中的subheading/main/sub的size不是answer的，而是question的。
+    //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
+    //we did this when:
+    //1. manually click segmented control to switch QA  (we have to do this since users could switch QA without saving content, so we need to cache it.
+    //AND 2. save cards
     if (_segmentedControl.selectedSegmentIndex == 0) {
         _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
         _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
