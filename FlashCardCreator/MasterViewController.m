@@ -1664,6 +1664,8 @@ extern BOOL isFromNewCreatedCard;
                 pack.fileNameOnAWS = @"";
             }
             
+            pack.languageName = packDict[@"language_name"];
+            
             pack.platform = packDict[@"platform"];
             if (pack.platform.length == 0) {
                 pack.platform = @"";
