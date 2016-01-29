@@ -91,8 +91,8 @@
 #define GLOBAL_USER_ID @"314"
 
 //Dropbox APP_KEY and APP_SECRET
-#define DROPBOX_APP_KEY @"1sn1igzypb8udmy"
-#define DROPBOX_APP_SECRET @"sy3sdmu93rcxjt1"
+#define DROPBOX_APP_KEY @"ik5f5c5689ms9gl"
+#define DROPBOX_APP_SECRET @"9edqskw8deob1we"
 #define DROPBOX_APP_ROOT kDBRootDropbox
 
 //Public Pack （or Example Pack）
