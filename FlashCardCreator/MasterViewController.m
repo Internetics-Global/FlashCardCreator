@@ -70,7 +70,7 @@ const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -1506,20 +1506,12 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-- (void) didClickDownloadFromCodeAlertView:(UIAlertView *)alertView{
-    NSString *downloadCode = [alertView textFieldAtIndex:0].text;
-    if (downloadCode.length > 0) {
-        NSString *urlStr = nil;
-        if ([downloadCode rangeOfString:@"http://tinyurl.com"].length >0) {
-            urlStr = downloadCode;
-        } else {
-            urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
-        }
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
-    }
+- (void) downloadPackWithCode:(NSString *)downloadCode {
     
-    APP_DELEGATE.isAllowToShowPackList = YES;
+    NSString *urlStr = [NSString stringWithFormat:@"http://tinyurl.com/%@",downloadCode];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+    //NSURLConnectionDataDelegate will take care following actions
 }
 
 
@@ -2712,7 +2704,21 @@ extern BOOL isFromNewCreatedCard;
                 [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
                 [alertView bk_addButtonWithTitle:NSLocalizedString(@"Keyboard_Cancel",@"") handler:nil];
                 [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
-                    [weakSelf didClickDownloadFromCodeAlertView:alertView];
+                    
+                    NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+                    if (downloadCode.length > 0) {
+                        if (!_HUD)
+                            _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+                        
+                        [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+                        [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+                        
+                        _HUD.mode = MBProgressHUDModeIndeterminate;
+                        _HUD.labelText = NSLocalizedString(@"Title_Process_Share_Code",@"");
+                        [_HUD show:YES];
+                        [weakSelf downloadPackWithCode:downloadCode];
+                    }
+                    
                 }];
                 [alertView show];
                 
@@ -2987,6 +2993,84 @@ extern BOOL isFromNewCreatedCard;
         }
     }
 }
+
+#pragma mark – NSURLConnectionDataDelegate
+
+/**
+ *  这个方法在请求将要被发送出去之前会调用
+ *  返回值是一个NSURLRequest就是那个真正将要被发送的请求
+ *  第二个参数request就是被重定向处理过后的请求 在这里就可以拿到需要的URL
+ *  第三个参数response是一个将要触发重定向的请求
+ 
+ *  在FFC项目中，
+ *  1. 如果没有重定向，比如这种（http://tinyurl.com/xpppxxxxxxxxx），response为nil。此方法执行后，调用connectionDidFinishLoading结束
+ *  2. 如果有重定向，比如这种（http://tinyurl.com/yahoo)，则会被调用3次，1次response为nil，2次是reponse中包含重定向的url.最后，同上面一样，调用connectionDidFinishLoading结束。值得注意的，我们实际中只调用了二次，因为我们用了：return  nil;
+ */
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
+    
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+    if (httpResponse) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            [_HUD removeFromSuperview];
+            _HUD = nil;
+        });
+        
+        NSString *unshortedURLStr = [httpResponse.allHeaderFields objectForKey:@"Location"];
+        if (unshortedURLStr) {
+            NSURL *unshortedURL = [NSURL URLWithString:unshortedURLStr];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                
+                if ([[unshortedURL scheme] isEqualToString:@"fcc"]) {
+                    [self downloadPackNotification:[NSNotification notificationWithName:DOWNLOAD_PACK_NOTIFICATION object:[unshortedURL absoluteString]]];
+                    
+                    
+                } else {
+                    
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+                    [alertView show];
+                    
+                }
+                
+                
+            });
+        } else {
+            [iConsole error:@"%s: httpResponse.allHeaderFields = %@",__FUNCTION__,httpResponse.allHeaderFields];
+        }
+        
+        return  nil;
+        
+        
+    } else {
+        //不能再这里执行[_HUD removeFromSuperview]，因为redirect会导致本方法会被调用的多次
+    }
+    
+    
+    return request;
+}
+
+/**
+ *  如果connection:willSendRequest:redirectResponse返回nil,就不会执行此方法  (也就是说，如果我们的share code正确，就不会执行到这里
+ */
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection; {
+    
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    if (_HUD) {
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            [_HUD removeFromSuperview];
+            _HUD = nil;
+        });
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+}
+
 
 #pragma mark -
 #pragma mark DBSessionDelegate methods
