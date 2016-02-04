@@ -1171,7 +1171,9 @@ enum popover_enum {
         if (unshortedURLStr) {
             NSURL *unshortedURL = [NSURL URLWithString:unshortedURLStr];
             
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
+            double delayInSeconds = 0.01;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 
                 if ([[unshortedURL scheme] isEqualToString:@"fcc"]) {
                     
@@ -1185,9 +1187,8 @@ enum popover_enum {
                     [alertView show];
                     
                 }
-                
-                
             });
+            
         } else {
             [iConsole error:@"%s: httpResponse.allHeaderFields = %@",__FUNCTION__,httpResponse.allHeaderFields];
         }
