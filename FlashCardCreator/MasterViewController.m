@@ -1402,28 +1402,37 @@ extern BOOL isFromNewCreatedCard;
     //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
     NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
     NSString *simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
-    BOOL isAllowedToDownload;
+    
     
     [self showDownloadProgressIndicator:type withSource:from];
-    if ([type.lowercaseString isEqualToString:@"demo"]) {
-        isAllowedToDownload = YES;
-    } else {
-        isAllowedToDownload = [self checkDownloadable:simpleDBItemName];
-    }
-    if (isAllowedToDownload) {
-        NSString *downloadableURL = [ZipFileDownloadHelper convertToDownloadableURL:urlStr];
-        [_zipFileDownloadHelper downloadZipFile:downloadableURL];
-        _zipFileDownloadHelper.delegate = self;
-    }  else {
-        [_HUD hide:YES];
+    
+    __weak __typeof(&*self)weakSelf = self;
+    double delayInSeconds = 0.01;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        double delayInSeconds = 0.3;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [Common alertViewCommon:NSLocalizedString(@"DIALOG_REACH_MAX_DOWNLOAD_LIMIT",@"")];
-            [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
-        });
-    }
+        BOOL isAllowedToDownload;
+        if ([type.lowercaseString isEqualToString:@"demo"]) {
+            isAllowedToDownload = YES;
+        } else {
+            isAllowedToDownload = [weakSelf checkDownloadable:simpleDBItemName];
+        }
+        if (isAllowedToDownload) {
+            NSString *downloadableURL = [ZipFileDownloadHelper convertToDownloadableURL:urlStr];
+            [_zipFileDownloadHelper downloadZipFile:downloadableURL];
+            _zipFileDownloadHelper.delegate = weakSelf;
+        }  else {
+            [_HUD hide:YES];
+            
+            double delayInSeconds = 0.3;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [Common alertViewCommon:NSLocalizedString(@"DIALOG_REACH_MAX_DOWNLOAD_LIMIT",@"")];
+                [iConsole error:@"%s,You have reached the limit of downloads for this pack",__FUNCTION__];
+            });
+        }
+        
+    });
     
 }
 
