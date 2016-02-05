@@ -790,6 +790,7 @@ enum popover_enum {
                     [[alertView textFieldAtIndex:0] resignFirstResponder];
                     
                     NSString *downloadCode = [alertView textFieldAtIndex:0].text;
+                    downloadCode = [downloadCode stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                     if (downloadCode.length > 0) {
                         if (!_HUD)
                             _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
@@ -1226,6 +1227,9 @@ enum popover_enum {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
+        
+        
+        
     }
     
 }
@@ -1236,12 +1240,18 @@ enum popover_enum {
             
             [_HUD removeFromSuperview];
             _HUD = nil;
+            
+            if (error.code == -1009) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+                [alertView show];
+            } else {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+                [alertView show];
+            }
+            
         });
         
-        if (error.code == -1009) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-            [alertView show];
-        }
+        
     }
     
 }
