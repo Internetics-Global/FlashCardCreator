@@ -787,6 +787,8 @@ enum popover_enum {
                 [alertView bk_addButtonWithTitle:NSLocalizedString(@"Keyboard_Cancel",@"") handler:nil];
                 [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
                     
+                    [[alertView textFieldAtIndex:0] resignFirstResponder];
+                    
                     NSString *downloadCode = [alertView textFieldAtIndex:0].text;
                     if (downloadCode.length > 0) {
                         if (!_HUD)
@@ -1183,7 +1185,7 @@ enum popover_enum {
                     
                 } else {
                     
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                     
                 }
@@ -1218,7 +1220,7 @@ enum popover_enum {
             _HUD = nil;
         });
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"Title_Share_Code_Not_Right",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
     
