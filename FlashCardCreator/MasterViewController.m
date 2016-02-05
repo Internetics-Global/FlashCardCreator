@@ -1045,10 +1045,8 @@ extern BOOL isFromNewCreatedCard;
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
-    
-    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
-        [self selectAvailablePacks:nil];;
-    }
+    appDelegate.isAllowToShowPackList = TRUE;
+
     
     if (isUserInterfaceIdiomPhone == FALSE) {
         appDelegate.packIDForMasterViewPack = self.currentPack.packID;
@@ -1063,6 +1061,8 @@ extern BOOL isFromNewCreatedCard;
         [self.detailViewController showPackInfoView];
         //[self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     } else {
+        
+        [self selectAvailablePacks:nil];
         
         [self updateRightPackInfoView];
     }

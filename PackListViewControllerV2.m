@@ -274,7 +274,7 @@
     [iConsole info:@"Selected item at index %d", indexPath.row];
     
     if (isUserInterfaceIdiomPhone) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         [self.popController dismissPopoverAnimated:YES];
         [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
