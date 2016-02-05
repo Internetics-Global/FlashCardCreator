@@ -1106,6 +1106,10 @@ enum popover_enum {
             _rightPackView.hidden = NO;
         }
         
+        
+        UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+        [titleLable setText:_currentPack.packName];
+        
     }
 }
 
