@@ -393,13 +393,14 @@
 
 + (NSString *) getShareMessage:(NSString *) shareLink {
     
-    NSString *message = [NSString stringWithFormat:@"%@ ( %@ ) %@ %@",
+    NSString *message = [NSString stringWithFormat:@"%@%@%@%@",
                          NSLocalizedString(@"Tip_Share_Message_Pre",@""),
                          shareLink,
                          NSLocalizedString(@"Tip_Share_Message_Post",@""),
                                            K_AppStore_Link];
                                            
     return message;
+    
                                                                                                                                                 
 }
 
