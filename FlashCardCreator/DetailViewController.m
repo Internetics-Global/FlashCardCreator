@@ -1224,6 +1224,22 @@ enum popover_enum {
     
 }
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    if (_HUD) {
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            
+            [_HUD removeFromSuperview];
+            _HUD = nil;
+        });
+        
+        if (error.code == -1009) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_PLEASE_CHECK_YOUR_NETWORK",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }
+    
+}
+
 
 #pragma mark -
 #pragma mark DBSessionDelegate methods
