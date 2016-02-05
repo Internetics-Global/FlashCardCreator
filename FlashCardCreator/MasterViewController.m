@@ -428,6 +428,9 @@ enum popover_enum {
         NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
         _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
     }
+    
+    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+    titleLabel.text = _currentPack.packName;;
 }
 
 
@@ -1059,6 +1062,9 @@ extern BOOL isFromNewCreatedCard;
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self.detailViewController showPackInfoView];
         //[self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+    } else {
+        
+        [self updateRightPackInfoView];
     }
     
 }
