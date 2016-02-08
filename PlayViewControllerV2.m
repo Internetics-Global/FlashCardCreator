@@ -1002,6 +1002,7 @@
     
     __weak __typeof(&*self)weakSelf = self;
     [_timerForDelayedPlaybackOnCard invalidate];
+    _timerForDelayedPlaybackOnCard = nil;
     _timerForDelayedPlaybackOnCard = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
         [weakSelf playbackOnCard:currentFlashCardView];
     } repeats:NO];
@@ -1404,17 +1405,22 @@
 - (void)didScrollToPage:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     
-    [_timerForDelayedPlaybackOnCard invalidate]; //_timerForDelayedPlaybackOnCard当switch QA，切换next/previous卡片时都需要invalidate
-    
     if (_isAutoScroll) {
         [self enableDwellTimeSlider];
     }
     
     _currentPage = index;
     
-    FlashCard *currentCard = [self getCurrrentCard];
-    [self playbackOnCard:currentCard];
-    _previousCard = currentCard;
+    __weak __typeof(&*self)weakSelf = self;
+    [_timerForDelayedPlaybackOnCard invalidate];
+    _timerForDelayedPlaybackOnCard = nil;
+    _timerForDelayedPlaybackOnCard = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+
+        FlashCard *currentCard = [weakSelf getCurrrentCard];
+        [weakSelf playbackOnCard:currentCard];
+        _previousCard = currentCard;
+        
+    } repeats:NO];
     
     
     [self resetQASwitchTimer];
