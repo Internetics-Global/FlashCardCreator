@@ -8774,6 +8774,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         double delayInSeconds = 0.020;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
             [weakSelf triggerResizeTextToSameLineNo_Smaller:textView withMaxLineNumber:maxLineNo];
         });
         
@@ -8785,6 +8786,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         double delayInSeconds = 0.02;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
             [weakSelf didFinishResizeText:textView];
         });
         
@@ -8823,7 +8825,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 //    [self setVerticalAlignment:textView];
     
-    if (flag_Sub_ResizeFinished && flag_Main_ResizeFinished && flag_Sub_ResizeFinished) {
+    if (flag_Subheading_ResizeFinished && flag_Main_ResizeFinished && flag_Sub_ResizeFinished) {
         
         [self updateQuestionAnswerAllTextViewVeriticalAlignment];
         
