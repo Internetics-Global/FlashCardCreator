@@ -1001,6 +1001,10 @@
     }
     
     __weak __typeof(&*self)weakSelf = self;
+    if (currentFlashCardView) {
+        [currentFlashCardView stopTextToSpeechNow];
+        [currentFlashCardView stopAudio];
+    }
     [_timerForDelayedPlaybackOnCard invalidate];
     _timerForDelayedPlaybackOnCard = nil;
     _timerForDelayedPlaybackOnCard = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
@@ -1412,6 +1416,10 @@
     _currentPage = index;
     
     __weak __typeof(&*self)weakSelf = self;
+    if (_previousCard) {
+        [_previousCard stopTextToSpeechNow];
+        [_previousCard stopAudio];
+    }
     [_timerForDelayedPlaybackOnCard invalidate];
     _timerForDelayedPlaybackOnCard = nil;
     _timerForDelayedPlaybackOnCard = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
