@@ -128,6 +128,9 @@
      */
     NSTimer  *_timerBForText2SpeechFinished;
     
+    
+    NSTimer  *_timerForDelayedPlaybackOnCard;
+    
     /**
      *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
      */
@@ -997,8 +1000,11 @@
         [iConsole info:@"%s:current FlashCardView is empty",__FUNCTION__];
     }
     
-    
-    [self playbackOnCard:currentFlashCardView];
+    __weak __typeof(&*self)weakSelf = self;
+    [_timerForDelayedPlaybackOnCard invalidate];
+    _timerForDelayedPlaybackOnCard = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+        [weakSelf playbackOnCard:currentFlashCardView];
+    } repeats:NO];
     
 }
 
@@ -1398,6 +1404,8 @@
 - (void)didScrollToPage:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     
+    [_timerForDelayedPlaybackOnCard invalidate]; //_timerForDelayedPlaybackOnCard当switch QA，切换next/previous卡片时都需要invalidate
+    
     if (_isAutoScroll) {
         [self enableDwellTimeSlider];
     }
@@ -1667,12 +1675,16 @@
     
     [_timerBForText2SpeechFinished invalidate];
     _timerBForText2SpeechFinished = nil;
+
     
     [_timerCForText2SpeechFinished invalidate];
     _timerCForText2SpeechFinished = nil;
     
     [_timerForDelayedText2Speech invalidate];
     _timerForDelayedText2Speech = nil;
+    
+    [_timerForDelayedPlaybackOnCard invalidate];
+    _timerForDelayedPlaybackOnCard = nil;
 }
 
 
