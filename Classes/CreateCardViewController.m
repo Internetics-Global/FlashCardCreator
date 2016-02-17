@@ -45,8 +45,14 @@ BOOL isFromNewCreatedCard = NO;
                                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"save_button"] target:self action:@selector(saveAndCloseCreateCardView)]];
         
 
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                                 initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(backAndPopCreateCardView)]];
+        if (isUserInterfaceIdiomPhone) {
+            
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backAndPopCreateCardView)];
+            
+        } else {
+            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(backAndPopCreateCardView)]];
+        }
         
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -155,6 +161,9 @@ BOOL isFromNewCreatedCard = NO;
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveNewCreatedCardNotification:) name:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideNavigationBarNotification:) name:HIDE_NAVIGATION_BAR_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -176,8 +185,12 @@ BOOL isFromNewCreatedCard = NO;
 
 - (void) saveAndCloseCreateCardView {
     [iConsole info:@"%s",__FUNCTION__];
+    
     //Step1: dismiss window
-    [self.navigationController popViewControllerAnimated:YES];
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
     
     //Step2: exception dealing
     if (_currentPack.packID == -1) {
@@ -189,7 +202,9 @@ BOOL isFromNewCreatedCard = NO;
     [_newCardView saveEdittedCard];
     
     //Step4: Send notification to remove the background in master view
-    [[NSNotificationCenter defaultCenter] postNotificationName:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
+    }
     
     //Step5: set flag
     //涉及到一些异步任务，比如delayed execUpdatelogoImageForAllCards，需要采用这种方式
@@ -241,6 +256,7 @@ BOOL isFromNewCreatedCard = NO;
     
 }
 
+
 - (void)dealloc {
     _currentPack = nil;
     _newCard = nil;
@@ -250,6 +266,17 @@ BOOL isFromNewCreatedCard = NO;
 }
 
 #pragma mark – notification
+
+- (void) hideNavigationBarNotification:(NSNotification *) notification {
+    [iConsole info:@"%s",__FUNCTION__];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void) showNavigationBarNotification:(NSNotification *) notification {
+    [iConsole info:@"%s",__FUNCTION__];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (void) saveNewCreatedCardNotification: (NSNotification *) notification {
     [self saveAndCloseCreateCardView];
 }
