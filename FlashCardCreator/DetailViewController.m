@@ -98,6 +98,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCancelledNotification:) name:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil];
+        
         if (isUserInterfaceIdiomPhone == false) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
@@ -255,16 +257,6 @@ enum popover_enum {
         }
         
     });
-    
-    
-    if (isUserInterfaceIdiomPhone == FALSE) {
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
-        }
-    }
-    
-    
     
 
 }
@@ -667,6 +659,17 @@ enum popover_enum {
     _currentPack.shareLink = shareLink;
     
     [self updateRightPackInfoView];
+}
+
+
+- (void) downloadCancelledNotification: (NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+        }
+    }
 }
 
 -(void)editPackFinishedNotification:(NSNotification *)notification{
@@ -1124,6 +1127,13 @@ enum popover_enum {
         UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
         [titleLable setText:_currentPack.packName];
         
+    }
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+        }
     }
 }
 

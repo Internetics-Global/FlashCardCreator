@@ -90,6 +90,8 @@
     [self.delegate downloadFail];
     //[Common alertViewCommon:[error description]];
     [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_CANCELLED",@"")];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil userInfo:nil];
 }
 
 

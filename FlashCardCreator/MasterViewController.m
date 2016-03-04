@@ -140,6 +140,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCancelledNotification:) name:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil];
+        
         if (isUserInterfaceIdiomPhone == false) {
             //在iPhone中，不需要这逻辑
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
@@ -400,7 +402,8 @@ enum popover_enum {
     }
     
     if (isUserInterfaceIdiomPhone) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE &&
+            APP_DELEGATE.isDownloadingPack == FALSE) {
             [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
         }
     }
@@ -949,6 +952,16 @@ extern BOOL isFromNewCreatedCard;
     BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
     if (val == FALSE && val2) {
         [self showTooltips];
+  
+    }
+}
+
+- (void) downloadCancelledNotification: (NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
+        }
     }
 }
 
