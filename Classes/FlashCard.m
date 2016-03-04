@@ -1603,8 +1603,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
     }
     
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
     
-    if (APP_DELEGATE.isAllowToShowTooltip) {
+    if (APP_DELEGATE.isAllowToShowTooltip && val2) {
         double delayInSeconds = 0.2;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         __weak __typeof(&*self)weakSelf = self;
@@ -11185,7 +11186,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     //4
-    CGRect recLinkButton = [_logoLinkageButton  convertRect:CGRectMake(CGRectGetWidth(_logoLinkageButton.frame)/3, CGRectGetHeight(_logoLinkageButton.frame)/4, 0, 0) toView:self];
+    CGRect recLinkButton = [_logoLinkageButton  convertRect:CGRectMake(CGRectGetWidth(_logoLinkageButton.frame)/3, CGRectGetHeight(_logoLinkageButton.frame)/4 + 5, 0, 0) toView:self];
     [[TipHelper defaultHelper] showTipForLinkButtonInView:self fromFrame:recLinkButton];
     
     

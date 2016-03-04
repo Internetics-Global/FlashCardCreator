@@ -265,7 +265,7 @@
 "Tip_Edit_Link"  = "Edit link";
 "Tip_App_Setting"  = "App setting";
 "Tip_Link"  = "Add a link";
-"Tip_Toggle"  = "Toggle help tips on and off";
+"Tip_Toggle"  = "Click the help button at any time to get tips and help! Click the button again to dismiss the help";
 "Tip_Palette"  = "Change the color palette";
 "Tip_Create_Card"  = "Create a new card";
 "Tip_Image" = "Click to select an image/video from library, or insert a YouTube video URL";

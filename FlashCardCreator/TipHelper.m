@@ -425,19 +425,25 @@
     
     if (_popTipRightNaviBarItemHelp == nil) {
         _popTipRightNaviBarItemHelp = [AMPopTip popTip];
-        _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 50);
+        if (isUserInterfaceIdiomPhone) {
+            _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 10);
+        } else {
+            _popTipRightNaviBarItemHelp.arrowSize = CGSizeMake(8, 77);
+        }
         _popTipRightNaviBarItemHelp.popoverColor = [UIColor colorWithRed:0 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemHelp.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemHelp.shouldDismissOnTapOutside = NO;
         _popTipRightNaviBarItemHelp.dismissHandler = ^() {
-            if (isUserInterfaceIdiomPhone) {
-                [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
-            } else {
-                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
-            }
+//            if (isUserInterfaceIdiomPhone) {
+//                [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
+//            } else {
+//                [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
+//            }
+            
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:K_Tooltip_Help_Tip_Has_Been_Showed];
         };
     }
-    [_popTipRightNaviBarItemHelp showText:NSLocalizedString(@"Tip_Toggle",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    [_popTipRightNaviBarItemHelp showText:NSLocalizedString(@"Tip_Toggle",@"") direction:AMPopTipDirectionDown maxWidth:310 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -451,7 +457,11 @@
     
     if (_popTipRightNaviBarItemSetting == nil) {
         _popTipRightNaviBarItemSetting = [AMPopTip popTip];
-        _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 90);
+        if (isUserInterfaceIdiomPhone) {
+            _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 90);
+        } else {
+            _popTipRightNaviBarItemSetting.arrowSize = CGSizeMake(8, 45);
+        }
         _popTipRightNaviBarItemSetting.popoverColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.17 alpha:1];
         _popTipRightNaviBarItemSetting.shouldDismissOnTap = YES;
         _popTipRightNaviBarItemSetting.shouldDismissOnTapOutside = NO;

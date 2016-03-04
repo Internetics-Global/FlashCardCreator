@@ -163,10 +163,10 @@
 
 
 //Tooltip related
-
-#define K_Tooltip_Master_Not_Allow  @"K_Tooltip_Master_Not_Allow"
-#define K_Tooltip_Detail_Not_Allow  @"K_Tooltip_Detail_Not_Allow"
-#define K_Tooltip_FlashCard_Not_Allow  @"K_Tooltip_FlashCard_Not_Allow"
+#define K_Tooltip_Help_Tip_Has_Been_Showed  @"K_Tooltip_Help_Tip_Has_Been_Showed" //show tip on the help button firstly, then others
+#define K_Tooltip_Master_Not_Allow          @"K_Tooltip_Master_Not_Allow"
+#define K_Tooltip_Detail_Not_Allow          @"K_Tooltip_Detail_Not_Allow"
+#define K_Tooltip_FlashCard_Not_Allow       @"K_Tooltip_FlashCard_Not_Allow"
 
 #pragma mark – Card size (iPad)
 

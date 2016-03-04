@@ -255,6 +255,17 @@ enum popover_enum {
         }
         
     });
+    
+    
+    if (isUserInterfaceIdiomPhone == FALSE) {
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+        }
+    }
+    
+    
+    
 
 }
 
@@ -689,7 +700,8 @@ enum popover_enum {
     [self updateRightPackInfoView];
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
     
@@ -745,7 +757,8 @@ enum popover_enum {
     [titleLable setText:_currentPack.packName];
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
 }

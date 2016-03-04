@@ -399,10 +399,10 @@ enum popover_enum {
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
     
-    
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if ((val == FALSE) && (APP_DELEGATE.isAllowToShowTooltip)) {
-        [self showTooltips];
+    if (isUserInterfaceIdiomPhone) {
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
+        }
     }
     
     
@@ -772,7 +772,8 @@ extern BOOL isFromNewCreatedCard;
     APP_DELEGATE.isAllowToShowTooltip = YES;
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
     
@@ -859,7 +860,8 @@ extern BOOL isFromNewCreatedCard;
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
     
@@ -944,7 +946,8 @@ extern BOOL isFromNewCreatedCard;
     APP_DELEGATE.isAllowToShowTooltip = YES;
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
 }
@@ -2889,7 +2892,8 @@ extern BOOL isFromNewCreatedCard;
     APP_DELEGATE.isAllowToShowPackList = YES;
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
-    if (val == FALSE) {
+    BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
+    if (val == FALSE && val2) {
         [self showTooltips];
     }
     
