@@ -178,6 +178,7 @@
 "Label_Job_Title"       = "Name or title";
 "Label_New_User"      = "New User?";
 "Label_Visit_Store"      = "Visit Store";
+"Label_Help"      = "Help";
 "Label_Recently_Created"      = "recently created";
 "Label_Recently_Viewed"      = "recently viewed";
 "Label_Please_Select"      = "Please Select";
@@ -265,7 +266,7 @@
 "Tip_Edit_Link"  = "Edit link";
 "Tip_App_Setting"  = "App setting";
 "Tip_Link"  = "Add a link";
-"Tip_Toggle"  = "Click the help button at any time to get tips and help! Click the button again to dismiss the help";
+"Tip_Toggle"  = "Click the ? button at any time to activate drop down help tags. Click again to remove tags.";
 "Tip_Palette"  = "Change the color palette";
 "Tip_Create_Card"  = "Create a new card";
 "Tip_Image" = "Click to select an image/video from library, or insert a YouTube video URL";

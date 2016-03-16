@@ -36,6 +36,7 @@
 @property (strong, nonatomic) UISegmentedControl * sortSegmentedControl;
 @property (strong, nonatomic) UIButton           *userNewButton;
 @property (strong, nonatomic) UIButton           *visitStoreButton;
+@property (strong, nonatomic) UIButton           *helpButton;
 
 @end
 
@@ -140,7 +141,7 @@
         self.visitStoreButton.frame = CGRectOffset(_userNewButton.frame, CGRectGetWidth(_userNewButton.frame) + 20, 0);
     } else {
         self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-        self.visitStoreButton.frame = CGRectMake((CGRectGetMaxX(self.userNewButton.frame) + CGRectGetMinX(self.sortSegmentedControl.frame) - 84)/2, CGRectGetMinY(self.userNewButton.frame), 84, 30);
+        self.visitStoreButton.frame = CGRectMake(CGRectGetMaxX(self.userNewButton.frame) + (CGRectGetMinX(self.sortSegmentedControl.frame) - 84*2 - CGRectGetMaxX(self.userNewButton.frame))/3, CGRectGetMinY(self.userNewButton.frame), 84, 30);
     }
     [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.visitStoreButton setTitle:NSLocalizedString(@"Label_Visit_Store",@"") forState:UIControlStateNormal];
@@ -148,9 +149,25 @@
     [self.view addSubview:self.visitStoreButton];
     
     
+    self.helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    if (isUserInterfaceIdiomPhone) {
+        self.helpButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        self.helpButton.frame = CGRectOffset(_visitStoreButton.frame, CGRectGetWidth(_visitStoreButton.frame) + 20, 0);
+    } else {
+        self.helpButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
+        self.helpButton.frame = CGRectMake(CGRectGetMaxX(self.visitStoreButton.frame) + (CGRectGetMinX(self.sortSegmentedControl.frame) - 84*2 - CGRectGetMaxX(self.userNewButton.frame))/3, CGRectGetMinY(self.visitStoreButton.frame), 84, 30);
+    }
+    [self.helpButton titleLabel].font = [UIFont systemFontOfSize:16];
+    [self.helpButton setTitle:NSLocalizedString(@"Label_Help",@"") forState:UIControlStateNormal];
+    [self.helpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:self.helpButton];
+    
+    
     [self.sortSegmentedControl addTarget:self action:@selector(switchSort:) forControlEvents:UIControlEventValueChanged];
     [self.userNewButton addTarget:self action:@selector(showIntroduction:) forControlEvents:UIControlEventTouchDown];
     [self.visitStoreButton addTarget:self action:@selector(visitStoreButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [self.helpButton addTarget:self action:@selector(helpButtonClicked:) forControlEvents:UIControlEventTouchDown];
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
 
@@ -409,6 +426,20 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_VISIT_STORE_NOTIFICATION object:self];
 }
+
+
+- (void) helpButtonClicked:(id)sender {
+    if (isUserInterfaceIdiomPhone) {
+    } else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+        
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_HELP_NOTIFICATION object:self];
+}
+
 
 
 - (void) showIntroduction:(id)sender {

@@ -132,6 +132,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showVisitStoreNotification:) name:SHOW_VISIT_STORE_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHelpNotification:) name:SHOW_HELP_NOTIFICATION object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:PLAY_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -1033,9 +1035,24 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
+
 - (void) showVisitStoreNotification:(NSNotification *) notification {
     
     NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/packs"];
+    SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
+    controller.hidesToolbar = NO;
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController pushViewController:controller animated:YES];
+    } else {
+        controller.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentModalViewController:controller animated:YES];
+    }
+    
+}
+
+- (void) showHelpNotification:(NSNotification *) notification {
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
