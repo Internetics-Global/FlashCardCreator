@@ -253,15 +253,15 @@ enum popover_enum {
     if (isUserInterfaceIdiomPhone) {
 //        self.title = _currentPack.packName;
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
-        label.font = [UIFont boldSystemFontOfSize:16.0];
-        label.textAlignment = NSTextAlignmentLeft;
-        label.backgroundColor = [UIColor clearColor];
-        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-        
-        label.textColor = [UIColor whiteColor]; // change this color
-        label.text = _currentPack.packName;
-        [self.navigationItem setTitleView:label];
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
+//        label.font = [UIFont boldSystemFontOfSize:16.0];
+//        label.textAlignment = NSTextAlignmentLeft;
+//        label.backgroundColor = [UIColor clearColor];
+//        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+//        
+//        label.textColor = [UIColor whiteColor]; // change this color
+//        label.text = _currentPack.packName;
+//        [self.navigationItem setTitleView:label];
         
     }
     [self.tableView reloadData];
@@ -313,7 +313,7 @@ enum popover_enum {
             _rightPackImage = [[UIImageView alloc] init];
             _rightPackImage.frame = CGRectMake(0, 0, 180, 144);
             _rightPackImage.contentMode = UIViewContentModeScaleAspectFit;
-            _rightPackImage.center = CGPointMake(100, 100);
+            _rightPackImage.center = CGPointMake(100, 110);
             _rightPackImage.layer.cornerRadius = 5;
             _rightPackImage.layer.masksToBounds = TRUE;
             _rightPackImage.layer.opacity = 0.85;
@@ -325,6 +325,19 @@ enum popover_enum {
         } else {
             NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
             _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
+        }
+        
+        
+        if (_rightPackCardTitle == nil) {
+            _rightPackCardTitle = [[UILabel alloc] init];
+            _rightPackCardTitle.textColor = [UIColor whiteColor];
+            _rightPackCardTitle.backgroundColor = [UIColor clearColor];
+            _rightPackCardTitle.textAlignment = NSTextAlignmentCenter;
+            _rightPackCardTitle.font = [UIFont systemFontOfSize: 14];
+            CGRect rect = CGRectMake(CGRectGetMinX(_rightPackImage.frame), CGRectGetMinY(_rightPackImage.frame) - 30, CGRectGetWidth(_rightPackImage.frame), 30);
+            _rightPackCardTitle.frame = rect;
+            [_rightPackView addSubview:_rightPackCardTitle];
+            [_rightPackCardTitle setText:self.currentPack.packName];
         }
         
         
@@ -418,6 +431,8 @@ enum popover_enum {
  */
 - (void) updateRightPackInfoView {
     
+    [_rightPackCardTitle setText:self.currentPack.packName];
+    
     [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
     
     if (self.currentPack.shareLink.length >0 && [Common isOwner:_currentPack]) {
@@ -434,8 +449,8 @@ enum popover_enum {
         _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
     }
     
-    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-    titleLabel.text = _currentPack.packName;;
+//    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+//    titleLabel.text = _currentPack.packName;;
 }
 
 
@@ -754,8 +769,8 @@ extern BOOL isFromNewCreatedCard;
     } else {
 //        self.title = _currentPack.packName;
         
-        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-        titleLabel.text = _currentPack.packName;;
+//        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+//        titleLabel.text = _currentPack.packName;;
     }
     
     [self.tableView setEditing:NO];
@@ -811,8 +826,8 @@ extern BOOL isFromNewCreatedCard;
   if (isUserInterfaceIdiomPhone) {
 //    self.title = _currentPack.packName;
       
-      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-      titleLabel.text = _currentPack.packName;;
+//      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+//      titleLabel.text = _currentPack.packName;;
       
   } else {
     self.detailViewController.title = _currentPack.packName;
@@ -856,8 +871,8 @@ extern BOOL isFromNewCreatedCard;
     
     if (isUserInterfaceIdiomPhone) {
 //        self.title = _currentPack.packName;
-        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-        titleLabel.text = _currentPack.packName;;
+//        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+//        titleLabel.text = _currentPack.packName;;
     } else {
         self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];

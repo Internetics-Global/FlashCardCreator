@@ -43,6 +43,7 @@
     UIView *_rightPackView;
     
     
+    UILabel     *_rightPackCardTitle;
     UIImageView *_rightPackImage;
     UILabel *_rightPackCardNo;
     UILabel *_shareCodeLabel;
