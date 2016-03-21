@@ -766,11 +766,16 @@ extern BOOL isFromNewCreatedCard;
         [_packListPickerPopover dismissPopoverAnimated:YES];
         _packListPickerPopover = nil;
         //self.detailViewController.title = _currentPack.packName;
+        
+        [self.detailViewController showPackInfoView];
+        
     } else {
 //        self.title = _currentPack.packName;
         
 //        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
 //        titleLabel.text = _currentPack.packName;;
+        
+        [self updateRightPackInfoView];
     }
     
     [self.tableView setEditing:NO];
@@ -829,8 +834,10 @@ extern BOOL isFromNewCreatedCard;
 //      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
 //      titleLabel.text = _currentPack.packName;;
       
+      [self updateRightPackInfoView];
+      
   } else {
-    self.detailViewController.title = _currentPack.packName;
+//    self.detailViewController.title = _currentPack.packName;
     [self.detailViewController showPackInfoView];
   }
 }
@@ -873,8 +880,11 @@ extern BOOL isFromNewCreatedCard;
 //        self.title = _currentPack.packName;
 //        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
 //        titleLabel.text = _currentPack.packName;;
+        
+        [self updateRightPackInfoView];
+        
     } else {
-        self.detailViewController.title = _currentPack.packName;
+//        self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
     }
     
