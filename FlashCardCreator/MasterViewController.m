@@ -1067,7 +1067,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showHelpNotification:(NSNotification *) notification {
     
-    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/category/tutorials/"];
+    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/quick-start-tutorial/"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
