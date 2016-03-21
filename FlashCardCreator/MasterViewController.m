@@ -765,7 +765,7 @@ extern BOOL isFromNewCreatedCard;
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
         _packListPickerPopover = nil;
-        self.detailViewController.title = _currentPack.packName;
+        //self.detailViewController.title = _currentPack.packName;
     } else {
 //        self.title = _currentPack.packName;
         

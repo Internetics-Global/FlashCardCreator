@@ -292,7 +292,7 @@ enum popover_enum {
     
     label.textColor = [UIColor whiteColor]; // change this color
     label.text = _currentPack.packName;
-    [self.navigationItem setTitleView:label];
+//    [self.navigationItem setTitleView:label];
     
     if ((shouldResetSegment == YES) && (_currentCardView.segmentedControl.selectedSegmentIndex == 1)) {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;
@@ -684,8 +684,8 @@ enum popover_enum {
     [self updateRightPackInfoView];
     
     
-    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
-    titleLabel.text = self.currentPack.packName;
+//    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+//    titleLabel.text = self.currentPack.packName;
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
@@ -697,8 +697,8 @@ enum popover_enum {
         return;
     }
     
-    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
-    titleLabel.text = self.currentPack.packName;
+//    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+//    titleLabel.text = self.currentPack.packName;
     
     [self updateRightPackInfoView];
     
@@ -729,6 +729,8 @@ enum popover_enum {
                 }
                 
                 
+            } else if (myView.tag == 2) {
+                [(UILabel *)myView setText:self.currentPack.packName];
             }
             
         } else if ([myView isKindOfClass:[UIImageView class]]) {
@@ -756,8 +758,8 @@ enum popover_enum {
         }
     }
     
-    UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
-    [titleLable setText:_currentPack.packName];
+//    UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+//    [titleLable setText:_currentPack.packName];
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
     BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
@@ -1054,7 +1056,7 @@ enum popover_enum {
         
         
         UIImageView *rightPackImageView = [[UIImageView alloc] init];
-        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 130, 400, 400);
+        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 150, 400, 400);
         rightPackImageView.autoresizingMask = UIViewAutoresizingNone;
         rightPackImageView.layer.opacity = 0.85;
 //        rightPackImageView.layer.shadowOpacity= 0.3;
@@ -1075,6 +1077,20 @@ enum popover_enum {
         
         rightPackImageView.contentMode = UIViewContentModeScaleAspectFit;
         
+        UILabel *rightPackCardTitle = [[UILabel alloc] init];
+        rightPackCardTitle.textColor = [UIColor whiteColor];
+        rightPackCardTitle.autoresizingMask =  UIViewAutoresizingNone;
+        rightPackCardTitle.backgroundColor = [UIColor clearColor];
+        rightPackCardTitle.textAlignment = UITextAlignmentCenter;
+        rightPackCardTitle.font = [UIFont systemFontOfSize: 24];
+        rightPackCardTitle.tag = 2;
+        CGRect rect = rightPackImageView. frame;
+        rect.origin.y = rect.origin.y - 25 - 10;
+        rect.size.height = 25;
+        rightPackCardTitle.frame = rect;
+        [rightPackCardTitle setText:self.currentPack.packName];
+        [_rightPackView addSubview:rightPackCardTitle];
+        
         UILabel *rightPackCardNo = [[UILabel alloc] init];
         rightPackCardNo.textColor = [UIColor whiteColor];
         rightPackCardNo.autoresizingMask =  UIViewAutoresizingNone;
@@ -1082,7 +1098,7 @@ enum popover_enum {
         rightPackCardNo.textAlignment = UITextAlignmentCenter;
         rightPackCardNo.font = [UIFont systemFontOfSize: 24];
         rightPackCardNo.tag = 0;
-        CGRect rect = rightPackImageView. frame;
+        rect = rightPackImageView. frame;
         rect.origin.y = rect.origin.y +rect.size.height+16;
         rect.size.height = 25;
         rightPackCardNo.frame = rect;
@@ -1124,8 +1140,8 @@ enum popover_enum {
         }
         
         
-        UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
-        [titleLable setText:_currentPack.packName];
+//        UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+//        [titleLable setText:_currentPack.packName];
         
     }
     
