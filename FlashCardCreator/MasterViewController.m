@@ -448,9 +448,6 @@ enum popover_enum {
         NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
         _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
     }
-    
-//    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-//    titleLabel.text = _currentPack.packName;;
 }
 
 
@@ -765,15 +762,11 @@ extern BOOL isFromNewCreatedCard;
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
         _packListPickerPopover = nil;
-        //self.detailViewController.title = _currentPack.packName;
         
+        self.detailViewController.currentPack = _currentPack;
         [self.detailViewController showPackInfoView];
         
     } else {
-//        self.title = _currentPack.packName;
-        
-//        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-//        titleLabel.text = _currentPack.packName;;
         
         [self updateRightPackInfoView];
     }
@@ -784,9 +777,7 @@ extern BOOL isFromNewCreatedCard;
     
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         self.detailViewController.currentPack = _currentPack;
-        [self.detailViewController showPackInfoView];
     } else if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count == 0)) {
-        self.detailViewController.title = @"";
         self.detailViewController.currentCard = nil;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = 0;
@@ -829,15 +820,9 @@ extern BOOL isFromNewCreatedCard;
   [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
   if (isUserInterfaceIdiomPhone) {
-//    self.title = _currentPack.packName;
-      
-//      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-//      titleLabel.text = _currentPack.packName;;
-      
       [self updateRightPackInfoView];
       
   } else {
-//    self.detailViewController.title = _currentPack.packName;
     [self.detailViewController showPackInfoView];
   }
 }
@@ -877,14 +862,9 @@ extern BOOL isFromNewCreatedCard;
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
-//        self.title = _currentPack.packName;
-//        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-//        titleLabel.text = _currentPack.packName;;
-        
         [self updateRightPackInfoView];
         
     } else {
-//        self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
     }
     
