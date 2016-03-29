@@ -63,7 +63,7 @@
 
 /**
  ** Calibration
- *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
+ *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
  */
 const float ZAPFINO_RATIO_FROM_NON_IOS = 3;
 const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
@@ -109,13 +109,13 @@ enum popover_enum {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         //1. Setup notification
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editPackFinishedNotification:) name:EDIT_PACK_FINISHED_NOTIFICATION object:nil];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeBackgroundAfterCardCreatedNotification:) name:REMOVE_BACKGROUND_AFTER_CARD_CREATED_NOTIFICATION object:nil];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewAfterParseDownloadPackFinishNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
@@ -160,7 +160,7 @@ enum popover_enum {
         _zipFileDownloadHelper =[ZipFileDownloadHelper sharedInstance];
         
         
-
+        
     }
     return self;
 }
@@ -192,15 +192,15 @@ enum popover_enum {
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view insertSubview:self.tableView atIndex:0];
-
+    
     UIButton *selectPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"packs_button.png"] target:self action:@selector(selectAvailablePacks:)];
     _selectPackBarButton = [[UIBarButtonItem alloc]
-                         initWithCustomView:selectPackButton];
+                            initWithCustomView:selectPackButton];
     
     
     UIButton *newPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)];
     UIBarButtonItem *newPackBarButtonItem = [[UIBarButtonItem alloc]
-                                      initWithCustomView:newPackButton];
+                                             initWithCustomView:newPackButton];
     
     
     _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
@@ -222,55 +222,55 @@ enum popover_enum {
         UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
         playButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         UIBarButtonItem *playBarButtonItem = [[UIBarButtonItem alloc]
-                                       initWithCustomView:playButton];
+                                              initWithCustomView:playButton];
         
         
         UIButton *shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
         shareButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset);
         [shareButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset)];
         UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc]
-                                        initWithCustomView:shareButton];
+                                               initWithCustomView:shareButton];
         
         
         UIButton *settingButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)];
         settingButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2);
         [settingButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*2, 0, -K_Navigation_Item_Inset_Offset*2)];
         UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc]
-                                          initWithCustomView:settingButton];
+                                                 initWithCustomView:settingButton];
         
         
         UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
         helpButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3);
         [helpButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3)];
         UIBarButtonItem *helpBarButtonItem = [[UIBarButtonItem alloc]
-                                          initWithCustomView:helpButton];
+                                              initWithCustomView:helpButton];
         
         self.navigationItem.rightBarButtonItems =
-            @[playBarButtonItem,shareBarButtonItem,settingBarButtonItem,helpBarButtonItem];
+        @[playBarButtonItem,shareBarButtonItem,settingBarButtonItem,helpBarButtonItem];
     }
     
-
+    
     if (isUserInterfaceIdiomPhone) {
-//        self.title = _currentPack.packName;
+        //        self.title = _currentPack.packName;
         
-//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
-//        label.font = [UIFont boldSystemFontOfSize:16.0];
-//        label.textAlignment = NSTextAlignmentLeft;
-//        label.backgroundColor = [UIColor clearColor];
-//        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-//        
-//        label.textColor = [UIColor whiteColor]; // change this color
-//        label.text = _currentPack.packName;
-//        [self.navigationItem setTitleView:label];
+        //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
+        //        label.font = [UIFont boldSystemFontOfSize:16.0];
+        //        label.textAlignment = NSTextAlignmentLeft;
+        //        label.backgroundColor = [UIColor clearColor];
+        //        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        //
+        //        label.textColor = [UIColor whiteColor]; // change this color
+        //        label.text = _currentPack.packName;
+        //        [self.navigationItem setTitleView:label];
         
     }
     [self.tableView reloadData];
-
+    
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-
+    
     [super viewDidAppear:animated];
     
     if (_addCardButton == nil) {
@@ -305,7 +305,7 @@ enum popover_enum {
         
         if (_rightPackView == nil) {
             _rightPackView = [[UIView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH -150- 200)/2 + 150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, 200, IPHONE_UI_HEIGHT)];
-//            _rightPackView.backgroundColor = [UIColor redColor];
+            //            _rightPackView.backgroundColor = [UIColor redColor];
             _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         }
         
@@ -368,16 +368,16 @@ enum popover_enum {
         }
         
         if (_rightPackImage != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
-          
+            
             if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
-              _shareCodeLabel.hidden = NO;
-              _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
+                _shareCodeLabel.hidden = NO;
+                _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
             } else {
-              _shareCodeLabel.hidden = YES;
+                _shareCodeLabel.hidden = YES;
             }
-          
+            
         }
         
         long miniumAMPopTipIndex = 1000000000;// big enough value
@@ -397,7 +397,7 @@ enum popover_enum {
         
     }
     
-    [self.navigationController.view addSubview:_addCardButtonBackground];    
+    [self.navigationController.view addSubview:_addCardButtonBackground];
     [self.navigationController.view insertSubview:_addCardButton atIndex:0];
     [self.navigationController.view bringSubviewToFront:_addCardButton];
     
@@ -448,6 +448,9 @@ enum popover_enum {
         NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
         _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
     }
+    
+    //    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+    //    titleLabel.text = _currentPack.packName;;
 }
 
 
@@ -471,11 +474,11 @@ enum popover_enum {
     } else {
         createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPad" bundle:nil];
     }
-	UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-	[self presentModalViewController:navController animated:YES];
-
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    [self presentModalViewController:navController animated:YES];
+    
 }
 
 - (void)selectAvailablePacks:(id)sender
@@ -555,7 +558,7 @@ enum popover_enum {
         });
         
     }
-
+    
     
     
     CreateCardViewController *createCardViewController = [[CreateCardViewController alloc] init];
@@ -635,19 +638,19 @@ extern BOOL isFromNewCreatedCard;
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
-
+    
     
 }
 
 - (void)shareButtonClicked:(id) sender {
-
+    
     PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
                                                                      withTitle:NSLocalizedString(@"Label_Please_Select",@"")
                                                                withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
                                                                       delegate:self];
     shareSelectPopupPopoverView.tag = popover_enum_share;
-
+    
     
 }
 
@@ -736,7 +739,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void) downloadPackNotification:(NSNotification *) notification {
-
+    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = TRUE;
     
@@ -762,13 +765,12 @@ extern BOOL isFromNewCreatedCard;
     if (!isUserInterfaceIdiomPhone) {
         [_packListPickerPopover dismissPopoverAnimated:YES];
         _packListPickerPopover = nil;
-        
-        self.detailViewController.currentPack = _currentPack;
-        [self.detailViewController showPackInfoView];
-        
+        self.detailViewController.title = _currentPack.packName;
     } else {
+        //        self.title = _currentPack.packName;
         
-        [self updateRightPackInfoView];
+        //        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        //        titleLabel.text = _currentPack.packName;;
     }
     
     [self.tableView setEditing:NO];
@@ -777,7 +779,9 @@ extern BOOL isFromNewCreatedCard;
     
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         self.detailViewController.currentPack = _currentPack;
+        [self.detailViewController showPackInfoView];
     } else if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count == 0)) {
+        self.detailViewController.title = @"";
         self.detailViewController.currentCard = nil;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = 0;
@@ -798,7 +802,7 @@ extern BOOL isFromNewCreatedCard;
 
 
 -(void)removeBackgroundAfterCardCreatedNotification:(NSNotification *)notification{
-	
+    
     //we do refresh tableview cell in updateMasterAfterSaveCardNotification
     
     if (!isUserInterfaceIdiomPhone) {
@@ -808,27 +812,31 @@ extern BOOL isFromNewCreatedCard;
 
 
 -(void)editPackFinishedNotification:(NSNotification *)notification {
-  self.currentPack = (Pack *)[notification object];
-
-  AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  appDelegate.packIDForMasterViewPack = self.currentPack.packID;
+    self.currentPack = (Pack *)[notification object];
     
-  _indexCard = 0;
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.packIDForMasterViewPack = self.currentPack.packID;
     
-  [self.tableView reloadData];
-  NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-  [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    _indexCard = 0;
     
-  if (isUserInterfaceIdiomPhone) {
-      [self updateRightPackInfoView];
-      
-  } else {
-    [self.detailViewController showPackInfoView];
-  }
+    [self.tableView reloadData];
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+    if (isUserInterfaceIdiomPhone) {
+        //    self.title = _currentPack.packName;
+        
+        //      UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        //      titleLabel.text = _currentPack.packName;;
+        
+    } else {
+        self.detailViewController.title = _currentPack.packName;
+        [self.detailViewController showPackInfoView];
+    }
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
-	self.currentPack = (Pack *)[notification object];
+    self.currentPack = (Pack *)[notification object];
     
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.packIDForMasterViewPack = self.currentPack.packID;
@@ -862,9 +870,11 @@ extern BOOL isFromNewCreatedCard;
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
-        [self updateRightPackInfoView];
-        
+        //        self.title = _currentPack.packName;
+        //        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        //        titleLabel.text = _currentPack.packName;;
     } else {
+        self.detailViewController.title = _currentPack.packName;
         [self.detailViewController showPackInfoView];
     }
     
@@ -900,7 +910,7 @@ extern BOOL isFromNewCreatedCard;
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self.tableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
-    
+        
     }
 }
 
@@ -959,7 +969,7 @@ extern BOOL isFromNewCreatedCard;
     BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
     if (val == FALSE && val2) {
         [self showTooltips];
-  
+        
     }
 }
 
@@ -1084,7 +1094,7 @@ extern BOOL isFromNewCreatedCard;
     AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.isDownloadingPack = FALSE;
     appDelegate.isAllowToShowPackList = TRUE;
-
+    
     
     if (isUserInterfaceIdiomPhone == FALSE) {
         appDelegate.packIDForMasterViewPack = self.currentPack.packID;
@@ -1117,7 +1127,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{    
+{
     return ([[_currentPack cards] count]); //test purpose
 }
 
@@ -1135,15 +1145,15 @@ extern BOOL isFromNewCreatedCard;
     static NSString *CellIdentifier = @"CardCell";
     
     CardCell *cell = (CardCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[CardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIImageView *backgroundView = [[UIImageView alloc] init];
         backgroundView.layer.opacity = 0.8;
         backgroundView.backgroundColor = [UIColor colorWithRed:127.0/255 green:134.0/255 blue:164.0/255 alpha:0.8];
         backgroundView.layer.cornerRadius = 5;
         backgroundView.layer.masksToBounds = YES;
         cell.selectedBackgroundView = backgroundView;
-	}
+    }
     
     
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -1159,14 +1169,14 @@ extern BOOL isFromNewCreatedCard;
     
     cell.indexLabel.text = [NSString stringWithFormat:@"%ld",card.cardSN];
     
-
+    
     NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[card.coverImageURL lastPathComponent]];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     if (([Common isPlaceholderFilePathOrDirectory:card.coverImageURL] == FALSE) && (image != NULL)) {
         cell.cellImageView.image = image;
     } else {
         if (self.currentPack.sidebarTitle.length > 0) {
-           cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder_title.png"];
+            cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder_title.png"];
         } else {
             cell.cellImageView.image = [UIImage imageNamed:@"card_cover_image_placeholder.png"];
         }
@@ -1179,9 +1189,9 @@ extern BOOL isFromNewCreatedCard;
     
     cell.backgroundColor = [UIColor clearColor];
     
-
+    
     return cell;
-
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1189,7 +1199,7 @@ extern BOOL isFromNewCreatedCard;
     [iConsole info:@"%s",__FUNCTION__];
     self.currentCard = [_currentPack cards][indexPath.row];
     _indexCard = indexPath.row;
-
+    
     if (_currentPack.packID == PUBLIC_PACK_ID) {
         [Common alertViewCommon:@"will implement this function soon"];
         
@@ -1299,7 +1309,7 @@ extern BOOL isFromNewCreatedCard;
     } else {
         //Update right pack info
         if (_rightPackImage.image != nil) {
-          [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
+            [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
         }
         
     }
@@ -1309,7 +1319,7 @@ extern BOOL isFromNewCreatedCard;
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    [self moveAction:fromIndexPath toIndexPath:toIndexPath];    
+    [self moveAction:fromIndexPath toIndexPath:toIndexPath];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1485,7 +1495,7 @@ extern BOOL isFromNewCreatedCard;
     
     NSString *defaultDomain = [SimpleDBHelper defaultDomain];
     
-//    itemName = @"Pack1374144082-185879295"; //only for test, will be removed
+    //    itemName = @"Pack1374144082-185879295"; //only for test, will be removed
     
     _amazonSimpleDBItemName = itemName;
     NSMutableDictionary *dict = [SimpleDBHelper fetchAttributeValuesAtItem:itemName withDomainName:defaultDomain];
@@ -1617,8 +1627,8 @@ extern BOOL isFromNewCreatedCard;
     
     BOOL success = [CryptorHelper decryptFileWithSameOutput:downloadedZipPackFileFixedPath];
     if (success == false) {
-//        [Common alertViewCommon:@"Failure to decrypt zipped share file."];
-//        return;
+        //        [Common alertViewCommon:@"Failure to decrypt zipped share file."];
+        //        return;
         [iConsole warn:@"%s:Possiblly you are using a old version without zip file encripted",__FUNCTION__];
     }
     
@@ -1672,7 +1682,7 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     id packJsonObject = [NSJSONSerialization JSONObjectWithData:packData options:
-                           NSJSONReadingMutableContainers error:&error];
+                         NSJSONReadingMutableContainers error:&error];
     if (packJsonObject != nil && error == nil) {
         if ([packJsonObject isKindOfClass:[NSDictionary class]]){
             
@@ -1726,7 +1736,7 @@ extern BOOL isFromNewCreatedCard;
                 pack.packID = [packIDStr integerValue];
                 [[User defaultUser] removePackWithPackID:pack.packID];
             }
-        
+            
             
             //We need to move cover image to imagesDirectory
             if ([packDict[@"cover_image"] lastPathComponent].length > 0) {
@@ -1819,10 +1829,10 @@ extern BOOL isFromNewCreatedCard;
     }
     
     NSArray *shuffledCardArray = [array cardSNOrdered];
-     for (Card *card in shuffledCardArray) {
-         [pack addCard:card];
-     }
-
+    for (Card *card in shuffledCardArray) {
+        [pack addCard:card];
+    }
+    
     
     //Step5: set  flag
     if (APP_DELEGATE.isDownloadingSamplePack) {
@@ -1845,13 +1855,13 @@ extern BOOL isFromNewCreatedCard;
     }
     NSMutableDictionary *downloadLinkageMutableDict = [NSMutableDictionary dictionaryWithDictionary:downloadLinkageDict];
     if (_zipFileDownloadHelper.downloadedURL == nil) {
-      _zipFileDownloadHelper.downloadedURL = @"";
+        _zipFileDownloadHelper.downloadedURL = @"";
     }
     [downloadLinkageMutableDict setObject:_zipFileDownloadHelper.downloadedURL forKey:[NSString stringWithFormat:@"%ld",pack.packID]];
     [[NSUserDefaults standardUserDefaults] setObject:downloadLinkageMutableDict forKey:@"savedDownloadLinkage"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     //step6. update amazon sinpleDB
     [self updateDownloadLimitCount];
     
@@ -2006,13 +2016,13 @@ extern BOOL isFromNewCreatedCard;
             
             if (((NSString *)questionDict[@"cardSN"]).length > 0) {
                 //表明，将使用meta info的数值（iOS的做法）
-               assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
+                assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
             } else {
                 //meta info为空，表明，我们需要后续手动赋值(见上面fileListArray部分的逻辑）。
                 assembledCard.cardSN = -1;
-                 [iConsole info:@"%s: no cardSN field in questionTextContent.json",__FUNCTION__];
+                [iConsole info:@"%s: no cardSN field in questionTextContent.json",__FUNCTION__];
             }
-
+            
             
             assembledCard.question.templateID = [questionDict[@"template_id"] intValue];
             
@@ -2080,9 +2090,9 @@ extern BOOL isFromNewCreatedCard;
             
             error = nil;
             if ([questionDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) { //Android的格式
-              newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
+                newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
             } else if ([questionDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) { //iOS的格式
-              newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
+                newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
             }
             if ([questionDict[@"audio"] length] > 0) {
                 [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"audio"]] toPath:newFileName error:&error];
@@ -2134,32 +2144,32 @@ extern BOOL isFromNewCreatedCard;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
-
+                
                 //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
                 //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
                 
-//之所以comment out，因为这不是一个make sense的逻辑
-//                float factor = 0;
-//                if ((subheadingSize < 16) && (subheadingSize >0)) {
-//                    factor = subheadingSize/16.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
-//                    [assembledCard question].css.mainSize = mainSize/factor;
-//                    [assembledCard question].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((mainSize < 20) && (mainSize >0)) {
-//                    factor = mainSize/20.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
-//                    [assembledCard question].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((subSize < 16) && (subSize >0)) {
-//                    factor = subSize/16.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard question].css.mainSize = mainSize/factor;
-//                    [assembledCard question].css.subSize = subSize/factor;  // ==16
-//                    baseActionDone = YES;
-//                }
+                //之所以comment out，因为这不是一个make sense的逻辑
+                //                float factor = 0;
+                //                if ((subheadingSize < 16) && (subheadingSize >0)) {
+                //                    factor = subheadingSize/16.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
+                //                    [assembledCard question].css.mainSize = mainSize/factor;
+                //                    [assembledCard question].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((mainSize < 20) && (mainSize >0)) {
+                //                    factor = mainSize/20.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
+                //                    [assembledCard question].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((subSize < 16) && (subSize >0)) {
+                //                    factor = subSize/16.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard question].css.mainSize = mainSize/factor;
+                //                    [assembledCard question].css.subSize = subSize/factor;  // ==16
+                //                    baseActionDone = YES;
+                //                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2212,27 +2222,27 @@ extern BOOL isFromNewCreatedCard;
                 //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
                 
-//之所以comment out，因为这不是一个make sense的逻辑
-//                float factor = 0;
-//                if ((subheadingSize < 32) && (subheadingSize >0)) {
-//                    factor = subheadingSize/32.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
-//                    [assembledCard question].css.mainSize = mainSize/factor;
-//                    [assembledCard question].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((mainSize < 40) && (mainSize >0)) {
-//                    factor = mainSize/40.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
-//                    [assembledCard question].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((subSize < 32) && (subSize >0)) {
-//                    factor = subSize/32.0;
-//                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard question].css.mainSize = mainSize/factor;
-//                    [assembledCard question].css.subSize = subSize/factor;  // ==32
-//                    baseActionDone = YES;
-//                }
+                //之所以comment out，因为这不是一个make sense的逻辑
+                //                float factor = 0;
+                //                if ((subheadingSize < 32) && (subheadingSize >0)) {
+                //                    factor = subheadingSize/32.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
+                //                    [assembledCard question].css.mainSize = mainSize/factor;
+                //                    [assembledCard question].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((mainSize < 40) && (mainSize >0)) {
+                //                    factor = mainSize/40.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
+                //                    [assembledCard question].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((subSize < 32) && (subSize >0)) {
+                //                    factor = subSize/32.0;
+                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard question].css.mainSize = mainSize/factor;
+                //                    [assembledCard question].css.subSize = subSize/factor;  // ==32
+                //                    baseActionDone = YES;
+                //                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2391,7 +2401,7 @@ extern BOOL isFromNewCreatedCard;
             if ([answerDict[@"movie"] length] > 0) {
                 //youtube link
                 if ([Common isValidYoutubeLinkage:answerDict[@"movie"]]) {
-                  [assembledCard answer].movieFullPath = answerDict[@"movie"];
+                    [assembledCard answer].movieFullPath = answerDict[@"movie"];
                 } else {
                     //with video file locally
                     [[NSFileManager defaultManager] moveItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"movie"]] toPath:newFileName error:&error];
@@ -2449,7 +2459,7 @@ extern BOOL isFromNewCreatedCard;
             int subSize = [answerDict[@"sub_size"] intValue];
             
             if (subheadingSize == 0) {
-                //this occur when no subheading_size field in json file, then we use default value 
+                //this occur when no subheading_size field in json file, then we use default value
                 subheadingSize = [assembledCard answer].css.subheadingSize;
             }
             
@@ -2485,26 +2495,26 @@ extern BOOL isFromNewCreatedCard;
                 float factor = 0;
                 BOOL baseActionDone = NO;
                 
-//之所以comment out，因为这不是一个make sense的逻辑
-//                if ((subheadingSize < 16) && (subheadingSize >0)) {
-//                    factor = subheadingSize/16.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
-//                    [assembledCard answer].css.mainSize = mainSize/factor;
-//                    [assembledCard answer].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((mainSize < 20) && (mainSize >0)) {
-//                    factor = mainSize/20.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
-//                    [assembledCard answer].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((subSize < 16) && (subSize >0)) {
-//                    factor = subSize/16.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard answer].css.mainSize = mainSize/factor;
-//                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
-//                    baseActionDone = YES;
-//                }
+                //之所以comment out，因为这不是一个make sense的逻辑
+                //                if ((subheadingSize < 16) && (subheadingSize >0)) {
+                //                    factor = subheadingSize/16.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
+                //                    [assembledCard answer].css.mainSize = mainSize/factor;
+                //                    [assembledCard answer].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((mainSize < 20) && (mainSize >0)) {
+                //                    factor = mainSize/20.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
+                //                    [assembledCard answer].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((subSize < 16) && (subSize >0)) {
+                //                    factor = subSize/16.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard answer].css.mainSize = mainSize/factor;
+                //                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
+                //                    baseActionDone = YES;
+                //                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2519,7 +2529,7 @@ extern BOOL isFromNewCreatedCard;
                     if (isUserInterfaceIdiomPhone) {
                         ratio = ratio *1.15;
                         
-    
+                        
                     }
                     
                     if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
@@ -2551,7 +2561,7 @@ extern BOOL isFromNewCreatedCard;
                     } else {
                         [assembledCard answer].css.subSize = subSize/ratio/DEFAULT_FONT_RATIO_FROM_NON_IOS;
                     }
-                        
+                    
                     
                 }
                 
@@ -2563,26 +2573,26 @@ extern BOOL isFromNewCreatedCard;
                 float factor = 0;
                 BOOL baseActionDone = NO;
                 
-//之所以comment out，因为这不是一个make sense的逻辑
-//                if ((subheadingSize < 32) && (subheadingSize >0)) {
-//                    factor = subheadingSize/32.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
-//                    [assembledCard answer].css.mainSize = mainSize/factor;
-//                    [assembledCard answer].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((mainSize < 40) && (mainSize >0)) {
-//                    factor = mainSize/40.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
-//                    [assembledCard answer].css.subSize = subSize/factor;
-//                    baseActionDone = YES;
-//                } else if ((subSize < 32) && (subSize >0)) {
-//                    factor = subSize/32.0;
-//                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-//                    [assembledCard answer].css.mainSize = mainSize/factor;
-//                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
-//                    baseActionDone = YES;
-//                }
+                //之所以comment out，因为这不是一个make sense的逻辑
+                //                if ((subheadingSize < 32) && (subheadingSize >0)) {
+                //                    factor = subheadingSize/32.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
+                //                    [assembledCard answer].css.mainSize = mainSize/factor;
+                //                    [assembledCard answer].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((mainSize < 40) && (mainSize >0)) {
+                //                    factor = mainSize/40.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
+                //                    [assembledCard answer].css.subSize = subSize/factor;
+                //                    baseActionDone = YES;
+                //                } else if ((subSize < 32) && (subSize >0)) {
+                //                    factor = subSize/32.0;
+                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
+                //                    [assembledCard answer].css.mainSize = mainSize/factor;
+                //                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
+                //                    baseActionDone = YES;
+                //                }
                 
                 
                 if (baseActionDone == NO) {
@@ -2591,7 +2601,7 @@ extern BOOL isFromNewCreatedCard;
                     if (_downloadedPackSourceDeviceWidth > 0) {
                         ratio = (float)_downloadedPackSourceDeviceWidth/IPAD_UI_WIDTH / K_Weight_From_Android_To_IOS;
                     }
-
+                    
                     
                     if ([[assembledCard answer].css.subheadingFont.lowercaseString rangeOfString:@"zapfino"].location != NSNotFound) {
                         [assembledCard answer].css.subheadingSize = subheadingSize/ratio/ZAPFINO_RATIO_FROM_NON_IOS;
@@ -2657,7 +2667,7 @@ extern BOOL isFromNewCreatedCard;
 - (void)showDownloadProgressIndicator:(NSString *) type withSource:(NSString *) from {
     
     _progressivePercent = 0;
-	
+    
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.buttonTitle = @"    Cancel    ";
     _HUD.buttonTitleColor = [UIColor whiteColor];
@@ -2670,9 +2680,9 @@ extern BOOL isFromNewCreatedCard;
     
     _HUD.delegate = self;
     if ([type isEqualToString:@"demo"]) {
-        _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");    
+        _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK",@"");
     } else {
-//        _HUD.labelText = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@""), from];
+        //        _HUD.labelText = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@""), from];
         _HUD.labelText = NSLocalizedString(@"DIALOG_DOWNLOAD_PACK_FROM_FRIENDS",@"");
     }
     
@@ -2684,17 +2694,17 @@ extern BOOL isFromNewCreatedCard;
 
 
 - (void)myProgressTask {
-	while (_progressivePercent < 1.0f) {
-		_HUD.progress = _progressivePercent;
-		usleep(50000);
-	}
+    while (_progressivePercent < 1.0f) {
+        _HUD.progress = _progressivePercent;
+        usleep(50000);
+    }
     
     _progressivePercent = 0;
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
-	// Remove HUD from screen when the HUD was hidded
-	[_HUD removeFromSuperview];
+    // Remove HUD from screen when the HUD was hidded
+    [_HUD removeFromSuperview];
 }
 
 
@@ -2798,7 +2808,7 @@ extern BOOL isFromNewCreatedCard;
                         _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_dropboxShareHelper shareAction];
                     }
-#else 
+#else
                     
                     if ([DBSession sharedSession].isLinked) { //这个必须放在else if ([PFUser currentUser])前
                         
@@ -2873,7 +2883,7 @@ extern BOOL isFromNewCreatedCard;
         //1.
         CGRect rect = _addCardButton.frame;
         rect.origin.y = rect.origin.y - 30;
-    
+        
         
         [[TipHelper defaultHelper] showTipForCreateCardInView:weakSelf.view fromFrame:rect];
         
@@ -2896,7 +2906,7 @@ extern BOOL isFromNewCreatedCard;
             [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 85, 0, 0, 0)];
             [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 130, 0, 0, 0)];
             [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
-    
+            
         }
         
     });
@@ -3012,7 +3022,7 @@ extern BOOL isFromNewCreatedCard;
     
     
     [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
-    
+        
         if (signUpController.fromSetting) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];

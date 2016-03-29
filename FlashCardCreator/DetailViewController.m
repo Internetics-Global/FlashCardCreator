@@ -42,7 +42,7 @@ enum template_color_enum {
     template_color_enum_gray = 2,
     template_color_enum_purple = 3,
     template_color_enum_red = 4
-    };
+};
 
 enum popover_enum {
     popover_enum_share = 0,
@@ -126,7 +126,7 @@ enum popover_enum {
     }
     
     if (isUserInterfaceIdiomPhone) {
-
+        
         _previousCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,kFlashCardViewTopMarginWithNav_Detail_iPhone,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone) defaultPack:_currentPack defaultCard:_currentCard];
         _currentCardView = [[FlashCard alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH-kFlashCardViewWidth_Detail_iPhone)/2,kFlashCardViewTopMarginWithNav_Detail_iPhone,kFlashCardViewWidth_Detail_iPhone,kFlashCardViewHeight_Detail_iPhone)
                                                 defaultPack:_currentPack defaultCard:_currentCard];
@@ -146,12 +146,12 @@ enum popover_enum {
     
     
     if (SYSTEM_VERSION_LESS_THAN(@"7.0")) {
-       //do nothing
+        //do nothing
     } else {
         //self.automaticallyAdjustsScrollViewInsets = NO; //we will add this back when xcode5 is finally released
     }
     
-
+    
 }
 
 
@@ -161,21 +161,21 @@ enum popover_enum {
     
     UIButton *templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
     _templateBackgroundSelectBarButton = [[UIBarButtonItem alloc]
-                                       initWithCustomView:templateBackgroundSelectButton];;
+                                          initWithCustomView:templateBackgroundSelectButton];;
     
     //we don't setting button on iPhone
     _settingButton = [[UIBarButtonItem alloc]
-                                      initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
+                      initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
     UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
     UIBarButtonItem *playBarButton = [[UIBarButtonItem alloc]
-                                   initWithCustomView:playButton];
+                                      initWithCustomView:playButton];
     
     UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc]
-                                    initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
     
     UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
     _helpBarButton = [[UIBarButtonItem alloc]
-                                   initWithCustomView:helpButton];
+                      initWithCustomView:helpButton];
     
     if (isUserInterfaceIdiomPhone) {
         
@@ -188,7 +188,7 @@ enum popover_enum {
         @[playBarButton,_templateBackgroundSelectBarButton,_helpBarButton];
     } else {
         self.navigationItem.rightBarButtonItems =
-                                @[playBarButton,shareBarButton,_settingButton,_helpBarButton,_templateBackgroundSelectBarButton];
+        @[playBarButton,shareBarButton,_settingButton,_helpBarButton,_templateBackgroundSelectBarButton];
     }
     
     //Don't need the back button when on iPad
@@ -235,7 +235,7 @@ enum popover_enum {
         }
     }
     
-
+    
     //iOS7 special, since UIImagePickerController will display status bar forcely.
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
@@ -258,12 +258,12 @@ enum popover_enum {
         
     });
     
-
+    
 }
 
 
 #pragma mark -
-#pragma mark - Layout 
+#pragma mark - Layout
 
 - (void) showCurrentCardInScrollView:(BOOL) shouldResetSegment {
     [iConsole info:@"%s",__FUNCTION__];
@@ -292,7 +292,7 @@ enum popover_enum {
     
     label.textColor = [UIColor whiteColor]; // change this color
     label.text = _currentPack.packName;
-//    [self.navigationItem setTitleView:label];
+    [self.navigationItem setTitleView:label];
     
     if ((shouldResetSegment == YES) && (_currentCardView.segmentedControl.selectedSegmentIndex == 1)) {
         _currentCardView.segmentedControl.selectedSegmentIndex = 0;
@@ -301,7 +301,7 @@ enum popover_enum {
     
     _scrollView.userInteractionEnabled = YES; //在特殊情况下scrollviewdidenddecelerating（这里会重置_scrollView.userInteractionEnabled = YES）没有被调用，导致界面完全失去响应，所以这里需要加一个backup
     
-
+    
 }
 
 - (void)layoutScrollObjectsForiPad
@@ -330,7 +330,7 @@ enum popover_enum {
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
     [_scrollView addSubview:_currentCardView];
-
+    
     [_currentCardView refreshAll:false withIndexPlaying:_indexCard];
     
     //3. Set previous
@@ -342,7 +342,7 @@ enum popover_enum {
         _previousCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc -IPAD_UI_DETAIL_WIDTH;
         _previousCardView.frame = rect;
-        [_scrollView addSubview:_previousCardView]; 
+        [_scrollView addSubview:_previousCardView];
         [_previousCardView refreshAll:false withIndexPlaying:_indexCard-1];
     }
     
@@ -355,11 +355,11 @@ enum popover_enum {
         _nextCardView.currentPack = _currentPack;
         rect.origin.x = curXLoc +IPAD_UI_DETAIL_WIDTH;
         _nextCardView.frame = rect;
-        [_scrollView addSubview:_nextCardView]; 
+        [_scrollView addSubview:_nextCardView];
         
         [_nextCardView refreshAll:false withIndexPlaying:_indexCard+1];
     }
-
+    
 }
 
 - (void)layoutScrollObjectsForiPhone
@@ -388,11 +388,11 @@ enum popover_enum {
     rect.origin.x = curXLoc;
     _currentCardView.frame = rect;
     if (_currentCardView.superview == nil) {
-        [_scrollView addSubview:_currentCardView];    
+        [_scrollView addSubview:_currentCardView];
     }
     
     [_currentCardView refreshAll:false withIndexPlaying:_indexCard];
-
+    
     
     //3. Set previous
     _previousCardView.tag = PREVIOUS_FLASHCARDVIEW_TAG;
@@ -403,7 +403,7 @@ enum popover_enum {
         rect.origin.x = curXLoc -IPHONE_UI_WIDTH;
         _previousCardView.frame = rect;
         if (_previousCardView.superview == nil) {
-            [_scrollView addSubview:_previousCardView];    
+            [_scrollView addSubview:_previousCardView];
         }
         [_previousCardView refreshAll:false withIndexPlaying:_indexCard-1];
     }
@@ -421,7 +421,7 @@ enum popover_enum {
         }
         [_nextCardView refreshAll:false withIndexPlaying:_indexCard+1];
     }
-
+    
 }
 
 #pragma mark -
@@ -507,10 +507,10 @@ enum popover_enum {
     
     
     PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                                        inView:self.navigationController.view
-                                                                     withTitle:NSLocalizedString(@"Label_Color_Select",@"")
-                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Blue",@""), NSLocalizedString(@"Optional_Coffee",@""),NSLocalizedString(@"Optional_Gray",@""),NSLocalizedString(@"Optional_Purple",@""),NSLocalizedString(@"Optional_Red",@""), nil]
-                                                                      delegate:self];
+                                                                                inView:self.navigationController.view
+                                                                             withTitle:NSLocalizedString(@"Label_Color_Select",@"")
+                                                                       withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Blue",@""), NSLocalizedString(@"Optional_Coffee",@""),NSLocalizedString(@"Optional_Gray",@""),NSLocalizedString(@"Optional_Purple",@""),NSLocalizedString(@"Optional_Red",@""), nil]
+                                                                              delegate:self];
     templateBackgroundSelectPopoverView.tag = popover_enum_template_select;
 }
 
@@ -684,8 +684,8 @@ enum popover_enum {
     [self updateRightPackInfoView];
     
     
-//    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
-//    titleLabel.text = self.currentPack.packName;
+    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+    titleLabel.text = self.currentPack.packName;
 }
 
 -(void)newPackAddedNotification:(NSNotification *)notification{
@@ -697,8 +697,8 @@ enum popover_enum {
         return;
     }
     
-//    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
-//    titleLabel.text = self.currentPack.packName;
+    UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
+    titleLabel.text = self.currentPack.packName;
     
     [self updateRightPackInfoView];
     
@@ -729,8 +729,6 @@ enum popover_enum {
                 }
                 
                 
-            } else if (myView.tag == 2) {
-                [(UILabel *)myView setText:self.currentPack.packName];
             }
             
         } else if ([myView isKindOfClass:[UIImageView class]]) {
@@ -758,8 +756,8 @@ enum popover_enum {
         }
     }
     
-//    UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
-//    [titleLable setText:_currentPack.packName];
+    UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+    [titleLable setText:_currentPack.packName];
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
     BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
@@ -790,9 +788,9 @@ enum popover_enum {
 {
     [iConsole info:@"%s",__FUNCTION__];
     dispatch_async(dispatch_get_main_queue(), ^{
-       [popoverView dismiss];
+        [popoverView dismiss];
     });
-
+    
     
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
@@ -855,7 +853,7 @@ enum popover_enum {
                         
                         
                     } else if ([PFUser currentUser]) {
-
+                        
                         [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
                         
                         _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
@@ -1056,13 +1054,13 @@ enum popover_enum {
         
         
         UIImageView *rightPackImageView = [[UIImageView alloc] init];
-        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 150, 400, 400);
+        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 130, 400, 400);
         rightPackImageView.autoresizingMask = UIViewAutoresizingNone;
         rightPackImageView.layer.opacity = 0.85;
-//        rightPackImageView.layer.shadowOpacity= 0.3;
-//        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
-////        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
-//        rightPackImageView.layer.shadowRadius = 20;
+        //        rightPackImageView.layer.shadowOpacity= 0.3;
+        //        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
+        ////        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
+        //        rightPackImageView.layer.shadowRadius = 20;
         rightPackImageView.layer.masksToBounds = YES;
         rightPackImageView.backgroundColor = [UIColor clearColor];
         
@@ -1077,20 +1075,6 @@ enum popover_enum {
         
         rightPackImageView.contentMode = UIViewContentModeScaleAspectFit;
         
-        UILabel *rightPackCardTitle = [[UILabel alloc] init];
-        rightPackCardTitle.textColor = [UIColor whiteColor];
-        rightPackCardTitle.autoresizingMask =  UIViewAutoresizingNone;
-        rightPackCardTitle.backgroundColor = [UIColor clearColor];
-        rightPackCardTitle.textAlignment = UITextAlignmentCenter;
-        rightPackCardTitle.font = [UIFont systemFontOfSize: 24];
-        rightPackCardTitle.tag = 2;
-        CGRect rect = rightPackImageView. frame;
-        rect.origin.y = rect.origin.y - 25 - 10;
-        rect.size.height = 25;
-        rightPackCardTitle.frame = rect;
-        [rightPackCardTitle setText:self.currentPack.packName];
-        [_rightPackView addSubview:rightPackCardTitle];
-        
         UILabel *rightPackCardNo = [[UILabel alloc] init];
         rightPackCardNo.textColor = [UIColor whiteColor];
         rightPackCardNo.autoresizingMask =  UIViewAutoresizingNone;
@@ -1098,7 +1082,7 @@ enum popover_enum {
         rightPackCardNo.textAlignment = UITextAlignmentCenter;
         rightPackCardNo.font = [UIFont systemFontOfSize: 24];
         rightPackCardNo.tag = 0;
-        rect = rightPackImageView. frame;
+        CGRect rect = rightPackImageView. frame;
         rect.origin.y = rect.origin.y +rect.size.height+16;
         rect.size.height = 25;
         rightPackCardNo.frame = rect;
@@ -1140,8 +1124,8 @@ enum popover_enum {
         }
         
         
-//        UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
-//        [titleLable setText:_currentPack.packName];
+        UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
+        [titleLable setText:_currentPack.packName];
         
     }
     
@@ -1241,7 +1225,7 @@ enum popover_enum {
         
         return  nil;
         
-
+        
     } else {
         //不能再这里执行[_HUD removeFromSuperview]，因为redirect会导致本方法会被调用的多次
     }
