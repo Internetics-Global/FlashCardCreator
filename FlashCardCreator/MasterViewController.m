@@ -61,6 +61,8 @@
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
+#import "MutipleTargetHelper.h"
+
 /**
  ** Calibration
  *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
@@ -468,6 +470,15 @@ enum popover_enum {
 #pragma mark - Create or select Pack
 
 - (void) createNewPack:(id)sender {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
+    
     CreateEditPackViewController2 * createPackController;
     if (isUserInterfaceIdiomPhone) {
         createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPhone" bundle:nil];
@@ -525,6 +536,14 @@ enum popover_enum {
 
 - (void)createNewCard:(id)sender
 {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+
     if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
         return;

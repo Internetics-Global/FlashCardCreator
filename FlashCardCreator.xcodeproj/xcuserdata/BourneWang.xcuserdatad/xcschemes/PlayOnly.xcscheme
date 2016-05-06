@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0460"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2DCE0B0616798E04007A8CAD"
-               BuildableName = "FlashCardCreator.app"
-               BlueprintName = "FlashCardCreator"
+               BlueprintIdentifier = "884055FF1CDC3F610092CAB4"
+               BuildableName = "Play Only.app"
+               BlueprintName = "Play Only"
                ReferencedContainer = "container:FlashCardCreator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2DCE0B0616798E04007A8CAD"
-            BuildableName = "FlashCardCreator.app"
-            BlueprintName = "FlashCardCreator"
+            BlueprintIdentifier = "884055FF1CDC3F610092CAB4"
+            BuildableName = "Play Only.app"
+            BlueprintName = "Play Only"
             ReferencedContainer = "container:FlashCardCreator.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,25 +55,13 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2DCE0B0616798E04007A8CAD"
-            BuildableName = "FlashCardCreator.app"
-            BlueprintName = "FlashCardCreator"
+            BlueprintIdentifier = "884055FF1CDC3F610092CAB4"
+            BuildableName = "Play Only.app"
+            BlueprintName = "Play Only"
             ReferencedContainer = "container:FlashCardCreator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "XcodeColors"
-            value = "YES"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "AUTO_LOG_ALL"
-            value = ""
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -86,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2DCE0B0616798E04007A8CAD"
-            BuildableName = "FlashCardCreator.app"
-            BlueprintName = "FlashCardCreator"
+            BlueprintIdentifier = "884055FF1CDC3F610092CAB4"
+            BuildableName = "Play Only.app"
+            BlueprintName = "Play Only"
             ReferencedContainer = "container:FlashCardCreator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -4,15 +4,30 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FlashCardCreator WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>FlashCardCreator.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>PlayOnly.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>2DCE0B0616798E04007A8CAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>884055FF1CDC3F610092CAB4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
