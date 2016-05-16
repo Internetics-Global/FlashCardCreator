@@ -63,6 +63,11 @@
 
 #import "MutipleTargetHelper.h"
 
+
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "MutipleTargetHelper.h"
+
+
 /**
  ** Calibration
  *  Different text size have different margin and occupaction, see this article in my evernote: "(different text size  difference margin; different device, different text size)"
@@ -83,6 +88,9 @@ const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
      *  不是当前的设备宽度，而是download时source device的宽度。
      */
     int       _downloadedPackSourceDeviceWidth;
+    
+    
+    UIImageView   *_adImageView;
     
 }
 
@@ -200,12 +208,21 @@ enum popover_enum {
                             initWithCustomView:selectPackButton];
     
     
-    UIButton *newPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)];
+    UIButton *newPackButton;
+    if ([MutipleTargetHelper isFullVersion]) {
+        newPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button.png"] target:self action:@selector(createNewPack:)];
+    } else {
+        newPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"add_pack_button_dimmed.png"] target:self action:@selector(createNewPack:)];
+    }
     UIBarButtonItem *newPackBarButtonItem = [[UIBarButtonItem alloc]
                                              initWithCustomView:newPackButton];
     
     
-    _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    if ([MutipleTargetHelper isFullVersion]) {
+        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    } else {
+        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button_dimmed.png"] target:self action:@selector(editButtonClicked:)];
+    }
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
@@ -227,7 +244,13 @@ enum popover_enum {
                                               initWithCustomView:playButton];
         
         
-        UIButton *shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
+        UIButton *shareButton;
+        if ([MutipleTargetHelper isFullVersion]) {
+            shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
+        } else {
+            shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button_dimmed.png"] target:self action:@selector(shareButtonClicked:)];
+        }
+        
         shareButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset);
         [shareButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset)];
         UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc]
@@ -241,7 +264,12 @@ enum popover_enum {
                                                  initWithCustomView:settingButton];
         
         
-        UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+        UIButton *helpButton;
+        if ([MutipleTargetHelper isFullVersion]) {
+            helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+        } else {
+            helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button_dimmed.png"] target:self action:@selector(helpButtonClicked:)];
+        }
         helpButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3);
         [helpButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset*3, 0, -K_Navigation_Item_Inset_Offset*3)];
         UIBarButtonItem *helpBarButtonItem = [[UIBarButtonItem alloc]
@@ -297,7 +325,11 @@ enum popover_enum {
         
         _addCardButtonBackground.hidden = YES;
         
-        [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
+        if ([MutipleTargetHelper isFullVersion]) {
+            [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
+        } else {
+            [_addCardButton setImage:[UIImage imageNamed:@"plus_button_dimmed.png"] forState:UIControlStateNormal];
+        }
         _addCardButton.showsTouchWhenHighlighted = YES;
         [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -453,8 +485,20 @@ enum popover_enum {
     
     //    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
     //    titleLabel.text = _currentPack.packName;;
+    
+    if (_adImageView != nil) {
+        [self.view bringSubviewToFront:_adImageView];
+    }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([MutipleTargetHelper isFullVersion] == false && isUserInterfaceIdiomPhone) {
+        
+        [self showAdView];
+    }
+}
 
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -663,6 +707,13 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)shareButtonClicked:(id) sender {
     
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
     PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
                                                                      withTitle:NSLocalizedString(@"Label_Please_Select",@"")
@@ -683,6 +734,13 @@ extern BOOL isFromNewCreatedCard;
 // on iPhone, Help button only  exists on master
 - (void)helpButtonClicked:(id) sender
 {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
     
     
     BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
@@ -717,6 +775,15 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)editButtonClicked:(id) sender
 {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
+    
     if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
         return;
@@ -1137,6 +1204,44 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
+- (void) removeAdView {
+    if (_adImageView != nil) {
+        [_adImageView removeFromSuperview];
+        _adImageView = nil;
+    }
+}
+
+- (void) showAdView {
+    
+    if (_adImageView != nil) {
+        [_adImageView removeFromSuperview];
+        _adImageView = nil;
+    }
+    
+    _adImageView = [[UIImageView alloc] init];
+    [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
+    _adImageView.autoresizingMask = UIViewAutoresizingNone;
+    _adImageView.clipsToBounds = YES;
+    _adImageView.frame = CGRectMake(IPHONE_UI_MASTER_TABLE_WIDTH + 10, CGRectGetMaxY(self.view.frame) - 90, CGRectGetWidth(self.view.frame) - IPHONE_UI_MASTER_TABLE_WIDTH - 10 *2, 50);
+//    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"https://www.luxurydaily.com/wp-content/uploads/2013/01/bmw-i-concept-mobile-ad.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        if (error == nil) {
+//            _adImageView.hidden = NO;
+//        }
+//    }];
+    
+    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
+    
+    _adImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:_adImageView];
+    
+    _adImageView.userInteractionEnabled = true;
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPurchaseView)];
+    oneTap.numberOfTapsRequired = 1;
+    [_adImageView addGestureRecognizer:oneTap];
+    
+}
+
+
 #pragma mark -
 #pragma mark UITableViewDataSource and UITableViewDelegate
 
@@ -1284,6 +1389,10 @@ extern BOOL isFromNewCreatedCard;
         APP_DELEGATE.isAllowToShowPackList = NO;
     }
     
+}
+
+- (void) showPurchaseView {
+    [MutipleTargetHelper showPurchaseView];
 }
 
 - (void) deleteCurrentCard:(NSIndexPath *)indexPath {

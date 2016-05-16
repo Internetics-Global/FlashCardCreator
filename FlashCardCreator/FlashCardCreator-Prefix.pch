@@ -221,3 +221,7 @@
 #define K_AppStore_Link                     @"https://itunes.apple.com/au/app/id1074183551?mt=8"
 
 
+#define IAPProductID_1_Dollar   @"3141592653511"
+#define IAPProductID_5_Dollar   @"3141234354"
+
+

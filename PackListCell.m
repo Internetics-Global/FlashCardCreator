@@ -12,6 +12,7 @@
 #import "OpenUDID.h"
 #import "FileOperationHelper.h"
 #import "AppDelegate.h"
+#import "MutipleTargetHelper.h"
 
 @implementation PackListCell
 
@@ -99,7 +100,11 @@
     self.changeImageButton.tag = index;
     self.changeImageButton.userInteractionEnabled = TRUE;
     self.changeImageButton.frame = CGRectMake(130.0f, 205.0f, 80.0, 25);
-    [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button"] forState:UIControlStateNormal];
+    if ([MutipleTargetHelper isFullVersion]) {
+        [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button"] forState:UIControlStateNormal];
+    } else {
+        [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button_dimmed"] forState:UIControlStateNormal];
+    }
     [contentView addSubview:self.changeImageButton];
     
     [self.contentView addSubview:contentView];

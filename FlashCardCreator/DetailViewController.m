@@ -34,7 +34,10 @@
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #import "TipHelper.h"
+#import "MutipleTargetHelper.h"
 
 enum template_color_enum {
     template_color_enum_blue = 0,
@@ -54,6 +57,8 @@ enum popover_enum {
 @interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate>{
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
+    
+    UIImageView              *_adImageView;
     
 }
 
@@ -159,7 +164,12 @@ enum popover_enum {
     [iConsole info:@"%s",__FUNCTION__];
     [super loadView];
     
-    UIButton *templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
+    UIButton *templateBackgroundSelectButton;
+    if ([MutipleTargetHelper isFullVersion]) {
+        templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
+    } else {
+        templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button_dimmed.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
+    }
     _templateBackgroundSelectBarButton = [[UIBarButtonItem alloc]
                                           initWithCustomView:templateBackgroundSelectButton];;
     
@@ -170,10 +180,21 @@ enum popover_enum {
     UIBarButtonItem *playBarButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:playButton];
     
-    UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc]
-                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+    UIBarButtonItem *shareBarButton;
+    if ([MutipleTargetHelper isFullVersion]) {
+        shareBarButton = [[UIBarButtonItem alloc]
+                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
+    } else {
+        shareBarButton = [[UIBarButtonItem alloc]
+                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button_dimmed.png"] target:self action:@selector(shareButtonClicked:)]];
+    }
     
-    UIButton *helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+    UIButton *helpButton;
+    if ([MutipleTargetHelper isFullVersion]) {
+        helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button.png"] target:self action:@selector(helpButtonClicked:)];
+    } else {
+        helpButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"helping_button_dimmed.png"] target:self action:@selector(helpButtonClicked:)];
+    }
     _helpBarButton = [[UIBarButtonItem alloc]
                       initWithCustomView:helpButton];
     
@@ -211,6 +232,46 @@ enum popover_enum {
     
 }
 
+- (void) removeAdView {
+    if (_adImageView != nil) {
+        [_adImageView removeFromSuperview];
+        _adImageView = nil;
+    }
+}
+
+- (void) showAdView {
+    
+    if (_adImageView != nil) {
+        [_adImageView removeFromSuperview];
+        _adImageView = nil;
+    }
+    
+    _adImageView = [[UIImageView alloc] init];
+    [_adImageView setContentMode:UIViewContentModeScaleAspectFill];
+    _adImageView.autoresizingMask = UIViewAutoresizingNone;
+    _adImageView.clipsToBounds = YES;
+    _adImageView.frame = CGRectMake(25, CGRectGetMaxY(self.view.frame) - 130, CGRectGetWidth(self.view.frame) - 50, 70);
+//    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"https://www.luxurydaily.com/wp-content/uploads/2013/01/bmw-i-concept-mobile-ad.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        if (error == nil) {
+//            _adImageView.hidden = NO;
+//        }
+//            }];
+    
+    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
+    
+    _adImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:_adImageView];
+    
+    
+    _adImageView.userInteractionEnabled = true;
+    UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPurchaseView)];
+    oneTap.numberOfTapsRequired = 1;
+    [_adImageView addGestureRecognizer:oneTap];
+    
+    
+    
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
@@ -233,6 +294,10 @@ enum popover_enum {
                 });
             }
         }
+    }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && isUserInterfaceIdiomPhone == false) {
+        [self showAdView];
     }
     
     
@@ -259,6 +324,10 @@ enum popover_enum {
     });
     
     
+}
+
+- (void) showPurchaseView {
+    [MutipleTargetHelper showPurchaseView];
 }
 
 
@@ -430,6 +499,13 @@ enum popover_enum {
 - (void)shareButtonClicked:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
     
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
     [self dismissKeyboardGlobally];
     
     if (!isUserInterfaceIdiomPhone) {
@@ -452,6 +528,15 @@ enum popover_enum {
 // on iPad, Help button only  exists on detail
 - (void)helpButtonClicked:(id) sender
 {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
+    
     [self dismissKeyboardGlobally];
     
     BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
@@ -497,6 +582,14 @@ enum popover_enum {
 
 - (void) selectCardBackgroundTemplate:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
     if ([Common isOwner:_currentPack] == FALSE) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -1126,6 +1219,10 @@ enum popover_enum {
         
         UILabel *titleLable = (UILabel *)self.navigationItem.titleView;
         [titleLable setText:_currentPack.packName];
+        
+        if (_adImageView != nil) {
+            [self.view bringSubviewToFront:_adImageView];
+        }
         
     }
     

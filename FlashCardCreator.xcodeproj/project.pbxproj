@@ -452,6 +452,8 @@
 		8840571C1CDC3F610092CAB4 /* templateScreenshot10_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A56719B00D470044C8CC /* templateScreenshot10_answer_iPad.png */; };
 		884057291CDC40BB0092CAB4 /* MutipleTargetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 884057281CDC40BB0092CAB4 /* MutipleTargetHelper.m */; };
 		8840572A1CDC40BB0092CAB4 /* MutipleTargetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 884057281CDC40BB0092CAB4 /* MutipleTargetHelper.m */; };
+		884057331CDC59C30092CAB4 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884057321CDC59C30092CAB4 /* PurchaseViewController.m */; };
+		884057341CDC59C30092CAB4 /* PurchaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884057321CDC59C30092CAB4 /* PurchaseViewController.m */; };
 		8840788A1C1FD79A00313604 /* UIImageView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 884078891C1FD79A00313604 /* UIImageView+Extensions.m */; };
 		8842A52919AFF3860044C8CC /* templateScreenshot8_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */; };
 		8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 8842A51A19AFF3860044C8CC /* templateScreenshot8_question.png */; };
@@ -811,6 +813,8 @@
 		884057231CDC3F610092CAB4 /* FlashCardCreator copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FlashCardCreator copy-Info.plist"; path = "/Users/BourneWang/Documents/Project/FlashCardCreator/FlashCardCreator copy-Info.plist"; sourceTree = "<absolute>"; };
 		884057271CDC40BB0092CAB4 /* MutipleTargetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MutipleTargetHelper.h; path = Classes/MutipleTargetHelper.h; sourceTree = "<group>"; };
 		884057281CDC40BB0092CAB4 /* MutipleTargetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MutipleTargetHelper.m; path = Classes/MutipleTargetHelper.m; sourceTree = "<group>"; };
+		884057311CDC59C30092CAB4 /* PurchaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PurchaseViewController.h; path = Classes/PurchaseViewController.h; sourceTree = "<group>"; };
+		884057321CDC59C30092CAB4 /* PurchaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PurchaseViewController.m; path = Classes/PurchaseViewController.m; sourceTree = "<group>"; };
 		884078881C1FD79A00313604 /* UIImageView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Extensions.h"; sourceTree = "<group>"; };
 		884078891C1FD79A00313604 /* UIImageView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Extensions.m"; sourceTree = "<group>"; };
 		8842A51919AFF3860044C8CC /* templateScreenshot8_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot8_question_iPad.png; path = Resources/templateScreenshot8_question_iPad.png; sourceTree = "<group>"; };
@@ -1375,6 +1379,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				884057301CDC59B50092CAB4 /* IAP */,
 				88A196721BD1C4B000A4C65C /* Parse */,
 				889C9B131BB4F11F00BE77AB /* Dropbox */,
 				887FF2B01B13F76800D998FA /* AWS */,
@@ -1732,6 +1737,15 @@
 			path = Libraries/AMPopTip;
 			sourceTree = "<group>";
 		};
+		884057301CDC59B50092CAB4 /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				884057311CDC59C30092CAB4 /* PurchaseViewController.h */,
+				884057321CDC59C30092CAB4 /* PurchaseViewController.m */,
+			);
+			name = IAP;
+			sourceTree = "<group>";
+		};
 		885C3DBC19260BD70090F63C /* Background */ = {
 			isa = PBXGroup;
 			children = (
@@ -1921,6 +1935,7 @@
 				2DCE0B0516798E04007A8CAD /* Resources */,
 				889DD7BD184D321900D99C56 /* ShellScript */,
 				146131C688B1A7C98795391E /* Copy Pods Resources */,
+				0DA85D56C4C2D08576552C2C /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2300,6 +2315,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0DA85D56C4C2D08576552C2C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		146131C688B1A7C98795391E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2486,6 +2516,7 @@
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
 				881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */,
 				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
+				884057331CDC59C30092CAB4 /* PurchaseViewController.m in Sources */,
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,
 				881DDCE31BA908C3005EFE21 /* DALabeledCircularProgressView.m in Sources */,
 				88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */,
@@ -2600,6 +2631,7 @@
 				8840565B1CDC3F610092CAB4 /* Emoticon.m in Sources */,
 				8840565C1CDC3F610092CAB4 /* DACircularProgressView.m in Sources */,
 				8840565D1CDC3F610092CAB4 /* EmoticonGridView.m in Sources */,
+				884057341CDC59C30092CAB4 /* PurchaseViewController.m in Sources */,
 				8840565E1CDC3F610092CAB4 /* EmoticonHelper.m in Sources */,
 				8840565F1CDC3F610092CAB4 /* DALabeledCircularProgressView.m in Sources */,
 				884056601CDC3F610092CAB4 /* EmoticonSelectionViewController.m in Sources */,
@@ -2762,8 +2794,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
-				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2806,8 +2838,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
-				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2852,10 +2884,10 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFCPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
-				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2901,10 +2933,10 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFCPlay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e98e33dd-b9fa-40b4-8917-a865472157fe";
-				"PROVISIONING_PROFILE[sdk=*]" = "e98e33dd-b9fa-40b4-8917-a865472157fe";
+				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

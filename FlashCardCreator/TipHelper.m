@@ -7,6 +7,7 @@
 //
 
 #import "TipHelper.h"
+#import "MutipleTargetHelper.h"
 
 @interface TipHelper ()
 
@@ -416,6 +417,11 @@
 }
 
 - (void) showTipForRightNaviBarItemHelpInView:(UIView *)view fromFrame:(CGRect) frame {
+    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        return;
+    }
+    
     
     if ([_popTipRightNaviBarItemHelp isVisible]) {
         return;

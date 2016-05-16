@@ -12,6 +12,7 @@
 
 + (BOOL) isFullVersion;
 + (void) showAlertToUpgradeToFullVersion;
++ (void) showPurchaseView;
 + (void) setFullVersionFlag:(BOOL) flag;
 
 @end

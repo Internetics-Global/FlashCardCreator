@@ -55,6 +55,9 @@ PODS:
     - Bolts/Tasks (~> 1.2)
     - Parse (~> 1.8)
   - Reachability (3.2)
+  - RMStore (0.7.1):
+    - RMStore/Core (= 0.7.1)
+  - RMStore/Core (0.7.1)
   - RNCryptor (2.2)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
@@ -73,6 +76,7 @@ DEPENDENCIES:
   - ParseTwitterUtils
   - ParseUI
   - Reachability
+  - RMStore (~> 0.7)
   - RNCryptor
   - SDWebImage
 
@@ -91,7 +95,8 @@ SPEC CHECKSUMS:
   ParseTwitterUtils: af5c073b0750519b9efb33c3069a161cdeafe433
   ParseUI: 8a22e448c03f825203d8c379c80523517f68baa3
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

@@ -7,6 +7,7 @@
 //
 
 #import "PackListFirstCell.h"
+#import "MutipleTargetHelper.h"
 
 @implementation PackListFirstCell
 
@@ -19,7 +20,14 @@
         self.addNewPackImageView.contentMode = UIViewContentModeScaleAspectFit;
         self.addNewPackImageView.layer.cornerRadius = 10;
         self.addNewPackImageView.layer.masksToBounds = YES;
-        self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
+        
+        if ([MutipleTargetHelper isFullVersion]) {
+            self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
+        } else {
+            self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
+            self.addNewPackImageView.alpha = 0.05;
+        }
+        
         [self.contentView addSubview:self.addNewPackImageView];
         
         UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, 250, 30)];
@@ -27,7 +35,15 @@
         desLabel.font = [UIFont boldSystemFontOfSize:20];
         desLabel.text = NSLocalizedString(@"Title_Add_A_New_Pack",@"");
         desLabel.numberOfLines = 1;
-        desLabel.textColor = [UIColor whiteColor];
+        
+        if ([MutipleTargetHelper isFullVersion]) {
+            desLabel.textColor = [UIColor whiteColor];
+            desLabel.alpha = 1;
+        } else {
+            desLabel.textColor = [UIColor darkGrayColor];
+            desLabel.alpha = 0.3;
+        }
+        
         desLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:desLabel];
         

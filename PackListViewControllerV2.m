@@ -20,6 +20,7 @@
 #import "PlayViewControllerV2.h"
 #import "PopoverView.h"
 #import "Base64.h"
+#import "MutipleTargetHelper.h"
 
 @interface PackListViewControllerV2() <UITextFieldDelegate, UINavigationControllerDelegate,UIAlertViewDelegate,PopoverViewDelegate> {
 
@@ -71,6 +72,14 @@
     //Don't need the back button when on iPad
     
     _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [_editBtnItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor colorWithWhite:0.3 alpha:0.3], NSForegroundColorAttributeName,
+                                                       
+                                                       nil] forState:UIControlStateNormal];
+    }
+    
+    
     
     if (isUserInterfaceIdiomPhone) {
         _backBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked)];
@@ -80,6 +89,12 @@
     }
     
     _createNewPackBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"") style:UIBarButtonItemStylePlain target:self action:@selector(createNewPackButtonClicked:)];
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [_createNewPackBtnItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor colorWithWhite:0.3 alpha:0.3], NSForegroundColorAttributeName,
+                                                       
+                                                       nil] forState:UIControlStateNormal];
+    }
     self.navigationItem.rightBarButtonItem = _createNewPackBtnItem;
     
     _currentIndex = -1;
@@ -455,6 +470,14 @@
 }
 
 - (void) editBtnItemClicked:(id)sender {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
+    
     if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
         _isCollectionViewEditing = YES;
@@ -477,6 +500,13 @@
 }
 
 - (void) createNewPackButtonClicked:(id)sender {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+#endif
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];

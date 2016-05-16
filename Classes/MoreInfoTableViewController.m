@@ -30,6 +30,9 @@
 #import "PlayOptionViewController.h"
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "PurchaseViewController.h"
+
+#import "MutipleTargetHelper.h"
 
 @interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
@@ -278,16 +281,33 @@
     } else if (indexPath.row == 8) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Dropbox_Logged_In",@"");
-        cell.textLabel.textColor = [UIColor whiteColor];
+        
+        if ([MutipleTargetHelper isFullVersion]) {
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.textLabel.alpha = 1;
+        } else {
+            cell.textLabel.textColor = [UIColor darkGrayColor];
+            cell.textLabel.alpha = 0.2;
+        }
+        
         cell.accessoryType = UITableViewCellAccessoryNone;
         UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [storageProviderSwitch addTarget:self action:@selector(dropboxLogInOutAction) forControlEvents:UIControlEventValueChanged];
+        [storageProviderSwitch addTarget:self action:@selector(dropboxLogInOutAction:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = storageProviderSwitch;
         BOOL b = [[DBSession sharedSession] isLinked];
         [storageProviderSwitch setOn:b];
         
+        if ([MutipleTargetHelper isFullVersion]) {
+            storageProviderSwitch.tintColor = [UIColor whiteColor];
+            storageProviderSwitch.thumbTintColor = [UIColor whiteColor];
+        } else {
+            storageProviderSwitch.tintColor = [UIColor lightGrayColor];
+            storageProviderSwitch.thumbTintColor = [UIColor lightGrayColor];
+        }
+        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+    
 #else
     } else if (indexPath.row == 8) {
         
@@ -319,6 +339,7 @@
     
     return cell;
 }
+
 
 
 - (void) countDownSliderValueChanged:(UISlider *) slider {
@@ -470,7 +491,28 @@
 /**
  *  仅适用于FFC_WITHOUT_SUBSCRIPTION
  */
-- (void) dropboxLogInOutAction {
+- (void) dropboxLogInOutAction:(UISwitch *) myswitch {
+    
+#ifdef TARGET_PLAY_ONLY
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        
+        myswitch.on = false;
+        
+        if (isUserInterfaceIdiomPhone) {
+            
+            [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+            
+        } else {
+            [self dismissViewControllerAnimated:true completion:^{
+                [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+            }];
+        }
+        
+        
+        return;
+    }
+#endif
+    
     if (![[DBSession sharedSession] isLinked]) {
         [DBSession sharedSession].delegate = self;
         [[DBSession sharedSession] linkFromController:self];
