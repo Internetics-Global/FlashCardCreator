@@ -247,7 +247,7 @@ enum popover_enum {
     }
     
     _adImageView = [[UIImageView alloc] init];
-    [_adImageView setContentMode:UIViewContentModeScaleAspectFill];
+    [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
     _adImageView.clipsToBounds = YES;
     _adImageView.frame = CGRectMake(25, CGRectGetMaxY(self.view.frame) - 130, CGRectGetWidth(self.view.frame) - 50, 70);
@@ -665,7 +665,7 @@ enum popover_enum {
     playViewController.currentPack = self.currentPack;
     
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
-        [Common alertViewCommon:@"Current card or pack is nil"];
+        [Common alertViewCommon:@"There are no packs loaded"];
         return;
     }
     

@@ -694,7 +694,7 @@ extern BOOL isFromNewCreatedCard;
     }
     playViewController.view.autoresizesSubviews = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
-        [Common alertViewCommon:@"Current card or pack is nil"];
+        [Common alertViewCommon:@"There are no packs loaded"];
         return;
     }
     
@@ -1102,7 +1102,7 @@ extern BOOL isFromNewCreatedCard;
     playViewController.oneOffPlayType = oneOffType;
     playViewController.currentPack = selectedPack;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
-        [Common alertViewCommon:@"Current card or pack is nil"];
+        [Common alertViewCommon:@"There are no packs loaded"];
         return;
     }
     
