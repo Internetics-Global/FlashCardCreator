@@ -14,6 +14,12 @@
 #import "RMStore.h"
 #endif
 
+typedef NS_ENUM(NSInteger, Purchase_Type) {
+    Purchase_Type_Unknown      = -1,
+    Purchase_Type_No_Ad      = 1,
+    Purchase_Type_Full   = 2
+};
+
 
 @interface PurchaseViewController () <UIWebViewDelegate> {
     BOOL _localizedPriceUpdated;
@@ -64,10 +70,11 @@
     [self.purchaseButton setTitle:@"No Ads" forState:UIControlStateNormal];
     [self.purchaseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.purchaseButton addTarget:self action:@selector(purchaseNow:) forControlEvents:UIControlEventTouchUpInside];
-    self.purchaseButton.tag = 0;
+    self.purchaseButton.tag = Purchase_Type_No_Ad;
     self.purchaseButton.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:self.purchaseButton];
     self.purchaseButton.backgroundColor = [UIColor grayColor];
+    self.purchaseButton.showsTouchWhenHighlighted = true;
     self.purchaseButton.layer.cornerRadius = 3;
     
     self.purchase2Button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -75,11 +82,12 @@
     self.purchase2Button.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     [self.purchase2Button setTitle:@"Full Version" forState:UIControlStateNormal];
     self.purchase2Button.titleLabel.font = [UIFont systemFontOfSize:13];
-    self.purchase2Button.tag = 1;
+    self.purchase2Button.tag = Purchase_Type_Full;
     [self.purchase2Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.purchase2Button addTarget:self action:@selector(purchaseNow:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.purchase2Button];
     self.purchase2Button.backgroundColor = [UIColor grayColor];
+    self.purchase2Button.showsTouchWhenHighlighted = true;
     self.purchase2Button.layer.cornerRadius = 3;
     
     self.restoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -162,13 +170,24 @@
         return;
     }
     
-    SKProduct *price1Product = [products firstObject];
-    NSString *purchase1Price = [self localizedPrice:price1Product];
-    [_purchaseButton setTitle:[NSString stringWithFormat:@"No Ads - %@ ",purchase1Price] forState:UIControlStateNormal];
     
+    SKProduct *price1Product = [products firstObject];
     SKProduct *price2Product = [products lastObject];
-    NSString *purchase2Price = [self localizedPrice:price2Product];
-    [_purchase2Button setTitle:[NSString stringWithFormat:@"Full Version - %@ ",purchase2Price] forState:UIControlStateNormal];
+    
+
+    NSString *purchase1DollarPrice;
+    NSString *purchase5DollarPrice;
+    if (price1Product.price.floatValue > price2Product.price.floatValue) {
+        purchase1DollarPrice = [self localizedPrice:price2Product];
+        purchase5DollarPrice = [self localizedPrice:price1Product];
+    } else {
+        purchase1DollarPrice = [self localizedPrice:price1Product];
+        purchase5DollarPrice = [self localizedPrice:price2Product];
+    }
+    
+    [_purchaseButton setTitle:[NSString stringWithFormat:@"No Ads - %@ ",purchase1DollarPrice] forState:UIControlStateNormal];
+    
+    [_purchase2Button setTitle:[NSString stringWithFormat:@"Full Version - %@ ",purchase5DollarPrice] forState:UIControlStateNormal];
     
     _localizedPriceUpdated = true;
     
@@ -185,11 +204,17 @@
     [[RMStore defaultStore] restoreTransactionsOnSuccess:^(NSArray *transactions){
         NSLog(@"Transactions restored");
         
-        [MutipleTargetHelper setFullVersionFlag:YES];
+        for (SKPaymentTransaction *item in transactions) {
+            if ([item.payment.productIdentifier isEqualToString:IAPProductID_1_Dollar]){
+                [MutipleTargetHelper setNoAdVersionFlag:YES];
+            } else if ([item.payment.productIdentifier isEqualToString:IAPProductID_5_Dollar]) {
+                [MutipleTargetHelper setFullVersionFlag:YES];
+            }
+        }
         
         [self dismiss];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Successfully restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Successfully restored, please restart the app to be effective" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
     } failure:^(NSError *error) {
@@ -208,6 +233,19 @@
 
 - (void) purchaseNow:(UIButton *) button {
     
+    Purchase_Type purchaseType = Purchase_Type_Unknown;
+    switch (button.tag) {
+        case Purchase_Type_No_Ad:
+            purchaseType = Purchase_Type_No_Ad;
+            break;
+        case Purchase_Type_Full:
+            purchaseType = Purchase_Type_Full;
+            break;
+            
+        default:
+            break;
+    }
+    
     if (_localizedPriceUpdated == false) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please wait for price to be fetched" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -222,19 +260,30 @@
 
     
     NSString *productIdentifier;
-    if (button.tag == 0) {
-        //0.99$
-        productIdentifier = IAPProductID_1_Dollar;
-    } else {
-        productIdentifier = IAPProductID_5_Dollar;
+    
+    switch (purchaseType) {
+        case Purchase_Type_No_Ad:
+            productIdentifier = IAPProductID_1_Dollar;
+            break;
+        case Purchase_Type_Full:
+            productIdentifier = IAPProductID_5_Dollar;
+            break;
+            
+        default:
+            break;
     }
     
-    NSString *successDest = @"Thank you for upgrading, please restart your app to be effective";
+    NSString *successDest = @"Thank you for upgrading, please restart the app to be effective";
     
     [[RMStore defaultStore] addPayment:productIdentifier success:^(SKPaymentTransaction *transaction) {
         NSLog(@"Product purchased");
         
-        [MutipleTargetHelper setFullVersionFlag:YES];
+        if ([transaction.payment.productIdentifier isEqualToString:IAPProductID_1_Dollar]){
+            [MutipleTargetHelper setNoAdVersionFlag:YES];
+        } else if ([transaction.payment.productIdentifier isEqualToString:IAPProductID_5_Dollar]) {
+            [MutipleTargetHelper setFullVersionFlag:YES];
+        }
+        
         
         [self dismiss];
         

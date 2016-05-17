@@ -494,7 +494,7 @@ enum popover_enum {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([MutipleTargetHelper isFullVersion] == false && isUserInterfaceIdiomPhone) {
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone) {
         
         [self showAdView];
     }

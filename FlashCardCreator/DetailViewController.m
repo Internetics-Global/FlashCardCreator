@@ -296,7 +296,7 @@ enum popover_enum {
         }
     }
     
-    if ([MutipleTargetHelper isFullVersion] == false && isUserInterfaceIdiomPhone == false) {
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false) {
         [self showAdView];
     }
     

@@ -11,8 +11,12 @@
 @interface MutipleTargetHelper : NSObject
 
 + (BOOL) isFullVersion;
++ (BOOL) isNoAdVersion;
+
 + (void) showAlertToUpgradeToFullVersion;
 + (void) showPurchaseView;
+
 + (void) setFullVersionFlag:(BOOL) flag;
++ (void) setNoAdVersionFlag:(BOOL) flag;
 
 @end

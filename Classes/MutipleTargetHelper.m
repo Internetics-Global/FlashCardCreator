@@ -10,12 +10,15 @@
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "PurchaseViewController.h"
 
+#define K_Full_Version_Flag @"K_Full_Version_Flag"
+#define K_No_Ad_Version_Flag @"K_No_Ad_Version_Flag"
+
 @implementation MutipleTargetHelper
 
 + (BOOL) isFullVersion {
     
 #ifdef TARGET_PLAY_ONLY
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Full_Version_Flag"];
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Full_Version_Flag];
     return val;
 #else
     return true;
@@ -23,10 +26,31 @@
     
 }
 
+
 + (void) setFullVersionFlag:(BOOL) flag  {
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:flag  forKey:@"K_Full_Version_Flag"];
+    [defaults setBool:flag  forKey:K_Full_Version_Flag];
+    [defaults synchronize];
+    
+}
+
+
++ (BOOL) isNoAdVersion {
+    
+#ifdef TARGET_PLAY_ONLY
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_No_Ad_Version_Flag];
+    return val;
+#else
+    return true;
+#endif
+    
+}
+
++ (void) setNoAdVersionFlag:(BOOL) flag  {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:flag  forKey:K_No_Ad_Version_Flag];
     [defaults synchronize];
     
 }
