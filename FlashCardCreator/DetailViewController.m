@@ -250,6 +250,10 @@ enum popover_enum {
         _adImageView = nil;
     }
     
+    if ([MutipleTargetHelper isFullVersion] && [MutipleTargetHelper isNoAdVersion]) {
+        return;
+    }
+    
     _adImageView = [[UIImageView alloc] init];
     [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
@@ -301,7 +305,7 @@ enum popover_enum {
         }
     }
     
-    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false) {
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
         [self showAdView];
     }
     
@@ -767,6 +771,10 @@ enum popover_enum {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
             [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
         }
+    }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
+        [self showAdView];
     }
 }
 
@@ -1236,6 +1244,10 @@ enum popover_enum {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
             [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
         }
+    }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
+        [self showAdView];
     }
 }
 

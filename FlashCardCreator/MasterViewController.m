@@ -489,12 +489,17 @@ enum popover_enum {
     if (_adImageView != nil) {
         [self.view bringSubviewToFront:_adImageView];
     }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
+        
+        [self showAdView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone) {
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
         
         [self showAdView];
     }
@@ -1066,6 +1071,12 @@ extern BOOL isFromNewCreatedCard;
             [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 175, 0, 0, 0)];
         }
     }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
+        
+        [self showAdView];
+    }
+    
 }
 
 - (void) playNotification :(NSNotification *) notification {
@@ -1201,6 +1212,9 @@ extern BOOL isFromNewCreatedCard;
         [self updateRightPackInfoView];
     }
     
+    
+    
+    
 }
 
 
@@ -1216,6 +1230,10 @@ extern BOOL isFromNewCreatedCard;
     if (_adImageView != nil) {
         [_adImageView removeFromSuperview];
         _adImageView = nil;
+    }
+    
+    if ([MutipleTargetHelper isFullVersion] && [MutipleTargetHelper isNoAdVersion]) {
+        return;
     }
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];

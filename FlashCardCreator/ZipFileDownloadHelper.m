@@ -12,6 +12,7 @@
 #import "Pack.h"
 #import "Card.h"
 #import "FileOperationHelper.h"
+#import "AppDelegate.h"
 
 @implementation ZipFileDownloadHelper  {
     AFDownloadRequestOperation *_downloadOperation;
@@ -90,6 +91,9 @@
     [self.delegate downloadFail];
     //[Common alertViewCommon:[error description]];
     [Common alertViewCommon:NSLocalizedString(@"DIALOG_DOWNLOAD_CANCELLED",@"")];
+    
+    APP_DELEGATE.isDownloadingPack = false;
+    APP_DELEGATE.isDownloadingSamplePack = false;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil userInfo:nil];
 }
