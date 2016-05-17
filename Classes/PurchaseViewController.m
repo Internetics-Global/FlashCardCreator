@@ -50,6 +50,8 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
 {
     [super viewDidLoad];
     
+    self.title = @"Purchase";
+    
     _localizedPriceUpdated = false;
     
     UIBarButtonItem *rightBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
