@@ -1218,18 +1218,24 @@ extern BOOL isFromNewCreatedCard;
         _adImageView = nil;
     }
     
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
+    [imageCache clearDisk];
+    
+    
     _adImageView = [[UIImageView alloc] init];
     [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
     _adImageView.clipsToBounds = YES;
     _adImageView.frame = CGRectMake(IPHONE_UI_MASTER_TABLE_WIDTH + 10, CGRectGetMaxY(self.view.frame) - 90, CGRectGetWidth(self.view.frame) - IPHONE_UI_MASTER_TABLE_WIDTH - 10 *2, 50);
-//    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"https://www.luxurydaily.com/wp-content/uploads/2013/01/bmw-i-concept-mobile-ad.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        if (error == nil) {
-//            _adImageView.hidden = NO;
-//        }
-//    }];
     
-    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
+    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.flipflashcards.com/promo/upgrade.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (error == nil) {
+            _adImageView.hidden = NO;
+        }
+    }];
+//
+//    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
     
     _adImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_adImageView];

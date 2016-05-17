@@ -241,6 +241,10 @@ enum popover_enum {
 
 - (void) showAdView {
     
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
+    [imageCache clearDisk];
+    
     if (_adImageView != nil) {
         [_adImageView removeFromSuperview];
         _adImageView = nil;
@@ -251,13 +255,14 @@ enum popover_enum {
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
     _adImageView.clipsToBounds = YES;
     _adImageView.frame = CGRectMake(25, CGRectGetMaxY(self.view.frame) - 130, CGRectGetWidth(self.view.frame) - 50, 70);
-//    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"https://www.luxurydaily.com/wp-content/uploads/2013/01/bmw-i-concept-mobile-ad.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        if (error == nil) {
-//            _adImageView.hidden = NO;
-//        }
-//            }];
     
-    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
+    [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.flipflashcards.com/promo/upgrade.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (error == nil) {
+            _adImageView.hidden = NO;
+        }
+            }];
+    
+//    [_adImageView setImage:[UIImage imageNamed:@"ad_banner"]];
     
     _adImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_adImageView];

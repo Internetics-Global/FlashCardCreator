@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     self.webview =[[UIWebView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame),CGRectGetHeight(self.view.frame) - 57)];
     NSString *url=@"http://www.flipflashcards.com/promo/index.html";
     NSURL *nsurl=[NSURL URLWithString:url];
-    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
     [self.webview loadRequest:nsrequest];
     self.webview.delegate = self;
     self.webview.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
