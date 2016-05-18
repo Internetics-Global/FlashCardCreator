@@ -250,7 +250,7 @@ enum popover_enum {
         _adImageView = nil;
     }
     
-    if ([MutipleTargetHelper isFullVersion] && [MutipleTargetHelper isNoAdVersion]) {
+    if ([MutipleTargetHelper isFullVersion] || [MutipleTargetHelper isNoAdVersion]) {
         return;
     }
     
