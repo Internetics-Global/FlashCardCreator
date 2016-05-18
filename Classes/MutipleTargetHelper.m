@@ -58,7 +58,7 @@
 + (void) showAlertToUpgradeToFullVersion {
     
     
-    [UIAlertView bk_showAlertViewWithTitle:@"This is a FlipFashCard PRO function" message:@"You can upgrade the app to get it!" cancelButtonTitle:@"Not yet" otherButtonTitles:@[@"More details"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:@"This is a FlipFlashCard PRO function" message:@"You can upgrade the app to get it!" cancelButtonTitle:@"Not yet" otherButtonTitles:@[@"More details"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         
         if (buttonIndex == 0) {
             //cancel button
