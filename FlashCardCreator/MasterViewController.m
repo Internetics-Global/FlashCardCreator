@@ -244,12 +244,7 @@ enum popover_enum {
                                               initWithCustomView:playButton];
         
         
-        UIButton *shareButton;
-        if ([MutipleTargetHelper isFullVersion]) {
-            shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
-        } else {
-            shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button_dimmed.png"] target:self action:@selector(shareButtonClicked:)];
-        }
+        UIButton *shareButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)];
         
         shareButton.contentEdgeInsets = UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset);
         [shareButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, K_Navigation_Item_Inset_Offset, 0, -K_Navigation_Item_Inset_Offset)];
@@ -327,8 +322,10 @@ enum popover_enum {
         
         if ([MutipleTargetHelper isFullVersion]) {
             [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
+            _addCardButton.hidden = false;
         } else {
             [_addCardButton setImage:[UIImage imageNamed:@"plus_button_dimmed.png"] forState:UIControlStateNormal];
+            _addCardButton.hidden = true;
         }
         _addCardButton.showsTouchWhenHighlighted = YES;
         [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
@@ -711,13 +708,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (void)shareButtonClicked:(id) sender {
-    
-#ifdef TARGET_PLAY_ONLY
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-        return;
-    }
-#endif
     
     PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
                                                                         inView:self.navigationController.view
@@ -2911,6 +2901,7 @@ extern BOOL isFromNewCreatedCard;
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
+        
                 
                 __weak __typeof(&*self)weakSelf = self;
                 
@@ -2945,6 +2936,13 @@ extern BOOL isFromNewCreatedCard;
                 break;
             }
             case 1: {
+                
+#ifdef TARGET_PLAY_ONLY
+                if ([MutipleTargetHelper isFullVersion] == false) {
+                    [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+                    return;
+                }
+#endif
                 
                 if (_currentPack.isAllowShare && _currentCard) {
 #ifdef FFC_WITHOUT_SUBSCRIPTION

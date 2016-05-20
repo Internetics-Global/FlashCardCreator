@@ -180,14 +180,8 @@ enum popover_enum {
     UIBarButtonItem *playBarButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:playButton];
     
-    UIBarButtonItem *shareBarButton;
-    if ([MutipleTargetHelper isFullVersion]) {
-        shareBarButton = [[UIBarButtonItem alloc]
-                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
-    } else {
-        shareBarButton = [[UIBarButtonItem alloc]
-                          initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button_dimmed.png"] target:self action:@selector(shareButtonClicked:)]];
-    }
+    UIBarButtonItem *shareBarButton = [[UIBarButtonItem alloc]
+                                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"share_button.png"] target:self action:@selector(shareButtonClicked:)]];
     
     UIButton *helpButton;
     if ([MutipleTargetHelper isFullVersion]) {
@@ -507,13 +501,6 @@ enum popover_enum {
 
 - (void)shareButtonClicked:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
-    
-#ifdef TARGET_PLAY_ONLY
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-        return;
-    }
-#endif
     
     [self dismissKeyboardGlobally];
     
@@ -934,6 +921,14 @@ enum popover_enum {
                 break;
             }
             case 1: {
+                
+                
+#ifdef TARGET_PLAY_ONLY
+                if ([MutipleTargetHelper isFullVersion] == false) {
+                    [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+                    return;
+                }
+#endif
                 
                 if (_currentPack.isAllowShare) {
                     
