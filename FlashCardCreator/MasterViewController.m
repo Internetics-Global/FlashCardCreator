@@ -709,11 +709,21 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)shareButtonClicked:(id) sender {
     
-    PopoverView *shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                                        inView:self.navigationController.view
-                                                                     withTitle:NSLocalizedString(@"Label_Please_Select",@"")
-                                                               withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
-                                                                      delegate:self];
+    PopoverView *shareSelectPopupPopoverView;
+    if ([MutipleTargetHelper isFullVersion]) {
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                 inView:self.navigationController.view
+                              withTitle:NSLocalizedString(@"Label_Please_Select",@"")
+                        withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
+                               delegate:self];
+    } else {
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
+                                                               inView:self.navigationController.view
+                                                            withTitle:NSLocalizedString(@"Label_Please_Select",@"")
+                                                      withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), nil]
+                                                             delegate:self];
+    }
+    
     shareSelectPopupPopoverView.tag = popover_enum_share;
     
     
