@@ -31,11 +31,40 @@
 
 #import <DropboxSDK/DropboxSDK.h>
 
+#import "MutipleTargetHelper.h"
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    /**
+     *  This should be before [SQLiteHelper verifyDatabase]
+     *  In version 1x, it's paid version
+     *  From 2.x, it's IAP version
+     */
+    {
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        
+        //check only once
+        if ([standardUserDefaults objectForKey:@"K_Upgrade_From_Paid_To_IAP"] == nil) {
+            
+            if ([SQLiteHelper tableExists:@"Packs_Tables"]) {
+                
+                //it's upgraded from 1.x to 2.x
+                [MutipleTargetHelper setFullVersionFlag:YES];
+                
+            }
+            
+            [standardUserDefaults setObject:@"PLACEHOLDER" forKey:@"K_Upgrade_From_Paid_To_IAP"];
+            
+        }
+        
+    }
+    
+    
+    
     [self setupLog];
     
     self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];

@@ -15,15 +15,11 @@
 
 @implementation MutipleTargetHelper
 
+
 + (BOOL) isFullVersion {
     
-    
-#ifdef TARGET_PLAY_ONLY
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Full_Version_Flag];
     return val;
-#else
-    return true;
-#endif
     
 }
 
@@ -39,12 +35,8 @@
 
 + (BOOL) isNoAdVersion {
     
-#ifdef TARGET_PLAY_ONLY
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_No_Ad_Version_Flag];
     return val;
-#else
-    return true;
-#endif
     
 }
 

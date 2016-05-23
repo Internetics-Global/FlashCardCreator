@@ -517,12 +517,10 @@ enum popover_enum {
 
 - (void) createNewPack:(id)sender {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     
     CreateEditPackViewController2 * createPackController;
@@ -583,12 +581,10 @@ enum popover_enum {
 - (void)createNewCard:(id)sender
 {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
 
     if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_NOT_ALLOW_CREATE_CARD_THAT_IS_NOT_YOU",@"")];
@@ -740,12 +736,10 @@ extern BOOL isFromNewCreatedCard;
 - (void)helpButtonClicked:(id) sender
 {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     
     BOOL isNotAllowShowTooltip_Master = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Master_Not_Allow];
@@ -781,12 +775,10 @@ extern BOOL isFromNewCreatedCard;
 - (void)editButtonClicked:(id) sender
 {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     
     if (![Common isOwner:_currentPack]) {
@@ -2947,12 +2939,10 @@ extern BOOL isFromNewCreatedCard;
             }
             case 1: {
                 
-#ifdef TARGET_PLAY_ONLY
                 if ([MutipleTargetHelper isFullVersion] == false) {
                     [MutipleTargetHelper showAlertToUpgradeToFullVersion];
                     return;
                 }
-#endif
                 
                 if (_currentPack.isAllowShare && _currentCard) {
 #ifdef FFC_WITHOUT_SUBSCRIPTION

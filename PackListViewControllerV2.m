@@ -471,12 +471,10 @@
 
 - (void) editBtnItemClicked:(id)sender {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
@@ -501,12 +499,10 @@
 
 - (void) createNewPackButtonClicked:(id)sender {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popViewControllerAnimated:YES];

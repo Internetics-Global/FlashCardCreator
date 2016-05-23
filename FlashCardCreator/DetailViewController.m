@@ -538,12 +538,10 @@ enum popover_enum {
 - (void)helpButtonClicked:(id) sender
 {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     
     [self dismissKeyboardGlobally];
@@ -592,12 +590,10 @@ enum popover_enum {
 - (void) selectCardBackgroundTemplate:(id) sender {
     [iConsole info:@"%s",__FUNCTION__];
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
         return;
     }
-#endif
     
     if ([Common isOwner:_currentPack] == FALSE) {
         
@@ -936,12 +932,10 @@ enum popover_enum {
             case 1: {
                 
                 
-#ifdef TARGET_PLAY_ONLY
                 if ([MutipleTargetHelper isFullVersion] == false) {
                     [MutipleTargetHelper showAlertToUpgradeToFullVersion];
                     return;
                 }
-#endif
                 
                 if (_currentPack.isAllowShare) {
                     

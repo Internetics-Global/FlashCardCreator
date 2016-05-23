@@ -493,7 +493,6 @@
  */
 - (void) dropboxLogInOutAction:(UISwitch *) myswitch {
     
-#ifdef TARGET_PLAY_ONLY
     if ([MutipleTargetHelper isFullVersion] == false) {
         
         myswitch.on = false;
@@ -511,7 +510,6 @@
         
         return;
     }
-#endif
     
     if (![[DBSession sharedSession] isLinked]) {
         [DBSession sharedSession].delegate = self;
