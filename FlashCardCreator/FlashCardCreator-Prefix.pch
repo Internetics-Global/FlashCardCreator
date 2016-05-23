@@ -220,8 +220,11 @@
 
 #define K_AppStore_Link                     @"https://itunes.apple.com/au/app/id1074183551?mt=8"
 
+//test environment with bundle id = com.flipflash.FFCIAPTEST
+//#define IAPProductID_1_Dollar   @"3141592653511"
+//#define IAPProductID_5_Dollar   @"3141234354"
+#define IAPProductID_1_Dollar   @"com.flipflash.FlipFlashCards.removeads"
+#define IAPProductID_5_Dollar   @"com.flipflash.FlipFlashCards.full"
 
-#define IAPProductID_1_Dollar   @"3141592653511"
-#define IAPProductID_5_Dollar   @"3141234354"
 
 
