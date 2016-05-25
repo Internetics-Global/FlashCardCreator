@@ -79,6 +79,7 @@
     [self.view addGestureRecognizer:fiveTap];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -131,10 +132,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    int offset = 0;
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        offset = 1;
+    }
+    
 #ifdef FFC_WITHOUT_SUBSCRIPTION
-    return 9;
+    return 9 + offset;
 #else
-    return 10;
+    return 10 + offset;
 #endif
 }
 
@@ -306,6 +312,11 @@
         }
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (indexPath.row == 9) {
+        
+        cell.textLabel.text = NSLocalizedString(@"Upgrade",nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
     }
     
 #else
@@ -321,13 +332,18 @@
         [storageProviderSwitch setOn:b];
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 9) {
-        if ([PFUser currentUser]) {
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
-        } else {
-            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_In_Social_Network",@"");
-        }
+//    } else if (indexPath.row == 9) {
+//        if ([PFUser currentUser]) {
+//            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
+//        } else {
+//            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_In_Social_Network",@"");
+//        }
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else if (NSIndexPath == 9) {
+        
+        cell.textLabel.text = NSLocalizedString(@"Upgrade",nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
     }
 #endif
     
@@ -395,71 +411,76 @@
     if (indexPath.row == 3) {
         AboutViewController *about = [[AboutViewController alloc] init];
         [self.navigationController pushViewController:about animated:YES];
+//    } else if (indexPath.row == 9) {
+//        
+//        if ([PFUser currentUser]) {
+//            [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+//                if (error) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+//                        [alertView show];
+//                        
+//                    });
+//                } else {
+//                    if (isUserInterfaceIdiomPhone == false) {
+//                        [self dismissViewControllerAnimated:YES completion:nil];
+//                    }
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        
+//                        [weakSelf.tableView reloadData];
+//                    
+//                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+//                        [alertView show];
+//                        
+//                    });
+//                }
+//            }];
+//            
+//            
+//        } else {
+//            
+//            PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
+//            logInController.fields = (PFLogInFieldsUsernameAndPassword
+//                                      | PFLogInFieldsLogInButton
+//                                      | PFLogInFieldsPasswordForgotten
+//                                      | PFLogInFieldsFacebook
+//                                      | PFLogInFieldsTwitter
+//                                      | PFLogInFieldsSignUpButton
+//                                      | PFLogInFieldsDismissButton);
+//            logInController.fromSetting = YES;
+//            
+//            logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
+//                                                       | PFSignUpFieldsEmail
+//                                                       | PFSignUpFieldsAdditional
+//                                                       | PFSignUpFieldsDismissButton
+//                                                       | PFSignUpFieldsSignUpButton);
+//            
+//            logInController.signUpController.fromSetting = YES;
+//            
+//            
+//            if (isUserInterfaceIdiomPhone) {
+//                logInController.signUpController.delegate = self;
+//                logInController.delegate = self;
+//                [self presentViewController:logInController animated:YES completion:nil];
+//            } else {
+//                logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
+//                logInController.delegate = APP_DELEGATE.masterViewController;
+//                [self dismissViewControllerAnimated:YES completion:^{
+//                    
+//                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
+//                    
+//                }];
+//            }
+//            
+//            
+//            APP_DELEGATE.isAllowToShowPackList = NO;
+//        }
+        
     } else if (indexPath.row == 9) {
-        
-        if ([PFUser currentUser]) {
-            [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-                if (error) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-                        [alertView show];
-                        
-                    });
-                } else {
-                    if (isUserInterfaceIdiomPhone == false) {
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [weakSelf.tableView reloadData];
-                    
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_OUT_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-                        [alertView show];
-                        
-                    });
-                }
-            }];
-            
-            
-        } else {
-            
-            PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
-            logInController.fields = (PFLogInFieldsUsernameAndPassword
-                                      | PFLogInFieldsLogInButton
-                                      | PFLogInFieldsPasswordForgotten
-                                      | PFLogInFieldsFacebook
-                                      | PFLogInFieldsTwitter
-                                      | PFLogInFieldsSignUpButton
-                                      | PFLogInFieldsDismissButton);
-            logInController.fromSetting = YES;
-            
-            logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
-                                                       | PFSignUpFieldsEmail
-                                                       | PFSignUpFieldsAdditional
-                                                       | PFSignUpFieldsDismissButton
-                                                       | PFSignUpFieldsSignUpButton);
-            
-            logInController.signUpController.fromSetting = YES;
-            
-            
-            if (isUserInterfaceIdiomPhone) {
-                logInController.signUpController.delegate = self;
-                logInController.delegate = self;
-                [self presentViewController:logInController animated:YES completion:nil];
-            } else {
-                logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
-                logInController.delegate = APP_DELEGATE.masterViewController;
-                [self dismissViewControllerAnimated:YES completion:^{
-                    
-                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
-                    
-                }];
-            }
-            
-            
-            APP_DELEGATE.isAllowToShowPackList = NO;
+        if (isUserInterfaceIdiomPhone == false) {
+            [self dismissViewControllerAnimated:false completion:nil];
         }
-        
+        [MutipleTargetHelper showPurchaseView];
     } else if (indexPath.row == 0) {
         PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
