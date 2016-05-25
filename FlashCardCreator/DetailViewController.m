@@ -39,6 +39,8 @@
 #import "TipHelper.h"
 #import "MutipleTargetHelper.h"
 
+#import "PurchaseViewController.h"
+
 enum template_color_enum {
     template_color_enum_blue = 0,
     template_color_enum_coffee = 1,
@@ -105,6 +107,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCancelledNotification:) name:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapPurchaseSuccessNotification:) name:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil];
+        
         if (isUserInterfaceIdiomPhone == false) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
@@ -164,6 +168,24 @@ enum popover_enum {
     [iConsole info:@"%s",__FUNCTION__];
     [super loadView];
     
+    [self setupNaviBarButtonItems];
+    
+    _scrollView = [[UIScrollView alloc] init];
+    _scrollView.delegate = self;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.clipsToBounds = YES;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.bounces = YES;
+    _scrollView.backgroundColor =[UIColor clearColor];
+    [self.view addSubview:_scrollView];
+    
+    _scrollView.scrollEnabled = false;
+    
+}
+
+- (void) setupNaviBarButtonItems {
+    
     UIButton *templateBackgroundSelectButton;
     if ([MutipleTargetHelper isFullVersion]) {
         templateBackgroundSelectButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"template_background_change_button.png"] target:self action:@selector(selectCardBackgroundTemplate:)];
@@ -211,19 +233,6 @@ enum popover_enum {
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"ToolbarItem_Back", nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)];
         self.navigationItem.leftBarButtonItem = backButton;
     }
-    
-    _scrollView = [[UIScrollView alloc] init];
-    _scrollView.delegate = self;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.clipsToBounds = YES;
-    _scrollView.pagingEnabled = YES;
-    _scrollView.bounces = YES;
-    _scrollView.backgroundColor =[UIColor clearColor];
-    [self.view addSubview:_scrollView];
-    
-    _scrollView.scrollEnabled = false;
-    
 }
 
 - (void) removeAdView {
@@ -614,6 +623,8 @@ enum popover_enum {
 
 - (void)moreButtonClicked:(id) sender
 {
+    
+    
     [iConsole info:@"%s",__FUNCTION__];
     
     [self dismissKeyboardGlobally];
@@ -757,6 +768,16 @@ enum popover_enum {
     _currentPack.shareLink = shareLink;
     
     [self updateRightPackInfoView];
+}
+
+- (void) iapPurchaseSuccessNotification:(NSNotification *) notification {
+    
+    if (isUserInterfaceIdiomPhone == false) {
+        [self removeAdView];
+    }
+    
+    [self setupNaviBarButtonItems];
+    
 }
 
 

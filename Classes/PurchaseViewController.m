@@ -209,8 +209,10 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
         for (SKPaymentTransaction *item in transactions) {
             if ([item.payment.productIdentifier isEqualToString:IAPProductID_1_Dollar]){
                 [MutipleTargetHelper setNoAdVersionFlag:YES];
+                [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
             } else if ([item.payment.productIdentifier isEqualToString:IAPProductID_5_Dollar]) {
                 [MutipleTargetHelper setFullVersionFlag:YES];
+                [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
             }
         }
         
@@ -282,8 +284,10 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
         
         if ([transaction.payment.productIdentifier isEqualToString:IAPProductID_1_Dollar]){
             [MutipleTargetHelper setNoAdVersionFlag:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
         } else if ([transaction.payment.productIdentifier isEqualToString:IAPProductID_5_Dollar]) {
             [MutipleTargetHelper setFullVersionFlag:YES];
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
         }
         
         

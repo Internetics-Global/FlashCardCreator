@@ -67,6 +67,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MutipleTargetHelper.h"
 
+#import "PurchaseViewController.h"
+
 
 /**
  ** Calibration
@@ -154,6 +156,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCancelledNotification:) name:PARSE_DOWNLOADED_PACK_CANCEL_NOTIFICATION object:nil];
         
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapPurchaseSuccessNotification:) name:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil];
+        
         if (isUserInterfaceIdiomPhone == false) {
             //在iPhone中，不需要这逻辑
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
@@ -202,6 +206,31 @@ enum popover_enum {
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view insertSubview:self.tableView atIndex:0];
+    
+    [self setupNaviBarButtonItems];
+    
+    
+    if (isUserInterfaceIdiomPhone) {
+        //        self.title = _currentPack.packName;
+        
+        //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
+        //        label.font = [UIFont boldSystemFontOfSize:16.0];
+        //        label.textAlignment = NSTextAlignmentLeft;
+        //        label.backgroundColor = [UIColor clearColor];
+        //        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        //
+        //        label.textColor = [UIColor whiteColor]; // change this color
+        //        label.text = _currentPack.packName;
+        //        [self.navigationItem setTitleView:label];
+        
+    }
+    [self.tableView reloadData];
+    
+    
+}
+
+
+- (void) setupNaviBarButtonItems {
     
     UIButton *selectPackButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"packs_button.png"] target:self action:@selector(selectAvailablePacks:)];
     _selectPackBarButton = [[UIBarButtonItem alloc]
@@ -274,24 +303,6 @@ enum popover_enum {
         @[playBarButtonItem,shareBarButtonItem,settingBarButtonItem,helpBarButtonItem];
     }
     
-    
-    if (isUserInterfaceIdiomPhone) {
-        //        self.title = _currentPack.packName;
-        
-        //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 29)];
-        //        label.font = [UIFont boldSystemFontOfSize:16.0];
-        //        label.textAlignment = NSTextAlignmentLeft;
-        //        label.backgroundColor = [UIColor clearColor];
-        //        label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-        //
-        //        label.textColor = [UIColor whiteColor]; // change this color
-        //        label.text = _currentPack.packName;
-        //        [self.navigationItem setTitleView:label];
-        
-    }
-    [self.tableView reloadData];
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -327,6 +338,7 @@ enum popover_enum {
             [_addCardButton setImage:[UIImage imageNamed:@"plus_button_dimmed.png"] forState:UIControlStateNormal];
             _addCardButton.hidden = true;
         }
+        
         _addCardButton.showsTouchWhenHighlighted = YES;
         [_addCardButton addTarget:self action:@selector(createNewCard:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -1054,6 +1066,26 @@ extern BOOL isFromNewCreatedCard;
         [self showTooltips];
         
     }
+}
+
+
+
+- (void) iapPurchaseSuccessNotification: (NSNotification *) notification {
+    
+    if ([MutipleTargetHelper isFullVersion]) {
+        [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
+        _addCardButton.hidden = false;
+    } else {
+        [_addCardButton setImage:[UIImage imageNamed:@"plus_button_dimmed.png"] forState:UIControlStateNormal];
+        _addCardButton.hidden = true;
+    }
+    
+    [self setupNaviBarButtonItems];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self removeAdView];
+    }
+    
 }
 
 - (void) downloadCancelledNotification: (NSNotification *) notification {
