@@ -247,7 +247,11 @@ enum popover_enum {
                                              initWithCustomView:newPackButton];
     
     
-    _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    if ([MutipleTargetHelper isFullVersion]) {
+        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
+    } else {
+        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button_dimmed.png"] target:self action:@selector(editButtonClicked:)];
+    }
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
@@ -782,7 +786,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)editButtonClicked:(id) sender
 {
-    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
     
     if (![Common isOwner:_currentPack]) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
