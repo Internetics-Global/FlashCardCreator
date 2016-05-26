@@ -1220,6 +1220,12 @@ extern BOOL isFromNewCreatedCard;
         [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self.detailViewController showPackInfoView];
         //[self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        
+        //ffc sample card must be named as ffc sample cards
+        if ([self.currentPack.packName.lowercaseString rangeOfString:@"ffc sample cards"].location != NSNotFound ) {
+            [self selectAvailablePacks:nil];
+        }
+        
     } else {
         
         [self selectAvailablePacks:nil];
