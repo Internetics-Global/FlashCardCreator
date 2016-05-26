@@ -1099,6 +1099,10 @@ extern BOOL isFromNewCreatedCard;
         [self showAdView];
     }
     
+    if (isUserInterfaceIdiomPhone == false) {
+        [self selectAvailablePacks:nil];
+    }
+    
 }
 
 - (void) playNotification :(NSNotification *) notification {
