@@ -56,6 +56,8 @@
 
 #import "UITextField+AutoResizeFont.h"
 
+#import "MutipleTargetHelper.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -1709,28 +1711,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     //是否显示soundButton的逻辑
-    if (_segmentedControl.selectedSegmentIndex == 0) {
+    if ([MutipleTargetHelper isFullVersion]) {
         
-        if (_isPlayingCard) {
-            if (_currentCard.question.recordedSoundFullPath.length > 0) {
-                self.functionAreaView.hidden = NO;
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            
+            if (_isPlayingCard) {
+                if (_currentCard.question.recordedSoundFullPath.length > 0) {
+                    self.functionAreaView.hidden = NO;
+                } else {
+                    self.functionAreaView.hidden = YES;
+                }
             } else {
-                self.functionAreaView.hidden = YES;
+                self.functionAreaView.hidden = NO;
             }
+            
         } else {
-            self.functionAreaView.hidden = NO;
+            if (_isPlayingCard) {
+                if (_currentCard.answer.recordedSoundFullPath.length > 0) {
+                    self.functionAreaView.hidden = NO;
+                } else {
+                    self.functionAreaView.hidden = YES;
+                }
+            } else {
+                self.functionAreaView.hidden = NO;
+            }
         }
-        
     } else {
-        if (_isPlayingCard) {
-            if (_currentCard.answer.recordedSoundFullPath.length > 0) {
-                self.functionAreaView.hidden = NO;
-            } else {
-                self.functionAreaView.hidden = YES;
-            }
-        } else {
-            self.functionAreaView.hidden = NO;
-        }
+        
+        self.functionAreaView.hidden = YES;
+    }
+    
+    if ([MutipleTargetHelper isFullVersion]) {
+        _segmentedControl.hidden = NO;
+    } else {
+        _segmentedControl.hidden = YES;
     }
     
     if (isUserInterfaceIdiomPhone) {
