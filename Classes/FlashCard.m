@@ -9643,17 +9643,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [_recordingBackgroundMaskView removeFromSuperview];
             }
             
+            
+            
             [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_recordingBackgroundMaskView];
             
             __block int COUNTDOWN_SECOND_FOR_RECORDING = 30;
+            __block int COUNTDOWN_SECOND_FOR_PREPARE = 3;
+            [_recordingStopButton setTitle:[NSString stringWithFormat:@"%d",COUNTDOWN_SECOND_FOR_PREPARE] forState:UIControlStateNormal];
             _recordCountDownTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
                 
-                COUNTDOWN_SECOND_FOR_RECORDING = COUNTDOWN_SECOND_FOR_RECORDING-1;
-                [_recordingProgressView setProgress:(30-COUNTDOWN_SECOND_FOR_RECORDING)/30.0f];
-                if (COUNTDOWN_SECOND_FOR_RECORDING <= 0) {
-                    [APP_DELEGATE.recorder stop];
-                    [_recordCountDownTimer invalidate];
-                    _recordCountDownTimer = nil;
+                if (COUNTDOWN_SECOND_FOR_PREPARE == 1) {
+                    
+                    [_recordingStopButton setTitle:@"Stop" forState:UIControlStateNormal];
+                    
+                    
+                    COUNTDOWN_SECOND_FOR_RECORDING = COUNTDOWN_SECOND_FOR_RECORDING-1;
+                    [_recordingProgressView setProgress:(30-COUNTDOWN_SECOND_FOR_RECORDING)/30.0f];
+                    if (COUNTDOWN_SECOND_FOR_RECORDING <= 0) {
+                        [APP_DELEGATE.recorder stop];
+                        [_recordCountDownTimer invalidate];
+                        _recordCountDownTimer = nil;
+                    }
+                } else {
+                    
+                    COUNTDOWN_SECOND_FOR_PREPARE = COUNTDOWN_SECOND_FOR_PREPARE -1;
+                    [_recordingStopButton setTitle:[NSString stringWithFormat:@"%d",COUNTDOWN_SECOND_FOR_PREPARE] forState:UIControlStateNormal];
                 }
                 
             } repeats:YES];
