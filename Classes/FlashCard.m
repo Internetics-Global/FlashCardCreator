@@ -1741,7 +1741,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         self.functionAreaView.hidden = YES;
     }
     
-    if ([MutipleTargetHelper isFullVersion]) {
+    if ([MutipleTargetHelper isFullVersion] && _isPlayingCard == false) {
         _segmentedControl.hidden = NO;
     } else {
         _segmentedControl.hidden = YES;
