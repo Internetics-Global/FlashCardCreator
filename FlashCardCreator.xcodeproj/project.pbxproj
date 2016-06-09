@@ -217,6 +217,7 @@
 		88491B481714522300833692 /* templateScreenshot4_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88491B341714522300833692 /* templateScreenshot4_question.png */; };
 		884DE18B18FBA48A00C09067 /* video_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 884DE18A18FBA48A00C09067 /* video_default@2x.png */; };
 		884DE1AF18FBA94F00C09067 /* RequestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 884DE1AE18FBA94F00C09067 /* RequestUtils.m */; };
+		884E61021D094B39003EC638 /* PackInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 884E61011D094B39003EC638 /* PackInfoView.m */; };
 		8858064D18C9984D00490C33 /* upButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858064C18C9984C00490C33 /* upButton@2x.png */; };
 		885C3DC6192619FB0090F63C /* background2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C3DC5192619FB0090F63C /* background2@2x.png */; };
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
@@ -580,6 +581,8 @@
 		884DE18A18FBA48A00C09067 /* video_default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "video_default@2x.png"; path = "Resources/video_default@2x.png"; sourceTree = "<group>"; };
 		884DE1AD18FBA94F00C09067 /* RequestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUtils.h; sourceTree = "<group>"; };
 		884DE1AE18FBA94F00C09067 /* RequestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUtils.m; sourceTree = "<group>"; };
+		884E61001D094B39003EC638 /* PackInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackInfoView.h; path = Classes/PackInfoView.h; sourceTree = "<group>"; };
+		884E61011D094B39003EC638 /* PackInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackInfoView.m; path = Classes/PackInfoView.m; sourceTree = "<group>"; };
 		8858064C18C9984C00490C33 /* upButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "upButton@2x.png"; path = "Resources/upButton@2x.png"; sourceTree = "<group>"; };
 		885C3DC5192619FB0090F63C /* background2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background2@2x.png"; sourceTree = "<group>"; };
 		885C3DD01926281C0090F63C /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
@@ -924,6 +927,8 @@
 		2D3E9D0E167D954F0053FA31 /* Custom UIs */ = {
 			isa = PBXGroup;
 			children = (
+				884E61001D094B39003EC638 /* PackInfoView.h */,
+				884E61011D094B39003EC638 /* PackInfoView.m */,
 				2D5FCB6216DD916600DB8628 /* FCCBarButton.h */,
 				2D5FCB6316DD916600DB8628 /* FCCBarButton.m */,
 				2D5C188F16D1A7B700E1E785 /* CardCell.h */,
@@ -1903,6 +1908,7 @@
 				2D5F3D3C167ACA8C009D2ADC /* Question.m in Sources */,
 				8840788A1C1FD79A00313604 /* UIImageView+Extensions.m in Sources */,
 				2D5F3D3F167ACA9A009D2ADC /* Answer.m in Sources */,
+				884E61021D094B39003EC638 /* PackInfoView.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
