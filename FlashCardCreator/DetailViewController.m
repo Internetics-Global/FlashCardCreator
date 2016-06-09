@@ -40,6 +40,7 @@
 #import "MutipleTargetHelper.h"
 
 #import "PurchaseViewController.h"
+#import "PackInfoView.h"
 
 enum template_color_enum {
     template_color_enum_blue = 0,
@@ -56,11 +57,18 @@ enum popover_enum {
 };
 
 
-@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate>{
+@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
     
     UIImageView              *_adImageView;
+    
+    
+    /**
+     *  General pack info (like pack image and no of cards) on the right.
+     *  Only applicable for iPad (on iPad, we have the similar logic on the master view)
+     */
+    PackInfoView        *_packInfoView;
     
 }
 
@@ -328,7 +336,18 @@ enum popover_enum {
         if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
             //show pack info rather than first card
             if (isUserInterfaceIdiomPhone == FALSE) {
-                [weakSelf showPackInfoView];
+                [weakSelf setupPackInfoView];
+                
+                if (isUserInterfaceIdiomPhone == FALSE) {
+                    
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
+                        [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(weakSelf.view.frame)- 200, 0, 0, 0)];
+                    }
+                }
+                
+                if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
+                    [weakSelf showAdView];
+                }
             }
         }
         
@@ -766,7 +785,7 @@ enum popover_enum {
     NSString *shareLink = [notification object];
     _currentPack.shareLink = shareLink;
     
-    [self updateRightPackInfoView];
+    [self showPackInfoViewWithRebuildScrollView:false];
 }
 
 - (void) iapPurchaseSuccessNotification:(NSNotification *) notification {
@@ -803,7 +822,7 @@ enum popover_enum {
         return;
     }
     
-    [self updateRightPackInfoView];
+    [self showPackInfoViewWithRebuildScrollView:false];
     
     
     UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
@@ -822,7 +841,7 @@ enum popover_enum {
     UILabel *titleLabel = (UILabel *)(self.navigationItem.titleView);
     titleLabel.text = self.currentPack.packName;
     
-    [self updateRightPackInfoView];
+    [self showPackInfoViewWithRebuildScrollView:true];
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Detail_Not_Allow];
     BOOL val2 = [[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed];
@@ -833,38 +852,6 @@ enum popover_enum {
     
 }
 
-- (void) updateRightPackInfoView {
-    for (UIView *myView in [_rightPackView subviews]) {
-        if ([myView isKindOfClass:[UILabel class]]) {
-            
-            if (myView.tag == 0) {
-                
-                [(UILabel *)myView setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
-                
-            } else if (myView.tag == 1) {
-                
-                if (self.currentPack.shareLink.length >0 && [Common isOwner:_currentPack]) {
-                    myView.hidden = NO;
-                    ((UILabel *)myView).text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
-                } else {
-                    myView.hidden = YES;
-                }
-                
-                
-            }
-            
-        } else if ([myView isKindOfClass:[UIImageView class]]) {
-            
-            if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
-                ((UIImageView *)myView).image = [UIImage imageNamed:@"default_pack_cover_image"];
-            } else {
-                NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
-                ((UIImageView *)myView).image = [UIImage imageWithContentsOfFile:path];
-            }
-            
-        }
-    }
-}
 
 
 - (void) selectedPackNotification:(NSNotification *) notification {
@@ -886,6 +873,8 @@ enum popover_enum {
     if (val == FALSE && val2) {
         [self showTooltips];
     }
+    
+    [self showPackInfoViewWithRebuildScrollView:false];
 }
 
 - (void) hideNavigationBarNotification:(NSNotification *) notification {
@@ -1145,110 +1134,29 @@ enum popover_enum {
 
 
 /**
- *  Only applicable for iPad
- *  call this when:
- *  1. select any card in the left card list view
+ *  iPad only
  */
-- (void) hidePackInfoView {
-    if (_rightPackView) {
-        [_rightPackView removeFromSuperview];
-        _rightPackView = nil;
-        _scrollView.hidden = NO;
-    }
-    
-}
-
-
-/**
- *  Only applicable for iPad
- *  call this when:
- *  1. start up app
- *  2. finishing creating a new pack
- *  3. selecting an existing pack
- */
-- (void) showPackInfoView {
+- (void) setupPackInfoView {
     [iConsole info:@"%s",__FUNCTION__];
     if (isUserInterfaceIdiomPhone == FALSE) {
         
-        [_rightPackView removeFromSuperview];
-        _rightPackView = nil;
-        
-        _rightPackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-        _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        
-        _rightPackView.backgroundColor = [UIColor clearColor];
+        [_packInfoView removeFromSuperview];
+        _packInfoView = nil;
         
         _scrollView.hidden = YES;
         
+        _packInfoView = [ [PackInfoView alloc ] initWithFrame:CGRectMake(0,0, 400, 550)];
+        _packInfoView.center = self.view.center;
+        _packInfoView.delegate = self;
+        [self.view addSubview:_packInfoView];
+        [self.view bringSubviewToFront:_packInfoView];
         
-        UIImageView *rightPackImageView = [[UIImageView alloc] init];
-        rightPackImageView.frame = CGRectMake((IPAD_UI_DETAIL_WIDTH - 300)/2, 130, 400, 400);
-        rightPackImageView.autoresizingMask = UIViewAutoresizingNone;
-        rightPackImageView.layer.opacity = 0.85;
-        //        rightPackImageView.layer.shadowOpacity= 0.3;
-        //        rightPackImageView.layer.shadowColor = [UIColor greenColor].CGColor;
-        ////        rightPackImageView.layer.shadowOffset = CGSizeMake(0.f, 12.0f);
-        //        rightPackImageView.layer.shadowRadius = 20;
-        rightPackImageView.layer.masksToBounds = YES;
-        rightPackImageView.backgroundColor = [UIColor clearColor];
-        
-        [_rightPackView addSubview:rightPackImageView];
-        
-        if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
-            rightPackImageView.image = [UIImage imageNamed:@"default_pack_cover_image_transparent"];
-        } else {
-            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
-            rightPackImageView.image = [UIImage imageWithContentsOfFile:path];
-        }
-        
-        rightPackImageView.contentMode = UIViewContentModeScaleAspectFit;
-        
-        UILabel *rightPackCardNo = [[UILabel alloc] init];
-        rightPackCardNo.textColor = [UIColor whiteColor];
-        rightPackCardNo.autoresizingMask =  UIViewAutoresizingNone;
-        rightPackCardNo.backgroundColor = [UIColor clearColor];
-        rightPackCardNo.textAlignment = UITextAlignmentCenter;
-        rightPackCardNo.font = [UIFont systemFontOfSize: 24];
-        rightPackCardNo.tag = 0;
-        CGRect rect = rightPackImageView. frame;
-        rect.origin.y = rect.origin.y +rect.size.height+16;
-        rect.size.height = 25;
-        rightPackCardNo.frame = rect;
-        [_rightPackView addSubview:rightPackCardNo];
-        
-        UILabel *shareCodeLabel = [[UILabel alloc] init];
-        shareCodeLabel.textColor = [UIColor whiteColor];
-        shareCodeLabel.autoresizingMask =  UIViewAutoresizingNone;
-        shareCodeLabel.backgroundColor = [UIColor clearColor];
-        shareCodeLabel.textAlignment = UITextAlignmentCenter;
-        shareCodeLabel.font = [UIFont systemFontOfSize: 16];
-        shareCodeLabel.tag = 1;
-        rect = rightPackCardNo.frame;
-        rect.origin.y = rect.origin.y +rect.size.height+16;
-        rect.size.height = 25;
-        shareCodeLabel.frame = rect;
-        [_rightPackView addSubview:shareCodeLabel];
-        
-        if ((rightPackImageView.image != nil) && (_currentPack != nil)) {
-            [rightPackCardNo setText:[NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
-            
-            if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
-                shareCodeLabel.hidden = NO;
-                shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
-            } else {
-                shareCodeLabel.hidden = YES;
-            }
-        }
-        
-        
-        [self.view addSubview:_rightPackView];
-        
-        [self.view bringSubviewToFront:_rightPackView];
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:true];
         
         if (APP_DELEGATE.isDownloadingPack) {
-            _rightPackView.hidden = YES;
+            _packInfoView.hidden = YES;
         } else {
-            _rightPackView.hidden = NO;
+            _packInfoView.hidden = NO;
         }
         
         
@@ -1260,17 +1168,66 @@ enum popover_enum {
         }
         
     }
+
+}
+
+/**
+ *  iPad only
+ *  call this when:
+ *  1. select any card in the left card list view
+ */
+- (void) removePackInfoView {
     
-    if (isUserInterfaceIdiomPhone == FALSE) {
-        
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+    if (isUserInterfaceIdiomPhone) {
+        return;
+    }
+    
+    if (_packInfoView) {
+        [_packInfoView removeFromSuperview];
+        _packInfoView = nil;
+        _scrollView.hidden = NO;
+    }
+    
+}
+
+- (BOOL) isPackInfoViewVisible {
+    return _packInfoView.hidden == false;
+}
+
+
+/**
+ *  iPad only
+ */
+- (void) showPackInfoViewWithRebuildScrollView:(BOOL) b {
+    
+    if (self.currentPack == nil) {
+        return;
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+        return;
+    }
+    
+    //in this case, self.currentPack needs to be updated
+    NSArray *packs = [[User defaultUser] packs];
+    for (Pack *item in packs) {
+        if (item.packID == self.currentPack.packID) {
+            self.currentPack = item;
+            break;
         }
     }
     
-    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
-        [self showAdView];
+    
+    _scrollView.hidden = YES;
+    
+    if (_packInfoView == nil) {
+        [self setupPackInfoView];
+    } else {
+        _packInfoView.hidden = NO;
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:b];
     }
+    
+    
 }
 
 
@@ -1412,6 +1369,22 @@ enum popover_enum {
         
         
     }
+    
+}
+
+
+#pragma mark – PackInfoViewDelegate
+
+- (void)packInfoView:(PackInfoView *)packInfoVIew didScrollToPack:(Pack *)pack {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:pack];
+    
+    
+}
+
+- (void)playButtonClickedOnPackInfoView{
+    
+    [self playButtonClicked:nil];
     
 }
 

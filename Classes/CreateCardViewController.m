@@ -186,17 +186,15 @@ BOOL isFromNewCreatedCard = NO;
 - (void) saveAndCloseCreateCardView {
     [iConsole info:@"%s",__FUNCTION__];
     
-    //Step1: dismiss window
-    if (isUserInterfaceIdiomPhone == FALSE) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
     
-    
-    //Step2: exception dealing
+    //Step1: exception dealing
     if (_currentPack.packID == -1) {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_NEED_TO_CREATE_PACK_FIRST",@"")];
         return;
     }
+    
+    //Step2: dismiss window
+    [self.navigationController popViewControllerAnimated:YES];
     
     //Step3: Save.
     [_newCardView saveEdittedCard];

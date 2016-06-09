@@ -68,6 +68,7 @@
 #import "MutipleTargetHelper.h"
 
 #import "PurchaseViewController.h"
+#import "PackInfoView.h"
 
 
 /**
@@ -79,7 +80,7 @@ const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -93,6 +94,13 @@ const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
     
     
     UIImageView   *_adImageView;
+    
+    
+    /**
+     *  General pack info (like pack image and no of cards) on the right.
+     *  Only applicable for iPhone (on iPad, we have the similar logic on the detail view)
+     */
+    PackInfoView *_packInfoView;
     
 }
 
@@ -121,6 +129,8 @@ enum popover_enum {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         //1. Setup notification
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(packDeleteNotification:) name:PACK_DELETE_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newPackAddedNotification:) name:NEW_PACK_ADDED_NOTIFICATION object:nil];
         
@@ -346,82 +356,21 @@ enum popover_enum {
     //Update right pack information (only appliable for iPhone）
     if ((isUserInterfaceIdiomPhone) && (_currentPack.packID != -1)) {   //must be a valid pack
         
-        if (_rightPackView == nil) {
-            _rightPackView = [[UIView alloc] initWithFrame:CGRectMake((IPHONE_UI_WIDTH -150- 200)/2 + 150, IPHONE_UI_NAVIGATION_BAR_HEIGHT, 200, IPHONE_UI_HEIGHT)];
-            //            _rightPackView.backgroundColor = [UIColor redColor];
-            _rightPackView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        }
-        
-        if (_rightPackImage == nil) {
-            _rightPackImage = [[UIImageView alloc] init];
-            _rightPackImage.frame = CGRectMake(0, 0, 180, 144);
-            _rightPackImage.contentMode = UIViewContentModeScaleAspectFit;
-            _rightPackImage.center = CGPointMake(100, 110);
-            _rightPackImage.layer.cornerRadius = 5;
-            _rightPackImage.layer.masksToBounds = TRUE;
-            _rightPackImage.layer.opacity = 0.85;
-            [_rightPackView addSubview:_rightPackImage];
-        }
-        
-        if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
-            _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image"];
+        if (_packInfoView == nil) {
+            _packInfoView = [ [PackInfoView alloc ] initWithFrame:CGRectMake((IPHONE_UI_WIDTH -150- 180)/2 + 150, 10, 180, IPHONE_UI_HEIGHT)];
+            _packInfoView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+            _packInfoView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+            [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:true];
+            _packInfoView.delegate = self;
         } else {
-            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
-            _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
+            [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:false];
         }
         
         
-        if (_rightPackCardTitle == nil) {
-            _rightPackCardTitle = [[UILabel alloc] init];
-            _rightPackCardTitle.textColor = [UIColor whiteColor];
-            _rightPackCardTitle.backgroundColor = [UIColor clearColor];
-            _rightPackCardTitle.textAlignment = NSTextAlignmentCenter;
-            _rightPackCardTitle.font = [UIFont systemFontOfSize: 14];
-            CGRect rect = CGRectMake(CGRectGetMinX(_rightPackImage.frame), CGRectGetMinY(_rightPackImage.frame) - 30, CGRectGetWidth(_rightPackImage.frame), 30);
-            _rightPackCardTitle.frame = rect;
-            [_rightPackView addSubview:_rightPackCardTitle];
-            [_rightPackCardTitle setText:self.currentPack.packName];
-        }
-        
-        
-        if (_rightPackCardNo == nil) {
-            _rightPackCardNo = [[UILabel alloc] init];
-            _rightPackCardNo.textColor = [UIColor whiteColor];
-            _rightPackCardNo.backgroundColor = [UIColor clearColor];
-            _rightPackCardNo.textAlignment = NSTextAlignmentCenter;
-            _rightPackCardNo.font = [UIFont systemFontOfSize: 14];
-            CGRect rect = _rightPackImage. frame;
-            rect.origin.y = rect.origin.y +rect.size.height+16;
-            rect.size.height = 15;
-            _rightPackCardNo.frame = rect;
-            [_rightPackView addSubview:_rightPackCardNo];
-        }
-        
-        if (_shareCodeLabel == nil) {
-            _shareCodeLabel = [[UILabel alloc] init];
-            _shareCodeLabel.textColor = [UIColor whiteColor];
-            _shareCodeLabel.backgroundColor = [UIColor clearColor];
-            _shareCodeLabel.textAlignment = NSTextAlignmentCenter;
-            _shareCodeLabel.font = [UIFont systemFontOfSize: 14];
-            CGRect rect = _rightPackCardNo. frame;
-            rect.origin.y = rect.origin.y +rect.size.height+16;
-            rect.size.height = 15;
-            _shareCodeLabel.frame = rect;
-            [_rightPackView addSubview:_shareCodeLabel];
-        }
-        
-        if (_rightPackImage != nil) {
-            [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
             
-            
-            if ((self.currentPack.shareLink.length >0) && [Common isOwner:_currentPack]) {
-                _shareCodeLabel.hidden = NO;
-                _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
-            } else {
-                _shareCodeLabel.hidden = YES;
-            }
-            
-        }
+    
+        
+        //make sure _packInfoView is under all the AMPopTips
         
         long miniumAMPopTipIndex = 1000000000;// big enough value
         for (UIView *myView in self.view.subviews) {
@@ -435,8 +384,7 @@ enum popover_enum {
             miniumAMPopTipIndex = 1;
         }
         
-        //make sure _rightPackView is under all the AMPopTips
-        [self.view insertSubview:_rightPackView atIndex:(miniumAMPopTipIndex -1)];
+        [self.view insertSubview:_packInfoView atIndex:(miniumAMPopTipIndex -1)];
         
     }
     
@@ -455,8 +403,8 @@ enum popover_enum {
     }
     
     if ((isUserInterfaceIdiomPhone == FALSE) && ([[_currentPack cards] count] > 0)) {
-        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
-        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+//        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+//        [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
     }
     
     if (isUserInterfaceIdiomPhone) {
@@ -469,41 +417,6 @@ enum popover_enum {
     
 }
 
-/**
- *  TODO:Refactoring later
- */
-- (void) updateRightPackInfoView {
-    
-    [_rightPackCardTitle setText:self.currentPack.packName];
-    
-    [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
-    
-    if (self.currentPack.shareLink.length >0 && [Common isOwner:_currentPack]) {
-        _shareCodeLabel.hidden = NO;
-        _shareCodeLabel.text = [NSString stringWithFormat:@"%@:  %@",NSLocalizedString(@"Title_Share_Code",@""),[self.currentPack.shareLink lastPathComponent]];
-    } else {
-        _shareCodeLabel.hidden = YES;
-    }
-    
-    if ([Common isPlaceholderFilePathOrDirectory:_currentPack.coverImageURL]) {
-        _rightPackImage.image = [UIImage imageNamed:@"default_pack_cover_image"];
-    } else {
-        NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentPack.coverImageURL lastPathComponent]];
-        _rightPackImage.image = [UIImage imageWithContentsOfFile:path];
-    }
-    
-        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-        titleLabel.text = _currentPack.packName;;
-    
-    if (_adImageView != nil) {
-        [self.view bringSubviewToFront:_adImageView];
-    }
-    
-    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
-        
-        [self showAdView];
-    }
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -517,7 +430,7 @@ enum popover_enum {
 
 - (void) viewWillDisappear:(BOOL)animated {
     if (isUserInterfaceIdiomPhone) {
-        [_rightPackView removeFromSuperview];
+        [_packInfoView removeFromSuperview];
     }
     
     [_addCardButtonBackground removeFromSuperview];
@@ -828,7 +741,16 @@ extern BOOL isFromNewCreatedCard;
     NSString *shareLink = [notification object];
     _currentPack.shareLink = shareLink;
     
-    [self updateRightPackInfoView];
+    [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:false];
+    
+    if (_adImageView != nil) {
+        [self.view bringSubviewToFront:_adImageView];
+    }
+    
+    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
+        
+        [self showAdView];
+    }
 }
 
 - (void) downloadPackNotification:(NSNotification *) notification {
@@ -844,6 +766,12 @@ extern BOOL isFromNewCreatedCard;
 - (void) selectedPackNotification:(NSNotification *) notification {
     
     Pack *pack = (Pack *)[notification object];
+    [self selectPack:pack];
+    
+}
+
+- (void) selectPack:(Pack *) pack {
+    
     NSMutableArray *allPacks = [[User defaultUser] packs];
     for (Pack *itempPack in allPacks) {
         if (itempPack.packID == pack.packID) {
@@ -872,13 +800,14 @@ extern BOOL isFromNewCreatedCard;
     
     if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count != 0)) {
         self.detailViewController.currentPack = _currentPack;
-        [self.detailViewController showPackInfoView];
+        [self.detailViewController showPackInfoViewWithRebuildScrollView:false];
     } else if ((!isUserInterfaceIdiomPhone) && ([_currentPack cards].count == 0)) {
         self.detailViewController.title = @"";
         self.detailViewController.currentCard = nil;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = 0;
-        [self.detailViewController showCurrentCardInScrollView:YES];
+//        [self.detailViewController showCurrentCardInScrollView:YES];
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:false];
         
     }
     
@@ -921,10 +850,25 @@ extern BOOL isFromNewCreatedCard;
         
               UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
               titleLabel.text = _currentPack.packName;;
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:false];
         
     } else {
         self.detailViewController.title = _currentPack.packName;
-        [self.detailViewController showPackInfoView];
+        [self.detailViewController showPackInfoViewWithRebuildScrollView:false];
+    }
+}
+
+- (void) packDeleteNotification:(NSNotification *)notification {
+    
+    if (isUserInterfaceIdiomPhone) {
+        if (_packInfoView.hidden == false) {
+            [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:true];
+        }
+        
+    } else {
+        if ([self.detailViewController isPackInfoViewVisible]) {
+            [self.detailViewController showPackInfoViewWithRebuildScrollView:true];
+        }
     }
 }
 
@@ -963,12 +907,14 @@ extern BOOL isFromNewCreatedCard;
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     if (isUserInterfaceIdiomPhone) {
-                self.title = _currentPack.packName;
-                UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-                titleLabel.text = _currentPack.packName;;
+        self.title = _currentPack.packName;
+        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        titleLabel.text = _currentPack.packName;
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:true];
+        
     } else {
         self.detailViewController.title = _currentPack.packName;
-        [self.detailViewController showPackInfoView];
+        [self.detailViewController showPackInfoViewWithRebuildScrollView:true];
     }
     
     APP_DELEGATE.isAllowToShowTooltip = YES;
@@ -1227,10 +1173,9 @@ extern BOOL isFromNewCreatedCard;
         self.detailViewController.currentPack = _currentPack;
         self.detailViewController.indexCard = _indexCard;
         
-        NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
-        [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self.detailViewController showPackInfoView];
-        //[self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+        //NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:_indexCard inSection:0];
+       // [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self.detailViewController showPackInfoViewWithRebuildScrollView:true];
         
         //ffc sample card must be named as ffc sample cards
         if ([self.currentPack.packName.lowercaseString rangeOfString:@"ffc sample cards"].location != NSNotFound ) {
@@ -1241,7 +1186,16 @@ extern BOOL isFromNewCreatedCard;
         
         [self selectAvailablePacks:nil];
         
-        [self updateRightPackInfoView];
+        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:true];
+        
+        if (_adImageView != nil) {
+            [self.view bringSubviewToFront:_adImageView];
+        }
+        
+        if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone && APP_DELEGATE.isDownloadingPack == false) {
+            
+            [self showAdView];
+        }
     }
     
     
@@ -1402,7 +1356,7 @@ extern BOOL isFromNewCreatedCard;
             self.detailViewController.currentCard = _currentCard;
             self.detailViewController.currentPack = _currentPack;
             self.detailViewController.indexCard = _indexCard;
-            [self.detailViewController hidePackInfoView];
+            [self.detailViewController removePackInfoView];
             [self.detailViewController showCurrentCardInScrollView:YES];
         }
     }
@@ -1475,14 +1429,23 @@ extern BOOL isFromNewCreatedCard;
     
     if (!isUserInterfaceIdiomPhone) {
         if ([[_currentPack cards] count] >0) {
-            NSIndexPath *selectedIndexPath;
-            if (indexPath.row != 0) {
-                selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:0];
+           
+            if ([self.detailViewController isPackInfoViewVisible]) {
+                self.detailViewController.currentPack = _currentPack;
+                [self.detailViewController showPackInfoViewWithRebuildScrollView:false];
+                
             } else {
-                selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                
+                NSIndexPath *selectedIndexPath;
+                if (indexPath.row != 0) {
+                    selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:0];
+                } else {
+                    selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                }
+                [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+                [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
             }
-            [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-            [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+            
         } else {
             self.detailViewController.title = @"";
             self.detailViewController.currentCard = nil;
@@ -1490,10 +1453,8 @@ extern BOOL isFromNewCreatedCard;
             [self.detailViewController showCurrentCardInScrollView:YES];
         }
     } else {
-        //Update right pack info
-        if (_rightPackImage.image != nil) {
-            [_rightPackCardNo setText:[NSString stringWithFormat:@"%@: %ld",NSLocalizedString(@"Title_Total_Number_Card",@""),[_currentPack cards].count]];
-        }
+        
+        [_packInfoView refreshWithRebuildScrollView:false];
         
     }
     
@@ -3349,6 +3310,22 @@ extern BOOL isFromNewCreatedCard;
         
         
     }
+    
+}
+
+#pragma mark – PackInfoViewDelegate
+
+- (void)packInfoView:(PackInfoView *)packInfoVIew didScrollToPack:(Pack *)pack {
+    
+    self.currentPack = pack;
+    [self selectPack:pack];
+    
+    
+}
+
+- (void)playButtonClickedOnPackInfoView{
+    
+    [self playButtonClicked:nil];
     
 }
 

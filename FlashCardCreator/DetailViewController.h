@@ -42,12 +42,7 @@
     UIBarButtonItem *_helpBarButton;
     
     MBProgressHUD *_HUD;
-    
-    /**
-     *  General pack info (like pack image and no of cards) on the right.
-     *  Only applicable for iPad (on iPad, we have the similar logic on the master view)
-     */
-    UIView        *_rightPackView;
+
     
 }
 
@@ -65,8 +60,9 @@
 
 - (void)shareButtonClicked:(id) sender;
 
-- (void) showPackInfoView;
-- (void) hidePackInfoView;
+- (void) showPackInfoViewWithRebuildScrollView:(BOOL) b;
+- (void) removePackInfoView;
+- (BOOL) isPackInfoViewVisible;
 
 - (void) switchToQuestionCard;
 

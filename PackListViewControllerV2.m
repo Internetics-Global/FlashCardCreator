@@ -642,6 +642,10 @@
             [_createNewPackBtnItem setTitle:NSLocalizedString(@"NavigationBarItem_Create_New_Pack", @"")];
             
             [self.collectionView reloadData];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:PACK_DELETE_NOTIFICATION object:nil];
+            
+            
         }
         
         APP_DELEGATE.isAllowToShowPackList = YES;
