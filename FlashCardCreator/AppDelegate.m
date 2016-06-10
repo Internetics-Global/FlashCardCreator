@@ -296,6 +296,11 @@
     if (!success)  {
         [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
     }
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)
+                                                 name:AVAudioSessionRouteChangeNotification
+                                               object:nil];
 }
 
 #pragma mark -
@@ -430,6 +435,47 @@
     
 }
 
+
+- (void)audioRouteChangeListenerCallback:(NSNotification*)notification
+{
+    NSDictionary *interuptionDict = notification.userInfo;
+    
+    NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    
+    switch (routeChangeReason) {
+            
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable: {
+            [iConsole info:@"%s: Headphone/Line plugged in",__FUNCTION__];
+            break;
+        }
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:{
+            [iConsole info:@"%s: Headphone/Line was pulled",__FUNCTION__];
+            
+            NSError *error = nil;
+            BOOL success = FALSE;
+            success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+            if (!success)  {
+                [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
+            }
+            
+            break;
+        }
+        case AVAudioSessionRouteChangeReasonCategoryChange:{
+            // called at start - also when other audio wants to play
+            [iConsole info:@"%s: AVAudioSessionRouteChangeReasonCategoryChange",__FUNCTION__];
+            break;
+        }
+        case AVAudioSessionRouteChangeReasonOverride:{
+            // it will be reached when overrideOutputAudioPort is called
+            [iConsole info:@"%s: AVAudioSessionRouteChangeReasonOverride",__FUNCTION__];
+            break;
+        }
+        default: {
+            [iConsole info:@"%s: other reason  with code: %ld",__FUNCTION__,routeChangeReason];
+            break;
+        }
+    }
+}
 
 
 
