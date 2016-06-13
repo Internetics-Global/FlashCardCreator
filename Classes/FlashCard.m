@@ -8020,6 +8020,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) changeFontTypeBarButtonItemClicked:(id) sender{
     [iConsole info:@"%s",__FUNCTION__];
     NSString *title = ((UIButton *) sender).titleLabel.text;
+    
+    if ([title isEqualToString:@"Futura"]) {
+        title = @"Futura-Medium";
+    } else if ([title isEqualToString:@"Chalkboard"]) {
+        title = @"ChalkboardSE-Bold";
+    }
+    
+    
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
     CGFloat size = responderTextView.font.pointSize;
@@ -10699,6 +10707,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             fontFamilyName = _mainFontAnswer;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
             fontFamilyName = _subFontAnswer;
+        }
+        
+        if ([fontFamilyName isEqualToString:@"Futura-Medium"]) {
+            fontFamilyName = @"Futura";
+        } else if ([fontFamilyName isEqualToString:@"ChalkboardSE-Bold"]) {
+            fontFamilyName = @"Chalkboard";
         }
         
         BOOL isDefault = YES;
