@@ -72,12 +72,6 @@
     //Don't need the back button when on iPad
     
     _editBtnItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NavigationBarItem_Edit", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editBtnItemClicked:)];
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [_editBtnItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor colorWithWhite:0.3 alpha:0.3], NSForegroundColorAttributeName,
-                                                       
-                                                       nil] forState:UIControlStateNormal];
-    }
     
     
     
@@ -471,11 +465,6 @@
 
 - (void) editBtnItemClicked:(id)sender {
     
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-        return;
-    }
-    
     if ([_editBtnItem.title isEqualToString:NSLocalizedString(@"NavigationBarItem_Edit", @"")]) {
         _editBtnItem.title = NSLocalizedString(@"NavigationBarItem_Done", @"");
         _isCollectionViewEditing = YES;
@@ -548,6 +537,11 @@
 }
 
 - (void) editPackButtonClicked: (id) sender {
+    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
     
     NSInteger index = ((UIButton *) sender).tag;
     _currentPack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
