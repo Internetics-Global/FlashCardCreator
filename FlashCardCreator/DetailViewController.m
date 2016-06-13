@@ -269,7 +269,7 @@ enum popover_enum {
     [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
     _adImageView.clipsToBounds = YES;
-    _adImageView.frame = CGRectMake(25, CGRectGetMaxY(self.view.frame) - 130, CGRectGetWidth(self.view.frame) - 50, 70);
+    _adImageView.frame = CGRectMake(25, 5, CGRectGetWidth(self.view.frame) - 50, 70);
     
     [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.flipflashcards.com/promo/upgrade.png"] placeholderImage:[UIImage imageNamed:@"ad_banner"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error == nil) {

@@ -384,7 +384,13 @@ enum popover_enum {
             miniumAMPopTipIndex = 1;
         }
         
-        [self.view insertSubview:_packInfoView atIndex:(miniumAMPopTipIndex -1)];
+        
+        
+        if (_adImageView != nil) {
+            [self.view insertSubview:_packInfoView belowSubview:_adImageView];
+        } else {
+            [self.view insertSubview:_packInfoView atIndex:(miniumAMPopTipIndex -1)];
+        }
         
     }
     
@@ -1231,7 +1237,7 @@ extern BOOL isFromNewCreatedCard;
     [_adImageView setContentMode:UIViewContentModeScaleAspectFit];
     _adImageView.autoresizingMask = UIViewAutoresizingNone;
     _adImageView.clipsToBounds = YES;
-    _adImageView.frame = CGRectMake(IPHONE_UI_MASTER_TABLE_WIDTH + 10, CGRectGetMaxY(self.view.frame) - 90, CGRectGetWidth(self.view.frame) - IPHONE_UI_MASTER_TABLE_WIDTH - 10 *2, 50);
+    _adImageView.frame = CGRectMake(IPHONE_UI_MASTER_TABLE_WIDTH + 10, 5, CGRectGetWidth(self.view.frame) - IPHONE_UI_MASTER_TABLE_WIDTH - 10 *2, 50);
     
     [_adImageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.flipflashcards.com/promo/upgrade.png"] placeholderImage:[UIImage imageNamed:@"ad_banner"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error == nil) {
