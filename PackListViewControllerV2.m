@@ -211,18 +211,31 @@
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    NSInteger count =  [[User defaultUser].packs count] + 1;
-    return count;
+
+    if ([MutipleTargetHelper isFullVersion]) {
+        return [[User defaultUser].packs count] + 1;
+    } else {
+        return [[User defaultUser].packs count];
+    }
+
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.row == 0) {
+    NSInteger OFFSET;
+    if ([MutipleTargetHelper isFullVersion]) {
+        OFFSET = 0;
+    } else {
+        OFFSET = -1;  //in view mode, there's no "add pack" cell
+    }
+    
+    
+    if (indexPath.row == 0 + OFFSET) {
         PackListFirstCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"PackListFirstCell" forIndexPath:indexPath];
         return cell;
     } else {
         
-        NSInteger index = indexPath.row - 1;
+        NSInteger index = indexPath.row - 1 - OFFSET;
         
         Pack *pack = (Pack *)[[[User defaultUser] packs] objectAtIndex:index];
         
@@ -295,9 +308,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSInteger index = indexPath.row;
+    NSInteger OFFSET;
+    if ([MutipleTargetHelper isFullVersion]) {
+        OFFSET = 0;
+    } else {
+        OFFSET = -1;  //in view mode, there's no "add pack" cell
+    }
     
-    [iConsole info:@"Selected item at index %d", indexPath.row];
+    
+    [iConsole info:@"Selected item at index %ld", index];
     
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -306,10 +325,13 @@
         [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
     }
     
-    if (index == 0) {
+    if (indexPath.row == 0 + OFFSET) {
         [self createNewPackButtonClicked:nil];
     } else {
-        Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index -1];
+        
+        NSInteger index = indexPath.row - 1 - OFFSET;
+        
+        Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
         selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
         [selectedPack savePackOnly];
         
