@@ -188,18 +188,18 @@
         
     } else if (indexPath.row ==2) {
         
-        _muteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [_muteSwitch addTarget:self action:@selector(muteSwitchAction) forControlEvents:UIControlEventValueChanged];
+        _notMuteSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [_notMuteSwitch addTarget:self action:@selector(notMuteSwitchAction) forControlEvents:UIControlEventValueChanged];
         
-        BOOL isMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
-        if (isMuteMode) {
-            [_muteSwitch setOn:YES];
+        BOOL isNotMuteMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"isNotMuteMode"];
+        if (isNotMuteMode) {
+            [_notMuteSwitch setOn:YES];
         } else {
-            [_muteSwitch setOn:NO];
+            [_notMuteSwitch setOn:NO];
         }
-        cell.textLabel.text = NSLocalizedString(@"Table_Item_Mute_Sound_Recording",@"");
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Personal_Recording",@"");
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = _muteSwitch;
+        cell.accessoryView = _notMuteSwitch;
         
         
     } else if (indexPath.row == 3) {
@@ -369,8 +369,8 @@
     
 }
 
-- (void) muteSwitchAction {
-    [[NSUserDefaults standardUserDefaults] setBool:(_muteSwitch.on) forKey:@"isMuteMode"];
+- (void) notMuteSwitchAction {
+    [[NSUserDefaults standardUserDefaults] setBool:(_notMuteSwitch.on) forKey:@"isNotMuteMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

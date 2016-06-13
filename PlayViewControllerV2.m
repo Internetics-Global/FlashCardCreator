@@ -49,7 +49,7 @@
     /**
      *  实际上不是真正的mute
      */
-    BOOL  _isMute;
+    BOOL  _isNotMute;
     
     BOOL  _isShuttingDown;
     
@@ -606,11 +606,11 @@
     //muteButton.showsTouchWhenHighlighted =YES;
     [muteButton setHitTestEdgeInsets:UIEdgeInsetsMake(-8, -8, -8, -8)];
     [_controlPanel addSubview:muteButton];
-    _isMute = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMuteMode"];
-    if (_isMute) {
-        [muteButton setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
-    } else {
+    _isNotMute = [[NSUserDefaults standardUserDefaults] boolForKey:@"isNotMuteMode"];
+    if (_isNotMute) {
         [muteButton setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
+    } else {
+        [muteButton setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
     }
     
     [_dwellTimeSlider showPopUpViewAnimated:NO];
@@ -1099,7 +1099,7 @@
             }
             if (_isShuttingDown == FALSE) {
                 
-                if (_isMute == false) {
+                if (_isNotMute) {
                     
                     int durationForRecordedSound;
                     if ([currentCard isQuestionShowing]) {
@@ -1110,7 +1110,7 @@
                     if (durationForRecordedSound == 0) {
                         [currentCard textToSpeechAllContentNow];
                     } else {
-                        [currentCard playAudioWithManualClick:NO withMute:_isMute];
+                        [currentCard playAudioWithManualClick:NO withMute:_isNotMute == false];
                         double delayInSeconds = durationForRecordedSound + 1;  ////这里1秒是适当的，因为_pauseForAnswerSlider或K_IntervalBetweenCardSeconds_ForQAOnly都远大于这个数
                         
                         [_timerForDelayedText2Speech invalidate];
@@ -1133,7 +1133,7 @@
             }
         } else {
             
-            [currentCard playAudioWithManualClick:NO withMute:_isMute];
+            [currentCard playAudioWithManualClick:NO withMute:_isNotMute == false];
         }
     } else {
         [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
@@ -1248,10 +1248,10 @@
  */
 - (void) playButtonClicked:(UIButton *) button {
     
-    if (_isMute == FALSE) {
+    if (_isNotMute) {
         FlashCard *currentCard = [self getCurrrentCard];
         if (currentCard) {
-            [currentCard playAudioWithManualClick:YES withMute:_isMute];
+            [currentCard playAudioWithManualClick:YES withMute:_isNotMute == false];
         } else {
             [iConsole error:@"%s,currentCard should not be nil",__FUNCTION__];
         };
@@ -1264,19 +1264,19 @@
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
     
-    if (_isMute) {
-        _isMute = NO;
+    if (_isNotMute == NO) {
+        _isNotMute = YES;
         [button setImage:[UIImage imageNamed:@"mute_unselected"] forState:UIControlStateNormal];
         [currentFlashCardView unMuteAudio];
     } else {
-        _isMute = YES;
+        _isNotMute = NO;
         [button setImage:[UIImage imageNamed:@"mute_selected"] forState:UIControlStateNormal];
         [currentFlashCardView muteAudio];
         
         
     }
     
-    [[NSUserDefaults standardUserDefaults] setBool:_isMute forKey:@"isMuteMode"];
+    [[NSUserDefaults standardUserDefaults] setBool:_isNotMute forKey:@"isNotMuteMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self resetAutoHideControlPanelTimer];
