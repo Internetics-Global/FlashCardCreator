@@ -25,7 +25,7 @@
             self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
         } else {
             self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
-            self.addNewPackImageView.alpha = 0.05;
+            self.addNewPackImageView.alpha = 0.6;
         }
         
         [self.contentView addSubview:self.addNewPackImageView];
@@ -41,7 +41,7 @@
             desLabel.alpha = 1;
         } else {
             desLabel.textColor = [UIColor darkGrayColor];
-            desLabel.alpha = 0.3;
+            desLabel.alpha = 0.7;
         }
         
         desLabel.backgroundColor = [UIColor clearColor];
