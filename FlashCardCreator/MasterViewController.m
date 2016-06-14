@@ -236,6 +236,12 @@ enum popover_enum {
     }
     [self.tableView reloadData];
     
+    if ([MutipleTargetHelper isFullVersion]) {
+        _tableView.allowsSelection = true;
+    } else {
+        _tableView.allowsSelection = false;
+    }
+    
     
 }
 
@@ -1025,9 +1031,14 @@ extern BOOL isFromNewCreatedCard;
     if ([MutipleTargetHelper isFullVersion]) {
         [_addCardButton setImage:[UIImage imageNamed:@"plus_button.png"] forState:UIControlStateNormal];
         _addCardButton.hidden = false;
+        
+        _tableView.allowsSelection = true;
+        
     } else {
         [_addCardButton setImage:[UIImage imageNamed:@"plus_button_dimmed.png"] forState:UIControlStateNormal];
         _addCardButton.hidden = true;
+        
+        _tableView.allowsSelection = false;
     }
     
     [self setupNaviBarButtonItems];
@@ -1335,10 +1346,6 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [tableView deselectRowAtIndexPath:indexPath animated:false];
-        return;
-    }
     
     
     [iConsole info:@"%s",__FUNCTION__];
