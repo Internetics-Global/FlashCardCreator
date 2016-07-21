@@ -273,6 +273,10 @@
 		88D453261780DE3900500487 /* EmoticonHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D4531E1780DE3900500487 /* EmoticonHelper.m */; };
 		88D453271780DE3900500487 /* EmoticonSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453201780DE3900500487 /* EmoticonSelectionViewController.m */; };
 		88D453281780DE3900500487 /* EmoticonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D453221780DE3900500487 /* EmoticonView.m */; };
+		88E38D3F1D40A223005DABEC /* templateScreenshot17_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E38D3D1D40A223005DABEC /* templateScreenshot17_question.png */; };
+		88E38D401D40A223005DABEC /* templateScreenshot17_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E38D3E1D40A223005DABEC /* templateScreenshot17_question_iPad.png */; };
+		88E38D431D40A22B005DABEC /* templateScreenshot17_answer_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E38D411D40A22B005DABEC /* templateScreenshot17_answer_iPad.png */; };
+		88E38D441D40A22B005DABEC /* templateScreenshot17_answer.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E38D421D40A22B005DABEC /* templateScreenshot17_answer.png */; };
 		88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */; };
 		88E93D7C1A634EA2007CB7A2 /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E93D7B1A634EA2007CB7A2 /* mute.caf */; };
 		88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */; };
@@ -670,6 +674,10 @@
 		88D453201780DE3900500487 /* EmoticonSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonSelectionViewController.m; path = Classes/emotion/EmoticonSelectionViewController.m; sourceTree = "<group>"; };
 		88D453211780DE3900500487 /* EmoticonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmoticonView.h; path = Classes/emotion/EmoticonView.h; sourceTree = "<group>"; };
 		88D453221780DE3900500487 /* EmoticonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmoticonView.m; path = Classes/emotion/EmoticonView.m; sourceTree = "<group>"; };
+		88E38D3D1D40A223005DABEC /* templateScreenshot17_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot17_question.png; path = Resources/templateScreenshot17_question.png; sourceTree = "<group>"; };
+		88E38D3E1D40A223005DABEC /* templateScreenshot17_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot17_question_iPad.png; path = Resources/templateScreenshot17_question_iPad.png; sourceTree = "<group>"; };
+		88E38D411D40A22B005DABEC /* templateScreenshot17_answer_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot17_answer_iPad.png; path = Resources/templateScreenshot17_answer_iPad.png; sourceTree = "<group>"; };
+		88E38D421D40A22B005DABEC /* templateScreenshot17_answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot17_answer.png; path = Resources/templateScreenshot17_answer.png; sourceTree = "<group>"; };
 		88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		88E93D7B1A634EA2007CB7A2 /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = mute.caf; path = Resources/mute.caf; sourceTree = "<group>"; };
 		88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CycleScrollView.h; path = Classes/CycleScrollView.h; sourceTree = "<group>"; };
@@ -847,6 +855,8 @@
 				88265CD31B8DE37500AF55A1 /* templateScreenshot15_question.png */,
 				88265CD41B8DE37500AF55A1 /* templateScreenshot16_question_iPad.png */,
 				88265CD51B8DE37500AF55A1 /* templateScreenshot16_question.png */,
+				88E38D3D1D40A223005DABEC /* templateScreenshot17_question.png */,
+				88E38D3E1D40A223005DABEC /* templateScreenshot17_question_iPad.png */,
 				8842A55A19B00D470044C8CC /* templateScreenshot0_answer_iPad.png */,
 				8842A55B19B00D470044C8CC /* templateScreenshot0_answer.png */,
 				8842A55C19B00D470044C8CC /* templateScreenshot1_answer.png */,
@@ -881,6 +891,8 @@
 				88265CE71B8DE38B00AF55A1 /* templateScreenshot15_answer.png */,
 				88265CE81B8DE38B00AF55A1 /* templateScreenshot16_answer_iPad.png */,
 				88265CE91B8DE38B00AF55A1 /* templateScreenshot16_answer.png */,
+				88E38D411D40A22B005DABEC /* templateScreenshot17_answer_iPad.png */,
+				88E38D421D40A22B005DABEC /* templateScreenshot17_answer.png */,
 			);
 			name = "Template Cell";
 			sourceTree = "<group>";
@@ -1674,6 +1686,7 @@
 			files = (
 				885C3DC6192619FB0090F63C /* background2@2x.png in Resources */,
 				2DCE0B1616798E04007A8CAD /* InfoPlist.strings in Resources */,
+				88E38D441D40A22B005DABEC /* templateScreenshot17_answer.png in Resources */,
 				2DCE0B2B16798E04007A8CAD /* MasterViewController_iPhone.xib in Resources */,
 				2DCE0B2E16798E04007A8CAD /* MasterViewController_iPad.xib in Resources */,
 				2DCE0B3116798E04007A8CAD /* DetailViewController_iPhone.xib in Resources */,
@@ -1783,6 +1796,7 @@
 				880979011978F3C900C3BD1A /* circle_selected_button@2x.png in Resources */,
 				88265CDF1B8DE37500AF55A1 /* templateScreenshot16_question.png in Resources */,
 				881F2717192B5C740068648D /* w2048.png in Resources */,
+				88E38D431D40A22B005DABEC /* templateScreenshot17_answer_iPad.png in Resources */,
 				8842A53619AFF3860044C8CC /* templateScreenshot11_question.png in Resources */,
 				8833F4071AAC1E7B00B62576 /* answer_placeholder_content@2x.png in Resources */,
 				88491B371714522300833692 /* templateScreenshot0_question_iPad.png in Resources */,
@@ -1803,6 +1817,7 @@
 				88491B431714522300833692 /* templateScreenshot3_question_iPad.png in Resources */,
 				88491B441714522300833692 /* templateScreenshot3_question.png in Resources */,
 				88491B471714522300833692 /* templateScreenshot4_question_iPad.png in Resources */,
+				88E38D3F1D40A223005DABEC /* templateScreenshot17_question.png in Resources */,
 				8833F4081AAC1E7B00B62576 /* question_placeholder_content.png in Resources */,
 				88491B481714522300833692 /* templateScreenshot4_question.png in Resources */,
 				88CA253617152EE700859BDC /* grayButton.png in Resources */,
@@ -1814,6 +1829,7 @@
 				8842A57419B00D470044C8CC /* templateScreenshot1_answer.png in Resources */,
 				88D04E4C178D39170058A0D9 /* emotions.txt in Resources */,
 				88A53ED2179E8FD600D91782 /* uibarbuttonitem_highlight.png in Resources */,
+				88E38D401D40A223005DABEC /* templateScreenshot17_question_iPad.png in Resources */,
 				88A53ED3179E8FD600D91782 /* uibarbuttonitem_highlight@2x.png in Resources */,
 				88F5CE9519B40EBF00107075 /* PEPhotoCropEditor.bundle in Resources */,
 				88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */,
