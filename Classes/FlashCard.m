@@ -3976,6 +3976,51 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             break;
         }
             
+        case 17: {
+            _subheadingAnswer.hidden = YES;
+            
+            _mainAnswer.hidden = YES;
+            
+            _subAnswer.hidden = NO;
+            _subAnswer.frame = CGRectMake(3, 138, 304.5, 47);
+            if (self.isPlayingCard) {
+                _subAnswer.frame = [Common getScaledViewRect:_subAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontAnswer.length == 0) {
+                _subAnswer.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontAnswer.length == 0) {
+                    _subAnswer.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subAnswer.font =[UIFont fontWithName:_subFontAnswer size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subAnswer.textColor = [UIColor blackColor];
+            _subAnswer.textAlignment = NSTextAlignmentCenter;
+            _subAlignAnswer = @"Center";
+            
+            _subAlignVerticalAnswer = @"";
+            [self resetVerticalAlignment:_subAnswer];
+            
+            _subColorAnswer = @"Black";
+            _subSizeAnswer = 16;
+            
+            
+            _imageAnswer.hidden = FALSE;
+            _imageAnswer.frame = CGRectMake(95, 15, 122, 100);
+            if (self.isPlayingCard) {
+                _imageAnswer.frame = [Common getScaledViewRect:_imageAnswer withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageAnswer2.hidden = TRUE;
+            
+            break;
+        }
+            
             
         default:
         {
@@ -6924,6 +6969,51 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _imageQuestion.hidden = FALSE;
             _imageQuestion.frame = CGRectMake(3, 15, 152, 152);
+            if (self.isPlayingCard) {
+                _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            _imageQuestion2.hidden = TRUE;
+            
+            break;
+        }
+            
+        case 17: {
+            _subheadingQuestion.hidden = YES;
+            
+            _mainQuestion.hidden = YES;
+            
+            _subQuestion.hidden = NO;
+            _subQuestion.frame = CGRectMake(3, 138, 304.5, 47);
+            if (self.isPlayingCard) {
+                _subQuestion.frame = [Common getScaledViewRect:_subQuestion withProportion:kFlashCardViewProporation_iPhone];
+            }
+            
+            if (_subFontQuestion.length == 0) {
+                _subQuestion.font =[UIFont boldSystemFontOfSize:16];
+            } else {
+                _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16];
+            }
+            if (self.isPlayingCard) {
+                if (_subFontQuestion.length == 0) {
+                    _subQuestion.font =[UIFont boldSystemFontOfSize:16*kFlashCardViewProporation_iPhone];
+                } else {
+                    _subQuestion.font =[UIFont fontWithName:_subFontQuestion size:16*kFlashCardViewProporation_iPhone];
+                }
+            }
+            _subQuestion.textColor = [UIColor blackColor];
+            _subQuestion.textAlignment = NSTextAlignmentCenter;
+            _subAlignQuestion = @"Center";
+            
+            _subAlignVerticalQuestion = @"";
+            [self resetVerticalAlignment:_subQuestion];
+            
+            _subColorQuestion = @"Black";
+            _subSizeQuestion = 16;
+            
+            
+            _imageQuestion.hidden = FALSE;
+            _imageQuestion.frame = CGRectMake(95, 15, 122, 100);
             if (self.isPlayingCard) {
                 _imageQuestion.frame = [Common getScaledViewRect:_imageQuestion withProportion:kFlashCardViewProporation_iPhone];
             }
