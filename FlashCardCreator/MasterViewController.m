@@ -1,4 +1,4 @@
-//
+ //
 //  MasterViewController.m
 //  FFC
 //
@@ -283,7 +283,7 @@ enum popover_enum {
         _editButton.contentEdgeInsets = UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset, 0, K_Navigation_Item_Inset_Offset);
         [_editButton setHitTestEdgeInsets:UIEdgeInsetsMake(0, -K_Navigation_Item_Inset_Offset, 0, K_Navigation_Item_Inset_Offset)];
         
-        UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
+        UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked)];
         playButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         UIBarButtonItem *playBarButtonItem = [[UIBarButtonItem alloc]
                                               initWithCustomView:playButton];
@@ -599,7 +599,8 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark UIBarButtonItem action
 
-- (void)playButtonClicked:(id) sender
+
+- (void)playButtonClicked
 {
     
     PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
@@ -621,6 +622,8 @@ extern BOOL isFromNewCreatedCard;
     }
     
     playViewController.currentPack = self.currentPack;
+    
+    
     //playViewController.currentCard = self.currentCard;
     if (isUserInterfaceIdiomPhone) {
         playViewController.view.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT);
@@ -1068,6 +1071,8 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
+#pragma mark – PLAY_NOTIFICATION, could be from pack list view, or preview button in card
+
 - (void) playNotification :(NSNotification *) notification {
     
     if (isUserInterfaceIdiomPhone == FALSE) {
@@ -1077,10 +1082,14 @@ extern BOOL isFromNewCreatedCard;
         //[self.navigationController popToRootViewControllerAnimated:TRUE];
     }
     
-    int index = [[[notification object] lastObject] intValue];
+
+    NSDictionary *dict = [notification userInfo];
     
-    One_Off_Play_Type oneOffType;
-    switch ([[[notification object] firstObject] intValue]) {
+    One_Off_Play_Type oneOffType = [[dict objectForKey:@"oneOffType"] intValue];
+    int index                    = [[dict objectForKey:@"packIndex"] intValue];
+    BOOL isPreviewOnly               = [[dict objectForKey:@"preview_only"] boolValue];
+    
+    switch (oneOffType) {
         case 0:
             oneOffType = One_Off_Play_Type_Manually;
             break;
@@ -1096,7 +1105,42 @@ extern BOOL isFromNewCreatedCard;
             break;
     }
     
-    Pack *selectedPack = [[[User defaultUser] packs] objectAtIndex:index];
+    Pack *selectedPack;
+    if (isPreviewOnly) {
+        
+        Card *screnshotCard = [notification object];
+        
+        selectedPack = [[Pack alloc] init];
+        selectedPack.cards = [NSMutableArray arrayWithObject:screnshotCard];
+        
+        {
+            //currently, we only need info of creator, but for future potential benefit, we try to copy everything except packID info, shareLink, and fileNameOnAWS
+            
+            selectedPack.packName = self.currentPack.packName;
+            selectedPack.sidebarTitle = self.currentPack.sidebarTitle;
+            selectedPack.coverImageURL = self.currentPack.coverImageURL;
+            selectedPack.userID = self.currentPack.userID;
+            selectedPack.languageName = self.currentPack.languageName;
+            selectedPack.creator = self.currentPack.creator;
+            selectedPack.creatorNickName = self.currentPack.creatorNickName;
+            selectedPack.lastVisitDate = self.currentPack.lastVisitDate;
+            selectedPack.createDate = self.currentPack.createDate;
+            selectedPack.restorePassword = self.currentPack.restorePassword;
+            selectedPack.isAllowShare = self.currentPack.isAllowShare;
+            selectedPack.autoPlaySpeed = self.currentPack.autoPlaySpeed;
+            selectedPack.platform = self.currentPack.platform;
+            
+            selectedPack.shareLink = @"";
+            selectedPack.fileNameOnAWS = @"";
+            selectedPack.packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
+        }
+        
+        oneOffType = One_Off_Play_Type_Manually; //in preview mode, only manual is supported
+        
+        
+    } else {
+        selectedPack = [[[User defaultUser] packs] objectAtIndex:index];
+    }
     
     PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.oneOffPlayType = oneOffType;
@@ -3344,7 +3388,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)playButtonClickedOnPackInfoView{
     
-    [self playButtonClicked:nil];
+    [self playButtonClicked];
     
 }
 

@@ -63,6 +63,9 @@ typedef enum{
     UIImageView  *_templateBackgroundImageView; //存在于NSBundle,不允许随便从library选择
     NSString     *_templateBackgroundImageName;
     
+    UIButton     *_previewButton;
+    UIButton     *_saveButton;
+    
     
     UIImageView  *_logoImage;
     NSString     *_logoImageFullPath;

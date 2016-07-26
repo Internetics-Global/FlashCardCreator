@@ -104,4 +104,6 @@
 
 + (NSMutableDictionary *) answerForCardID:(NSInteger)cardID;
 
+- (id)copyWithZone:(NSZone *)zone;
+
 @end

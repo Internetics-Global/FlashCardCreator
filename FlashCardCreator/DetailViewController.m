@@ -206,7 +206,7 @@ enum popover_enum {
     //we don't setting button on iPhone
     _settingButton = [[UIBarButtonItem alloc]
                       initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"setting_button.png"] target:self action:@selector(moreButtonClicked:)]];
-    UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked:)];
+    UIButton *playButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"play_button.png"] target:self action:@selector(playButtonClicked)];
     UIBarButtonItem *playBarButton = [[UIBarButtonItem alloc]
                                       initWithCustomView:playButton];
     
@@ -667,7 +667,7 @@ enum popover_enum {
     
 }
 
-- (void)playButtonClicked:(id) sender
+- (void)playButtonClicked;
 {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -682,16 +682,20 @@ enum popover_enum {
     
     int playIndex = [Common getPlayOption];
     switch (playIndex) {
-        case 0:
+        case 0: {
             playViewController.oneOffPlayType = One_Off_Play_Type_Manually;
             break;
-        case 1:
+        }
+        case 1: {
             playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play;
-            break;
-        case 2:
-            playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play_Loop;
-            break;
             
+            break;
+        }
+        case 2: {
+            playViewController.oneOffPlayType = One_Off_Play_Type_Auto_Play_Loop;
+            
+            break;
+        }
         default:
             break;
     }
@@ -1384,7 +1388,7 @@ enum popover_enum {
 
 - (void)playButtonClickedOnPackInfoView{
     
-    [self playButtonClicked:nil];
+    [self playButtonClicked];
     
 }
 

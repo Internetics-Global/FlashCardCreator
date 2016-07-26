@@ -190,4 +190,24 @@
 	return returnArray;
 }
 
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    Card *copy=[[[self class] allocWithZone:zone] init];
+    
+    copy.cardID = _cardID;
+    copy.packID = _packID;
+    copy.cardSN = _cardSN;
+    copy.cardName = _cardName;
+    copy.coverImageURL = _coverImageURL;
+    copy.templateBackgroundName = _templateBackgroundName;
+    copy.creator = _creator;
+    
+    copy.question = [_question copyWithZone:zone];
+    copy.answer = [_answer copyWithZone:zone];
+    
+    return copy;
+}
+
 @end

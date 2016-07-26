@@ -147,6 +147,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     BOOL                                  flag_Subheading_ResizeFinished;
     BOOL                                  flag_Main_ResizeFinished;
     BOOL                                  flag_Sub_ResizeFinished;
+    
+    /**
+     *  two cases to diff dismiss keyboard:
+     *  by clicking "save" button on keyboard
+     *  by click the built-in "hide" button on keyboard
+     */
+    BOOL                                 *_isDismissKeyboardViaSaveButtonFromKeyboard;
 }
 
 
@@ -293,6 +300,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _mainFontQuestion = @"";
     _subFontAnswer = @"";
     _subFontQuestion = @"";
+    
+    _isDismissKeyboardViaSaveButtonFromKeyboard = false;
     
     [self setUpInputView];
     [self setUpInputAccessoryView];
@@ -683,7 +692,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPad,
                                   self.bounds.size.height-kSegmentHeightForiPad-kSegmentButtomMarginForiPad,
-                                  500,
+                                  300,
                                   kSegmentHeightForiPad);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentedControlQAClicked:) forControlEvents:UIControlEventValueChanged];
@@ -818,6 +827,36 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [_changeTemplateButton addTarget:self action:@selector(changeTemplateButtonClick:) forControlEvents:UIControlEventTouchDown];
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
         }
+        
+        
+        if (_previewButton == nil) {
+            _previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _previewButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 160, CGRectGetMinY(_functionAreaView.frame), 70, CGRectGetHeight(_functionAreaView.frame));
+            _previewButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _previewButton.layer.borderWidth = 1;
+            _previewButton.showsTouchWhenHighlighted = YES;
+            [_previewButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [_previewButton setTitle:NSLocalizedString(@"Functional_Panel_Preview",@"") forState:UIControlStateNormal];
+            [_previewButton addTarget:self action:@selector(previewButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _previewButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_previewButton];
+        }
+        
+        if (_saveButton == nil) {
+            _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _saveButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 80, CGRectGetMinY(_functionAreaView.frame), 70, CGRectGetHeight(_functionAreaView.frame));
+            _saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _saveButton.layer.borderWidth = 1;
+            _saveButton.showsTouchWhenHighlighted = YES;
+            [_saveButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [_saveButton setTitle:NSLocalizedString(@"Functional_Panel_Save",@"") forState:UIControlStateNormal];
+            [_saveButton addTarget:self action:@selector(saveButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _saveButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_saveButton];
+        }
+        
     }
     
     
@@ -1195,7 +1234,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         CGRect frame = CGRectMake(kSegmentLeftMarginForiPhone,
                                   self.bounds.size.height-kSegmentHeightForiPhone-kSegmentButtomMarginForiPhone,
-                                  180,
+                                  130,
                                   kSegmentHeightForiPhone);
         _segmentedControl.frame = frame;
         [_segmentedControl addTarget:self action:@selector(segmentedControlQAClicked:) forControlEvents:UIControlEventValueChanged];
@@ -1316,7 +1355,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_isPlayingCard == NO) {
         if (_functionAreaView == nil) {
-            _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 150, CGRectGetMinY(_segmentedControl.frame), 150, CGRectGetHeight(_segmentedControl.frame))];
+            _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 100, CGRectGetMinY(_segmentedControl.frame), 100, CGRectGetHeight(_segmentedControl.frame))];
             _functionAreaView.backgroundColor = [UIColor darkGrayColor];
             _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
             _functionAreaView.layer.borderWidth = 0;
@@ -1327,7 +1366,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_soundButton == nil) {
             _soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _soundButton.frame = CGRectMake(109.5, 4, 20, 20);
+            _soundButton.frame = CGRectMake(75, 4, 20, 20);
             [_soundButton setImage:[UIImage imageNamed:@"record_button"] forState:UIControlStateNormal];
             [_soundButton addTarget:self action:@selector(soundRecordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             _soundButton.backgroundColor = [UIColor clearColor];
@@ -1338,7 +1377,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_backgroundImageSelectButton == nil) {
             _backgroundImageSelectButton = [UIButton buttonWithType:UIButtonTypeCustom];
             _backgroundImageSelectButton.showsTouchWhenHighlighted = YES;
-            _backgroundImageSelectButton.frame = CGRectMake(67, 4, 20, 20);
+            _backgroundImageSelectButton.frame = CGRectMake(40, 4, 20, 20);
             [_backgroundImageSelectButton setBackgroundImage:[UIImage imageNamed:@"change_card_background_image_button"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_backgroundImageSelectButton];
             UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundImageSelectButtonClicked:)];
@@ -1349,7 +1388,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_changeTemplateButton == nil) {
             _changeTemplateButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _changeTemplateButton.frame = CGRectMake(22.5, 4, 20, 20);
+            _changeTemplateButton.frame = CGRectMake(5, 4, 20, 20);
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
             [_changeTemplateButton setImage:[UIImage imageNamed:@"change_card_layout_template"] forState:UIControlStateNormal];
             [_functionAreaView addSubview:_changeTemplateButton];
@@ -1359,6 +1398,35 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_isPlayingCard) {
             _functionAreaView.hidden = YES;
+        }
+        
+        
+        if (_previewButton == nil) {
+            _previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _previewButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 90, CGRectGetMinY(_functionAreaView.frame), 42, CGRectGetHeight(_functionAreaView.frame));
+            _previewButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _previewButton.layer.borderWidth = 1;
+            _previewButton.showsTouchWhenHighlighted = YES;
+            [_previewButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+            [_previewButton setTitle:NSLocalizedString(@"Functional_Panel_Preview",@"") forState:UIControlStateNormal];
+            [_previewButton addTarget:self action:@selector(previewButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _previewButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_previewButton];
+        }
+        
+        if (_saveButton == nil) {
+            _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _saveButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 45, CGRectGetMinY(_functionAreaView.frame), 42, CGRectGetHeight(_functionAreaView.frame));
+            _saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _saveButton.layer.borderWidth = 1;
+            _saveButton.showsTouchWhenHighlighted = YES;
+            [_saveButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+            [_saveButton setTitle:NSLocalizedString(@"Functional_Panel_Save",@"") forState:UIControlStateNormal];
+            [_saveButton addTarget:self action:@selector(saveButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _saveButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_saveButton];
         }
     }
     
@@ -2278,6 +2346,101 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     }
+    
+}
+
+/**
+ *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
+ *  无比保持同commitQuestionAndAnswerData一致（除了pack部分）
+ */
+- (Card *) copyCurrentUnsavedCardForPreview {
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    Card *card = [self.currentCard copy];;
+    
+    card.answer.title = _answerTitle.text;
+    card.answer.subheading = _subheadingAnswer.text;
+    card.answer.main = _mainAnswer.text;
+    card.answer.sub = _subAnswer.text;
+    card.answer.imageFullPath = _answerImageFullPath;
+    card.answer.imageFullPath2 = _answerImageFullPath2;
+    
+    card.answer.backgroundImageFullPath = _answerBackgroundImageFullPath;
+    
+    card.answer.movieFullPath = _answerMovieFullPath;
+    card.answer.movieFullPath2 = _answerMovieFullPath2;
+    
+    if (isFromNewCreatedCard) {
+        //我们不做什么，因为已经在CreateSoundViewController中进行commit了
+    } else {
+        card.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
+        card.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
+    }
+    
+    
+    card.answer.css.subheadingAlign = _subheadingAlignAnswer;
+    card.answer.css.subheadingColor = _subheadingColorAnswer;
+    card.answer.css.subheadingSize = _subheadingSizeAnswer;
+    card.answer.css.mainAlign = _mainAlignAnswer;
+    card.answer.css.mainColor = _mainColorAnswer;
+    card.answer.css.mainSize = _mainSizeAnswer;
+    card.answer.css.subAlign = _subAlignAnswer;
+    card.answer.css.subColor = _subColorAnswer;
+    card.answer.css.subSize = _subSizeAnswer;
+    
+    card.answer.css.subheadingAlignVertical = _subheadingAlignVerticalAnswer;
+    card.answer.css.mainAlignVertical = _mainAlignVerticalAnswer;
+    card.answer.css.subAlignVertical = _subAlignVerticalAnswer;
+    
+    card.answer.css.subheadingFont = _subheadingFontAnswer;
+    card.answer.css.mainFont = _mainFontAnswer;
+    card.answer.css.subFont = _subFontAnswer;
+    
+    card.question.title = _questionTitle.text;
+    card.question.subheading = _subheadingQuestion.text;
+    card.question.main = _mainQuestion.text;
+    card.question.sub = _subQuestion.text;
+    card.question.imageFullPath = _questionImageFullPath;
+    card.question.imageFullPath2 = _questionImageFullPath2;
+    
+    card.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
+    
+    card.question.movieFullPath = _questionMovieFullPath;
+    card.question.movieFullPath2 = _questionMovieFullPath2;
+    
+    card.question.css.subheadingAlign = _subheadingAlignQuestion;
+    card.question.css.subheadingColor = _subheadingColorQuestion;
+    card.question.css.subheadingSize = _subheadingSizeQuestion;
+    card.question.css.mainAlign = _mainAlignQuestion;
+    card.question.css.mainColor = _mainColorQuestion;
+    card.question.css.mainSize = _mainSizeQuestion;
+    card.question.css.subAlign = _subAlignQuestion;
+    card.question.css.subColor = _subColorQuestion;
+    card.question.css.subSize = _subSizeQuestion;
+    
+    card.question.css.subheadingAlignVertical = _subheadingAlignVerticalQuestion;
+    card.question.css.mainAlignVertical = _mainAlignVerticalQuestion;
+    card.question.css.subAlignVertical = _subAlignVerticalQuestion;
+    
+    card.question.css.subheadingFont = _subheadingFontQuestion;
+    card.question.css.mainFont = _mainFontQuestion;
+    card.question.css.subFont = _subFontQuestion;
+    
+    //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
+    //we did this when:
+    //1. manually click segmented control to switch QA  (we have to do this since users could switch QA without saving content, so we need to cache it.
+    //AND 2. save cards
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        card.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
+        card.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
+        card.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
+    } else {
+        card.answer.lineNoSubheading = [self lineNumberWithUITextView:_subheadingAnswer];
+        card.answer.lineNoMain = [self lineNumberWithUITextView:_mainAnswer];
+        card.answer.lineNoSub = [self lineNumberWithUITextView:_subAnswer];
+    }
+    
+    return card;
     
 }
 
@@ -7046,6 +7209,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
+    if (_isDismissKeyboardViaSaveButtonFromKeyboard) {
+        //if true,dismissKeyBoard is called directly in "save button" action
+    } else {
+        //in this case, keyboard is closed by clicking "built-in hide button" on keyboard. Moreover, it's only an action of keyboard close, no coming save action
+        
+        [self dismissKeyBoard:nil withSaveComing:false];
+        
+    }
+    
+    _isDismissKeyboardViaSaveButtonFromKeyboard = false;
+    
+    
 }
 
 
@@ -7083,6 +7258,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 {
     
     [iConsole info:@"%s",__FUNCTION__];
+    
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
@@ -7179,6 +7355,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 {
     
     [iConsole info:@"%s",__FUNCTION__];
+    
+    
     if ((self.tag == PREVIOUS_FLASHCARDVIEW_TAG) || (self.tag == NEXT_FLASHCARDVIEW_TAG)) {
         return;
     }
@@ -7314,7 +7492,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
--(void)dismissKeyBoard:(id) sender
+-(void)dismissKeyBoard:(id) sender withSaveComing:(BOOL) isGoingToSave
 {
     [iConsole info:@"%s",__FUNCTION__];
     if (isUserInterfaceIdiomPhone) {
@@ -7351,8 +7529,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     });
     
-    //Step3: save data in keyboardWasHidden
-    _saveButtonPressed = YES;
+    if (isGoingToSave) {
+        //Step3: save data in keyboardWasHidden
+        _saveButtonPressed = YES;
+    } else {
+        _saveButtonPressed = NO;
+    }
 }
 
 
@@ -9818,6 +10000,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (COUNTDOWN_SECOND_FOR_PREPARE == 1) {
                     
                     [_recordingStopButton setTitle:@"Stop" forState:UIControlStateNormal];
+                   // [APP_DELEGATE.recorder record];
                     
                     
                     COUNTDOWN_SECOND_FOR_RECORDING = COUNTDOWN_SECOND_FOR_RECORDING-1;
@@ -9884,6 +10067,38 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:navController animated:YES];
 }
 
+
+/**
+ *  There're two save
+ *  1. save from "save button" on keyboard
+ *  2. save from "save button",right side of "functioinal panel"
+ *  here, refer to 2
+ */
+- (void) saveButtonClick:(id)sender {
+    
+    if ([self checkCardEditable] == false) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"SAVE_NOT_AVAILABLE_THAT_IS_NOT_YOU",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+        return;
+    }
+    
+    
+    [self saveEdittedCard];
+    
+}
+
+- (void) previewButtonClick:(id)sender {
+    
+    Card *screnshotCard = [self copyCurrentUnsavedCardForPreview];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:[NSNumber numberWithBool:true] forKey:@"preview_only"];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:screnshotCard userInfo:dict];
+    
+}
 
 - (void) changeTemplateButtonClick:(id)sender {
     [iConsole info:@"%s",__FUNCTION__];
@@ -11132,7 +11347,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id)sender {
-    [self dismissKeyBoard:sender];
+    _isDismissKeyboardViaSaveButtonFromKeyboard = true;
+    [self dismissKeyBoard:sender withSaveComing:true];
 }
 
 

@@ -446,4 +446,37 @@
 	return answerDict;
 }
 
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    Answer *copy=[[[self class] allocWithZone:zone] init];
+    
+    copy.answerID = _answerID;
+    copy.cardID = _cardID;
+    copy.cssID = _cssID;
+    copy.title = _title;
+    copy.subheading = _subheading;
+    copy.main = _main;
+    copy.sub = _sub;
+    copy.imageFullPath = _imageFullPath;
+    copy.imageFullPath2 = _imageFullPath2;
+    copy.movieFullPath = _movieFullPath;
+    copy.movieFullPath2 = _movieFullPath2;
+    copy.logoFullPath = _logoFullPath;
+    copy.templateID = _templateID;
+    copy.autoresizeFlag = _autoresizeFlag;
+    copy.lineNoSubheading = _lineNoSubheading;
+    copy.lineNoMain = _lineNoMain;
+    copy.lineNoSub = _lineNoSub;
+    copy.backgroundImageFullPath = _backgroundImageFullPath;
+    copy.recordedSoundFullPath = _recordedSoundFullPath;
+    
+    copy.css = [_css copyWithZone:zone];
+    
+    
+    
+    
+    return copy;
+}
+
 @end

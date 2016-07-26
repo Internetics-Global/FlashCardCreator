@@ -58,4 +58,6 @@
 
 + (NSMutableDictionary *) cssForCSSID:(NSInteger)cssID;
 
+- (id)copyWithZone:(NSZone *)zone;
+
 @end

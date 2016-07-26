@@ -98,4 +98,6 @@
 
 + (NSMutableDictionary *) questionForCardID:(NSInteger)cardID;
 
+- (id)copyWithZone:(NSZone *)zone;
+
 @end

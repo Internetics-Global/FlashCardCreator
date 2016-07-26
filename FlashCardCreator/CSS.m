@@ -185,4 +185,33 @@
 	return cssDict;
 }
 
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    CSS *copy=[[[self class] allocWithZone:zone] init];
+    
+    copy.cssID = _cssID;
+    
+    copy.subheadingSize = _subheadingSize;
+    copy.subheadingColor = _subheadingColor;
+    copy.subheadingAlign = _subheadingAlign;
+    copy.subheadingAlignVertical = _subheadingAlignVertical;
+    copy.subheadingFont = _subheadingFont;
+    
+    copy.mainSize = _mainSize;
+    copy.mainColor = _mainColor;
+    copy.mainAlign = _mainAlign;
+    copy.mainAlignVertical = _mainAlignVertical;
+    copy.mainFont = _mainFont;
+    
+    copy.subSize = _subSize;
+    copy.subColor = _subColor;
+    copy.subAlign = _subAlign;
+    copy.subAlignVertical = _subAlignVertical;
+    copy.subFont = _subFont;
+    
+    
+    return copy;
+}
+
 @end

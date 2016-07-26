@@ -48,5 +48,7 @@
 
 + (NSMutableArray *) cardsForPackID:(NSInteger)packID;
 
+- (id)copyWithZone:(NSZone *)zone;
+
 @end
 

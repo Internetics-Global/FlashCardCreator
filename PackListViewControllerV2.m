@@ -386,8 +386,12 @@
             break;
     }
     
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:@[[NSNumber numberWithInteger:oneOffType],[NSNumber numberWithInteger:packIndex]]];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:[NSNumber numberWithInteger:oneOffType] forKey:@"oneOffType"];
+    [dict setValue:[NSNumber numberWithInteger:packIndex] forKey:@"packIndex"];
+    [dict setValue:[NSNumber numberWithBool:false] forKey:@"preview_only"];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:dict];
     
     Pack *selectedPack = [[User defaultUser].packs objectAtIndex:packIndex];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
