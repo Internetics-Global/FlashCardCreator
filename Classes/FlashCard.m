@@ -9964,7 +9964,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _recordingStopButton.layer.masksToBounds = YES;
                 _recordingStopButton.backgroundColor = [UIColor redColor];
                 [_recordingStopButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [_recordingStopButton addTarget:self action:@selector(recordingStopButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+                [_recordingStopButton addTarget:self action:@selector(recordingStopButtonClicked) forControlEvents:UIControlEventTouchDown];
             
                 [_recordingBackgroundMaskView addSubview:_recordingStopButton];
                 
