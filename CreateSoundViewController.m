@@ -151,8 +151,6 @@
 
 - (IBAction)startButtonClicked:(id)sender {
     
-    [APP_DELEGATE.recorder record];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
     
     APP_DELEGATE.isRecordFinished = YES;

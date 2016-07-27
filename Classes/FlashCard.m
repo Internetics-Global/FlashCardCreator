@@ -10000,7 +10000,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (COUNTDOWN_SECOND_FOR_PREPARE == 1) {
                     
                     [_recordingStopButton setTitle:@"Stop" forState:UIControlStateNormal];
-                   // [APP_DELEGATE.recorder record];
+                    [APP_DELEGATE.recorder record];
                     
                     
                     COUNTDOWN_SECOND_FOR_RECORDING = COUNTDOWN_SECOND_FOR_RECORDING-1;
