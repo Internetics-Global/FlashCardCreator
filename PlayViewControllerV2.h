@@ -20,6 +20,8 @@ typedef NS_ENUM(NSInteger, One_Off_Play_Type) {
 
 @property (strong, nonatomic) Pack *currentPack;
 
+@property (assign, nonatomic) BOOL previewOnly;
+
 
 /**
  *  用于判断来源于popover的选项（manual, auto, auto with loop)

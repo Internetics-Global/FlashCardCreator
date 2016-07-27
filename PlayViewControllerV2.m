@@ -146,6 +146,16 @@
 
 @implementation PlayViewControllerV2
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+        self.previewOnly = false;
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -855,7 +865,10 @@
     
     _scrollView = nil;
     
-    [_currentPack savePackOnly];
+    if (self.previewOnly == false) {
+        //in preview mode, we never save it.
+        [_currentPack savePackOnly];
+    }
     
     [self dismissViewControllerAnimated:YES completion:nil];
     

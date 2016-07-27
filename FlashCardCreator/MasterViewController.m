@@ -1144,6 +1144,7 @@ extern BOOL isFromNewCreatedCard;
     
     PlayViewControllerV2 *playViewController = [[PlayViewControllerV2 alloc] init];
     playViewController.oneOffPlayType = oneOffType;
+    playViewController.previewOnly = isPreviewOnly;
     playViewController.currentPack = selectedPack;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"There are no packs loaded"];
