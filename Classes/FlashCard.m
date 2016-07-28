@@ -1398,6 +1398,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if (_isPlayingCard) {
             _functionAreaView.hidden = YES;
+            
+            _saveButton.hidden = YES;
+            _previewButton.hidden = YES;
         }
         
         
@@ -1634,6 +1637,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionTitle.userInteractionEnabled = false;
         _answerTitle.userInteractionEnabled = false;
         //_functionAreaView.hidden = YES;
+        
+        _previewButton.hidden = true;
+        _saveButton.hidden = true;
     }
     
     if (0) {
