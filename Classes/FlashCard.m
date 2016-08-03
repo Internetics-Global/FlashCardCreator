@@ -9999,7 +9999,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:_recordingBackgroundMaskView];
             
             __block int COUNTDOWN_SECOND_FOR_RECORDING = 30;
-            __block int COUNTDOWN_SECOND_FOR_PREPARE = 3;
+            __block int COUNTDOWN_SECOND_FOR_PREPARE = 5;
             [_recordingStopButton setTitle:[NSString stringWithFormat:@"%d",COUNTDOWN_SECOND_FOR_PREPARE] forState:UIControlStateNormal];
             _recordCountDownTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
                 
