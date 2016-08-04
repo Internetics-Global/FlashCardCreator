@@ -2248,9 +2248,14 @@ extern BOOL isFromNewCreatedCard;
             [assembledCard question].css.mainFont = questionDict[@"main_font"];
             [assembledCard question].css.subFont = questionDict[@"sub_font"];
             
+            [assembledCard question].css.subheadingSemiTransparent = [questionDict[@"subheading_semi_transparent"] integerValue] == 1;
+            [assembledCard question].css.mainSemiTransparent = [questionDict[@"main_semi_transparent"] integerValue] == 1;
+            [assembledCard question].css.subSemiTransparent = [questionDict[@"sub_semi_transparent"] integerValue] == 1;
+            
             [assembledCard question].lineNoSubheading = [questionDict[@"line_number_subheading"] integerValue];
             [assembledCard question].lineNoMain = [questionDict[@"line_number_main"] integerValue];
             [assembledCard question].lineNoSub = [questionDict[@"line_number_sub"] integerValue];
+            
             
             
             error = nil;
@@ -2599,6 +2604,10 @@ extern BOOL isFromNewCreatedCard;
             [assembledCard answer].css.subheadingFont = answerDict[@"subheading_font"];
             [assembledCard answer].css.mainFont = answerDict[@"main_font"];
             [assembledCard answer].css.subFont = answerDict[@"sub_font"];
+            
+            [assembledCard answer].css.subheadingSemiTransparent = [answerDict[@"subheading_semi_transparent"] integerValue] == 1;
+            [assembledCard answer].css.mainSemiTransparent = [answerDict[@"main_semi_transparent"] integerValue] == 1;
+            [assembledCard answer].css.subSemiTransparent = [answerDict[@"sub_semi_transparent"] integerValue] == 1;
             
             [assembledCard answer].lineNoSubheading = [answerDict[@"line_number_subheading"] integerValue];
             [assembledCard answer].lineNoMain = [answerDict[@"line_number_main"] integerValue];

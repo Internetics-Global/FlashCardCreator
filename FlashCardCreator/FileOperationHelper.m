@@ -397,7 +397,10 @@
                                         card.question.css.subFont,@"sub_font",
                                             card.question.css.subheadingAlignVertical,@"subheading_align_vertical",
                                             card.question.css.mainAlignVertical,@"main_align_vertical",
-                                            card.question.css.subAlignVertical,@"sub_align_vertical",nil];
+                                            card.question.css.subAlignVertical,@"sub_align_vertical",
+                                                  card.question.css.subheadingSemiTransparent?@"1":@"0",@"subheading_semi_transparent",
+                                                  card.question.css.mainSemiTransparent?@"1":@"0",@"main_semi_transparent",
+                                                  card.question.css.subSemiTransparent?@"1":@"0",@"sub_semi_transparent",nil];
     
     [iConsole info:@"%s: questionDict = %@",__FUNCTION__,questionDict];
     
@@ -461,7 +464,10 @@
                                       card.answer.css.subFont,@"sub_font",
                                              card.answer.css.subheadingAlignVertical,@"subheading_align_vertical",
                                              card.answer.css.mainAlignVertical,@"main_align_vertical",
-                                             card.answer.css.subAlignVertical,@"sub_align_vertical",nil];
+                                             card.answer.css.subAlignVertical,@"sub_align_vertical",
+                                                 card.answer.css.subheadingSemiTransparent?@"1":@"0",@"subheading_semi_transparent",
+                                                 card.answer.css.mainSemiTransparent?@"1":@"0",@"main_semi_transparent",
+                                                 card.answer.css.subSemiTransparent?@"1":@"0",@"sub_semi_transparent",nil];
     
     [iConsole info:@"%s: answerDict = %@",__FUNCTION__,anserDict];
     

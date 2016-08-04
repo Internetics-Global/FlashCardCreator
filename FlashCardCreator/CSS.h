@@ -16,18 +16,21 @@
     NSString *_subheadingAlign;
     NSString *_subheadingAlignVertical;
     NSString *_subheadingFont;
+    BOOL      _subheadingSemiTransparent;
     
     float _mainSize;
 	NSString *_mainColor;
     NSString *_mainAlign;
     NSString *_mainAlignVertical;
     NSString *_mainFont;
+    BOOL      _mainSemiTransparent;
 
     float _subSize;
 	NSString *_subColor;
     NSString *_subAlign;
     NSString *_subAlignVertical;
     NSString *_subFont;
+    BOOL      _subSemiTransparent;
     
 }
 
@@ -38,18 +41,21 @@
 @property (nonatomic, copy) NSString *subheadingAlign;
 @property (nonatomic, copy) NSString *subheadingAlignVertical;
 @property (nonatomic, copy) NSString *subheadingFont;
+@property (nonatomic, assign) BOOL  subheadingSemiTransparent;
 
 @property (nonatomic, assign) float mainSize;
 @property (nonatomic, copy) NSString *mainColor;
 @property (nonatomic, copy) NSString *mainAlign;
 @property (nonatomic, copy) NSString *mainAlignVertical;
 @property (nonatomic, copy) NSString *mainFont;
+@property (nonatomic, assign) BOOL  mainSemiTransparent;
 
 @property (nonatomic, assign) float subSize;
 @property (nonatomic, copy) NSString *subColor;
 @property (nonatomic, copy) NSString *subAlign;
 @property (nonatomic, copy) NSString *subAlignVertical;
 @property (nonatomic, copy) NSString *subFont;
+@property (nonatomic, assign) BOOL subSemiTransparent;
 
 
 - (id)initWithDictionary:(NSDictionary *)dict;
