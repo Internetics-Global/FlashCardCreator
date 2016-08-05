@@ -11073,6 +11073,32 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
+        
+        //semi-transparent logic update
+        //需要放在最后面
+        BOOL isSemiTransparent = false;
+        {
+            if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+                isSemiTransparent = _subheadingQuestion.alpha == 0.5;
+            } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+                isSemiTransparent = _mainQuestion.alpha == 0.5;
+            } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+                isSemiTransparent = _subQuestion.alpha == 0.5;
+            } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+                isSemiTransparent = _subheadingAnswer.alpha == 0.5;
+            } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+                isSemiTransparent = _mainAnswer.alpha == 0.5;
+            } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+                isSemiTransparent = _subAnswer.alpha == 0.5;
+            }
+            
+            if (isSemiTransparent) {
+                [[targetButtonArray lastObject] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+            }
+            
+            
+        }
+        
         if (_lastBecomeFirstRespondTextView.inputView == nil) {
             [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
         } else {
