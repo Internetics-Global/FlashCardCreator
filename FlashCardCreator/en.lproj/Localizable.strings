@@ -169,6 +169,7 @@
 "ToolbarItem_Color_Black"        = "Black";
 "ToolbarItem_Color_Yellow"        = "Yellow";
 "ToolbarItem_Color_White"        = "White";
+"ToolbarItem_Color_Invisible"        = "Invisible";
 
 "Label_Question"      = "Question";
 "Label_Answer"        = "Answer";

@@ -1671,6 +1671,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     }
     
+    [self updateSemiTransparentPolicyForPlayMode];
 
     
     [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
@@ -2494,6 +2495,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.mainFont = _mainFontAnswer;
     _currentCard.answer.css.subFont = _subFontAnswer;
     
+    _currentCard.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
+    _currentCard.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
+    _currentCard.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
+    
     _currentCard.question.title = _questionTitle.text;
     _currentCard.question.subheading = _subheadingQuestion.text;
     _currentCard.question.main = _mainQuestion.text;
@@ -2523,6 +2528,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.subheadingFont = _subheadingFontQuestion;
     _currentCard.question.css.mainFont = _mainFontQuestion;
     _currentCard.question.css.subFont = _subFontQuestion;
+    
+    _currentCard.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5);
+    _currentCard.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5);
+    _currentCard.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5);
     
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
     //we did this when:
@@ -8507,38 +8516,52 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     NSString *title = ((UIButton *) sender).titleLabel.text;;
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
-    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Black",nil)]) {
-        responderTextView.textColor = [UIColor blackColor];
-        selectColorStr = @"Black";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil)]) {
-        responderTextView.textColor = [UIColor yellowColor];
-        selectColorStr = @"Yellow";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Blue",nil)]) {
-        responderTextView.textColor = [UIColor blueColor];
-        selectColorStr = @"Blue";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Red",nil)]) {
-        responderTextView.textColor = [UIColor redColor];
-        selectColorStr = @"Red";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Green",nil)]) {
-        responderTextView.textColor = [UIColor greenColor];
-        selectColorStr = @"Green";
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_White",nil)]) {
-        responderTextView.textColor = [UIColor whiteColor];
-        selectColorStr = @"White";
-    }
     
-    if (responderTextView.tag == kTagSubheadingQuestion){
-        _subheadingColorQuestion = selectColorStr;
-    } else if (responderTextView.tag == kTagMainQuestion) {
-        _mainColorQuestion = selectColorStr;
-    } else if (responderTextView.tag == kTagSubQuestion) {
-        _subColorQuestion = selectColorStr;
-    } else if (responderTextView.tag == kTagSubheadingAnswer) {
-        _subheadingColorAnswer = selectColorStr;
-    } else if (responderTextView.tag == kTagMainAnswer) {
-        _mainColorAnswer = selectColorStr;
-    } else if (responderTextView.tag == kTagSubAnswer) {
-        _subColorAnswer = selectColorStr;
+    
+    
+    if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Invisible",nil)]) {
+        
+        if (responderTextView.alpha == 0.5) {
+            responderTextView.alpha = 1;
+        } else {
+            responderTextView.alpha = 0.5;
+        }
+        
+    } else {
+        
+        if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Black",nil)]) {
+            responderTextView.textColor = [UIColor blackColor];
+            selectColorStr = @"Black";
+        } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Yellow",nil)]) {
+            responderTextView.textColor = [UIColor yellowColor];
+            selectColorStr = @"Yellow";
+        } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Blue",nil)]) {
+            responderTextView.textColor = [UIColor blueColor];
+            selectColorStr = @"Blue";
+        } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Red",nil)]) {
+            responderTextView.textColor = [UIColor redColor];
+            selectColorStr = @"Red";
+        } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_Green",nil)]) {
+            responderTextView.textColor = [UIColor greenColor];
+            selectColorStr = @"Green";
+        } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Color_White",nil)]) {
+            responderTextView.textColor = [UIColor whiteColor];
+            selectColorStr = @"White";
+        }
+        
+        if (responderTextView.tag == kTagSubheadingQuestion){
+            _subheadingColorQuestion = selectColorStr;
+        } else if (responderTextView.tag == kTagMainQuestion) {
+            _mainColorQuestion = selectColorStr;
+        } else if (responderTextView.tag == kTagSubQuestion) {
+            _subColorQuestion = selectColorStr;
+        } else if (responderTextView.tag == kTagSubheadingAnswer) {
+            _subheadingColorAnswer = selectColorStr;
+        } else if (responderTextView.tag == kTagMainAnswer) {
+            _mainColorAnswer = selectColorStr;
+        } else if (responderTextView.tag == kTagSubAnswer) {
+            _subColorAnswer = selectColorStr;
+        }
     }
 }
 
@@ -11259,6 +11282,58 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
         tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
     }
+}
+
+/**
+ *  我们不能使用hidden属性，因为triggerResizeTextToFitFrame的中间过程中会局部hidden
+ */
+- (void) updateSemiTransparentPolicyForPlayMode {
+    
+    float ALPHA_VALUE;
+    
+    if (_isPlayingCard) {
+        ALPHA_VALUE = 0;
+    } else {
+        ALPHA_VALUE = 0.5;
+    }
+    
+    if (self.currentCard.question.css.subheadingSemiTransparent) {
+        _subheadingQuestion.alpha = ALPHA_VALUE;
+    } else {
+        _subheadingQuestion.alpha = 1;
+    }
+    
+    if (self.currentCard.question.css.mainSemiTransparent) {
+        _mainQuestion.alpha = ALPHA_VALUE;
+    } else {
+        _mainQuestion.alpha = 1;
+    }
+    
+    if (self.currentCard.question.css.subSemiTransparent) {
+        _subQuestion.alpha = ALPHA_VALUE;
+    } else {
+        _subQuestion.alpha = 1;
+    }
+    
+    if (self.currentCard.answer.css.subheadingSemiTransparent) {
+        _subheadingAnswer.alpha = ALPHA_VALUE;
+    } else {
+        _subheadingAnswer.alpha = 1;
+    }
+    
+    if (self.currentCard.answer.css.mainSemiTransparent) {
+        _mainAnswer.alpha = ALPHA_VALUE;
+    } else {
+        _mainAnswer.alpha = 1;
+    }
+    
+    if (self.currentCard.answer.css.subSemiTransparent) {
+        _subAnswer.alpha = ALPHA_VALUE;
+    } else {
+        _subAnswer.alpha = 1;
+    }
+    
+    
 }
 
 /**
