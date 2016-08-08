@@ -2403,6 +2403,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.answer.css.mainFont = _mainFontAnswer;
     card.answer.css.subFont = _subFontAnswer;
     
+    card.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
+    card.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
+    card.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
+    
     card.question.title = _questionTitle.text;
     card.question.subheading = _subheadingQuestion.text;
     card.question.main = _mainQuestion.text;
@@ -2432,6 +2436,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.question.css.subheadingFont = _subheadingFontQuestion;
     card.question.css.mainFont = _mainFontQuestion;
     card.question.css.subFont = _subFontQuestion;
+    
+    card.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5);
+    card.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5);
+    card.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5);
+    
     
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
     //we did this when:
