@@ -67,7 +67,7 @@
     
     [self setupLog];
     
-    self.rawMatchedText2SpeechArray = [self rawText2SpeechLanguage];
+    self.rawLocaleText2SpeechArray = [self getRawLocaleText2SpeechArray];
     
 //    [ParseCrashReporting enable];
     [Parse setApplicationId:@"LWnSvs6XkYqzdKd07QKowViu8axdnwsHJIpFb4gO"
@@ -412,9 +412,11 @@
 }
 
 /**
- *  这个是粗糙的结果，还需要进一步的过滤
+ * return AVSpeechSynthesisVoice language arary for current locale
+ * The reason why we do this is:
+*  NSLocale and NSLinguisticTagger both use ISO 681 codes to identify languages. AVSpeechSynthesisVoice, however, takes an IETF Language Tag, as specified BCP 47 Document Series. If an utterance string and voice aren’t in the same language, speech synthesis will fail.
  */
-- (NSMutableArray *) rawText2SpeechLanguage {
+- (NSMutableArray *) getRawLocaleText2SpeechArray {
     
     NSMutableArray *returnArray = [NSMutableArray array];
     
@@ -431,9 +433,11 @@
         
     }
     
+    
     return returnArray;
     
 }
+
 
 
 - (void)audioRouteChangeListenerCallback:(NSNotification*)notification

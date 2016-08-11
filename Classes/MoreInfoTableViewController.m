@@ -34,6 +34,8 @@
 
 #import "MutipleTargetHelper.h"
 
+#import "SelectText2SpeechLanguage.h"
+
 @interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @end
@@ -223,14 +225,8 @@
         [showQuestionOnlySwitch setOn:b];
     } else if (indexPath.row == 6) {
         
-        cell.textLabel.text = NSLocalizedString(@"Table_Item_Male_Female",@"");
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        UISwitch *voiceSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [voiceSwitch addTarget:self action:@selector(voiceSwitchAction) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = voiceSwitch;
-        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
-        [voiceSwitch setOn:b];
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Speech_Language_Select",nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else if (indexPath.row == 7) {
@@ -483,6 +479,9 @@
         [MutipleTargetHelper showPurchaseView];
     } else if (indexPath.row == 0) {
         PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
+    } else if (indexPath.row == 6) {
+        SelectText2SpeechLanguage *controller = [[SelectText2SpeechLanguage alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }
     

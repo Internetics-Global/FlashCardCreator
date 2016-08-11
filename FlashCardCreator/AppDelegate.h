@@ -51,7 +51,7 @@
  */
 @property (assign, nonatomic) BOOL             isRecordFinished;
 
-@property (strong, nonatomic) NSMutableArray   *rawMatchedText2SpeechArray;
+@property (strong, nonatomic) NSMutableArray   *rawLocaleText2SpeechArray;
 
 
 - (UIView *)progressHUDHolderView;

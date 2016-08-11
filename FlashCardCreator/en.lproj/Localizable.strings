@@ -245,6 +245,7 @@
 "Table_Item_TTS" = "Text to Speech";
 "Table_Item_Show_Question_Only" = "Auto-Show Question Only";
 "Table_Item_Male_Female" = "Male/Female Voice";
+"Table_Item_Speech_Language_Select" = "Select Speech Language";
 "Table_Item_Personal_Recording" = "Personal Recording";
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";

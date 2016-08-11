@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0DECB48518D6885C2C51BA80 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AC7AA83697FD47C0F6FA7D /* libPods.a */; };
+		2A417A671D5C583500180A52 /* SelectText2SpeechLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */; };
 		2D1A051816EDDF1D00527311 /* card_background_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051316EDDF1D00527311 /* card_background_red.png */; };
 		2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051416EDDF1D00527311 /* card_background_purple.png */; };
 		2D1A051A16EDDF1D00527311 /* card_background_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051516EDDF1D00527311 /* card_background_gray.png */; };
@@ -298,6 +299,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A417A651D5C583500180A52 /* SelectText2SpeechLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectText2SpeechLanguage.h; path = Classes/SelectText2SpeechLanguage.h; sourceTree = "<group>"; };
+		2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectText2SpeechLanguage.m; path = Classes/SelectText2SpeechLanguage.m; sourceTree = "<group>"; };
 		2D1A051316EDDF1D00527311 /* card_background_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_red.png; path = Resources/card_background_red.png; sourceTree = "<group>"; };
 		2D1A051416EDDF1D00527311 /* card_background_purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_purple.png; path = Resources/card_background_purple.png; sourceTree = "<group>"; };
 		2D1A051516EDDF1D00527311 /* card_background_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_gray.png; path = Resources/card_background_gray.png; sourceTree = "<group>"; };
@@ -1107,6 +1110,8 @@
 				2D5C184016D1A69200E1E785 /* MoreInfoTableViewController.m */,
 				8867262F1C1164CF007E86CE /* PlayOptionViewController.h */,
 				886726301C1164CF007E86CE /* PlayOptionViewController.m */,
+				2A417A651D5C583500180A52 /* SelectText2SpeechLanguage.h */,
+				2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1943,6 +1948,7 @@
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
 				882D56281C39F2A900EBA68E /* UITextField+AutoResizeFont.m in Sources */,
+				2A417A671D5C583500180A52 /* SelectText2SpeechLanguage.m in Sources */,
 				886D8FF01AE4975E00865101 /* TPKeyboardAvoidingTableView.m in Sources */,
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
