@@ -719,11 +719,6 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
-    if (![Common isOwner:_currentPack]) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
-        return;
-    }
-    
     if (self.tableView.editing == FALSE) {
         self.tableView.editing = TRUE;
         [((UIButton *)sender) setImage:[UIImage imageNamed:@"done_button"] forState:UIControlStateNormal];
