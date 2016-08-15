@@ -1543,12 +1543,7 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (BOOL)moveTableView:(FMMoveTableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![Common isOwner:_currentPack]) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
-        return false;
-    }  else {
-        return true;
-    }
+    return true;
 }
 
 - (void)moveTableView:(FMMoveTableView *)tableView moveRowFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
