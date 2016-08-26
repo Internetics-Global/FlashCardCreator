@@ -305,13 +305,7 @@ enum popover_enum {
             //Load card view when not:1. downloading;2. not every time
             __weak __typeof(&*self)weakSelf = self;
             
-            BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-            if (isExamplePackDownloadedSuccessful == TRUE) {
-                static dispatch_once_t oncetoken;
-                dispatch_once(&oncetoken, ^{
-                    [weakSelf showCurrentCardInScrollView:NO];
-                });
-            }
+            [weakSelf showCurrentCardInScrollView:NO];
         }
     }
     
