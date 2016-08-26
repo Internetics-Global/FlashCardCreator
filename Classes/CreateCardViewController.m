@@ -194,7 +194,9 @@ BOOL isFromNewCreatedCard = NO;
     }
     
     //Step2: dismiss window
-    [self.navigationController popViewControllerAnimated:YES];
+    if (isUserInterfaceIdiomPhone == false) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
     //Step3: Save.
     [_newCardView saveEdittedCard];
