@@ -12,7 +12,7 @@
 @interface SelectText2SpeechLanguage () <UITableViewDelegate, UITableViewDataSource>{
     UITableView *_alertTable;
     
-    NSArray     *_allText2SpeechArray;
+    NSMutableArray     *_allText2SpeechArray;
 }
 
 @end
@@ -36,7 +36,23 @@
     
     self.title = @"Select Language";
     
-    _allText2SpeechArray = [AVSpeechSynthesisVoice speechVoices];
+    _allText2SpeechArray = [NSMutableArray array];
+    NSArray *array = [AVSpeechSynthesisVoice speechVoices];
+
+    //remove duplicte
+    for (AVSpeechSynthesisVoice *item in array) {
+        BOOL exist =false;
+        for (AVSpeechSynthesisVoice *subItem in _allText2SpeechArray) {
+            if ([item.language isEqualToString:subItem.language]) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist == false) {
+            [_allText2SpeechArray addObject:item];
+        }
+        
+    }
     
     
 }

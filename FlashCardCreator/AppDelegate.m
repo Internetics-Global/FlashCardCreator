@@ -416,9 +416,9 @@
  * The reason why we do this is:
 *  NSLocale and NSLinguisticTagger both use ISO 681 codes to identify languages. AVSpeechSynthesisVoice, however, takes an IETF Language Tag, as specified BCP 47 Document Series. If an utterance string and voice aren’t in the same language, speech synthesis will fail.
  */
-- (NSMutableArray *) getRawLocaleText2SpeechArray {
+- (NSArray *) getRawLocaleText2SpeechArray {
     
-    NSMutableArray *returnArray = [NSMutableArray array];
+    NSMutableArray *array = [NSMutableArray array];
     
     NSString * language2RegionStr = [[NSLocale preferredLanguages] objectAtIndex:0];
     NSString *languageStr = [[language2RegionStr componentsSeparatedByString:@"-"] objectAtIndex:0];
@@ -428,13 +428,15 @@
         NSString *text2SpeechLanguageStr = [[item.language componentsSeparatedByString:@"-"] objectAtIndex:0];
         
         if ([text2SpeechLanguageStr isEqualToString:languageStr]) {
-            [returnArray addObject:item.language];
+            [array addObject:item.language];
         }
         
     }
     
+    NSArray *uniquearray = [[NSSet setWithArray:array] allObjects];
     
-    return returnArray;
+    
+    return uniquearray;
     
 }
 

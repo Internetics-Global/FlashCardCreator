@@ -433,7 +433,7 @@
 
 + (NSString *) getDefaultText2SpeechVoiceLanguage {
     
-    NSMutableArray *rawArray = APP_DELEGATE.rawLocaleText2SpeechArray;
+    NSArray *rawArray = APP_DELEGATE.rawLocaleText2SpeechArray;
     
     if ([rawArray count] == 0) {
         return @"en-GB";

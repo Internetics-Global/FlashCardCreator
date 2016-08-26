@@ -10720,7 +10720,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         NSString *text2SpeechStr = [Common getSelectedText2SpeechLanguage];
         utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechStr];
         
-        //NSArray* speechVoices = [AVSpeechSynthesisVoice speechVoices];
         
         utterance.rate = (AVSpeechUtteranceMinimumSpeechRate + AVSpeechUtteranceDefaultSpeechRate)*0.75;
         
