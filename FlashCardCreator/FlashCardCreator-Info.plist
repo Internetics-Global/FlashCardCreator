@@ -105,5 +105,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>$(PRODUCT_NAME) uses microphone</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>$(PRODUCT_NAME) uses photos</string>
 </dict>
 </plist>
