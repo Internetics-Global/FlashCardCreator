@@ -1146,9 +1146,17 @@ extern BOOL isFromNewCreatedCard;
         return;
     }
     
+    if (isPreviewOnly && isUserInterfaceIdiomPhone == false) {
+        //yes, it's quite a strange solution. However,if we don't use this way, the vertical alignment will be a problem
+        //a tempoary solution,  add this todo list later, ccaa
+        [APP_DELEGATE.splitViewController.masterViewController presentModalViewController:playViewController animated:YES];
+        
+    } else {
+        UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+        [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
+    }
     
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
+    
 }
 
 - (void) toCreateNewPackNotification:(NSNotification *) notification {
