@@ -277,7 +277,7 @@
     NSError *error;
     //这个为必须的，否则无法
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
     
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
     [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
@@ -292,10 +292,11 @@
     
     
     BOOL success = FALSE;
-    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
     if (!success)  {
         [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
     }
+    
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)
@@ -457,12 +458,12 @@
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:{
             [iConsole info:@"%s: Headphone/Line was pulled",__FUNCTION__];
             
-            NSError *error = nil;
-            BOOL success = FALSE;
-            success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-            if (!success)  {
-                [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
-            }
+//            NSError *error = nil;
+//            BOOL success = FALSE;
+//            success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+//            if (!success)  {
+//                [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
+//            }
             
             break;
         }
