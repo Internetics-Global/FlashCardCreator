@@ -158,7 +158,7 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playNotification:) name:PLAY_NOTIFICATION object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissPackListAfterDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         
@@ -192,6 +192,8 @@ enum popover_enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.edgesForExtendedLayout = FALSE;
@@ -2161,8 +2163,16 @@ extern BOOL isFromNewCreatedCard;
             
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([questionDict[@"image"] length] >0) {
+                
+                NSString *temp = questionDict[@"image"];
+                if ([temp.lowercaseString containsString:@"gif"] == false) {
+                    newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                } else {
+                    newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                }
+
+                
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
                     [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
@@ -2174,8 +2184,16 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
             if ([questionDict[@"image2"] length] >0) {
+                
+                NSString *temp = questionDict[@"image2"];
+                if ([temp.lowercaseString containsString:@"gif"] == false) {
+                    newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                } else {
+                    newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                }
+                
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:questionDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
                     [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
@@ -2536,8 +2554,15 @@ extern BOOL isFromNewCreatedCard;
             
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image"] length] > 0) {
+                
+                NSString *temp = answerDict[@"image"];
+                if ([temp.lowercaseString containsString:@"gif"] == false) {
+                    newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                } else {
+                    newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                }
+                
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image"]] toPath:newFileName error:&error];
                 if (error) {
                     [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];
@@ -2549,8 +2574,15 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             if ([answerDict[@"image2"] length] > 0) {
+                
+                NSString *temp = answerDict[@"image2"];
+                if ([temp.lowercaseString containsString:@"gif"] == false) {
+                    newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                } else {
+                    newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                }
+                
                 [[NSFileManager defaultManager] copyItemAtPath:[temporaryImagesDir stringByAppendingPathComponent:answerDict[@"image2"]] toPath:newFileName error:&error];
                 if (error) {
                     [iConsole error:@"%s:Error during moveItemAtPath to %@",__FUNCTION__,newFileName];

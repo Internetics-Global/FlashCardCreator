@@ -1048,7 +1048,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (_imageQuestion ==  nil) {
-        _imageQuestion= [[UIImageView  alloc] init];
+        _imageQuestion= [[FLAnimatedImageView  alloc] init];
         _imageQuestion.userInteractionEnabled = FALSE;
         _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion.clipsToBounds = YES;
@@ -1063,7 +1063,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageQuestion2 ==  nil) {
-        _imageQuestion2= [[UIImageView  alloc] init];
+        _imageQuestion2= [[FLAnimatedImageView  alloc] init];
         _imageQuestion2.userInteractionEnabled = FALSE;
         _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion2.clipsToBounds = YES;
@@ -1137,7 +1137,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer ==  nil) {
-        _imageAnswer= [[UIImageView  alloc] init];
+        _imageAnswer= [[FLAnimatedImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
         _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
@@ -1153,7 +1153,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _imageAnswer.hidden = YES;
     
     if (_imageAnswer2 ==  nil) {
-        _imageAnswer2= [[UIImageView  alloc] init];
+        _imageAnswer2= [[FLAnimatedImageView  alloc] init];
         _imageAnswer2.userInteractionEnabled = FALSE;
         _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer2.clipsToBounds = YES;
@@ -11730,7 +11730,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return false;
     }
     
-    if ([path.lastPathComponent containsString:@".gif"]) {
+    if ([path.lastPathComponent.lowercaseString containsString:@".gif"]) {
         return true;
     } else {
         return false;
