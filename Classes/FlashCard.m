@@ -29,6 +29,7 @@
 #import "EmoticonHelper.h"
 #import "Emoticon.h"
 #import <AVFoundation/AVFoundation.h>
+ #import <Photos/Photos.h>
 
 #import "CreateSoundViewController.h"
 
@@ -57,6 +58,8 @@
 #import "UITextField+AutoResizeFont.h"
 
 #import "MutipleTargetHelper.h"
+
+#import "FLAnimatedImage.h"
 
 extern BOOL isFromNewCreatedCard;
 
@@ -434,7 +437,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (_imageQuestion == nil) {
-        _imageQuestion= [[UIImageView  alloc] init];
+        _imageQuestion= [[FLAnimatedImageView  alloc] init];
         _imageQuestion.userInteractionEnabled = FALSE;
         _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion.clipsToBounds = YES;
@@ -448,7 +451,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageQuestion2 == nil) {
-        _imageQuestion2= [[UIImageView  alloc] init];
+        _imageQuestion2= [[FLAnimatedImageView  alloc] init];
         _imageQuestion2.userInteractionEnabled = FALSE;
         _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion2.clipsToBounds = YES;
@@ -537,7 +540,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer == nil) {
-        _imageAnswer= [[UIImageView  alloc] init];
+        _imageAnswer= [[FLAnimatedImageView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
         _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
@@ -551,7 +554,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer2 == nil) {
-        _imageAnswer2= [[UIImageView  alloc] init];
+        _imageAnswer2= [[FLAnimatedImageView  alloc] init];
         _imageAnswer2.userInteractionEnabled = FALSE;
         _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer2.clipsToBounds = YES;
@@ -1874,16 +1877,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     
     UIImage *imageTemp = nil;
+    FLAnimatedImage *gifImageTemp = nil;
     NSString *path = @"";
     [iConsole info:@"%s,_currentCard.answer.imageFullPath = %@",__FUNCTION__,_currentCard.answer.imageFullPath];
+    BOOL isGif = [self isGif:_currentCard.answer.imageFullPath];
     if ([_currentCard.answer.imageFullPath lastPathComponent].length != 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
+        if (isGif) {
+            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+        } else {
+            imageTemp = [UIImage imageWithContentsOfFile:path];
+        }
     }
     
     _answerImageFullPath = path;
     if (imageTemp) {
         _imageAnswer.image = imageTemp;
+    } else if (gifImageTemp) {
+        _imageAnswer.animatedImage = gifImageTemp;
     } else {
         _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
@@ -1903,16 +1914,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     imageTemp = nil;
+    gifImageTemp = nil;
     path = @"";
     [iConsole info:@"%s,_currentCard.answer.imageFullPath2 = %@",__FUNCTION__,_currentCard.answer.imageFullPath2];
+    isGif = [self isGif:_currentCard.answer.imageFullPath2];
     if ([_currentCard.answer.imageFullPath2 lastPathComponent].length != 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath2 lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
+        if (isGif) {
+            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+        } else {
+            imageTemp = [UIImage imageWithContentsOfFile:path];
+        }
     }
     
     _answerImageFullPath2 = path;
     if (imageTemp) {
         _imageAnswer2.image = imageTemp;
+    } else if (gifImageTemp) {
+        _imageAnswer2.animatedImage = gifImageTemp;
     } else {
         _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
@@ -1992,20 +2011,32 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+
 - (void) refreshQuestionContent {
     [iConsole info:@"%s",__FUNCTION__];
     
     UIImage *imageTemp = nil;
+    FLAnimatedImage *gifImageTemp = nil;
     NSString *path = @"";
+    BOOL isGif = [self isGif:_currentCard.question.imageFullPath];
     [iConsole info:@"%s,_currentCard.question.imageFullPath = %@",__FUNCTION__,_currentCard.question.imageFullPath];
     if ([_currentCard.question.imageFullPath lastPathComponent].length != 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
+        
+        if (isGif) {
+            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+        } else {
+            imageTemp = [UIImage imageWithContentsOfFile:path];
+        }
+        
     }
     _questionImageFullPath = path;
+    
     if (imageTemp) {
         _imageQuestion.image = imageTemp;
-    } else {
+    } else if (gifImageTemp) {
+        _imageQuestion.animatedImage = gifImageTemp;
+    }else {
         _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content"];
         
         if (_isPlayingCard) {
@@ -2015,6 +2046,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
     
+
     //客户要求，touch的范围必须在icon内，而不是在imageview frame内
     if ([_currentCard.question.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
         _isPlayingCard) {
@@ -2025,15 +2057,23 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     imageTemp = nil;
+    gifImageTemp = nil;
     path = @"";
+    isGif = [self isGif:_currentCard.question.imageFullPath2];
     [iConsole info:@"%s,_currentCard.question.imageFullPath2 = %@",__FUNCTION__,_currentCard.question.imageFullPath2];
     if ([_currentCard.question.imageFullPath2 lastPathComponent].length != 0) {
         path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath2 lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
+        if (isGif) {
+            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+        } else {
+            imageTemp = [UIImage imageWithContentsOfFile:path];
+        }
     }
     _questionImageFullPath2 = path;
     if (imageTemp) {
         _imageQuestion2.image = imageTemp;
+    } else if (gifImageTemp) {
+        _imageQuestion2.animatedImage = gifImageTemp;
     } else {
         _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content"];
         
@@ -8135,117 +8175,227 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         
     } else if ([mediaType isEqualToString:@"public.image"]) {
-        UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        
-        NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
-        
-        if (isUserInterfaceIdiomPhone) {
-            [picker dismissModalViewControllerAnimated:YES];
-            picker = nil;
-        } else {
-            //        picker = nil;
-            [_imagePickerPopover dismissPopoverAnimated:YES];
-            _imagePickerPopover = nil;
-        }
-        
-        if (_imageSourceType == Type_Image_Source_Logo) {
+        NSURL *assetURL = info[UIImagePickerControllerReferenceURL];
+        NSString *extension = [assetURL pathExtension];
+        CFStringRef imageUTI = (UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
+        if (UTTypeConformsTo(imageUTI, kUTTypeGIF))
+        {
+            dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
             
-            _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-            if ([Common isPlaceholderFilePathOrDirectory:_logoImageFullPath]) {
-                _logoImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            __block NSData *imageData = nil;
+            PHAsset * asset = [[PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil] lastObject];
+            if (asset) {
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                options.synchronous = YES;
+                options.networkAccessAllowed = NO;
+                options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+                [[PHImageManager defaultManager] requestImageDataForAsset:asset options:options resultHandler:^(NSData * _Nullable data, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                    NSNumber * isError = [info objectForKey:PHImageErrorKey];
+                    NSNumber * isCloud = [info objectForKey:PHImageResultIsInCloudKey];
+                    if ([isError boolValue] || [isCloud boolValue] || ! data) {
+                        // fail
+                    } else {
+                        // success
+                        imageData = data;
+                    }
+                    
+                    dispatch_semaphore_signal(semaphore);
+                }];
             }
             
-            [imageData writeToFile:_logoImageFullPath atomically:YES];
-            _logoImage.image = [UIImage imageWithData:imageData];
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
             
-            _currentCard.question.logoFullPath = _logoImageFullPath;
-            if (isFromNewCreatedCard) {
-                //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
-                _isAllCardsNeedToBeUpdateForNewCardOnly = YES;
-            } else {
-                //do save operation and update all others
-                
-                if (!_HUD) {
-                    _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
-                }
-                [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
-                [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
-                
-                _HUD.mode = MBProgressHUDModeIndeterminate;
-                [_HUD show:YES];
-                _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
-                [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
-            }
-            
-        } else if (_imageSourceType == Type_Image_Source_Image) {
-            
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                if ([Common isPlaceholderFilePathOrDirectory:_questionImageFullPath]) {
-                    _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
-                }
-                [imageData writeToFile:_questionImageFullPath atomically:YES];
-                _imageQuestion.image = [UIImage imageWithData:imageData];
-            } else {
-                if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath]) {
-                    _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
-                }
-                [imageData writeToFile:_answerImageFullPath atomically:YES];
-                _imageAnswer.image = [UIImage imageWithData:imageData];
-            }
-            
-            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-                //we will save until after we press the save button
-                if (_segmentedControl.selectedSegmentIndex == 0) {
-                    _currentCard.question.imageFullPath = _questionImageFullPath;
-                } else {
-                    _currentCard.answer.imageFullPath = _answerImageFullPath;
-                }
-            } else {
-                [self saveEdittedCard];
-            }
-        } else if (_imageSourceType == Type_Image_Source_Image2) {
-            
-            if (_segmentedControl.selectedSegmentIndex == 0) {
-                if ([Common isPlaceholderFilePathOrDirectory:_questionImageFullPath2]) {
-                    _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
-                }
-                [imageData writeToFile:_questionImageFullPath2 atomically:YES];
-                _imageQuestion2.image = [UIImage imageWithData:imageData];
-            } else {
-                if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2]) {
-                    _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
-                }
-                [imageData writeToFile:_answerImageFullPath2 atomically:YES];
-                _imageAnswer2.image = [UIImage imageWithData:imageData];
-            }
-            
-            if (self.tag == NEW_FLASHCARDVIEW_TAG) {
-                //we will save until after we press the save button
-                if (_segmentedControl.selectedSegmentIndex == 0) {
-                    _currentCard.question.imageFullPath2 = _questionImageFullPath2;
-                } else {
-                    _currentCard.answer.imageFullPath2 = _answerImageFullPath2;
-                }
-            } else {
-                [self saveEdittedCard];
-            }
-        } else if (_imageSourceType == Type_Image_Source_Background)  {
             
             if (isUserInterfaceIdiomPhone) {
                 [picker dismissModalViewControllerAnimated:YES];
-                
+                picker = nil;
             } else {
+                //        picker = nil;
                 [_imagePickerPopover dismissPopoverAnimated:YES];
+                _imagePickerPopover = nil;
             }
             
-            __weak __typeof(&*self)weakSelf = self;
-            double delayInSeconds = 0.6;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [weakSelf openEditor:origialmage];
-            });
+            if (_imageSourceType == Type_Image_Source_Image) {
+                
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    BOOL isAlreadyGif = [self isGif:_questionImageFullPath];
+                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath];
+                    if (isPlaceHolder || (isAlreadyGif == false)) {
+                        _questionImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_questionImageFullPath atomically:YES];
+                    _imageQuestion.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                } else {
+                    BOOL isAlreadyGif = [self isGif:_answerImageFullPath];
+                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath];
+                    if (isPlaceHolder || (isAlreadyGif == false)) {
+                        _answerImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_answerImageFullPath atomically:YES];
+                    _imageAnswer.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                }
+                
+                if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                    //we will save until after we press the save button
+                    if (_segmentedControl.selectedSegmentIndex == 0) {
+                        _currentCard.question.imageFullPath = _questionImageFullPath;
+                    } else {
+                        _currentCard.answer.imageFullPath = _answerImageFullPath;
+                    }
+                } else {
+                    [self saveEdittedCard];
+                }
+            } else if (_imageSourceType == Type_Image_Source_Image2) {
+                
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    BOOL isAlreadyGif = [self isGif:_questionImageFullPath2];
+                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath2];
+                    if (isPlaceHolder || (isAlreadyGif == false)) {
+                        _questionImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_questionImageFullPath2 atomically:YES];
+                    _imageQuestion2.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                } else {
+                    BOOL isAlreadyGif = [self isGif:_answerImageFullPath2];
+                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2];
+                    if (isPlaceHolder || (isAlreadyGif == false)) {
+                        _answerImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_answerImageFullPath2 atomically:YES];
+                    _imageAnswer2.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                }
+                
+                if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                    //we will save until after we press the save button
+                    if (_segmentedControl.selectedSegmentIndex == 0) {
+                        _currentCard.question.imageFullPath2 = _questionImageFullPath2;
+                    } else {
+                        _currentCard.answer.imageFullPath2 = _answerImageFullPath2;
+                    }
+                } else {
+                    [self saveEdittedCard];
+                }
+            }
+            
+            
+        } else {
+            
+            
+            UIImage *origialmage = [info objectForKey:UIImagePickerControllerOriginalImage];
+            
+            NSData *imageData = UIImagePNGRepresentation([origialmage scaleToSize:CGSizeMake(400, 400)]);
+            
+            if (isUserInterfaceIdiomPhone) {
+                [picker dismissModalViewControllerAnimated:YES];
+                picker = nil;
+            } else {
+                //        picker = nil;
+                [_imagePickerPopover dismissPopoverAnimated:YES];
+                _imagePickerPopover = nil;
+            }
+            
+            if (_imageSourceType == Type_Image_Source_Logo) {
+                
+                _logoImageFullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
+                if ([Common isPlaceholderFilePathOrDirectory:_logoImageFullPath]) {
+                    _logoImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                }
+                
+                [imageData writeToFile:_logoImageFullPath atomically:YES];
+                _logoImage.image = [UIImage imageWithData:imageData];
+                
+                _currentCard.question.logoFullPath = _logoImageFullPath;
+                if (isFromNewCreatedCard) {
+                    //we don't do save operation now but need to tell to save all cards' logo when we click "save button"
+                    _isAllCardsNeedToBeUpdateForNewCardOnly = YES;
+                } else {
+                    //do save operation and update all others
+                    
+                    if (!_HUD) {
+                        _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+                    }
+                    [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+                    [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+                    
+                    _HUD.mode = MBProgressHUDModeIndeterminate;
+                    [_HUD show:YES];
+                    _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+                    [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
+                }
+                
+            } else if (_imageSourceType == Type_Image_Source_Image) {
+                
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    if ([Common isPlaceholderFilePathOrDirectory:_questionImageFullPath]) {
+                        _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_questionImageFullPath atomically:YES];
+                    _imageQuestion.image = [UIImage imageWithData:imageData];
+                } else {
+                    if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath]) {
+                        _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_answerImageFullPath atomically:YES];
+                    _imageAnswer.image = [UIImage imageWithData:imageData];
+                }
+                
+                if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                    //we will save until after we press the save button
+                    if (_segmentedControl.selectedSegmentIndex == 0) {
+                        _currentCard.question.imageFullPath = _questionImageFullPath;
+                    } else {
+                        _currentCard.answer.imageFullPath = _answerImageFullPath;
+                    }
+                } else {
+                    [self saveEdittedCard];
+                }
+            } else if (_imageSourceType == Type_Image_Source_Image2) {
+                
+                if (_segmentedControl.selectedSegmentIndex == 0) {
+                    if ([Common isPlaceholderFilePathOrDirectory:_questionImageFullPath2]) {
+                        _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_questionImageFullPath2 atomically:YES];
+                    _imageQuestion2.image = [UIImage imageWithData:imageData];
+                } else {
+                    if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2]) {
+                        _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                    }
+                    [imageData writeToFile:_answerImageFullPath2 atomically:YES];
+                    _imageAnswer2.image = [UIImage imageWithData:imageData];
+                }
+                
+                if (self.tag == NEW_FLASHCARDVIEW_TAG) {
+                    //we will save until after we press the save button
+                    if (_segmentedControl.selectedSegmentIndex == 0) {
+                        _currentCard.question.imageFullPath2 = _questionImageFullPath2;
+                    } else {
+                        _currentCard.answer.imageFullPath2 = _answerImageFullPath2;
+                    }
+                } else {
+                    [self saveEdittedCard];
+                }
+            } else if (_imageSourceType == Type_Image_Source_Background)  {
+                
+                if (isUserInterfaceIdiomPhone) {
+                    [picker dismissModalViewControllerAnimated:YES];
+                    
+                } else {
+                    [_imagePickerPopover dismissPopoverAnimated:YES];
+                }
+                
+                __weak __typeof(&*self)weakSelf = self;
+                double delayInSeconds = 0.6;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [weakSelf openEditor:origialmage];
+                });
+            }
+            
+            
         }
+        
     }
     
     if (_imageSourceType != Type_Image_Source_Background) {
@@ -11570,6 +11720,21 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:navigationController animated:YES completion:NULL];
+}
+
+
+#pragma mark – utilities
+
+- (BOOL) isGif:(NSString *) path {
+    if (path == nil || path.length == 0) {
+        return false;
+    }
+    
+    if ([path.lastPathComponent containsString:@".gif"]) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 

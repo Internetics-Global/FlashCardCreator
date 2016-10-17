@@ -226,6 +226,24 @@
 
 
 /**
+ *	an unique name will be generated and will be under directory of "Images"
+ *
+ */
++ (NSString *) generateUniqueGIFImageFilePathUnderImagesFolder {
+    NSString *path = [[self dataDocumentDirectory] stringByAppendingPathComponent:@"Images"];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if(![[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error]) {
+            [iConsole error:@"Failed to create directory at %@", path];
+        }
+    }
+    
+    
+    NSString *uid = [NSString stringWithFormat:@"%d%d.gif", (int)[[NSDate date] timeIntervalSince1970], arc4random()];
+    return ([path stringByAppendingPathComponent:uid]);
+}
+
+/**
  *	must be .3gp format
  *
  */

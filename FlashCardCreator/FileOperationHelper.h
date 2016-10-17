@@ -31,6 +31,7 @@
 + (NSString *) generateUniqueAudioAACFilePathUnderImagesFolder;
 + (NSString *) generateUniqueAudio3GPFilePathUnderImagesFolder;
 + (NSString *) generateUniquePNGImageFilePathUnderImagesFolder;
++ (NSString *) generateUniqueGIFImageFilePathUnderImagesFolder;
 + (NSString *) generateUniqueMovFilePathUnderImagesFolder;
 + (NSString *) zipPackForUpload:(Pack *)pack withPassword: (NSString *) password;
 

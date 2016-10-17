@@ -36,6 +36,7 @@ typedef enum{
 @class Pack;
 @class MBProgressHUD;
 @class JSBadgeView;
+@class FLAnimatedImageView;
 
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopoverViewDelegate,AVSpeechSynthesizerDelegate> {
     JSBadgeView *_cardSNText;
@@ -93,8 +94,8 @@ typedef enum{
     UITextView   *_subheadingQuestion;
     UITextView   *_mainQuestion;
     UITextView   *_subQuestion;
-    UIImageView  *_imageQuestion;
-    UIImageView  *_imageQuestion2;
+    FLAnimatedImageView  *_imageQuestion;
+    FLAnimatedImageView  *_imageQuestion2;
     NSInteger    _subheadingSizeQuestion;
 	NSString     *_subheadingColorQuestion;
     NSString     *_subheadingAlignQuestion;
@@ -108,8 +109,8 @@ typedef enum{
     UITextView   *_subheadingAnswer;
     UITextView   *_mainAnswer;
     UITextView   *_subAnswer;
-    UIImageView  *_imageAnswer;
-    UIImageView  *_imageAnswer2;
+    FLAnimatedImageView  *_imageAnswer;
+    FLAnimatedImageView  *_imageAnswer2;
     NSInteger    _subheadingSizeAnswer;
 	NSString     *_subheadingColorAnswer;
     NSString     *_subheadingAlignAnswer;
