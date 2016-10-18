@@ -353,6 +353,10 @@ enum popover_enum {
         
     });
     
+    //this is quite tricky.
+    //The scene is when you back from play, this text alignement will be top, rather than expected center if you have already vertically center.
+    //Seem a bug from Apple, so this is a temp solution but works.
+    [_currentCardView updateQuestionAnswerAllTextViewVeriticalAlignment];
     
 }
 

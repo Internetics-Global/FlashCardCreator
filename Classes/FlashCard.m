@@ -229,13 +229,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self setupTextToSpeech];
         }
         
-        //Vertical alignment，在具体的KVO中，如果alignment是vertical，则
-        [_subheadingQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-        [_mainQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-        [_subQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-        [_subheadingAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-        [_mainAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-        [_subAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     
@@ -448,6 +441,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
         [_imageQuestion addGestureRecognizer:imageSingeTap];
+        
     }
     
     if (_imageQuestion2 == nil) {
@@ -486,6 +480,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.contentOffset = CGPointZero;
         _subheadingQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingQuestion];
+        
+        [_subheadingQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     if (_mainQuestion == nil) {
@@ -511,6 +507,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion.contentOffset = CGPointZero;
         _mainQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainQuestion];
+        
+        [_mainQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     
@@ -537,6 +535,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.contentOffset = CGPointZero;
         _subQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subQuestion];
+        
+        [_subQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     if (_imageAnswer == nil) {
@@ -593,6 +593,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.contentOffset = CGPointZero;
         _subheadingAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingAnswer];
+        
+        [_subheadingAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _subheadingAnswer.hidden = TRUE;
     
@@ -619,6 +621,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAnswer.contentOffset = CGPointZero;
         _mainAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainAnswer];
+        
+        [_mainAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _mainAnswer.hidden = TRUE;
     
@@ -646,6 +650,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.contentOffset = CGPointZero;
         _subAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subAnswer];
+        
+        [_subAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _subAnswer.hidden = TRUE;
     
@@ -1094,6 +1100,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.contentOffset = CGPointZero;
         _subheadingQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingQuestion];
+        
+        [_subheadingQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     if (_mainQuestion ==  nil) {
@@ -1113,6 +1121,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion.contentOffset = CGPointZero;
         _mainQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainQuestion];
+        
+        [_mainQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     
@@ -1134,6 +1144,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion.contentOffset = CGPointZero;
         _subQuestion.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subQuestion];
+        
+        [_subQuestion addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     
     if (_imageAnswer ==  nil) {
@@ -1187,6 +1199,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.contentOffset = CGPointZero;
         _subheadingAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subheadingAnswer];
+        
+        [_subheadingAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _subheadingAnswer.hidden = YES;
     
@@ -1207,6 +1221,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAnswer.contentOffset = CGPointZero;
         _mainAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_mainAnswer];
+        
+        [_mainAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _mainAnswer.hidden = YES;
     
@@ -1227,6 +1243,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.contentOffset = CGPointZero;
         _subAnswer.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
         [_verticalScrollView addSubview:_subAnswer];
+        
+        [_subAnswer addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
     }
     _subAnswer.hidden = YES;
     
@@ -11403,14 +11421,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 -(void)observeValueForKeyPath:(NSString *)keyPath   ofObject:(id)object   change:(NSDictionary *)change   context:(void *)context
 {
-    
-    UITextView *tv = object;
-    
-    if ([self isVerticalAlignment:tv]) {
-        CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])  / 2.0;
-        topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-        tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    if ([@"contentSize" isEqualToString:keyPath]) {
+        
+        UITextView *tv = object;
+        
+        if ([self isVerticalAlignment:tv]) {
+            CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])  / 2.0;
+            topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+            tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+        }
+        
     }
+    
 }
 
 /**
