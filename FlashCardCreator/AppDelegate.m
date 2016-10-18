@@ -405,11 +405,7 @@
 
 
 - (UIView *)progressHUDHolderView {
-    if (isUserInterfaceIdiomPhone) {
-        return self.navigationController.view.window;
-    } else {
-        return self.splitViewController.view.window;
-    }
+    return self.window;
 }
 
 /**
