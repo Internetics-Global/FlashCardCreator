@@ -61,6 +61,9 @@
 
 #import "FLAnimatedImage.h"
 
+#import "MultimediaView.h"
+#import "MultimediaView+Extensions.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -430,13 +433,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (_imageQuestion == nil) {
-        _imageQuestion= [[FLAnimatedImageView  alloc] init];
-        _imageQuestion.userInteractionEnabled = FALSE;
-        _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
-        _imageQuestion.clipsToBounds = YES;
-        _imageQuestion.backgroundColor = [UIColor clearColor];
-        _imageQuestion.layer.cornerRadius = 15;
-        _imageQuestion.layer.masksToBounds = YES;
+        _imageQuestion= [[MultimediaView  alloc] init];
+        [_imageQuestion setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageQuestion];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
@@ -445,13 +443,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageQuestion2 == nil) {
-        _imageQuestion2= [[FLAnimatedImageView  alloc] init];
-        _imageQuestion2.userInteractionEnabled = FALSE;
-        _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
-        _imageQuestion2.clipsToBounds = YES;
-        _imageQuestion2.backgroundColor = [UIColor clearColor];
-        _imageQuestion2.layer.cornerRadius = 15;
-        _imageQuestion2.layer.masksToBounds = YES;
+        _imageQuestion2= [[MultimediaView  alloc] init];
+        [_imageQuestion2 setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageQuestion2];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
@@ -540,13 +533,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer == nil) {
-        _imageAnswer= [[FLAnimatedImageView  alloc] init];
-        _imageAnswer.userInteractionEnabled = FALSE;
-        _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
-        _imageAnswer.clipsToBounds = YES;
-        _imageAnswer.backgroundColor = [UIColor clearColor];
-        _imageAnswer.layer.cornerRadius = 15;
-        _imageAnswer.layer.masksToBounds = YES;
+        _imageAnswer= [[MultimediaView  alloc] init];
+        [_imageAnswer setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageAnswer];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
@@ -554,13 +542,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer2 == nil) {
-        _imageAnswer2= [[FLAnimatedImageView  alloc] init];
-        _imageAnswer2.userInteractionEnabled = FALSE;
-        _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
-        _imageAnswer2.clipsToBounds = YES;
-        _imageAnswer2.backgroundColor = [UIColor clearColor];
-        _imageAnswer2.layer.cornerRadius = 15;
-        _imageAnswer2.layer.masksToBounds = YES;
+        _imageAnswer2= [[MultimediaView  alloc] init];
+        [_imageAnswer2 setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageAnswer2];
         
         UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
@@ -1054,7 +1037,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     if (_imageQuestion ==  nil) {
-        _imageQuestion= [[FLAnimatedImageView  alloc] init];
+        _imageQuestion= [[MultimediaView  alloc] init];
         _imageQuestion.userInteractionEnabled = FALSE;
         _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion.clipsToBounds = YES;
@@ -1069,7 +1052,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageQuestion2 ==  nil) {
-        _imageQuestion2= [[FLAnimatedImageView  alloc] init];
+        _imageQuestion2= [[MultimediaView  alloc] init];
         _imageQuestion2.userInteractionEnabled = FALSE;
         _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion2.clipsToBounds = YES;
@@ -1149,7 +1132,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_imageAnswer ==  nil) {
-        _imageAnswer= [[FLAnimatedImageView  alloc] init];
+        _imageAnswer= [[MultimediaView  alloc] init];
         _imageAnswer.userInteractionEnabled = FALSE;
         _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
@@ -1165,7 +1148,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _imageAnswer.hidden = YES;
     
     if (_imageAnswer2 ==  nil) {
-        _imageAnswer2= [[FLAnimatedImageView  alloc] init];
+        _imageAnswer2= [[MultimediaView  alloc] init];
         _imageAnswer2.userInteractionEnabled = FALSE;
         _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer2.clipsToBounds = YES;
@@ -1638,6 +1621,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     [iConsole info:@"%s",__FUNCTION__];
+    [self pauseEmbeddedVideo];
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
@@ -1894,138 +1878,166 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) refreshAnswerContent {
     [iConsole info:@"%s",__FUNCTION__];
     
-    UIImage *imageTemp = nil;
-    FLAnimatedImage *gifImageTemp = nil;
-    NSString *path = @"";
-    [iConsole info:@"%s,_currentCard.answer.imageFullPath = %@",__FUNCTION__,_currentCard.answer.imageFullPath];
-    BOOL isGif = [self isGif:_currentCard.answer.imageFullPath];
-    if ([_currentCard.answer.imageFullPath lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath lastPathComponent]];
-        if (isGif) {
-            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+    {
+        _answerMovieFullPath = _currentCard.answer.movieFullPath;
+        _answerMovieFullPath2 = _currentCard.answer.movieFullPath2;
+        
+        _answerImageFullPath = _currentCard.answer.imageFullPath;
+        _answerImageFullPath2 = _currentCard.answer.imageFullPath2;
+        
+        _answerTitle.text = _currentCard.answer.title;
+        _answerTitle.textColor = [self colorForAnswerTitle];
+        _answerTitle.layer.shadowColor = [self colorForAnswerTitleShadowColor];
+        _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
+        
+        
+        _subheadingAnswer.text = _currentCard.answer.subheading;
+        _mainAnswer.text =_currentCard.answer.main;
+        _subAnswer.text =_currentCard.answer.sub;
+    }
+    
+    {
+        BOOL isVideo = [self isLocalVideo:_answerMovieFullPath];
+        
+        if (isVideo) {
+            
+            [_imageAnswer setMultimediaType:Video];
+            [_imageAnswer setVideoURL:[NSURL fileURLWithPath:_answerMovieFullPath]];
+// we put play at the end
+//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 1) {
+//                [_imageAnswer playVideo];
+//            }
+            
         } else {
+            
+            [_imageAnswer setMultimediaType:ImageView];
+            
+            UIImage *imageTemp = nil;
+            FLAnimatedImage *gifImageTemp = nil;
+            [iConsole info:@"%s,_currentCard.answer.imageFullPath = %@",__FUNCTION__,_currentCard.answer.imageFullPath];
+            BOOL isGif = [self isGif:_currentCard.answer.imageFullPath];
+            if ([_answerImageFullPath lastPathComponent].length != 0) {
+                if (isGif) {
+                    gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:_answerImageFullPath]];
+                } else {
+                    imageTemp = [UIImage imageWithContentsOfFile:_answerImageFullPath];
+                }
+            }
+
+            if (imageTemp) {
+                _imageAnswer.animtableImageView.image = imageTemp;
+            } else if (gifImageTemp) {
+                _imageAnswer.animtableImageView.animatedImage = gifImageTemp;
+            } else {
+                _imageAnswer.animtableImageView.image = [UIImage imageNamed:@"answer_placeholder_content"];
+                
+                if (_isPlayingCard) {
+                    _imageAnswer.hidden = YES;
+                } else {
+                }
+            }
+        }
+        
+        
+        
+        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+        if ([_currentCard.answer.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+            _isPlayingCard) {
+            float width = CGRectGetWidth(_imageAnswer.frame);
+            float height = CGRectGetHeight(_imageAnswer.frame);
+            _imageAnswer.bypassTransparentColor = YES;
+            [_imageAnswer setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+        }
+    }
+    
+    {
+        
+        BOOL isVideo = [self isLocalVideo:_answerMovieFullPath2];
+        
+        if (isVideo) {
+            
+            [_imageAnswer2 setMultimediaType:Video];
+            [_imageAnswer2 setVideoURL:[NSURL fileURLWithPath:_answerMovieFullPath2]];
+// we put play at the end
+//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 1) {
+//                [_imageAnswer2 playVideo];
+//            }
+
+            
+        } else {
+            
+            [_imageAnswer2 setMultimediaType:ImageView];
+            
+            UIImage *imageTemp = nil;
+            FLAnimatedImage *gifImageTemp = nil;
+            
+            [iConsole info:@"%s,_currentCard.answer.imageFullPath2 = %@",__FUNCTION__,_currentCard.answer.imageFullPath2];
+            BOOL isGif = [self isGif:_currentCard.answer.imageFullPath2];
+            if ([_answerImageFullPath2 lastPathComponent].length != 0) {
+                if (isGif) {
+                    gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:_answerImageFullPath2]];
+                } else {
+                    imageTemp = [UIImage imageWithContentsOfFile:_answerImageFullPath2];
+                }
+            }
+            
+            if (imageTemp) {
+                _imageAnswer2.animtableImageView.image = imageTemp;
+            } else if (gifImageTemp) {
+                _imageAnswer2.animtableImageView.animatedImage = gifImageTemp;
+            } else {
+                _imageAnswer2.animtableImageView.image = [UIImage imageNamed:@"answer_placeholder_content"];
+                
+                if (_isPlayingCard) {
+                    _imageAnswer2.hidden = YES;
+                } else {
+                }
+            }
+        }
+    
+        
+        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+        if ([_currentCard.answer.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+            _isPlayingCard) {
+            float width = CGRectGetWidth(_imageAnswer2.frame);
+            float height = CGRectGetHeight(_imageAnswer2.frame);
+            _imageAnswer2.bypassTransparentColor = YES;
+            [_imageAnswer2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+        }
+    }
+    
+    {
+        UIImage *imageTemp = nil;
+        NSString *path = @"";
+        [iConsole info:@"%s,_currentCard.answer.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.answer.backgroundImageFullPath];
+        if ([_currentCard.answer.backgroundImageFullPath lastPathComponent].length != 0) {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
             imageTemp = [UIImage imageWithContentsOfFile:path];
         }
-    }
-    
-    _answerImageFullPath = path;
-    if (imageTemp) {
-        _imageAnswer.image = imageTemp;
-    } else if (gifImageTemp) {
-        _imageAnswer.animatedImage = gifImageTemp;
-    } else {
-        _imageAnswer.image = [UIImage imageNamed:@"answer_placeholder_content"];
         
-        if (_isPlayingCard) {
-            _imageAnswer.hidden = YES;
+        _answerBackgroundImageFullPath = path;
+        if (imageTemp) {
+            _answerBackgroundImageView.image = imageTemp;
         } else {
+            _answerBackgroundImageView.image = nil;
         }
     }
     
-    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
-    if ([_currentCard.answer.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
-        _isPlayingCard) {
-        float width = CGRectGetWidth(_imageAnswer.frame);
-        float height = CGRectGetHeight(_imageAnswer.frame);
-        _imageAnswer.bypassTransparentColor = YES;
-        [_imageAnswer setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
-    }
     
-    imageTemp = nil;
-    gifImageTemp = nil;
-    path = @"";
-    [iConsole info:@"%s,_currentCard.answer.imageFullPath2 = %@",__FUNCTION__,_currentCard.answer.imageFullPath2];
-    isGif = [self isGif:_currentCard.answer.imageFullPath2];
-    if ([_currentCard.answer.imageFullPath2 lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.imageFullPath2 lastPathComponent]];
-        if (isGif) {
-            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+    {
+        if (_currentCard.answer.recordedSoundFullPath.length > 0) {
+            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
+            _answerRecordedSoundFullPath = path;
         } else {
-            imageTemp = [UIImage imageWithContentsOfFile:path];
+            _answerRecordedSoundFullPath = @"";
         }
     }
     
-    _answerImageFullPath2 = path;
-    if (imageTemp) {
-        _imageAnswer2.image = imageTemp;
-    } else if (gifImageTemp) {
-        _imageAnswer2.animatedImage = gifImageTemp;
-    } else {
-        _imageAnswer2.image = [UIImage imageNamed:@"answer_placeholder_content"];
-        
-        if (_isPlayingCard) {
-            _imageAnswer2.hidden = YES;
-        } else {
-        }
+    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
+        [self playEmbeddedVideo];
     }
     
-    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
-    if ([_currentCard.answer.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
-        _isPlayingCard) {
-        float width = CGRectGetWidth(_imageAnswer2.frame);
-        float height = CGRectGetHeight(_imageAnswer2.frame);
-        _imageAnswer2.bypassTransparentColor = YES;
-        [_imageAnswer2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
-    }
-    
-    imageTemp = nil;
-    path = @"";
-    [iConsole info:@"%s,_currentCard.answer.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.answer.backgroundImageFullPath];
-    if ([_currentCard.answer.backgroundImageFullPath lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.backgroundImageFullPath lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
-    }
-    
-    _answerBackgroundImageFullPath = path;
-    if (imageTemp) {
-        _answerBackgroundImageView.image = imageTemp;
-    } else {
-        _answerBackgroundImageView.image = nil;
-    }
-    
-    //两种情况，普通youtube，另外一种，本地创建
-    if (_currentCard.answer.movieFullPath.length > 0) {
-        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
-            _answerMovieFullPath = _currentCard.answer.movieFullPath;
-        } else {
-            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath lastPathComponent]];
-            _answerMovieFullPath = path;
-        }
-        
-    } else {
-        _answerMovieFullPath = @"";
-    }
-    
-    if (_currentCard.answer.movieFullPath2.length > 0) {
-        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath2]) {
-            _answerMovieFullPath2 = _currentCard.answer.movieFullPath2;
-        } else {
-            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.movieFullPath2 lastPathComponent]];
-            _answerMovieFullPath2 = path;
-        }
-        
-    } else {
-        _answerMovieFullPath2 = @"";
-    }
-    
-    if (_currentCard.answer.recordedSoundFullPath.length > 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.answer.recordedSoundFullPath lastPathComponent]];
-        _answerRecordedSoundFullPath = path;
-    } else {
-        _answerRecordedSoundFullPath = @"";
-    }
-    
-    
-    
-    _answerTitle.text = _currentCard.answer.title;
-    _answerTitle.textColor = [self colorForAnswerTitle];
-    _answerTitle.layer.shadowColor = [self colorForAnswerTitleShadowColor];
-    _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
-    
-    
-    _subheadingAnswer.text = _currentCard.answer.subheading;
-    _mainAnswer.text =_currentCard.answer.main;
-    _subAnswer.text =_currentCard.answer.sub;
+
     
 }
 
@@ -2033,160 +2045,198 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 - (void) refreshQuestionContent {
     [iConsole info:@"%s",__FUNCTION__];
     
-    UIImage *imageTemp = nil;
-    FLAnimatedImage *gifImageTemp = nil;
-    NSString *path = @"";
-    BOOL isGif = [self isGif:_currentCard.question.imageFullPath];
-    [iConsole info:@"%s,_currentCard.question.imageFullPath = %@",__FUNCTION__,_currentCard.question.imageFullPath];
-    if ([_currentCard.question.imageFullPath lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath lastPathComponent]];
+    {
+        _questionMovieFullPath = _currentCard.question.movieFullPath;
+        _questionMovieFullPath2 = _currentCard.question.movieFullPath2;
         
-        if (isGif) {
-            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
-        } else {
-            imageTemp = [UIImage imageWithContentsOfFile:path];
-        }
+        _questionImageFullPath = _currentCard.question.imageFullPath;
+        _questionImageFullPath2 = _currentCard.question.imageFullPath2;
         
-    }
-    _questionImageFullPath = path;
-    
-    if (imageTemp) {
-        _imageQuestion.image = imageTemp;
-    } else if (gifImageTemp) {
-        _imageQuestion.animatedImage = gifImageTemp;
-    }else {
-        _imageQuestion.image = [UIImage imageNamed:@"question_placeholder_content"];
         
-        if (_isPlayingCard) {
-            _imageQuestion.hidden = YES;
-        } else {
-        }
+        _questionTitle.text = _currentCard.question.title;
+        _questionTitle.textColor = [self colorForQuestionTitle];
+        _questionTitle.layer.shadowColor = [self colorForQuestionTitleShadowColor];
+        _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
         
+        _subheadingQuestion.text = _currentCard.question.subheading;
+        _mainQuestion.text =_currentCard.question.main;
+        _subQuestion.text =_currentCard.question.sub;
     }
     
+    
+    //_currentCard.question 1
+    {
+        BOOL isVideo = [self isLocalVideo:_questionMovieFullPath];
+        
+        if (isVideo) {
+            
+            [_imageQuestion setMultimediaType:Video];
+            [_imageQuestion setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath]];
+// we put play video at the end
+//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 0) {
+//                [_imageQuestion playVideo];
+//            }
+            
 
-    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
-    if ([_currentCard.question.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
-        _isPlayingCard) {
-        float width = CGRectGetWidth(_imageQuestion.frame);
-        float height = CGRectGetHeight(_imageQuestion.frame);
-        _imageQuestion.bypassTransparentColor = YES;
-        [_imageQuestion setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+            
+        } else {
+            
+            [_imageQuestion setMultimediaType:ImageView];
+            
+            UIImage *imageTemp = nil;
+            FLAnimatedImage *gifImageTemp = nil;
+
+            BOOL isGif = [self isGif:_questionImageFullPath];
+            
+            
+            if ([_questionImageFullPath lastPathComponent].length != 0) {
+                
+                if (isGif) {
+                    gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:_questionImageFullPath]];
+                } else {
+                    imageTemp = [UIImage imageWithContentsOfFile:_questionImageFullPath];
+                }
+                
+            }
+            
+            if (imageTemp) {
+                _imageQuestion.animtableImageView.image = imageTemp;
+            } else if (gifImageTemp) {
+                _imageQuestion.animtableImageView.animatedImage = gifImageTemp;
+            }else {
+                _imageQuestion.animtableImageView.image = [UIImage imageNamed:@"question_placeholder_content"];
+                
+                if (_isPlayingCard) {
+                    _imageQuestion.hidden = YES;
+                } else {
+                }
+                
+            }
+        }
+        
+        
+        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+        if ([_currentCard.question.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+            _isPlayingCard) {
+            float width = CGRectGetWidth(_imageQuestion.frame);
+            float height = CGRectGetHeight(_imageQuestion.frame);
+            _imageQuestion.bypassTransparentColor = YES;
+            [_imageQuestion setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+        }
     }
     
-    imageTemp = nil;
-    gifImageTemp = nil;
-    path = @"";
-    isGif = [self isGif:_currentCard.question.imageFullPath2];
-    [iConsole info:@"%s,_currentCard.question.imageFullPath2 = %@",__FUNCTION__,_currentCard.question.imageFullPath2];
-    if ([_currentCard.question.imageFullPath2 lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.imageFullPath2 lastPathComponent]];
-        if (isGif) {
-            gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:path]];
+    //_currentCard.question 2
+    {
+        BOOL isVideo = [self isLocalVideo:_questionMovieFullPath2];
+        
+        if (isVideo) {
+            
+            [_imageQuestion2 setMultimediaType:Video];
+            [_imageQuestion2 setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
+// we put play at the end
+//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 0) {
+//                [_imageQuestion2 playVideo];
+//            }
+            
         } else {
+            
+            [_imageQuestion2 setMultimediaType:ImageView];
+            
+            UIImage *imageTemp = nil;
+            FLAnimatedImage *gifImageTemp = nil;
+            
+            BOOL isGif = [self isGif:_questionImageFullPath2];
+            [iConsole info:@"%s,_currentCard.question.imageFullPath2 = %@",__FUNCTION__,_currentCard.question.imageFullPath2];
+            if ([_questionImageFullPath2 lastPathComponent].length != 0) {
+                if (isGif) {
+                    gifImageTemp = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:_questionImageFullPath2]];
+                } else {
+                    imageTemp = [UIImage imageWithContentsOfFile:_questionImageFullPath2];
+                }
+            }
+            if (imageTemp) {
+                _imageQuestion2.animtableImageView.image = imageTemp;
+            } else if (gifImageTemp) {
+                _imageQuestion2.animtableImageView.animatedImage = gifImageTemp;
+            } else {
+                _imageQuestion2.animtableImageView.image = [UIImage imageNamed:@"question_placeholder_content"];
+                
+                if (_isPlayingCard) {
+                    _imageQuestion2.hidden = YES;
+                } else {
+                }
+                
+            }
+        }
+        
+        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+        if ([_currentCard.question.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
+            _isPlayingCard) {
+            float width = CGRectGetWidth(_imageQuestion2.frame);
+            float height = CGRectGetHeight(_imageQuestion2.frame);
+            _imageQuestion2.bypassTransparentColor = YES;
+            [_imageQuestion2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
+        }
+    }
+    
+    //logo
+    {
+        UIImage *imageTemp = nil;
+        NSString *path = @"";
+        
+        [iConsole info:@"%s,_currentCard.question.logoFullPath = %@",__FUNCTION__,_currentCard.question.logoFullPath];
+        if ([_currentCard.question.logoFullPath lastPathComponent].length != 0) {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
             imageTemp = [UIImage imageWithContentsOfFile:path];
         }
-    }
-    _questionImageFullPath2 = path;
-    if (imageTemp) {
-        _imageQuestion2.image = imageTemp;
-    } else if (gifImageTemp) {
-        _imageQuestion2.animatedImage = gifImageTemp;
-    } else {
-        _imageQuestion2.image = [UIImage imageNamed:@"question_placeholder_content"];
         
-        if (_isPlayingCard) {
-            _imageQuestion2.hidden = YES;
+        _logoImageFullPath = path;
+        if (imageTemp) {
+            _logoImage.image = imageTemp;
         } else {
+            _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo"];
+            
+            if (_isPlayingCard) {
+                _logoImage.hidden = YES;
+            } else {
+            }
         }
         
     }
     
-    //客户要求，touch的范围必须在icon内，而不是在imageview frame内
-    if ([_currentCard.question.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
-        _isPlayingCard) {
-        float width = CGRectGetWidth(_imageQuestion2.frame);
-        float height = CGRectGetHeight(_imageQuestion2.frame);
-        _imageQuestion2.bypassTransparentColor = YES;
-        [_imageQuestion2 setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.4, height*0.4, width*0.4)];
-    }
-    
-    imageTemp = nil;
-    path = @"";
-    [iConsole info:@"%s,_currentCard.question.logoFullPath = %@",__FUNCTION__,_currentCard.question.logoFullPath];
-    if ([_currentCard.question.logoFullPath lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.logoFullPath lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
-    }
-    
-    _logoImageFullPath = path;
-    if (imageTemp) {
-        _logoImage.image = imageTemp;
-    } else {
-        _logoImage.image = [UIImage imageNamed:@"question_placeholder_logo"];
+    //background
+    {
+        UIImage *imageTemp = nil;
+        NSString *path = @"";
+        [iConsole info:@"%s,_currentCard.question.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.question.backgroundImageFullPath];
+        if ([_currentCard.question.backgroundImageFullPath lastPathComponent].length != 0) {
+            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
+            imageTemp = [UIImage imageWithContentsOfFile:path];
+        }
         
-        if (_isPlayingCard) {
-            _logoImage.hidden = YES;
+        _questionBackgroundImageFullPath = path;
+        if (imageTemp) {
+            _questionBackgroundImageView.image = imageTemp;
         } else {
+            _questionBackgroundImageView.image = nil;
         }
     }
     
-    imageTemp = nil;
-    path = @"";
-    [iConsole info:@"%s,_currentCard.question.backgroundImageFullPath = %@",__FUNCTION__,_currentCard.question.backgroundImageFullPath];
-    if ([_currentCard.question.backgroundImageFullPath lastPathComponent].length != 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.backgroundImageFullPath lastPathComponent]];
-        imageTemp = [UIImage imageWithContentsOfFile:path];
-    }
-    
-    _questionBackgroundImageFullPath = path;
-    if (imageTemp) {
-        _questionBackgroundImageView.image = imageTemp;
-    } else {
-        _questionBackgroundImageView.image = nil;
-    }
-    
-    //两种情况，普通youtube，另外一种，本地创建
-    if (_currentCard.question.movieFullPath.length > 0) {
-        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
-            _questionMovieFullPath = _currentCard.question.movieFullPath;
+    //recorded sound
+    {
+        if (_currentCard.question.recordedSoundFullPath.length > 0) {
+            NSString *path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
+            _questionRecordedSoundFullPath = path;
         } else {
-            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath lastPathComponent]];
-            _questionMovieFullPath = path;
+            _questionRecordedSoundFullPath = @"";
         }
         
-    } else {
-        _questionMovieFullPath = @"";
     }
     
-    if (_currentCard.question.movieFullPath2.length > 0) {
-        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath2]) {
-            _questionMovieFullPath2 = _currentCard.question.movieFullPath2;
-        } else {
-            path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.movieFullPath2 lastPathComponent]];
-            _questionMovieFullPath2 = path;
-        }
-        
-    } else {
-        _questionMovieFullPath2 = @"";
+    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
+        [self playEmbeddedVideo];
     }
     
-    if (_currentCard.question.recordedSoundFullPath.length > 0) {
-        path = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
-        _questionRecordedSoundFullPath = path;
-    } else {
-        _questionRecordedSoundFullPath = @"";
-    }
-    
-    
-    _questionTitle.text = _currentCard.question.title;
-    _questionTitle.textColor = [self colorForQuestionTitle];
-    _questionTitle.layer.shadowColor = [self colorForQuestionTitleShadowColor];
-    _cardSNText.badgeBackgroundColor = [self colorForCardSNBackgroundTemplateID];
-    
-    _subheadingQuestion.text = _currentCard.question.subheading;
-    _mainQuestion.text =_currentCard.question.main;
-    _subQuestion.text =_currentCard.question.sub;
 }
 
 - (UIColor *) colorForQuestionTitle {
@@ -2338,6 +2388,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void)segmentedControlQAClicked:(id)sender
 {
+    
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
     //it does not matter even we can not edit the card. (we don't save card in non-edittable card)
     if (sender != nil) {  //do it only when manually click segmented control
@@ -7408,13 +7459,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     CGSize size = _verticalScrollView.contentSize;
     if (gap > 0) {
         if (isUserInterfaceIdiomPhone ) {
-            size.height =size.height + fabsf(scrollableOffset) + gap;
+            size.height =size.height + fabs(scrollableOffset) + gap;
         } else {
-            size.height =size.height + fabsf(scrollableOffset) + gap;
+            size.height =size.height + fabs(scrollableOffset) + gap;
         }
         
     } else {
-        size.height =size.height + fabsf(scrollableOffset) - fabsf(gap);
+        size.height =size.height + fabs(scrollableOffset) - fabs(gap);
     }
     _verticalScrollView.contentSize = size;
     
@@ -7933,6 +7984,47 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
+
+- (void) playEmbeddedVideo {
+    
+    if (_segmentedControl.selectedSegmentIndex  == 0) {
+        [_imageQuestion playVideo];
+        [_imageQuestion2 playVideo];
+        
+        [_imageAnswer pauseVideo];
+        [_imageAnswer2 pauseVideo];
+        
+    } else {
+        [_imageAnswer playVideo];
+        [_imageAnswer2 playVideo];
+        
+        [_imageQuestion pauseVideo];
+        [_imageQuestion2 pauseVideo];
+    }
+    
+}
+
+- (void) pauseEmbeddedVideo {
+    
+    [_imageQuestion pauseVideo];
+    [_imageQuestion2 pauseVideo];
+    
+    [_imageAnswer pauseVideo];
+    [_imageAnswer2 pauseVideo];
+    
+    
+}
+
+
+- (void) cleanMultimediaViews {
+    
+    [_imageQuestion clean];
+    [_imageQuestion2 clean];
+    
+    [_imageAnswer clean];
+    [_imageAnswer2 clean];
+}
+
 /**
  *  Play movie/video
  */
@@ -8071,7 +8163,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:movieURL options:nil];
         CMTime duration = sourceAsset.duration;
         float seconds = CMTimeGetSeconds(duration);
-        if (seconds > 30) {
+        if (seconds > 61) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
             return;
@@ -8083,7 +8175,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_imageSourceType == Type_Image_Source_Image) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if ([_questionMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
+                if (_questionMovieFullPath != nil && [_questionMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
                     NSError *error = nil;
                     if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
                                                                     error:&error])
@@ -8098,7 +8190,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             } else {
                 
-                if ([_answerMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
+                if (_answerMovieFullPath != nil && [_answerMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
                     NSError *error = nil;
                     if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
                                                                     error:&error])
@@ -8113,7 +8205,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
         } else {
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if ([_questionMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
+                if (_questionMovieFullPath2 != nil && [_questionMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
                     NSError *error = nil;
                     if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
                                                                     error:&error])
@@ -8128,7 +8220,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
                 
             } else {
-                if ([_answerMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
+                if (_answerMovieFullPath2 != nil && [_answerMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
                     NSError *error = nil;
                     if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
                                                                     error:&error])
@@ -8149,6 +8241,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             exportSession.shouldOptimizeForNetworkUse = YES;
             exportSession.outputFileType = AVFileType3GPP;
             exportSession.outputURL = [NSURL fileURLWithPath:destPath];
+            __weak __typeof(&*self)weakSelf = self;
             [exportSession exportAsynchronouslyWithCompletionHandler:^{
                 
                 //check file size for test purpose
@@ -8156,12 +8249,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 long fileSize = [fileDictionary fileSize];
                 [iConsole info:@"%s:Done and converted 3gp size is:%ld",__FUNCTION__,fileSize];
                 
+                [weakSelf switchToVideoModeAndPlayWithImageSource:_imageSourceType];
             }];
         }
         
-        
-        //save thumbnail info
-        [self thumbnailImageFromURL:[info objectForKey:@"UIImagePickerControllerMediaURL"] withImageSource:_imageSourceType];
         
         
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -8243,7 +8334,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath atomically:YES];
-                    _imageQuestion.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                    _imageQuestion.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
                     BOOL isAlreadyGif = [self isGif:_answerImageFullPath];
                     BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath];
@@ -8251,7 +8342,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _answerImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath atomically:YES];
-                    _imageAnswer.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                    _imageAnswer.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
                 
                 if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -8273,7 +8364,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath2 atomically:YES];
-                    _imageQuestion2.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                    _imageQuestion2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
                     BOOL isAlreadyGif = [self isGif:_answerImageFullPath2];
                     BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2];
@@ -8281,7 +8372,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _answerImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath2 atomically:YES];
-                    _imageAnswer2.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
+                    _imageAnswer2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
                 
                 if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -8349,13 +8440,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath atomically:YES];
-                    _imageQuestion.image = [UIImage imageWithData:imageData];
+                    _imageQuestion.animtableImageView.image = [UIImage imageWithData:imageData];
                 } else {
                     if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath]) {
                         _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath atomically:YES];
-                    _imageAnswer.image = [UIImage imageWithData:imageData];
+                    _imageAnswer.animtableImageView.image = [UIImage imageWithData:imageData];
                 }
                 
                 if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -8375,13 +8466,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath2 atomically:YES];
-                    _imageQuestion2.image = [UIImage imageWithData:imageData];
+                    _imageQuestion2.animtableImageView.image = [UIImage imageWithData:imageData];
                 } else {
                     if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2]) {
                         _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath2 atomically:YES];
-                    _imageAnswer2.image = [UIImage imageWithData:imageData];
+                    _imageAnswer2.animtableImageView.image = [UIImage imageWithData:imageData];
                 }
                 
                 if (self.tag == NEW_FLASHCARDVIEW_TAG) {
@@ -10381,6 +10472,49 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+
+- (void) switchToVideoModeAndPlayWithImageSource:(Type_Image_Source) imageSoucrType {
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    MultimediaView *targetMultiMediaView = nil;
+    NSURL *targetURL = nil;
+    if (imageSoucrType == Type_Image_Source_Image) {
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            targetMultiMediaView = _imageQuestion;
+            targetURL = [NSURL fileURLWithPath:_questionMovieFullPath];
+        } else {
+            targetMultiMediaView = _imageAnswer;
+            targetURL = [NSURL fileURLWithPath:_answerMovieFullPath];
+        }
+    } else if (imageSoucrType == Type_Image_Source_Image2) {
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            targetMultiMediaView = _imageQuestion2;
+            targetURL = [NSURL fileURLWithPath:_questionMovieFullPath2];
+        } else {
+            targetMultiMediaView = _imageAnswer2;
+            targetURL = [NSURL fileURLWithPath:_answerMovieFullPath2];
+        }
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:@"Error on switchToVideoModeAndPlayWithImageSource" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        if (targetMultiMediaView && targetURL) {
+            [targetMultiMediaView setMultimediaType:Video];
+            [targetMultiMediaView setVideoURL:targetURL];
+            if (weakSelf.tag == CURRENT_FLASHCARDVIEW_TAG) {
+                [targetMultiMediaView playVideo];
+            }
+        }
+    });
+    
+    
+}
+
+
+
 /**
  *  Get thumbnail image from an URL
  *
@@ -10393,15 +10527,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (imageSoucrType == Type_Image_Source_Image) {
         if (self.segmentedControl.selectedSegmentIndex == 0) {
-            pickerImageView = _imageQuestion;
+            pickerImageView = _imageQuestion.animtableImageView;
         } else {
-            pickerImageView = _imageAnswer;
+            pickerImageView = _imageAnswer.animtableImageView;
         }
     } else if (imageSoucrType == Type_Image_Source_Image2) {
         if (self.segmentedControl.selectedSegmentIndex == 0) {
-            pickerImageView = _imageQuestion2;
+            pickerImageView = _imageQuestion2.animtableImageView;
         } else {
-            pickerImageView = _imageAnswer2;
+            pickerImageView = _imageAnswer2.animtableImageView;
         }
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:@"Error on thumbnailImageFromURL" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -10438,13 +10572,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath atomically:YES];
-            _imageQuestion.image = compositeThumbNail;
+            _imageQuestion.animtableImageView.image = compositeThumbNail;
         } else {
             if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath]) {
                 _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath atomically:YES];
-            _imageAnswer.image = compositeThumbNail;
+            _imageAnswer.animtableImageView.image = compositeThumbNail;
         }
     } else if (imageSoucrType == Type_Image_Source_Image2) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -10452,13 +10586,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_questionImageFullPath2 atomically:YES];
-            _imageQuestion2.image = compositeThumbNail;
+            _imageQuestion2.animtableImageView.image = compositeThumbNail;
         } else {
             if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2]) {
                 _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
             }
             [UIImagePNGRepresentation(compositeThumbNail) writeToFile:_answerImageFullPath2 atomically:YES];
-            _imageAnswer2.image = compositeThumbNail;
+            _imageAnswer2.animtableImageView.image = compositeThumbNail;
         }
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:@"Error on thumbnailImageFromURL2" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -11759,12 +11893,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
+/*
+ *  we already have converted to .3gp for any video format
+ */
+- (BOOL) isLocalVideo:(NSString *) path {
+    if (path == nil || path.length == 0) {
+        return false;
+    }
+    
+    if ([path.lastPathComponent.lowercaseString containsString:@".3gp"]) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 #pragma mark -
 #pragma mark - Memory management
 
 - (void)dealloc {
-    [iConsole info:@"%s,tag = %d,question main = %@",__FUNCTION__,self.tag,_mainQuestion.text];
+    [iConsole info:@"%s,tag = %ld,question main = %@",__FUNCTION__,(long)self.tag,_mainQuestion.text];
     
     _synth = nil;
     
@@ -11975,6 +12124,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 } else {
                     isToSetImageViewEmpty = YES;
                 }
+                
             }
             
             if (isToSetImageViewEmpty) {
@@ -11983,10 +12133,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
                 _currentCard.question.movieFullPath = @"";
                 _currentCard.question.imageFullPath = @"";
-                [_imageQuestion setImage:[UIImage imageNamed:@"question_placeholder_content"]];
+                
+                [_imageQuestion setMultimediaType:ImageView];
+                [_imageQuestion.animtableImageView setImage:[UIImage imageNamed:@"question_placeholder_content"]];
             } else {
                 [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
             }
+            
             
         } else {
             
@@ -12015,7 +12168,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _currentCard.answer.movieFullPath = @"";
             _currentCard.answer.imageFullPath = @"";
-            [_imageAnswer setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
+            [_imageAnswer setMultimediaType:ImageView];
+            [_imageAnswer.animtableImageView setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
         }
         if (isFromNewCreatedCard == FALSE) {
             [self saveEdittedCard];
@@ -12070,7 +12224,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _currentCard.question.movieFullPath2 = @"";
             _currentCard.question.imageFullPath2 = @"";
             
-            [_imageQuestion2 setImage:[UIImage imageNamed:@"question_placeholder_content"]];
+            [_imageQuestion2 setMultimediaType:ImageView];
+            [_imageQuestion2.animtableImageView setImage:[UIImage imageNamed:@"question_placeholder_content"]];
         } else {
             
             if (([_answerImageFullPath2 rangeOfString:@"placeholder"].location == NSNotFound) &&
@@ -12098,7 +12253,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _currentCard.answer.movieFullPath2 = @"";
             _currentCard.answer.imageFullPath2 = @"";
-            [_imageAnswer2 setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
+            
+            [_imageAnswer2 setMultimediaType:ImageView];
+            [_imageAnswer2.animtableImageView setImage:[UIImage imageNamed:@"answer_placeholder_content"]];
         }
         if (isFromNewCreatedCard == FALSE) {
             [self saveEdittedCard];
@@ -12209,6 +12366,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
 }
+
+
 
 
 

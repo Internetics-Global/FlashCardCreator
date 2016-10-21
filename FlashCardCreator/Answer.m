@@ -289,7 +289,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", css_id=%d, template_id=%d,autoresize_flag=%d,line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\"  WHERE card_id=%d", _answerID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _cssID, _templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath,_cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Answer_Tables SET answer_id=%ld, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", css_id=%ld, template_id=%ld,autoresize_flag=%ld,line_number_subheading=%ld, line_number_main=%ld, line_number_sub=%ld, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\"  WHERE card_id=%ld", (long)_answerID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, (long)_cssID, (long)_templateID,(long)_autoresizeFlag, (long)_lineNoSubheading,(long)_lineNoMain, (long)_lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath,(long)_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -313,7 +313,7 @@
         }
 	}
 
-    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image,image2, logo, css_id, template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\",\"%@\", \"%@\", %d, %d, %d,%d, %d, %d,\"%@\",\"%@\",\"%@\",\"%@\")", _answerID, _cardID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];
+    NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Answer_Tables(answer_id, card_id, title, main, sub, subheading, image,image2, logo, css_id, template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%ld, %ld, \"%@\", ?, ?, ?, \"%@\",\"%@\", \"%@\", %ld, %ld, %ld,%ld, %ld, %ld,\"%@\",\"%@\",\"%@\",\"%@\")", (long)_answerID, (long)_cardID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, (long)_cssID, (long)_templateID,(long)_autoresizeFlag,(long)_lineNoSubheading,(long)_lineNoMain, (long)_lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -328,7 +328,7 @@
 
 -(void)destroy{
 	//Step1: delete from database
-    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Answer_Tables WHERE card_id=%d", _cardID];
+    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Answer_Tables WHERE card_id=%ld", (long)_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -416,7 +416,7 @@
 }
 
 +(NSMutableDictionary *) answerForCardID:(NSInteger)cardID{
-	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Answer_Tables WHERE card_id=%d", cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Answer_Tables WHERE card_id=%ld", (long)cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	NSMutableDictionary *answerDict = [[NSMutableDictionary alloc] init];
 	while (sqlite3_step(queryStatement) == SQLITE_ROW) {

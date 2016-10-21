@@ -292,71 +292,92 @@ enum popover_enum {
 }
 
 
+
 - (void)viewWillAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
-    if (isUserInterfaceIdiomPhone){
-        _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
-        [self showCurrentCardInScrollView:NO];
-    } else {
-        _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
-        
-        if ([_currentPack cards].count !=0) {
-            //Load card view when not:1. downloading;2. not every time
-            __weak __typeof(&*self)weakSelf = self;
+    
+    {
+        static dispatch_once_t onceToken;
+        __weak __typeof(&*self)weakSelf = self;
+        dispatch_once(&onceToken, ^{
             
-            BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
-            if (isExamplePackDownloadedSuccessful == TRUE) {
-                static dispatch_once_t oncetoken;
-                dispatch_once(&oncetoken, ^{
-                    [weakSelf showCurrentCardInScrollView:NO];
-                });
+            if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
+                //show pack info rather than first card
+                if (isUserInterfaceIdiomPhone == FALSE) {
+                    
+                    [weakSelf setupPackInfoView];
+                    
+                    if (isUserInterfaceIdiomPhone == FALSE) {
+                        
+                        if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
+                            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(weakSelf.view.frame)- 200, 0, 0, 0)];
+                        }
+                    }
+                    
+                    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
+                        [weakSelf showAdView];
+                    }
+                }
+            }
+            
+        });
+        
+        
+    }
+
+    
+    {
+        if (isUserInterfaceIdiomPhone){
+            _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT);
+            [self showCurrentCardInScrollView:NO];
+        } else {
+            _scrollView.frame = CGRectMake(0, 0, IPAD_UI_DETAIL_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT);
+            
+            if ([_currentPack cards].count !=0 && [self isPackInfoViewVisible] == false) {
+                //Load card view when not:1. downloading;2. not every time
+                __weak __typeof(&*self)weakSelf = self;
+                
+                BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
+                if (isExamplePackDownloadedSuccessful == TRUE) {
+                    static dispatch_once_t oncetoken;
+                    dispatch_once(&oncetoken, ^{
+                        [weakSelf showCurrentCardInScrollView:NO];
+                    });
+                }
             }
         }
+        
+        if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
+            [self showAdView];
+        }
+        
+        
+        //iOS7 special, since UIImagePickerController will display status bar forcely.
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
     
-    if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
-        [self showAdView];
+    {
+        //this is quite tricky.
+        //The scene is when you back from play, this text alignement will be top, rather than expected center if you have already vertically center.
+        //Seem a bug from Apple, so this is a temp solution but works.
+        [_currentCardView updateQuestionAnswerAllTextViewVeriticalAlignment];
     }
-    
-    
-    //iOS7 special, since UIImagePickerController will display status bar forcely.
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [_currentCardView pauseEmbeddedVideo];
+}
 
 - (void) viewDidAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
     [super viewDidAppear:animated];
     
-    static dispatch_once_t onceToken;
-    __weak __typeof(&*self)weakSelf = self;
-    dispatch_once(&onceToken, ^{
-        
-        if ([UIApplication sharedApplication].statusBarOrientation==UIDeviceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation ==UIDeviceOrientationLandscapeRight) {
-            //show pack info rather than first card
-            if (isUserInterfaceIdiomPhone == FALSE) {
-                [weakSelf setupPackInfoView];
-                
-                if (isUserInterfaceIdiomPhone == FALSE) {
-                    
-                    if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
-                        [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(weakSelf.view.frame)- 200, 0, 0, 0)];
-                    }
-                }
-                
-                if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false && isUserInterfaceIdiomPhone == false && APP_DELEGATE.isDownloadingPack == false) {
-                    [weakSelf showAdView];
-                }
-            }
-        }
-        
-    });
-    
-    //this is quite tricky.
-    //The scene is when you back from play, this text alignement will be top, rather than expected center if you have already vertically center.
-    //Seem a bug from Apple, so this is a temp solution but works.
-    [_currentCardView updateQuestionAnswerAllTextViewVeriticalAlignment];
+    if ([self isPackInfoViewVisible] == false) {
+         [_currentCardView playEmbeddedVideo];
+    }
     
 }
 
@@ -414,6 +435,7 @@ enum popover_enum {
     
     for (FlashCard *cardView in [_scrollView subviews]) {
         [cardView removeFromSuperview];
+        [cardView cleanMultimediaViews]; ;
     }
     
     if ([_currentPack cards].count == 0) {
@@ -476,6 +498,7 @@ enum popover_enum {
     
     for (FlashCard *card in [_scrollView subviews]) {
         [card removeFromSuperview];
+        [card cleanMultimediaViews];
     }
     
     //1. Content size
@@ -1199,7 +1222,8 @@ enum popover_enum {
 }
 
 - (BOOL) isPackInfoViewVisible {
-    return _packInfoView.hidden == false;
+
+    return (_packInfoView != nil) && (_packInfoView.hidden == false);
 }
 
 
@@ -1234,6 +1258,8 @@ enum popover_enum {
         _packInfoView.hidden = NO;
         [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:b];
     }
+    
+    [_currentCardView pauseEmbeddedVideo];
     
     
 }

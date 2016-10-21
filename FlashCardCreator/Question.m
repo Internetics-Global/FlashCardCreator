@@ -141,6 +141,7 @@
 - (void)setImageFullPath:(NSString *)imageFullPath {
     if (imageFullPath.length == 0 || [Common isDirectoryFormat:imageFullPath] ) {
         //[iConsole warn:@"%s: imageFullPath could not be nil or empty or diectory",__FUNCTION__];
+        _imageFullPath = @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath lastPathComponent]];
         _imageFullPath = fullPath;
@@ -150,6 +151,7 @@
 - (void)setImageFullPath2:(NSString *)imageFullPath2 {
     if (imageFullPath2.length == 0 || [Common isDirectoryFormat:imageFullPath2] ) {
         //[iConsole warn:@"%s: imageFullPath2 could not be nil or empty or directory",__FUNCTION__];
+        _imageFullPath2 = @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[imageFullPath2 lastPathComponent]];
         _imageFullPath2 = fullPath;
@@ -160,6 +162,7 @@
 - (void)setLogoFullPath:(NSString *)logoFullPath {
     if (logoFullPath.length == 0 || [Common isDirectoryFormat:logoFullPath] ) {
         //[iConsole warn:@"%s: logoFullPath could not be nil or empty or directory",__FUNCTION__];
+        _logoFullPath = @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[logoFullPath lastPathComponent]];
         _logoFullPath = fullPath;
@@ -169,6 +172,7 @@
 - (void)setMovieFullPath:(NSString *)movieFullPath {
     if (movieFullPath.length == 0 || [Common isDirectoryFormat:movieFullPath] ) {
         //[iConsole warn:@"%s: movieFullPath could not be nil or empty or directory",__FUNCTION__];
+        movieFullPath = @"";
     } else {
         //we don't do conversion when its an http/https url
         if ([movieFullPath rangeOfString:@"http"].location == NSNotFound) {
@@ -184,6 +188,7 @@
 - (void)setMovieFullPath2:(NSString *)movieFullPath2 {
     if (movieFullPath2.length == 0 || [Common isDirectoryFormat:movieFullPath2]) {
         //[iConsole warn:@"%s: movieFullPath2 could not be nil or empty or directory",__FUNCTION__];
+        _movieFullPath2 = @"";
     } else {
         if ([movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
             NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[movieFullPath2 lastPathComponent]];
@@ -304,7 +309,7 @@
 }
 
 -(void)update{
-	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%d, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%d, template_id=%d, autoresize_flag=%d, line_number_subheading=%d, line_number_main=%d, line_number_sub=%d, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\" WHERE card_id=%d", _questionID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _logoURLLinkage, _cssID,_templateID,_autoresizeFlag, _lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath, _cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"UPDATE Question_Tables SET question_id=%ld, title=\"%@\", main=?, sub=?, subheading=?, image=\"%@\", image2=\"%@\", logo=\"%@\", logo_url=\"%@\", css_id=%ld, template_id=%ld, autoresize_flag=%ld, line_number_subheading=%ld, line_number_main=%ld, line_number_sub=%ld, background_image=\"%@\",movie=\"%@\",movie2=\"%@\",audio=\"%@\" WHERE card_id=%ld", (long)_questionID, _title, _imageFullPath, _imageFullPath2, _logoFullPath, _logoURLLinkage, (long)_cssID,(long)_templateID,(long)_autoresizeFlag, (long)_lineNoSubheading,(long)_lineNoMain, (long)_lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath, (long)_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -327,7 +332,7 @@
             
         }
 	}
-	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, image2, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%d, %d, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, \"%@\",\"%@\",\"%@\",\"%@\")", _questionID, _cardID, _title, _imageFullPath,_imageFullPath2, _logoFullPath, _logoURLLinkage, _cssID, _templateID,_autoresizeFlag,_lineNoSubheading,_lineNoMain, _lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];
+	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Question_Tables(question_id, card_id, title, main, sub, subheading, image, image2, logo, logo_url,css_id,template_id,autoresize_flag,line_number_subheading,line_number_main,line_number_sub,background_image,movie,movie2,audio) VALUES (%ld, %ld, \"%@\", ?, ?, ?, \"%@\", \"%@\", \"%@\", \"%@\", %ld, %ld, %ld, %ld, %ld, %ld, \"%@\",\"%@\",\"%@\",\"%@\")", (long)_questionID, (long)_cardID, _title, _imageFullPath,_imageFullPath2, _logoFullPath, _logoURLLinkage, (long)_cssID, (long)_templateID,(long)_autoresizeFlag,(long)_lineNoSubheading,(long)_lineNoMain, (long)_lineNoSub,_backgroundImageFullPath,_movieFullPath,_movieFullPath2,_recordedSoundFullPath];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     sqlite3_bind_text(queryStatement, 1, [_main UTF8String], -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(queryStatement, 2, [_sub UTF8String], -1, SQLITE_TRANSIENT);
@@ -342,7 +347,7 @@
 
 -(void)destroy {
 	//Step1: delete from database
-    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Question_Tables WHERE card_id=%d", _cardID];
+    NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Question_Tables WHERE card_id=%ld", (long)_cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(queryStatement);
 	sqlite3_finalize(queryStatement);
@@ -436,7 +441,7 @@
 
 
 +(NSMutableDictionary *) questionForCardID:(NSInteger)cardID{
-	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Question_Tables WHERE card_id=%d", cardID];
+	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Question_Tables WHERE card_id=%ld", (long)cardID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
     NSMutableDictionary *questionDict = [[NSMutableDictionary alloc] init];
 	while (sqlite3_step(queryStatement) == SQLITE_ROW) {

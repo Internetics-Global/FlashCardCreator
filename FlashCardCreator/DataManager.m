@@ -22,7 +22,7 @@
 
 
 + (BOOL)apiReachable{
-	if (![[Reachability reachabilityWithHostName:@"www.google.com"] currentReachabilityStatus] == NotReachable) {
+	if (!([[Reachability reachabilityWithHostName:@"www.google.com"] currentReachabilityStatus] == NotReachable)) {
         
 		return YES;
 	}else {

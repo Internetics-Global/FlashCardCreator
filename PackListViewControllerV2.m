@@ -316,8 +316,6 @@
     }
     
     
-    [iConsole info:@"Selected item at index %ld", index];
-    
     if (isUserInterfaceIdiomPhone) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
@@ -356,7 +354,7 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     
     return UIInterfaceOrientationMaskLandscape;
 }

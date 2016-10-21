@@ -117,6 +117,9 @@
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
+		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
+		7538848B1DB9916B00AF106B /* MultimediaView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */; };
+		7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538848E1DB9A9B500AF106B /* AVKit.framework */; };
 		759C45231DB4934600789008 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 759C45221DB4934600789008 /* Photos.framework */; };
 		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
 		880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025F017C3297F00A485CE /* FMMoveTableViewCell.m */; };
@@ -469,6 +472,11 @@
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
+		753884861DB89F6800AF106B /* MultimediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultimediaView.h; path = Classes/MultimediaView.h; sourceTree = "<group>"; };
+		753884871DB89F6800AF106B /* MultimediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultimediaView.m; path = Classes/MultimediaView.m; sourceTree = "<group>"; };
+		753884891DB9916B00AF106B /* MultimediaView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MultimediaView+Extensions.h"; path = "Classes/MultimediaView+Extensions.h"; sourceTree = "<group>"; };
+		7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MultimediaView+Extensions.m"; path = "Classes/MultimediaView+Extensions.m"; sourceTree = "<group>"; };
+		7538848E1DB9A9B500AF106B /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		759C45221DB4934600789008 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		795B4BEF418E66C476B617D1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		84AC7AA83697FD47C0F6FA7D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -717,6 +725,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */,
 				759C45231DB4934600789008 /* Photos.framework in Frameworks */,
 				88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
@@ -951,6 +960,10 @@
 				2D5FCB6316DD916600DB8628 /* FCCBarButton.m */,
 				2D5C188F16D1A7B700E1E785 /* CardCell.h */,
 				2D5C189016D1A7B700E1E785 /* CardCell.m */,
+				753884861DB89F6800AF106B /* MultimediaView.h */,
+				753884871DB89F6800AF106B /* MultimediaView.m */,
+				753884891DB9916B00AF106B /* MultimediaView+Extensions.h */,
+				7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */,
 			);
 			name = "Custom UIs";
 			sourceTree = "<group>";
@@ -1283,6 +1296,7 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7538848E1DB9A9B500AF106B /* AVKit.framework */,
 				759C45221DB4934600789008 /* Photos.framework */,
 				88620B5F1AB104120046B64E /* libstdc++.6.dylib */,
 				88E93D791A634DF8007CB7A2 /* AudioToolbox.framework */,
@@ -1927,6 +1941,7 @@
 				2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */,
 				88F5CE7019B40B4B00107075 /* PECropViewController.m in Sources */,
 				2D5F3D30167AB3D4009D2ADC /* User.m in Sources */,
+				753884881DB89F6800AF106B /* MultimediaView.m in Sources */,
 				2D5F3D36167ACA0A009D2ADC /* Pack.m in Sources */,
 				885C3DD41926281C0090F63C /* PopoverView.m in Sources */,
 				2D5F3D39167ACA7B009D2ADC /* Card.m in Sources */,
@@ -1957,6 +1972,7 @@
 				881E9E9B18F7B7CD00ECC523 /* CreateSoundViewController.m in Sources */,
 				2D5C17DF16D1A56A00E1E785 /* AFJSONRequestOperation.m in Sources */,
 				2D5C17E016D1A56A00E1E785 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				7538848B1DB9916B00AF106B /* MultimediaView+Extensions.m in Sources */,
 				2D5C17E116D1A56A00E1E785 /* AFPropertyListRequestOperation.m in Sources */,
 				2D5C17E216D1A56A00E1E785 /* AFURLConnectionOperation.m in Sources */,
 				88F5CE7219B40B4B00107075 /* UIImage+PECrop.m in Sources */,
@@ -2159,6 +2175,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2173,8 +2192,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
-				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				PROVISIONING_PROFILE = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				"PROVISIONING_PROFILE[sdk=*]" = "4af53371-221c-40b0-be3d-fa57dcaab002";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2203,6 +2222,9 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FlashCardCreator/FlashCardCreator-Prefix.pch";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = "FlashCardCreator/FlashCardCreator-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2217,8 +2239,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
-				"PROVISIONING_PROFILE[sdk=*]" = "58fb3b08-8291-4bdd-8743-47f78f3066cd";
+				PROVISIONING_PROFILE = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				"PROVISIONING_PROFILE[sdk=*]" = "4af53371-221c-40b0-be3d-fa57dcaab002";
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

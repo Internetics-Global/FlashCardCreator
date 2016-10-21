@@ -241,7 +241,7 @@
 }
 
 + (BOOL)checkIntegerValueExists:(NSInteger)value forColumn:(NSString *)columnName inTable:(NSString *)table{
-	NSString *queryString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@=%d", table, columnName, value];
+	NSString *queryString = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE %@=%ld", table, columnName, (long)value];
 	sqlite3_stmt *query = [SQLiteHelper prepareStatementForQuery:queryString];
 	BOOL exists = NO;
 	if (sqlite3_step(query) == SQLITE_ROW) {

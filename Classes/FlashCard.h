@@ -37,6 +37,7 @@ typedef enum{
 @class MBProgressHUD;
 @class JSBadgeView;
 @class FLAnimatedImageView;
+@class MultimediaView;
 
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopoverViewDelegate,AVSpeechSynthesizerDelegate> {
     JSBadgeView *_cardSNText;
@@ -94,8 +95,8 @@ typedef enum{
     UITextView   *_subheadingQuestion;
     UITextView   *_mainQuestion;
     UITextView   *_subQuestion;
-    FLAnimatedImageView  *_imageQuestion;
-    FLAnimatedImageView  *_imageQuestion2;
+    MultimediaView  *_imageQuestion;
+    MultimediaView  *_imageQuestion2;
     NSInteger    _subheadingSizeQuestion;
 	NSString     *_subheadingColorQuestion;
     NSString     *_subheadingAlignQuestion;
@@ -109,8 +110,8 @@ typedef enum{
     UITextView   *_subheadingAnswer;
     UITextView   *_mainAnswer;
     UITextView   *_subAnswer;
-    FLAnimatedImageView  *_imageAnswer;
-    FLAnimatedImageView  *_imageAnswer2;
+    MultimediaView  *_imageAnswer;
+    MultimediaView  *_imageAnswer2;
     NSInteger    _subheadingSizeAnswer;
 	NSString     *_subheadingColorAnswer;
     NSString     *_subheadingAlignAnswer;
@@ -223,5 +224,13 @@ typedef enum{
 
 - (float) durationForQuestionRecordedSound;
 - (float) durationForAnswerRecordedSound;
+
+/**
+ *  Currently, video is designed to play repeatedly and automatically.
+ */
+- (void) pauseEmbeddedVideo;
+- (void) playEmbeddedVideo;
+- (void) cleanMultimediaViews;
+
 
 @end

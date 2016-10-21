@@ -1129,7 +1129,7 @@ extern BOOL isFromNewCreatedCard;
             
             selectedPack.shareLink = @"";
             selectedPack.fileNameOnAWS = @"";
-            selectedPack.packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
+            selectedPack.packID = [[NSString stringWithFormat:@"%f%ld", [[NSDate date] timeIntervalSince1970], (long)[[User defaultUser] userID]] intValue];
         }
         
         oneOffType = One_Off_Play_Type_Manually; //in preview mode, only manual is supported
@@ -1361,7 +1361,7 @@ extern BOOL isFromNewCreatedCard;
     
     //Just to keep consistent: indexPath.row should be same as card.cardSN
     if (card.cardSN != indexPath.row +1) {
-        [iConsole info:@"card.cardSN = %d, indexPath.row = %d", card.cardSN, indexPath.row];
+        [iConsole info:@"card.cardSN = %ld, indexPath.row = %ld", (long)card.cardSN, (long)indexPath.row];
         [iConsole info:@"******warning: We have to reorder it since it's not consistent"];
         card.cardSN = indexPath.row +1;
         [card save];
@@ -1560,7 +1560,7 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark - Move action
 
 - (void) moveAction: (NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *) toIndexPath {
-    [iConsole info:@"move from:%d to:%d", fromIndexPath.row, toIndexPath.row];
+    [iConsole info:@"move from:%ld to:%ld", (long)fromIndexPath.row, (long)toIndexPath.row];
     
     if (fromIndexPath.row == toIndexPath.row)
         return;

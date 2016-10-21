@@ -99,7 +99,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:TEMPLATE_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%d",indexPath.row]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TEMPLATE_SELECTED_NOTIFICATION object:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
     
     if (isUserInterfaceIdiomPhone) {
         #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -125,7 +125,7 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     
     return UIInterfaceOrientationMaskLandscape;
 }

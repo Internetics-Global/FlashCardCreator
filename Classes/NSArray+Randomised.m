@@ -45,7 +45,7 @@ static inline int randomInt(int low, int high)
     
     NSArray *shuffledCardArray= [NSArray arrayWithArray:self];
     shuffledCardArray = [self sortedArrayUsingComparator:^(Card *a, Card *b) {
-        return [[NSString stringWithFormat:@"%d",[a cardSN]] compare:[NSString stringWithFormat:@"%d",[b cardSN]] options:NSNumericSearch];
+        return [[NSString stringWithFormat:@"%ld",(long)[a cardSN]] compare:[NSString stringWithFormat:@"%ld",(long)[b cardSN]] options:NSNumericSearch];
     }];
     
     return [NSMutableArray arrayWithArray:shuffledCardArray];

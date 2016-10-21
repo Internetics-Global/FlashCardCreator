@@ -194,7 +194,7 @@
     }
     
 	if (_packID == -1) {
-		_packID = [[NSString stringWithFormat:@"%f%d", [[NSDate date] timeIntervalSince1970], [[User defaultUser] userID]] intValue];
+		_packID = [[NSString stringWithFormat:@"%f%ld", [[NSDate date] timeIntervalSince1970], (long)[[User defaultUser] userID]] intValue];
 		//[[DataManager defaultManager] postEvent:self];
 	}
 	NSString *query = [[NSString alloc] initWithFormat:@"INSERT INTO Packs_Tables(pack_id, pack_name, user_id, language_name, is_public, cover_image, creator, creator_nick_name,job_title,sidebar_title,create_date,last_visit_date,auto_play_speed,restore_password,share_link,file_name_on_aws,platform) VALUES (%ld, \"%@\", %ld, \"%@\",%d, \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, \"%@\", \"%@\",\"%@\",\"%@\")", _packID, _packName, [User defaultUser].userID, _languageName, 0, self.coverImageURL, _creator, _creatorNickName,_jobTitle, _sidebarTitle,_createDate,_lastVisitDate,_autoPlaySpeed,_restorePassword,_shareLink,_fileNameOnAWS,_platform];
@@ -213,7 +213,7 @@
 
 - (void)destroy{
 	//[[DataManager defaultManager] deleteEvent:self];
-	NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Packs_Tables WHERE pack_id=%d", self.packID];
+	NSString *query = [[NSString alloc] initWithFormat:@"DELETE FROM Packs_Tables WHERE pack_id=%ld", (long)self.packID];
 	sqlite3_stmt *statement = [SQLiteHelper prepareStatementForQuery:query];
 	sqlite3_step(statement);
 	sqlite3_finalize(statement);
@@ -258,7 +258,7 @@
 }
 
 +(NSMutableArray *) packsForUserID:(NSInteger)userID{
-	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Packs_Tables WHERE user_id=%d", userID];
+	NSString *query = [[NSString alloc] initWithFormat:@"SELECT * FROM Packs_Tables WHERE user_id=%ld", (long)userID];
     
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	NSMutableArray *returnArray = nil;

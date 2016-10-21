@@ -1188,6 +1188,7 @@
             _isAutoScroll = NO;
             FlashCard *currentCard = [self  getCurrrentCard];
             if (currentCard) {
+                [currentCard playEmbeddedVideo];
                 [self playbackOnCard:currentCard];
             }
             
@@ -1432,6 +1433,7 @@
     if (_previousCard) {
         [_previousCard stopTextToSpeechNow];
         [_previousCard stopAudio];
+        [_previousCard pauseEmbeddedVideo];
     }
     [_timerForDelayedPlaybackOnCard invalidate];
     _timerForDelayedPlaybackOnCard = nil;
@@ -1439,6 +1441,7 @@
 
         FlashCard *currentCard = [weakSelf getCurrrentCard];
         [weakSelf playbackOnCard:currentCard];
+        [currentCard playEmbeddedVideo];
         _previousCard = currentCard;
         
     } repeats:NO];
@@ -1501,7 +1504,7 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscape;
 }
 
