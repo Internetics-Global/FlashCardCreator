@@ -172,7 +172,7 @@
 - (void)setMovieFullPath:(NSString *)movieFullPath {
     if (movieFullPath.length == 0 || [Common isDirectoryFormat:movieFullPath] ) {
         //[iConsole warn:@"%s: movieFullPath could not be nil or empty or directory",__FUNCTION__];
-        movieFullPath = @"";
+        _movieFullPath = @"";
     } else {
         //we don't do conversion when its an http/https url
         if ([movieFullPath rangeOfString:@"http"].location == NSNotFound) {

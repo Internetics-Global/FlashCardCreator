@@ -63,7 +63,14 @@
 
 - (void) playVideo {
     if (self.avPlayerController) {
-        [self.avPlayerController.player play];
+        
+        if ((self.avPlayerController.player.rate != 0) && (self.avPlayerController.player.error == nil)) {
+            // player is playing
+            return;
+        } else {
+            [self.avPlayerController.player play];
+        }
+        
     }
 }
 

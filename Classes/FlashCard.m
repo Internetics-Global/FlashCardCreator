@@ -8152,9 +8152,124 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
     
+    //remove current file
+    if (_imageSourceType == Type_Image_Source_Image) {
+        
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (_questionMovieFullPath.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _questionMovieFullPath];
+                }
+                
+                _questionMovieFullPath = @"";
+                
+            }
+            
+            {
+                BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath];
+                NSError *error = nil;
+                if (isPlaceHolder == false) {
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath
+                                                                    error:&error])
+                    {
+                        [iConsole info:@"[Error] %@ (%@)", error, _questionImageFullPath];
+                    }
+                    
+                    _questionImageFullPath = @"";
+                    
+                }
+            }
+            
+        } else {
+            
+            if (_answerMovieFullPath.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _answerMovieFullPath];
+                }
+                
+                _answerMovieFullPath = @"";
+                
+            }
+            
+            {
+                BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath];
+                NSError *error = nil;
+                if (isPlaceHolder == false) {
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath
+                                                                    error:&error])
+                    {
+                        [iConsole info:@"[Error] %@ (%@)", error, _answerImageFullPath];
+                    }
+                    
+                    _answerImageFullPath = @"";
+                }
+                
+            }
+        }
+    } else {
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (_questionMovieFullPath2.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _questionMovieFullPath2];
+                }
+                
+                _questionMovieFullPath2 = @"";
+            }
+            
+            {
+                BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath2];
+                NSError *error = nil;
+                if (isPlaceHolder == false) {
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionImageFullPath2
+                                                                    error:&error])
+                    {
+                        [iConsole info:@"[Error] %@ (%@)", error, _questionImageFullPath2];
+                    }
+                    
+                    _questionImageFullPath2 = @"";
+                }
+                
+            }
+            
+        } else {
+            if (_answerMovieFullPath2.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _answerMovieFullPath2];
+                }
+                
+                _answerMovieFullPath2 = @"";
+            }
+            
+            {
+                BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2];
+                NSError *error = nil;
+                if (isPlaceHolder == false) {
+                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerImageFullPath2
+                                                                    error:&error])
+                    {
+                        [iConsole info:@"[Error] %@ (%@)", error, _answerImageFullPath2];
+                    }
+                    
+                    _answerImageFullPath2 = @"";
+                }
+                
+            }
+        }
+    }
+    
     if ([mediaType isEqualToString:@"public.movie"]){
-        
-        
         
         NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
         [iConsole info:@"found a movie %@", movieURL];
@@ -8172,71 +8287,56 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         //save movie info
         NSString *destPath;
+        NSString *thumbnailDestPath;
         if (_imageSourceType == Type_Image_Source_Image) {
             
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (_questionMovieFullPath != nil && [_questionMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath
-                                                                    error:&error])
-                    {
-                        [iConsole info:@"[Error] %@ (%@)", error, _questionMovieFullPath];
-                    }
-                    destPath = _questionMovieFullPath;
-                } else {
-                    _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
-                    destPath = _questionMovieFullPath;
-                }
+                _questionMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _questionMovieFullPath;
+                
+                _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                thumbnailDestPath = _questionImageFullPath;
                 
             } else {
                 
-                if (_answerMovieFullPath != nil && [_answerMovieFullPath rangeOfString:@".3gp"].location != NSNotFound) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath
-                                                                    error:&error])
-                    {
-                        [iConsole info:@"[Error] %@ (%@)", error, _answerMovieFullPath];
-                    }
-                    destPath = _answerMovieFullPath;
-                } else {
-                    _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
-                    destPath = _answerMovieFullPath;
-                }
+                _answerMovieFullPath = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _answerMovieFullPath;
+                
+                _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                thumbnailDestPath = _answerImageFullPath;
             }
         } else {
             if (_segmentedControl.selectedSegmentIndex == 0) {
-                if (_questionMovieFullPath2 != nil && [_questionMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_questionMovieFullPath2
-                                                                    error:&error])
-                    {
-                        [iConsole info:@"[Error] %@ (%@)", error, _questionMovieFullPath2];
-                    }
-                    destPath = _questionMovieFullPath2;
-                } else {
-                    _questionMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
-                    destPath = _questionMovieFullPath2;
-                }
+                _questionMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _questionMovieFullPath2;
                 
+                _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                thumbnailDestPath = _questionImageFullPath2;
                 
             } else {
-                if (_answerMovieFullPath2 != nil && [_answerMovieFullPath2 rangeOfString:@".3gp"].location != NSNotFound) {
-                    NSError *error = nil;
-                    if (![[NSFileManager defaultManager] removeItemAtPath:_answerMovieFullPath2
-                                                                    error:&error])
-                    {
-                        [iConsole info:@"[Error] %@ (%@)", error, _answerMovieFullPath2];
-                    }
-                    destPath = _answerMovieFullPath2;
-                } else {
-                    _answerMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
-                    destPath = _answerMovieFullPath2;
-                }
+                _answerMovieFullPath2 = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+                destPath = _answerMovieFullPath2;
+                
+                _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+                thumbnailDestPath = _answerImageFullPath2;
             }
         }
         
+        AVAsset *video = [AVAsset assetWithURL:movieURL];
+        
+        //thumbnail
+        if (thumbnailDestPath) {
+            AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc]initWithAsset:video];
+            imageGenerator.appliesPreferredTrackTransform = YES;
+            CMTime time = [video duration];
+            time.value = 0;
+            CGImageRef imageRef = [imageGenerator copyCGImageAtTime:time actualTime:NULL error:NULL];
+            UIImage *thumbnail = [UIImage imageWithCGImage:imageRef];
+            [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailDestPath atomically:YES];
+        }
+        
+        //export video file
         if (destPath) {
-            AVAsset *video = [AVAsset assetWithURL:movieURL];
             AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:video presetName:AVAssetExportPresetPassthrough];
             exportSession.shouldOptimizeForNetworkUse = YES;
             exportSession.outputFileType = AVFileType3GPP;
@@ -8328,19 +8428,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if (_imageSourceType == Type_Image_Source_Image) {
                 
                 if (_segmentedControl.selectedSegmentIndex == 0) {
-                    BOOL isAlreadyGif = [self isGif:_questionImageFullPath];
-                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath];
-                    if (isPlaceHolder || (isAlreadyGif == false)) {
-                        _questionImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
-                    }
+                    _questionImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_questionImageFullPath atomically:YES];
                     _imageQuestion.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
-                    BOOL isAlreadyGif = [self isGif:_answerImageFullPath];
-                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath];
-                    if (isPlaceHolder || (isAlreadyGif == false)) {
-                        _answerImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
-                    }
+                    _answerImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_answerImageFullPath atomically:YES];
                     _imageAnswer.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
@@ -8358,19 +8450,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             } else if (_imageSourceType == Type_Image_Source_Image2) {
                 
                 if (_segmentedControl.selectedSegmentIndex == 0) {
-                    BOOL isAlreadyGif = [self isGif:_questionImageFullPath2];
-                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_questionImageFullPath2];
-                    if (isPlaceHolder || (isAlreadyGif == false)) {
-                        _questionImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
-                    }
+                    _questionImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_questionImageFullPath2 atomically:YES];
                     _imageQuestion2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
-                    BOOL isAlreadyGif = [self isGif:_answerImageFullPath2];
-                    BOOL isPlaceHolder = [Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2];
-                    if (isPlaceHolder || (isAlreadyGif == false)) {
-                        _answerImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
-                    }
+                    _answerImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_answerImageFullPath2 atomically:YES];
                     _imageAnswer2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
@@ -8554,6 +8638,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _logoImage.hidden = false;
         }
         
+        if ([self isLocalVideo:_currentCard.question.movieFullPath]) {
+            
+            [_imageQuestion setMultimediaType:ImageView];
+            [_imageQuestion.animtableImageView setImage:[UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath]];
+        }
+        
+        if ([self isLocalVideo:_currentCard.question.movieFullPath2]) {
+            
+            [_imageQuestion2 setMultimediaType:ImageView];
+            [_imageQuestion2.animtableImageView setImage:[UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath2]];
+            
+        }
+        
     }
     
     if (_keyboardShown) {
@@ -8579,11 +8676,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self enableCardEdit];
         _segmentedControl.hidden = NO;
         _logoImage.hidden = NO;
+        
+        if ([self isLocalVideo:_currentCard.question.movieFullPath]) {
+            
+            [_imageQuestion setMultimediaType:Video];
+            [_imageQuestion setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath]];
+            
+        }
+        
+        if ([self isLocalVideo:_currentCard.question.movieFullPath2]) {
+            
+            [_imageQuestion2 setMultimediaType:Video];
+            [_imageQuestion setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
+            
+        }
     }
     
     if (switchSegment == YES) {
         _segmentedControl.selectedSegmentIndex = 1;
+        
         [self refreshAll];
+    } else {
+        
+        if ([self isLocalVideo:_currentCard.question.movieFullPath]) {
+            
+            [_imageQuestion playVideo];
+            
+        }
+        
+        if ([self isLocalVideo:_currentCard.question.movieFullPath2]) {
+            
+            [_imageQuestion2 playVideo];
+            
+        }
+        
     }
     
     return newImage;
