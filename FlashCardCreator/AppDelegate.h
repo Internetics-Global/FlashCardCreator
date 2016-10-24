@@ -54,6 +54,9 @@
 @property (strong, nonatomic) NSArray   *rawLocaleText2SpeechArray;
 
 
+- (void) setupAudioWithoutRecord;
+- (void) setupAudioWithRecord;
+
 - (UIView *)progressHUDHolderView;
 
 @end

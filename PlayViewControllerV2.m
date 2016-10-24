@@ -21,6 +21,8 @@
 #import "NSTimer+BlocksKit.h"
 #import "OpenUDID.h"
 
+#import "AppDelegate.h"
+
 
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds_ForQAOnly     4
@@ -160,6 +162,8 @@
 {
     [super viewDidLoad];
     
+    [APP_DELEGATE setupAudioWithoutRecord];
+    
     _isAutoShowQuestionOnly = YES;
     
     _startDate =[NSDate date];
@@ -201,6 +205,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    [APP_DELEGATE setupAudioWithRecord];
+    
     [self cleanupMotionSensor];
     
     if (_isAutoScroll == false) {
@@ -218,6 +224,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
     [super viewWillAppear:animated];
+    
     
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc]init];

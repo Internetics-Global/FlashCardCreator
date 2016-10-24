@@ -263,7 +263,7 @@
     }
     
     //Prepare recording function
-    [self setupRecord];
+    [self setupAudioWithRecord];
 
     
     
@@ -272,23 +272,49 @@
 }
 
 
-- (void) setupRecord {
+- (void) setupAudioWithoutRecord {
+    
+    NSError *error;
+    //这个为必须的，否则无法
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
+    
+    BOOL success = FALSE;
+    success = [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
+    if (!success)  {
+        [iConsole error:@"%s:AVAudioSession error overrideOutputAudioPort %@",__FUNCTION__,error];
+    }
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)
+                                                 name:AVAudioSessionRouteChangeNotification
+                                               object:nil];
+}
+
+
+
+- (void) setupAudioWithRecord {
     
     NSError *error;
     //这个为必须的，否则无法
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
+
     
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-    
-    // Initiate and prepare the recorder
-    NSURL *url = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"tmp.aac"]];;
-    self.recorder = [[AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:NULL];
-    self.recorder.meteringEnabled = YES;
-    [self.recorder prepareToRecord];
+    if (self.recorder == nil) {
+        
+        NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
+        [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+        [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+        [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+        
+        // Initiate and prepare the recorder
+        NSURL *url = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"tmp.aac"]];;
+        self.recorder = [[AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:NULL];
+        self.recorder.meteringEnabled = YES;
+        [self.recorder prepareToRecord];
+    }
     
     
     BOOL success = FALSE;
@@ -299,6 +325,7 @@
     
 
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)
                                                  name:AVAudioSessionRouteChangeNotification
                                                object:nil];
@@ -441,6 +468,7 @@
 
 - (void)audioRouteChangeListenerCallback:(NSNotification*)notification
 {
+        
     NSDictionary *interuptionDict = notification.userInfo;
     
     NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
