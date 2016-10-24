@@ -484,8 +484,12 @@ enum popover_enum {
     
     if (isUserInterfaceIdiomPhone) {
         
-        packListViewController.view.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
-        [self.navigationController pushViewController:packListViewController animated:YES];
+        if ([[self.navigationController topViewController] isKindOfClass:[PackListViewControllerV2 class] ]== false) {
+            packListViewController.view.backgroundColor = [UIColor colorWithRed:63.0/255 green:63.0/255 blue:63.0/255 alpha:0.3];
+            [self.navigationController pushViewController:packListViewController animated:YES];
+        }
+        
+        
         
     } else {
         

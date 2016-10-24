@@ -12,6 +12,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 
+@interface MultimediaView () {
+    
+    UIView   *_avHolderView;
+}
+
+@end
+
 @implementation MultimediaView
 
 - (instancetype)init {
@@ -32,11 +39,11 @@
 }
 
 - (void) setup {
-    self.translatesAutoresizingMaskIntoConstraints = true;
+    self.translatesAutoresizingMaskIntoConstraints = false;
 }
 
 - (void) setVideoURL:(NSURL*) movieUrl {
-    if (self.avPlayerController) {
+    if (self.avPlayer) {
         
         NSError *err;
         if ([movieUrl checkResourceIsReachableAndReturnError:&err] == false) {
@@ -51,7 +58,7 @@
         
         AVPlayer *video=[AVPlayer playerWithURL:movieUrl];
         video.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-        self.avPlayerController.player = video;
+        self.avPlayer.player = video;
         
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -62,21 +69,21 @@
 }
 
 - (void) playVideo {
-    if (self.avPlayerController) {
+    if (self.avPlayer) {
         
-        if ((self.avPlayerController.player.rate != 0) && (self.avPlayerController.player.error == nil)) {
+        if ((self.avPlayer.player.rate != 0) && (self.avPlayer.player.error == nil)) {
             // player is playing
             return;
         } else {
-            [self.avPlayerController.player play];
+            [self.avPlayer.player play];
         }
         
     }
 }
 
 - (void) pauseVideo {
-    if (self.avPlayerController) {
-        [self.avPlayerController.player pause];
+    if (self.avPlayer) {
+        [self.avPlayer.player pause];
     }
 }
 
@@ -84,8 +91,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     self.animtableImageView = nil;
-    self.avPlayerController = nil;
+    
+    _avHolderView = nil;
+    _avPlayer = nil;
 }
 
 - (void) setMultimediaType:(FFCMultimediaType) multimediaType {
@@ -96,18 +106,19 @@
     
     switch (multimediaType) {
         case Video: {
+            
+            _avHolderView = [[UIView alloc] init];
+            [_avHolderView setFrame:self.bounds];
+            _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
+            UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+            self.avPlayer = [[AVPlayerLayer alloc] init];
+            self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+            self.avPlayer.frame = _avHolderView.bounds;
+            [_avHolderView.layer addSublayer:self.avPlayer];
 
-            self.avPlayerController = [[AVPlayerViewController alloc] init];
-            self.avPlayerController.view.translatesAutoresizingMaskIntoConstraints = true;
-            self.avPlayerController.videoGravity = AVLayerVideoGravityResizeAspect;
-            self.avPlayerController.view.frame = self.bounds;
+            _avHolderView.userInteractionEnabled = false;
             
-            self.avPlayerController.showsPlaybackControls = false;
-            
-            
-            self.avPlayerController.view.userInteractionEnabled = false;
-            
-            [self addSubview:self.avPlayerController.view];
+            [self addSubview:_avHolderView];
         
             
             break;
@@ -116,7 +127,6 @@
             
             self.animtableImageView = [[FLAnimatedImageView alloc] init];
             self.animtableImageView.frame = self.bounds;
-            self.animtableImageView.translatesAutoresizingMaskIntoConstraints = true;
             self.animtableImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
                 UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
             self.animtableImageView.userInteractionEnabled = FALSE;
@@ -152,8 +162,9 @@
         self.animtableImageView.frame = self.bounds;
     }
     
-    if (self.avPlayerController) {
-        self.avPlayerController.view.frame = self.bounds;
+    if (_avHolderView) {
+        _avHolderView.frame = self.bounds;
+//        _avHolderView.backgroundColor = [UIColor orangeColor];
     }
 }
 
@@ -161,8 +172,10 @@
 
 - (void)dealloc {
     
-    self.avPlayerController = nil;
     self.animtableImageView = nil;
+    
+    _avPlayer = nil;
+    _avHolderView = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

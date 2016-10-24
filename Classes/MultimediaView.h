@@ -17,13 +17,14 @@ typedef enum {
 
 @class FLAnimatedImageView;
 @class AVPlayerViewController;
+@class AVPlayerLayer;
 
 
 
 @interface MultimediaView : UIView
 
 @property (strong, nonatomic) FLAnimatedImageView     *animtableImageView;
-@property (strong, nonatomic) AVPlayerViewController  *avPlayerController;
+@property (strong, nonatomic) AVPlayerLayer           *avPlayer;
 
 - (void) setMultimediaType:(FFCMultimediaType) multimediaType;
 
