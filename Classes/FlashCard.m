@@ -1699,7 +1699,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         });
     }
     
-    
 }
 
 
@@ -9315,11 +9314,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     __weak __typeof(&*self)weakSelf = self;
     
-    //Debug purpose, leave here in case we need more adjust
-    if ([textView.text rangeOfString:@"Bicarbonate of soda"].location != NSNotFound) {
-        
-    }
-    
     if ((textView.contentSize.height > CGRectGetHeight(textView.frame) )
             &&(textView.contentSize.height >0)
                   &&(textView.font.pointSize >0)
@@ -9653,17 +9647,43 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
-        [self triggerResizeTextToFitFrame:_subheadingQuestion withMaxLineNumber:_currentCard.question.lineNoSubheading];
-        [self triggerResizeTextToFitFrame:_mainQuestion withMaxLineNumber:_currentCard.question.lineNoMain];
-        [self triggerResizeTextToFitFrame:_subQuestion withMaxLineNumber:_currentCard.question.lineNoSub];
+        if (_subheadingQuestion.hidden == false) {
+            [self triggerResizeTextToFitFrame:_subheadingQuestion withMaxLineNumber:_currentCard.question.lineNoSubheading];
+        } else {
+            flag_Subheading_ResizeFinished = true;
+        }
+        
+        if (_mainQuestion.hidden == false) {
+            [self triggerResizeTextToFitFrame:_mainQuestion withMaxLineNumber:_currentCard.question.lineNoMain];
+        } else {
+            flag_Main_ResizeFinished = true;
+        }
+        
+        if (_subQuestion.hidden == false) {
+            [self triggerResizeTextToFitFrame:_subQuestion withMaxLineNumber:_currentCard.question.lineNoSub];
+        } else {
+            flag_Sub_ResizeFinished = true;
+        }
         
     } else {
         
-        [self triggerResizeTextToFitFrame:_subheadingAnswer withMaxLineNumber:_currentCard.answer.lineNoSubheading];
+        if (_subheadingAnswer.hidden == false) {
+            [self triggerResizeTextToFitFrame:_subheadingAnswer withMaxLineNumber:_currentCard.answer.lineNoSubheading];
+        } else {
+            flag_Subheading_ResizeFinished = true;
+        }
         
-        [self triggerResizeTextToFitFrame:_mainAnswer withMaxLineNumber:_currentCard.answer.lineNoMain];
+        if (_mainAnswer.hidden == false) {
+            [self triggerResizeTextToFitFrame:_mainAnswer withMaxLineNumber:_currentCard.answer.lineNoMain];
+        } else {
+            flag_Main_ResizeFinished = true;
+        }
         
-        [self triggerResizeTextToFitFrame:_subAnswer withMaxLineNumber:_currentCard.answer.lineNoSub];
+        if (_subAnswer.hidden == false) {
+            [self triggerResizeTextToFitFrame:_subAnswer withMaxLineNumber:_currentCard.answer.lineNoSub];
+        } else {
+            flag_Sub_ResizeFinished = true;
+        }
         
     }
     
