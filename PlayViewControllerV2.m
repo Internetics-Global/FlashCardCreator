@@ -1195,7 +1195,6 @@
             _isAutoScroll = NO;
             FlashCard *currentCard = [self  getCurrrentCard];
             if (currentCard) {
-                [currentCard playEmbeddedVideo];
                 [self playbackOnCard:currentCard];
             }
             
@@ -1427,6 +1426,14 @@
     }
 }
 
+- (void)didScroll:(NSInteger)index {
+    
+    //don't allow to play vieo and gif during scrolling
+    FlashCard *currentCard = [self getCurrrentCard];
+    [currentCard pauseEmbeddedVideoAndGif];
+    
+}
+
 - (void)didScrollToPage:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -1440,7 +1447,7 @@
     if (_previousCard) {
         [_previousCard stopTextToSpeechNow];
         [_previousCard stopAudio];
-        [_previousCard pauseEmbeddedVideo];
+        [_previousCard pauseEmbeddedVideoAndGif];
     }
     [_timerForDelayedPlaybackOnCard invalidate];
     _timerForDelayedPlaybackOnCard = nil;
@@ -1448,7 +1455,6 @@
 
         FlashCard *currentCard = [weakSelf getCurrrentCard];
         [weakSelf playbackOnCard:currentCard];
-        [currentCard playEmbeddedVideo];
         _previousCard = currentCard;
         
     } repeats:NO];

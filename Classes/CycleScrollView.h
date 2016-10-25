@@ -85,6 +85,7 @@ typedef NS_ENUM(NSInteger, Type_Card_Position) {
 - (void)gestureDownAction:(CycleScrollView *)csView atPageIndex:(NSInteger)index;
 
 - (void)didScrollToPage:(NSInteger)index;
+- (void)didScroll:(NSInteger)index;
 
 /**
  *  当超过dwellSecondsOnQuestion后被触发

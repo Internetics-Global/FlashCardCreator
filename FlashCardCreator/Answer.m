@@ -40,7 +40,7 @@
 
 - (NSString *)getBackgroundImageFullPath {
     if (_backgroundImageFullPath.length == 0 || [Common isDirectoryFormat:_backgroundImageFullPath]) {
-        return nil;
+        return @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_backgroundImageFullPath lastPathComponent]];
         return fullPath;
@@ -49,7 +49,7 @@
 
 - (NSString *)getRecordedSoundFullPath {
     if (_recordedSoundFullPath.length == 0 || [Common isDirectoryFormat:_recordedSoundFullPath] ) {
-        return nil;
+        return @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_recordedSoundFullPath lastPathComponent]];
         return fullPath;
@@ -58,7 +58,7 @@
 
 - (void)setBackgroundImageFullPath:(NSString *)backgroundImageFullPath {
     if (backgroundImageFullPath.length == 0 || [Common isDirectoryFormat:backgroundImageFullPath] ) {
-        _backgroundImageFullPath = nil;
+        _backgroundImageFullPath = @"";
         //[iConsole error:@"%s:backgroundImageFullPath could not be nil or empty",__FUNCTION__];
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[backgroundImageFullPath lastPathComponent]];
@@ -70,7 +70,7 @@
     
     if (recordedSoundFullPath.length == 0 || [Common isDirectoryFormat:recordedSoundFullPath] ) {
         //[iConsole error:@"%s: recordedSoundFullPath could not be nil or empty",__FUNCTION__];
-        _recordedSoundFullPath = nil;
+        _recordedSoundFullPath = @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[recordedSoundFullPath lastPathComponent]];
         _recordedSoundFullPath = fullPath;
@@ -80,7 +80,7 @@
 
 - (NSString *)getImageFullPath {
     if (_imageFullPath.length == 0 || [Common isDirectoryFormat:_imageFullPath] ) {
-        return nil;
+        return @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath lastPathComponent]];
         return fullPath;
@@ -89,7 +89,7 @@
 
 - (NSString *)getImageFullPath2 {
     if (_imageFullPath2.length == 0 || [Common isDirectoryFormat:_imageFullPath2] ) {
-        return nil;
+        return @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_imageFullPath2 lastPathComponent]];
         return fullPath;
@@ -98,7 +98,7 @@
 
 - (NSString *)getLogoFullPath {
     if (_logoFullPath.length == 0 || [Common isDirectoryFormat:_logoFullPath] ) {
-        return nil;
+        return @"";
     } else {
         NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_logoFullPath lastPathComponent]];
         return fullPath;
@@ -107,7 +107,7 @@
 
 - (NSString *)getMovieFullPath {
     if (_movieFullPath.length == 0 || [Common isDirectoryFormat:_movieFullPath] ) {
-        return nil;
+        return @"";
     } else {
         if ([_movieFullPath rangeOfString:@"http"].location == NSNotFound) {
             NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath lastPathComponent]];
@@ -120,7 +120,7 @@
 
 - (NSString *)getMovieFullPath2 {
     if (_movieFullPath2.length == 0 || [Common isDirectoryFormat:_movieFullPath2] ) {
-        return nil;
+        return @"";
     } else {
         if ([_movieFullPath2 rangeOfString:@"http"].location == NSNotFound) {
             NSString *fullPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_movieFullPath2 lastPathComponent]];

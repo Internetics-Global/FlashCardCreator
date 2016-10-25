@@ -30,7 +30,8 @@ typedef enum {
 
 - (void) setVideoURL:(NSURL*) movieUrl;
 - (void) playVideo;
-- (void) pauseVideo;
 - (void) clean;
+
+- (void) pauseVideoAndGif;
 
 @end

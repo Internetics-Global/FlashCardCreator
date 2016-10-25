@@ -368,7 +368,7 @@ enum popover_enum {
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    [_currentCardView pauseEmbeddedVideo];
+    [_currentCardView pauseEmbeddedVideoAndGif];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -376,7 +376,7 @@ enum popover_enum {
     [super viewDidAppear:animated];
     
     if ([self isPackInfoViewVisible] == false) {
-         [_currentCardView playEmbeddedVideo];
+        [_currentCardView pauseEmbeddedVideoAndGif];
     }
     
 }
@@ -1259,7 +1259,7 @@ enum popover_enum {
         [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:b];
     }
     
-    [_currentCardView pauseEmbeddedVideo];
+    [_currentCardView pauseEmbeddedVideoAndGif];
     
     
 }

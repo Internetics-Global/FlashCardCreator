@@ -243,7 +243,7 @@
 
 - (UIView *) getCurrentView {
     if ([_curViews count] != 3) {
-        [iConsole info:@"%s:Unexpeced",__FUNCTION__];
+       // [iConsole info:@"%s:Unexpeced",__FUNCTION__];
         return nil;
     } else {
         return [_curViews objectAtIndex:1];
@@ -301,6 +301,10 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    
+    if ([self.delegate respondsToSelector:@selector(didScroll:)]) {
+        [self.delegate didScroll:_curPage];
+    }
     
     if (self.isCycle == false) {
         if (_totalPages == 1) {

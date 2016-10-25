@@ -225,11 +225,7 @@ typedef enum{
 - (float) durationForQuestionRecordedSound;
 - (float) durationForAnswerRecordedSound;
 
-/**
- *  Currently, video is designed to play repeatedly and automatically.
- */
-- (void) pauseEmbeddedVideo;
-- (void) playEmbeddedVideo;
+- (void) pauseEmbeddedVideoAndGif;
 - (void) cleanMultimediaViews;
 
 

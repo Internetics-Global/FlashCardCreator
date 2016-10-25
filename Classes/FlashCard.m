@@ -1478,14 +1478,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if (_currentCard.question.movieFullPath.length > 0) {
+    if (_currentCard.question.movieFullPath.length > 0 || [self isGif:_currentCard.question.imageFullPath]) {
         //allow to play movie
         _imageQuestion.userInteractionEnabled        = YES;
     } else {
         _imageQuestion.userInteractionEnabled        = FALSE;
     }
     
-    if (_currentCard.question.movieFullPath2.length > 0) {
+    if (_currentCard.question.movieFullPath2.length > 0 || [self isGif:_currentCard.question.imageFullPath2]) {
         //allow to play movie
         _imageQuestion2.userInteractionEnabled        = YES;
     } else {
@@ -1501,13 +1501,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subheadingQuestion.userInteractionEnabled   = FALSE;
     _subheadingQuestion.layer.borderWidth = 0;
     
-    if (_currentCard.answer.movieFullPath.length > 0) {
+    if (_currentCard.answer.movieFullPath.length > 0 || [self isGif:_currentCard.answer.imageFullPath]) {
         _imageAnswer.userInteractionEnabled        = YES;
     } else {
         _imageAnswer.userInteractionEnabled        = FALSE;
     }
     
-    if (_currentCard.answer.movieFullPath2.length > 0) {
+    if (_currentCard.answer.movieFullPath2.length > 0 || [self isGif:_currentCard.answer.imageFullPath2]) {
         _imageAnswer2.userInteractionEnabled        = YES;
     } else {
         _imageAnswer2.userInteractionEnabled        = FALSE;
@@ -1621,7 +1621,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     [iConsole info:@"%s",__FUNCTION__];
-    [self pauseEmbeddedVideo];
+    [self pauseEmbeddedVideoAndGif];
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
@@ -1902,10 +1902,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             [_imageAnswer setMultimediaType:Video];
             [_imageAnswer setVideoURL:[NSURL fileURLWithPath:_answerMovieFullPath]];
-// we put play at the end
-//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 1) {
-//                [_imageAnswer playVideo];
-//            }
             
         } else {
             
@@ -1957,10 +1953,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             [_imageAnswer2 setMultimediaType:Video];
             [_imageAnswer2 setVideoURL:[NSURL fileURLWithPath:_answerMovieFullPath2]];
-// we put play at the end
-//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 1) {
-//                [_imageAnswer2 playVideo];
-//            }
 
             
         } else {
@@ -2032,9 +2024,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
-        [self playEmbeddedVideo];
-    }
     
 
     
@@ -2071,10 +2060,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             [_imageQuestion setMultimediaType:Video];
             [_imageQuestion setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath]];
-// we put play video at the end
-//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 0) {
-//                [_imageQuestion playVideo];
-//            }
             
 
             
@@ -2132,10 +2117,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             [_imageQuestion2 setMultimediaType:Video];
             [_imageQuestion2 setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
-// we put play at the end
-//            if (self.tag == CURRENT_FLASHCARDVIEW_TAG && _segmentedControl.selectedSegmentIndex == 0) {
-//                [_imageQuestion2 playVideo];
-//            }
             
         } else {
             
@@ -2230,10 +2211,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _questionRecordedSoundFullPath = @"";
         }
         
-    }
-    
-    if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
-        [self playEmbeddedVideo];
     }
     
 }
@@ -7984,32 +7961,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 
-- (void) playEmbeddedVideo {
+- (void) pauseEmbeddedVideoAndGif {
     
-    if (_segmentedControl.selectedSegmentIndex  == 0) {
-        [_imageQuestion playVideo];
-        [_imageQuestion2 playVideo];
-        
-        [_imageAnswer pauseVideo];
-        [_imageAnswer2 pauseVideo];
-        
-    } else {
-        [_imageAnswer playVideo];
-        [_imageAnswer2 playVideo];
-        
-        [_imageQuestion pauseVideo];
-        [_imageQuestion2 pauseVideo];
-    }
+    [_imageQuestion pauseVideoAndGif];
+    [_imageQuestion2 pauseVideoAndGif];
     
-}
-
-- (void) pauseEmbeddedVideo {
-    
-    [_imageQuestion pauseVideo];
-    [_imageQuestion2 pauseVideo];
-    
-    [_imageAnswer pauseVideo];
-    [_imageAnswer2 pauseVideo];
+    [_imageAnswer pauseVideoAndGif];
+    [_imageAnswer2 pauseVideoAndGif];
     
     
 }
