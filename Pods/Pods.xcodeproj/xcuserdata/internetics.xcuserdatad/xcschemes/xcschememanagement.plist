@@ -44,11 +44,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>FLAnimatedImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -107,27 +102,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1A79BA86DB198181905CBBFC1F1E6701</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>281DC306EF43F1A3941CFF89A371098A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2E8BE534079A76D6FFDFA151BB906A75</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>370F2C15D2A913AE1BE21F98C4E5009F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>37DA8823B6E71A919A969C9729B2EC00</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3CE2CB9C67A28331258CB633D40757CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -138,6 +118,16 @@
 			<true/>
 		</dict>
 		<key>4E286D373D75563CE26E479A68203892</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>55BB43751EBCBE9D1B4BB3EC65278866</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>56D08B992C686FE48A47E70426ABE5B9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -157,11 +147,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>938E9E1DF8778DA34EB061B1C141D6F5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>960A6BC377BC3426655C94898BD5BCAA</key>
 		<dict>
 			<key>primary</key>
@@ -172,7 +157,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CBB23942F885D43707E759F859C5DFE1</key>
+		<key>CC719FF10C1F90A4055E473D2C7CB516</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -183,6 +168,11 @@
 			<true/>
 		</dict>
 		<key>DA1A7295DF2A99609DA0EEBF5E83233D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E3B91771B2325896882D3D93D1FC61EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

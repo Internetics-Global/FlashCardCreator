@@ -38,7 +38,6 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.7.0):
     - FBSDKCoreKit
-  - FLAnimatedImage (1.0.12)
   - Parse (1.8.2):
     - Bolts/Tasks (>= 1.2.1)
   - ParseCrashReporting (1.8.2):
@@ -71,7 +70,6 @@ DEPENDENCIES:
   - AWSSimpleDB
   - BlocksKit
   - Bolts
-  - FLAnimatedImage (~> 1.0)
   - Parse (~> 1.8.2)
   - ParseCrashReporting
   - ParseFacebookUtilsV4
@@ -91,7 +89,6 @@ SPEC CHECKSUMS:
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 01bce8dd3f3a26a023b0ba4ffdde7ef5062889fe
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Parse: 188601c6cd91fae55906badd283b513104a3a8c9
   ParseCrashReporting: 437b722377462faaeba60ffde23af95fcc486c28
   ParseFacebookUtilsV4: 6e7415146935e1238ebabbee7e5d32d148027b2d

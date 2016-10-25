@@ -87,6 +87,8 @@
 - (void)commonInit
 {
     self.runLoopMode = [[self class] defaultRunLoopMode];
+    
+    self.isAllowAutoPlayWhenVisible = true;
 }
 
 
@@ -121,7 +123,7 @@
         
         // Start animating after the new animated image has been set.
         [self updateShouldAnimate];
-        if (self.shouldAnimate) {
+        if (self.shouldAnimate && self.isAllowAutoPlayWhenVisible) {
             [self startAnimating];
         }
         
@@ -147,7 +149,7 @@
     [super didMoveToSuperview];
     
     [self updateShouldAnimate];
-    if (self.shouldAnimate) {
+    if (self.shouldAnimate && self.isAllowAutoPlayWhenVisible) {
         [self startAnimating];
     } else {
         [self stopAnimating];
@@ -160,7 +162,7 @@
     [super didMoveToWindow];
     
     [self updateShouldAnimate];
-    if (self.shouldAnimate) {
+    if (self.shouldAnimate && self.isAllowAutoPlayWhenVisible) {
         [self startAnimating];
     } else {
         [self stopAnimating];
@@ -172,7 +174,7 @@
     [super setAlpha:alpha];
 
     [self updateShouldAnimate];
-    if (self.shouldAnimate) {
+    if (self.shouldAnimate && self.isAllowAutoPlayWhenVisible) {
         [self startAnimating];
     } else {
         [self stopAnimating];
@@ -184,7 +186,7 @@
     [super setHidden:hidden];
 
     [self updateShouldAnimate];
-    if (self.shouldAnimate) {
+    if (self.shouldAnimate && self.isAllowAutoPlayWhenVisible) {
         [self startAnimating];
     } else {
         [self stopAnimating];
