@@ -187,7 +187,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
             
             _videoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _videoButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 40, CGRectGetHeight(_avHolderView.frame) - 40, 32, 32);
+            _videoButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 48, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
             _videoButton.contentMode = UIViewContentModeCenter;
             _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
             [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
@@ -226,7 +226,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             [_gifHolderView addSubview:self.animtableImageView];
             
             _gifButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 40, CGRectGetHeight(_gifHolderView.frame) - 40, 32, 32);
+            _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 48, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
             _gifButton.contentMode = UIViewContentModeCenter;
             _gifButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
             [_gifButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
