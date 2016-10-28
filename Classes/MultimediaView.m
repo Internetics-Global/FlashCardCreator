@@ -73,8 +73,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         if ([videoUrl checkResourceIsReachableAndReturnError:&err] == false) {
             NSLog(@"this videoUrl does not exit: %@",videoUrl);
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
             
             return;
             
@@ -176,6 +176,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     self.animtableImageView = nil;
+    
     _avPlayer = nil;
     
     _avHolderView = nil;
@@ -194,6 +195,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         case Video: {
             
             {
+                
                 _avHolderView = [[UIView alloc] init];
                 [_avHolderView setFrame:self.bounds];
                 _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
@@ -316,7 +318,6 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             break;
     }
     
-    
 }
 
 - (void) gifFullScreenButtonDidClicked {
@@ -410,6 +411,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         
         
     } else if ([keyPath isEqualToString:Key_Path_Image]) {
+    
         
         _gifButton.hidden = true;
         _gifFullScreenButton.hidden = true;

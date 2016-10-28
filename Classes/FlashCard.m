@@ -8389,10 +8389,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (_segmentedControl.selectedSegmentIndex == 0) {
                     _questionImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_questionImageFullPath atomically:YES];
+                    [_imageQuestion setMultimediaType:ImageView];
                     _imageQuestion.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
                     _answerImageFullPath = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_answerImageFullPath atomically:YES];
+                    [_imageAnswer setMultimediaType:ImageView];
                     _imageAnswer.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
                 
@@ -8411,10 +8413,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (_segmentedControl.selectedSegmentIndex == 0) {
                     _questionImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_questionImageFullPath2 atomically:YES];
+                    [_imageQuestion2 setMultimediaType:ImageView];
                     _imageQuestion2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 } else {
                     _answerImageFullPath2 = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
                     [imageData writeToFile:_answerImageFullPath2 atomically:YES];
+                    [_imageAnswer2 setMultimediaType:ImageView];
                     _imageAnswer2.animtableImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:imageData];
                 }
                 
@@ -8483,12 +8487,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath atomically:YES];
+                    [_imageQuestion setMultimediaType:ImageView];
                     _imageQuestion.animtableImageView.image = [UIImage imageWithData:imageData];
                 } else {
                     if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath]) {
                         _answerImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath atomically:YES];
+                    [_imageAnswer setMultimediaType:ImageView];
                     _imageAnswer.animtableImageView.image = [UIImage imageWithData:imageData];
                 }
                 
@@ -8509,12 +8515,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                         _questionImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_questionImageFullPath2 atomically:YES];
+                    [_imageQuestion2 setMultimediaType:ImageView];
                     _imageQuestion2.animtableImageView.image = [UIImage imageWithData:imageData];
                 } else {
                     if ([Common isPlaceholderFilePathOrDirectory:_answerImageFullPath2]) {
                         _answerImageFullPath2 = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
                     }
                     [imageData writeToFile:_answerImageFullPath2 atomically:YES];
+                    [_imageAnswer2 setMultimediaType:ImageView];
                     _imageAnswer2.animtableImageView.image = [UIImage imageWithData:imageData];
                 }
                 
