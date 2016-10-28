@@ -217,6 +217,7 @@
         if (currentCard) {
             [currentCard stopAudio];
             [currentCard stopTextToSpeechNow];
+            [currentCard pauseEmbeddedVideoAndGif];
         }
     }
 }
