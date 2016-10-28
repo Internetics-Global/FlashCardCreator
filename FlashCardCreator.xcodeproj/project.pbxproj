@@ -120,6 +120,8 @@
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
 		7538848B1DB9916B00AF106B /* MultimediaView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */; };
 		7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538848E1DB9A9B500AF106B /* AVKit.framework */; };
+		759AAB4A1DC2DB7A0060B153 /* UIView+FindUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */; };
+		759AAB4E1DC2E25A0060B153 /* AnimatedGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */; };
 		759C45231DB4934600789008 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 759C45221DB4934600789008 /* Photos.framework */; };
 		75F323EA1DBF08BE00B7B047 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */; };
 		75F323EB1DBF08BE00B7B047 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E91DBF08BE00B7B047 /* FLAnimatedImageView.m */; };
@@ -479,6 +481,10 @@
 		753884891DB9916B00AF106B /* MultimediaView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MultimediaView+Extensions.h"; path = "Classes/MultimediaView+Extensions.h"; sourceTree = "<group>"; };
 		7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MultimediaView+Extensions.m"; path = "Classes/MultimediaView+Extensions.m"; sourceTree = "<group>"; };
 		7538848E1DB9A9B500AF106B /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		759AAB481DC2DB7A0060B153 /* UIView+FindUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+FindUIViewController.h"; path = "Classes/UIView+FindUIViewController.h"; sourceTree = "<group>"; };
+		759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+FindUIViewController.m"; path = "Classes/UIView+FindUIViewController.m"; sourceTree = "<group>"; };
+		759AAB4B1DC2E25A0060B153 /* AnimatedGifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGifViewController.h; path = Classes/AnimatedGifViewController.h; sourceTree = "<group>"; };
+		759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGifViewController.m; path = Classes/AnimatedGifViewController.m; sourceTree = "<group>"; };
 		759C45221DB4934600789008 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		75F323E61DBF08BE00B7B047 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
@@ -953,6 +959,8 @@
 				882D56271C39F2A900EBA68E /* UITextField+AutoResizeFont.m */,
 				884057271CDC40BB0092CAB4 /* MutipleTargetHelper.h */,
 				884057281CDC40BB0092CAB4 /* MutipleTargetHelper.m */,
+				759AAB481DC2DB7A0060B153 /* UIView+FindUIViewController.h */,
+				759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -981,6 +989,8 @@
 				88EA2ACB1ABFC24800A3663E /* PlayViewControllerV2.m */,
 				88EA2AC71ABFBF4A00A3663E /* CycleScrollView.h */,
 				88EA2AC81ABFBF4A00A3663E /* CycleScrollView.m */,
+				759AAB4B1DC2E25A0060B153 /* AnimatedGifViewController.h */,
+				759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */,
 			);
 			name = Play;
 			sourceTree = "<group>";
@@ -2008,6 +2018,7 @@
 				88BD615C1977732200834D72 /* PackListCell.m in Sources */,
 				886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */,
 				2D5C17F716D1A59300E1E785 /* zip.c in Sources */,
+				759AAB4A1DC2DB7A0060B153 /* UIView+FindUIViewController.m in Sources */,
 				2D5C17F816D1A59300E1E785 /* ZipArchive.m in Sources */,
 				2D5C17FB16D1A5BB00E1E785 /* AFDownloadRequestOperation.m in Sources */,
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
@@ -2037,6 +2048,7 @@
 				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
 				88A196781BD1C72900A4C65C /* PFLogInViewController+Landscape.m in Sources */,
+				759AAB4E1DC2E25A0060B153 /* AnimatedGifViewController.m in Sources */,
 				2D1A052A16EDEB0100527311 /* WEPopoverController.m in Sources */,
 				2D2E33A716F2C6F600489286 /* FlashCard.m in Sources */,
 				88BB8FE41AE72A040089D7F6 /* ASValuePopUpView.m in Sources */,

@@ -11,6 +11,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
+#import "UIView+FindUIViewController.h"
+#import "PlayViewControllerV2.h"
+#import "AnimatedGifViewController.h"
 
 
 NSString *const Key_Path_AnimatedImage = @"self.animtableImageView.animatedImage";
@@ -22,7 +25,20 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     UIView   *_gifHolderView;
     
     UIButton *_videoButton;
+    UIButton *_videoFullScreenButton;
+    
     UIButton *_gifButton;
+    UIButton *_gifFullScreenButton;
+    
+    /*
+     * the only usage is for videoFullScreenButtonDidClicked
+    */
+    NSURL              *_videoUrl;
+    
+    /*
+     * the only usage is for gifFullScreenButtonDidClicked
+     */
+    FLAnimatedImage    *_gifImage;
 }
 
 @end
@@ -64,11 +80,14 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
         }
         
+        _videoUrl = videoUrl;
+        
         AVPlayer *video=[AVPlayer playerWithURL:videoUrl];
         video.actionAtItemEnd = AVPlayerActionAtItemEndNone;
         self.avPlayer.player = video;
         
         _videoButton.hidden = false;
+        _videoFullScreenButton.hidden = false;
     }
 }
 
@@ -161,6 +180,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     
     _avHolderView = nil;
     _gifHolderView = nil;
+    
+    _gifImage = nil;
 }
 
 - (void) setMultimediaType:(FFCMultimediaType) multimediaType {
@@ -172,73 +193,111 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     switch (multimediaType) {
         case Video: {
             
-            _avHolderView = [[UIView alloc] init];
-            [_avHolderView setFrame:self.bounds];
-            _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
-            UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-            self.avPlayer = [[AVPlayerLayer alloc] init];
-            self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
-            self.avPlayer.frame = _avHolderView.bounds;
-            [_avHolderView.layer addSublayer:self.avPlayer];
-
-//            _avHolderView.userInteractionEnabled = false;
+            {
+                _avHolderView = [[UIView alloc] init];
+                [_avHolderView setFrame:self.bounds];
+                _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
+                UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+                self.avPlayer = [[AVPlayerLayer alloc] init];
+                self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+                self.avPlayer.frame = _avHolderView.bounds;
+                [_avHolderView.layer addSublayer:self.avPlayer];
+                
+                [self addSubview:_avHolderView];
+            }
             
-            [self addSubview:_avHolderView];
+            
+            {
+                _videoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                _videoButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 48, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
+                _videoButton.contentMode = UIViewContentModeCenter;
+                _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+                [_videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                
+                [_videoButton addTarget:self action:@selector(videoButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
+                
+                _videoButton.hidden = true;
+                
+                [_avHolderView addSubview:_videoButton];
+            }
             
             
-            _videoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _videoButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 48, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
-            _videoButton.contentMode = UIViewContentModeCenter;
-            _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-            [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
-            [_videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            
-            [_videoButton addTarget:self action:@selector(videoButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
-            
-            _videoButton.hidden = true;
-            
-            [_avHolderView addSubview:_videoButton];
+            {
+                _videoFullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                _videoFullScreenButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 96, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
+                _videoFullScreenButton.contentMode = UIViewContentModeCenter;
+                _videoFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                [_videoFullScreenButton setImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
+                [_videoFullScreenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                
+                [_videoFullScreenButton addTarget:self action:@selector(videoFullScreenButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
+                
+                _videoFullScreenButton.hidden = true;
+                
+                [_avHolderView addSubview:_videoFullScreenButton];
+            }
         
             
             break;
         }
         case ImageView: {
             
-            _gifHolderView = [[UIView alloc] init];
-            [_gifHolderView setFrame:self.bounds];
-            _gifHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
-            UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-            
-            [self addSubview:_gifHolderView];
-            
-            self.animtableImageView = [[FLAnimatedImageView alloc] init];
-            self.animtableImageView.frame = _gifHolderView.bounds;
-            self.animtableImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
+            {
+                _gifHolderView = [[UIView alloc] init];
+                [_gifHolderView setFrame:self.bounds];
+                _gifHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
                 UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-            self.animtableImageView.contentMode = UIViewContentModeScaleAspectFit;
-            self.animtableImageView.clipsToBounds = YES;
-            //self.animtableImageView.backgroundColor = [UIColor greenColor];
-            self.animtableImageView.layer.cornerRadius = 15;
-            self.animtableImageView.layer.masksToBounds = true;
+                
+                [self addSubview:_gifHolderView];
+            }
             
-            self.animtableImageView.isAllowAutoPlayWhenVisible = false;
+            {
+                self.animtableImageView = [[FLAnimatedImageView alloc] init];
+                self.animtableImageView.frame = _gifHolderView.bounds;
+                self.animtableImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
+                UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+                self.animtableImageView.contentMode = UIViewContentModeScaleAspectFit;
+                self.animtableImageView.clipsToBounds = YES;
+                //self.animtableImageView.backgroundColor = [UIColor greenColor];
+                self.animtableImageView.layer.cornerRadius = 15;
+                self.animtableImageView.layer.masksToBounds = true;
+                
+                self.animtableImageView.isAllowAutoPlayWhenVisible = false;
+                
+                [_gifHolderView addSubview:self.animtableImageView];
+            }
             
-            [_gifHolderView addSubview:self.animtableImageView];
+            {
+                _gifButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 48, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+                _gifButton.contentMode = UIViewContentModeCenter;
+                _gifButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                [_gifButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+                [_gifButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                
+                [_gifButton addTarget:self action:@selector(gifButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
+                
+                _gifButton.hidden = true;
+                
+                [_gifHolderView addSubview:_gifButton];
+            }
             
-            _gifButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 48, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
-            _gifButton.contentMode = UIViewContentModeCenter;
-            _gifButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-            [_gifButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
-            [_gifButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             
-            [_gifButton addTarget:self action:@selector(gifButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
-            
-            _gifButton.hidden = true;
-            
-//            _gifButton.backgroundColor = [UIColor greenColor];
-            
-            [_gifHolderView addSubview:_gifButton];
+            {
+                _gifFullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                _gifFullScreenButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 96, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+                _gifFullScreenButton.contentMode = UIViewContentModeCenter;
+                _gifFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                [_gifFullScreenButton setImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
+                [_gifFullScreenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                
+                [_gifFullScreenButton addTarget:self action:@selector(gifFullScreenButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
+                
+                _gifFullScreenButton.hidden = true;
+                
+                [_gifHolderView addSubview:_gifFullScreenButton];
+            }
             
             
             [self addObserver:self
@@ -262,6 +321,29 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     
 }
 
+- (void) gifFullScreenButtonDidClicked {
+    
+    if (_gifImage == nil) {
+        return;
+    }
+    
+    AnimatedGifViewController *playerViewController = [[AnimatedGifViewController alloc] init];
+    playerViewController.animatedImage = _gifImage;
+    
+    PlayViewControllerV2 *controller = [self findPlayViewControllerV2];
+    
+    if (controller) {
+        //means this is called from play mode
+        //iPad
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [controller presentModalViewController:playerViewController animated:YES];
+    } else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+    }
+    
+}
+
 - (void) gifButtonDidClicked {
     
     if ([self isPlayingGif]) {
@@ -269,6 +351,31 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         [self pauseGif];
     } else {
         [self playGif];
+    }
+    
+}
+
+- (void) videoFullScreenButtonDidClicked {
+    
+    if (_videoUrl == nil) {
+        return;
+    }
+    
+    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_videoUrl];
+    [[playerViewController moviePlayer] play];
+    
+    
+    
+    PlayViewControllerV2 *controller = [self findPlayViewControllerV2];
+    
+    if (controller) {
+        //means this is called from play mode
+        //iPad
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [controller presentModalViewController:playerViewController animated:YES];
+    } else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
     }
     
 }
@@ -306,18 +413,21 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         UIImage *image = [change objectForKey: NSKeyValueChangeNewKey];
         if (image == nil || [image isKindOfClass:[NSNull class]]) {
             _gifButton.hidden = true;
+            _gifFullScreenButton.hidden = true;
             
         } else {
             _gifButton.hidden = false;
+            _gifFullScreenButton.hidden = false;
             [self.animtableImageView stopAnimating];
         }
         
-       
+        _gifImage = image;
         
         
     } else if ([keyPath isEqualToString:Key_Path_Image]) {
         
         _gifButton.hidden = true;
+        _gifFullScreenButton.hidden = true;
         
     } else {
         

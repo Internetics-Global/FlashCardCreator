@@ -7987,6 +7987,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) playVideo:(NSString *) urlStr {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    //todo: later this will be moved to MultimediaView
+    
     if ([Common isValidYoutubeLinkage:urlStr]) {
         //http://www.youtube.com/watch?v=gzsrooteAZw
         NSString *finalURLStr = [Common embeddedYoutubeURL:urlStr];
@@ -8005,18 +8008,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         
-        MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
-        [[playerViewController moviePlayer] play];
-        
-        if (_calledViewController) {
-            //means this is called from play mode
-            //iPad
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-            [_calledViewController presentModalViewController:playerViewController animated:YES];
-        } else {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
-        }
+//        MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
+//        [[playerViewController moviePlayer] play];
+//        
+//        if (_calledViewController) {
+//            //means this is called from play mode
+//            //iPad
+//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+//            [_calledViewController presentModalViewController:playerViewController animated:YES];
+//        } else {
+//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+//            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+//        }
         
     }
     

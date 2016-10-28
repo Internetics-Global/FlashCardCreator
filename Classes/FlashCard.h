@@ -180,6 +180,9 @@ typedef enum{
 @property (nonatomic, strong) UITextField   *questionTitle;
 @property (nonatomic, strong) UITextField   *answerTitle;
 
+/*
+ * todo: Later this needs to be change to UIView+FindUIViewController.h
+*/
 @property (nonatomic, weak) UIViewController *calledViewController;
 
 - (BOOL) checkCardEditable;
