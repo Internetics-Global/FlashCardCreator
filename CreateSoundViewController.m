@@ -218,14 +218,28 @@
     
     [self dismiss];
     
-    //update_date info
-    NSString *updateDate = [FileOperationHelper getTodayString];
-    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_pack.packName];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-    [dict setObject:updateDate forKey:@"update_date"];
+    {
+        //update_date info
+        NSString *updateDate = [FileOperationHelper getTodayString];
+        NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_pack.packName];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+        [dict setObject:updateDate forKey:@"update_date"];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_pack.packName];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
-    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_pack.packName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        if (_isOnQuestion) {
+            [dict setObject:saveTo forKey:@"question"];
+        } else {
+            [dict setObject:saveTo forKey:@"answer"];
+        }
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SOUND_RECORDING_SAVED_NOTIFICATION object:nil userInfo:dict];
+    }
     
     
 }

@@ -121,6 +121,8 @@ enum popover_enum {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(soundRecordingSavedNotification:) name:SOUND_RECORDING_SAVED_NOTIFICATION object:nil];
+        
     }
     return self;
 }
@@ -810,6 +812,21 @@ enum popover_enum {
     
 }
 
+
+-(void)soundRecordingSavedNotification:(NSNotification *)notification {
+    NSDictionary *dict = [notification userInfo];
+    
+    NSString *question = [dict objectForKey:@"question"];
+    NSString *answer = [dict objectForKey:@"answer"];
+    
+    if (question != nil) {
+        _currentCardView.currentCard.question.recordedSoundFullPath = question;
+    }
+    
+    if (answer != nil) {
+        _currentCardView.currentCard.answer.recordedSoundFullPath = answer;
+    }
+}
 
 -(void)shareLinkCreatedNotification:(NSNotification *)notification {
     
