@@ -7983,12 +7983,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 /**
- *  Play movie/video
+ *  Actually, it works only youtube now
+ *  //todo: later this part of logic should  be moved to MultimediaView, which will be consistent with other function.
  */
 - (void) playVideo:(NSString *) urlStr {
     [iConsole info:@"%s",__FUNCTION__];
-    
-    //todo: later this will be moved to MultimediaView
     
     if ([Common isValidYoutubeLinkage:urlStr]) {
         //http://www.youtube.com/watch?v=gzsrooteAZw
@@ -8647,7 +8646,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if ([self isLocalVideo:_currentCard.question.movieFullPath2]) {
             
             [_imageQuestion2 setMultimediaType:Video];
-            [_imageQuestion setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
+            [_imageQuestion2 setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
             
         }
     }
@@ -8657,18 +8656,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         [self refreshAll];
     } else {
-        
-        if ([self isLocalVideo:_currentCard.question.movieFullPath]) {
-            
-            [_imageQuestion playVideo];
-            
-        }
-        
-        if ([self isLocalVideo:_currentCard.question.movieFullPath2]) {
-            
-            [_imageQuestion2 playVideo];
-            
-        }
         
     }
     
@@ -10611,9 +10598,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (targetMultiMediaView && targetURL) {
             [targetMultiMediaView setMultimediaType:Video];
             [targetMultiMediaView setVideoURL:targetURL];
-            if (weakSelf.tag == CURRENT_FLASHCARDVIEW_TAG) {
-                [targetMultiMediaView playVideo];
-            }
         }
     });
     
@@ -12205,8 +12189,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else if (buttonIndex == 3) {
         if (self.segmentedControl.selectedSegmentIndex == 0) {
             
-            BOOL isToSetImageViewEmpty = false;
-            
             if (([_questionImageFullPath rangeOfString:@"placeholder"].location == NSNotFound) &&
                 (_questionImageFullPath.length > 0)) {
                 NSError *error = nil;
@@ -12214,8 +12196,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                                 error:&error])
                 {
                     NSLog(@"[Error] %@ (%@)", error, _questionImageFullPath);
-                } else {
-                    isToSetImageViewEmpty = YES;
                 }
                 
                 
@@ -12228,24 +12208,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                                 error:&error])
                 {
                     NSLog(@"[Error] %@ (%@)", error, _questionMovieFullPath);
-                } else {
-                    isToSetImageViewEmpty = YES;
                 }
                 
             }
             
-            if (isToSetImageViewEmpty) {
-                _questionImageFullPath = @"";
-                _questionMovieFullPath = @"";
-                
-                _currentCard.question.movieFullPath = @"";
-                _currentCard.question.imageFullPath = @"";
-                
-                [_imageQuestion setMultimediaType:ImageView];
-                [_imageQuestion.animtableImageView setImage:[UIImage imageNamed:@"question_placeholder_content"]];
-            } else {
-                [iConsole info:@"%s: delete is ignored since empty or default image",__FUNCTION__];
-            }
+            _questionImageFullPath = @"";
+            _questionMovieFullPath = @"";
+            
+            _currentCard.question.movieFullPath = @"";
+            _currentCard.question.imageFullPath = @"";
+            
+            [_imageQuestion setMultimediaType:ImageView];
+            [_imageQuestion.animtableImageView setImage:[UIImage imageNamed:@"question_placeholder_content"]];
             
             
         } else {

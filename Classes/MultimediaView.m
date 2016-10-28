@@ -196,8 +196,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             {
                 _avHolderView = [[UIView alloc] init];
                 [_avHolderView setFrame:self.bounds];
-                _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
-                UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+                _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
                 self.avPlayer = [[AVPlayerLayer alloc] init];
                 self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
                 self.avPlayer.frame = _avHolderView.bounds;
@@ -246,23 +245,22 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             {
                 _gifHolderView = [[UIView alloc] init];
                 [_gifHolderView setFrame:self.bounds];
-                _gifHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
-                UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-                
+                _gifHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
+//                _gifHolderView.backgroundColor = [UIColor greenColor];
                 [self addSubview:_gifHolderView];
             }
             
             {
                 self.animtableImageView = [[FLAnimatedImageView alloc] init];
-                self.animtableImageView.frame = _gifHolderView.bounds;
-                self.animtableImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|
-                UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+                self.animtableImageView.frame = self.bounds;
+                self.animtableImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
                 self.animtableImageView.contentMode = UIViewContentModeScaleAspectFit;
                 self.animtableImageView.clipsToBounds = YES;
                 //self.animtableImageView.backgroundColor = [UIColor greenColor];
                 self.animtableImageView.layer.cornerRadius = 15;
                 self.animtableImageView.layer.masksToBounds = true;
-                
+//                self.animtableImageView.layer.borderColor = [UIColor redColor].CGColor;
+//                self.animtableImageView.layer.borderWidth = 2;
                 self.animtableImageView.isAllowAutoPlayWhenVisible = false;
                 
                 [_gifHolderView addSubview:self.animtableImageView];
@@ -391,19 +389,6 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     
 }
 
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    if (_gifHolderView) {
-        _gifHolderView.frame = self.bounds;
-    }
-    
-    if (_avHolderView) {
-        _avHolderView.frame = self.bounds;
-//        _avHolderView.backgroundColor = [UIColor orangeColor];
-    }
-}
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
