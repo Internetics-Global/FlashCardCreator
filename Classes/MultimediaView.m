@@ -38,7 +38,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     /*
      * the only usage is for gifFullScreenButtonDidClicked
      */
-    FLAnimatedImage    *_gifImage;
+    id                  _gifImagePointer;
 }
 
 @end
@@ -181,7 +181,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     _avHolderView = nil;
     _gifHolderView = nil;
     
-    _gifImage = nil;
+    _gifImagePointer = nil;
 }
 
 - (void) setMultimediaType:(FFCMultimediaType) multimediaType {
@@ -323,12 +323,12 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) gifFullScreenButtonDidClicked {
     
-    if (_gifImage == nil) {
+    if (_gifImagePointer == nil) {
         return;
     }
     
     AnimatedGifViewController *playerViewController = [[AnimatedGifViewController alloc] init];
-    playerViewController.animatedImage = _gifImage;
+    playerViewController.animatedImage = _gifImagePointer;
     
     PlayViewControllerV2 *controller = [self findPlayViewControllerV2];
     
@@ -406,7 +406,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 }
 
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if ([keyPath isEqualToString:Key_Path_AnimatedImage]) {
         
@@ -421,7 +421,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             [self.animtableImageView stopAnimating];
         }
         
-        _gifImage = image;
+        _gifImagePointer = image;
         
         
     } else if ([keyPath isEqualToString:Key_Path_Image]) {
