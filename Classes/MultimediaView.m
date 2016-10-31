@@ -196,6 +196,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         //do nothing, obviously it wasn't attached because an exception was thrown
     }
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     self.animtableImageView = nil;
@@ -256,6 +258,15 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
                 self.avPlayer.frame = _videoHolderView.bounds;
                 //self.avPlayer.backgroundColor = [UIColor orangeColor].CGColor;
+                
+                self.avPlayer.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+                
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(playerItemDidReachEnd:)
+                                                             name:AVPlayerItemDidPlayToEndTimeNotification
+                                                           object:[self.avPlayer.player currentItem]];
+                
+            
                 [_videoHolderView.layer addSublayer:self.avPlayer];
                 
                 [self addSubview:_videoHolderView];
@@ -473,6 +484,11 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     } else {
         
     }
+}
+
+- (void)playerItemDidReachEnd:(NSNotification *)notification {
+    AVPlayerItem *p = [notification object];
+    [p seekToTime:kCMTimeZero];
 }
 
 
