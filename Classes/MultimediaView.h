@@ -12,6 +12,7 @@ typedef enum {
     ImageView,
     Video,
     YoutubeVideo,
+    Unkown
 } FFCMultimediaType;
 
 

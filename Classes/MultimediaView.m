@@ -21,7 +21,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 @interface MultimediaView () <UIGestureRecognizerDelegate> {
     
-    UIView   *_avHolderView;
+    UIView   *_videoHolderView;
     UIView   *_gifHolderView;
     
     UIButton *_videoButton;
@@ -39,6 +39,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
      * the only usage is for gifFullScreenButtonDidClicked
      */
     id                  _gifImagePointer;
+    
+    FFCMultimediaType   _currentMultimediaType;
 }
 
 @end
@@ -64,6 +66,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) setup {
     self.translatesAutoresizingMaskIntoConstraints = false;
+    _currentMultimediaType = Unkown;
 }
 
 - (void) setVideoURL:(NSURL*) videoUrl {
@@ -73,8 +76,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         if ([videoUrl checkResourceIsReachableAndReturnError:&err] == false) {
             NSLog(@"this videoUrl does not exit: %@",videoUrl);
             
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//            [alertView show];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
             
             return;
             
@@ -124,6 +127,24 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     }
 }
 
+/*
+ * please don't use this method. The reason why it's here is I want to highlight its difference with Android counterpart.
+ * In Android, since screenshot does not work well, so we have to stop gif and setMutimediaType to ImageView, after screenshot
+ * we will resume to gif type
+*/
+- (void) stopGif {
+    NSAssert(false, @"should not come here");
+}
+
+/*
+ * please don't use this method. The reason why it's here is I want to highlight its difference with Android counterpart.
+ * In Android, since screenshot does not work well, so we have to stop video and setMutimediaType to ImageView, after screenshot
+ * we will resume to video type
+ */
+- (void) stopVideo {
+    NSAssert(false, @"should not come here");
+}
+
 - (void) playVideo {
     if (self.avPlayer) {
         
@@ -161,6 +182,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) clean {
     
+    _currentMultimediaType = Unkown;
+    
     @try {
         [self removeObserver:self forKeyPath:@"self.animtableImageView.animatedImage"];
     } @catch(id anException){
@@ -179,7 +202,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     
     _avPlayer = nil;
     
-    _avHolderView = nil;
+    _videoHolderView = nil;
     _gifHolderView = nil;
     
     _gifImagePointer = nil;
@@ -187,30 +210,61 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) setMultimediaType:(FFCMultimediaType) multimediaType {
     
-    [self clean];
+    if (multimediaType == _currentMultimediaType) {
+        
+        if (multimediaType == Video) {
+            
+            /*
+             * This is quite tricky part. if we don't rebuild avPlayer and use set frame again, there will be a animation from CGSizeZero to full view, that's not good user experience.
+             *
+            */
+            
+            
+            [self.avPlayer removeFromSuperlayer];
+            self.avPlayer = nil;
+            
+            self.avPlayer = [[AVPlayerLayer alloc] init];
+            self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
+            self.avPlayer.frame = _videoHolderView.bounds;
+            //self.avPlayer.backgroundColor = [UIColor orangeColor].CGColor;
+            [_videoHolderView.layer addSublayer:self.avPlayer];
+            
+            //this is necessary since it could hide following two buttons when insert a new CALayer
+            [_videoHolderView bringSubviewToFront:_videoButton];
+            [_videoHolderView bringSubviewToFront:_videoFullScreenButton];
+        }
+        
+        return;
+    }
     
-    self.autoresizesSubviews = true;
+    [self clean];
     
     switch (multimediaType) {
         case Video: {
             
+            //In Android,since Android system does not support thumbnail preview, so we have to create
+            //another ImageView to hold thumbnail. In iOS, we don't need to do this.
+            
             {
                 
-                _avHolderView = [[UIView alloc] init];
-                [_avHolderView setFrame:self.bounds];
-                _avHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
+                _videoHolderView = [[UIView alloc] init];
+                [_videoHolderView setFrame:self.bounds];
+                //_videoHolderView.backgroundColor = [UIColor greenColor];
+                _videoHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
+                
                 self.avPlayer = [[AVPlayerLayer alloc] init];
                 self.avPlayer.videoGravity = AVLayerVideoGravityResizeAspect;
-                self.avPlayer.frame = _avHolderView.bounds;
-                [_avHolderView.layer addSublayer:self.avPlayer];
+                self.avPlayer.frame = _videoHolderView.bounds;
+                //self.avPlayer.backgroundColor = [UIColor orangeColor].CGColor;
+                [_videoHolderView.layer addSublayer:self.avPlayer];
                 
-                [self addSubview:_avHolderView];
+                [self addSubview:_videoHolderView];
             }
             
             
             {
                 _videoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _videoButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 48, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
+                _videoButton.frame = CGRectMake(CGRectGetWidth(_videoHolderView.frame) - 48, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
                 _videoButton.contentMode = UIViewContentModeCenter;
                 _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
                 [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
@@ -220,13 +274,13 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 
                 _videoButton.hidden = true;
                 
-                [_avHolderView addSubview:_videoButton];
+                [_videoHolderView addSubview:_videoButton];
             }
             
             
             {
                 _videoFullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _videoFullScreenButton.frame = CGRectMake(CGRectGetWidth(_avHolderView.frame) - 96, CGRectGetHeight(_avHolderView.frame) - 48, 48, 48);
+                _videoFullScreenButton.frame = CGRectMake(CGRectGetWidth(_videoHolderView.frame) - 96, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
                 _videoFullScreenButton.contentMode = UIViewContentModeCenter;
                 _videoFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
                 [_videoFullScreenButton setImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
@@ -236,7 +290,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 
                 _videoFullScreenButton.hidden = true;
                 
-                [_avHolderView addSubview:_videoFullScreenButton];
+                [_videoHolderView addSubview:_videoFullScreenButton];
             }
         
             
@@ -248,7 +302,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 _gifHolderView = [[UIView alloc] init];
                 [_gifHolderView setFrame:self.bounds];
                 _gifHolderView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;;
-//                _gifHolderView.backgroundColor = [UIColor greenColor];
+                //_gifHolderView.backgroundColor = [UIColor redColor];
                 [self addSubview:_gifHolderView];
             }
             
@@ -318,6 +372,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             break;
     }
     
+    _currentMultimediaType = multimediaType;
 }
 
 - (void) gifFullScreenButtonDidClicked {
@@ -411,7 +466,6 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         
         
     } else if ([keyPath isEqualToString:Key_Path_Image]) {
-    
         
         _gifButton.hidden = true;
         _gifFullScreenButton.hidden = true;
