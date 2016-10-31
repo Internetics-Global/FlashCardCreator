@@ -1699,13 +1699,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
                     || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
                     
-                    BOOL isFontResized = [self adjustAllTextViewsToFitIfNecessary];
-                    
-                    if ((isFontResized)) {
-                        
-                        [iConsole warn:@"%s:card(sn=%ld) is font resized",__FUNCTION__,_currentCard.cardSN];
-                        
-                    }
+                    [self adjustAllTextViewsToFitIfNecessary];
                 }
             } else {
                 [self adjustAllTextViewsToFitIfNecessary];
@@ -9592,36 +9586,43 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-- (BOOL) adjustAllTextViewsToFitIfNecessary {
+
+- (void) adjustAllTextViewsToFitIfNecessary {
     [iConsole info:@"%s",__FUNCTION__];
     
     
     
     if ([self checkCardEditable]) {
-        return NO;
+        return;
     }
     
-    //There's an error in orgigional pack, so we need a patch here
+    //There's an error in original pack, so we need a patch here
     if ([_currentCard.answer.main rangeOfString:@"Knee how"].location != NSNotFound) {
         _currentCard.answer.lineNoMain = 5;
     }
     
     if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
         ([self.currentPack.platform isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone == false))){
-        return false;
+        return;
     }
     
     if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
         ([self.currentPack.platform isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone == false))){
-        return false;
+        return;
     }
     
-    _verticalScrollView.hidden = YES;
     flag_Subheading_ResizeFinished = NO;
     flag_Main_ResizeFinished = NO;
     flag_Sub_ResizeFinished = NO;
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
+        
+        if (_subheadingQuestion.hidden && _mainQuestion.hidden && _subQuestion.hidden) {
+            // _verticalScrollView is hidden when resizing process. if no text, we don't do this
+        } else {
+            _verticalScrollView.hidden = YES;
+        }
+        
         
         if (_subheadingQuestion.hidden == false) {
             [self triggerResizeTextToFitFrame:_subheadingQuestion withMaxLineNumber:_currentCard.question.lineNoSubheading];
@@ -9643,6 +9644,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     } else {
         
+        if (_subheadingAnswer.hidden && _mainAnswer.hidden && _subAnswer.hidden) {
+            // _verticalScrollView is hidden when resizing process. if no text, we don't do this
+        } else {
+            _verticalScrollView.hidden = YES;
+        }
+        
         if (_subheadingAnswer.hidden == false) {
             [self triggerResizeTextToFitFrame:_subheadingAnswer withMaxLineNumber:_currentCard.answer.lineNoSubheading];
         } else {
@@ -9662,8 +9669,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     }
-    
-    return NO;
 }
 
 /** 
