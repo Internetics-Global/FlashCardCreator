@@ -436,19 +436,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion= [[MultimediaView  alloc] init];
         [_imageQuestion setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageQuestion];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-        [_imageQuestion addGestureRecognizer:imageSingeTap];
-        
+
     }
     
     if (_imageQuestion2 == nil) {
         _imageQuestion2= [[MultimediaView  alloc] init];
         [_imageQuestion2 setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageQuestion2];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
-        [_imageQuestion2 addGestureRecognizer:imageSingeTap];
+
     }
     
     if (_subheadingQuestion == nil) {
@@ -536,18 +531,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageAnswer= [[MultimediaView  alloc] init];
         [_imageAnswer setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageAnswer];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-        [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     
     if (_imageAnswer2 == nil) {
         _imageAnswer2= [[MultimediaView  alloc] init];
         [_imageAnswer2 setMultimediaType:ImageView];
         [_verticalScrollView addSubview:_imageAnswer2];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
-        [_imageAnswer2 addGestureRecognizer:imageSingeTap];
+
     }
     
     _imageAnswer.hidden = YES;
@@ -1038,7 +1028,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_imageQuestion ==  nil) {
         _imageQuestion= [[MultimediaView  alloc] init];
-        _imageQuestion.userInteractionEnabled = FALSE;
+        _imageQuestion.userInteractionEnabled = true;
         _imageQuestion.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion.clipsToBounds = YES;
         _imageQuestion.backgroundColor = [UIColor clearColor];
@@ -1046,14 +1036,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion.layer.cornerRadius = 10;
         _imageQuestion.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageQuestion];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-        [_imageQuestion addGestureRecognizer:imageSingeTap];
     }
     
     if (_imageQuestion2 ==  nil) {
         _imageQuestion2= [[MultimediaView  alloc] init];
-        _imageQuestion2.userInteractionEnabled = FALSE;
+        _imageQuestion2.userInteractionEnabled = true;
         _imageQuestion2.contentMode = UIViewContentModeScaleAspectFit;
         _imageQuestion2.clipsToBounds = YES;
         _imageQuestion2.backgroundColor = [UIColor clearColor];
@@ -1061,9 +1048,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageQuestion2.layer.cornerRadius = 10;
         _imageQuestion2.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageQuestion2];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
-        [_imageQuestion2 addGestureRecognizer:imageSingeTap];
     }
     
     if (_subheadingQuestion ==  nil) {
@@ -1133,7 +1117,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_imageAnswer ==  nil) {
         _imageAnswer= [[MultimediaView  alloc] init];
-        _imageAnswer.userInteractionEnabled = FALSE;
+        _imageAnswer.userInteractionEnabled = true;
         _imageAnswer.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer.clipsToBounds = YES;
         _imageAnswer.backgroundColor = [UIColor clearColor];
@@ -1141,15 +1125,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageAnswer.layer.cornerRadius = 10;
         _imageAnswer.layer.masksToBounds = YES;
         [_verticalScrollView addSubview:_imageAnswer];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-        [_imageAnswer addGestureRecognizer:imageSingeTap];
     }
     _imageAnswer.hidden = YES;
     
     if (_imageAnswer2 ==  nil) {
         _imageAnswer2= [[MultimediaView  alloc] init];
-        _imageAnswer2.userInteractionEnabled = FALSE;
+        _imageAnswer2.userInteractionEnabled = true;
         _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         _imageAnswer2.clipsToBounds = YES;
         _imageAnswer2.backgroundColor = [UIColor clearColor];
@@ -1158,9 +1139,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _imageAnswer2.layer.masksToBounds = YES;
         _imageAnswer2.contentMode = UIViewContentModeScaleAspectFit;
         [_verticalScrollView addSubview:_imageAnswer2];
-        
-        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
-        [_imageAnswer2 addGestureRecognizer:imageSingeTap];
     }
     _imageAnswer2.hidden = YES;
     
@@ -1478,18 +1456,32 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openWebviewViaLogoURL:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    if (_currentCard.question.movieFullPath.length > 0 || [self isGif:_currentCard.question.imageFullPath]) {
-        //allow to play movie
-        _imageQuestion.userInteractionEnabled        = YES;
-    } else {
-        _imageQuestion.userInteractionEnabled        = FALSE;
+    
+    {
+        while (_imageQuestion.gestureRecognizers.count) {
+            [_imageQuestion removeGestureRecognizer:[_imageQuestion.gestureRecognizers objectAtIndex:0]];
+        }
+        
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
+            
+            UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+            [_imageQuestion addGestureRecognizer:imageSingeTap];
+            
+        }
     }
     
-    if (_currentCard.question.movieFullPath2.length > 0 || [self isGif:_currentCard.question.imageFullPath2]) {
-        //allow to play movie
-        _imageQuestion2.userInteractionEnabled        = YES;
-    } else {
-        _imageQuestion2.userInteractionEnabled        = FALSE;
+    
+    {
+        while (_imageQuestion2.gestureRecognizers.count) {
+            [_imageQuestion2 removeGestureRecognizer:[_imageQuestion2.gestureRecognizers objectAtIndex:0]];
+        }
+        
+        if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath2]) {
+            
+            UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+            [_imageQuestion2 addGestureRecognizer:imageSingeTap];
+            
+        }
     }
     
     _imageQuestion.layer.borderWidth = 0;
@@ -1501,16 +1493,31 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subheadingQuestion.userInteractionEnabled   = FALSE;
     _subheadingQuestion.layer.borderWidth = 0;
     
-    if (_currentCard.answer.movieFullPath.length > 0 || [self isGif:_currentCard.answer.imageFullPath]) {
-        _imageAnswer.userInteractionEnabled        = YES;
-    } else {
-        _imageAnswer.userInteractionEnabled        = FALSE;
+    {
+        while (_imageAnswer.gestureRecognizers.count) {
+            [_imageAnswer removeGestureRecognizer:[_imageAnswer.gestureRecognizers objectAtIndex:0]];
+        }
+        
+        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
+            
+            UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+            [_imageAnswer addGestureRecognizer:imageSingeTap];
+            
+        }
     }
     
-    if (_currentCard.answer.movieFullPath2.length > 0 || [self isGif:_currentCard.answer.imageFullPath2]) {
-        _imageAnswer2.userInteractionEnabled        = YES;
-    } else {
-        _imageAnswer2.userInteractionEnabled        = FALSE;
+    
+    {
+        while (_imageAnswer2.gestureRecognizers.count) {
+            [_imageAnswer2 removeGestureRecognizer:[_imageAnswer2.gestureRecognizers objectAtIndex:0]];
+        }
+        
+        if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath2]) {
+            
+            UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+            [_imageAnswer2 addGestureRecognizer:imageSingeTap];
+            
+        }
     }
     
     _imageAnswer.layer.borderWidth = 0;
@@ -1549,7 +1556,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UITapGestureRecognizer *logoSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectFromImageLibraryByLogo:)];
     [_logoImage addGestureRecognizer:logoSingeTap];
     
-    _imageQuestion.userInteractionEnabled        = TRUE;
     _imageQuestion.layer.borderColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"dotted_line.png"]] CGColor];
     _imageQuestion.layer.borderWidth = k_Scale/scale;
     
@@ -1598,6 +1604,40 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _sidebarTitle.userInteractionEnabled = YES;
     _creatorText.userInteractionEnabled = YES;
     _jobTitleText.userInteractionEnabled = YES;
+    
+    
+    {
+        while (_imageQuestion.gestureRecognizers.count) {
+            [_imageQuestion removeGestureRecognizer:[_imageQuestion.gestureRecognizers objectAtIndex:0]];
+        }
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+        [_imageQuestion addGestureRecognizer:imageSingeTap];
+    }
+    
+    {
+        while (_imageQuestion2.gestureRecognizers.count) {
+            [_imageQuestion2 removeGestureRecognizer:[_imageQuestion2.gestureRecognizers objectAtIndex:0]];
+        }
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        [_imageQuestion2 addGestureRecognizer:imageSingeTap];
+    }
+    
+    {
+        while (_imageAnswer.gestureRecognizers.count) {
+            [_imageAnswer removeGestureRecognizer:[_imageAnswer.gestureRecognizers objectAtIndex:0]];
+        }
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+        [_imageAnswer addGestureRecognizer:imageSingeTap];
+    }
+    
+    {
+        while (_imageAnswer2.gestureRecognizers.count) {
+            [_imageAnswer2 removeGestureRecognizer:[_imageAnswer2.gestureRecognizers objectAtIndex:0]];
+        }
+        UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
+        [_imageAnswer2 addGestureRecognizer:imageSingeTap];
+    }
+    
 }
 
 
@@ -7756,40 +7796,38 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (_currentCard.question.movieFullPath.length > 0) {
                 
-                [self playVideo:_currentCard.question.movieFullPath];
+                [self playYoutubeVideo:_currentCard.question.movieFullPath];
                 
             }
             
         } else {
             if (_currentCard.answer.movieFullPath.length > 0) {
-                [self playVideo:_currentCard.answer.movieFullPath];
+                [self playYoutubeVideo:_currentCard.answer.movieFullPath];
             }
         }
         
-        return;
-        
-    }
-    
-    //2. edit mode, and have video, but not own the pack
-    NSString *targetStr;
-    if (self.segmentedControl.selectedSegmentIndex == 0) {
-        targetStr = _currentCard.question.movieFullPath;
     } else {
-        targetStr = _currentCard.answer.movieFullPath;
-    }
-    if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-    
-    __weak __typeof(&*self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        //2. edit mode, and have video, but not own the pack
+        NSString *targetStr;
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            targetStr = _currentCard.question.movieFullPath;
+        } else {
+            targetStr = _currentCard.answer.movieFullPath;
+        }
+        if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
         
-        [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
-        
-    }];
-    
+        __weak __typeof(&*self)weakSelf = self;
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
+            
+        }];
+    }
+
     
 }
 
@@ -7802,39 +7840,37 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (_currentCard.question.movieFullPath2.length > 0) {
                 
-                [self playVideo:_currentCard.question.movieFullPath2];
+                [self playYoutubeVideo:_currentCard.question.movieFullPath2];
                 
             }
             
         } else {
             if (_currentCard.answer.movieFullPath2.length > 0) {
-                [self playVideo:_currentCard.answer.movieFullPath2];
+                [self playYoutubeVideo:_currentCard.answer.movieFullPath2];
             }
         }
         
-        return;
-        
-    }
-    
-    //2. edit mode, and have video, but not own the pack
-    NSString *targetStr;
-    if (self.segmentedControl.selectedSegmentIndex == 0) {
-        targetStr = _currentCard.question.movieFullPath2;
     } else {
-        targetStr = _currentCard.answer.movieFullPath2;
-    }
-    if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-    
-    __weak __typeof(&*self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        //2. edit mode, and have video, but not own the pack
+        NSString *targetStr;
+        if (self.segmentedControl.selectedSegmentIndex == 0) {
+            targetStr = _currentCard.question.movieFullPath2;
+        } else {
+            targetStr = _currentCard.answer.movieFullPath2;
+        }
+        if (([self checkCardEditable] == FALSE) && (targetStr.length >0)) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_VIDEO_PLAY_ONLY_AVAILABLE_IN_PLAY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
         
-        [weakSelf image2SelectAlertViewClickedAtIndex: buttonIndex];
-        
-    }];
+        __weak __typeof(&*self)weakSelf = self;
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            [weakSelf image2SelectAlertViewClickedAtIndex: buttonIndex];
+            
+        }];
+    }
     
 }
 
@@ -7983,10 +8019,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 /**
- *  Actually, it works only youtube now
- *  //todo: later this part of logic should  be moved to MultimediaView, which will be consistent with other function.
+ *  todo: later this part of logic should  be moved to MultimediaView, which will be consistent with other function.
  */
-- (void) playVideo:(NSString *) urlStr {
+- (void) playYoutubeVideo:(NSString *) urlStr {
     [iConsole info:@"%s",__FUNCTION__];
     
     if ([Common isValidYoutubeLinkage:urlStr]) {
@@ -8004,21 +8039,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
         }
-        
-    } else {
-        
-//        MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:urlStr]];
-//        [[playerViewController moviePlayer] play];
-//        
-//        if (_calledViewController) {
-//            //means this is called from play mode
-//            //iPad
-//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//            [_calledViewController presentModalViewController:playerViewController animated:YES];
-//        } else {
-//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//            [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
-//        }
         
     }
     
@@ -8237,7 +8257,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:movieURL options:nil];
         CMTime duration = sourceAsset.duration;
         float seconds = CMTimeGetSeconds(duration);
-        if (seconds > 61) {
+        if (seconds > 30) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
             return;

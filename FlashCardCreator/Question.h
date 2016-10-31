@@ -20,7 +20,15 @@
     NSString *_sub;
     NSString *_imageFullPath;
     NSString *_imageFullPath2;
+    
+    /*
+     *  including local video and youtube link
+     */
     NSString *_movieFullPath;
+    
+    /*
+     *  including local video and youtube link
+     */
     NSString *_movieFullPath2;
     
     NSString *_logoFullPath;

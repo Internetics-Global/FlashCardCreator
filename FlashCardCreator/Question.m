@@ -110,6 +110,9 @@
     }
 }
 
+/*
+ *  including local video and youtube link
+*/
 - (NSString *)getMovieFullPath {
     if (_movieFullPath.length == 0 || [Common isDirectoryFormat:_movieFullPath] ) {
         return @"";
@@ -124,6 +127,10 @@
     }
 }
 
+
+/*
+ *  including local video and youtube link
+ */
 - (NSString *)getMovieFullPath2 {
     if (_movieFullPath2.length == 0 || [Common isDirectoryFormat:_movieFullPath2] ) {
         return @"";

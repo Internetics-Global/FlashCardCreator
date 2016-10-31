@@ -22,8 +22,14 @@
     NSString *_imageFullPath;
     NSString *_imageFullPath2;
     
-    //youtube linkage or an local url
+    /*
+     *  including local video and youtube link
+     */
     NSString *_movieFullPath;
+    
+    /*
+     *  including local video and youtube link
+     */
     NSString *_movieFullPath2;
     
     NSString *_logoFullPath;  //we don't use this field
