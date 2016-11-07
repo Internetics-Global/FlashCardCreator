@@ -15,6 +15,10 @@
 #import "PlayViewControllerV2.h"
 #import "AnimatedGifViewController.h"
 
+#import <AVFoundation/AVFoundation.h>
+
+#import "AppDelegate.h"
+
 
 NSString *const Key_Path_AnimatedImage = @"self.animtableImageView.animatedImage";
 NSString *const Key_Path_Image = @"self.animtableImageView.image";
@@ -86,6 +90,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         _videoUrl = videoUrl;
         
         AVPlayer *video=[AVPlayer playerWithURL:videoUrl];
+        video.volume = 1;
         video.actionAtItemEnd = AVPlayerActionAtItemEndNone;
         self.avPlayer.player = video;
         
@@ -426,24 +431,29 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         return;
     }
     
-    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:_videoUrl];
-    [[playerViewController moviePlayer] play];
     
-    
+    AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+    AVPlayer *player = [[AVPlayer alloc] initWithURL:_videoUrl];
+    player.volume = 1.0;
+    playerViewController.player = player;
     
     PlayViewControllerV2 *controller = [self findPlayViewControllerV2];
     
     if (controller) {
         //means this is called from play mode
         //iPad
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        [controller presentModalViewController:playerViewController animated:YES];
+        [controller presentViewController:playerViewController animated:true completion:^{
+            [playerViewController.player play];
+        }];
     } else {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:playerViewController animated:YES];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:playerViewController animated:true completion:^{
+            [playerViewController.player play];
+        }];
     }
     
+    
 }
+
 
 - (void) videoButtonDidClicked {
     
@@ -455,7 +465,6 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     }
     
 }
-
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -492,11 +501,15 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 }
 
 
+
+
 - (void)dealloc {
     
     [self clean];
 
 }
+
+
 
 
 @end

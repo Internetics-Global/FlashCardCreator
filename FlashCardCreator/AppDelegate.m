@@ -263,13 +263,14 @@
     }
     
     //Prepare recording function
-    [self setupAudioWithRecord];
+    [self setupAudioWithoutRecord];
 
     
     
     // Override point for customization after application launch.
     return YES;
 }
+
 
 
 - (void) setupAudioWithoutRecord {
@@ -293,7 +294,10 @@
 }
 
 
-
+/*
+ * The problem of AVAudioSessionCategoryPlayAndRecord is its volume could be lower than normal including AVPlayer
+ * So we tried to avoid use setupAudioWithRecord unless in record function
+*/
 - (void) setupAudioWithRecord {
     
     NSError *error;

@@ -100,13 +100,17 @@
         self.saveButton.hidden = NO;
         
         [self.alertLabel setText:NSLocalizedString(@"Record_Introduction_Text2",@"")];
+        
 
+        [APP_DELEGATE setupAudioWithoutRecord];
         
     } else {
         self.playButton.hidden = YES;
         self.saveButton.hidden = YES;
 
         [self.alertLabel setText:NSLocalizedString(@"Record_Introduction_Text",@"")];
+        
+        [APP_DELEGATE setupAudioWithRecord];
 
 
     }
@@ -274,13 +278,17 @@
     }
 }
 
+/*
+ * Diff with start recording and dismiss, it's simply used to dimiss recording view and exit whole recording process
+ */
 - (void) dismiss {
     
   APP_DELEGATE.isRecordFinished = NO; //back to normal
   [[NSNotificationCenter defaultCenter] postNotificationName:@"K_CreateSoundViewController_Dimissed_Notification" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"is_to_recording"] userInfo:nil];
     
-  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-  [self dismissModalViewControllerAnimated:YES];
+  [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [APP_DELEGATE setupAudioWithoutRecord];
     
 }
 
