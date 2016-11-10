@@ -22,9 +22,6 @@
 
 #import "CryptorHelper.h"
 
-#import <ParseUI/ParseUI.h>
-#import <Parse/Parse.h>
-
 #import "AWS_Constants.h"
 
 #import "Common.h"
@@ -281,9 +278,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
     
-    NSAssert([PFUser currentUser].username.length > 0, @"PFUser currentUser].username should exist");
-
-    NSString *expectedBucketName = [[PFUser currentUser].username lowercaseString]; //aws要求bucket必须是小写的
+    NSString *expectedBucketName = @"FlashCardCreateo";  //TODO: ccaa
     
     [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
     

@@ -27,9 +27,6 @@
 #import "OpenUDID.h"
 #import "AppDelegate.h"
 
-#import <ParseUI/ParseUI.h>
-#import <Parse/Parse.h>
-
 #import "UIButton+Extensions.h"
 
 #import <BlocksKit/UIAlertView+BlocksKit.h>
@@ -57,7 +54,7 @@ enum popover_enum {
 };
 
 
-@interface DetailViewController () <PFSignUpViewControllerDelegate,PFLogInViewControllerDelegate,UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
+@interface DetailViewController () <UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
     AWSS3UploadHelper        *_amazonShareHelper;
     DropboxSharekitHelper    *_dropboxShareHelper;
     

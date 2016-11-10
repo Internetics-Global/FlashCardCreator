@@ -50,11 +50,6 @@
 #import "CryptorHelper.h"
 #import "Base64.h"
 
-#import <ParseUI/ParseUI.h>
-#import <Parse/Parse.h>
-#import "PFSignUpViewController+Landscape.h"
-#import "PFLogInViewController+Landscape.h"
-
 #import "Common.h"
 
 #import "UIButton+Extensions.h"
@@ -80,7 +75,7 @@ const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -1790,43 +1785,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-/**
- *  @param fromSetting 由于有两种可能来源：来自分享和来自setting
- */
-- (void) didClickCreateNewAccountAlertView:(UIAlertView *)alertView fromSetting: (BOOL) fromSetting{
-    
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    NSString *username = textField.text;
-    
-    if ([Common isValidBucketNameFromParseUserName:username] == false) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-        [PFUser logOut];
-        return;
-    }
-    
-    PFUser *currentUser = [PFUser currentUser];
-    [currentUser setUsername:username];
-    NSError *error;
-    BOOL succeeded = [currentUser save:&error];
-    if (succeeded) {
-        if (fromSetting) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-            [alertView show];
-        } else {
-            
-            _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-            [_amazonShareHelper shareAction];
-            
-        }
-    } else {
-        
-        [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-}
 
 
 #pragma mark -
@@ -3202,100 +3160,6 @@ extern BOOL isFromNewCreatedCard;
 }
 
 
-#pragma mark -
-#pragma mark PFLogInViewControllerDelegate
-
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    __weak __typeof(&*self)weakSelf = self;
-    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
-        
-        PFUser *currentUser = [PFUser currentUser];
-        if (currentUser.username.length > 20) {  //这是一个经验值，因为Parse默认生成的账号大于20个字节，比如eOp1D7Rh0t5AHFxG4zpRVSQrI
-            
-            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:NSLocalizedString(@"DIALOG_CREATE_ACCOUNT_ALERT_MESSAGE",@"")];
-            [alertView textFieldAtIndex:0].text = @"";
-            [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-            BOOL isFromSetting = logInController.fromSetting;
-            [alertView bk_setCancelButtonWithTitle:NSLocalizedString(@"Keyboard_Done",@"") handler:^{
-                [weakSelf didClickCreateNewAccountAlertView:alertView fromSetting:isFromSetting];
-            }];
-            [alertView show];
-            
-        } else {
-            if (logInController.fromSetting) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-                [alertView show];
-            } else {
-                _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                [_amazonShareHelper shareAction];
-            }
-        }
-        
-    }];
-    
-}
-
-- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
-    // Do nothing, as the view controller dismisses itself
-}
-
-- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
-    
-    [iConsole info:@"%s:%@",__FUNCTION__,[error description]];
-    
-    if ([error code] == 101) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_INVALID_USERNAME_OR_PASSWORD",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-        
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_SOCIAL_MEDIA_LOG_IN_FAILURE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-    
-}
-
-#pragma mark -
-#pragma mark PFSignUpViewControllerDelegate
-
-- (BOOL)signUpViewController:(PFSignUpViewController *)signUpController shouldBeginSignUp:(NSDictionary *)info {
-    
-    NSString *userName = [info objectForKey:@"username"];
-    
-    if ([Common isValidBucketNameFromParseUserName:userName] == false) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-        return false;
-    } else {
-        return true;
-    }
-    
-}
-
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    
-    __weak __typeof(&*self)weakSelf = self;
-    
-    
-    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
-        
-        if (signUpController.fromSetting) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_ACCOUNT_CREATED_SUCCESS",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-            [alertView show];
-        } else {
-            
-            _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-            [_amazonShareHelper shareAction];
-        }
-        
-    }];
-    
-}
-
-- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
-    // Do nothing, as the view controller dismisses itself
-}
 
 
 #pragma mark -

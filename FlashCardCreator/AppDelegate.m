@@ -20,12 +20,6 @@
 #import "NSString+QueryString.h"
 #import "FileOperationHelper.h"
 
-#import <Parse/Parse.h>
-#import <ParseTwitterUtils/ParseTwitterUtils.h>
-#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-#import <FBSDKCoreKit/FBSDKApplicationDelegate.h>
-#import <ParseCrashReporting/ParseCrashReporting.h>
-
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
 
@@ -69,13 +63,6 @@
     
     self.rawLocaleText2SpeechArray = [self getRawLocaleText2SpeechArray];
     
-//    [ParseCrashReporting enable];
-    [Parse setApplicationId:@"LWnSvs6XkYqzdKd07QKowViu8axdnwsHJIpFb4gO"
-                  clientKey:@"bVGvephS1FlkuePH7Yv6GrsQmfvNDW75mKN67Ssk"];
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
-    [PFTwitterUtils initializeWithConsumerKey:@"uptcC5DVVmMPE25rwNDoVyG7q"
-                               consumerSecret:@"ciAdhaC2lF1hkZqnYmfoUowcBhnQN2rfcYuKoV7D9ImK8tWZzo"];
     [self setupAWS];
     
     self.isAllowToShowPackList = YES;
@@ -367,10 +354,7 @@
         
     }
     
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                          openURL:url
-                                                sourceApplication:sourceApplication
-                                                       annotation:annotation];
+    return YES;
 }
 
 
