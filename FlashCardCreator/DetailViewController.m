@@ -993,8 +993,6 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare) {
                     
-#ifdef FFC_WITHOUT_SUBSCRIPTION
-                    
                     //Dropbox only
                     if (![[DBSession sharedSession] isLinked]) {
                         [DBSession sharedSession].delegate = self;
@@ -1006,46 +1004,6 @@ enum popover_enum {
                         _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_dropboxShareHelper shareAction];
                     }
-#else
-                    
-                    if ([DBSession sharedSession].isLinked) {  //这个必须放在else if ([PFUser currentUser])
-                        
-                        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_dropboxShareHelper shareAction];
-                        
-                        
-                    } else if ([PFUser currentUser]) {
-                        
-                        [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
-                        
-                        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_amazonShareHelper shareAction];
-                        
-                        
-                    }  else {
-                        //则表明用AWS服务，且还没有创建user
-                        PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
-                        logInController.fields = (PFLogInFieldsUsernameAndPassword
-                                                  | PFLogInFieldsLogInButton
-                                                  | PFLogInFieldsPasswordForgotten
-                                                  | PFLogInFieldsFacebook
-                                                  | PFLogInFieldsTwitter
-                                                  | PFLogInFieldsSignUpButton
-                                                  | PFLogInFieldsDismissButton);
-                        
-                        logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
-                                                                   | PFSignUpFieldsEmail
-                                                                   | PFSignUpFieldsAdditional
-                                                                   | PFSignUpFieldsDismissButton
-                                                                   | PFSignUpFieldsSignUpButton);
-                        logInController.signUpController.delegate = APP_DELEGATE.masterViewController;
-                        
-                        logInController.delegate = APP_DELEGATE.masterViewController;
-                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
-                        
-                        APP_DELEGATE.isAllowToShowPackList = NO;
-                    }
-#endif
                     
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];

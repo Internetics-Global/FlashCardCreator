@@ -134,11 +134,7 @@
         offset = 1;
     }
     
-#ifdef FFC_WITHOUT_SUBSCRIPTION
     return 9 + offset;
-#else
-    return 10 + offset;
-#endif
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,7 +270,7 @@
         cell.accessoryView = baseView;
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
-#ifdef FFC_WITHOUT_SUBSCRIPTION
+
     } else if (indexPath.row == 8) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Dropbox_Logged_In",@"");
@@ -310,33 +306,7 @@
         
     }
     
-#else
-    } else if (indexPath.row == 8) {
-        
-        cell.textLabel.text = NSLocalizedString(@"Table_Item_Amazon_Or_Dropbox",@"");
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [storageProviderSwitch addTarget:self action:@selector(storageProviderAction) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = storageProviderSwitch;
-        BOOL b = [[DBSession sharedSession] isLinked];
-        [storageProviderSwitch setOn:b];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    } else if (indexPath.row == 9) {
-//        if ([PFUser currentUser]) {
-//            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_Out_Social_Network",@"");
-//        } else {
-//            cell.textLabel.text = NSLocalizedString(@"Table_Item_Log_In_Social_Network",@"");
-//        }
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (NSIndexPath == 9) {
-        
-        cell.textLabel.text = NSLocalizedString(@"Upgrade",nil);
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-    }
-#endif
+
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         cell.backgroundColor = [UIColor clearColor];

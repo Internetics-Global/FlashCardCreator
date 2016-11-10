@@ -3010,7 +3010,6 @@ extern BOOL isFromNewCreatedCard;
                 }
                 
                 if (_currentPack.isAllowShare && _currentCard) {
-#ifdef FFC_WITHOUT_SUBSCRIPTION
                     
                     //Dropbox only
                     if (![[DBSession sharedSession] isLinked]) {
@@ -3023,45 +3022,6 @@ extern BOOL isFromNewCreatedCard;
                         _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
                         [_dropboxShareHelper shareAction];
                     }
-#else
-                    
-                    if ([DBSession sharedSession].isLinked) { //这个必须放在else if ([PFUser currentUser])前
-                        
-                        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_dropboxShareHelper shareAction];
-                        
-                    } else if ([PFUser currentUser]) {
-                        
-                        [iConsole info:@"%s: [PFUser currentUser].username = %@",__FUNCTION__,[PFUser currentUser].username];
-                        
-                        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_amazonShareHelper shareAction];
-                        
-                    } else {
-                        
-                        PFLogInViewController *logInController = [[PFLogInViewController alloc] init];
-                        logInController.fields = (PFLogInFieldsUsernameAndPassword
-                                                  | PFLogInFieldsLogInButton
-                                                  | PFLogInFieldsPasswordForgotten
-                                                  | PFLogInFieldsFacebook
-                                                  | PFLogInFieldsTwitter
-                                                  | PFLogInFieldsSignUpButton
-                                                  | PFLogInFieldsDismissButton);
-                        
-                        
-                        logInController.signUpController.fields = (PFSignUpFieldsUsernameAndPassword
-                                                                   | PFSignUpFieldsEmail
-                                                                   | PFSignUpFieldsAdditional
-                                                                   | PFSignUpFieldsDismissButton
-                                                                   | PFSignUpFieldsSignUpButton);
-                        logInController.signUpController.delegate = self;
-                        
-                        logInController.delegate = self;
-                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:logInController animated:YES completion:nil];
-                        
-                        APP_DELEGATE.isAllowToShowPackList = NO;
-                    }
-#endif
                     
                     
                 } else {
