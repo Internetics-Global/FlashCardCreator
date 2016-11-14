@@ -64,6 +64,8 @@
 #import "MultimediaView.h"
 #import "MultimediaView+Extensions.h"
 
+#import "UIView+FindUIViewController.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -7815,11 +7817,42 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         __weak __typeof(&*self)weakSelf = self;
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            
-            [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
+        
+//        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//            
+//            [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
+//            
+//        }];
+        
+        
+        UIViewController *parentViewController = [self firstAvailableUIViewController];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"")  preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             
         }];
+        
+        UIAlertAction *youtubeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf imageSelectAlertViewClickedAtIndex: 1];
+        }];
+        
+        UIAlertAction *libaryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf imageSelectAlertViewClickedAtIndex: 2];
+        }];
+        
+        UIAlertAction *removeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf imageSelectAlertViewClickedAtIndex: 3];
+        }];
+        
+        [alertController addAction:youtubeAction];
+        [alertController addAction:libaryAction];
+        [alertController addAction:removeAction];
+        [alertController addAction:cancelAction];
+        
+        [parentViewController presentViewController:alertController animated:YES completion:nil];
+        
+
     }
 
     
@@ -7859,11 +7892,42 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         __weak __typeof(&*self)weakSelf = self;
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            
-            [weakSelf image2SelectAlertViewClickedAtIndex: buttonIndex];
+//        UIAlertView *alertView = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//            
+//            [weakSelf image2SelectAlertViewClickedAtIndex: buttonIndex];
+//            
+//        }];
+        
+        UIViewController *parentViewController = [self firstAvailableUIViewController];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"")  preferredStyle:UIAlertControllerStyleAlert];
+    
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             
         }];
+        
+        UIAlertAction *youtubeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf image2SelectAlertViewClickedAtIndex: 1];
+        }];
+        
+        UIAlertAction *libaryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf image2SelectAlertViewClickedAtIndex: 2];
+        }];
+        
+        UIAlertAction *removeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [weakSelf image2SelectAlertViewClickedAtIndex: 3];
+        }];
+
+        [alertController addAction:youtubeAction];
+        [alertController addAction:libaryAction];
+        [alertController addAction:removeAction];
+        [alertController addAction:cancelAction];
+        
+        [parentViewController presentViewController:alertController animated:YES completion:nil];
+
+        
+    
+        
     }
     
 }
