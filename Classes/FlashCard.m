@@ -66,6 +66,8 @@
 
 #import "UIView+FindUIViewController.h"
 
+#import "SIAlertView.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -7824,33 +7826,50 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //            
 //        }];
         
-        
-        UIViewController *parentViewController = [self firstAvailableUIViewController];
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"")  preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        //show dialog
+        {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") andMessage:NSLocalizedString(@"Title_Image_Copyright",@"")];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf imageSelectAlertViewClickedAtIndex: 1];
+                             
+                                  }];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf imageSelectAlertViewClickedAtIndex: 2];
+                                  }];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf imageSelectAlertViewClickedAtIndex: 3];
+                                   
+                                  }];
             
-        }];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alertView) {
+                                   
+                                  }];
+            alertView.titleColor = [UIColor blackColor];
+            alertView.viewBackgroundColor = [UIColor colorWithRed:249.0/255 green:249.0/255 blue:249.0/255 alpha:1];
+            alertView.messageColor = [UIColor blackColor];
+            alertView.buttonsListStyle = SIAlertViewButtonsListStyleNormal;
+            [alertView setButtonColor:[UIColor blackColor]];
+            [alertView setDefaultButtonImage:nil forState:UIControlStateNormal];
+            [alertView setCancelButtonImage:nil forState:UIControlStateNormal];
+            alertView.cancelButtonColor = [UIColor colorWithRed:20.0/255 green:119.0/255 blue:237.0/255 alpha:1];
+            alertView.buttonColor = [UIColor colorWithRed:20.0/255 green:119.0/255 blue:237.0/255 alpha:1];
+            alertView.cornerRadius = 10;
+            alertView.buttonFont = [UIFont boldSystemFontOfSize:12];
+            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+            
+            [alertView show];
+            
+        }
         
-        UIAlertAction *youtubeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf imageSelectAlertViewClickedAtIndex: 1];
-        }];
         
-        UIAlertAction *libaryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf imageSelectAlertViewClickedAtIndex: 2];
-        }];
-        
-        UIAlertAction *removeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf imageSelectAlertViewClickedAtIndex: 3];
-        }];
-        
-        [alertController addAction:youtubeAction];
-        [alertController addAction:libaryAction];
-        [alertController addAction:removeAction];
-        [alertController addAction:cancelAction];
-        
-        [parentViewController presentViewController:alertController animated:YES completion:nil];
         
 
     }
@@ -7898,35 +7917,49 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //            
 //        }];
         
-        UIViewController *parentViewController = [self firstAvailableUIViewController];
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"")  preferredStyle:UIAlertControllerStyleAlert];
-    
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        //show dialog
+        {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") andMessage:NSLocalizedString(@"Title_Image_Copyright",@"")];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf image2SelectAlertViewClickedAtIndex: 1];
+                                      
+                                  }];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf image2SelectAlertViewClickedAtIndex: 2];
+                                      
+                                  }];
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"")
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alertView) {
+                                      [weakSelf image2SelectAlertViewClickedAtIndex: 3];
+                                      
+                                  }];
             
-        }];
-        
-        UIAlertAction *youtubeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf image2SelectAlertViewClickedAtIndex: 1];
-        }];
-        
-        UIAlertAction *libaryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf image2SelectAlertViewClickedAtIndex: 2];
-        }];
-        
-        UIAlertAction *removeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [weakSelf image2SelectAlertViewClickedAtIndex: 3];
-        }];
-
-        [alertController addAction:youtubeAction];
-        [alertController addAction:libaryAction];
-        [alertController addAction:removeAction];
-        [alertController addAction:cancelAction];
-        
-        [parentViewController presentViewController:alertController animated:YES completion:nil];
-
-        
-    
+            [alertView addButtonWithTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alertView) {
+                                      
+                                  }];
+            alertView.titleColor = [UIColor blackColor];
+            alertView.viewBackgroundColor = [UIColor colorWithRed:249.0/255 green:249.0/255 blue:249.0/255 alpha:1];
+            alertView.messageColor = [UIColor blackColor];
+            alertView.buttonsListStyle = SIAlertViewButtonsListStyleNormal;
+            [alertView setButtonColor:[UIColor blackColor]];
+            [alertView setDefaultButtonImage:nil forState:UIControlStateNormal];
+            [alertView setCancelButtonImage:nil forState:UIControlStateNormal];
+            alertView.cancelButtonColor = [UIColor colorWithRed:20.0/255 green:119.0/255 blue:237.0/255 alpha:1];
+            alertView.buttonColor = [UIColor colorWithRed:20.0/255 green:119.0/255 blue:237.0/255 alpha:1];
+            alertView.cornerRadius = 10;
+            alertView.buttonFont = [UIFont boldSystemFontOfSize:12];
+            alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+            
+            [alertView show];
+            
+        }
         
     }
     

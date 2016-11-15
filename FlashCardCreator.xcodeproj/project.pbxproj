@@ -123,6 +123,9 @@
 		759AAB4A1DC2DB7A0060B153 /* UIView+FindUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */; };
 		759AAB4E1DC2E25A0060B153 /* AnimatedGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */; };
 		759C45231DB4934600789008 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 759C45221DB4934600789008 /* Photos.framework */; };
+		75AB610A1DDA9F21007AC629 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 75AB61051DDA9F21007AC629 /* SIAlertView.bundle */; };
+		75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61071DDA9F21007AC629 /* SIAlertView.m */; };
+		75AB610C1DDA9F21007AC629 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */; };
 		75F323EA1DBF08BE00B7B047 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */; };
 		75F323EB1DBF08BE00B7B047 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E91DBF08BE00B7B047 /* FLAnimatedImageView.m */; };
 		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
@@ -486,6 +489,11 @@
 		759AAB4B1DC2E25A0060B153 /* AnimatedGifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGifViewController.h; path = Classes/AnimatedGifViewController.h; sourceTree = "<group>"; };
 		759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGifViewController.m; path = Classes/AnimatedGifViewController.m; sourceTree = "<group>"; };
 		759C45221DB4934600789008 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		75AB61051DDA9F21007AC629 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
+		75AB61061DDA9F21007AC629 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
+		75AB61071DDA9F21007AC629 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
+		75AB61081DDA9F21007AC629 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
+		75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
 		75F323E61DBF08BE00B7B047 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		75F323E81DBF08BE00B7B047 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
@@ -1081,6 +1089,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				75AB61041DDA9F21007AC629 /* SIAlertView */,
 				75F323E51DBF08BE00B7B047 /* FLAnimatedImage */,
 				889C9B111BB4D74A00BE77AB /* DropboxSDK.framework */,
 				881DDCDD1BA908C3005EFE21 /* DACircularProgress */,
@@ -1381,6 +1390,19 @@
 				0072F176B099A33584355F02 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		75AB61041DDA9F21007AC629 /* SIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				75AB61051DDA9F21007AC629 /* SIAlertView.bundle */,
+				75AB61061DDA9F21007AC629 /* SIAlertView.h */,
+				75AB61071DDA9F21007AC629 /* SIAlertView.m */,
+				75AB61081DDA9F21007AC629 /* UIWindow+SIUtils.h */,
+				75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */,
+			);
+			name = SIAlertView;
+			path = Libraries/SIAlertView;
 			sourceTree = "<group>";
 		};
 		75F323E51DBF08BE00B7B047 /* FLAnimatedImage */ = {
@@ -1719,6 +1741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				885C3DC6192619FB0090F63C /* background2@2x.png in Resources */,
+				75AB610A1DDA9F21007AC629 /* SIAlertView.bundle in Resources */,
 				2DCE0B1616798E04007A8CAD /* InfoPlist.strings in Resources */,
 				88E38D441D40A22B005DABEC /* templateScreenshot17_answer.png in Resources */,
 				2DCE0B2B16798E04007A8CAD /* MasterViewController_iPhone.xib in Resources */,
@@ -1947,6 +1970,7 @@
 				2DCE0B2516798E04007A8CAD /* MasterViewController.m in Sources */,
 				2DCE0B2816798E04007A8CAD /* DetailViewController.m in Sources */,
 				88A175291797C3BD00FE778C /* SimpleDBHelper.m in Sources */,
+				75AB610C1DDA9F21007AC629 /* UIWindow+SIUtils.m in Sources */,
 				886075031932B167009C16EE /* DKCircleButton.m in Sources */,
 				2D5F3CF41679D29C009D2ADC /* SQLiteHelper.m in Sources */,
 				2D5F3CF91679D334009D2ADC /* FileOperationHelper.m in Sources */,
@@ -2036,6 +2060,7 @@
 				88F5CE6F19B40B4B00107075 /* PECropView.m in Sources */,
 				88D453231780DE3900500487 /* ColorPageControl.m in Sources */,
 				75F323EB1DBF08BE00B7B047 /* FLAnimatedImageView.m in Sources */,
+				75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */,
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
 				881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */,
 				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
