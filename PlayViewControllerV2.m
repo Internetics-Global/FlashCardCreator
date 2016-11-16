@@ -205,8 +205,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [APP_DELEGATE setupAudioWithRecord];
-    
     [self cleanupMotionSensor];
     
     if (_isAutoScroll == false) {
