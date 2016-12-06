@@ -159,6 +159,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         } else {
             [_videoButton setImage:[UIImage imageNamed:@"pause_button"] forState:UIControlStateNormal];
             [self.avPlayer.player play];
+            _videoButton.hidden = true;
+            _videoFullScreenButton.hidden = true;
         }
         
     }
@@ -177,6 +179,8 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     if (self.avPlayer) {
         [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
         [self.avPlayer.player pause];
+        _videoButton.hidden = false;
+        _videoFullScreenButton.hidden = false;
     }
 }
 
@@ -498,6 +502,9 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
     AVPlayerItem *p = [notification object];
     [p seekToTime:kCMTimeZero];
+    [self pauseVideo];
+    _videoButton.hidden = false;
+    _videoFullScreenButton.hidden = false;
 }
 
 
