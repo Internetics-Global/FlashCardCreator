@@ -80,9 +80,9 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
         if ([videoUrl checkResourceIsReachableAndReturnError:&err] == false) {
             NSLog(@"this videoUrl does not exit: %@",videoUrl);
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
-            
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"The requested video does not exsit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            
             return;
             
         }
