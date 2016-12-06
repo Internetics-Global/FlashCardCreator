@@ -127,7 +127,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) pauseGif {
     if (self.animtableImageView && [self.animtableImageView isAnimating]) {
-        [_gifButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+        [_gifButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
         [self.animtableImageView stopAnimating];
     }
 }
@@ -177,7 +177,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
 
 - (void) pauseVideo {
     if (self.avPlayer) {
-        [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+        [_videoButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
         [self.avPlayer.player pause];
         _videoButton.hidden = false;
         _videoFullScreenButton.hidden = false;
@@ -287,7 +287,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 _videoButton.frame = CGRectMake(CGRectGetWidth(_videoHolderView.frame) - 48, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
                 _videoButton.contentMode = UIViewContentModeCenter;
                 _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-                [_videoButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+                [_videoButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
                 [_videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 
                 [_videoButton addTarget:self action:@selector(videoButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -347,7 +347,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
                 _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 48, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
                 _gifButton.contentMode = UIViewContentModeCenter;
                 _gifButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
-                [_gifButton setImage:[UIImage imageNamed:@"play_button"] forState:UIControlStateNormal];
+                [_gifButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
                 [_gifButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 
                 [_gifButton addTarget:self action:@selector(gifButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
