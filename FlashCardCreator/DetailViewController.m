@@ -39,6 +39,8 @@
 #import "PurchaseViewController.h"
 #import "PackInfoView.h"
 
+#import "GoogleDriveHelper.h"
+
 enum template_color_enum {
     template_color_enum_blue = 0,
     template_color_enum_coffee = 1,
@@ -993,17 +995,33 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare) {
                     
-                    //Dropbox only
-                    if (![[DBSession sharedSession] isLinked]) {
-                        [DBSession sharedSession].delegate = self;
-                        //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
-                        //不需要在本类中设置dropboxLinkedNotification
-                        [[DBSession sharedSession] linkFromController:self];
-                        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
+                    if ([[DBSession sharedSession] isLinked]) {
+                        [self shareViaDropbox];
+                    } else if ([[GoogleDriveHelper sharedHelper] isLinked]) {
+                        [self shareViaGoogleDrive];
                     } else {
-                        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
-                        [_dropboxShareHelper shareAction];
+     
+                        __weak __typeof(&*self)weakSelf = self;
+                        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_STORAGE_SELECTION",@"") message:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_STORAGE_SELECTION_DROPBOX",@""), NSLocalizedString(@"DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                            
+                            if (buttonIndex == 0) {
+                                //cancel button
+                                
+                            } else if (buttonIndex == 1) {
+                                //dropbox
+                                [weakSelf shareViaDropbox];
+                                
+                            } else if (buttonIndex == 2) {
+                                //google drive
+                                [weakSelf shareViaGoogleDrive];
+                                
+                            }
+                            
+                        }];
+                        
                     }
+                    
+                    
                     
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_SHARE_FUNCTION_FORBIDDEN_BY_CREATOR",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
@@ -1392,6 +1410,27 @@ enum popover_enum {
     
     [self playButtonClicked];
     
+}
+
+#pragma mark – Others
+
+- (void) shareViaGoogleDrive {
+    
+}
+
+- (void) shareViaDropbox {
+    
+    //Dropbox only
+    if (![[DBSession sharedSession] isLinked]) {
+        [DBSession sharedSession].delegate = self;
+        //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
+        //不需要在本类中设置dropboxLinkedNotification
+        [[DBSession sharedSession] linkFromController:self];
+        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
+    } else {
+        _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_dropboxShareHelper shareAction];
+    }
 }
 
 

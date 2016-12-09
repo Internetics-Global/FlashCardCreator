@@ -17,9 +17,6 @@
 
 #import <Social/Social.h>
 
-#import <DropboxSDK/DropboxSDK.h>
-
-
 #import "Common.h"
 
 #import "PlayOptionViewController.h"
@@ -30,8 +27,9 @@
 #import "MutipleTargetHelper.h"
 
 #import "SelectText2SpeechLanguage.h"
+#import "StorageOptionViewController.h"
 
-@interface MoreInfoTableViewController () <DBSessionDelegate, DBNetworkRequestDelegate,UIActionSheetDelegate>
+@interface MoreInfoTableViewController () <UIActionSheetDelegate>
 
 @end
 
@@ -75,7 +73,7 @@
     fiveTap.numberOfTapsRequired = 5;
     [self.view addGestureRecognizer:fiveTap];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
+    
     
 }
 
@@ -273,7 +271,7 @@
 
     } else if (indexPath.row == 8) {
         
-        cell.textLabel.text = NSLocalizedString(@"Table_Item_Dropbox_Logged_In",@"");
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Storage",@"");
         
         if ([MutipleTargetHelper isFullVersion]) {
             cell.textLabel.textColor = [UIColor whiteColor];
@@ -283,22 +281,9 @@
             cell.textLabel.alpha = 0.2;
         }
         
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        UISwitch *storageProviderSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [storageProviderSwitch addTarget:self action:@selector(dropboxLogInOutAction:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = storageProviderSwitch;
-        BOOL b = [[DBSession sharedSession] isLinked];
-        [storageProviderSwitch setOn:b];
-        
-        if ([MutipleTargetHelper isFullVersion]) {
-            storageProviderSwitch.tintColor = [UIColor whiteColor];
-            storageProviderSwitch.thumbTintColor = [UIColor whiteColor];
-        } else {
-            storageProviderSwitch.tintColor = [UIColor lightGrayColor];
-            storageProviderSwitch.thumbTintColor = [UIColor lightGrayColor];
-        }
-        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        
     } else if (indexPath.row == 9) {
         
         cell.textLabel.text = NSLocalizedString(@"Upgrade",nil);
@@ -442,6 +427,12 @@
             [self dismissViewControllerAnimated:false completion:nil];
         }
         [MutipleTargetHelper showPurchaseView];
+    } else if (indexPath.row == 8) {
+        if ([MutipleTargetHelper isFullVersion]) {
+            StorageOptionViewController *controller = [[StorageOptionViewController alloc] initWithNibName:nil bundle:nil];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+        
     } else if (indexPath.row == 0) {
         PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
@@ -473,66 +464,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/**
- *  仅适用于FFC_WITHOUT_SUBSCRIPTION
- */
-- (void) dropboxLogInOutAction:(UISwitch *) myswitch {
-    
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        
-        myswitch.on = false;
-        
-        if (isUserInterfaceIdiomPhone) {
-            
-            [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-            
-        } else {
-            [self dismissViewControllerAnimated:true completion:^{
-                [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-            }];
-        }
-        
-        
-        return;
-    }
-    
-    if (![[DBSession sharedSession] isLinked]) {
-        [DBSession sharedSession].delegate = self;
-        [[DBSession sharedSession] linkFromController:self];
-        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
-    } else {
-        
-        [[DBSession sharedSession] unlinkAll];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-}
-
-/**
- *  仅当FFC_WITHOUT_SUBSCRIPTION ＝ NO
- *  因为Dropbox服务需要登陆，而AWS不需要，所以只要是[Common isDropboxAsStorage] ＝ YES，则表明使用Dropbox，否则用AWS
- */
-- (void) storageProviderAction {
-
-    if ([DBSession sharedSession].isLinked == false) {
-        [DBSession sharedSession].delegate = self;
-        [[DBSession sharedSession] linkFromController:self];
-    } else {
-        
-        [[DBSession sharedSession] unlinkAll];
-        
-        [self.tableView reloadData];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_USE_AMAZON_AS_STORAGE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-        [alertView show];
-    }
-    
-    
-    
-
-    
-}
 
 - (void) voiceSwitchAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isMaleVoice"];
@@ -548,52 +479,6 @@
 }
 
 
-#pragma mark -
-#pragma mark DBSessionDelegate methods
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-}
-
-
-#pragma mark -
-#pragma mark DBNetworkRequestDelegate methods
-
-static int outstandingRequests;
-
-- (void)networkRequestStarted {
-    outstandingRequests++;
-    if (outstandingRequests == 1) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    }
-}
-
-- (void)networkRequestStopped {
-    outstandingRequests--;
-    if (outstandingRequests == 0) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }
-}
-
-
-#pragma mark -
-#pragma mark - DROPBOX_LINKED_NOTIFICATION
-
-- (void) dropboxLinkedNotification:(id)notification
-{
-    [iConsole info:@"%s",__FUNCTION__];
-    NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
-    
-    if(![linkedNum boolValue])
-    {
-        
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-    } else
-    {
-    }
-    
-    [self.tableView reloadData];
-}
 
 
 

@@ -108,6 +108,10 @@
 
 "DIALOG_ERROR_DROPBOX_QUOTA_FULL" = "Dropbox was unable to complete this action because of a storage quota limit";
 
+"DIALOG_STORAGE_SELECTION"       = "Storage Selection";
+"DIALOG_STORAGE_SELECTION_DROPBOX"       = "Dropbox";
+"DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE"       = "Google Drive";
+
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
 "NavigationBarItem_Edit"    = " Edit ";
@@ -117,7 +121,6 @@
 "NavigationBarItem_Delete"    = "Delete";
 "NavigationBarItem_Change"    = "Change Image";
 "NavigationBarItem_Done"    = "Done";
-"NavigationBarItem_Share"   = "Share the pack";
 "NavigationBarItem_More"    = "More";
 "NavigationBarItem_Back"    = " Back ";
 "NavigationBarItem_Play"    = "Play";
@@ -248,8 +251,9 @@
 "Table_Item_Speech_Language_Select" = "Select Speech Language";
 "Table_Item_Personal_Recording" = "Personal Recording";
 "Table_Item_Count_Down" = "Count Down";
-"Table_Item_Amazon_Or_Dropbox" = "Use Dropbox Storage";
-"Table_Item_Dropbox_Logged_In" = "Dropbox storage";
+"Table_Item_Dropbox" = "Use Dropbox";
+"Table_Item_Google_Drive" = "Use Google Drive";
+"Table_Item_Storage" = "Storage";
 "Table_Item_Log_In_Social_Network" = "Sign In";
 "Table_Item_Log_Out_Social_Network" = "Sign Out";
 

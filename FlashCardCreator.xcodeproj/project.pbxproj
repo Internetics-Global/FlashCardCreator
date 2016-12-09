@@ -117,6 +117,8 @@
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
+		751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751234671DFA2EBF001F0065 /* StorageOptionViewController.m */; };
+		7512346C1DFA306B001F0065 /* GoogleDriveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */; };
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
 		7538848B1DB9916B00AF106B /* MultimediaView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */; };
 		7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538848E1DB9A9B500AF106B /* AVKit.framework */; };
@@ -479,6 +481,10 @@
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
 		36F3AE0A77B98165D28AD649 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		751234661DFA2EBF001F0065 /* StorageOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageOptionViewController.h; sourceTree = "<group>"; };
+		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
+		7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveHelper.h; sourceTree = "<group>"; };
+		7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveHelper.m; sourceTree = "<group>"; };
 		753884861DB89F6800AF106B /* MultimediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultimediaView.h; path = Classes/MultimediaView.h; sourceTree = "<group>"; };
 		753884871DB89F6800AF106B /* MultimediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultimediaView.m; path = Classes/MultimediaView.m; sourceTree = "<group>"; };
 		753884891DB9916B00AF106B /* MultimediaView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MultimediaView+Extensions.h"; path = "Classes/MultimediaView+Extensions.h"; sourceTree = "<group>"; };
@@ -1116,6 +1122,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				751234691DFA303C001F0065 /* GoogleDrive */,
 				884057301CDC59B50092CAB4 /* IAP */,
 				889C9B131BB4F11F00BE77AB /* Dropbox */,
 				887FF2B01B13F76800D998FA /* AWS */,
@@ -1147,6 +1154,8 @@
 				886726301C1164CF007E86CE /* PlayOptionViewController.m */,
 				2A417A651D5C583500180A52 /* SelectText2SpeechLanguage.h */,
 				2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */,
+				751234661DFA2EBF001F0065 /* StorageOptionViewController.h */,
+				751234671DFA2EBF001F0065 /* StorageOptionViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1390,6 +1399,15 @@
 				0072F176B099A33584355F02 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		751234691DFA303C001F0065 /* GoogleDrive */ = {
+			isa = PBXGroup;
+			children = (
+				7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */,
+				7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */,
+			);
+			name = GoogleDrive;
 			sourceTree = "<group>";
 		};
 		75AB61041DDA9F21007AC629 /* SIAlertView */ = {
@@ -1964,6 +1982,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88BD61591977727400834D72 /* LineLayout.m in Sources */,
+				7512346C1DFA306B001F0065 /* GoogleDriveHelper.m in Sources */,
 				2DCE0B1816798E04007A8CAD /* main.m in Sources */,
 				88BD615F19777D2A00834D72 /* PackListFirstCell.m in Sources */,
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
@@ -2019,6 +2038,7 @@
 				2D5C17E716D1A57800E1E785 /* MBProgressHUD.m in Sources */,
 				2D5C17F416D1A59300E1E785 /* ioapi.c in Sources */,
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
+				751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */,
 				2D5C17F616D1A59300E1E785 /* unzip.c in Sources */,
 				88BD615C1977732200834D72 /* PackListCell.m in Sources */,
 				886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */,
