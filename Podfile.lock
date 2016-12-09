@@ -1,4 +1,5 @@
 PODS:
+  - AppAuth (0.4.2)
   - AWSCognito (2.2.5):
     - AWSCore (= 2.2.5)
   - AWSCore (2.2.5)
@@ -27,6 +28,19 @@ PODS:
   - Bolts/AppLinks (1.2.1):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.1)
+  - GoogleAPIClientForREST/Core (1.1.1):
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleAPIClientForREST/Drive (1.1.1):
+    - GoogleAPIClientForREST/Core
+    - GTMSessionFetcher (>= 1.1.7)
+  - GTMAppAuth (0.1.0):
+    - AppAuth (~> 0.4.2)
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.7):
+    - GTMSessionFetcher/Full (= 1.1.7)
+  - GTMSessionFetcher/Core (1.1.7)
+  - GTMSessionFetcher/Full (1.1.7):
+    - GTMSessionFetcher/Core (= 1.1.7)
   - Reachability (3.2)
   - RMStore (0.7.1):
     - RMStore/Core (= 0.7.1)
@@ -43,21 +57,29 @@ DEPENDENCIES:
   - AWSSimpleDB
   - BlocksKit
   - Bolts
+  - GoogleAPIClientForREST/Drive
+  - GTMAppAuth
   - Reachability
   - RMStore (~> 0.7)
   - RNCryptor
   - SDWebImage
 
 SPEC CHECKSUMS:
+  AppAuth: 292151ac22065106b0bee6b80e3be29c95bda0fc
   AWSCognito: df121e01df20a03de311a9cf708cbc25efdb3248
   AWSCore: 101929899cea9febd4ea4fc85774a63ff17cf809
   AWSS3: 78a5be4417c5fe1d9a1c301b05bbfbb6719d4f18
   AWSSimpleDB: 89a6f82d45d1858030b5ee6ac7f4a801403df656
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
+  GoogleAPIClientForREST: f272e35f7fe9f80ab232756c798adc32245ece8c
+  GTMAppAuth: 3f57495c702c78d68fa5cf1bced8519eec496963
+  GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: a3dfab2b27739a1e2eeb5ca7d0b8ccdd5ee74742
+
+COCOAPODS: 1.1.1

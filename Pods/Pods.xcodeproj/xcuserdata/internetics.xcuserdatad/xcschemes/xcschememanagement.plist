@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AppAuth.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>BlocksKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,7 +39,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>GTMAppAuth.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GTMSessionFetcher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleAPIClientForREST.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-FlashCardCreator.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,57 +82,77 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37DA8823B6E71A919A969C9729B2EC00</key>
+		<key>0AC55E754182E1FCF070AC7F74379523</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3F83E831561656C5DFD4A0562272CDB6</key>
+		<key>0E9F6724C731DB563F6A7FC5A489C702</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D1D316CB9BD9BBE4169B95795828500</key>
+		<key>257C01CC9996AEC9940B7B729132EC7F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>748C8B3AB8BC06217C07552A9EF3229D</key>
+		<key>2DC549F9D200E645025017E1C1C9C966</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>84763FD0592C947C832BC210FBC728D4</key>
+		<key>4E422AF077D02F5C760954685C5DE0B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8A6BC0E1B6F7A5370F8B9BD2CDF239B</key>
+		<key>8F88AA548990C1705685B56E4CEA6C14</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CA690FC5CE79D76FFF44DF653528F36E</key>
+		<key>B909E6E3D7FFED0A868B8558AC1F6AFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA1A7295DF2A99609DA0EEBF5E83233D</key>
+		<key>B932C198B2811DE34F4FE4DD2668AC2C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E5527822BEF716E3A2792DF1931EC24D</key>
+		<key>BEF4CE81B806DD31D97F7B86DB2F9149</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F0CB79A997C0BA2B4B9ECB2640E37099</key>
+		<key>CDB552D55EF2208F8F2167BB4DB41DF5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F21523DE0EE1E35B265242490D97EE4C</key>
+		<key>D7B26F0A432C2A5E3E2EC8F91A096CA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E29B8868BA38043AE72DA3FBC7AD033D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ED5CB0E3C6971B155E1BCF02CB2B7653</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFA5B643BF9EE1C19E35948F1ADFF8FD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC62C786DC727C411D7F0DDB948E1C03</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14E2DD92057A7908356F77CE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3E2953749405A11C6448CF /* libPods.a */; };
 		2A417A671D5C583500180A52 /* SelectText2SpeechLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */; };
 		2D1A051816EDDF1D00527311 /* card_background_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051316EDDF1D00527311 /* card_background_red.png */; };
 		2D1A051916EDDF1D00527311 /* card_background_purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A051416EDDF1D00527311 /* card_background_purple.png */; };
@@ -117,6 +116,7 @@
 		2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDA1FA1683100E0074AC9E /* ZipFileDownloadHelper.m */; };
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
+		51BF5B2E990D0D495A4B1394 /* libPods-FlashCardCreator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */; };
 		751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751234671DFA2EBF001F0065 /* StorageOptionViewController.m */; };
 		7512346C1DFA306B001F0065 /* GoogleDriveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */; };
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
@@ -310,7 +310,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0072F176B099A33584355F02 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2A417A651D5C583500180A52 /* SelectText2SpeechLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectText2SpeechLanguage.h; path = Classes/SelectText2SpeechLanguage.h; sourceTree = "<group>"; };
 		2A417A661D5C583500180A52 /* SelectText2SpeechLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectText2SpeechLanguage.m; path = Classes/SelectText2SpeechLanguage.m; sourceTree = "<group>"; };
 		2D1A051316EDDF1D00527311 /* card_background_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = card_background_red.png; path = Resources/card_background_red.png; sourceTree = "<group>"; };
@@ -480,7 +479,7 @@
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
-		36F3AE0A77B98165D28AD649 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.release.xcconfig"; sourceTree = "<group>"; };
 		751234661DFA2EBF001F0065 /* StorageOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageOptionViewController.h; sourceTree = "<group>"; };
 		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
 		7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveHelper.h; sourceTree = "<group>"; };
@@ -737,7 +736,8 @@
 		88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question_iPad.png; path = Resources/templateScreenshot5_question_iPad.png; sourceTree = "<group>"; };
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SQLiteVersion.plist; sourceTree = "<group>"; };
-		9B3E2953749405A11C6448CF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlashCardCreator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC52A6920CDE851682E8BBE5 /* Pods-FlashCardCreator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -774,13 +774,22 @@
 				2DCE0B0E16798E04007A8CAD /* Foundation.framework in Frameworks */,
 				889C9B121BB4D74A00BE77AB /* DropboxSDK.framework in Frameworks */,
 				2DCE0B1016798E04007A8CAD /* CoreGraphics.framework in Frameworks */,
-				14E2DD92057A7908356F77CE /* libPods.a in Frameworks */,
+				51BF5B2E990D0D495A4B1394 /* libPods-FlashCardCreator.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26D93B67BA19A2A11919641B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CC52A6920CDE851682E8BBE5 /* Pods-FlashCardCreator.debug.xcconfig */,
+				54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2D09AF1316A5046900B1C0C9 /* CreatePack */ = {
 			isa = PBXGroup;
 			children = (
@@ -1309,7 +1318,7 @@
 				2DCE0B0816798E04007A8CAD /* Products */,
 				2D5F3D081679EFA8009D2ADC /* Resources */,
 				884057231CDC3F610092CAB4 /* FlashCardCreator copy-Info.plist */,
-				58CE5A2228E8CC9F1421FFFC /* Pods */,
+				26D93B67BA19A2A11919641B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1352,7 +1361,7 @@
 				2DCE0B0F16798E04007A8CAD /* CoreGraphics.framework */,
 				2D7A8CE61691100F002EDF77 /* libz.dylib */,
 				2D5F3CF51679D2B0009D2ADC /* libsqlite3.dylib */,
-				9B3E2953749405A11C6448CF /* libPods.a */,
+				AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1390,15 +1399,6 @@
 				2D5C17C216D1A54200E1E785 /* OpenUDID.m */,
 			);
 			name = OpenUDID;
-			sourceTree = "<group>";
-		};
-		58CE5A2228E8CC9F1421FFFC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				36F3AE0A77B98165D28AD649 /* Pods.debug.xcconfig */,
-				0072F176B099A33584355F02 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		751234691DFA303C001F0065 /* GoogleDrive */ = {
@@ -1700,13 +1700,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2DCE0B3716798E04007A8CAD /* Build configuration list for PBXNativeTarget "FlashCardCreator" */;
 			buildPhases = (
-				B2DD8C99389C2B86AD2968AD /* Check Pods Manifest.lock */,
+				7243F0F31787993F12AF13EF /* [CP] Check Pods Manifest.lock */,
 				2DCE0B0316798E04007A8CAD /* Sources */,
 				2DCE0B0416798E04007A8CAD /* Frameworks */,
 				2DCE0B0516798E04007A8CAD /* Resources */,
 				889DD7BD184D321900D99C56 /* ShellScript */,
-				6487BC18E1F7C7DE557F2E65 /* Embed Pods Frameworks */,
-				632D632195825C8197F5D92E /* Copy Pods Resources */,
+				79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */,
+				4CCDAFD88BDBA7BC47D23CAF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1916,34 +1916,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		632D632195825C8197F5D92E /* Copy Pods Resources */ = {
+		4CCDAFD88BDBA7BC47D23CAF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6487BC18E1F7C7DE557F2E65 /* Embed Pods Frameworks */ = {
+		7243F0F31787993F12AF13EF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		889DD7BD184D321900D99C56 /* ShellScript */ = {
@@ -1958,21 +1973,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION == Debug ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n#increment the build number (ie 115 to 116)\nbuildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nexit 2\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\nfi";
-		};
-		B2DD8C99389C2B86AD2968AD /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2214,7 +2214,7 @@
 		};
 		2DCE0B3816798E04007A8CAD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36F3AE0A77B98165D28AD649 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = CC52A6920CDE851682E8BBE5 /* Pods-FlashCardCreator.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2260,7 +2260,7 @@
 		};
 		2DCE0B3916798E04007A8CAD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0072F176B099A33584355F02 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

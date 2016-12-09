@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2B984F41B2C304186B069285'
+               BlueprintIdentifier = 'CDB552D55EF2208F8F2167BB4DB41DF5'
                BlueprintName = 'RNCryptor'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libRNCryptor.a'>
