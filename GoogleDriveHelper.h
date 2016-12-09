@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^AuthSuccessCompletion)();
+
 @interface GoogleDriveHelper : NSObject
 
 + (id)sharedHelper;
 
 - (BOOL)isLinked; 
 - (void)unlinkAll;
+
+- (void)authWithSuccessCompletion:(nonnull AuthSuccessCompletion) authSuccessCompletion;
 
 @end

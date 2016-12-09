@@ -484,6 +484,7 @@
 		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
 		7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveHelper.h; sourceTree = "<group>"; };
 		7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveHelper.m; sourceTree = "<group>"; };
+		7512346D1DFA4833001F0065 /* GTMAppAuth Drive Example iOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "GTMAppAuth Drive Example iOS.entitlements"; sourceTree = "<group>"; };
 		753884861DB89F6800AF106B /* MultimediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultimediaView.h; path = Classes/MultimediaView.h; sourceTree = "<group>"; };
 		753884871DB89F6800AF106B /* MultimediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultimediaView.m; path = Classes/MultimediaView.m; sourceTree = "<group>"; };
 		753884891DB9916B00AF106B /* MultimediaView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MultimediaView+Extensions.h"; path = "Classes/MultimediaView+Extensions.h"; sourceTree = "<group>"; };
@@ -1404,6 +1405,7 @@
 		751234691DFA303C001F0065 /* GoogleDrive */ = {
 			isa = PBXGroup;
 			children = (
+				7512346D1DFA4833001F0065 /* GTMAppAuth Drive Example iOS.entitlements */,
 				7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */,
 				7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */,
 			);

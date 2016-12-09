@@ -36,7 +36,18 @@
     
     self.title = @"Storage";
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dropboxLinkedNotification:) name:DROPBOX_LINKED_NOTIFICATION object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,7 +86,7 @@
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Google_Drive",@"");
         
         UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [mySwitch addTarget:self action:@selector(dropboxLogInOutAction:) forControlEvents:UIControlEventValueChanged];
+        [mySwitch addTarget:self action:@selector(googeDriveLogInOutAction:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = mySwitch;
         BOOL b = [[GoogleDriveHelper sharedHelper] isLinked];
         [mySwitch setOn:b];
@@ -104,19 +115,64 @@
 
 }
 
+- (void) googeDriveLogInOutAction :(UISwitch *) myswitch {
+    
+    if (![[GoogleDriveHelper sharedHelper] isLinked]) {
+        
+        if (isUserInterfaceIdiomPhone) {
+            
+            [self.navigationController popViewControllerAnimated:true];
+            
+            double delayInSeconds = 0.4;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                
+                [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    });
+                }];
+            });
+            
+        } else {
+            [self dismissViewControllerAnimated:true completion:^{
+                [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    });
+                }];
+            }];
+        }
+        
+        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
+    } else {
+        
+        [[GoogleDriveHelper sharedHelper] unlinkAll];
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
 
 - (void) dropboxLogInOutAction:(UISwitch *) myswitch {
     
     
     if (![[DBSession sharedSession] isLinked]) {
-        [DBSession sharedSession].delegate = self;
-        [[DBSession sharedSession] linkFromController:self];
+        
+        __weak __typeof(&*self)weakSelf = self;
+        
+        [DBSession sharedSession].delegate = weakSelf;
+        [[DBSession sharedSession] linkFromController:weakSelf];
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
+        
+        
     } else {
         
         [[DBSession sharedSession] unlinkAll];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DROPBOX_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -139,13 +195,13 @@
     [iConsole info:@"%s",__FUNCTION__];
     NSNumber *linkedNum = [[notification userInfo] objectForKey:@"linked"];
     
-    if(![linkedNum boolValue])
-    {
-        
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-    } else
-    {
-    }
+//    if(![linkedNum boolValue])
+//    {
+//        
+//        [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+//    } else
+//    {
+//    }
     
     [_alertTable reloadData];
 }

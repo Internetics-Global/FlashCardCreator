@@ -27,6 +27,8 @@
 
 #import "MutipleTargetHelper.h"
 
+#import "AppAuth.h"
+
 
 @implementation AppDelegate
 
@@ -331,6 +333,16 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    // Sends the URL to the current authorization flow (if any) which will process it if it relates to
+    // an authorization response.
+    if ([_currentGoogleDriveAuthorizationFlow resumeAuthorizationFlowWithURL:url]) {
+        _currentGoogleDriveAuthorizationFlow = nil;
+        return YES;
+    }
+    
+    
+    
     if (_isDownloadingSamplePack) {
         _isDownloadingSamplePack = FALSE;
         return NO;

@@ -3280,6 +3280,24 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) shareViaGoogleDrive {
     
+    if ([[GoogleDriveHelper sharedHelper] isLinked]) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+    } else {
+        
+        [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alertView show];
+            });
+            
+        }];
+        
+    }
+    
 }
 
 - (void) shareViaDropbox {

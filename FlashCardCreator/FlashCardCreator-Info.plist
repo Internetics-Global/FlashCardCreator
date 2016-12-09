@@ -29,6 +29,14 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1088270400357-c34d0lm948p1d9vkm5e89g8noum25n70</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>com.flipflash.FlashCardCreator</string>
 			<key>CFBundleURLSchemes</key>
@@ -52,7 +60,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10502</string>
+	<string>10516</string>
 	<key>FacebookAppID</key>
 	<string>905454096190039</string>
 	<key>LSApplicationQueriesSchemes</key>
