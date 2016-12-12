@@ -9,7 +9,7 @@
 #import "StorageOptionViewController.h"
 #import "Common.h"
 #import <DropboxSDK/DropboxSDK.h>
-#import "GoogleDriveHelper.h"
+#import "GoogleDriveSession.h"
 #import "AppDelegate.h"
 
 @interface StorageOptionViewController () <UITableViewDelegate, UITableViewDataSource,DBSessionDelegate>{
@@ -88,7 +88,7 @@
         UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [mySwitch addTarget:self action:@selector(googeDriveLogInOutAction:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = mySwitch;
-        BOOL b = [[GoogleDriveHelper sharedHelper] isLinked];
+        BOOL b = [[GoogleDriveSession sharedSession] isLinked];
         [mySwitch setOn:b];
 
     }
@@ -117,17 +117,22 @@
 
 - (void) googeDriveLogInOutAction :(UISwitch *) myswitch {
     
-    if (![[GoogleDriveHelper sharedHelper] isLinked]) {
+    [[DBSession sharedSession] unlinkAll];
+    
+    if (![[GoogleDriveSession sharedSession] isLinked]) {
+        
+        APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
+        APP_DELEGATE.isAllowToShowPackList = NO;
+        
+        __weak __typeof(&*self)weakSelf = self;
         
         if (isUserInterfaceIdiomPhone) {
-            
-            [self.navigationController popViewControllerAnimated:true];
             
             double delayInSeconds = 0.4;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 
-                [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+                [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
                     dispatch_async(dispatch_get_main_queue(), ^(void) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alertView show];
@@ -137,7 +142,7 @@
             
         } else {
             [self dismissViewControllerAnimated:true completion:^{
-                [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+                [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
                     dispatch_async(dispatch_get_main_queue(), ^(void) {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alertView show];
@@ -149,7 +154,7 @@
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
     } else {
         
-        [[GoogleDriveHelper sharedHelper] unlinkAll];
+        [[GoogleDriveSession sharedSession] unlinkAll];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
@@ -158,6 +163,7 @@
 
 - (void) dropboxLogInOutAction:(UISwitch *) myswitch {
     
+    [[GoogleDriveSession sharedSession] unlinkAll];
     
     if (![[DBSession sharedSession] isLinked]) {
         

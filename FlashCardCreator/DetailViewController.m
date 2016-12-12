@@ -39,7 +39,7 @@
 #import "PurchaseViewController.h"
 #import "PackInfoView.h"
 
-#import "GoogleDriveHelper.h"
+#import "GoogleDriveSession.h"
 
 enum template_color_enum {
     template_color_enum_blue = 0,
@@ -997,7 +997,7 @@ enum popover_enum {
                     
                     if ([[DBSession sharedSession] isLinked]) {
                         [self shareViaDropbox];
-                    } else if ([[GoogleDriveHelper sharedHelper] isLinked]) {
+                    } else if ([[GoogleDriveSession sharedSession] isLinked]) {
                         [self shareViaGoogleDrive];
                     } else {
      
@@ -1416,14 +1416,14 @@ enum popover_enum {
 
 - (void) shareViaGoogleDrive {
     
-    if ([[GoogleDriveHelper sharedHelper] isLinked]) {
+    if ([[GoogleDriveSession sharedSession] isLinked]) {
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         
     } else {
         
-        [[GoogleDriveHelper sharedHelper] authWithSuccessCompletion:^{
+        [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
             
             dispatch_async(dispatch_get_main_queue(), ^(void) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
