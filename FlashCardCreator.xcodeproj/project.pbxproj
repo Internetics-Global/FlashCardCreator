@@ -118,10 +118,13 @@
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
 		51BF5B2E990D0D495A4B1394 /* libPods-FlashCardCreator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */; };
 		751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751234671DFA2EBF001F0065 /* StorageOptionViewController.m */; };
-		7512346C1DFA306B001F0065 /* GoogleDriveHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */; };
+		7512346C1DFA306B001F0065 /* GoogleDriveShareKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveShareKitHelper.m */; };
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
 		7538848B1DB9916B00AF106B /* MultimediaView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */; };
 		7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7538848E1DB9A9B500AF106B /* AVKit.framework */; };
+		7552D6001DFE3C3300BA08C1 /* GoogleDriveMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552D5FF1DFE3C3300BA08C1 /* GoogleDriveMetadata.m */; };
+		757F56941DFE339600C8B498 /* GoogleDriveSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 757F56931DFE339600C8B498 /* GoogleDriveSession.m */; };
+		757F56971DFE37BE00C8B498 /* GoogleDriveRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 757F56961DFE37BE00C8B498 /* GoogleDriveRestClient.m */; };
 		759AAB4A1DC2DB7A0060B153 /* UIView+FindUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */; };
 		759AAB4E1DC2E25A0060B153 /* AnimatedGifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB4C1DC2E25A0060B153 /* AnimatedGifViewController.m */; };
 		759C45231DB4934600789008 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 759C45221DB4934600789008 /* Photos.framework */; };
@@ -482,14 +485,20 @@
 		54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.release.xcconfig"; sourceTree = "<group>"; };
 		751234661DFA2EBF001F0065 /* StorageOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageOptionViewController.h; sourceTree = "<group>"; };
 		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
-		7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveHelper.h; sourceTree = "<group>"; };
-		7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveHelper.m; sourceTree = "<group>"; };
+		7512346A1DFA306B001F0065 /* GoogleDriveShareKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveShareKitHelper.h; sourceTree = "<group>"; };
+		7512346B1DFA306B001F0065 /* GoogleDriveShareKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveShareKitHelper.m; sourceTree = "<group>"; };
 		7512346D1DFA4833001F0065 /* GTMAppAuth Drive Example iOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "GTMAppAuth Drive Example iOS.entitlements"; sourceTree = "<group>"; };
 		753884861DB89F6800AF106B /* MultimediaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultimediaView.h; path = Classes/MultimediaView.h; sourceTree = "<group>"; };
 		753884871DB89F6800AF106B /* MultimediaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultimediaView.m; path = Classes/MultimediaView.m; sourceTree = "<group>"; };
 		753884891DB9916B00AF106B /* MultimediaView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MultimediaView+Extensions.h"; path = "Classes/MultimediaView+Extensions.h"; sourceTree = "<group>"; };
 		7538848A1DB9916B00AF106B /* MultimediaView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MultimediaView+Extensions.m"; path = "Classes/MultimediaView+Extensions.m"; sourceTree = "<group>"; };
 		7538848E1DB9A9B500AF106B /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		7552D5FE1DFE3C3300BA08C1 /* GoogleDriveMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveMetadata.h; sourceTree = "<group>"; };
+		7552D5FF1DFE3C3300BA08C1 /* GoogleDriveMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveMetadata.m; sourceTree = "<group>"; };
+		757F56921DFE339600C8B498 /* GoogleDriveSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveSession.h; sourceTree = "<group>"; };
+		757F56931DFE339600C8B498 /* GoogleDriveSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveSession.m; sourceTree = "<group>"; };
+		757F56951DFE37BE00C8B498 /* GoogleDriveRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveRestClient.h; sourceTree = "<group>"; };
+		757F56961DFE37BE00C8B498 /* GoogleDriveRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveRestClient.m; sourceTree = "<group>"; };
 		759AAB481DC2DB7A0060B153 /* UIView+FindUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+FindUIViewController.h"; path = "Classes/UIView+FindUIViewController.h"; sourceTree = "<group>"; };
 		759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+FindUIViewController.m"; path = "Classes/UIView+FindUIViewController.m"; sourceTree = "<group>"; };
 		759AAB4B1DC2E25A0060B153 /* AnimatedGifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGifViewController.h; path = Classes/AnimatedGifViewController.h; sourceTree = "<group>"; };
@@ -1406,8 +1415,14 @@
 			isa = PBXGroup;
 			children = (
 				7512346D1DFA4833001F0065 /* GTMAppAuth Drive Example iOS.entitlements */,
-				7512346A1DFA306B001F0065 /* GoogleDriveHelper.h */,
-				7512346B1DFA306B001F0065 /* GoogleDriveHelper.m */,
+				7512346A1DFA306B001F0065 /* GoogleDriveShareKitHelper.h */,
+				7512346B1DFA306B001F0065 /* GoogleDriveShareKitHelper.m */,
+				757F56951DFE37BE00C8B498 /* GoogleDriveRestClient.h */,
+				757F56961DFE37BE00C8B498 /* GoogleDriveRestClient.m */,
+				757F56921DFE339600C8B498 /* GoogleDriveSession.h */,
+				757F56931DFE339600C8B498 /* GoogleDriveSession.m */,
+				7552D5FE1DFE3C3300BA08C1 /* GoogleDriveMetadata.h */,
+				7552D5FF1DFE3C3300BA08C1 /* GoogleDriveMetadata.m */,
 			);
 			name = GoogleDrive;
 			sourceTree = "<group>";
@@ -1984,7 +1999,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88BD61591977727400834D72 /* LineLayout.m in Sources */,
-				7512346C1DFA306B001F0065 /* GoogleDriveHelper.m in Sources */,
+				7512346C1DFA306B001F0065 /* GoogleDriveShareKitHelper.m in Sources */,
 				2DCE0B1816798E04007A8CAD /* main.m in Sources */,
 				88BD615F19777D2A00834D72 /* PackListFirstCell.m in Sources */,
 				2DCE0B1C16798E04007A8CAD /* AppDelegate.m in Sources */,
@@ -2037,6 +2052,7 @@
 				2D5C17E416D1A56A00E1E785 /* UIImageView+AFNetworking.m in Sources */,
 				75F323EA1DBF08BE00B7B047 /* FLAnimatedImage.m in Sources */,
 				889131D51A123DED0011B7ED /* iConsole.m in Sources */,
+				757F56971DFE37BE00C8B498 /* GoogleDriveRestClient.m in Sources */,
 				2D5C17E716D1A57800E1E785 /* MBProgressHUD.m in Sources */,
 				2D5C17F416D1A59300E1E785 /* ioapi.c in Sources */,
 				2D5C17F516D1A59300E1E785 /* mztools.c in Sources */,
@@ -2071,6 +2087,7 @@
 				8810ED2B1B1FED55003140FC /* CryptorHelper.m in Sources */,
 				2D5FCB6416DD916600DB8628 /* FCCBarButton.m in Sources */,
 				2DE809E916E0811C00B7959A /* AWSS3UploadHelper.m in Sources */,
+				7552D6001DFE3C3300BA08C1 /* GoogleDriveMetadata.m in Sources */,
 				2D1A052216EDEAE600527311 /* PopupListComponent.m in Sources */,
 				886D8FDF1AE48C0300865101 /* CreateEditPackViewController2.m in Sources */,
 				2D1A052916EDEB0100527311 /* WEPopoverContainerView.m in Sources */,
@@ -2085,6 +2102,7 @@
 				75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */,
 				88D453241780DE3900500487 /* Emoticon.m in Sources */,
 				881DDCE21BA908C3005EFE21 /* DACircularProgressView.m in Sources */,
+				757F56941DFE339600C8B498 /* GoogleDriveSession.m in Sources */,
 				88D453251780DE3900500487 /* EmoticonGridView.m in Sources */,
 				884057331CDC59C30092CAB4 /* PurchaseViewController.m in Sources */,
 				88D453261780DE3900500487 /* EmoticonHelper.m in Sources */,

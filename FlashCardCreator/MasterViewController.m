@@ -33,6 +33,7 @@
 
 #import "AWSS3UploadHelper.h"
 #import "DropboxShareKitHelper.h"
+#import "GoogleDriveShareKitHelper.h"
 
 #import "PlayViewControllerV2.h"
 #import "NSArray+Randomised.h"
@@ -81,8 +82,9 @@ const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
-    AWSS3UploadHelper        *_amazonShareHelper;
-    DropboxSharekitHelper    *_dropboxShareHelper;
+    AWSS3UploadHelper          *_amazonShareHelper;
+    DropboxSharekitHelper      *_dropboxShareHelper;
+    GoogleDriveShareKitHelper  *_googleDriveShareHelper;
     
     /**
      *  不是当前的设备宽度，而是download时source device的宽度。
@@ -1654,17 +1656,26 @@ extern BOOL isFromNewCreatedCard;
         from = @"Unknown person";
     }
     
-    
-    if ([urlStr rangeOfString:@".zip"].length == 0) {
-        [Common alertViewCommon:@"Incorrect URL share linkage (must end with .zip"];
-        [iConsole error:@"%s,Incorrect URL share linkage (must end with .zip",__FUNCTION__];
-        return;
+    NSString *simpleDBItemName;
+    if ([urlStr.lowercaseString rangeOfString:@"google.com"].location != NSNotFound) {
+        
+       //Google drive
+        
+        //example of urlStr: fcc://drive.google.com/uc?id=0ByMe_Cq4emVvbDg4WGF4WHllV1E&export=download?from=
+        NSDictionary *dict = [NSString queryParamsFromString:urlStr];
+        simpleDBItemName = [dict objectForKey:@"id"];
+        
+    } else {
+        
+        //Dropbox or AWS logic
+        
+        //example of urlStr "fcc://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip?from=Microsoft"
+        //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
+        NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
+        simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
     }
     
-    //urlStr is kind of "fcc://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip?from=Microsoft"
-    //[urlStr lastPathComponent] is kind of "Pack1374148414-1884690931.zip?from=Microsoft"
-    NSRange range = [[urlStr lastPathComponent] rangeOfString:@".zip"];
-    NSString *simpleDBItemName = [[urlStr lastPathComponent] substringToIndex:range.location];
+    
     
     
     [self showDownloadProgressIndicator:type withSource:from];
@@ -3189,6 +3200,9 @@ extern BOOL isFromNewCreatedCard;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 if ([[unshortedURL scheme] isEqualToString:@"fcc"]) {
+                    
+                    [connection cancel];
+                    
                     [self downloadPackNotification:[NSNotification notificationWithName:DOWNLOAD_PACK_NOTIFICATION object:[unshortedURL absoluteString]]];
                     
                     
@@ -3280,22 +3294,21 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) shareViaGoogleDrive {
     
-    if ([[GoogleDriveSession sharedSession] isLinked]) {
+    if (![[GoogleDriveSession sharedSession] isLinked]) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-        
-    } else {
+        __weak __typeof(&*self)weakSelf = self;
         
         [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
             
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alertView show];
-            });
+            _googleDriveShareHelper = [[GoogleDriveShareKitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:weakSelf];
+            [_googleDriveShareHelper shareAction];
             
         }];
         
+    } else {
+        
+        _googleDriveShareHelper = [[GoogleDriveShareKitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_googleDriveShareHelper shareAction];
     }
     
 }

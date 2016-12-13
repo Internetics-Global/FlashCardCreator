@@ -40,14 +40,12 @@ static NSString *const kRedirectURI =
  */
 static NSString *const kExampleAuthorizerKey = @"authorization";
 
-@interface GoogleDriveSession () {
-    NSString *_uploadedFileID;
-    NSString *_accessToken;
-    NSString *_downloadableLinkage;
-}
-
 /*! @brief The authorization state.
  */
+
+@interface GoogleDriveSession ()
+
+
 @property(nonatomic, nullable) GTMAppAuthFetcherAuthorization *authorization;
 
 
@@ -165,8 +163,6 @@ static NSString *const kExampleAuthorizerKey = @"authorization";
         _accessToken = _authorization.authState.lastTokenResponse.accessToken;
     } else {
         _accessToken = @"";
-        _downloadableLinkage = @"";
-        _uploadedFileID = @"";
     }
     
     [self stateChanged];

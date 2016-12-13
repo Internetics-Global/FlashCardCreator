@@ -1,12 +1,16 @@
 //
-//  DropboxSharekitHelper.m
-//  FFC
+//  GoogleDriveHelper.m
+//  FlashCardCreator
 //
-//  Created by Wang Bourne on 1/03/13.
-//  Copyright (c) 2013 Internetics. All rights reserved.
+//  Created by internetics on 9/12/16.
+//  Copyright © 2016 Internetics. All rights reserved.
 //
 
-#import "DropboxSharekitHelper.h"
+#import "GoogleDriveShareKitHelper.h"
+
+
+
+#import "MBProgressHUD.h"
 #import "Pack.h"
 #import "FileOperationHelper.h"
 #import "DataManager.h"
@@ -17,15 +21,27 @@
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 
-@interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
-    NSString *_finalPostMessage; //final share message
+#import "GoogleDriveRestClient.h"
+#import "GoogleDriveSession.h"
+
+#import "GoogleDriveMetadata.h"
+
+#import "NSString+QueryString.h"
+
+
+@interface GoogleDriveShareKitHelper () <MBProgressHUDDelegate, UIAlertViewDelegate,UIActionSheetDelegate,MFMailComposeViewControllerDelegate,GoogleDriveRestClientDelegate>{
     
+    NSString *_finalPostMessage; //final share message
     NSString *_generatedZipFilePath;
 }
 
+
 @end
 
-@implementation DropboxSharekitHelper
+
+
+@implementation GoogleDriveShareKitHelper
+
 
 @synthesize currentCard = _currentCard;
 @synthesize currentPack = _currentPack;
@@ -45,7 +61,7 @@
 
 
 #pragma mark -
-#pragma mark - Dropbox and Share related
+#pragma mark - Google Drive and Share related
 
 /**
  *  when user clicks the "share the pack" button
@@ -71,7 +87,7 @@
                 int update = [[FileOperationHelper convertStringToNSDate:updateDate] timeIntervalSince1970];
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
-//                if (update < share) {  //之所以disable这个逻辑，因为这个会引起误解，不如用户没有改变任何的数据，但是想改变max downloaded和password。所以，这里索性无论何种情况，都重新来一次。
+                //                if (update < share) {  //之所以disable这个逻辑，因为这个会引起误解，不如用户没有改变任何的数据，但是想改变max downloaded和password。所以，这里索性无论何种情况，都重新来一次。
                 if (false) {
                     [iConsole info:@"updateDate is earlier than shareDate"];
                     [self shareAction:shareLink];
@@ -108,9 +124,9 @@
             
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                               message:@"Packs downloaded before current version of FlashCardCreator are no more supported to share"
-                                              delegate:nil cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
-                                     otherButtonTitles:nil];
+                                                            message:@"Packs downloaded before current version of FlashCardCreator are no more supported to share"
+                                                           delegate:nil cancelButtonTitle:NSLocalizedString(@"Keyboard_Done",@"")
+                                                  otherButtonTitles:nil];
             [alert show];
         }
         
@@ -123,16 +139,16 @@
     UIAlertView *alert;
     if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
         alert = [[UIAlertView alloc] initWithTitle:nil
-                                   message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
+                                           message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
-                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
+                 NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
                                            message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
                                           delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
-                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
+                 NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
     }
     alert.tag = 1;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -144,17 +160,17 @@
 }
 
 
-- (DBRestClient *)restClient {
+- (GoogleDriveRestClient *)restClient {
     [iConsole info:@"%s",__FUNCTION__];
     if (!_restClient) {
         _restClient =
-        [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        [[GoogleDriveRestClient alloc] initWithSession:[GoogleDriveSession sharedSession]];
         _restClient.delegate = self;
     }
     return _restClient;
 }
 
-- (void) uploadToDropbox:(NSString *) password {
+- (void) uploadToGoogleDrive:(NSString *) password {
     [iConsole info:@"%s",__FUNCTION__];
     
     if ([DataManager apiReachable] == NO) {
@@ -183,7 +199,7 @@
     dispatch_group_t group = dispatch_group_create();
     
     dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-
+        
         
         //step1: create zip file
         _generatedZipFilePath = [FileOperationHelper zipPackForUpload:_currentPack withPassword:password];
@@ -225,23 +241,19 @@
             
             //Step3: upload
             if (!_restClient) {
-                _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+                _restClient = [[GoogleDriveRestClient alloc] initWithSession:[GoogleDriveSession sharedSession]];
             }
             _restClient.delegate = weakSelf;
             
-            //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
             [_restClient uploadFile:weakSelf.currentPack.fileNameOnAWS toPath:@"/FlipFlashCardsPacks"
                            fromPath:_generatedZipFilePath];
             
             [weakSelf showUploadingIndicator];
             
-            //step3: create dropbox linkage which locate in uploadedFile:
-            
         }
         
     });
-
+    
     
 }
 
@@ -266,13 +278,13 @@
                                            message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
                                           delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
                                  otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
-                                                   NSLocalizedString(@"DIALOG_OK",@""),nil];
+                 NSLocalizedString(@"DIALOG_OK",@""),nil];
     } else {
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                   message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
-                                           NSLocalizedString(@"DIALOG_OK",@""), nil];
+                                           message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
+                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
+                 NSLocalizedString(@"DIALOG_OK",@""), nil];
     }
     alert.tag = 2;
     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -295,10 +307,10 @@
             if (buttonIndex == 1) {
                 //Password input finished
                 NSString *password = [alertView textFieldAtIndex:0].text;
-                [self uploadToDropbox:password];
+                [self uploadToGoogleDrive:password];
             } else if (buttonIndex == 2) {
                 //Password not set
-                [self uploadToDropbox:@""];
+                [self uploadToGoogleDrive:@""];
             }
             
         }
@@ -344,10 +356,27 @@
                         } else {
                             maxNo = [maxNoString integerValue];
                         }
-                        NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-                        NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+                        
+                        NSString *simpleDBItemName;
+                        if (0) {
+                            //dropbox logic
+                            
+                            NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+                            simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+                            
+                        } else {
+                            //Google drive logic, which is different with dropbox logic
+                            //_finalShareLinkBeforeRedirect example:   fcc://drive.google.com/uc?id=0ByMe_Cq4emVvbDg4WGF4WHllV1E&export=download?from=
+                            
+                            NSDictionary *dict = [NSString queryParamsFromString:_finalShareLinkBeforeRedirect];
+                            simpleDBItemName = [dict objectForKey:@"id"];
+                            
+                        }
+                        
+                        
                         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                        __weak DropboxSharekitHelper *safeSelf = self;
+                        
+                        __weak __typeof(&*self)safeSelf = self;
                         dispatch_async(queue, ^{
                             [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
                             [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
@@ -401,12 +430,12 @@
                        nil];
     } else {
         actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:
-         @"Facebook",
-         @"Twitter",
-         @"Email",
-         @"Copy",
-         @"Exit",
-         nil];
+                       @"Facebook",
+                       @"Twitter",
+                       @"Email",
+                       @"Copy",
+                       @"Exit",
+                       nil];
     }
     
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow.rootViewController.view];
@@ -427,41 +456,35 @@
 #pragma mark - DBRestClientDelegate related
 
 
-/**
- @param destPath an example: /FlipFlashCardsPacks/1111481524004-1771792289.zip
- @param srcPath an example: ../Documents/com.intenectics.fcc/Card Assemble Factory/1111481524003-663177798.zip
- */
-- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
-              from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+
+- (void)restClient:(GoogleDriveRestClient*)client uploadedFile:(NSString*)destPath
+              from:(NSString*)srcPath metadata:(GoogleDriveMetadata*)metadata {
     
-    [iConsole info:@"File uploaded successfully to path: %@", metadata.path];  //metadata.path example: /FlipFlashCardsPacks/1111481524004-1771792289.zip
+    NSString *uploadedFileFullPath = metadata.uploadedFileFullPath;
+    [iConsole info:@"File uploaded successfully to path: %@", uploadedFileFullPath];
     
     [FileOperationHelper removeAssembleFactoryDirectory];
     
     _isCreatingShareLinkage = YES;
     
-    //step3: create dropbox linkage
-    [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
+    //step3: create Google Drive share linkage
+    [_restClient loadSharableLinkForFile:metadata.uploadedFileID withPath:uploadedFileFullPath shortUrl:false];
     
     //step4: share via sharekit, which locate in loadedSharableLink:
 }
 
 
-- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
+- (void)restClient:(GoogleDriveRestClient*)client uploadFileFailedWithError:(NSError*)error {
     [iConsole error:@"File upload failed with error - %@", error];
     
     [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
     
-    if ([error code] == 507) {  //dropbox quota is full
-       [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_DROPBOX_QUOTA_FULL",@"")];
-    } else {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
-    }
+    [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
     
 }
 
-- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
+- (void)restClient:(GoogleDriveRestClient*)client uploadProgress:(CGFloat)progress
            forFile:(NSString*)destPath from:(NSString*)srcPath {
     _progressivePercent = progress;
     _HUD.progress = progress;
@@ -470,12 +493,7 @@
         _isCreatingShareLinkage = YES;
 }
 
-
-/**
- @param link : an example https://www.dropbox.com/s/c6jajajeod9m5t4/1111481524004-1771792289.zip?dl=0
- @param path : an exammple /FlipFlashCardsPacks/1111481524004-1771792289.zip
- */
-- (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
+- (void)restClient:(GoogleDriveRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
     [iConsole info:@"Share linkage create successfully with linkage - %@", link];
     [_HUD hide:YES];
     
@@ -495,7 +513,7 @@
     
 }
 
-- (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
+- (void)restClient:(GoogleDriveRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
     [iConsole error:@"%s",__FUNCTION__];
     _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Share_Linkage_Failure",@"");
     _isCreatingShareLinkage = NO;
@@ -512,8 +530,8 @@
         [_HUD removeFromSuperview];
         _HUD = nil;
     }
-	
-	//这时是有cancel button，之后的 create share link的indicator复用这个，也是有进度条的
+    
+    //这时是有cancel button，之后的 create share link的indicator复用这个，也是有进度条的
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
@@ -521,7 +539,7 @@
     
     _HUD.buttonTitle = @"    Cancel    ";
     _HUD.buttonTitleColor = [UIColor whiteColor];
-;
+    ;
     _isCreatingShareLinkage = NO;
     [_HUD showWhileExecuting:@selector(uploadProgressTask) onTarget:self withObject:nil animated:YES];
     
@@ -561,10 +579,10 @@
 
 - (void)uploadProgressTask {
     [iConsole info:@"%s",__FUNCTION__];
-	while (_progressivePercent < 1.0f) {
-		_HUD.progress = _progressivePercent;
-		usleep(50000);
-	}
+    while (_progressivePercent < 1.0f) {
+        _HUD.progress = _progressivePercent;
+        usleep(50000);
+    }
     _progressivePercent = 0;
     
     //一旦uploading完成后，就转成processing
@@ -579,7 +597,7 @@
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [iConsole info:@"%s",__FUNCTION__];
-	[_HUD removeFromSuperview];
+    [_HUD removeFromSuperview];
 }
 
 - (void) hideHud {
@@ -605,7 +623,7 @@
     {
         NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         if (([newStr rangeOfString:@"http://"].location != 0) || ([[newStr uppercaseString] rangeOfString:@"ERROR"].location != NSNotFound)) {
-          [iConsole error:@"%s:%@",__FUNCTION__,newStr];
+            [iConsole error:@"%s:%@",__FUNCTION__,newStr];
         } else {
             returnURL = newStr;
             [iConsole info:@"%s:redireced URL is %@",__FUNCTION__,newStr];
@@ -681,7 +699,7 @@
             } else {
                 [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_WARN",@"") message:NSLocalizedString(@"DIALOG_CONFIG_MAIL_REQUIRED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
             }
-
+            
             
         }
             break;
@@ -723,6 +741,5 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 @end

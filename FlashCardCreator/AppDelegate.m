@@ -338,6 +338,9 @@
     // an authorization response.
     if ([_currentGoogleDriveAuthorizationFlow resumeAuthorizationFlowWithURL:url]) {
         _currentGoogleDriveAuthorizationFlow = nil;
+        
+        //Unlike Dropbox, Google drive use handler block, rather than delegate, so we don't need to set notificaiton like DROPBOX_LINKED_NOTIFICATION
+        
         return YES;
     }
     

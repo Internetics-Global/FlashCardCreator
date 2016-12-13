@@ -21,6 +21,7 @@
 
 #import "AWSS3UploadHelper.h"
 #import "DropboxShareKitHelper.h"
+#import "GoogleDriveShareKitHelper.h"
 
 #import "UIImage+Scale.h"
 #import "FileOperationHelper.h"
@@ -57,8 +58,9 @@ enum popover_enum {
 
 
 @interface DetailViewController () <UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
-    AWSS3UploadHelper        *_amazonShareHelper;
-    DropboxSharekitHelper    *_dropboxShareHelper;
+    AWSS3UploadHelper         *_amazonShareHelper;
+    DropboxSharekitHelper     *_dropboxShareHelper;
+    GoogleDriveShareKitHelper *_googleDriveShareHelper;
     
     UIImageView              *_adImageView;
     
@@ -1416,21 +1418,21 @@ enum popover_enum {
 
 - (void) shareViaGoogleDrive {
     
-    if ([[GoogleDriveSession sharedSession] isLinked]) {
+    if (![[GoogleDriveSession sharedSession] isLinked]) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
-        
-    } else {
+        __weak __typeof(&*self)weakSelf = self;
         
         [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
             
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Coming process will be the same as Dropbox " delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alertView show];
-            });
+            _googleDriveShareHelper = [[GoogleDriveShareKitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:weakSelf];
+            [_googleDriveShareHelper shareAction];
             
         }];
+        
+    } else {
+        
+        _googleDriveShareHelper = [[GoogleDriveShareKitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_googleDriveShareHelper shareAction];
         
     }
     

@@ -10,13 +10,19 @@
 
 typedef void (^AuthSuccessCompletion)();
 
+@class GTLRDriveService;
+
 @interface GoogleDriveSession : NSObject
+
+@property (copy, nonatomic) NSString *accessToken;
 
 
 + (id)sharedSession;
 
 - (BOOL)isLinked;
 - (void)unlinkAll;
+
+- (GTLRDriveService *)driveService;
 
 - (void)authWithSuccessCompletion:(nonnull AuthSuccessCompletion) authSuccessCompletion;
 
