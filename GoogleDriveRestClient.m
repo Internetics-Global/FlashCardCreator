@@ -14,6 +14,8 @@
 #import "GTMSessionFetcherService.h"
 #import "GoogleDriveMetadata.h"
 
+#import "iConsole.h"
+
 @interface GoogleDriveRestClient () {
     NSString *_downloadableLinkage;
     
@@ -338,8 +340,20 @@
                     
                     NSString *downloadableLinkage = [dictionary objectForKey:@"webContentLink"];
                     
-                    if (weakSelf.delegate) {
-                        [weakSelf.delegate restClient:_session loadedSharableLink:downloadableLinkage forFile:path];
+                    if (downloadableLinkage) {
+                        if (weakSelf.delegate) {
+                            [weakSelf.delegate restClient:_session loadedSharableLink:downloadableLinkage forFile:path];
+                        }
+                    } else {
+                        
+                        if (weakSelf.delegate) {
+                            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                            [details setValue:@"downloadableLinkage is nil, check log" forKey:NSLocalizedDescriptionKey];
+                            NSError *myError = [NSError errorWithDomain:@"com.ccaa" code:200 userInfo:details];
+                            [weakSelf.delegate restClient:_session loadSharableLinkFailedWithError:myError];
+                        }
+                        
+                        [iConsole info:@"%s:%@",__FUNCTION__,dictionary];
                     }
                     
                     

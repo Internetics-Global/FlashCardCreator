@@ -475,6 +475,8 @@
 
 
 - (void)restClient:(GoogleDriveRestClient*)client uploadFileFailedWithError:(NSError*)error {
+    
+    //possible reason: Daily Limit for Unauthenticated Use Exceeded. Continued use requires signup.
     [iConsole error:@"File upload failed with error - %@", error];
     
     [FileOperationHelper removeAssembleFactoryDirectory];

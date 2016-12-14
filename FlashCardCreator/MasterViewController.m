@@ -3298,6 +3298,7 @@ extern BOOL isFromNewCreatedCard;
         
         __weak __typeof(&*self)weakSelf = self;
         
+        APP_DELEGATE.isAllowToShowPackList = false;
         [[GoogleDriveSession sharedSession] authWithSuccessCompletion:^{
             
             _googleDriveShareHelper = [[GoogleDriveShareKitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:weakSelf];
