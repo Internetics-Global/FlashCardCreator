@@ -246,7 +246,45 @@
     
 }
 
-- (void)makeItPublic:(NSString *)fileID withPath:(NSString *) path {
+
+- (void)makeItPublic:(NSString *)fileID withPath:(NSString *) path{
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    GTLRDriveService *service = _session.driveService;
+    
+    GTLRDrive_Permission *permission = [GTLRDrive_Permission object];
+    permission.role = @"reader";
+    permission.type = @"anyone";
+    
+    GTLRDriveQuery_PermissionsCreate *query =
+    [GTLRDriveQuery_PermissionsCreate queryWithObject:permission fileId:fileID];
+    [service executeQuery:query
+        completionHandler:^(GTLRServiceTicket *callbackTicket,
+                            GTLRDrive_File *fileItem,
+                            NSError *callbackError) {
+            
+            if (!callbackError) {
+                
+                [weakSelf getShareLink:fileID withPath:(NSString *) path];
+                
+            } else {
+                
+                [weakSelf.delegate restClient:_session loadSharableLinkFailedWithError:callbackError];
+                
+            }
+            
+        }];
+}
+
+
+/* 
+ * Deprecated !!!!!
+ * This is HTTP POST way, and it's the same function as makeItPublic
+ *  It's not recommended since token(expire,refresh) needs to be managed individuals, rather than SDK
+ * detailed story:  https://github.com/google/google-api-objectivec-client-for-rest/issues/75#issuecomment-266737890
+*/
+- (void)makeItPublic2:(NSString *)fileID withPath:(NSString *) path {
     
     __weak __typeof(&*self)weakSelf = self;
     
@@ -301,7 +339,58 @@
 }
 
 
-- (void)getShareLink:(NSString *)fileID withPath:(NSString *) path {
+- (void)getShareLink:(NSString *)fileID withPath:(NSString *) path{
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    GTLRDriveService *service = _session.driveService;
+    
+    
+    GTLRDriveQuery_FilesGet *query =
+    [GTLRDriveQuery_FilesGet queryWithFileId:fileID];
+    query.fields = @"webContentLink";
+    [service executeQuery:query
+        completionHandler:^(GTLRServiceTicket *callbackTicket,
+                            GTLRDrive_File *fileItem,
+                            NSError *callbackError) {
+            
+            if (!callbackError) {
+                
+                NSString *downloadableLinkage = fileItem.webContentLink;
+                
+                if (downloadableLinkage) {
+                    if (weakSelf.delegate) {
+                        [weakSelf.delegate restClient:_session loadedSharableLink:downloadableLinkage forFile:path];
+                    }
+                } else {
+                    
+                    if (weakSelf.delegate) {
+                        NSMutableDictionary* details = [NSMutableDictionary dictionary];
+                        [details setValue:@"downloadableLinkage is nil, check log" forKey:NSLocalizedDescriptionKey];
+                        NSError *myError = [NSError errorWithDomain:@"com.ccaa" code:200 userInfo:details];
+                        [weakSelf.delegate restClient:_session loadSharableLinkFailedWithError:myError];
+                    }
+                }
+                
+            } else {
+                
+                if (weakSelf.delegate) {
+                    [weakSelf.delegate restClient:_session loadSharableLinkFailedWithError:callbackError];
+                }
+                
+            }
+            
+            
+        }];
+}
+
+/*
+ * Deprecated !!!!!
+ * This is HTTP POST way, and it's the same function as makeItPublic
+ *  It's not recommended since token(expire,refresh) needs to be managed individuals, rather than SDK
+ * detailed story:  https://github.com/google/google-api-objectivec-client-for-rest/issues/75#issuecomment-266737890
+ */
+- (void)getShareLink2:(NSString *)fileID withPath:(NSString *) path {
     
     __weak __typeof(&*self)weakSelf = self;
     

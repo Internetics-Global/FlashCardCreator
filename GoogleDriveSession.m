@@ -187,29 +187,37 @@ static NSString *const kExampleAuthorizerKey = @"authorization";
     
     [self setGtmAuthorization:authorization];
     
-    //******* important highlight
-    // see background: https://github.com/google/google-api-objectivec-client-for-rest/issues/75#issuecomment-266737890
-    // 1. Google Drive APIs don't provide a way to check whether token expire or not. So we have to refresh token every time when session is initialized
-    // 2. Token is only used on getShareLink and makeItPublic, it does not matter with uploading and downloading packs
-    // 3. Even though withFreshTokensPerformAction is asyn, it does not matter since getShareLink/makeItPublic is called quite late after session is initialized
     
-    // 4. For other service, you don't need to worry about the token issue, since Objective-C GoogleAPIClientForREST automatically handle this for you.
-    
-    //******* important highlight
-    
-    if (_authorization) {
-        [_authorization.authState withFreshTokensPerformAction:^(NSString * _Nullable accessToken, NSString * _Nullable idToken, NSError * _Nullable error) {
-            NSLog(@"%@",accessToken);
-            if (error == nil) {
-                _accessToken = accessToken;
-            } else {
-                _authorization = nil;
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_AUTHE_FAILED",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alertView show];
-                });
-            }
-        }];
+    //Deprecated
+    // if we use GTLRDriveService, we don't need to care about token expire issue
+    // Only when we use standard HTTP, we should care about token
+    // In this project, all standard HTTP ways are marked as deprecated like makeItPublic2 and getShareLink2
+    if (0) {
+        
+        //******* important highlight
+        // see background: https://github.com/google/google-api-objectivec-client-for-rest/issues/75#issuecomment-266737890
+        // 1. Google Drive APIs don't provide a way to check whether token expire or not. So we have to refresh token every time when session is initialized
+        // 2. Token is only used on getShareLink and makeItPublic, it does not matter with uploading and downloading packs
+        // 3. Even though withFreshTokensPerformAction is asyn, it does not matter since getShareLink/makeItPublic is called quite late after session is initialized
+        
+        // 4. For other service, you don't need to worry about the token issue, since Objective-C GoogleAPIClientForREST automatically handle this for you.
+        
+        //******* important highlight
+        
+        if (_authorization) {
+            [_authorization.authState withFreshTokensPerformAction:^(NSString * _Nullable accessToken, NSString * _Nullable idToken, NSError * _Nullable error) {
+                NSLog(@"%@",accessToken);
+                if (error == nil) {
+                    _accessToken = accessToken;
+                } else {
+                    _authorization = nil;
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_AUTHE_FAILED",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    });
+                }
+            }];
+        }
     }
 }
 
