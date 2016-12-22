@@ -17,4 +17,6 @@ pod 'RMStore', '~> 0.7'
 pod 'GTMAppAuth'
 pod 'GoogleAPIClientForREST/Drive'
 
+pod 'ObjectiveDropboxOfficial'
+
 end

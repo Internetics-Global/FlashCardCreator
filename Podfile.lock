@@ -41,6 +41,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - GTMSessionFetcher/Full (1.1.7):
     - GTMSessionFetcher/Core (= 1.1.7)
+  - ObjectiveDropboxOfficial (1.1.4)
   - Reachability (3.2)
   - RMStore (0.7.1):
     - RMStore/Core (= 0.7.1)
@@ -59,6 +60,7 @@ DEPENDENCIES:
   - Bolts
   - GoogleAPIClientForREST/Drive
   - GTMAppAuth
+  - ObjectiveDropboxOfficial
   - Reachability
   - RMStore (~> 0.7)
   - RNCryptor
@@ -75,11 +77,12 @@ SPEC CHECKSUMS:
   GoogleAPIClientForREST: f272e35f7fe9f80ab232756c798adc32245ece8c
   GTMAppAuth: 3f57495c702c78d68fa5cf1bced8519eec496963
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
+  ObjectiveDropboxOfficial: 2a70f14ff3e6c9489468028d7134b8712b48a062
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
-PODFILE CHECKSUM: a3dfab2b27739a1e2eeb5ca7d0b8ccdd5ee74742
+PODFILE CHECKSUM: c2cced8edca2d1fd6ee6f9b3310b59bd17b0f9ec
 
 COCOAPODS: 1.1.1
