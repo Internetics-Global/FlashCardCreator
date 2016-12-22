@@ -117,6 +117,8 @@
 
 - (void) googeDriveLogInOutAction :(UISwitch *) myswitch {
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     [[DBSession sharedSession] unlinkAll];
     
     if (![[GoogleDriveSession sharedSession] isLinked]) {
@@ -137,6 +139,8 @@
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alertView show];
                     });
+                    
+                    [_alertTable reloadData];
                 }];
             });
             
@@ -147,6 +151,8 @@
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS",@"") delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alertView show];
                     });
+                    
+                    [_alertTable reloadData];
                 }];
             }];
         }
@@ -158,12 +164,15 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_GOOGLE_DRIVE_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
+        
+         [_alertTable reloadData];
     }
 }
 
 - (void) dropboxLogInOutAction:(UISwitch *) myswitch {
     
     [[GoogleDriveSession sharedSession] unlinkAll];
+    
     
     if (![[DBSession sharedSession] isLinked]) {
         
@@ -180,6 +189,8 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DROPBOX_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
+        
+        [_alertTable reloadData];
     }
 }
 
