@@ -71,6 +71,67 @@
 }
 
 
+- (void)checkFileExist:(NSString*)filename withCompletion: (void (^)(BOOL isExist,NSError *error, NSString *fileID))handler{
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    GTLRDrive_FileList *_fileList;
+    NSError *_fileListFetchError;
+    
+    _fileList = nil;
+    _fileListFetchError = nil;
+    
+    GTLRDriveService *service = _session.driveService;
+    
+    GTLRDriveQuery_FilesList *query = [GTLRDriveQuery_FilesList query];
+    query.q = [NSString stringWithFormat:@"mimeType = 'application/zip' and name = '%@' and trashed = false",filename];
+    
+    // Because GTLRDrive_FileList is derived from GTLCollectionObject and the service
+    // property shouldFetchNextPages is enabled, this may do multiple fetches to
+    // retrieve all items in the file list.
+    
+    // Google APIs typically allow the fields returned to be limited by the "fields" property.
+    // The Drive API uses the "fields" property differently by not sending most of the requested
+    // resource's fields unless they are explicitly specified.
+    query.fields = @"kind,files(mimeType,id,name)";
+    
+    [service executeQuery:query
+        completionHandler:^(GTLRServiceTicket *callbackTicket,
+                            GTLRDrive_FileList *fileList,
+                            NSError *callbackError) {
+            
+            if (callbackError == nil) {
+                
+                BOOL isExist = false;
+                GTLRDrive_File *firstFile = [fileList.files firstObject];
+                if (firstFile) {
+                    NSString *fileID = [firstFile.JSON objectForKey:@"id"];
+                    isExist = true;
+                    NSLog(@"Founded, the fileID is %@", fileID);
+                    if (handler) {
+                        handler(true,nil,fileID);
+                        return;
+                    }
+                }
+                
+                if (isExist == false) {
+                    if (handler) {
+                        handler(false,nil,nil);
+                    }
+                }
+                
+            } else {
+                handler(false,callbackError,nil);
+            }
+            
+            
+            
+        }];
+    
+}
+
+
+
 - (void)checkFolderOfFlipFlashCardsPacksExist:(void (^)(BOOL isExist,NSError *error, NSString *folderID))handler{
     
     __weak __typeof(&*self)weakSelf = self;
@@ -130,18 +191,16 @@
     
 }
 
-
-
-- (void)uploadFile:(NSString*)filename toPath:(NSString*)destPath fromPath:(NSString *)sourcePath {
+- (void)updateFile:(NSString*)existingFilename existingfileID: (NSString*)existingfileID toPath:(NSString*)destPath fromPath:(NSString *)sourcePath {
     
     [self checkFolderOfFlipFlashCardsPacksExist:^(BOOL isExist, NSError *error,NSString *folderID) {
         if (error == nil) {
             if (isExist) {
-                [self uploadFile:filename toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                [self updateFile:existingFilename existingfileID:existingfileID toPath:destPath fromPath:sourcePath parentFolderID:folderID];
             } else {
                 [self createFolderOfFlipFlashCardsPacks:^(NSError *error, NSString *folderID) {
                     if (error == nil) {
-                        [self uploadFile:filename toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                        [self uploadFile:existingFilename toPath:destPath fromPath:sourcePath parentFolderID:folderID];
                     } else {
                         if (self.delegate) {
                             [self.delegate restClient:_session uploadFileFailedWithError:error];
@@ -152,6 +211,54 @@
         } else {
             if (self.delegate) {
                 [self.delegate restClient:_session uploadFileFailedWithError:error];
+            }
+        }
+    }];
+    
+}
+
+
+
+- (void)uploadFile:(NSString*)filename toPath:(NSString*)destPath fromPath:(NSString *)sourcePath {
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    [self checkFolderOfFlipFlashCardsPacksExist:^(BOOL isFolderExist, NSError *error,NSString *folderID) {
+        if (error == nil) {
+            if (isFolderExist) {
+                [weakSelf checkFileExist:filename withCompletion:^(BOOL isExist, NSError *error, NSString *fileID) {
+                    
+                    if (isExist) {
+                        [weakSelf updateFile:filename existingfileID:fileID toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                    } else {
+                        [weakSelf uploadFile:filename toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                    }
+                    
+                }];
+            } else {
+                [weakSelf createFolderOfFlipFlashCardsPacks:^(NSError *error, NSString *folderID) {
+                    if (error == nil) {
+                        
+                        [weakSelf checkFileExist:filename withCompletion:^(BOOL isExist, NSError *error, NSString *fileID) {
+                            
+                            if (isExist) {
+                                [weakSelf updateFile:filename existingfileID:fileID toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                            } else {
+                                [weakSelf uploadFile:filename toPath:destPath fromPath:sourcePath parentFolderID:folderID];
+                            }
+                            
+                        }];
+                        
+                    } else {
+                        if (weakSelf.delegate) {
+                            [weakSelf.delegate restClient:_session uploadFileFailedWithError:error];
+                        }
+                    }
+                }];
+            }
+        } else {
+            if (weakSelf.delegate) {
+                [weakSelf.delegate restClient:_session uploadFileFailedWithError:error];
             }
         }
     }];
@@ -175,7 +282,7 @@
                                              MIMEType:@"application/zip"];
     
     GTLRDrive_File *newFile = [GTLRDrive_File object];
-    newFile.name = fileToUploadURL.lastPathComponent;
+    newFile.name = filename;
     newFile.parents = [NSArray arrayWithObject:parentFolderID];
     
     GTLRDriveQuery_FilesCreate *query =
@@ -208,6 +315,71 @@
                     metaData.uploadedFileID = uploadedFile.identifier;
                     
                     metaData.uploadedFileFullPath = [destPath stringByAppendingPathComponent:filename];
+                    [weakSelf.delegate restClient:_session uploadedFile:destPath from:sourcePath metadata:metaData];
+                }
+            } else {
+                if (weakSelf.delegate) {
+                    [weakSelf.delegate restClient:_session uploadFileFailedWithError:callbackError];
+                }
+            }
+        }];
+    
+    
+    
+    
+    
+    
+}
+
+
+/**
+ private method
+ */
+- (void)updateFile:(NSString*)existingFilename existingfileID: (NSString*)existingfileID toPath:(NSString*)destPath fromPath:(NSString *)sourcePath parentFolderID:(NSString *)parentFolderID {
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    NSURL *fileToUploadURL = [NSURL fileURLWithPath:sourcePath];
+    
+    GTLRDriveService *service = _session.driveService;
+    
+    GTLRUploadParameters *uploadParameters =
+    [GTLRUploadParameters uploadParametersWithFileURL:fileToUploadURL
+                                             MIMEType:@"application/zip"];
+    
+    GTLRDrive_File *newFile = [GTLRDrive_File object];
+    newFile.name = existingFilename;
+    newFile.mimeType = @"application/zip";
+    
+    GTLRDriveQuery_FilesUpdate *query =
+    [GTLRDriveQuery_FilesUpdate queryWithObject:newFile fileId:existingfileID uploadParameters:uploadParameters];
+    
+    
+    query.executionParameters.uploadProgressBlock =
+    ^(GTLRServiceTicket *ticket,
+      unsigned long long numberOfBytesRead,
+      unsigned long long dataLength) {
+        
+        if (weakSelf.delegate && dataLength > 0) {
+            [weakSelf.delegate restClient:_session uploadProgress:numberOfBytesRead/dataLength forFile:destPath from:sourcePath];
+        }
+        
+    };
+    
+    _uploadTicket =
+    [service executeQuery:query
+        completionHandler:^(GTLRServiceTicket *callbackTicket,
+                            GTLRDrive_File *uploadedFile,
+                            NSError *callbackError) {
+            if (callbackError == nil) {
+                
+                NSLog(@"uploaded file id = %@",uploadedFile.identifier);
+                
+                if (weakSelf.delegate) {
+                    GoogleDriveMetadata *metaData = [[GoogleDriveMetadata alloc] init];
+                    metaData.uploadedFileID = uploadedFile.identifier;
+                    
+                    metaData.uploadedFileFullPath = [destPath stringByAppendingPathComponent:existingFilename];
                     [weakSelf.delegate restClient:_session uploadedFile:destPath from:sourcePath metadata:metaData];
                 }
             } else {
