@@ -159,6 +159,7 @@
         }
         
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
+        APP_DELEGATE.isAllowToShowPackList = NO;
     } else {
         
         [[GoogleDriveSession sharedSession] unlinkAll];
@@ -189,6 +190,7 @@
         
         
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
+        APP_DELEGATE.isAllowToShowPackList = NO;
         
         
     } else {

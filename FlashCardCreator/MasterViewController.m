@@ -3321,7 +3321,7 @@ extern BOOL isFromNewCreatedCard;
         //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
         //不需要在本类中设置dropboxLinkedNotification
         [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
-                                            controller:self
+                                            controller:APP_DELEGATE.window.rootViewController
                                                openURL:^(NSURL *url) {
                                                    [[UIApplication sharedApplication] openURL:url];
                                                }
