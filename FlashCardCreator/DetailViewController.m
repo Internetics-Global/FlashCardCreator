@@ -57,7 +57,7 @@ enum popover_enum {
 };
 
 
-@interface DetailViewController () <UIAlertViewDelegate,DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
+@interface DetailViewController () <UIAlertViewDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate>{
     AWSS3UploadHelper         *_amazonShareHelper;
     DropboxSharekitHelper     *_dropboxShareHelper;
     GoogleDriveShareKitHelper *_googleDriveShareHelper;
@@ -997,7 +997,7 @@ enum popover_enum {
                 
                 if (_currentPack.isAllowShare) {
                     
-                    if ([[DBSession sharedSession] isLinked]) {
+                    if (([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
                         [self shareViaDropbox];
                     } else if ([[GoogleDriveSession sharedSession] isLinked]) {
                         [self shareViaGoogleDrive];
@@ -1442,11 +1442,15 @@ enum popover_enum {
 - (void) shareViaDropbox {
     
     //Dropbox only
-    if (![[DBSession sharedSession] isLinked]) {
-        [DBSession sharedSession].delegate = self;
+    if (!([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
         //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
         //不需要在本类中设置dropboxLinkedNotification
-        [[DBSession sharedSession] linkFromController:self];
+        [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
+                                            controller:self
+                                               openURL:^(NSURL *url) {
+                                                   [[UIApplication sharedApplication] openURL:url];
+                                               }
+                                           browserAuth:NO];
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
     } else {
         _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
@@ -1455,11 +1459,11 @@ enum popover_enum {
 }
 
 
-#pragma mark -
-#pragma mark DBSessionDelegate methods
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-}
+//#pragma mark -
+//#pragma mark DBSessionDelegate methods
+//
+//- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+//    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+//}
 
 @end

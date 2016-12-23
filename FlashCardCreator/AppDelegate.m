@@ -23,7 +23,7 @@
 #import <AWSCore/AWSCore.h>
 #import "AWS_Constants.h"
 
-#import <DropboxSDK/DropboxSDK.h>
+#import <ObjectiveDropboxOfficial/ObjectiveDropboxOfficial.h>
 
 #import "MutipleTargetHelper.h"
 
@@ -103,8 +103,7 @@
     [SQLiteHelper checkUserExist];
     
     //3. Initialized Dropbox session
-    DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY appSecret:DROPBOX_APP_SECRET root:kDBRootDropbox];
-    [DBSession setSharedSession:dbSession];
+    [DropboxClientsManager setupWithAppKey:DROPBOX_APP_KEY];
     
     //4. we need to put this in front of windows/controller init
     BOOL isExamplePackDownloadedSuccessful = [[NSUserDefaults standardUserDefaults] boolForKey:@"isExamplePackDownloadedSuccessful"];
@@ -332,6 +331,18 @@
 //url is kind of: fcc://s3.amazonaws.com/internetics.flashcardcreator/Pack1440729625-2043618070.zip?from=Clive&cardname=Happy New Year&packname=hello
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    return [self openURL:url];
+}
+
+
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    return [self openURL:url];
+
+}
+
+- (BOOL) openURL:(NSURL *)url {
     [iConsole info:@"%s",__FUNCTION__];
     
     // Sends the URL to the current authorization flow (if any) which will process it if it relates to
@@ -356,21 +367,26 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
         
     } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
-        if ([[DBSession sharedSession] handleOpenURL:url])
-        {
-            if ([[DBSession sharedSession] isLinked])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"linked"]];
-            } else {
-                [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"linked"]];
-            }
-            return YES;
-        }
         
+        DBOAuthResult *authResult = [DropboxClientsManager handleRedirectURL:url];
+        
+        if (authResult != nil && authResult.isSuccess)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"linked"]];
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:DROPBOX_LINKED_NOTIFICATION object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:@"linked"]];
+        }
+        return YES;
+        
+    } else if ([[url scheme] containsString:@"com.googleusercontent.apps"]) {
+        
+        //do nothing
+        //Unlike Dropbox, Google drive use handler block, rather than delegate, so we don't need to set notificaiton like DROPBOX_LINKED_NOTIFICATION
     }
     
     return YES;
 }
+
 
 
 - (Pack *) getLastCreatedCardPack {

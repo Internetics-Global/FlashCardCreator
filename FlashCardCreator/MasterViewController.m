@@ -78,7 +78,7 @@ const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
-@interface MasterViewController () <UIPopoverControllerDelegate, DBSessionDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -3024,7 +3024,7 @@ extern BOOL isFromNewCreatedCard;
                 
                 if (_currentPack.isAllowShare && _currentCard) {
                     
-                    if ([[DBSession sharedSession] isLinked]) {
+                    if (([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
                         [self shareViaDropbox];
                     } else if ([[GoogleDriveSession sharedSession] isLinked]) {
                         [self shareViaGoogleDrive];
@@ -3317,11 +3317,15 @@ extern BOOL isFromNewCreatedCard;
 - (void) shareViaDropbox {
     
     //Dropbox only
-    if (![[DBSession sharedSession] isLinked]) {
-        [DBSession sharedSession].delegate = self;
+    if (!([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
         //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
         //不需要在本类中设置dropboxLinkedNotification
-        [[DBSession sharedSession] linkFromController:self];
+        [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
+                                            controller:self
+                                               openURL:^(NSURL *url) {
+                                                   [[UIApplication sharedApplication] openURL:url];
+                                               }
+                                           browserAuth:NO];
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = YES;
     } else {
         _dropboxShareHelper = [[DropboxSharekitHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
@@ -3329,13 +3333,13 @@ extern BOOL isFromNewCreatedCard;
     }
 }
 
-
-#pragma mark -
-#pragma mark DBSessionDelegate methods
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-}
+//
+//#pragma mark -
+//#pragma mark DBSessionDelegate methods
+//
+//- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+//    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+//}
 
 
 @end

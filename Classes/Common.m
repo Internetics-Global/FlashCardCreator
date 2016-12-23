@@ -14,8 +14,6 @@
 #import "Pack.h"
 #import "OpenUDID.h"
 
-#import <DropboxSDK/DropboxSDK.h>
-
 #import "AppDelegate.h"
 
 @implementation Common

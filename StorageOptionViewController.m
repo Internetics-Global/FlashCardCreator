@@ -8,11 +8,11 @@
 
 #import "StorageOptionViewController.h"
 #import "Common.h"
-#import <DropboxSDK/DropboxSDK.h>
+#import <ObjectiveDropboxOfficial/ObjectiveDropboxOfficial.h>
 #import "GoogleDriveSession.h"
 #import "AppDelegate.h"
 
-@interface StorageOptionViewController () <UITableViewDelegate, UITableViewDataSource,DBSessionDelegate>{
+@interface StorageOptionViewController () <UITableViewDelegate, UITableViewDataSource>{
     UITableView *_alertTable;
 }
 
@@ -76,7 +76,7 @@
         UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
         [mySwitch addTarget:self action:@selector(dropboxLogInOutAction:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = mySwitch;
-        BOOL b = [[DBSession sharedSession] isLinked];
+        BOOL b = ([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil);
         [mySwitch setOn:b];
         
         
@@ -115,11 +115,12 @@
 
 }
 
+
 - (void) googeDriveLogInOutAction :(UISwitch *) myswitch {
     
     __weak __typeof(&*self)weakSelf = self;
     
-    [[DBSession sharedSession] unlinkAll];
+    [DropboxClientsManager unlinkClients];
     
     if (![[GoogleDriveSession sharedSession] isLinked]) {
         
@@ -173,19 +174,26 @@
     
     [[GoogleDriveSession sharedSession] unlinkAll];
     
+
     
-    if (![[DBSession sharedSession] isLinked]) {
+    if ([DropboxClientsManager authorizedClient] == nil && [DropboxClientsManager authorizedTeamClient] == nil) {
         
         __weak __typeof(&*self)weakSelf = self;
         
-        [DBSession sharedSession].delegate = weakSelf;
-        [[DBSession sharedSession] linkFromController:weakSelf];
+        [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
+                                            controller:weakSelf
+                                               openURL:^(NSURL *url) {
+                                                   [[UIApplication sharedApplication] openURL:url];
+                                               }
+                                           browserAuth:NO];
+        
+        
         APP_DELEGATE.isAllowToShareAfterDropboxLogIn = NO;
         
         
     } else {
         
-        [[DBSession sharedSession] unlinkAll];
+        [DropboxClientsManager unlinkClients];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DROPBOX_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") otherButtonTitles:nil, nil];
         [alertView show];
@@ -195,12 +203,12 @@
 }
 
 
-#pragma mark -
-#pragma mark DBSessionDelegate methods
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
-}
+//#pragma mark -
+//#pragma mark DBSessionDelegate methods
+//
+//- (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId {
+//    [Common alertViewCommon:NSLocalizedString(@"DIALOG_FAIL_TO_LOG_DROPBOX",@"")];
+//}
 
 
 
