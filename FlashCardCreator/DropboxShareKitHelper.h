@@ -7,18 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DropboxSDK/DropboxSDK.h>
+#import <ObjectiveDropboxOfficial/ObjectiveDropboxOfficial.h>
 #import "MBProgressHUD.h"
 
 @class Pack;
 @class Card;
 
-@interface DropboxSharekitHelper : NSObject <DBRestClientDelegate,MBProgressHUDDelegate, UIAlertViewDelegate> {
+@interface DropboxSharekitHelper : NSObject <MBProgressHUDDelegate, UIAlertViewDelegate> {
     Pack *_currentPack;
     Card *_currentCard;
     UIViewController *_baseViewController;
     
-    DBRestClient *_restClient;
     MBProgressHUD *_HUD;
     
     float _progressivePercent;

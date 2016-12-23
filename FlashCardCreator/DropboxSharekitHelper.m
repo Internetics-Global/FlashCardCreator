@@ -21,6 +21,11 @@
     NSString *_finalPostMessage; //final share message
     
     NSString *_generatedZipFilePath;
+    
+    DBUploadTask *_uploadTask;
+    
+    DBRpcTask             *_getShareLinTask;
+    DBRpcTask             *_createShareLinTask;
 }
 
 @end
@@ -144,18 +149,14 @@
 }
 
 
-- (DBRestClient *)restClient {
-    [iConsole info:@"%s",__FUNCTION__];
-    if (!_restClient) {
-        _restClient =
-        [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-        _restClient.delegate = self;
-    }
-    return _restClient;
-}
-
 - (void) uploadToDropbox:(NSString *) password {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    DropboxClient *client = [DropboxClientsManager authorizedClient];
+    if (client == nil) {
+        [iConsole info:@"%s: should not be here",__FUNCTION__];
+        return;
+    }
     
     if ([DataManager apiReachable] == NO) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_TITLE_NO_NETWORK",@"")
@@ -224,15 +225,29 @@
             }
             
             //Step3: upload
-            if (!_restClient) {
-                _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-            }
-            _restClient.delegate = weakSelf;
             
-            //we use the deprecated method to replace: http://stackoverflow.com/questions/10682749/how-to-overwrite-file-with-parent-rev-using-dropbox-api-in-ios
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-            [_restClient uploadFile:weakSelf.currentPack.fileNameOnAWS toPath:@"/FlipFlashCardsPacks"
-                           fromPath:_generatedZipFilePath];
+            NSString *destPath = [@"/FlipFlashCardsPacks" stringByAppendingPathComponent:weakSelf.currentPack.fileNameOnAWS];
+            NSData *fileData = [NSData dataWithContentsOfFile:_generatedZipFilePath];
+            _uploadTask = [[[client.filesRoutes uploadData:destPath mode:[[DBFILESWriteMode alloc] initWithOverwrite] autorename:[NSNumber numberWithBool:false] clientModified:nil mute:[NSNumber numberWithBool:true] inputData:fileData]
+             response:^(DBFILESFileMetadata *result, DBFILESUploadError *routeError, DBError * error) {
+                 
+                 if (routeError != nil || routeError != nil) {
+                     [weakSelf uploadFileFailedWithError:error];
+                 } else {
+                     
+                     [weakSelf uploadedFile:destPath from:_generatedZipFilePath metadata:result];
+                 }
+                 
+                 
+                
+            }] progress:^(int64_t bytesUploaded, int64_t totalBytesUploaded, int64_t totalBytesExpectedToUploaded) {
+                
+                double percent = 1.0 * totalBytesUploaded/totalBytesExpectedToUploaded;
+                
+                [weakSelf uploadProgress:percent];
+            }];
+            
+            
             
             [weakSelf showUploadingIndicator];
             
@@ -431,29 +446,67 @@
  @param destPath an example: /FlipFlashCardsPacks/1111481524004-1771792289.zip
  @param srcPath an example: ../Documents/com.intenectics.fcc/Card Assemble Factory/1111481524003-663177798.zip
  */
-- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath
-              from:(NSString*)srcPath metadata:(DBMetadata*)metadata {
+- (void)uploadedFile:(NSString*)destPath
+              from:(NSString*)srcPath metadata:(DBFILESFileMetadata*)metadata {
     
-    [iConsole info:@"File uploaded successfully to path: %@", metadata.path];  //metadata.path example: /FlipFlashCardsPacks/1111481524004-1771792289.zip
+    __weak __typeof(&*self)weakSelf = self;
+    
+    [iConsole info:@"File uploaded successfully to path: %@", metadata.name];  //metadata.path example: /FlipFlashCardsPacks/1111481524004-1771792289.zip
     
     [FileOperationHelper removeAssembleFactoryDirectory];
     
     _isCreatingShareLinkage = YES;
     
     //step3: create dropbox linkage
-    [_restClient loadSharableLinkForFile:metadata.path shortUrl:NO];
+    
+    DropboxClient *client = [DropboxClientsManager authorizedClient];
+    
+    _getShareLinTask = [[client.sharingRoutes listSharedLinks:destPath cursor:nil directOnly:nil]
+                          response:^(DBSHARINGListSharedLinksResult *metaData, DBSHARINGListSharedLinksError *shareError, DBError *error) {
+                              if (shareError != nil || error != nil) {
+                                  [weakSelf loadSharableLinkFailedWithError:error];
+                              } else {
+                                  NSArray *links = metaData.links;
+                                  if ([links count] > 0) {
+                                      DBSHARINGSharedLinkMetadata *firstObject = [links firstObject];
+                                      [weakSelf loadedSharableLink:firstObject.url forFile:destPath];
+                                  } else {
+                                      [weakSelf createShareLink:destPath];
+                                  }
+                              }
+        
+    }];
+    
+    
+    
     
     //step4: share via sharekit, which locate in loadedSharableLink:
 }
 
 
-- (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error {
+- (void)createShareLink:(NSString*)destPath {
+    DropboxClient *client = [DropboxClientsManager authorizedClient];
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    _createShareLinTask = [[client.sharingRoutes createSharedLinkWithSettings:destPath]
+                           response:^(DBSHARINGSharedLinkMetadata * metaData, DBSHARINGCreateSharedLinkWithSettingsError * shareError, DBError * error) {
+                               if (shareError != nil || error != nil) {
+                                   [weakSelf loadSharableLinkFailedWithError:error];
+                               } else {
+                                   [weakSelf loadedSharableLink:metaData.url forFile:destPath];
+                               }
+                           }];
+}
+
+
+- (void) uploadFileFailedWithError:(DBError*)error {
     [iConsole error:@"File upload failed with error - %@", error];
     
     [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
     
-    if ([error code] == 507) {  //dropbox quota is full
+    if ([error.statusCode integerValue] == 507) {  //dropbox quota is full
        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_DROPBOX_QUOTA_FULL",@"")];
     } else {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
@@ -461,10 +514,12 @@
     
 }
 
-- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress
-           forFile:(NSString*)destPath from:(NSString*)srcPath {
+- (void)uploadProgress:(CGFloat)progress{
     _progressivePercent = progress;
-    _HUD.progress = progress;
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        _HUD.progress = progress;
+    });
     
     if (progress == 1)
         _isCreatingShareLinkage = YES;
@@ -475,7 +530,7 @@
  @param link : an example https://www.dropbox.com/s/c6jajajeod9m5t4/1111481524004-1771792289.zip?dl=0
  @param path : an exammple /FlipFlashCardsPacks/1111481524004-1771792289.zip
  */
-- (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
+- (void)loadedSharableLink:(NSString *)link forFile:(NSString *)path {
     [iConsole info:@"Share linkage create successfully with linkage - %@", link];
     [_HUD hide:YES];
     
@@ -495,7 +550,7 @@
     
 }
 
-- (void)restClient:(DBRestClient*)restClient loadSharableLinkFailedWithError:(NSError*)error {
+- (void)loadSharableLinkFailedWithError:(DBError*)error {
     [iConsole error:@"%s",__FUNCTION__];
     _HUD.labelText = NSLocalizedString(@"Indicator_Creating_Share_Linkage_Failure",@"");
     _isCreatingShareLinkage = NO;
@@ -553,7 +608,18 @@
 #pragma mark - MBProgressHUDDelegate and related
 
 - (void)hudTappedButton:(MBProgressHUD *)hud {
-    [_restClient cancelAllRequests];  //including upload and create share link (但是不包括 shorted link，因为我们无法终止它）
+    
+    if (_uploadTask) {
+        [_uploadTask cancel];
+    }
+    
+    if (_createShareLinTask) {
+        [_createShareLinTask cancel];
+    }
+    
+    if (_getShareLinTask) {
+        [_getShareLinTask cancel];
+    }
     
     [_HUD hide:YES];
     [_HUD removeFromSuperview];
@@ -719,7 +785,10 @@
 }
 
 - (void) dealloc {
-    _restClient.delegate = nil;
+    
+    _uploadTask = nil;
+    _createShareLinTask = nil;
+    _getShareLinTask = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
