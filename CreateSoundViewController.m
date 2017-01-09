@@ -216,9 +216,11 @@
     
     if (self.isFromNewCreatedCard) {
         //we don't save here
+        //and we assign value to _card.answer/question.recordedSoundFullPath
     } else {
       [_card save];    
     }
+    
     
     [self dismiss];
     

@@ -2500,12 +2500,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.answer.movieFullPath = _answerMovieFullPath;
     card.answer.movieFullPath2 = _answerMovieFullPath2;
     
-    if (isFromNewCreatedCard) {
-        //我们不做什么，因为已经在CreateSoundViewController中进行commit了
-    } else {
-        card.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
-        card.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
-    }
+    //we do nothing here since it's already in CreateSoundViewController
+//    card.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
+//    card.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
     
     
     card.answer.css.subheadingAlign = _subheadingAlignAnswer;
@@ -10444,10 +10441,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark – K_CreateSoundViewController_Dimissed_Notification
 - (void) createSoundViewControllerDimissed_Notification:(NSNotification *)notification {
-
+    
     if (self.tag != CURRENT_FLASHCARDVIEW_TAG && self.tag != NEW_FLASHCARDVIEW_TAG) {
         return;
     }
+    
+    if (isFromNewCreatedCard) {
+        if (self.tag == CURRENT_FLASHCARDVIEW_TAG) {
+            return;
+        }
+    }
+
     
     NSDictionary *dict = [notification object];
     BOOL isToRecording = [[dict objectForKey:@"is_to_recording"] boolValue];
@@ -10516,6 +10520,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             __block int COUNTDOWN_SECOND_FOR_RECORDING = 30;
             __block int COUNTDOWN_SECOND_FOR_PREPARE = 5;
             [_recordingStopButton setTitle:[NSString stringWithFormat:@"%d",COUNTDOWN_SECOND_FOR_PREPARE] forState:UIControlStateNormal];
+            
+            [_recordCountDownTimer invalidate];
+            _recordCountDownTimer = nil;
+            
             _recordCountDownTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
                 
                 if (COUNTDOWN_SECOND_FOR_PREPARE == 1) {
@@ -12577,9 +12585,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
     }
 }
-
-
-
 
 
 @end
