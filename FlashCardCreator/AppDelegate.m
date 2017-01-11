@@ -29,6 +29,7 @@
 
 #import "AppAuth.h"
 
+@import Firebase;
 
 @implementation AppDelegate
 
@@ -66,6 +67,8 @@
     self.rawLocaleText2SpeechArray = [self getRawLocaleText2SpeechArray];
     
     [self setupAWS];
+    
+    [FIRApp configure];
     
     self.isAllowToShowPackList = YES;
     

@@ -131,6 +131,9 @@
 		75AB610A1DDA9F21007AC629 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 75AB61051DDA9F21007AC629 /* SIAlertView.bundle */; };
 		75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61071DDA9F21007AC629 /* SIAlertView.m */; };
 		75AB610C1DDA9F21007AC629 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */; };
+		75DEBD9E1E2377350062AB49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */; };
+		75DEBDA21E237AA20062AB49 /* firebase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBDA11E237AA20062AB49 /* firebase.storyboard */; };
+		75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */; };
 		75F323EA1DBF08BE00B7B047 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */; };
 		75F323EB1DBF08BE00B7B047 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E91DBF08BE00B7B047 /* FLAnimatedImageView.m */; };
 		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
@@ -508,6 +511,10 @@
 		75AB61071DDA9F21007AC629 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		75AB61081DDA9F21007AC629 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
 		75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		75DEBDA11E237AA20062AB49 /* firebase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = firebase.storyboard; sourceTree = "<group>"; };
+		75DEBDA31E237BB90062AB49 /* FirebaseSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseSignInViewController.h; sourceTree = "<group>"; };
+		75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseSignInViewController.m; sourceTree = "<group>"; };
 		75F323E61DBF08BE00B7B047 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		75F323E81DBF08BE00B7B047 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
@@ -1137,6 +1144,7 @@
 		2D5F3D56167D557C009D2ADC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				75DEBD9C1E2377220062AB49 /* Firebase */,
 				751234691DFA303C001F0065 /* GoogleDrive */,
 				884057301CDC59B50092CAB4 /* IAP */,
 				889C9B131BB4F11F00BE77AB /* Dropbox */,
@@ -1434,6 +1442,17 @@
 			);
 			name = SIAlertView;
 			path = Libraries/SIAlertView;
+			sourceTree = "<group>";
+		};
+		75DEBD9C1E2377220062AB49 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */,
+				75DEBDA11E237AA20062AB49 /* firebase.storyboard */,
+				75DEBDA31E237BB90062AB49 /* FirebaseSignInViewController.h */,
+				75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */,
+			);
+			name = Firebase;
 			sourceTree = "<group>";
 		};
 		75F323E51DBF08BE00B7B047 /* FLAnimatedImage */ = {
@@ -1800,6 +1819,7 @@
 				88265CF31B8DE38B00AF55A1 /* templateScreenshot16_answer.png in Resources */,
 				8842A52A19AFF3860044C8CC /* templateScreenshot8_question.png in Resources */,
 				8842A58019B00D470044C8CC /* templateScreenshot8_answer_iPad.png in Resources */,
+				75DEBD9E1E2377350062AB49 /* GoogleService-Info.plist in Resources */,
 				880E85E61A9DA39F00EB3926 /* default_pack_cover_image_transparent.png in Resources */,
 				2DE809C716DF679300B7959A /* selected_table_cell.png in Resources */,
 				2DE809C816DF679300B7959A /* selected_table_cell@2x.png in Resources */,
@@ -1873,6 +1893,7 @@
 				8842A57219B00D470044C8CC /* templateScreenshot0_answer_iPad.png in Resources */,
 				88265CDB1B8DE37500AF55A1 /* templateScreenshot14_question.png in Resources */,
 				881F271B192B5EC80068648D /* w1136.png in Resources */,
+				75DEBDA21E237AA20062AB49 /* firebase.storyboard in Resources */,
 				887BD94A18D66DDE00E4DA21 /* templateScreenshot6_question.png in Resources */,
 				886D8FE21AE48D4F00865101 /* CreateEditPackViewController2_iPad.xib in Resources */,
 				88F4D006192A1D10005E4BFC /* play_recorded_sound_button.png in Resources */,
@@ -2063,6 +2084,7 @@
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				88F5CE6E19B40B4B00107075 /* PECropRectView.m in Sources */,
+				75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
 				883763E41A1C205D007FD84F /* AMPopTip.m in Sources */,
 				88BD6135197771F500834D72 /* PackListViewControllerV2.m in Sources */,
@@ -2235,6 +2257,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
@@ -2281,6 +2304,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";

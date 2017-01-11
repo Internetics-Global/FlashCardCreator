@@ -258,6 +258,7 @@
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Dropbox" = "Use Dropbox";
 "Table_Item_Google_Drive" = "Use Google Drive";
+"Table_Item_AWS" = "Use AWS";
 "Table_Item_Storage" = "Storage";
 "Table_Item_Log_In_Social_Network" = "Sign In";
 "Table_Item_Log_Out_Social_Network" = "Sign Out";

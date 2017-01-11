@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>691893564635-i9r1arvp3lr1vbu8b3vc5ac73e74cql3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.691893564635-i9r1arvp3lr1vbu8b3vc5ac73e74cql3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCiMzUjhRSzH_tGrAj68HQNr1WTMAzcXnE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>691893564635</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flipflash.FFC</string>
+	<key>PROJECT_ID</key>
+	<string>flipflashcards-4cfc3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flipflashcards-4cfc3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:691893564635:ios:8428be58808fc3ca</string>
+	<key>DATABASE_URL</key>
+	<string>https://flipflashcards-4cfc3.firebaseio.com</string>
+</dict>
+</plist>
