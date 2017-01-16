@@ -11,6 +11,9 @@
 #import <ObjectiveDropboxOfficial/ObjectiveDropboxOfficial.h>
 #import "GoogleDriveSession.h"
 #import "AppDelegate.h"
+#import "FirebaseSignInViewController.h"
+
+@import Firebase;
 
 @interface StorageOptionViewController () <UITableViewDelegate, UITableViewDataSource>{
     UITableView *_alertTable;
@@ -58,7 +61,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 
@@ -93,6 +96,18 @@
 
     }
     
+    else if (indexPath.row == 2)
+    {
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_AWS",@"");
+        
+        UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [mySwitch addTarget:self action:@selector(awsAction:) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = mySwitch;
+        BOOL b = [FIRAuth auth].currentUser != nil;
+        [mySwitch setOn:b];
+        
+    }
+    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     
@@ -113,6 +128,52 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+- (void) awsAction :(UISwitch *) myswitch {
+    
+    if ([FIRAuth auth].currentUser != nil) {
+        
+        NSError *signOutError;
+        BOOL status = [[FIRAuth auth] signOut:&signOutError];
+        if (!status) {
+            NSLog(@"Error signing out: %@", signOutError);
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:signOutError.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+            
+            return;
+        } else {
+
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_AWS_DISCONNECTED",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+            [alertView show];
+            
+            
+        }
+        
+        [_alertTable reloadData];
+        
+        
+    } else {
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"firebase" bundle:nil];
+        FirebaseSignInViewController  *viewController = [storyboard instantiateViewControllerWithIdentifier:@"FirebaseSignInViewController"];
+        
+        UINavigationController *naviController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        
+        if (isUserInterfaceIdiomPhone) {
+            [self.navigationController popViewControllerAnimated:true];
+        } else {
+            [self dismissViewControllerAnimated:true completion:nil];
+            [self.navigationController popViewControllerAnimated:true];
+            naviController.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:naviController animated:true completion:nil];
+        
+    }
+    
+    
 }
 
 

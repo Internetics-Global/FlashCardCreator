@@ -26,6 +26,8 @@
 
 #import "Common.h"
 
+@import Firebase;
+
 typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     Type_ActionSheet_Share      = -1,
 };
@@ -278,13 +280,14 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
     
-    NSString *expectedBucketName = @"FlashCardCreateo";  //TODO: ccaa
-    
-    [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
+    NSAssert([FIRAuth auth].currentUser != nil, @"[FIRAuth auth].currentUser should exist");
+    NSString *expectedBucketName = [[FIRAuth auth].currentUser.email lowercaseString]; //aws要求bucket必须是小写的   //ccaa, to do
     
     expectedBucketName = [Common removeAllCharactersExceptAlphanumericFromString:expectedBucketName];
     
     expectedBucketName = [NSString stringWithFormat:@"%@-%@",expectedBucketName,BucketPostfixAfterUserName];
+    
+    [iConsole info:@"%s:expectedBucketName= %@",__FUNCTION__,expectedBucketName];
     
     AWSS3 *s3 = [AWSS3 defaultS3];
     

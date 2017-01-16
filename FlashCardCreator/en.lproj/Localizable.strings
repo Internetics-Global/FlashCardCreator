@@ -111,11 +111,14 @@
 "DIALOG_STORAGE_SELECTION"       = "Storage Selection";
 "DIALOG_STORAGE_SELECTION_DROPBOX"       = "Dropbox";
 "DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE"       = "Google Drive";
+"DIALOG_STORAGE_SELECTION_AWS"       = "Amazon Cloud";
 "DIALOG_GOOGLE_DRIVE_AUTHE_FAILED"       = "Google Drive Authentication failed, Please try again";
 "DIALOG_GOOGLE_DRIVE_DISCONNECTED"               = "Disconnected from Google Drive";
 "DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS"               = "Google Drive is successfully logged in";
+"AWS_DRIVE_LOGIN_SUCCESS"               = "AWS Cloud is successfully logged in";
 
 "DIALOG_DROPBOX_DISCONNECTED"               = "Disconnected from Dropbox";
+"DIALOG_AWS_DISCONNECTED"               = "Disconnected from AWS Cloud";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";

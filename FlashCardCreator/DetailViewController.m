@@ -42,6 +42,8 @@
 
 #import "GoogleDriveSession.h"
 
+@import Firebase;
+
 enum template_color_enum {
     template_color_enum_blue = 0,
     template_color_enum_coffee = 1,
@@ -1001,10 +1003,12 @@ enum popover_enum {
                         [self shareViaDropbox];
                     } else if ([[GoogleDriveSession sharedSession] isLinked]) {
                         [self shareViaGoogleDrive];
+                    } else if ([FIRAuth auth].currentUser != nil) {
+                        [self shareViaAWS];
                     } else {
      
                         __weak __typeof(&*self)weakSelf = self;
-                        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_STORAGE_SELECTION",@"") message:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_STORAGE_SELECTION_DROPBOX",@""), NSLocalizedString(@"DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_STORAGE_SELECTION",@"") message:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_STORAGE_SELECTION_DROPBOX",@""), NSLocalizedString(@"DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE",@""), NSLocalizedString(@"DIALOG_STORAGE_SELECTION_AWS",@""),nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                             
                             if (buttonIndex == 0) {
                                 //cancel button
@@ -1016,6 +1020,10 @@ enum popover_enum {
                             } else if (buttonIndex == 2) {
                                 //google drive
                                 [weakSelf shareViaGoogleDrive];
+                                
+                            } else if (buttonIndex == 3) {
+                                //google drive
+                                [weakSelf shareViaAWS];
                                 
                             }
                             
@@ -1415,6 +1423,22 @@ enum popover_enum {
 }
 
 #pragma mark – Others
+
+- (void) shareViaAWS {
+    
+    if ([FIRAuth auth].currentUser == nil) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please sign in AWS in Setting->Cloud option" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        
+    } else {
+        [iConsole info:@"%s: [FIRAuth auth].currentUser.email = %@",__FUNCTION__,[FIRAuth auth].currentUser.email];
+        
+        _amazonShareHelper = [[AWSS3UploadHelper alloc] initWithCurrentCard:_currentCard currentPack:_currentPack baseViewController:self];
+        [_amazonShareHelper shareAction];
+    }
+    
+}
 
 - (void) shareViaGoogleDrive {
     
