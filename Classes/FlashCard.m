@@ -8699,7 +8699,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         switchSegment = YES;
     }
     
-    
+    BOOL subHeadingQuestionAlphaRevertNeeded = false;
+    BOOL mainQuestionAlphaRevertNeeded = false;
+    BOOL subQuestionAlphaRevertNeeded = false;
     
     
     BOOL isEditable = [self checkCardEditable];
@@ -8725,6 +8727,24 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [_imageQuestion2.animtableImageView setImage:[UIImage imageWithContentsOfFile:_currentCard.question.imageFullPath2]];
             
         }
+        
+        if (_subheadingQuestion.alpha == 0.5) {
+            subHeadingQuestionAlphaRevertNeeded = true;
+            _subheadingQuestion.alpha = 0;
+        }
+        
+        if (_mainQuestion.alpha == 0.5) {
+            mainQuestionAlphaRevertNeeded = true;
+            _mainQuestion.alpha = 0;
+        }
+
+        if (_subQuestion.alpha == 0.5) {
+            subQuestionAlphaRevertNeeded = true;
+            _subQuestion.alpha = 0;
+        }
+
+        
+        
         
     }
     
@@ -8765,6 +8785,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [_imageQuestion2 setVideoURL:[NSURL fileURLWithPath:_questionMovieFullPath2]];
             
         }
+        
+        if (subHeadingQuestionAlphaRevertNeeded) {
+            subHeadingQuestionAlphaRevertNeeded = false;
+            _subheadingQuestion.alpha = 0.5;
+        }
+        
+        if (mainQuestionAlphaRevertNeeded) {
+            mainQuestionAlphaRevertNeeded = false;
+            _mainQuestion.alpha = 0.5;
+        }
+        
+        if (subQuestionAlphaRevertNeeded) {
+            subQuestionAlphaRevertNeeded = false;
+            _subQuestion.alpha = 0.5;
+        }
+        
     }
     
     if (switchSegment == YES) {

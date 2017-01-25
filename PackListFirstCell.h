@@ -10,6 +10,7 @@
 
 @interface PackListFirstCell : UICollectionViewCell
 
-@property (strong, nonatomic) UIImageView *addNewPackImageView ;
+@property (strong, nonatomic) UIImageView *addNewPackImageView;
+@property (strong, nonatomic) UIImageView *libraryImageView;
 
 @end

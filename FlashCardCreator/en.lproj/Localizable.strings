@@ -192,7 +192,7 @@
 "Label_Creator_Hint"       = "Created by:";
 "Label_Job_Title"       = "Name or title";
 "Label_New_User"      = "New User?";
-"Label_Visit_Store"      = "Get packs!";
+"Label_Visit_Store"      = "Free packs!";
 "Label_Help"      = "Help";
 "Label_Recently_Created"      = "recently created";
 "Label_Recently_Viewed"      = "recently viewed";
@@ -201,6 +201,8 @@
 "Label_Color_Select"      = "Select Color";
 
 "Title_Add_A_New_Pack" = "Add a new pack";
+"Title_Create_A_Pack" = "Create a pack";
+"Title_FFC_Library" = "FFC Library";
 "Title_Create_A_New_Card" = "Create a new card";
 "Title_About" = "About us";
 "Title_Edit_Pack" = "Edit Pack";

@@ -284,7 +284,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
             {
                 _videoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _videoButton.frame = CGRectMake(CGRectGetWidth(_videoHolderView.frame) - 48, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
+                _videoButton.frame = CGRectMake((CGRectGetWidth(_videoHolderView.frame) - 106)/2, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
                 _videoButton.contentMode = UIViewContentModeCenter;
                 _videoButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
                 [_videoButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
@@ -300,7 +300,7 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
             {
                 _videoFullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _videoFullScreenButton.frame = CGRectMake(CGRectGetWidth(_videoHolderView.frame) - 96, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
+                _videoFullScreenButton.frame = CGRectMake((CGRectGetWidth(_videoHolderView.frame) - 106)/2 + 48 + 10, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
                 _videoFullScreenButton.contentMode = UIViewContentModeCenter;
                 _videoFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
                 [_videoFullScreenButton setImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
@@ -344,9 +344,9 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
             {
                 _gifButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _gifButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 48, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+                _gifButton.frame = CGRectMake((CGRectGetWidth(_gifHolderView.frame) - 106)/2, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
                 _gifButton.contentMode = UIViewContentModeCenter;
-                _gifButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                _gifButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
                 [_gifButton setImage:[UIImage imageNamed:@"play_multimedia"] forState:UIControlStateNormal];
                 [_gifButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 
@@ -360,9 +360,9 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
             
             {
                 _gifFullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-                _gifFullScreenButton.frame = CGRectMake(CGRectGetWidth(_gifHolderView.frame) - 96, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+                _gifFullScreenButton.frame = CGRectMake((CGRectGetWidth(_gifHolderView.frame) - 106)/2 + 48 + 10, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
                 _gifFullScreenButton.contentMode = UIViewContentModeCenter;
-                _gifFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
+                _gifFullScreenButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
                 [_gifFullScreenButton setImage:[UIImage imageNamed:@"fullscreen"] forState:UIControlStateNormal];
                 [_gifFullScreenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 
@@ -507,6 +507,25 @@ NSString *const Key_Path_Image = @"self.animtableImageView.image";
     _videoFullScreenButton.hidden = false;
 }
 
+
+- (void)layoutSubviews {
+    
+    if (_gifButton != nil) {
+        _gifButton.frame = CGRectMake((CGRectGetWidth(_gifHolderView.frame) - 106)/2, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+    }
+    
+    if (_gifFullScreenButton != nil) {
+        _gifFullScreenButton.frame = CGRectMake((CGRectGetWidth(_gifHolderView.frame) - 106)/2 + 48 + 10, CGRectGetHeight(_gifHolderView.frame) - 48, 48, 48);
+    }
+    
+    if (_videoButton != nil) {
+        _videoButton.frame = CGRectMake((CGRectGetWidth(_videoHolderView.frame) - 106)/2, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
+    }
+    
+    if (_videoFullScreenButton != nil) {
+        _videoFullScreenButton.frame = CGRectMake((CGRectGetWidth(_videoHolderView.frame) - 106)/2 + 48 + 10, CGRectGetHeight(_videoHolderView.frame) - 48, 48, 48);
+    }
+}
 
 
 

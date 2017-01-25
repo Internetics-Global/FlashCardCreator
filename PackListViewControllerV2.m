@@ -232,6 +232,18 @@
     
     if (indexPath.row == 0 + OFFSET) {
         PackListFirstCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"PackListFirstCell" forIndexPath:indexPath];
+        
+        UITapGestureRecognizer *addNewPackTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addNewPackImageViewClicked)];
+        addNewPackTapGesture.numberOfTapsRequired = 1;
+        cell.addNewPackImageView.userInteractionEnabled = YES;
+        [cell.addNewPackImageView addGestureRecognizer:addNewPackTapGesture];
+        
+        UITapGestureRecognizer *libraryTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(libraryImageViewClicked)];
+        libraryTapGesture.numberOfTapsRequired = 1;
+        cell.libraryImageView.userInteractionEnabled = YES;
+        [cell.libraryImageView addGestureRecognizer:libraryTapGesture];
+    
+        
         return cell;
     } else {
         
@@ -324,7 +336,7 @@
     }
     
     if (indexPath.row == 0 + OFFSET) {
-        [self createNewPackButtonClicked:nil];
+        //[self createNewPackButtonClicked:nil];
     } else {
         
         NSInteger index = indexPath.row - 1 - OFFSET;
@@ -711,6 +723,14 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:packID forKey:@"lastCreatedPackID"];
     [defaults synchronize];
+}
+
+- (void) addNewPackImageViewClicked {
+  [self createNewPackButtonClicked:nil];
+}
+
+- (void) libraryImageViewClicked {
+  [self visitStoreButtonClicked:nil];
 }
 
 #pragma mark -
