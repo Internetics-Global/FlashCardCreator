@@ -231,7 +231,7 @@
             _uploadTask = [[[client.filesRoutes uploadData:destPath mode:[[DBFILESWriteMode alloc] initWithOverwrite] autorename:[NSNumber numberWithBool:false] clientModified:nil mute:[NSNumber numberWithBool:true] inputData:fileData]
              response:^(DBFILESFileMetadata *result, DBFILESUploadError *routeError, DBError * error) {
                  
-                 if (routeError != nil || routeError != nil) {
+                 if (routeError != nil || error != nil) {
                      [weakSelf uploadFileFailedWithError:error];
                  } else {
                      
