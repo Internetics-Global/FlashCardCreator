@@ -53,7 +53,7 @@
 "DIALOG_REMOVE_IMAGE" = "Remove image";
 "DIALOG_INVALID_YOUTUBE_URL" = "Invalid YouTube url, it must be a full url - for example: http://www.youtube.com/watch?v=3-EaGGPGiJY";
 "DIALOG_INPUT_DOWNLOAD_CODE" = "Enter download code";
-"DIALOG_USE_AMAZON_AS_STORAGE" = "Use Amazon Cloud as storage";
+"DIALOG_USE_AMAZON_AS_STORAGE" = "Use FFC Drive as storage";
 "DIALOG_SYMBOL_NOT_SUPPORTED_BY_FONT" = "Symbol may not be supported by selected font, when considering use on the Android platform";
 
 "DIALOG_ARE_YOU_SURE_YOU_WANT_TO_EXIT"       = "Are you sure you want to exit?";
@@ -98,7 +98,7 @@
 "DIALOG_ACCOUNT_USERNAME_HAS_BEEN_REGISTERED" = "The user name has been registered";
 "DIALOG_ACCOUNT_USERNAME_LINKED_SUCCESSFULLY" = "Successfully";
 "DIALOG_SOCIAL_MEDIA_SIGNUP_OR_SIGNIN_SUCCESS" = "You now are logged in";
-"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failed to create a new bucket on AWS";
+"DIALOG_FAILURE_TO_CREATE_BUCKET"    = "Failed to create a new bucket on FFC Drive";
 "DIALOG_ACCOUNT_USERNAME_EMPTY_ERROR" = "User name can not be empty";
 "DIALOG_INVALID_USERNAME_OR_PASSWORD" = "Invalid ID or password";
 "DIALOG_ACCOUNT_SIGN_UP_FAILURE_INVALID_NAME" = "Invlid user name. Only alphanumeric characters are permitted.";
@@ -111,14 +111,14 @@
 "DIALOG_STORAGE_SELECTION"       = "Storage Selection";
 "DIALOG_STORAGE_SELECTION_DROPBOX"       = "Dropbox";
 "DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE"       = "Google Drive";
-"DIALOG_STORAGE_SELECTION_AWS"       = "Amazon Cloud";
+"DIALOG_STORAGE_SELECTION_AWS"       = "FFC Drive";
 "DIALOG_GOOGLE_DRIVE_AUTHE_FAILED"       = "Google Drive Authentication failed, Please try again";
 "DIALOG_GOOGLE_DRIVE_DISCONNECTED"               = "Disconnected from Google Drive";
 "DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS"               = "Google Drive is successfully logged in";
-"AWS_DRIVE_LOGIN_SUCCESS"               = "AWS Cloud is successfully logged in";
+"AWS_DRIVE_LOGIN_SUCCESS"               = "FFC Drive is successfully logged in";
 
 "DIALOG_DROPBOX_DISCONNECTED"               = "Disconnected from Dropbox";
-"DIALOG_AWS_DISCONNECTED"               = "Disconnected from AWS Cloud";
+"DIALOG_AWS_DISCONNECTED"               = "Disconnected from FFC Drive";
 
 "NavigationBarItem_Packs"   = "Packs";
 "NavigationBarItem_Create"  = "Create";
@@ -263,7 +263,7 @@
 "Table_Item_Count_Down" = "Count Down";
 "Table_Item_Dropbox" = "Use Dropbox";
 "Table_Item_Google_Drive" = "Use Google Drive";
-"Table_Item_AWS" = "Use AWS";
+"Table_Item_AWS" = "Use FFC Drive";
 "Table_Item_Storage" = "Storage";
 "Table_Item_Log_In_Social_Network" = "Sign In";
 "Table_Item_Log_Out_Social_Network" = "Sign Out";

@@ -1428,7 +1428,7 @@ enum popover_enum {
     
     if ([FIRAuth auth].currentUser == nil) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please sign in AWS in Setting->Cloud option" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please sign in to FFC Drive in Settings > FFC Drive" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         
     } else {
