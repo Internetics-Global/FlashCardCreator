@@ -21,4 +21,7 @@
 
 @property (strong, nonatomic) Pack *currentPack;
 
+
+- (void) saveAndCloseCreateCardView;
+
 @end

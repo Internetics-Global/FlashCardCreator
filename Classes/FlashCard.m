@@ -68,6 +68,8 @@
 
 #import "SIAlertView.h"
 
+#import "CreateCardViewController.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -1687,8 +1689,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _answerTitle.userInteractionEnabled = false;
         //_functionAreaView.hidden = YES;
         
-        _previewButton.hidden = true;
-        _saveButton.hidden = true;
+//        _previewButton.hidden = true;
+//        _saveButton.hidden = true;
     }
     
     if (0) {
@@ -10649,8 +10651,18 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return;
     }
     
+    //same logic as navigation bar right "save button" itemm
+    if (isFromNewCreatedCard) {
+        CreateCardViewController *controller = (CreateCardViewController *)[self firstAvailableUIViewController];
+        [controller saveAndCloseCreateCardView];
+        return;
+        
+    }
+    
     
     [self saveEdittedCard];
+    
+    
     
 }
 
