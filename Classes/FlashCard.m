@@ -166,6 +166,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
      *  by click the built-in "hide" button on keyboard
      */
     BOOL                                 *_isDismissKeyboardViaSaveButtonFromKeyboard;
+    
 }
 
 
@@ -1716,7 +1717,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
     }
     
-    [self updateSemiTransparentPolicyForPlayMode];
+    [self hideAllSemiTransparentTextViews];
 
     
     [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
@@ -2350,6 +2351,27 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         return [UIColor blueColor];
     }
     
+}
+
+- (UIColor *) colorFromColorCSSString:(NSString *) colorStr {
+    
+    NSString *str = colorStr.lowercaseString;
+    
+    if ([str isEqualToString:@"blue"]) {
+        return [UIColor blueColor];
+    } else if ([str isEqualToString:@"red"]) {
+        return [UIColor redColor];
+    } else if ([str isEqualToString:@"yellow"]) {
+        return [UIColor yellowColor];
+    } else if ([str isEqualToString:@"black"]) {
+        return [UIColor blackColor];
+    } else if ([str isEqualToString:@"green"]) {
+        return [UIColor greenColor];
+    } else if ([str isEqualToString:@"white"]) {
+        return [UIColor whiteColor];
+    } else {
+        return [UIColor blackColor];
+    }
 }
 
 #pragma mark -
@@ -9181,6 +9203,35 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 //当点击，并还没有开始改变内容时
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    
+    /*
+     * Clear text color is used UNIQUELY in the app to specify those "semi texts" that should be hidden
+     * since we can not use the hidden propery, which could make touch out of response
+     * Never use clear color for text color everywhere else
+     */
+    if ([textView.textColor isEqual:[UIColor clearColor]] == true) {
+        
+        UIColor *textColor;
+        if (textView.tag == kTagSubheadingQuestion){
+            textColor = [self colorFromColorCSSString:_currentCard.question.css.subheadingColor];
+        } else if (textView.tag == kTagMainQuestion) {
+            textColor = [self colorFromColorCSSString:_currentCard.question.css.mainColor];
+        } else if (textView.tag == kTagSubQuestion) {
+            textColor = [self colorFromColorCSSString:_currentCard.question.css.subColor];
+        } else if (textView.tag == kTagSubheadingAnswer) {
+            textColor = [self colorFromColorCSSString:_currentCard.answer.css.subheadingColor];
+        } else if (textView.tag == kTagMainAnswer) {
+            textColor = [self colorFromColorCSSString:_currentCard.answer.css.mainColor];
+        } else if (textView.tag == kTagSubAnswer) {
+            textColor = [self colorFromColorCSSString:_currentCard.answer.css.subColor];
+        } else {
+            textColor = [UIColor blackColor];
+        }
+        
+        textView.textColor = textColor;
+    }
+    
     _lastBecomeFirstRespondTextView = textView;
     _isUITextViewFocused = TRUE;
     _keyboardInputBaseView.hidden = FALSE;
@@ -11849,50 +11900,37 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 /**
  *  我们不能使用hidden属性，因为triggerResizeTextToFitFrame的中间过程中会局部hidden
  */
-- (void) updateSemiTransparentPolicyForPlayMode {
+- (void) hideAllSemiTransparentTextViews {
     
-    float ALPHA_VALUE;
-    
-    if (_isPlayingCard) {
-        ALPHA_VALUE = 0;
-    } else {
-        ALPHA_VALUE = 0.5;
-    }
+    /*
+     * Clear text color is used UNIQUELY in the app to specify those "semi texts" that should be hidden
+     * since we can not use the hidden propery, which could make touch out of response
+     * Never use clear color for text color everywhere else
+    */
+    UIColor *clearTextColor = [UIColor clearColor];
     
     if (self.currentCard.question.css.subheadingSemiTransparent) {
-        _subheadingQuestion.alpha = ALPHA_VALUE;
-    } else {
-        _subheadingQuestion.alpha = 1;
+        _subheadingQuestion.textColor = clearTextColor;
     }
     
     if (self.currentCard.question.css.mainSemiTransparent) {
-        _mainQuestion.alpha = ALPHA_VALUE;
-    } else {
-        _mainQuestion.alpha = 1;
+        _mainQuestion.textColor = clearTextColor;
     }
     
     if (self.currentCard.question.css.subSemiTransparent) {
-        _subQuestion.alpha = ALPHA_VALUE;
-    } else {
-        _subQuestion.alpha = 1;
+        _subQuestion.textColor = clearTextColor;
     }
     
     if (self.currentCard.answer.css.subheadingSemiTransparent) {
-        _subheadingAnswer.alpha = ALPHA_VALUE;
-    } else {
-        _subheadingAnswer.alpha = 1;
+        _subheadingAnswer.textColor = clearTextColor;
     }
     
     if (self.currentCard.answer.css.mainSemiTransparent) {
-        _mainAnswer.alpha = ALPHA_VALUE;
-    } else {
-        _mainAnswer.alpha = 1;
+        _mainAnswer.textColor = clearTextColor;
     }
     
     if (self.currentCard.answer.css.subSemiTransparent) {
-        _subAnswer.alpha = ALPHA_VALUE;
-    } else {
-        _subAnswer.alpha = 1;
+        _subAnswer.textColor = clearTextColor;
     }
     
     
