@@ -13,7 +13,7 @@
 @class Pack;
 @class Card;
 
-@interface DropboxSharekitHelper : NSObject <MBProgressHUDDelegate, UIAlertViewDelegate> {
+@interface DropboxSharekitHelper : NSObject <MBProgressHUDDelegate> {
     Pack *_currentPack;
     Card *_currentCard;
     UIViewController *_baseViewController;

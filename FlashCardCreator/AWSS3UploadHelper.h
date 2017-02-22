@@ -12,7 +12,7 @@
 @class Pack;
 @class Card;
 
-@interface AWSS3UploadHelper : NSObject <MBProgressHUDDelegate, UIAlertViewDelegate> {
+@interface AWSS3UploadHelper : NSObject <MBProgressHUDDelegate> {
     Pack *_currentPack;
     Card *_currentCard;
     UIViewController *_baseViewController;

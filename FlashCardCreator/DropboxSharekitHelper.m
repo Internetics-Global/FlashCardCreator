@@ -17,6 +17,8 @@
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 
+#import "FFCTextInputCompactAlertView.h"
+
 @interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
     
@@ -125,25 +127,19 @@
 
 - (void) showPasswordInputDialog {
     [iConsole info:@"%s",__FUNCTION__];
-    UIAlertView *alert;
-    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-        alert = [[UIAlertView alloc] initWithTitle:nil
-                                   message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
-                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                           message:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"Keyboard_Cancel",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Set",@""),
-                                                   NSLocalizedString(@"Keyboard_No_Needed",@""),nil];
-    }
-    alert.tag = 1;
-    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [alert textFieldAtIndex:0].text = @"";
-    alert.delegate = self;
-    [alert show];
+    
+    FFCTextInputCompactAlertView *alertView = [[FFCTextInputCompactAlertView alloc] init];
+    [alertView showAlertViewWithMessage:NSLocalizedString(@"DIALOG_SET_PASSWORD",@"") buttonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Keyboard_Set",@""),NSLocalizedString(@"Keyboard_No_Needed",@""),NSLocalizedString(@"Keyboard_Cancel",@""), nil]];
+    alertView.completion = ^(NSInteger buttonIndex,NSString *inputTextsString) {
+        
+        if (buttonIndex == 0) {
+            [self uploadToDropbox:inputTextsString];
+        } else if (buttonIndex == 1) {
+            //Password not set
+            [self uploadToDropbox:@""];
+        }
+        
+    };
     
     APP_DELEGATE.isAllowToShowPackList = NO;
 }
@@ -275,133 +271,91 @@
     }
     
     
-    UIAlertView *alert;
-    if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
-        alert = [[UIAlertView alloc] initWithTitle:nil
-                                           message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                                 otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
-                                                   NSLocalizedString(@"DIALOG_OK",@""),nil];
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"")
-                                   message:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"")
-                                  delegate:self cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"")
-                         otherButtonTitles:NSLocalizedString(@"Keyboard_Unlimited",@""),
-                                           NSLocalizedString(@"DIALOG_OK",@""), nil];
-    }
-    alert.tag = 2;
-    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [alert textFieldAtIndex:0].text = @"9999";
-    alert.delegate = self;
-    [alert show];
+    FFCTextInputCompactAlertView *alertView = [[FFCTextInputCompactAlertView alloc] init];
+    [alertView showAlertViewWithMessage:NSLocalizedString(@"DIALOG_SET_MAX_NUMBER_OF_DOWNLOADS",@"") buttonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"Keyboard_Unlimited",@""),NSLocalizedString(@"DIALOG_OK",@""),NSLocalizedString(@"Keyboard_Cancel",@""), nil]];
+    alertView.completion = ^(NSInteger buttonIndex,NSString *inputTextsString) {
+        
+        if (buttonIndex == 0 || buttonIndex == 1) {
+            NSString *maxDownloadTimes;
+            if (buttonIndex == 0) {
+                maxDownloadTimes = @"9999999";
+            } else {
+                maxDownloadTimes = inputTextsString;
+            }
+            [self setMaxDownloadAlertViewClicked:maxDownloadTimes];
+            
+        } else if (buttonIndex == 2) {
+            [self hideHud];
+        }
+        
+        APP_DELEGATE.isAllowToShowPackList = YES;
+        
+        
+    };
     
     APP_DELEGATE.isAllowToShowPackList = NO;
     
 }
 
-
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [iConsole info:@"%s",__FUNCTION__];
-    
-    switch (alertView.tag) {
-        case 1: {
-            [[alertView textFieldAtIndex:0] resignFirstResponder];
-            if (buttonIndex == 1) {
-                //Password input finished
-                NSString *password = [alertView textFieldAtIndex:0].text;
-                [self uploadToDropbox:password];
-            } else if (buttonIndex == 2) {
-                //Password not set
-                [self uploadToDropbox:@""];
+- (void)setMaxDownloadAlertViewClicked: (NSString *) maxNoString {
+    if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
+        _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
+        [_HUD show:YES];
+        
+        double delayInSeconds = 0.4;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            //1.生成short linkage
+            NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
+            if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
+                _HUD.hidden = YES;
+                [_HUD removeFromSuperview];//we need to clean up _HUD
+                [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
+                return;
             }
+            _HUD.hidden = YES;
+            [_HUD removeFromSuperview]; //we need to clean up _HUD
             
+            
+            self.currentPack.shareLink = redirectedStr;
+            [self.currentPack savePackOnly];
+            
+            //2. save meta info in background
+            // insert this record in amazon singleDB for pack download limit control
+            // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
+            // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
+
+            int maxNo = [maxNoString integerValue];
+            NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
+            NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            __weak DropboxSharekitHelper *safeSelf = self;
+            dispatch_async(queue, ^{
+                [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
+                [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
+            });
+            
+            //3. 分享
+            _finalPostMessage = [Common getShareMessage:redirectedStr];
+            
+            [self showShareActionSheet];
+        });
+    } else {
+        //已经是短链接了，可以直接处理
+        
+        //保证shareLink存在
+        if (self.currentPack.shareLink.length == 0) {
+            self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
+            [self.currentPack savePackOnly];
         }
-            
-            break;
-            
-        case 2: {
-            [[alertView textFieldAtIndex:0] resignFirstResponder];
-            
-            if (buttonIndex != 0) {
-                if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
-                    _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
-                    [_HUD show:YES];
-                    
-                    double delayInSeconds = 0.4;
-                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                        
-                        //1.生成short linkage
-                        NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
-                        if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
-                            _HUD.hidden = YES;
-                            [_HUD removeFromSuperview];//we need to clean up _HUD
-                            [Common alertViewCommon:NSLocalizedString(@"DIALOG_REDIRECT_SERVICE_UNAVAILABLE",@"")];
-                            return;
-                        }
-                        _HUD.hidden = YES;
-                        [_HUD removeFromSuperview]; //we need to clean up _HUD
-                        
-                        
-                        self.currentPack.shareLink = redirectedStr;
-                        [self.currentPack savePackOnly];
-                        
-                        //2. save meta info in background
-                        // insert this record in amazon singleDB for pack download limit control
-                        // shareLinkage is kind of "https://s3.amazonaws.com/internetics.flashcardcreator/internetics.flashcardcreator/Pack1432614117-1358153070.zip"
-                        // [shareLinkage lastPathComponent] is kind of "Pack1374148414-1884690931.zip"
-                        NSString *maxNoString = [alertView textFieldAtIndex:0].text;
-                        int maxNo;
-                        if (buttonIndex == 1) {
-                            //unlimited
-                            maxNo = 9999999;
-                        } else {
-                            maxNo = [maxNoString integerValue];
-                        }
-                        NSRange range = [[_finalShareLinkBeforeRedirect lastPathComponent] rangeOfString:@".zip"];
-                        NSString *simpleDBItemName = [[_finalShareLinkBeforeRedirect lastPathComponent] substringToIndex:range.location];
-                        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-                        __weak DropboxSharekitHelper *safeSelf = self;
-                        dispatch_async(queue, ^{
-                            [iConsole info:@"Amazon simpleDB item name:%@",simpleDBItemName];
-                            [safeSelf insertIntoAmazonSingleDB:simpleDBItemName withMaxNo:maxNo];
-                        });
-                        
-                        //3. 分享
-                        _finalPostMessage = [Common getShareMessage:redirectedStr];
-                        
-                        [self showShareActionSheet];
-                    });
-                } else {
-                    //已经是短链接了，可以直接处理
-                    
-                    //保证shareLink存在
-                    if (self.currentPack.shareLink.length == 0) {
-                        self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
-                        [self.currentPack savePackOnly];
-                    }
-                    
-                    _finalPostMessage = [Common getShareMessage:_finalShareLinkBeforeRedirect];
-                    
-                    [self showShareActionSheet];
-                }
-            } else {
-                [self hideHud];
-            }
-        }
-            
-            break;
-            
-        default:
-            break;
+        
+        _finalPostMessage = [Common getShareMessage:_finalShareLinkBeforeRedirect];
+        
+        [self showShareActionSheet];
     }
-    
-    APP_DELEGATE.isAllowToShowPackList = YES;
-    
-    
-    
 }
+
 
 - (void) showShareActionSheet {
     

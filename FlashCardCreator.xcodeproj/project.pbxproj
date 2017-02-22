@@ -134,6 +134,8 @@
 		75DEBD9E1E2377350062AB49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */; };
 		75DEBDA21E237AA20062AB49 /* firebase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBDA11E237AA20062AB49 /* firebase.storyboard */; };
 		75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */; };
+		75EA2C181E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EA2C171E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.m */; };
+		75EA2C1E1E5DB046004B22A8 /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75EA2C1D1E5DB046004B22A8 /* CustomIOSAlertView.m */; };
 		75F323EA1DBF08BE00B7B047 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */; };
 		75F323EB1DBF08BE00B7B047 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F323E91DBF08BE00B7B047 /* FLAnimatedImageView.m */; };
 		880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 880025EE17C3297F00A485CE /* FMMoveTableView.m */; };
@@ -515,6 +517,10 @@
 		75DEBDA11E237AA20062AB49 /* firebase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = firebase.storyboard; sourceTree = "<group>"; };
 		75DEBDA31E237BB90062AB49 /* FirebaseSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseSignInViewController.h; sourceTree = "<group>"; };
 		75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirebaseSignInViewController.m; sourceTree = "<group>"; };
+		75EA2C161E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFCTextInputCompactAlertView.h; path = Classes/FFCTextInputCompactAlertView.h; sourceTree = "<group>"; };
+		75EA2C171E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FFCTextInputCompactAlertView.m; path = Classes/FFCTextInputCompactAlertView.m; sourceTree = "<group>"; };
+		75EA2C1C1E5DB046004B22A8 /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
+		75EA2C1D1E5DB046004B22A8 /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		75F323E61DBF08BE00B7B047 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		75F323E71DBF08BE00B7B047 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		75F323E81DBF08BE00B7B047 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
@@ -999,6 +1005,8 @@
 		2D3E9D0E167D954F0053FA31 /* Custom UIs */ = {
 			isa = PBXGroup;
 			children = (
+				75EA2C161E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.h */,
+				75EA2C171E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.m */,
 				884E61001D094B39003EC638 /* PackInfoView.h */,
 				884E61011D094B39003EC638 /* PackInfoView.m */,
 				2D5FCB6216DD916600DB8628 /* FCCBarButton.h */,
@@ -1118,6 +1126,7 @@
 		2D5F3D4F167B5365009D2ADC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				75EA2C1B1E5DB046004B22A8 /* CustomIOSAlertView */,
 				75AB61041DDA9F21007AC629 /* SIAlertView */,
 				75F323E51DBF08BE00B7B047 /* FLAnimatedImage */,
 				881DDCDD1BA908C3005EFE21 /* DACircularProgress */,
@@ -1453,6 +1462,16 @@
 				75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */,
 			);
 			name = Firebase;
+			sourceTree = "<group>";
+		};
+		75EA2C1B1E5DB046004B22A8 /* CustomIOSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				75EA2C1C1E5DB046004B22A8 /* CustomIOSAlertView.h */,
+				75EA2C1D1E5DB046004B22A8 /* CustomIOSAlertView.m */,
+			);
+			name = CustomIOSAlertView;
+			path = Libraries/CustomIOSAlertView;
 			sourceTree = "<group>";
 		};
 		75F323E51DBF08BE00B7B047 /* FLAnimatedImage */ = {
@@ -2039,6 +2058,7 @@
 				884E61021D094B39003EC638 /* PackInfoView.m in Sources */,
 				2D5F3D4A167B50F6009D2ADC /* DataManager.m in Sources */,
 				2D89234A16806BF200B43BCD /* PublicPackRequest.m in Sources */,
+				75EA2C1E1E5DB046004B22A8 /* CustomIOSAlertView.m in Sources */,
 				2DEDA1FB1683100E0074AC9E /* ZipFileDownloadHelper.m in Sources */,
 				2DF981E916C4F2660092AAF6 /* CSS.m in Sources */,
 				886D8FEE1AE4975E00865101 /* TPKeyboardAvoidingCollectionView.m in Sources */,
@@ -2053,6 +2073,7 @@
 				2D5C17DC16D1A56A00E1E785 /* AFHTTPClient.m in Sources */,
 				88BB8FE51AE72A040089D7F6 /* ASValueTrackingSlider.m in Sources */,
 				2D5C17DD16D1A56A00E1E785 /* AFHTTPRequestOperation.m in Sources */,
+				75EA2C181E5DAF3D004B22A8 /* FFCTextInputCompactAlertView.m in Sources */,
 				2D5C17DE16D1A56A00E1E785 /* AFImageRequestOperation.m in Sources */,
 				882D56281C39F2A900EBA68E /* UITextField+AutoResizeFont.m in Sources */,
 				2A417A671D5C583500180A52 /* SelectText2SpeechLanguage.m in Sources */,
