@@ -506,7 +506,8 @@
     [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
     
-    if ([error.statusCode integerValue] == 507) {  //dropbox quota is full
+    if ([error.statusCode integerValue] == 507 || [error.statusCode integerValue] == 409 ||
+        (error.errorContent != nil && [error.errorContent containsString:@"insufficient_space"])) {  //dropbox quota is full
        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_DROPBOX_QUOTA_FULL",@"")];
     } else {
         [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
