@@ -115,6 +115,8 @@
 "DIALOG_GOOGLE_DRIVE_AUTHE_FAILED"       = "Google Drive Authentication failed, Please try again";
 "DIALOG_GOOGLE_DRIVE_DISCONNECTED"               = "Disconnected from Google Drive";
 "DIALOG_GOOGLE_DRIVE_LOGIN_SUCCESS"               = "Google Drive is successfully logged in";
+"DIALOG_ERROR_GOOGLE_DRIVE_QUOTA_FULL" = "Google Drive was unable to complete this action possibly because of a storage quota limit";
+
 "AWS_DRIVE_LOGIN_SUCCESS"               = "FFC Drive is successfully logged in";
 
 "DIALOG_DROPBOX_DISCONNECTED"               = "Disconnected from Dropbox";

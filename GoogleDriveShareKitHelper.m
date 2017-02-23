@@ -435,7 +435,11 @@
     [FileOperationHelper removeAssembleFactoryDirectory];
     [_HUD hide:YES];
     
-    [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+    if (error.code == 403) {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_ERROR_GOOGLE_DRIVE_QUOTA_FULL",@"")];
+    } else {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_UPLOAD_FAILURE",@"")];
+    }
     
 }
 
