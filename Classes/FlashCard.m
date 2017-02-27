@@ -1668,6 +1668,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
     [iConsole info:@"%s",__FUNCTION__];
+    
+    _subQuestion.alpha = 1;
+    _subheadingQuestion.alpha = 1;
+    _mainQuestion.alpha = 1;
+    
+    _subAnswer.alpha = 1;
+    _subheadingAnswer.alpha = 1;
+    _mainAnswer.alpha = 1;
+    
     [self pauseEmbeddedVideoAndGif];
     [self resetVerticalScrollViewOffset];
     [self showQuestionOrAnswer];
@@ -11901,6 +11910,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
+
 
 /**
  *  我们不能使用hidden属性，因为triggerResizeTextToFitFrame的中间过程中会局部hidden
