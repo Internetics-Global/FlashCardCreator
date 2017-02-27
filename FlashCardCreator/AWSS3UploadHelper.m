@@ -278,6 +278,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void)upload:(NSString *)generatedZipFilePath withFileName:(NSString *)saveName {
     
+    
     NSAssert([FIRAuth auth].currentUser != nil, @"[FIRAuth auth].currentUser should exist");
     NSString *expectedBucketName = [[FIRAuth auth].currentUser.email lowercaseString]; //aws要求bucket必须是小写的   //ccaa, to do
     
@@ -436,32 +437,31 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             
         } else {
             
-        }
-        
-        //5. 执行完毕后，进行操作
-        __weak __typeof(&*self)weakSelf = self;
-        if (task.result) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+            //执行完毕后，进行操作
+            __weak __typeof(&*self)weakSelf = self;
+            if (task.result) {
                 
-                [_HUD hide:YES];
-                [iConsole info:@"Upload complete"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [_HUD hide:YES];
+                    [iConsole info:@"Upload complete"];
+                    
+                    
+                    //save local meta info
+                    NSString *link = [NSString stringWithFormat:@"%@/%@/%@",S3BaseURL,expectedBucketName,saveName];
+                    NSString *sharedate = [FileOperationHelper getTodayString];
+                    NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
+                    [dict setObject:sharedate forKey:@"share_date"];
+                    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    //share action
+                    [weakSelf shareAction:link];
+                    
+                });
                 
-                
-                //save local meta info
-                NSString *link = [NSString stringWithFormat:@"%@/%@/%@",S3BaseURL,expectedBucketName,saveName];
-                NSString *sharedate = [FileOperationHelper getTodayString];
-                NSDictionary * rawDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:_currentPack.packName];
-                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:rawDict];
-                [dict setObject:sharedate forKey:@"share_date"];
-                [[NSUserDefaults standardUserDefaults] setObject:dict forKey:_currentPack.packName];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                //share action
-                [weakSelf shareAction:link];
-                
-            });
-            
+            }
         }
         
         return nil;
@@ -473,24 +473,20 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         case AWSS3TransferManagerRequestStateRunning: {
             
             uploadRequest.uploadProgress = ^(int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (totalBytesExpectedToSend > 0) {
-                        float progress = (float)((double) totalBytesSent / totalBytesExpectedToSend);
-                        
-                        _progressivePercent = progress;
-                        _HUD.progress = progress;
-                        
-                    }
+                if (totalBytesExpectedToSend > 0) {
+                    float progress = (float)((double) totalBytesSent / totalBytesExpectedToSend);
                     
+                    _progressivePercent = progress;
+                    _HUD.progress = progress;
                     
-                });
+                }
             };
             break;
         }
             
         default:
         {
-            [_HUD hide:YES];
+//            [_HUD hide:YES];  //we don't hide here
             [iConsole info:@"go to default here"];
             break;
         }
