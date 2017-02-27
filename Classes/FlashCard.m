@@ -1740,6 +1740,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         });
     }
     
+    
 }
 
 
@@ -2547,6 +2548,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.answer.css.mainFont = _mainFontAnswer;
     card.answer.css.subFont = _subFontAnswer;
     
+    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
     card.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
     card.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
     card.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
@@ -2581,6 +2583,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.question.css.mainFont = _mainFontQuestion;
     card.question.css.subFont = _subFontQuestion;
     
+    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
     card.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5);
     card.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5);
     card.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5);
@@ -2648,6 +2651,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.mainFont = _mainFontAnswer;
     _currentCard.answer.css.subFont = _subFontAnswer;
     
+    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
     _currentCard.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
     _currentCard.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
     _currentCard.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
@@ -2682,9 +2686,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.mainFont = _mainFontQuestion;
     _currentCard.question.css.subFont = _subFontQuestion;
     
+    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
     _currentCard.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5);
     _currentCard.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5);
     _currentCard.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5);
+    
     
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
     //we did this when:
@@ -2916,7 +2922,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    
     //PartB: Answer
     css= _currentCard.answer.css;
     //1. subheading
@@ -3071,7 +3076,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.textAlignment = NSTextAlignmentJustified;
         _subAlignAnswer = @"Justify";
     }
-    
     
     
     [self setNeedsDisplay];
@@ -7513,7 +7517,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     _keyboardShown = YES;
     
-    
 }
 
 
@@ -7545,6 +7548,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
             [self commitQuestionAndAnswerData];
+            [self hideAllSemiTransparentTextViews];
             [[NSNotificationCenter defaultCenter] postNotificationName:SAVE_NEW_CREATED_CARD_NOTIFICATION object:nil];
         } else {
             __weak __typeof(&*self)weakSelf = self;
@@ -7552,6 +7556,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                 [weakSelf saveEdittedCard];
+                [weakSelf hideAllSemiTransparentTextViews];
             });
         }
     } else {
@@ -7559,6 +7564,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         //每当只是关闭键盘时，这时如果是NEW_FLASHCARDVIEW_TAG，我们需要把数据暂存一下，以免segement QA切换会引起数据丢失
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             [self commitQuestionAndAnswerData];
+            [self hideAllSemiTransparentTextViews];
         }
         
     }
@@ -8711,6 +8717,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _HUD = nil;
 }
 
+
+
 - (UIImage *)captureWholeViewAsImage {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -8726,7 +8734,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     BOOL subHeadingQuestionAlphaRevertNeeded = false;
     BOOL mainQuestionAlphaRevertNeeded = false;
     BOOL subQuestionAlphaRevertNeeded = false;
-    
     
     BOOL isEditable = [self checkCardEditable];
     if (isEditable == YES) {
@@ -8761,14 +8768,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             mainQuestionAlphaRevertNeeded = true;
             _mainQuestion.alpha = 0;
         }
-
+        
         if (_subQuestion.alpha == 0.5) {
             subQuestionAlphaRevertNeeded = true;
             _subQuestion.alpha = 0;
         }
-
-        
-        
         
     }
     
@@ -9041,7 +9045,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (responderTextView.alpha == 0.5) {
             responderTextView.alpha = 1;
         } else {
-            responderTextView.alpha = 0.5;
+            responderTextView.alpha = 0.5;  //只有两种情况会成为0.5，另外一种是键盘出现
         }
         
     } else {
@@ -9230,6 +9234,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         textView.textColor = textColor;
+        textView.alpha = 0.5; //只有两种情况会成为0.5，另外一种是点击"make visible按钮"
     }
     
     _lastBecomeFirstRespondTextView = textView;
@@ -11907,30 +11912,29 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
      * since we can not use the hidden propery, which could make touch out of response
      * Never use clear color for text color everywhere else
     */
-    UIColor *clearTextColor = [UIColor clearColor];
     
-    if (self.currentCard.question.css.subheadingSemiTransparent) {
-        _subheadingQuestion.textColor = clearTextColor;
+    if (self.currentCard.question.css.subheadingSemiTransparent || (_subheadingQuestion.alpha == 0.5)) {
+        _subheadingQuestion.textColor = [UIColor clearColor];
     }
     
-    if (self.currentCard.question.css.mainSemiTransparent) {
-        _mainQuestion.textColor = clearTextColor;
+    if (self.currentCard.question.css.mainSemiTransparent || (_mainQuestion.alpha == 0.5)) {
+        _mainQuestion.textColor = [UIColor clearColor];
     }
     
-    if (self.currentCard.question.css.subSemiTransparent) {
-        _subQuestion.textColor = clearTextColor;
+    if (self.currentCard.question.css.subSemiTransparent || (_subQuestion.alpha == 0.5)) {
+        _subQuestion.textColor = [UIColor clearColor];
     }
     
-    if (self.currentCard.answer.css.subheadingSemiTransparent) {
-        _subheadingAnswer.textColor = clearTextColor;
+    if (self.currentCard.answer.css.subheadingSemiTransparent || (_subheadingAnswer.alpha == 0.5)) {
+        _subheadingAnswer.textColor = [UIColor clearColor];
     }
     
-    if (self.currentCard.answer.css.mainSemiTransparent) {
-        _mainAnswer.textColor = clearTextColor;
+    if (self.currentCard.answer.css.mainSemiTransparent || (_mainAnswer.alpha == 0.5)) {
+        _mainAnswer.textColor = [UIColor clearColor];
     }
     
-    if (self.currentCard.answer.css.subSemiTransparent) {
-        _subAnswer.textColor = clearTextColor;
+    if (self.currentCard.answer.css.subSemiTransparent || (_subAnswer.alpha == 0.5)) {
+        _subAnswer.textColor = [UIColor clearColor];
     }
     
     

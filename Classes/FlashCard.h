@@ -231,5 +231,7 @@ typedef enum{
 - (void) pauseEmbeddedVideoAndGif;
 - (void) cleanMultimediaViews;
 
+- (void) hideAllSemiTransparentTextViews;
+
 
 @end

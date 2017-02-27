@@ -384,6 +384,8 @@ enum popover_enum {
         [_currentCardView pauseEmbeddedVideoAndGif];
     }
     
+    [_currentCardView hideAllSemiTransparentTextViews];
+    
 }
 
 - (void) showPurchaseView {
