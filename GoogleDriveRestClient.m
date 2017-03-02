@@ -296,7 +296,7 @@
       unsigned long long dataLength) {
         
         if (weakSelf.delegate && dataLength > 0) {
-            [weakSelf.delegate restClient:_session uploadProgress:numberOfBytesRead/dataLength forFile:destPath from:sourcePath];
+            [weakSelf.delegate restClient:_session uploadProgress:(float)numberOfBytesRead/dataLength forFile:destPath from:sourcePath];
         }
         
     };
@@ -361,7 +361,7 @@
       unsigned long long dataLength) {
         
         if (weakSelf.delegate && dataLength > 0) {
-            [weakSelf.delegate restClient:_session uploadProgress:numberOfBytesRead/dataLength forFile:destPath from:sourcePath];
+            [weakSelf.delegate restClient:_session uploadProgress:(float)numberOfBytesRead/dataLength forFile:destPath from:sourcePath];
         }
         
     };
