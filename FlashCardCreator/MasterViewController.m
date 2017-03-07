@@ -1125,6 +1125,7 @@ extern BOOL isFromNewCreatedCard;
             selectedPack.languageName = self.currentPack.languageName;
             selectedPack.creator = self.currentPack.creator;
             selectedPack.creatorNickName = self.currentPack.creatorNickName;
+            selectedPack.jobTitle = self.currentPack.jobTitle;
             selectedPack.lastVisitDate = self.currentPack.lastVisitDate;
             selectedPack.createDate = self.currentPack.createDate;
             selectedPack.restorePassword = self.currentPack.restorePassword;
