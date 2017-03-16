@@ -10899,12 +10899,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         thumbnail = [UIImage imageNamed:@"video_default"];
     }
     
-    UIImage *playImage = [UIImage imageNamed:@"play"];
+    UIImage *playImage = [UIImage imageNamed:@"play_with_video_link"];
     
     UIGraphicsBeginImageContext(thumbnail.size);
     [thumbnail drawInRect:CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height)];
     
-    [playImage drawInRect:CGRectMake(thumbnail.size.width *0.4, thumbnail.size.height *0.4, thumbnail.size.width *0.2, thumbnail.size.width *0.2)];
+    [playImage drawInRect:CGRectMake(thumbnail.size.width *0.42, thumbnail.size.height *0.4, thumbnail.size.width *0.16, thumbnail.size.width *0.2)];
+    
     UIImage *compositeThumbNail = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
