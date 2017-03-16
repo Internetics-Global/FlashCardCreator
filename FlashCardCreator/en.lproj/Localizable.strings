@@ -274,7 +274,7 @@
 "Indicator_Share_Process_Processing"  = "Processing the pack...";
 "Indicator_Creating_Share_Linkage_Failure"  = "Fail to create share linkage";
 
-"Tip_Open_Pack_Viewer"  = "Open pack viewer";
+"Tip_Open_Pack_Viewer"  = "Open pack list";
 "Tip_Edit_Pack"  = "Edit a pack";
 "Tip_Create_New_Pack"  = "Create a new pack";
 "Tip_Question"  = "Click to see the question side of the card";

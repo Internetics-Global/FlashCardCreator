@@ -150,7 +150,7 @@
         self.visitStoreButton.frame = CGRectOffset(_userNewButton.frame, CGRectGetWidth(_userNewButton.frame) + 20, 0);
     } else {
         self.visitStoreButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-        self.visitStoreButton.frame = CGRectMake(CGRectGetMaxX(self.userNewButton.frame) + (CGRectGetMinX(self.sortSegmentedControl.frame) - 84*2 - CGRectGetMaxX(self.userNewButton.frame))/3, CGRectGetMinY(self.userNewButton.frame), 84, 30);
+        self.visitStoreButton.frame = CGRectMake(CGRectGetMaxX(self.userNewButton.frame) + (CGRectGetMinX(self.sortSegmentedControl.frame) - 94*2 - CGRectGetMaxX(self.userNewButton.frame))/3, CGRectGetMinY(self.userNewButton.frame), 94, 30);
     }
     [self.visitStoreButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.visitStoreButton setTitle:NSLocalizedString(@"Label_Visit_Store",@"") forState:UIControlStateNormal];
