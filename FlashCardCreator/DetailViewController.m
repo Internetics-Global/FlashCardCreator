@@ -959,6 +959,12 @@ enum popover_enum {
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
+                
+                if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false ) {
+                    [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+                    return;
+                }
+                
                 __weak __typeof(&*self)weakSelf = self;
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:NSLocalizedString(@"DIALOG_INPUT_DOWNLOAD_CODE",@"") message:nil];
                 [alertView textFieldAtIndex:0].text = @"";

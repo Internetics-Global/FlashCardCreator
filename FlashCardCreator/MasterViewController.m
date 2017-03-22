@@ -2983,6 +2983,11 @@ extern BOOL isFromNewCreatedCard;
     if (popoverView.tag == popover_enum_share) {
         switch (index) {
             case 0: {
+                
+                if ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false ) {
+                    [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+                    return;
+                }
         
                 
                 __weak __typeof(&*self)weakSelf = self;
