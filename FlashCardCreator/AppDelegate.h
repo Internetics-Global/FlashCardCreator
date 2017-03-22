@@ -32,6 +32,8 @@
 
 @property (assign, nonatomic) BOOL isDownloadingPack;
 
+@property (assign, nonatomic) BOOL isInAppWebSite;
+
 /**
  *  正在download的过程中的标志，同isExamplePackDownloadedSuccessful区分
  */

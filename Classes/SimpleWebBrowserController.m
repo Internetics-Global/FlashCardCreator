@@ -8,6 +8,7 @@
 
 #import "SimpleWebBrowserController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 @implementation SimpleWebBrowserController
 
@@ -120,6 +121,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _isViewShowing = YES;
+    
+    APP_DELEGATE.isInAppWebSite = YES;
 }
 
 
@@ -127,6 +130,8 @@
 	[super viewWillDisappear:YES];
     _isViewShowing = NO;
 	[self.webView stopLoading];
+    
+    APP_DELEGATE.isInAppWebSite = NO;
 }
 
 

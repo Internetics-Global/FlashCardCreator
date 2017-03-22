@@ -367,7 +367,13 @@
     
     if ([[url scheme] isEqualToString:@"fcc"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
+        if (self.isInAppWebSite == NO && ([MutipleTargetHelper isFullVersion] == false && [MutipleTargetHelper isNoAdVersion] == false )) {
+            
+            [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:DOWNLOAD_PACK_NOTIFICATION object:[url absoluteString]];
+        }
         
     } else if ([[[url scheme] substringToIndex:3] isEqualToString:@"db-"]) {
         
