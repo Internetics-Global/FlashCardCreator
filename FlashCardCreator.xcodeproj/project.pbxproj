@@ -1778,7 +1778,7 @@
 				ORGANIZATIONNAME = Internetics;
 				TargetAttributes = {
 					2DCE0B0616798E04007A8CAD = {
-						DevelopmentTeam = Y8HQA4YE8L;
+						DevelopmentTeam = 35A5R96666;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -2280,9 +2280,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
 				DEPLOYMENT_POSTPROCESSING = NO;
+				DEVELOPMENT_TEAM = 35A5R96666;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2308,10 +2309,11 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FlipFlashCards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				PROVISIONING_PROFILE = "5313f1f5-e243-4b29-b3f2-462b451718a4";
 				"PROVISIONING_PROFILE[sdk=*]" = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdhoc1902017;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2327,10 +2329,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: kuang yuang (HDK2922LNQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: kuang yuang (HDK2922LNQ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flip Flash Cards Pty Ltd (35A5R96666)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
+				DEVELOPMENT_TEAM = 35A5R96666;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2356,10 +2359,11 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FFC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flipflash.FlipFlashCards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				PROVISIONING_PROFILE = "5313f1f5-e243-4b29-b3f2-462b451718a4";
 				"PROVISIONING_PROFILE[sdk=*]" = "4af53371-221c-40b0-be3d-fa57dcaab002";
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdhoc1902017;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

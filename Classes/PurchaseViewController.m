@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     self.purchaseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.purchaseButton.frame = CGRectMake(10, CGRectGetMaxY(self.webview.frame) + 10, 140, 37);
     self.purchaseButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleRightMargin;
-    [self.purchaseButton setTitle:@"No Ads" forState:UIControlStateNormal];
+    [self.purchaseButton setTitle:@"Viewer" forState:UIControlStateNormal];
     [self.purchaseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.purchaseButton addTarget:self action:@selector(purchaseNow:) forControlEvents:UIControlEventTouchUpInside];
     self.purchaseButton.tag = Purchase_Type_No_Ad;
@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     self.purchase2Button = [UIButton buttonWithType:UIButtonTypeCustom];
     self.purchase2Button.frame = CGRectMake(CGRectGetWidth(self.view.frame)/2- 140/2, CGRectGetMaxY(self.webview.frame) + 10, 140, 37);
     self.purchase2Button.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-    [self.purchase2Button setTitle:@"Full Version" forState:UIControlStateNormal];
+    [self.purchase2Button setTitle:@"Creator" forState:UIControlStateNormal];
     self.purchase2Button.titleLabel.font = [UIFont systemFontOfSize:13];
     self.purchase2Button.tag = Purchase_Type_Full;
     [self.purchase2Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -187,9 +187,9 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
         purchase5DollarPrice = [self localizedPrice:price2Product];
     }
     
-    [_purchaseButton setTitle:[NSString stringWithFormat:@"No Ads - %@ ",purchase1DollarPrice] forState:UIControlStateNormal];
+    [_purchaseButton setTitle:[NSString stringWithFormat:@"Viewer - %@ ",purchase1DollarPrice] forState:UIControlStateNormal];
     
-    [_purchase2Button setTitle:[NSString stringWithFormat:@"Full Version - %@ ",purchase5DollarPrice] forState:UIControlStateNormal];
+    [_purchase2Button setTitle:[NSString stringWithFormat:@"Creator - %@ ",purchase5DollarPrice] forState:UIControlStateNormal];
     
     _localizedPriceUpdated = true;
     

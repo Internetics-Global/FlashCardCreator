@@ -18,7 +18,7 @@
 
 + (BOOL) isFullVersion {
     
-    return true;
+    
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Full_Version_Flag];
     return val;
@@ -37,6 +37,8 @@
 
 + (BOOL) isNoAdVersion {
     
+   
+    
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_No_Ad_Version_Flag];
     return val;
     
@@ -53,7 +55,7 @@
 + (void) showAlertToUpgradeToFullVersion {
     
     
-    [UIAlertView bk_showAlertViewWithTitle:@"This is a FlipFlashCard PRO function" message:@"You can upgrade the app to get it!" cancelButtonTitle:@"Not yet" otherButtonTitles:@[@"More details"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:@"This is an advanced Flip Flash Cards function" message:@"You can upgrade the app to get it, and many other features" cancelButtonTitle:@"Not yet" otherButtonTitles:@[@"More details"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         
         if (buttonIndex == 0) {
             //cancel button
