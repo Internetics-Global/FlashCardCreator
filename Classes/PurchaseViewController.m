@@ -127,6 +127,11 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     self.webview.alpha = 0;
     
     _activity.center = self.webview.center;
+    
+    if ([MutipleTargetHelper isNoAdVersion]) {
+        _purchaseButton.enabled = false;
+        [_purchaseButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    }
 
 }
 
@@ -188,6 +193,8 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     }
     
     [_purchaseButton setTitle:[NSString stringWithFormat:@"Viewer - %@ ",purchase1DollarPrice] forState:UIControlStateNormal];
+    
+    
     
     [_purchase2Button setTitle:[NSString stringWithFormat:@"Creator - %@ ",purchase5DollarPrice] forState:UIControlStateNormal];
     
