@@ -639,6 +639,11 @@ enum popover_enum {
 
 
 -(void) showTooltips {
+    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        return;
+    }
+    
     [[TipHelper defaultHelper] showTipForRightNaviBarItemPlayInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 45, 0, 0, 0)];
     [[TipHelper defaultHelper] showTipForRightNaviBarItemShareInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 95, 0, 0, 0)];
     [[TipHelper defaultHelper] showTipForRightNaviBarItemSettingInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 145, 0, 0, 0)];

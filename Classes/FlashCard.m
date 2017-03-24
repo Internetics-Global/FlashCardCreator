@@ -12292,6 +12292,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) showTooltips {
     
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        return;
+    }
+    
     if (self.tag != CURRENT_FLASHCARDVIEW_TAG) {
         return;
     }
