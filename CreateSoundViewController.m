@@ -86,7 +86,7 @@
     _startButton.layer.borderWidth = 1;
 //    _startButton.layer.shadowRadius = 10.0f;
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                              initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(dismiss)]];
     
     

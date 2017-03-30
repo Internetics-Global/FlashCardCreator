@@ -24,6 +24,8 @@
     
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
+    
+    UIButton *_saveButton;
 }
 
 @end
@@ -121,6 +123,20 @@
         _cofirmAminPasswordTextField.text = savedPassword;
     }
     
+    if (isUserInterfaceIdiomPhone) {
+        CGRect rect = CGRectMake(CGRectGetMinX(_coverImageView.frame) + (CGRectGetWidth(_coverImageView.frame) - 88)/2 , CGRectGetMaxY(_coverImageView.frame) - 10, 88, 48);
+
+        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
+        _saveButton.frame = rect;
+        [_saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
+        [_saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
+        _saveButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -40, 0)];//set ur title insects myButton
+        [self.view addSubview:_saveButton];
+        [_saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     
 }
 
@@ -131,11 +147,7 @@
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]
                                     initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"close2_button"] target:self action:@selector(closeCreatePackView)]];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
-                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"save_button"] target:self action:@selector(saveAndCloseCreatePackView)]];
-    
-    self.navigationItem.leftBarButtonItem = closeButton;
-    self.navigationItem.rightBarButtonItem = saveButton;
+    self.navigationItem.rightBarButtonItem = closeButton;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
