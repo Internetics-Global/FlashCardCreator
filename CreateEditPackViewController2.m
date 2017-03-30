@@ -135,6 +135,19 @@
         [_saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -40, 0)];//set ur title insects myButton
         [self.view addSubview:_saveButton];
         [_saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        
+        CGRect rect = CGRectMake(CGRectGetMaxX(self.view.frame)- 110, CGRectGetMaxY(self.view.frame)- 110, 88, 48);
+        
+        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
+        _saveButton.frame = rect;
+        [_saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
+        [_saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
+        _saveButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [_saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -55, 0)];//set ur title insects myButton
+        [self.view addSubview:_saveButton];
+        [_saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
     }
     
     
