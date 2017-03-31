@@ -28,8 +28,12 @@
 #import "MutipleTargetHelper.h"
 
 #import "AppAuth.h"
+#import "VerifyStoreReceipt.h"
 
 @import Firebase;
+
+const NSString * global_bundleVersion = @"1.0.1";
+const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 
 @implementation AppDelegate
 
@@ -60,6 +64,22 @@
         
     }
     
+    //Authorize origional 1.x purchased users to get upgrade free
+    {
+         NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        
+        //check only once
+        if ([standardUserDefaults boolForKey:@"K_Existing_Recipt_Check"] == false &&
+            [MutipleTargetHelper isFullVersion] == false) {
+            
+            [self beginReceiptCheck];
+            
+            [standardUserDefaults setBool:true forKey:@"K_Existing_Recipt_Check"];
+            
+        }
+        
+       
+    }
     
     
     [self setupLog];
@@ -262,6 +282,28 @@
     return YES;
 }
 
+- (void)beginReceiptCheck {
+    // See if there is an existing receipt or not
+    NSString *appRecPath = [[[NSBundle mainBundle] appStoreReceiptURL] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appRecPath]) {
+        // There is an existing receipt, see if it is valid.
+        [self validateReceipt:appRecPath tryAgain:YES];
+    } else {
+        // There is no receipt, request one
+    }
+}
+
+- (void)validateReceipt:(NSString *)path tryAgain:(BOOL)again {
+    // See if the current receipt is valid or not
+    BOOL valid = verifyReceiptAtPath(path);
+    if (valid) {
+        
+        [MutipleTargetHelper setFullVersionFlag:true];
+        
+    } else {
+        NSLog(@"Receipt is invalid");
+    }
+}
 
 
 - (void) setupAudioWithoutRecord {

@@ -131,6 +131,7 @@
 		75AB610A1DDA9F21007AC629 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 75AB61051DDA9F21007AC629 /* SIAlertView.bundle */; };
 		75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61071DDA9F21007AC629 /* SIAlertView.m */; };
 		75AB610C1DDA9F21007AC629 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */; };
+		75CF85F41E8F08600055DCBE /* VerifyStoreReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CF85F21E8F08600055DCBE /* VerifyStoreReceipt.m */; };
 		75DEBD9E1E2377350062AB49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */; };
 		75DEBDA21E237AA20062AB49 /* firebase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBDA11E237AA20062AB49 /* firebase.storyboard */; };
 		75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */; };
@@ -513,6 +514,8 @@
 		75AB61071DDA9F21007AC629 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		75AB61081DDA9F21007AC629 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
 		75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		75CF85F21E8F08600055DCBE /* VerifyStoreReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyStoreReceipt.m; sourceTree = "<group>"; };
+		75CF85F31E8F08600055DCBE /* VerifyStoreReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyStoreReceipt.h; sourceTree = "<group>"; };
 		75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		75DEBDA11E237AA20062AB49 /* firebase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = firebase.storyboard; sourceTree = "<group>"; };
 		75DEBDA31E237BB90062AB49 /* FirebaseSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseSignInViewController.h; sourceTree = "<group>"; };
@@ -964,6 +967,8 @@
 		2D2A1B13169BA2AF00175D14 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				75CF85F21E8F08600055DCBE /* VerifyStoreReceipt.m */,
+				75CF85F31E8F08600055DCBE /* VerifyStoreReceipt.h */,
 				88490B1C1B4A2CB100878EEB /* NSTimer+BlocksKit.h */,
 				88490B1D1B4A2CB100878EEB /* NSTimer+BlocksKit.m */,
 				884078881C1FD79A00313604 /* UIImageView+Extensions.h */,
@@ -2155,6 +2160,7 @@
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
 				88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */,
 				886D8FEF1AE4975E00865101 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				75CF85F41E8F08600055DCBE /* VerifyStoreReceipt.m in Sources */,
 				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
 				88D2005B1985ED980022E8E9 /* UIViewController+LandscapeOnly.m in Sources */,
 				880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */,
