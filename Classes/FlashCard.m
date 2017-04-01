@@ -1659,23 +1659,37 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+- (void) refreshAllFromSegmentSwitch {
+    [iConsole info:@"%s",__FUNCTION__];
+    [self refreshAll:NO withIndexPlaying:-1 isFromSegmentSwitch:true];
+    
+}
+
+- (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
+    [self refreshAll:isDisableAutoResize withIndexPlaying:indexPlaying isFromSegmentSwitch:false];
+}
+
 /**
  *  刷新操作，考虑：
  *  1. play mode和 edit mode下的scroll view
  *  2. 卡片可编辑，或不可编辑
  *  @param isDisableAutoResize 如果为NO，满足下面的条件执行
  *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行
+  *  @param isFromSegmentSwitch
  */
-- (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying {
+- (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying isFromSegmentSwitch:(BOOL) isFromSegmentSwitch {
     [iConsole info:@"%s",__FUNCTION__];
     
-    _subQuestion.alpha = 1;
-    _subheadingQuestion.alpha = 1;
-    _mainQuestion.alpha = 1;
-    
-    _subAnswer.alpha = 1;
-    _subheadingAnswer.alpha = 1;
-    _mainAnswer.alpha = 1;
+    //we don't reset if it's only a segmented switch operation
+    if (isFromSegmentSwitch == false) {
+        _subQuestion.alpha = 1;
+        _subheadingQuestion.alpha = 1;
+        _mainQuestion.alpha = 1;
+        
+        _subAnswer.alpha = 1;
+        _subheadingAnswer.alpha = 1;
+        _mainAnswer.alpha = 1;
+    }
     
     [self pauseEmbeddedVideoAndGif];
     [self resetVerticalScrollViewOffset];
@@ -2075,9 +2089,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    
-
-    
 }
 
 
@@ -2451,7 +2462,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    [self refreshAll];
+    [self refreshAllFromSegmentSwitch];
 }
 
 - (void) backgroundImageSelectButtonClicked:(UITapGestureRecognizer *)sender {
