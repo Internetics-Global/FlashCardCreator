@@ -30,10 +30,16 @@
 #import "AppAuth.h"
 #import "VerifyStoreReceipt.h"
 
+#import <StoreKit/StoreKit.h>
+
 @import Firebase;
 
 const NSString * global_bundleVersion = @"1.0.1";
 const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
+
+@interface AppDelegate () <SKRequestDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -282,28 +288,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
     return YES;
 }
 
-- (void)beginReceiptCheck {
-    // See if there is an existing receipt or not
-    NSString *appRecPath = [[[NSBundle mainBundle] appStoreReceiptURL] path];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:appRecPath]) {
-        // There is an existing receipt, see if it is valid.
-        [self validateReceipt:appRecPath tryAgain:YES];
-    } else {
-        // There is no receipt, request one
-    }
-}
-
-- (void)validateReceipt:(NSString *)path tryAgain:(BOOL)again {
-    // See if the current receipt is valid or not
-    BOOL valid = verifyReceiptAtPath(path);
-    if (valid) {
-        
-        [MutipleTargetHelper setFullVersionFlag:true];
-        
-    } else {
-        NSLog(@"Receipt is invalid");
-    }
-}
 
 
 - (void) setupAudioWithoutRecord {
@@ -576,6 +560,76 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
             break;
         }
     }
+}
+
+#pragma mark – Receipt
+
+- (void)beginReceiptCheck {
+    // See if there is an existing receipt or not
+    NSString *appRecPath = [[[NSBundle mainBundle] appStoreReceiptURL] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appRecPath]) {
+        // There is an existing receipt, see if it is valid.
+        [self validateReceipt:appRecPath tryAgain:YES];
+    } else {
+        // There is no receipt, request one
+        [self requestNewReceipt];
+    }
+}
+
+- (void)requestNewReceipt {
+    // TODO - this should be updated with the proper use of "Reachability"
+    // Begin a request for a receipt from Apple
+    SKReceiptRefreshRequest *req = [[SKReceiptRefreshRequest alloc] initWithReceiptProperties:nil];
+    req.delegate = self;
+    [req start];
+}
+
+- (void)validateReceipt:(NSString *)path tryAgain:(BOOL)again {
+    // See if the current receipt is valid or not
+    BOOL valid = verifyReceiptAtPath(path);
+    if (valid) {
+        
+        [MutipleTargetHelper setFullVersionFlag:true];
+        
+    } else {
+        NSLog(@"Receipt is invalid");
+    }
+}
+
+
+- (void)requestDidFinish:(SKRequest *)request {
+    // The request for a receipt completed
+    NSString  *appRecPath = [[[NSBundle mainBundle] appStoreReceiptURL] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appRecPath]) {
+        NSLog(@"Receipt exists");
+        
+        [self validateReceipt:appRecPath tryAgain:NO];
+    } else {
+        NSLog(@"Receipt request done but there is no receipt");
+        
+        // This can happen if the user cancels the login screen for the store.
+        // If we get here it means there is no receipt and an attempt to get it failed because the user cancelled
+        // the login.
+        [self trackFailedAttempt];
+    }
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"Error tryung to request receipt: %@", error);
+    
+    // Unable to get/refresh the receipt
+    NSString *appRecPath = [[[NSBundle mainBundle] appStoreReceiptURL] path];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:appRecPath]) {
+        // There is an existing receipt but we failed to get a new one. This means the existing receipt is invalid
+        [self trackFailedAttempt];
+    } else {
+        // There is no receipt and we were unable to get a new one
+        [self trackFailedAttempt];
+    }
+}
+
+- (void)trackFailedAttempt {
+    [iConsole info:@"%s:Failed to fetch receipt",__FUNCTION__];
 }
 
 
