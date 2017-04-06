@@ -271,9 +271,9 @@
         }
         
         if (_isCollectionViewEditing) {
-            cell.changeImageButton.hidden = NO;
+            cell.editButton.hidden = NO;
         } else {
-            cell.changeImageButton.hidden = YES;
+            cell.editButton.hidden = YES;
         }
         
         cell.deleteButton.tag = index;
@@ -282,8 +282,8 @@
         cell.packNameText.tag = index;
         cell.packNameText.delegate = self;
         
-        cell.changeImageButton.tag = index;
-        [cell.changeImageButton addTarget:self action:@selector(editPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        cell.editButton.tag = index;
+        [cell.editButton addTarget:self action:@selector(editPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
         
         cell.playButton.tag = index;
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];

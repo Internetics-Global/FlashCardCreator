@@ -77,6 +77,17 @@
     self.playButton.autoresizingMask = UIViewAutoresizingNone;
     [contentView addSubview:self.playButton];
     
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.editButton.frame = CGRectMake(55, 140, 50, 50);
+    self.editButton.backgroundColor = [UIColor clearColor];
+    [self.editButton setImage:[UIImage imageNamed:@"editPackList"] forState:UIControlStateNormal];
+    self.editButton.autoresizingMask = UIViewAutoresizingNone;
+    [contentView addSubview:self.editButton];
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        self.editButton.enabled = false;
+        self.editButton.alpha = 0.5;
+    }
+    
     
     self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
@@ -90,22 +101,6 @@
     self.deleteButton.frame = CGRectMake(40.0f, 205.0f, 88, 25);
     [contentView addSubview:self.deleteButton];
     
-    //change image and edit cards share common button
-    self.changeImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.changeImageButton setBackgroundColor:[UIColor clearColor]];
-//    self.changeImageButton.layer.borderColor = [UIColor whiteColor].CGColor;
-//    self.changeImageButton.layer.borderWidth = 1;
-    [self.changeImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.changeImageButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    self.changeImageButton.tag = index;
-    self.changeImageButton.userInteractionEnabled = TRUE;
-    self.changeImageButton.frame = CGRectMake(130.0f, 205.0f, 80.0, 25);
-    if ([MutipleTargetHelper isFullVersion]) {
-        [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button"] forState:UIControlStateNormal];
-    } else {
-        [self.changeImageButton setImage:[UIImage imageNamed:@"edit_pack_button_dimmed"] forState:UIControlStateNormal];
-    }
-    [contentView addSubview:self.changeImageButton];
     
     [self.contentView addSubview:contentView];
 }

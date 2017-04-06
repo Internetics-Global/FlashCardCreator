@@ -13,7 +13,7 @@
 @property (strong, nonatomic) UIImageView *coverImageView;
 @property (strong, nonatomic) UITextField *packNameText;
 @property (strong, nonatomic) UIButton    *deleteButton;
-@property (strong, nonatomic) UIButton    *changeImageButton;
+@property (strong, nonatomic) UIButton    *editButton;
 @property (strong, nonatomic) UIButton    *playButton;
 @property (strong, nonatomic) UIImageView *lockImageView;
 @property (strong, nonatomic) UIImageView *maskImageView;
