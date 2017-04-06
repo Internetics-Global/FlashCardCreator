@@ -876,7 +876,15 @@
         [_currentPack savePackOnly];
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (_isFromPackList) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOW_PACK_LIST_AFTER_BACK_FROM_PLAY" object:nil userInfo:nil];
+            
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     
 }
 

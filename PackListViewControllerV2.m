@@ -400,6 +400,7 @@
     [dict setValue:[NSNumber numberWithInteger:oneOffType] forKey:@"oneOffType"];
     [dict setValue:[NSNumber numberWithInteger:packIndex] forKey:@"packIndex"];
     [dict setValue:[NSNumber numberWithBool:false] forKey:@"preview_only"];
+    [dict setValue:[NSNumber numberWithBool:true] forKey:@"isFromPackList"];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:PLAY_NOTIFICATION object:nil userInfo:dict];
     

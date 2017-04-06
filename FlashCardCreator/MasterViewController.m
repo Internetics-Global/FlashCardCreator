@@ -177,6 +177,8 @@ enum popover_enum {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterBackFromPlay:) name:@"SHOW_PACK_LIST_AFTER_BACK_FROM_PLAY" object:nil];
+        
         
         //2. Initialize
         _currentPack = [[Pack alloc] init];
@@ -987,6 +989,20 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
+- (void) showPackListAfterBackFromPlay :(NSNotification *) notification {
+    
+    if (self.view.window == nil) {
+        //The view's window property is non-nil if a view is currently visible, http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
+        //当在当前view controller弹出一个对话框时，则self.view.window不是nil,这也就是为什么需要额外参数APP_DELEGATE.isAllowToShowPackList的原因
+        return;
+    }
+    
+    AppDelegate* appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.isDownloadingPack == NO && APP_DELEGATE.isAllowToShowPackList) {
+        [self selectAvailablePacks:nil];;
+    }
+}
+
 
 - (void) showPackListAfterApplicationDidBecomeActive {
     
@@ -1089,7 +1105,8 @@ extern BOOL isFromNewCreatedCard;
     
     One_Off_Play_Type oneOffType = [[dict objectForKey:@"oneOffType"] intValue];
     int index                    = [[dict objectForKey:@"packIndex"] intValue];
-    BOOL isPreviewOnly               = [[dict objectForKey:@"preview_only"] boolValue];
+    BOOL isPreviewOnly           = [[dict objectForKey:@"preview_only"] boolValue];
+    BOOL isFromPackList          = [[dict objectForKey:@"isFromPackList"] boolValue];
     
     switch (oneOffType) {
         case 0:
@@ -1149,6 +1166,7 @@ extern BOOL isFromNewCreatedCard;
     playViewController.oneOffPlayType = oneOffType;
     playViewController.previewOnly = isPreviewOnly;
     playViewController.currentPack = selectedPack;
+    playViewController.isFromPackList = isFromPackList;
     if ((self.currentCard == nil) || (self.currentPack == nil)) {
         [Common alertViewCommon:@"There are no packs loaded"];
         return;
