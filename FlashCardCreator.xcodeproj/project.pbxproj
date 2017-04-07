@@ -132,6 +132,7 @@
 		75AB610B1DDA9F21007AC629 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61071DDA9F21007AC629 /* SIAlertView.m */; };
 		75AB610C1DDA9F21007AC629 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */; };
 		75CF85F41E8F08600055DCBE /* VerifyStoreReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CF85F21E8F08600055DCBE /* VerifyStoreReceipt.m */; };
+		75CF85F61E97B1160055DCBE /* animated_touch_down.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75CF85F51E97B1160055DCBE /* animated_touch_down.gif */; };
 		75DEBD9E1E2377350062AB49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */; };
 		75DEBDA21E237AA20062AB49 /* firebase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75DEBDA11E237AA20062AB49 /* firebase.storyboard */; };
 		75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DEBDA41E237BB90062AB49 /* FirebaseSignInViewController.m */; };
@@ -516,6 +517,7 @@
 		75AB61091DDA9F21007AC629 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
 		75CF85F21E8F08600055DCBE /* VerifyStoreReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyStoreReceipt.m; sourceTree = "<group>"; };
 		75CF85F31E8F08600055DCBE /* VerifyStoreReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyStoreReceipt.h; sourceTree = "<group>"; };
+		75CF85F51E97B1160055DCBE /* animated_touch_down.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated_touch_down.gif; sourceTree = "<group>"; };
 		75DEBD9D1E2377350062AB49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		75DEBDA11E237AA20062AB49 /* firebase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = firebase.storyboard; sourceTree = "<group>"; };
 		75DEBDA31E237BB90062AB49 /* FirebaseSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirebaseSignInViewController.h; sourceTree = "<group>"; };
@@ -1087,6 +1089,7 @@
 		2D5F3D081679EFA8009D2ADC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				75CF85F51E97B1160055DCBE /* animated_touch_down.gif */,
 				88E93D7B1A634EA2007CB7A2 /* mute.caf */,
 				881F26E0192B54120068648D /* Wallpaper */,
 				885C3DBC19260BD70090F63C /* Background */,
@@ -1968,6 +1971,7 @@
 				88A53ED4179E8FD600D91782 /* uibarbuttonitem_normal.png in Resources */,
 				88A53ED5179E8FD600D91782 /* uibarbuttonitem_normal@2x.png in Resources */,
 				8842A57F19B00D470044C8CC /* templateScreenshot10_answer_iPad.png in Resources */,
+				75CF85F61E97B1160055DCBE /* animated_touch_down.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
