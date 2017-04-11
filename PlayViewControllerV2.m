@@ -1712,6 +1712,7 @@
     if (val == false) {
         
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         CGRect screenBounds = [UIScreen mainScreen].bounds;
         
@@ -1740,6 +1741,11 @@
         [tranparentFullScreenView addGestureRecognizer:singleFingerTap];
         
         [tranparentFullScreenView addSubview:touchGif];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Question"] == true &&
+        [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Answer"] == true) {
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isFunctionPromptOff"];
     }
 }
 
