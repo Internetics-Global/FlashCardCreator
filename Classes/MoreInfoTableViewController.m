@@ -132,16 +132,16 @@
         offset = 1;
     }
     
-    return 9 + offset;
+    return 10 + offset;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SwitchCell";
     
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3 || indexPath.row == 10) {
         CellIdentifier = @"CommonCell";
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 7 || indexPath.row == 9 || indexPath.row == 0) {
         CellIdentifier = @"SlideCell";
     } else {
         CellIdentifier = @"SwitchCell";
@@ -205,6 +205,14 @@
         BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isTextToSpeech"];
         [textToSpeechSwitch setOn:b];
     } else if (indexPath.row == 5) {
+        cell.textLabel.text = NSLocalizedString(@"Table_Item_Function_Prompt",@"");
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        UISwitch *functionPromptSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+        [functionPromptSwitch addTarget:self action:@selector(functionPromptSwitchAction) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = functionPromptSwitch;
+        BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"];
+        [functionPromptSwitch setOn:!b];
+    } else if (indexPath.row == 6) {
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Show_Question_Only",@"");
         cell.accessoryType = UITableViewCellAccessoryNone;
         UISwitch *showQuestionOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
@@ -212,13 +220,13 @@
         cell.accessoryView = showQuestionOnlySwitch;
         BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
         [showQuestionOnlySwitch setOn:b];
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 7) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Speech_Language_Select",nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else if (indexPath.row == 7) {
+    } else if (indexPath.row == 8) {
         
         UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
         baseView.backgroundColor = [UIColor clearColor];
@@ -269,7 +277,7 @@
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",NSLocalizedString(@"Table_Item_Count_Down",@""),(int)countDownSlider.value];
 
-    } else if (indexPath.row == 8) {
+    } else if (indexPath.row == 9) {
         
         cell.textLabel.text = NSLocalizedString(@"Table_Item_Storage",@"");
         
@@ -284,7 +292,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         
-    } else if (indexPath.row == 9) {
+    } else if (indexPath.row == 10) {
         
         cell.textLabel.text = NSLocalizedString(@"Upgrade",nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -330,6 +338,13 @@
 - (void) showQuestionOnlyAction {
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isShowQuestionOnly"];
     [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isShowQuestionOnly"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) functionPromptSwitchAction {
+    
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"];
+    [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isFunctionPromptOff"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -422,12 +437,12 @@
 //            APP_DELEGATE.isAllowToShowPackList = NO;
 //        }
         
-    } else if (indexPath.row == 9) {
+    } else if (indexPath.row == 10) {
         if (isUserInterfaceIdiomPhone == false) {
             [self dismissViewControllerAnimated:false completion:nil];
         }
         [MutipleTargetHelper showPurchaseView];
-    } else if (indexPath.row == 8) {
+    } else if (indexPath.row == 9) {
         if ([MutipleTargetHelper isFullVersion]) {
             StorageOptionViewController *controller = [[StorageOptionViewController alloc] initWithNibName:nil bundle:nil];
             [self.navigationController pushViewController:controller animated:YES];
@@ -436,7 +451,7 @@
     } else if (indexPath.row == 0) {
         PlayOptionViewController *controller = [[PlayOptionViewController alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
-    } else if (indexPath.row == 6) {
+    } else if (indexPath.row == 7) {
         SelectText2SpeechLanguage *controller = [[SelectText2SpeechLanguage alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
     }

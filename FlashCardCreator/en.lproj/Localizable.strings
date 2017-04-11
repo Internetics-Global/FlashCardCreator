@@ -258,6 +258,7 @@
 "Optional_Play_Auto_Loop" = "Auto Play and Loop";
 
 "Table_Item_TTS" = "Text to Speech";
+"Table_Item_Function_Prompt" = "Function prompts";
 "Table_Item_Show_Question_Only" = "Auto-Show Question Only";
 "Table_Item_Male_Female" = "Male/Female Voice";
 "Table_Item_Speech_Language_Select" = "Select Speech Language";
