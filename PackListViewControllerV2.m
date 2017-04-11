@@ -278,6 +278,11 @@
         
         cell.editButton.tag = index;
         [cell.editButton addTarget:self action:@selector(editPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        if ([Common isOwner:pack]) {
+            cell.editButton.hidden = false;
+        } else {
+            cell.editButton.hidden = true;
+        }
         
         cell.playButton.tag = index;
         [cell.playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchDown];
