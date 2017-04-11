@@ -270,12 +270,6 @@
             cell.deleteButton.hidden = YES;
         }
         
-        if (_isCollectionViewEditing) {
-            cell.editButton.hidden = NO;
-        } else {
-            cell.editButton.hidden = YES;
-        }
-        
         cell.deleteButton.tag = index;
         [cell.deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         
