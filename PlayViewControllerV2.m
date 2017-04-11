@@ -23,6 +23,9 @@
 
 #import "AppDelegate.h"
 
+#import "FLAnimatedImageView.h"
+#import "FLAnimatedImage.h"
+
 
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds_ForQAOnly     4
@@ -281,7 +284,7 @@
         _OneOffExecution_Flag = NO;
     }
 
-    
+    [self showTranparentFingerAnimationFullScreenView];
 }
 
 - (void) cleanupMotionSensor {
@@ -1038,6 +1041,9 @@
         [weakSelf playbackOnCard:currentFlashCardView];
     } repeats:NO];
     
+    
+    [self showTranparentFingerAnimationFullScreenView];
+    
 }
 
 
@@ -1681,6 +1687,67 @@
     } else {
         return NO;
     }
+}
+
+
+- (void) showTranparentFingerAnimationFullScreenView {
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"]) {
+        return;
+    }
+    
+    FlashCard *currentFlashCardView = [self getCurrrentCard];
+    NSString *key;
+    NSString *gif;
+    if ([currentFlashCardView isQuestionShowing]) {
+        key = @"K_Transparent_Finger_Animation_Disabled_Question";
+        gif = @"question-gif";
+    } else {
+        key = @"K_Transparent_Finger_Animation_Disabled_Answer";
+        gif = @"answer-gif";
+    }
+
+    
+    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+    if (val == false) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:key];
+        
+        CGRect screenBounds = [UIScreen mainScreen].bounds;
+        
+        UIView *tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
+        tranparentFullScreenView.backgroundColor = [UIColor blackColor];
+        tranparentFullScreenView.alpha = 0.7;
+        [self.view addSubview:tranparentFullScreenView];
+        
+        FLAnimatedImageView *touchGif = [[FLAnimatedImageView alloc] init];
+        if (isUserInterfaceIdiomPhone) {
+            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50, CGRectGetHeight(screenBounds)-200, 100, 100);
+        } else {
+            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50, CGRectGetHeight(screenBounds)-260, 100, 100);
+        }
+        touchGif.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        touchGif.contentMode = UIViewContentModeScaleAspectFit;
+        touchGif.clipsToBounds = YES;
+        touchGif.isAllowAutoPlayWhenVisible = true;
+        NSString *gifPath =[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"];
+        touchGif.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifPath]];
+        
+        tranparentFullScreenView.userInteractionEnabled = true;
+        UITapGestureRecognizer *singleFingerTap =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(dismissTranparentFullScreenView:)];
+        [tranparentFullScreenView addGestureRecognizer:singleFingerTap];
+        
+        [tranparentFullScreenView addSubview:touchGif];
+    }
+}
+
+
+- (void)dismissTranparentFullScreenView:(UITapGestureRecognizer *)recognizer
+{
+    UIView *view = [recognizer view];
+    [view removeFromSuperview];
 }
 
 #pragma mark – ASValueTrackingSliderDataSource

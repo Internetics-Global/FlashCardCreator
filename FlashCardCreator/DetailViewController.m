@@ -42,9 +42,6 @@
 
 #import "GoogleDriveSession.h"
 
-#import "FLAnimatedImageView.h"
-#import "FLAnimatedImage.h"
-
 @import Firebase;
 
 enum template_color_enum {
@@ -300,43 +297,6 @@ enum popover_enum {
 }
 
 
-- (void) showTranparentFullScreenView {
-    
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_First_Time_Transparent_Help"];
-    if (val == false) {
-        
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"K_First_Time_Transparent_Help"];
-        
-        CGRect screenBounds = [UIScreen mainScreen].bounds;
-        
-        UIView *tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
-        tranparentFullScreenView.backgroundColor = [UIColor blackColor];
-        tranparentFullScreenView.alpha = 0.7;
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:tranparentFullScreenView];
-        
-        FLAnimatedImageView *touchGif = [[FLAnimatedImageView alloc] init];
-        if (isUserInterfaceIdiomPhone) {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-40, CGRectGetHeight(screenBounds)-160, 80, 80);
-        } else {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-40, CGRectGetHeight(screenBounds)-260, 80, 80);
-        }
-        touchGif.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        touchGif.contentMode = UIViewContentModeScaleAspectFit;
-        touchGif.clipsToBounds = YES;
-        touchGif.isAllowAutoPlayWhenVisible = true;
-        NSString *gifPath =[[NSBundle mainBundle] pathForResource:@"animated_touch_down" ofType:@"gif"];
-        touchGif.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifPath]];
-        
-        tranparentFullScreenView.userInteractionEnabled = true;
-        UITapGestureRecognizer *singleFingerTap =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(dismissTranparentFullScreenView:)];
-        [tranparentFullScreenView addGestureRecognizer:singleFingerTap];
-        
-        [tranparentFullScreenView addSubview:touchGif];
-    }
-}
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [iConsole info:@"%s",__FUNCTION__];
@@ -472,8 +432,6 @@ enum popover_enum {
     }
     
     _scrollView.userInteractionEnabled = YES; //在特殊情况下scrollviewdidenddecelerating（这里会重置_scrollView.userInteractionEnabled = YES）没有被调用，导致界面完全失去响应，所以这里需要加一个backup
-    
-    [self showTranparentFullScreenView];
     
 }
 
@@ -803,12 +761,6 @@ enum popover_enum {
 {
     [iConsole info:@"%s",__FUNCTION__];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)dismissTranparentFullScreenView:(UITapGestureRecognizer *)recognizer
-{
-    UIView *view = [recognizer view];
-    [view removeFromSuperview];
 }
 
 #pragma mark -

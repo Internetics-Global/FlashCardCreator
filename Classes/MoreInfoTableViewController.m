@@ -345,6 +345,13 @@
     
     BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"];
     [[NSUserDefaults standardUserDefaults] setBool:!b forKey:@"isFunctionPromptOff"];
+    
+    if (b == false) {
+        
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"K_Transparent_Finger_Animation_Disabled_Question"];
+        [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"K_Transparent_Finger_Animation_Disabled_Answer"];
+    }
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
