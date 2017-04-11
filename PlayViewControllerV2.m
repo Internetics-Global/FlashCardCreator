@@ -1709,7 +1709,7 @@
 
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:key];
-    if (val == false) {
+    if (true) {
         
         [[NSUserDefaults standardUserDefaults] setBool:true forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1743,10 +1743,10 @@
         [tranparentFullScreenView addSubview:touchGif];
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Question"] == true &&
-        [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Answer"] == true) {
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isFunctionPromptOff"];
-    }
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Question"] == true &&
+//        [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Answer"] == true) {
+//        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isFunctionPromptOff"];
+//    }
 }
 
 
