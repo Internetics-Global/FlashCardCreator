@@ -520,6 +520,7 @@
         
     }
     
+    
 }
 
 - (void) createNewPackButtonClicked:(id)sender {
@@ -606,6 +607,8 @@
     }
     
     [self gotoPackEditView];
+    
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
 }
 
 - (void) gotoPackEditView {
