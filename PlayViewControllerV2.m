@@ -1717,15 +1717,15 @@
         CGRect screenBounds = [UIScreen mainScreen].bounds;
         
         UIView *tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
-        tranparentFullScreenView.backgroundColor = [UIColor blackColor];
-        tranparentFullScreenView.alpha = 0.7;
+//        tranparentFullScreenView.backgroundColor = [UIColor blackColor];
+//        tranparentFullScreenView.alpha = 0.7;
         [self.view addSubview:tranparentFullScreenView];
         
         FLAnimatedImageView *touchGif = [[FLAnimatedImageView alloc] init];
         if (isUserInterfaceIdiomPhone) {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50, CGRectGetHeight(screenBounds)-200, 100, 100);
+            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50 + 7, CGRectGetHeight(screenBounds)-130, 100, 100);
         } else {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50, CGRectGetHeight(screenBounds)-260, 100, 100);
+            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-130 + 37, CGRectGetHeight(screenBounds)-260, 260, 260);
         }
         touchGif.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         touchGif.contentMode = UIViewContentModeScaleAspectFit;
