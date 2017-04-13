@@ -145,6 +145,14 @@
      *  用于执行在view controller生命周期内的仅仅一次的标志。不能用disp_once，因为dis_once是application生命周期仅仅一次执行。
      */
     BOOL     _OneOffExecution_Flag;
+    
+    /*
+     * only show once
+    */
+    BOOL     _showTransparentFingerAnimationQuestion;
+    BOOL     _showTransparentFingerAnimationAnswer;
+    
+    UIView   *_tranparentFullScreenView;
 }
 
 @end
@@ -201,6 +209,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActiveNotification) name:UIApplicationWillResignActiveNotification object:nil];
     
     _OneOffExecution_Flag = YES;
+    
+    _showTransparentFingerAnimationQuestion = false;
+    _showTransparentFingerAnimationAnswer = false;
     
     
 }
@@ -283,8 +294,6 @@
         
         _OneOffExecution_Flag = NO;
     }
-
-    [self showTranparentFingerAnimationFullScreenView];
 }
 
 - (void) cleanupMotionSensor {
@@ -966,6 +975,8 @@
  */
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     
+    [self hideTransparentFullScreenView];
+    
     if (_isAutoScroll && isManually) {
         return; //we don't allow to switch manually during auto play mode
     }
@@ -1041,8 +1052,6 @@
         [weakSelf playbackOnCard:currentFlashCardView];
     } repeats:NO];
     
-    
-    [self showTranparentFingerAnimationFullScreenView];
     
 }
 
@@ -1450,6 +1459,8 @@
 - (void)didScrollToPage:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     
+    [self hideTransparentFullScreenView];
+    
     if (_isAutoScroll) {
         [self enableDwellTimeSlider];
     }
@@ -1619,6 +1630,10 @@
     
     __weak __typeof(&*self)weakSelf = self;
     
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [weakSelf showTranparentFingerAnimationFullScreenView];
+    });
+    
     if (_isAutoScroll && (isQuestionShowing == FALSE)) {
         [self enableDwellTimeSlider];
     }
@@ -1700,9 +1715,23 @@
     NSString *key;
     NSString *gif;
     if ([currentFlashCardView isQuestionShowing]) {
+        
+        if (_showTransparentFingerAnimationQuestion) {
+            return;
+        } else {
+            _showTransparentFingerAnimationQuestion = true;
+        }
+        
         key = @"K_Transparent_Finger_Animation_Disabled_Question";
         gif = @"question-gif";
     } else {
+        
+        if (_showTransparentFingerAnimationAnswer) {
+            return;
+        } else {
+            _showTransparentFingerAnimationAnswer = true;
+        }
+        
         key = @"K_Transparent_Finger_Animation_Disabled_Answer";
         gif = @"answer-gif";
     }
@@ -1716,10 +1745,13 @@
         
         CGRect screenBounds = [UIScreen mainScreen].bounds;
         
-        UIView *tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
-//        tranparentFullScreenView.backgroundColor = [UIColor blackColor];
-//        tranparentFullScreenView.alpha = 0.7;
-        [self.view addSubview:tranparentFullScreenView];
+        
+        if (_tranparentFullScreenView){
+            [_tranparentFullScreenView removeFromSuperview];
+            _tranparentFullScreenView = nil;
+        }
+        _tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
+        [self.view addSubview:_tranparentFullScreenView];
         
         FLAnimatedImageView *touchGif = [[FLAnimatedImageView alloc] init];
         if (isUserInterfaceIdiomPhone) {
@@ -1734,13 +1766,13 @@
         NSString *gifPath =[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"];
         touchGif.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifPath]];
         
-        tranparentFullScreenView.userInteractionEnabled = true;
+        _tranparentFullScreenView.userInteractionEnabled = true;
         UITapGestureRecognizer *singleFingerTap =
         [[UITapGestureRecognizer alloc] initWithTarget:self
                                                 action:@selector(dismissTranparentFullScreenView:)];
-        [tranparentFullScreenView addGestureRecognizer:singleFingerTap];
+        [_tranparentFullScreenView addGestureRecognizer:singleFingerTap];
         
-        [tranparentFullScreenView addSubview:touchGif];
+        [_tranparentFullScreenView addSubview:touchGif];
     }
     
 //    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Question"] == true &&
@@ -1752,8 +1784,14 @@
 
 - (void)dismissTranparentFullScreenView:(UITapGestureRecognizer *)recognizer
 {
-    UIView *view = [recognizer view];
-    [view removeFromSuperview];
+    [self hideTransparentFullScreenView];
+}
+
+- (void) hideTransparentFullScreenView {
+    if (_tranparentFullScreenView) {
+        [_tranparentFullScreenView removeFromSuperview];
+        _tranparentFullScreenView = nil;
+    }
 }
 
 #pragma mark – ASValueTrackingSliderDataSource
