@@ -1126,6 +1126,8 @@
  */
 - (void) playbackOnCard:(FlashCard *) currentCard {
     
+    __weak __typeof(&*self)weakSelf = self;
+    
     if (currentCard) {
         if ([self isText2Speech] || [self isSmartDelay]) {
             
@@ -1150,6 +1152,11 @@
                         durationForRecordedSound = [currentCard durationForAnswerRecordedSound];
                     }
                     if (durationForRecordedSound == 0) {
+                        
+                        if ([self isText2Speech] == false) {
+                            [self showTranparentFingerAnimationFullScreenView];
+                        }
+                        
                         [currentCard textToSpeechAllContentNow];
                     } else {
                         [currentCard playAudioWithManualClick:NO withMute:_isNotMute == false];
@@ -1160,6 +1167,11 @@
                             if (_isShuttingDown == false) {
                                 [currentCard textToSpeechAllContentNow];
                             }
+                            
+                            if ([weakSelf isText2Speech] == false) {
+                                [weakSelf showTranparentFingerAnimationFullScreenView];
+                            }
+                            
                         } repeats:NO];
                         
                     }
@@ -1167,6 +1179,10 @@
                     
                     [_timerForDelayedText2Speech invalidate];
                     [currentCard textToSpeechAllContentNow];
+                    
+                    if ([weakSelf isText2Speech] == false) {
+                        [weakSelf showTranparentFingerAnimationFullScreenView];
+                    }
                     
                 }
                 
@@ -1630,9 +1646,10 @@
     
     __weak __typeof(&*self)weakSelf = self;
     
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [weakSelf showTranparentFingerAnimationFullScreenView];
-    });
+    if ([self isText2Speech]) {
+        //if false, we put it at playbackOnCard
+        [self showTranparentFingerAnimationFullScreenView];
+    }
     
     if (_isAutoScroll && (isQuestionShowing == FALSE)) {
         [self enableDwellTimeSlider];
