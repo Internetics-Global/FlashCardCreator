@@ -167,6 +167,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
      */
     BOOL                                 *_isDismissKeyboardViaSaveButtonFromKeyboard;
     
+    
+    FLAnimatedImageView                  *_fingerAnimationGifImageView;
+    
 }
 
 
@@ -233,6 +236,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self loadQuestionAnswerViewForiPad];
         }
         
+        _fingerAnimationGifImageView = [[FLAnimatedImageView alloc] init];
+        if (isUserInterfaceIdiomPhone) {
+            _fingerAnimationGifImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/2-50, CGRectGetHeight(self.frame)-130, 100, 100);
+        } else {
+            _fingerAnimationGifImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/2-130, CGRectGetHeight(self.frame)-300, 260, 260);
+        }
+        
+        //_fingerAnimationGifImageView.backgroundColor = [UIColor redColor];
+        
+        _fingerAnimationGifImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _fingerAnimationGifImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _fingerAnimationGifImageView.clipsToBounds = YES;
+        _fingerAnimationGifImageView.isAllowAutoPlayWhenVisible = true;
+        _fingerAnimationGifImageView.animationRepeatCount = 1;
+        [self addSubview:_fingerAnimationGifImageView];
+        
         [self initDefaultValue];
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
@@ -245,6 +264,48 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     return self;
 }
 
+
+
+- (void) hideTransparentFullScreenView {
+    
+    _fingerAnimationGifImageView.hidden = true;
+}
+
+- (BOOL) isAllowShowTransparentFullScreenView {
+    
+    if (_isPlayingCard == false) {
+        return false;
+    }
+    
+    BOOL b = [[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"];
+    return b == false;
+    
+}
+
+- (void) showTransparentFullScreenView {
+    
+    if ([self isAllowShowTransparentFullScreenView] == false) {
+        return;
+    }
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
+    _fingerAnimationGifImageView.hidden = false;
+    
+    NSString *gif;
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        gif = @"question-gif";
+    } else {
+        gif = @"answer-gif";
+    }
+    
+    NSString *gifPath =[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"];
+    _fingerAnimationGifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifPath]];
+    _fingerAnimationGifImageView.loopCompletionBlock = ^(NSUInteger loopCountRemaining){
+        [weakSelf hideTransparentFullScreenView];
+    };
+    
+}
 
 - (void) initDefaultValue {
     [iConsole info:@"%s",__FUNCTION__];

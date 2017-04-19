@@ -233,5 +233,8 @@ typedef enum{
 
 - (void) hideAllSemiTransparentTextViews;
 
+- (void) hideTransparentFullScreenView;
+- (void) showTransparentFullScreenView;
+
 
 @end

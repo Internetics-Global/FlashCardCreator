@@ -23,9 +23,6 @@
 
 #import "AppDelegate.h"
 
-#import "FLAnimatedImageView.h"
-#import "FLAnimatedImage.h"
-
 
 #define K_AutoHideControlPanelDwellSeconds         5
 #define K_IntervalBetweenCardSeconds_ForQAOnly     4
@@ -145,14 +142,6 @@
      *  用于执行在view controller生命周期内的仅仅一次的标志。不能用disp_once，因为dis_once是application生命周期仅仅一次执行。
      */
     BOOL     _OneOffExecution_Flag;
-    
-    /*
-     * only show once
-    */
-    BOOL     _showTransparentFingerAnimationQuestion;
-    BOOL     _showTransparentFingerAnimationAnswer;
-    
-    UIView   *_tranparentFullScreenView;
 }
 
 @end
@@ -209,9 +198,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActiveNotification) name:UIApplicationWillResignActiveNotification object:nil];
     
     _OneOffExecution_Flag = YES;
-    
-    _showTransparentFingerAnimationQuestion = false;
-    _showTransparentFingerAnimationAnswer = false;
     
     
 }
@@ -975,8 +961,6 @@
  */
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     
-    [self hideTransparentFullScreenView];
-    
     if (_isAutoScroll && isManually) {
         return; //we don't allow to switch manually during auto play mode
     }
@@ -985,6 +969,7 @@
     [iConsole info:@"%s",__FUNCTION__];
     
     FlashCard *currentFlashCardView = [self getCurrrentCard];
+    [currentFlashCardView hideTransparentFullScreenView];
     
     if (_isAutoScroll && ([currentFlashCardView isQuestionShowing] == FALSE)) {
         //we don't allow to automatically switch from answer to question again
@@ -1154,7 +1139,7 @@
                     if (durationForRecordedSound == 0) {
                         
                         if ([self isText2Speech] == false) {
-                            [self showTranparentFingerAnimationFullScreenView];
+                            [currentCard showTransparentFullScreenView];
                         }
                         
                         [currentCard textToSpeechAllContentNow];
@@ -1169,7 +1154,7 @@
                             }
                             
                             if ([weakSelf isText2Speech] == false) {
-                                [weakSelf showTranparentFingerAnimationFullScreenView];
+                                [currentCard showTransparentFullScreenView];
                             }
                             
                         } repeats:NO];
@@ -1181,7 +1166,7 @@
                     [currentCard textToSpeechAllContentNow];
                     
                     if ([weakSelf isText2Speech] == false) {
-                        [weakSelf showTranparentFingerAnimationFullScreenView];
+                        [currentCard showTransparentFullScreenView];
                     }
                     
                 }
@@ -1475,8 +1460,6 @@
 - (void)didScrollToPage:(NSInteger)index {
     [iConsole info:@"%s",__FUNCTION__];
     
-    [self hideTransparentFullScreenView];
-    
     if (_isAutoScroll) {
         [self enableDwellTimeSlider];
     }
@@ -1648,7 +1631,8 @@
     
     if ([self isText2Speech]) {
         //if false, we put it at playbackOnCard
-        [self showTranparentFingerAnimationFullScreenView];
+        FlashCard *currentCard = [self getCurrrentCard];
+        [currentCard showTransparentFullScreenView];
     }
     
     if (_isAutoScroll && (isQuestionShowing == FALSE)) {
@@ -1718,96 +1702,6 @@
         return YES;
     } else {
         return NO;
-    }
-}
-
-
-- (void) showTranparentFingerAnimationFullScreenView {
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isFunctionPromptOff"]) {
-        return;
-    }
-    
-    FlashCard *currentFlashCardView = [self getCurrrentCard];
-    NSString *key;
-    NSString *gif;
-    if ([currentFlashCardView isQuestionShowing]) {
-        
-        if (_showTransparentFingerAnimationQuestion) {
-            return;
-        } else {
-            _showTransparentFingerAnimationQuestion = true;
-        }
-        
-        key = @"K_Transparent_Finger_Animation_Disabled_Question";
-        gif = @"question-gif";
-    } else {
-        
-        if (_showTransparentFingerAnimationAnswer) {
-            return;
-        } else {
-            _showTransparentFingerAnimationAnswer = true;
-        }
-        
-        key = @"K_Transparent_Finger_Animation_Disabled_Answer";
-        gif = @"answer-gif";
-    }
-
-    
-    BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:key];
-    if (true) {
-        
-        [[NSUserDefaults standardUserDefaults] setBool:true forKey:key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        CGRect screenBounds = [UIScreen mainScreen].bounds;
-        
-        
-        if (_tranparentFullScreenView){
-            [_tranparentFullScreenView removeFromSuperview];
-            _tranparentFullScreenView = nil;
-        }
-        _tranparentFullScreenView = [[UIView alloc] initWithFrame:screenBounds];
-        [self.view addSubview:_tranparentFullScreenView];
-        
-        FLAnimatedImageView *touchGif = [[FLAnimatedImageView alloc] init];
-        if (isUserInterfaceIdiomPhone) {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-50 + 7, CGRectGetHeight(screenBounds)-130, 100, 100);
-        } else {
-            touchGif.frame = CGRectMake(CGRectGetWidth(screenBounds)/2-130 + 37, CGRectGetHeight(screenBounds)-260, 260, 260);
-        }
-        touchGif.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        touchGif.contentMode = UIViewContentModeScaleAspectFit;
-        touchGif.clipsToBounds = YES;
-        touchGif.isAllowAutoPlayWhenVisible = true;
-        NSString *gifPath =[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"];
-        touchGif.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfFile:gifPath]];
-        
-        _tranparentFullScreenView.userInteractionEnabled = true;
-        UITapGestureRecognizer *singleFingerTap =
-        [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                action:@selector(dismissTranparentFullScreenView:)];
-        [_tranparentFullScreenView addGestureRecognizer:singleFingerTap];
-        
-        [_tranparentFullScreenView addSubview:touchGif];
-    }
-    
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Question"] == true &&
-//        [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Transparent_Finger_Animation_Disabled_Answer"] == true) {
-//        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"isFunctionPromptOff"];
-//    }
-}
-
-
-- (void)dismissTranparentFullScreenView:(UITapGestureRecognizer *)recognizer
-{
-    [self hideTransparentFullScreenView];
-}
-
-- (void) hideTransparentFullScreenView {
-    if (_tranparentFullScreenView) {
-        [_tranparentFullScreenView removeFromSuperview];
-        _tranparentFullScreenView = nil;
     }
 }
 
