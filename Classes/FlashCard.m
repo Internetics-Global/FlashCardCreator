@@ -268,6 +268,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) hideTransparentFullScreenView {
     
+    _fingerAnimationGifImageView.animatedImage = nil;
+    [_fingerAnimationGifImageView stopAnimating];
+    
     _fingerAnimationGifImageView.hidden = true;
 }
 
