@@ -1138,7 +1138,7 @@
                     }
                     if (durationForRecordedSound == 0) {
                         
-                        if ([self isText2Speech] == false) {
+                        if ([self isText2Speech] == false && (self.oneOffPlayType == One_Off_Play_Type_Manually)) {
                             [currentCard showTransparentFullScreenView];
                         }
                         
@@ -1153,7 +1153,7 @@
                                 [currentCard textToSpeechAllContentNow];
                             }
                             
-                            if ([weakSelf isText2Speech] == false) {
+                            if ([weakSelf isText2Speech] == false && (self.oneOffPlayType == One_Off_Play_Type_Manually)) {
                                 [currentCard showTransparentFullScreenView];
                             }
                             
@@ -1165,7 +1165,7 @@
                     [_timerForDelayedText2Speech invalidate];
                     [currentCard textToSpeechAllContentNow];
                     
-                    if ([weakSelf isText2Speech] == false) {
+                    if ([weakSelf isText2Speech] == false && (self.oneOffPlayType == One_Off_Play_Type_Manually)) {
                         [currentCard showTransparentFullScreenView];
                     }
                     
@@ -1629,7 +1629,7 @@
     
     __weak __typeof(&*self)weakSelf = self;
     
-    if ([self isText2Speech]) {
+    if ([self isText2Speech] && (self.oneOffPlayType == One_Off_Play_Type_Manually)) {
         //if false, we put it at playbackOnCard
         FlashCard *currentCard = [self getCurrrentCard];
         [currentCard showTransparentFullScreenView];

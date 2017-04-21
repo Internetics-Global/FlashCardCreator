@@ -238,7 +238,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         _fingerAnimationGifImageView = [[FLAnimatedImageView alloc] init];
         if (isUserInterfaceIdiomPhone) {
-            _fingerAnimationGifImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/2-50, CGRectGetHeight(self.frame)-130, 100, 100);
+            _fingerAnimationGifImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/2-50, CGRectGetHeight(self.frame)-120, 120, 120);
         } else {
             _fingerAnimationGifImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/2-130, CGRectGetHeight(self.frame)-300, 260, 260);
         }
