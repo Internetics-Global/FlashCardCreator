@@ -608,7 +608,9 @@
     
     [self gotoPackEditView];
     
-    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
+    if (isUserInterfaceIdiomPhone == false) {
+        [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
+    }
 }
 
 - (void) gotoPackEditView {
