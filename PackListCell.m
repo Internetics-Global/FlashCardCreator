@@ -77,15 +77,15 @@
     self.playButton.autoresizingMask = UIViewAutoresizingNone;
     [contentView addSubview:self.playButton];
     
-    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.editButton.frame = CGRectMake(55, 140, 50, 50);
-    self.editButton.backgroundColor = [UIColor clearColor];
-    [self.editButton setImage:[UIImage imageNamed:@"editPackList"] forState:UIControlStateNormal];
-    self.editButton.autoresizingMask = UIViewAutoresizingNone;
-    [contentView addSubview:self.editButton];
+    self.gotoPackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.gotoPackButton.frame = CGRectMake(55, 140, 50, 50);
+    self.gotoPackButton.backgroundColor = [UIColor clearColor];
+    [self.gotoPackButton setImage:[UIImage imageNamed:@"editPackList"] forState:UIControlStateNormal];
+    self.gotoPackButton.autoresizingMask = UIViewAutoresizingNone;
+    [contentView addSubview:self.gotoPackButton];
     if ([MutipleTargetHelper isFullVersion] == false) {
-        self.editButton.enabled = false;
-        self.editButton.alpha = 0.5;
+        self.gotoPackButton.enabled = false;
+        self.gotoPackButton.alpha = 0.5;
     }
     
     
@@ -100,6 +100,16 @@
     self.deleteButton.userInteractionEnabled = TRUE;
     self.deleteButton.frame = CGRectMake(40.0f, 205.0f, 88, 25);
     [contentView addSubview:self.deleteButton];
+    
+    self.editPackSettingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.editPackSettingButton setImage:[UIImage imageNamed:@"edit_pack_button"] forState:UIControlStateNormal];
+    [self.editPackSettingButton setBackgroundColor:[UIColor clearColor]];
+    [self.editPackSettingButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.editPackSettingButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    self.editPackSettingButton.tag = index;
+    self.editPackSettingButton.userInteractionEnabled = TRUE;
+    self.editPackSettingButton.frame = CGRectMake(self.bounds.size.width - 40.0f - 88, 205.0f, 88, 25);
+    [contentView addSubview:self.editPackSettingButton];
     
     
     [self.contentView addSubview:contentView];

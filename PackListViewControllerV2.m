@@ -266,22 +266,27 @@
         
         if (_isCollectionViewEditing) {
             cell.deleteButton.hidden = NO;
+            cell.editPackSettingButton.hidden = NO;
         } else {
             cell.deleteButton.hidden = YES;
+            cell.editPackSettingButton.hidden = YES;
         }
         
         cell.deleteButton.tag = index;
         [cell.deleteButton addTarget:self action:@selector(deleteCurrentPack:) forControlEvents:UIControlEventTouchDown];
         
+        cell.editPackSettingButton.tag = index;
+        [cell.editPackSettingButton addTarget:self action:@selector(editPackSettingButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        
         cell.packNameText.tag = index;
         cell.packNameText.delegate = self;
         
-        cell.editButton.tag = index;
-        [cell.editButton addTarget:self action:@selector(editPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
+        cell.gotoPackButton.tag = index;
+        [cell.gotoPackButton addTarget:self action:@selector(gotoPackButtonClicked:) forControlEvents:UIControlEventTouchDown];
         if ([Common isOwner:pack]) {
-            cell.editButton.hidden = false;
+            cell.gotoPackButton.hidden = false;
         } else {
-            cell.editButton.hidden = true;
+            cell.gotoPackButton.hidden = true;
         }
         
         cell.playButton.tag = index;
@@ -340,13 +345,7 @@
         
         NSInteger index = indexPath.row - 1 - OFFSET;
         
-        Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
-        selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
-        [selectedPack savePackOnly];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
-        
-        [self setPackIDForLastSelected:selectedPack.packID];
+        [self play:index];
         
     }
     
@@ -376,6 +375,11 @@
     [iConsole info:@"%s",__FUNCTION__];
     
     NSInteger packIndex = ((UIButton *)sender).tag;
+    [self play:packIndex];
+}
+
+-  (void) play:(NSInteger) packIndex {
+    [iConsole info:@"%s",__FUNCTION__];
     
     One_Off_Play_Type oneOffType;
     
@@ -550,6 +554,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (void) deleteCurrentPack:(id) sender {
     _currentIndex = ((UIButton *)sender).tag;
     
@@ -573,7 +578,21 @@
     
 }
 
-- (void) editPackButtonClicked: (id) sender {
+- (void) gotoPackButtonClicked: (id) sender {
+    
+    NSInteger index = ((UIButton *) sender).tag;
+    
+    Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
+    selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
+    [selectedPack savePackOnly];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
+
+    [self setPackIDForLastSelected:selectedPack.packID];
+    
+}
+
+- (void) editPackSettingButtonClicked: (id) sender {
     
     if ([MutipleTargetHelper isFullVersion] == false) {
         [MutipleTargetHelper showAlertToUpgradeToFullVersion];
