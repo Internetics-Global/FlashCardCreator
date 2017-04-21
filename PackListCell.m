@@ -83,12 +83,7 @@
     [self.gotoPackButton setImage:[UIImage imageNamed:@"editPackList"] forState:UIControlStateNormal];
     self.gotoPackButton.autoresizingMask = UIViewAutoresizingNone;
     [contentView addSubview:self.gotoPackButton];
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        self.gotoPackButton.enabled = false;
-        self.gotoPackButton.alpha = 0.5;
-    }
-    
-    
+
     self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
     [self.deleteButton setBackgroundColor:[UIColor clearColor]];
@@ -110,7 +105,10 @@
     self.editPackSettingButton.userInteractionEnabled = TRUE;
     self.editPackSettingButton.frame = CGRectMake(self.bounds.size.width - 40.0f - 88, 205.0f, 88, 25);
     [contentView addSubview:self.editPackSettingButton];
-    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        self.editPackSettingButton.enabled = false;
+        self.editPackSettingButton.alpha = 0.5;
+    }
     
     [self.contentView addSubview:contentView];
 }
