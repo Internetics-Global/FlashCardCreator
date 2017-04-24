@@ -585,6 +585,10 @@
     Pack *selectedPack = [[User defaultUser].packs objectAtIndex:index];
     selectedPack.lastVisitDate = (int)[[NSDate date] timeIntervalSince1970];
     [selectedPack savePackOnly];
+    
+    if (isUserInterfaceIdiomPhone) {
+        [self.navigationController popViewControllerAnimated:true];
+    }
 
     [[NSNotificationCenter defaultCenter] postNotificationName:CURRENT_PACK_SELECTED_NOTIFICATION object:selectedPack];
 
