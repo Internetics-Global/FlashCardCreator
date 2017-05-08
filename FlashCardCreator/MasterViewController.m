@@ -177,7 +177,7 @@ enum popover_enum {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareLinkCreatedNotification:) name:SHARE_LINK_CREATED_NOTIFICATION object:nil];
         }
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterBackFromPlay:) name:@"SHOW_PACK_LIST_AFTER_BACK_FROM_PLAY" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPackListAfterDismiss:) name:@"SHOW_PACK_LIST_AFTER_DISMISS" object:nil];
         
         
         //2. Initialize
@@ -989,7 +989,7 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
-- (void) showPackListAfterBackFromPlay :(NSNotification *) notification {
+- (void) showPackListAfterDismiss :(NSNotification *) notification {
     
     if (self.view.window == nil) {
         //The view's window property is non-nil if a view is currently visible, http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible

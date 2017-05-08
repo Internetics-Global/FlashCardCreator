@@ -230,9 +230,17 @@
 
 - (void)closeButtonClicked:(id)sender {
 
-    [self.navigationController popViewControllerAnimated:YES]; //for help item in more tableview
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [self dismissModalViewControllerAnimated:YES]; //for logo
+    
+    
+    if (isUserInterfaceIdiomPhone) {
+        
+        [self.navigationController popViewControllerAnimated:YES]; 
+        
+    } else {
+        [self dismissViewControllerAnimated:true completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOW_PACK_LIST_AFTER_DISMISS" object:nil userInfo:nil];
+        }];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:REFRESH_SETTING_TABLEVIEW_NOTIFICATION object:nil];
 }

@@ -877,7 +877,7 @@
     if (_isFromPackList) {
         [self dismissViewControllerAnimated:YES completion:^{
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOW_PACK_LIST_AFTER_BACK_FROM_PLAY" object:nil userInfo:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOW_PACK_LIST_AFTER_DISMISS" object:nil userInfo:nil];
             
         }];
     } else {
