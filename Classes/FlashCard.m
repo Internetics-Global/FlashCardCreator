@@ -785,19 +785,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_creatorText == nil) {
         
-        UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(490, 25, 90, 20);
-        des.textAlignment = NSTextAlignmentLeft;
-        des.backgroundColor = [UIColor clearColor];
-        des.font = [UIFont systemFontOfSize:12];
-        des.textColor = [UIColor grayColor];
-        des.text = NSLocalizedString(@"Label_Creator_Hint",@"");
-        des.userInteractionEnabled = FALSE;
-        [self addSubview:des];
-        
-        
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(490, 50, 90, 20);
+        _creatorText.frame = CGRectMake(490, 30, 90, 20);
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:12];
@@ -810,12 +799,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
             _creatorText.tintColor = [UIColor blackColor];
         }
+        if (_isPlayingCard == false) {
+            _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
+            _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _creatorText.layer.borderWidth = 1;
+        }
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _creatorText.minimumFontSize = 6;
         [self addSubview:_creatorText];
         
         _jobTitleText = [[UITextField alloc] init];
-        _jobTitleText.frame = CGRectMake(490, 75, 90, 20);
+        _jobTitleText.frame = CGRectMake(490, 55, 90, 20);
         _jobTitleText.textAlignment = NSTextAlignmentLeft;
         _jobTitleText.backgroundColor = [UIColor clearColor];
         _jobTitleText.font = [UIFont systemFontOfSize:12];
@@ -824,6 +818,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.delegate = self;
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
             _jobTitleText.tintColor = [UIColor blackColor];
+        }
+        if (_isPlayingCard == false) {
+            _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
+            _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _jobTitleText.layer.borderWidth = 1;
         }
         _jobTitleText.keyboardType = UIKeyboardAppearanceDefault;
         _jobTitleText.returnKeyType = UIReturnKeyDone;
@@ -1337,25 +1336,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     if (_creatorText == nil) {
-        UITextField *des = [[UITextField alloc] init];
-        des.frame = CGRectMake(190, 5, 68, 10);
-        if (self.isPlayingCard) {
-            des.frame = [Common getScaledViewRect:des withProportion:kFlashCardViewProporation_iPhone];
-        }
-        des.textAlignment = NSTextAlignmentLeft;
-        des.backgroundColor = [UIColor clearColor];
-        des.font = [UIFont systemFontOfSize:8];
-        if (self.isPlayingCard) {
-            des.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
-        }
-        des.textColor = [UIColor grayColor];
-        des.text = NSLocalizedString(@"Label_Creator_Hint",@"");
-        des.userInteractionEnabled = FALSE;
-        [self addSubview:des];
-        
-        
+
         _creatorText = [[UITextField alloc] init];
-        _creatorText.frame = CGRectMake(190, 15, 68, 10);
+        _creatorText.frame = CGRectMake(190, 8, 60, 14);
         if (self.isPlayingCard) {
             _creatorText.frame = [Common getScaledViewRect:_creatorText withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1364,6 +1347,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.font = [UIFont systemFontOfSize:8];
         if (self.isPlayingCard) {
             _creatorText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
+        } else {
+            _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
+            _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _creatorText.layer.borderWidth = 1;
         }
         
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
@@ -1380,7 +1367,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self addSubview:_creatorText];
         
         _jobTitleText = [[UITextField alloc] init];
-        _jobTitleText.frame = CGRectMake(190, 25, 68, 10);
+        _jobTitleText.frame = CGRectMake(190, 25, 60, 14);
         if (self.isPlayingCard) {
             _jobTitleText.frame = [Common getScaledViewRect:_jobTitleText withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1389,7 +1376,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.font = [UIFont systemFontOfSize:8];
         if (self.isPlayingCard) {
             _jobTitleText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
+        } else {
+            _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
+            _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            _jobTitleText.layer.borderWidth = 1;
         }
+        
         _jobTitleText.textColor = [UIColor grayColor];
         _jobTitleText.userInteractionEnabled = FALSE;
         _jobTitleText.delegate = self;
