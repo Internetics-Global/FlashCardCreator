@@ -143,6 +143,8 @@ enum popover_enum {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewAfterParseDownloadPackFinishNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(copyCardNotification:) name:COPY_CARD_NOTIFICATION object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPackNotification:) name:DOWNLOAD_PACK_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterAfterSaveCardNotification:) name:UPDATE_MASTER_AFTER_SAVE_CARD_NOTFICATION object:nil];
@@ -1241,6 +1243,11 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark -
 #pragma mark - Update UI
+
+- (void) copyCardNotification:(NSNotification *) notification {
+    self.currentPack = (Pack *)[notification object];
+    [self.tableView reloadData];
+}
 
 - (void) updateMasterDetailViewAfterParseDownloadPackFinishNotification:(NSNotification *) notification {
     //Step1: update master view

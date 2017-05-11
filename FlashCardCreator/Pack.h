@@ -77,5 +77,7 @@
 
 + (NSMutableArray *) packsForUserID:(NSInteger)userID;
 
+- (void)insertCard:(Card *)card afterCardID:(int)cardID;
+
 @end
 

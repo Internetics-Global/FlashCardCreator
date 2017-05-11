@@ -50,5 +50,7 @@
 
 - (id)copyWithZone:(NSZone *)zone;
 
+- (id) copyAndUpdateID;
+
 @end
 

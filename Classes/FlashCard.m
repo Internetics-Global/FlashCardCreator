@@ -880,6 +880,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _changeTemplateButton.showsTouchWhenHighlighted = YES;
         }
         
+        if (_copyButton == nil) {
+            _copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _copyButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 240, CGRectGetMinY(_functionAreaView.frame), 70, CGRectGetHeight(_functionAreaView.frame));
+            _copyButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _copyButton.layer.borderWidth = 1;
+            _copyButton.showsTouchWhenHighlighted = YES;
+            [_copyButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [_copyButton setTitle:NSLocalizedString(@"Functional_Panel_Copy",@"") forState:UIControlStateNormal];
+            [_copyButton addTarget:self action:@selector(copyButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _copyButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_copyButton];
+        }
+        
         
         if (_previewButton == nil) {
             _previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1446,6 +1460,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             _saveButton.hidden = YES;
             _previewButton.hidden = YES;
+        }
+        
+        if (_copyButton == nil) {
+            _copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _previewButton.frame = CGRectMake(CGRectGetMinX(_functionAreaView.frame) - 135, CGRectGetMinY(_functionAreaView.frame), 42, CGRectGetHeight(_functionAreaView.frame));
+            _copyButton.layer.borderColor = [UIColor whiteColor].CGColor;
+            _copyButton.layer.borderWidth = 1;
+            _copyButton.showsTouchWhenHighlighted = YES;
+            [_copyButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+            [_copyButton setTitle:NSLocalizedString(@"Functional_Panel_Preview",@"") forState:UIControlStateNormal];
+            [_copyButton addTarget:self action:@selector(copyButtonClick:) forControlEvents:UIControlEventTouchDown];
+            _copyButton.showsTouchWhenHighlighted = YES;
+            
+            [self addSubview:_copyButton];
         }
         
         
@@ -10795,6 +10823,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self saveEdittedCard];
     
     
+    
+}
+
+- (void) copyButtonClick:(id)sender {
+    
+    if (_currentCard && _currentPack) {
+        Card *copy = [_currentCard copyAndUpdateID];
+        [_currentPack insertCard:copy afterCardID:_currentCard.cardID];
+        [_currentPack save];
+        [[NSNotificationCenter defaultCenter] postNotificationName:COPY_CARD_NOTIFICATION object:_currentPack];
+    }
     
 }
 

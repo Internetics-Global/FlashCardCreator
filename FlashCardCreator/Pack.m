@@ -252,6 +252,31 @@
     
 }
 
+
+- (void)insertCard:(Card *)card afterCardID:(int)cardID{
+    if (_cards == nil) {
+        [iConsole info:@"%s:could not enter an empty card",__FUNCTION__];
+    }
+    
+    card.packID = self.packID; //build table linkage in database
+    
+    int foundIndex = -1;
+    for (int i=0; i< [_cards count]; i++) {
+        Card *card = _cards[i];
+        if (card.cardID == cardID) {
+            foundIndex = i;
+            break;
+        }
+    }
+    
+    if (foundIndex >= 0) {
+        [_cards insertObject:card atIndex:foundIndex + 1];
+    }
+    
+    [card save];
+    
+}
+
 -(void)removeCard:(Card *)card{
 	[_cards removeObject:card];
 	[card destroy];

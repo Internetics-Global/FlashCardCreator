@@ -167,6 +167,7 @@
 
 "Functional_Panel_Save"           = "Save";
 "Functional_Panel_Preview"        = "Preview";
+"Functional_Panel_Copy"           = "Copy";
 
 "ToolbarItem_Align_Left"        = "Left";
 "ToolbarItem_Align_Center"        = "Center";

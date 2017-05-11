@@ -12,6 +12,7 @@
 #import "Question.h"
 #import "SQLiteHelper.h"
 #import "FileOperationHelper.h"
+#import "CSS.h"
 
 @implementation Card
 
@@ -206,6 +207,35 @@
     
     copy.question = [_question copyWithZone:zone];
     copy.answer = [_answer copyWithZone:zone];
+    
+    return copy;
+}
+
+- (id) copyAndUpdateID {
+    Card *copy = [self copy];
+    
+    NSError *error = nil;
+    NSString *copyCoverImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.coverImageURL lastPathComponent]];
+    NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+    [[NSFileManager defaultManager] copyItemAtPath:copyCoverImageURL toPath:newFileName error:&error];
+    if (error) {
+        [iConsole error:@"%s:Error during copyAndUpdateID copyItemAtPath to %@",__FUNCTION__,newFileName];
+    } else {
+        copy.coverImageURL = newFileName;
+    }
+    
+    copy.cardID = [[NSDate date] timeIntervalSince1970];
+    
+    copy.question.questionID = [[NSDate date] timeIntervalSince1970];
+    copy.question.cardID = copy.cardID;
+    copy.answer.answerID = [[NSDate date] timeIntervalSince1970];
+    copy.answer.cardID = copy.cardID;
+    
+    copy.question.cssID = [[NSDate date] timeIntervalSince1970];
+    copy.question.css.cssID = copy.question.cssID;
+    
+    copy.answer.cssID = [[NSDate date] timeIntervalSince1970] + 1;  //the reason why for +1 is becasue answer.cssID could be same as question.cssID
+    copy.answer.css.cssID = copy.answer.cssID;
     
     return copy;
 }
