@@ -1306,6 +1306,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [_segmentedControl addTarget:self action:@selector(segmentedControlQAClicked:) forControlEvents:UIControlEventValueChanged];
         _segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
         _segmentedControl.selectedSegmentIndex = 0;
+        NSDictionary *attributesNormal = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [UIFont systemFontOfSize:10], NSFontAttributeName,
+                                    [UIColor whiteColor], NSForegroundColorAttributeName,
+                                    nil];
+        NSDictionary *attributesSelected = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [UIFont systemFontOfSize:10], NSFontAttributeName,
+                                          [UIColor blackColor], NSForegroundColorAttributeName,
+                                          nil];
+        [_segmentedControl setTitleTextAttributes:attributesNormal
+                                        forState:UIControlStateNormal];
+        [_segmentedControl setTitleTextAttributes:attributesSelected
+                                         forState:UIControlStateSelected];
+        [_segmentedControl setTitleTextAttributes:attributesSelected
+                                         forState:UIControlStateHighlighted];
         [self addSubview:_segmentedControl];
     }
     
