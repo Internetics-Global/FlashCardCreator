@@ -1572,16 +1572,19 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
-        case 0:
+        case 0: {
             //copy
-            if (_currentCard && _currentPack) {
+            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            Card *selectedCard = [_currentPack cards][cellIndexPath.row];
+            if (selectedCard && _currentPack) {
                 Card *copy = [_currentCard copyAndUpdateID];
-                [_currentPack insertCard:copy afterCardID:_currentCard.cardID];
+                [_currentPack insertCard:copy afterCardID:selectedCard.cardID];
                 [_currentPack save];
                 [self.tableView reloadData];
             }
             
             break;
+        }
         default:
             break;
     }
@@ -1591,8 +1594,8 @@ extern BOOL isFromNewCreatedCard;
     switch (index) {
         case 0: {
             //delete
-            
-            _currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            _currentIndexPath = cellIndexPath;
             if (![Common isOwner:_currentPack]) {
                 [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
                 return;
