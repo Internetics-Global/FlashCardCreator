@@ -145,6 +145,9 @@
 "ToolbarItem_Answer"        = "Answer";
 "ToolbarItem_Question"      = "Question";
 
+"TableView_Cell_Action_Delete"        = "Delete";
+"TableView_Cell_Action_Copy"          = "Copy";
+
 "Keyboard_Done"             = "Done";
 "Keyboard_Cancel"             = "Cancel";
 "Keyboard_Save"             = "Save";

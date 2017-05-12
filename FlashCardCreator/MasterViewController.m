@@ -1429,7 +1429,7 @@ extern BOOL isFromNewCreatedCard;
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                title:@"Delete"];
+                                                title:NSLocalizedString(@"TableView_Cell_Action_Delete",@"")];
     
     return rightUtilityButtons;
 }
@@ -1440,7 +1440,7 @@ extern BOOL isFromNewCreatedCard;
     
     [leftUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
-                                                title:@"Copy"];
+                                                title:NSLocalizedString(@"TableView_Cell_Action_Copy",@"")];
     return leftUtilityButtons;
 }
 
@@ -1497,26 +1497,14 @@ extern BOOL isFromNewCreatedCard;
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    _currentIndexPath = indexPath;
-    
-    if (![Common isOwner:_currentPack]) {
-        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
-        return;
-    }
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        __weak __typeof(&*self)weakSelf = self;
-        
-        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"") cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"") otherButtonTitles:@[NSLocalizedString(@"Keyboard_Cancel",@"")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            [weakSelf didClickDeleteCardAlertView:alertView clickedButtonAtIndex:buttonIndex];
-        }];
-        
-        APP_DELEGATE.isAllowToShowPackList = NO;
-    }
-    
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+    [self moveAction:fromIndexPath toIndexPath:toIndexPath];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
 }
 
 - (void) showPurchaseView {
@@ -1579,22 +1567,13 @@ extern BOOL isFromNewCreatedCard;
     
 }
 
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-    [self moveAction:fromIndexPath toIndexPath:toIndexPath];
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleNone;
-}
 
 #pragma mark – SWTableViewDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
         case 0:
-            
+            //copy
             if (_currentCard && _currentPack) {
                 Card *copy = [_currentCard copyAndUpdateID];
                 [_currentPack insertCard:copy afterCardID:_currentCard.cardID];
@@ -1610,9 +1589,23 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
-        case 0:
-            [self deleteCurrentCard:[NSIndexPath indexPathForRow:index inSection:0]];
+        case 0: {
+            //delete
+            
+            _currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            if (![Common isOwner:_currentPack]) {
+                [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+                return;
+            }
+            
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"") cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"") otherButtonTitles:@[NSLocalizedString(@"Keyboard_Cancel",@"")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                [self didClickDeleteCardAlertView:alertView clickedButtonAtIndex:buttonIndex];
+            }];
+            
+            APP_DELEGATE.isAllowToShowPackList = NO;
+            
             break;
+        }
         default:
             break;
     }
