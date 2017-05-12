@@ -25,4 +25,6 @@ pod 'Firebase/Auth'
 
 pod 'OpenSSL-Universal'
 
+pod 'SWTableViewCell', '~> 0.3.7'
+
 end

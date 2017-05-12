@@ -84,6 +84,7 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
+  - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
   - AWSCognito
@@ -102,6 +103,7 @@ DEPENDENCIES:
   - RMStore (~> 0.7)
   - RNCryptor
   - SDWebImage
+  - SWTableViewCell (~> 0.3.7)
 
 SPEC CHECKSUMS:
   AppAuth: 292151ac22065106b0bee6b80e3be29c95bda0fc
@@ -128,7 +130,8 @@ SPEC CHECKSUMS:
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: fb3cd5a8fc0f84f29fa4295d86ed3629c1dd3524
+PODFILE CHECKSUM: 5344a0526fd1c5ac2502ba57c07124a854544698
 
 COCOAPODS: 1.1.1
