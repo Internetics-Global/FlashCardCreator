@@ -67,6 +67,7 @@
 #import "PackInfoView.h"
 
 #import "GoogleDriveSession.h"
+#import "SWTableViewCell.h"
 
 @import Firebase;
 
@@ -80,7 +81,7 @@ const float PAPYRUS_RATIO_FROM_NON_IOS = 1.5;
 const float COURIER_RATIO_FROM_NON_IOS = 1.5;
 const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
 
-@interface MasterViewController () <UIPopoverControllerDelegate,NSURLConnectionDataDelegate, PackInfoViewDelegate> {
+@interface MasterViewController () <UIPopoverControllerDelegate,NSURLConnectionDataDelegate,SWTableViewCellDelegate, PackInfoViewDelegate> {
     
     UIButton * _editButton; //used for UIBarbuttonItem
     
@@ -142,8 +143,6 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPackNotification:) name:CURRENT_PACK_SELECTED_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMasterDetailViewAfterParseDownloadPackFinishNotification:) name:PARSE_DOWNLOADED_PACK_FINISH_NOTIFICATION object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(copyCardNotification:) name:COPY_CARD_NOTIFICATION object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadPackNotification:) name:DOWNLOAD_PACK_NOTIFICATION object:nil];
         
@@ -278,7 +277,7 @@ enum popover_enum {
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
-    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton,editBarButtonItem, newPackBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton];
     
     
     
@@ -1244,11 +1243,6 @@ extern BOOL isFromNewCreatedCard;
 #pragma mark -
 #pragma mark - Update UI
 
-- (void) copyCardNotification:(NSNotification *) notification {
-    self.currentPack = (Pack *)[notification object];
-    [self.tableView reloadData];
-}
-
 - (void) updateMasterDetailViewAfterParseDownloadPackFinishNotification:(NSNotification *) notification {
     //Step1: update master view
     self.currentPack = (Pack *)[notification object];
@@ -1421,8 +1415,33 @@ extern BOOL isFromNewCreatedCard;
     cell.backgroundColor = [UIColor clearColor];
     
     
+    cell.leftUtilityButtons = [self leftUtilityButtons];
+    cell.rightUtilityButtons = [self rightUtilityButtons];
+    cell.delegate = self;
+    
+    
     return cell;
     
+}
+
+- (NSArray *)rightUtilityButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"Delete"];
+    
+    return rightUtilityButtons;
+}
+
+- (NSArray *)leftUtilityButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+                                                title:@"Copy"];
+    return leftUtilityButtons;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1475,7 +1494,7 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1567,7 +1586,36 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
+    return UITableViewCellEditingStyleNone;
+}
+
+#pragma mark – SWTableViewDelegate
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            
+            if (_currentCard && _currentPack) {
+                Card *copy = [_currentCard copyAndUpdateID];
+                [_currentPack insertCard:copy afterCardID:_currentCard.cardID];
+                [_currentPack save];
+                [self.tableView reloadData];
+            }
+            
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    switch (index) {
+        case 0:
+            [self deleteCurrentCard:[NSIndexPath indexPathForRow:index inSection:0]];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -
