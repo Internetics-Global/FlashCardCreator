@@ -277,9 +277,8 @@ enum popover_enum {
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
-    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton];
-    
-    
+    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton,editBarButtonItem, newPackBarButtonItem];
+
     
     if (isUserInterfaceIdiomPhone) {
         
@@ -1494,7 +1493,28 @@ extern BOOL isFromNewCreatedCard;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return NO;
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    _currentIndexPath = indexPath;
+    
+    if (![Common isOwner:_currentPack]) {
+        [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+        return;
+    }
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        __weak __typeof(&*self)weakSelf = self;
+        
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_DELETE_CARD",@"") cancelButtonTitle:NSLocalizedString(@"Keyboard_Delete",@"") otherButtonTitles:@[NSLocalizedString(@"Keyboard_Cancel",@"")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [weakSelf didClickDeleteCardAlertView:alertView clickedButtonAtIndex:buttonIndex];
+        }];
+        
+        APP_DELEGATE.isAllowToShowPackList = NO;
+    }
 }
 
 // Override to support rearranging the table view.
