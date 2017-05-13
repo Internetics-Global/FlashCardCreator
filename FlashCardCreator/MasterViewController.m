@@ -277,7 +277,7 @@ enum popover_enum {
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
-    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton,editBarButtonItem, newPackBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[_selectPackBarButton,editBarButtonItem];
 
     
     if (isUserInterfaceIdiomPhone) {
