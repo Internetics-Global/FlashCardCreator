@@ -240,7 +240,12 @@
     {
         {
             NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.imageFullPath lastPathComponent]];
-            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            NSString *newFileName;
+            if ([copyImageURL.lowercaseString containsString:@"gif"] == false) {
+                newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            } else {
+                newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+            }
             
             BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
             if (fileExists && (isDir == false)) {
@@ -255,7 +260,12 @@
         
         {
             NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.imageFullPath2 lastPathComponent]];
-            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            NSString *newFileName;
+            if ([copyImageURL.lowercaseString containsString:@"gif"] == false) {
+                newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            } else {
+                newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+            }
             
             BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
             if (fileExists && (isDir == false)) {
@@ -339,7 +349,12 @@
     {
         {
             NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.imageFullPath lastPathComponent]];
-            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            NSString *newFileName;
+            if ([copyImageURL.lowercaseString containsString:@"gif"] == false) {
+                newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            } else {
+                newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+            }
             
             BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
             if (fileExists && (isDir == false)) {
@@ -354,7 +369,12 @@
         
         {
             NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.imageFullPath2 lastPathComponent]];
-            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            NSString *newFileName;
+            if ([copyImageURL.lowercaseString containsString:@"gif"] == false) {
+                newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            } else {
+                newFileName = [FileOperationHelper generateUniqueGIFImageFilePathUnderImagesFolder];
+            }
             
             BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
             if (fileExists && (isDir == false)) {
