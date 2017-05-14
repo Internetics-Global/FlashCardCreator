@@ -13,6 +13,8 @@
 #import "SQLiteHelper.h"
 #import "FileOperationHelper.h"
 #import "CSS.h"
+#import "Question.h"
+#import "Answer.h"
 
 @implementation Card
 
@@ -211,31 +213,241 @@
     return copy;
 }
 
-- (id) copyAndUpdateID {
+- (id) deepCopy {
     Card *copy = [self copy];
     
     NSError *error = nil;
-    NSString *copyCoverImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.coverImageURL lastPathComponent]];
-    NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
-    [[NSFileManager defaultManager] copyItemAtPath:copyCoverImageURL toPath:newFileName error:&error];
-    if (error) {
-        [iConsole error:@"%s:Error during copyAndUpdateID copyItemAtPath to %@",__FUNCTION__,newFileName];
-    } else {
-        copy.coverImageURL = newFileName;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir;
+    
+    //card
+    {
+        NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.coverImageURL lastPathComponent]];
+        NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+        
+        BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+        if (fileExists && (isDir == false)) {
+            [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+            if (error) {
+                [iConsole error:@"%s:Error during coverImageURL copyItemAtPath to %@",__FUNCTION__,newFileName];
+            } else {
+                copy.coverImageURL = newFileName;
+            }
+        }
     }
     
-    copy.cardID = [[NSDate date] timeIntervalSince1970];
+    //question
+    {
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.imageFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during imageFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.imageFullPath = newFileName;
+                }
+            }
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.imageFullPath2 lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during imageFullPath2 copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.imageFullPath2 = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.movieFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during movieFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.movieFullPath = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.movieFullPath2 lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during movieFullPath2 copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.movieFullPath2 = newFileName;
+                }
+            }
+            
+        }
+        
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.backgroundImageFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during backgroundImageFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.backgroundImageFullPath = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.question.recordedSoundFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during recordedSoundFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.question.recordedSoundFullPath = newFileName;
+                }
+            }
+            
+        }
+    }
     
-    copy.question.questionID = [[NSDate date] timeIntervalSince1970];
-    copy.question.cardID = copy.cardID;
-    copy.answer.answerID = [[NSDate date] timeIntervalSince1970];
-    copy.answer.cardID = copy.cardID;
+    //anwer
+    {
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.imageFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during imageFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.imageFullPath = newFileName;
+                }
+            }
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.imageFullPath2 lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during imageFullPath2 copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.imageFullPath2 = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.movieFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during movieFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.movieFullPath = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.movieFullPath2 lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueMovFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during movieFullPath2 copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.movieFullPath2 = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.backgroundImageFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during backgroundImageFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.backgroundImageFullPath = newFileName;
+                }
+            }
+            
+        }
+        
+        {
+            NSString *copyImageURL = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[copy.answer.recordedSoundFullPath lastPathComponent]];
+            NSString *newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
+            
+            BOOL fileExists = [fileManager fileExistsAtPath:copyImageURL isDirectory:&isDir];
+            if (fileExists && (isDir == false)) {
+                [[NSFileManager defaultManager] copyItemAtPath:copyImageURL toPath:newFileName error:&error];
+                if (error) {
+                    [iConsole error:@"%s:Error during recordedSoundFullPath copyItemAtPath to %@",__FUNCTION__,newFileName];
+                } else {
+                    copy.answer.recordedSoundFullPath = newFileName;
+                }
+            }
+            
+        }
+    }
     
-    copy.question.cssID = [[NSDate date] timeIntervalSince1970];
-    copy.question.css.cssID = copy.question.cssID;
-    
-    copy.answer.cssID = [[NSDate date] timeIntervalSince1970] + 1;  //the reason why for +1 is becasue answer.cssID could be same as question.cssID
-    copy.answer.css.cssID = copy.answer.cssID;
+    //update ID
+    {
+        copy.cardID = [[NSDate date] timeIntervalSince1970];
+        
+        copy.question.questionID = [[NSDate date] timeIntervalSince1970];
+        copy.question.cardID = copy.cardID;
+        copy.answer.answerID = [[NSDate date] timeIntervalSince1970];
+        copy.answer.cardID = copy.cardID;
+        
+        copy.question.cssID = [[NSDate date] timeIntervalSince1970];
+        copy.question.css.cssID = copy.question.cssID;
+        
+        copy.answer.cssID = [[NSDate date] timeIntervalSince1970] + 1;  //the reason why for +1 is becasue answer.cssID could be same as question.cssID
+        copy.answer.css.cssID = copy.answer.cssID;
+    }
     
     return copy;
 }

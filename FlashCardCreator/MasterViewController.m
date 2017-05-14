@@ -1597,7 +1597,7 @@ extern BOOL isFromNewCreatedCard;
             NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
             Card *selectedCard = [_currentPack cards][cellIndexPath.row];
             if (selectedCard && _currentPack) {
-                Card *copy = [_currentCard copyAndUpdateID];
+                Card *copy = [_currentCard deepCopy];
                 [_currentPack insertCard:copy afterCardID:selectedCard.cardID];
                 [_currentPack save];
                 [self.tableView reloadData];

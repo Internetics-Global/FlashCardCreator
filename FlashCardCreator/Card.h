@@ -50,7 +50,7 @@
 
 - (id)copyWithZone:(NSZone *)zone;
 
-- (id) copyAndUpdateID;
+- (id) deepCopy;
 
 @end
 
