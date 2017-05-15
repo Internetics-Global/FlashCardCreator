@@ -731,15 +731,19 @@ extern BOOL isFromNewCreatedCard;
     if (self.tableView.editing == FALSE) {
         self.tableView.editing = TRUE;
         [((UIButton *)sender) setImage:[UIImage imageNamed:@"done_button"] forState:UIControlStateNormal];
+        
     } else {
         self.tableView.editing = FALSE;
         [((UIButton *)sender) setImage:[UIImage imageNamed:@"edit_button"] forState:UIControlStateNormal];
         
         if (!isUserInterfaceIdiomPhone) {
             if ([[_currentPack cards]count] >0) {
+                [self.tableView reloadData];
                 NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
                 [self.tableView selectRowAtIndexPath:selectedIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
                 [self tableView:self.tableView didSelectRowAtIndexPath:selectedIndexPath];
+                
+                
             } else {
                 self.detailViewController.title = @"";
                 self.detailViewController.currentPack = nil;
