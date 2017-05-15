@@ -103,7 +103,7 @@ const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
      *  Only applicable for iPhone (on iPad, we have the similar logic on the detail view)
      */
     PackInfoView *_packInfoView;
-    
+
 }
 
 @end
@@ -1589,6 +1589,10 @@ extern BOOL isFromNewCreatedCard;
 
 
 #pragma mark – SWTableViewDelegate
+
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell {
+    return true;
+}
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     switch (index) {
