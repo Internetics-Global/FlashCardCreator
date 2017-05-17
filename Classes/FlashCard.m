@@ -2641,9 +2641,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.answer.css.subFont = _subFontAnswer;
     
     // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
-    card.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5) || (_subheadingAnswer.textColor = [UIColor clearColor]);
-    card.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5) || (_mainAnswer.textColor = [UIColor clearColor]);
-    card.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5) || (_subAnswer.textColor = [UIColor clearColor]);
+    card.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5) || (_subheadingAnswer.textColor == [UIColor clearColor]);
+    card.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5) || (_mainAnswer.textColor == [UIColor clearColor]);
+    card.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5) || (_subAnswer.textColor == [UIColor clearColor]);
     
     card.question.title = _questionTitle.text;
     card.question.subheading = _subheadingQuestion.text;
@@ -2675,10 +2675,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.question.css.mainFont = _mainFontQuestion;
     card.question.css.subFont = _subFontQuestion;
     
-    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
-    card.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5) || (_subheadingQuestion.textColor = [UIColor clearColor]);
-    card.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5) || (_mainQuestion.textColor = [UIColor clearColor]);
-    card.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5) || (_subQuestion.textColor = [UIColor clearColor]);
+    card.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5) || (_subheadingQuestion.textColor == [UIColor clearColor]);
+    card.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5) || (_mainQuestion.textColor == [UIColor clearColor]);
+    card.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5) || (_subQuestion.textColor == [UIColor clearColor]);
     
     
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
@@ -2743,7 +2742,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.mainFont = _mainFontAnswer;
     _currentCard.answer.css.subFont = _subFontAnswer;
     
-    // alpha用于最终判断SemiTransparent唯一条件，而不是textColor = [UIColor clearColor]
     _currentCard.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
     _currentCard.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
     _currentCard.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
