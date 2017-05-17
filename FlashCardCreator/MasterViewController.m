@@ -1603,6 +1603,10 @@ extern BOOL isFromNewCreatedCard;
         case 0: {
             //copy
             NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            if (![Common isOwner:_currentPack]) {
+                [Common alertViewCommon:NSLocalizedString(@"DIALOG_YOU_CAN_NOT_CHANGE_TEMPLATE_BACKGROUND",@"")];
+                return;
+            }
             Card *selectedCard = [_currentPack cards][cellIndexPath.row];
             if (selectedCard && _currentPack) {
                 Card *copy = [_currentCard deepCopy];
