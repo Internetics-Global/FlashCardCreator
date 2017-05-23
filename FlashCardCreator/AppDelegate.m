@@ -87,6 +87,8 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
        
     }
     
+    [self setupDefaultUserDefault];
+    
     
     [self setupLog];
     
@@ -632,7 +634,14 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
     [iConsole info:@"%s:Failed to fetch receipt",__FUNCTION__];
 }
 
-
+- (void) setupDefaultUserDefault {
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:@"isTextToSpeech"] == nil) {
+        [userDefault setBool:true forKey:@"isTextToSpeech"];
+        [userDefault synchronize];
+    }
+}
 
 
 #pragma mark – Memory Managment
