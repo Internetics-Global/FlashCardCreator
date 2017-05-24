@@ -1708,8 +1708,8 @@ extern BOOL isFromNewCreatedCard;
     
     [self.tableView reloadData];
     if (!isUserInterfaceIdiomPhone) {
-        [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
+//        [self.tableView selectRowAtIndexPath:toIndexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+//        [self tableView:self.tableView didSelectRowAtIndexPath:toIndexPath];
     }
 }
 
