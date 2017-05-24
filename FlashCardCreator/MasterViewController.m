@@ -1655,7 +1655,12 @@ extern BOOL isFromNewCreatedCard;
 }
 
 - (BOOL)moveTableView:(FMMoveTableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return true;
+    
+    if (self.tableView.editing) {
+        return true;
+    } else {
+        false;
+    }
 }
 
 - (void)moveTableView:(FMMoveTableView *)tableView moveRowFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
