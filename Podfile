@@ -27,4 +27,7 @@ pod 'OpenSSL-Universal'
 
 pod 'SWTableViewCell', '~> 0.3.7'
 
+pod 'Fabric'
+pod 'Crashlytics'	
+
 end
