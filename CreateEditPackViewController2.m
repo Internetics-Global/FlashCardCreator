@@ -301,6 +301,11 @@
     _currentPack.autoPlaySpeed = _autoPlaySpeedSlider.value;
     _currentPack.restorePassword = [_adminPasswordTextField.text base64EncodedString];
     
+    if (_isEditPack == false) {
+       _currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:_currentPack];
+    }
+    
+    
     if (_isEditPack) {
        [_currentPack savePackOnly];
         [[NSNotificationCenter defaultCenter] postNotificationName:EDIT_PACK_FINISHED_NOTIFICATION object:_currentPack];
