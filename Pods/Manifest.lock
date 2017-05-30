@@ -28,9 +28,6 @@ PODS:
   - Bolts/AppLinks (1.2.1):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.1)
-  - Crashlytics (3.8.3):
-    - Fabric (~> 1.6.3)
-  - Fabric (1.6.11)
   - Firebase/Auth (3.9.0):
     - Firebase/Core
     - FirebaseAuth (= 3.0.6)
@@ -96,8 +93,6 @@ DEPENDENCIES:
   - AWSSimpleDB
   - BlocksKit
   - Bolts
-  - Crashlytics
-  - Fabric
   - Firebase/Auth
   - Firebase/Core
   - GoogleAPIClientForREST/Drive
@@ -118,8 +113,6 @@ SPEC CHECKSUMS:
   AWSSimpleDB: 89a6f82d45d1858030b5ee6ac7f4a801403df656
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   Firebase: ff77ffb77b317c3720fef57a60e9335cebf962e6
   FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
   FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
@@ -139,6 +132,6 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 399ea9e2e0b557b9d731fbf727cb6395f47637b0
+PODFILE CHECKSUM: 5344a0526fd1c5ac2502ba57c07124a854544698
 
 COCOAPODS: 1.1.1

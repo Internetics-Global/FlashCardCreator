@@ -32,10 +32,6 @@
 
 #import <StoreKit/StoreKit.h>
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-
-
 @import Firebase;
 
 const NSString * global_bundleVersion = @"1.0.1";
@@ -49,14 +45,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Fabric with:@[[Crashlytics class]]];
-    
-//simulate a crash issue
-//    double delayInSeconds = 10;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        [[Crashlytics sharedInstance] crash];
-//    });
     
     /**
      *  This should be before [SQLiteHelper verifyDatabase]
