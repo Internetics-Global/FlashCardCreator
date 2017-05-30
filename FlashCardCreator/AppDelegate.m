@@ -99,7 +99,11 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
     [FIRApp configure];
     
     //simulate a firebase crash case
-    assert(false);
+//    double delayInSeconds = 10;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        assert(false);
+//    });
     
     self.isAllowToShowPackList = YES;
     
