@@ -22,6 +22,7 @@ pod 'ObjectiveDropboxOfficial'
 
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
+pod 'Firebase/Crash'
 
 pod 'OpenSSL-Universal'
 
