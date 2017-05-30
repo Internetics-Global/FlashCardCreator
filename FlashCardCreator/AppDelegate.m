@@ -98,6 +98,9 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
     
     [FIRApp configure];
     
+    //simulate a firebase crash case
+    assert(false);
+    
     self.isAllowToShowPackList = YES;
     
     [iConsole info:@"%s:%@",__FUNCTION__,[Common userAgentInfo]];

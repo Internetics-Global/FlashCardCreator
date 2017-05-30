@@ -1769,6 +1769,7 @@
 				889DD7BD184D321900D99C56 /* ShellScript */,
 				79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */,
 				4CCDAFD88BDBA7BC47D23CAF /* [CP] Copy Pods Resources */,
+				75A866921EDD6D9400C527FA /* Firebase Crash Reporting */,
 			);
 			buildRules = (
 			);
@@ -2011,6 +2012,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		75A866921EDD6D9400C527FA /* Firebase Crash Reporting */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase Crash Reporting";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:691893564635:ios:8428be58808fc3ca\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/security/ffc_firebase/ffc_firebase_crash_reporting_private_key\"";
 		};
 		79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
