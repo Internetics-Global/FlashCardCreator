@@ -101,11 +101,14 @@ typedef enum{
     NSInteger    _subheadingSizeQuestion;
 	NSString     *_subheadingColorQuestion;
     NSString     *_subheadingAlignQuestion;
+    NSString     *_subheadingText2SpeechQuestion;
     NSInteger    _mainSizeQuestion;
 	NSString     *_mainColorQuestion;
+    NSString     *_mainText2SpeechQuestion;
     NSString     *_mainAlignQuestion;
     NSInteger    _subSizeQuestion;
 	NSString     *_subColorQuestion;
+    NSString     *_subText2SpeechQuestion;
     NSString     *_subAlignQuestion;
     
     UITextView   *_subheadingAnswer;
@@ -115,12 +118,15 @@ typedef enum{
     MultimediaView  *_imageAnswer2;
     NSInteger    _subheadingSizeAnswer;
 	NSString     *_subheadingColorAnswer;
+    NSString     *_subheadingText2SpeechAnswer;
     NSString     *_subheadingAlignAnswer;
     NSInteger    _mainSizeAnswer;
 	NSString     *_mainColorAnswer;
+    NSString     *_mainText2SpeechAnswer;
     NSString     *_mainAlignAnswer;
     NSInteger    _subSizeAnswer;
 	NSString     *_subColorAnswer;
+    NSString     *_subText2SpeechAnswer;
     NSString     *_subAlignAnswer;
     
     NSString     *_subheadingFontAnswer;

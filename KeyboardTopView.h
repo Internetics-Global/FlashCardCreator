@@ -23,7 +23,8 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
     Type_Toolbar_State_Size = 2,
     Type_Toolbar_State_Align      = 3,
     Type_Toolbar_State_Color = 4,
-    Type_Toolbar_State_Unkown = 5,
+    Type_Toolbar_State_Text2Speech = 5,
+    Type_Toolbar_State_Unkown = 6,
 };
 
 @class KeyboardTopView;
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSizeChangeButton:(id) sender;
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedColorChangeButton:(id) sender;
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedFontChangeButton:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedText2SpeechChangeButton:(id) sender;
 
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id) sender;
 

@@ -325,27 +325,33 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _subheadingColorQuestion = @"Black";
     _subheadingAlignQuestion = @"Right";
     _subheadingAlignVerticalQuestion = @"";
+    _subheadingText2SpeechQuestion = @"";
     _mainSizeQuestion = 40;
     _mainColorQuestion = @"Black";
     _mainAlignQuestion = @"Center";
     _mainAlignVerticalQuestion = @"";
+    _mainText2SpeechQuestion = @"";
     _subSizeQuestion = 40;
     _subColorQuestion = @"Black";
     _subAlignQuestion = @"Center";
     _subAlignVerticalQuestion = @"";
+    _subText2SpeechQuestion = @"";
     
     _subheadingSizeAnswer = 40;
     _subheadingColorAnswer = @"Black";
     _subheadingAlignAnswer = @"Right";
     _subheadingAlignVerticalAnswer = @"";
+    _subheadingText2SpeechAnswer = @"";
     _mainSizeAnswer = 40;
     _mainColorAnswer = @"Black";
     _mainAlignAnswer = @"Center";
     _mainAlignVerticalAnswer = @"";
+    _mainText2SpeechAnswer = @"";
     _subSizeAnswer = 40;
     _subColorAnswer = @"Black";
     _subAlignAnswer = @"Center";
     _subAlignVerticalAnswer = @"";
+    _subText2SpeechAnswer = @"";
     
     _keyboardShown = FALSE;
     
@@ -2624,13 +2630,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     card.answer.css.subheadingAlign = _subheadingAlignAnswer;
     card.answer.css.subheadingColor = _subheadingColorAnswer;
+    card.answer.css.subheadingText2SpeechSound = _subheadingText2SpeechAnswer;
     card.answer.css.subheadingSize = _subheadingSizeAnswer;
     card.answer.css.mainAlign = _mainAlignAnswer;
     card.answer.css.mainColor = _mainColorAnswer;
     card.answer.css.mainSize = _mainSizeAnswer;
+    card.answer.css.mainText2SpeechSound = _mainText2SpeechAnswer;
     card.answer.css.subAlign = _subAlignAnswer;
     card.answer.css.subColor = _subColorAnswer;
     card.answer.css.subSize = _subSizeAnswer;
+    card.answer.css.subheadingText2SpeechSound = _subText2SpeechAnswer;
     
     card.answer.css.subheadingAlignVertical = _subheadingAlignVerticalAnswer;
     card.answer.css.mainAlignVertical = _mainAlignVerticalAnswer;
@@ -2659,12 +2668,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.question.css.subheadingAlign = _subheadingAlignQuestion;
     card.question.css.subheadingColor = _subheadingColorQuestion;
     card.question.css.subheadingSize = _subheadingSizeQuestion;
+    card.question.css.subheadingText2SpeechSound = _subheadingText2SpeechQuestion;
     card.question.css.mainAlign = _mainAlignQuestion;
     card.question.css.mainColor = _mainColorQuestion;
     card.question.css.mainSize = _mainSizeQuestion;
+    card.question.css.mainText2SpeechSound = _mainText2SpeechQuestion;
     card.question.css.subAlign = _subAlignQuestion;
     card.question.css.subColor = _subColorQuestion;
     card.question.css.subSize = _subSizeQuestion;
+    card.question.css.subText2SpeechSound = _subText2SpeechQuestion;
     
     card.question.css.subheadingAlignVertical = _subheadingAlignVerticalQuestion;
     card.question.css.mainAlignVertical = _mainAlignVerticalQuestion;
@@ -2726,12 +2738,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.subheadingAlign = _subheadingAlignAnswer;
     _currentCard.answer.css.subheadingColor = _subheadingColorAnswer;
     _currentCard.answer.css.subheadingSize = _subheadingSizeAnswer;
+    _currentCard.answer.css.subheadingText2SpeechSound = _subheadingText2SpeechAnswer;
     _currentCard.answer.css.mainAlign = _mainAlignAnswer;
     _currentCard.answer.css.mainColor = _mainColorAnswer;
     _currentCard.answer.css.mainSize = _mainSizeAnswer;
+    _currentCard.answer.css.mainText2SpeechSound = _mainText2SpeechAnswer;
     _currentCard.answer.css.subAlign = _subAlignAnswer;
     _currentCard.answer.css.subColor = _subColorAnswer;
     _currentCard.answer.css.subSize = _subSizeAnswer;
+    _currentCard.answer.css.subText2SpeechSound = _subText2SpeechAnswer;
     
     _currentCard.answer.css.subheadingAlignVertical = _subheadingAlignVerticalAnswer;
     _currentCard.answer.css.mainAlignVertical = _mainAlignVerticalAnswer;
@@ -2760,12 +2775,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.subheadingAlign = _subheadingAlignQuestion;
     _currentCard.question.css.subheadingColor = _subheadingColorQuestion;
     _currentCard.question.css.subheadingSize = _subheadingSizeQuestion;
+    _currentCard.question.css.subheadingText2SpeechSound = _subheadingText2SpeechQuestion;
     _currentCard.question.css.mainAlign = _mainAlignQuestion;
     _currentCard.question.css.mainColor = _mainColorQuestion;
     _currentCard.question.css.mainSize = _mainSizeQuestion;
+    _currentCard.question.css.mainText2SpeechSound = _mainText2SpeechQuestion;
     _currentCard.question.css.subAlign = _subAlignQuestion;
     _currentCard.question.css.subColor = _subColorQuestion;
     _currentCard.question.css.subSize = _subSizeQuestion;
+    _currentCard.question.css.subText2SpeechSound = _subText2SpeechQuestion;
     
     _currentCard.question.css.subheadingAlignVertical = _subheadingAlignVerticalQuestion;
     _currentCard.question.css.mainAlignVertical = _mainAlignVerticalQuestion;
@@ -2904,6 +2922,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAlignQuestion = @"Justify";
     }
     
+    //ccaa, let's do it
     
     //2. main
     //during creating a new card, we used default value
@@ -3048,6 +3067,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.textColor = [UIColor whiteColor];
         _subheadingColorAnswer = @"White";
     }
+    
+    //ccaa,let's do it
     
     if ([css.subheadingAlign isEqualToString:@"Left"]) {
         _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -9174,6 +9195,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
+- (void) changeText2SpeechBarButtonItemClicked:(id) sender{
+    
+}
+
 
 #pragma mark -
 #pragma mark - UITextFieldDelegate
@@ -11906,6 +11931,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
 }
+    
+- (void) updateText2SpeechButtonsStatus:(id) sender {
+    
+}
 
 /**
  *  当选择了“vertical alignment”会执行这个
@@ -12120,6 +12149,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self updateColorButtonsStatus:sender];
     
 }
+    
+- (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedText2SpeechChangeButton:(id) sender {
+    [self changeText2SpeechBarButtonItemClicked:sender];
+    [self updateText2SpeechButtonsStatus:sender];
+    
+}
 
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id)sender {
     _isDismissKeyboardViaSaveButtonFromKeyboard = true;
@@ -12139,6 +12174,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self updateColorButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
         [self updateFontButtonsStatus:sender];
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Sound",@"")]) {
+        [self updateText2SpeechButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
         [self symbolAndKeyboardSwitch:sender];
     } else {

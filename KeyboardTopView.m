@@ -10,7 +10,7 @@
 
 #define K_Item_Width  80
 
-#define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol"]
+#define K_SummaryArray     @[@"Align",@"Size",@"Color",@"Font",@"Symbol",@"Sound"]
 #define K_NominalSizeArray @[@10,@11,@12,@14,@16,@18,@20,@24,@28,@32,@36,@40,@45,@50,@55,@60,@80,@100,@130]
 #define K_ColorArray       @[@"Red",@"Blue",@"Black",@"Yellow",@"Green",@"White",@"Invisible"]
 #define K_AlignArray       @[@"Left",@"Center",@"Right",@"Justify",@"Vertical"]
@@ -202,6 +202,10 @@
     
     [self setupSaveButton];
 }
+    
+- (void) setupText2SpeechArray {
+    
+}
 
 - (void) didClickedFontChangeButton:(id) sender {
     if (self.delegate) {
@@ -246,6 +250,14 @@
 - (void) didClickedColorChangeButton:(id) sender {
     if (self.delegate) {
         [self.delegate keyboardTopView:self didClickedColorChangeButton:sender];
+    } else {
+        //NSAssert(FALSE, @"You need to assign delete");
+    }
+}
+    
+- (void) didClickedText2SpeechChangeButton:(id) sender {
+    if (self.delegate) {
+        [self.delegate keyboardTopView:self didClickedText2SpeechChangeButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
@@ -412,7 +424,9 @@
         case 4:
             break;
         case 5:
-            
+            _toolbarState = Type_Toolbar_State_Text2Speech;
+            [self setupText2SpeechArray];
+            break;
             break;
         default:
             break;
