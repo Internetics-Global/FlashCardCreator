@@ -64,7 +64,7 @@
     
     AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
     
-    cell.textLabel.text = [Text2SpeechHelper getLanguageLocalFromCode:item.language];
+    cell.textLabel.text = [Text2SpeechHelper getLocalText2SpeechLanguageDescriptionFromCode:item.language];
     
     NSString *selectedLanguageName = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
     if (indexPath.row == [self indexOfText2SpeechArray:selectedLanguageName]) {
@@ -89,7 +89,7 @@
 {
     AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
     
-    [Text2SpeechHelper setSelectedText2SpeechLanguageForSetting:item.language];
+    [Text2SpeechHelper setSelectedText2SpeechLanguageForSetting:item];
     
     [_alertTable reloadData];
 }

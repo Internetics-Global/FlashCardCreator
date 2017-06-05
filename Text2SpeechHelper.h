@@ -7,15 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface Text2SpeechHelper : NSObject
 
+/*
+ * Array of AVSpeechSynthesisVoice
+*/
 + (NSArray *) getAllText2SpeechArray;
 
-+ (NSArray *) getRawText2SpeechArrayForCurrentLocale;
-
+/*
+ * result can directly be used by AVSpeechSynthesisVoice
+*/
 + (NSString *) getSelectedText2SpeechLanguageFromSetting;
-+ (void)       setSelectedText2SpeechLanguageForSetting:(NSString *) languageName;
-+ (NSString *) getLanguageLocalFromCode:(NSString *) code ;
+
++ (void)       setSelectedText2SpeechLanguageForSetting:(AVSpeechSynthesisVoice *) languageVoice;
+
+/*
+ * description and used to show on screen
+*/
++ (NSString *) getLocalText2SpeechLanguageDescriptionFromCode:(NSString *) code ;
 
 @end

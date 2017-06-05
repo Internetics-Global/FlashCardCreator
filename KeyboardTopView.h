@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, Back_Type) {
     Back_Type_Color   = 2,
     Back_Type_Size    = 3,
     Back_Type_Align    = 4,
-    Back_Type_Summary    = 5,
+    Back_Type_Text2Speech    = 5,
+    Back_Type_Summary    = 6,
 };
 
 typedef NS_ENUM(NSInteger, Type_Toolbar_State) {

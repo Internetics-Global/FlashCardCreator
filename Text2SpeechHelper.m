@@ -7,7 +7,6 @@
 //
 
 #import "Text2SpeechHelper.h"
-#import <AVFoundation/AVFoundation.h>
 
 @implementation Text2SpeechHelper
 
@@ -80,9 +79,9 @@
     
 }
 
-+ (void) setSelectedText2SpeechLanguageForSetting:(NSString *) languageName {
++ (void) setSelectedText2SpeechLanguageForSetting:(AVSpeechSynthesisVoice *) languageVoice {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:languageName forKey:@"Selected_Text2Speech_Language"];
+    [userDefaults setObject:languageVoice.language forKey:@"Selected_Text2Speech_Language"];
     [userDefaults synchronize];
 }
 
@@ -146,7 +145,7 @@
 /**
  *  Since there's no way to automatically mapping this relationship. review should be done when upgrading iOS
  */
-+ (NSString *) getLanguageLocalFromCode:(NSString *) code {
++ (NSString *) getLocalText2SpeechLanguageDescriptionFromCode:(NSString *) code {
     NSDictionary *dict = @{
                            @"ar-SA"       :@"Arabic (Saudi Arabia) ",
                            @"cs-CZ"       :@"Czech (Czech Republic) ",

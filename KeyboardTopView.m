@@ -7,6 +7,8 @@
 //
 
 #import "KeyboardTopView.h"
+#import "Text2SpeechHelper.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define K_Item_Width  80
 
@@ -78,6 +80,7 @@
     self.colorArray = K_ColorArray;
     self.alignArray = K_AlignArray;
     self.fontArray = K_FontArray;
+    
     
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
     
@@ -204,6 +207,36 @@
 }
     
 - (void) setupText2SpeechArray {
+    
+    [self removeAllScrollSubButtons];
+    
+    _backType = Back_Type_Color;
+    
+    NSArray *allText2SpeechArray = [Text2SpeechHelper getAllText2SpeechArray];
+    
+    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [allText2SpeechArray count], CGRectGetHeight(self.frame));
+    
+    for (int i = 0; i<[allText2SpeechArray count]; i++) {
+        AVSpeechSynthesisVoice *item = allText2SpeechArray[i];
+        
+        UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        myButton.tag = i;
+        myButton.frame = CGRectMake(i*K_Item_Width*2.5, 0, K_Item_Width*2.5, CGRectGetHeight(self.frame));
+        [myButton titleLabel].font = [UIFont boldSystemFontOfSize:16];
+        
+        [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.scrollView addSubview:myButton];
+        
+        NSString *title = [Text2SpeechHelper getLocalText2SpeechLanguageDescriptionFromCode:item.language];
+        [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
+        [myButton addTarget:self action:@selector(didClickedText2SpeechChangeButton:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.hidden = NO;
+    
+    [self setupSaveButton];
     
 }
 
