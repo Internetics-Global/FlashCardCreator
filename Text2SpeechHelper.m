@@ -10,7 +10,7 @@
 
 @implementation Text2SpeechHelper
 
-+ (NSArray *) getAllText2SpeechArray {
++ (NSArray *) getAllAvailableAVSpeechSynthesisVoiceArray {
     
     NSMutableArray *allText2SpeechArray = [NSMutableArray array];
     NSArray *array = [AVSpeechSynthesisVoice speechVoices];
@@ -33,6 +33,18 @@
     return allText2SpeechArray;
     
 }
+
++ (NSArray *) getAllAvailableText2SpeechDescriptionArrayForDisplay {
+    NSArray *voiceArray = [self getAllAvailableAVSpeechSynthesisVoiceArray];
+    NSMutableArray *returnarray = [NSMutableArray array];
+    for (AVSpeechSynthesisVoice *item in voiceArray) {
+        NSString *description = [self getText2SpeechDescriptionForDisplayFromVoiceLanguage:item.language];
+        [returnarray addObject:description];
+    }
+    
+    return returnarray;
+}
+
 
 /**
  * return AVSpeechSynthesisVoice language arary for current locale
@@ -64,7 +76,9 @@
 }
 
 
-
+/*
+ * used for [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechLanguage]
+*/
 + (NSString *) getSelectedText2SpeechLanguageFromSetting {
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -86,6 +100,10 @@
 }
 
 
++ (NSString *) getDefaultText2SpeechDescriptionForDisplay {
+    NSString *voiceLanguage = [self getDefaultText2SpeechVoiceLanguage];
+    return [self getText2SpeechDescriptionForDisplayFromVoiceLanguage:voiceLanguage];
+}
 
 + (NSString *) getDefaultText2SpeechVoiceLanguage {
     
@@ -141,11 +159,27 @@
     return [rawArray firstObject];
 }
 
++ (NSString *) getText2SpeechDescriptionForDisplayFromVoice:(AVSpeechSynthesisVoice *) voice {
+    NSString *language = voice.language;
+    return [self getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];
+}
+
 
 /**
  *  Since there's no way to automatically mapping this relationship. review should be done when upgrading iOS
  */
-+ (NSString *) getLocalText2SpeechLanguageDescriptionFromCode:(NSString *) code {
++ (NSString *) getText2SpeechDescriptionForDisplayFromVoiceLanguage:(NSString *) voiceLanguage {
+    
+    NSString *normalizedVoiceLanguage;
+    NSArray *array = [voiceLanguage componentsSeparatedByString:@"-"];
+    if ([array count] != 2) {
+        return nil;
+    } else {
+        NSString *first = array[0];
+        NSString *second = array[1];
+        normalizedVoiceLanguage = [NSString stringWithFormat:@"%@-%@",first.lowercaseString,second.uppercaseString];
+    }
+    
     NSDictionary *dict = @{
                            @"ar-SA"       :@"Arabic (Saudi Arabia) ",
                            @"cs-CZ"       :@"Czech (Czech Republic) ",
@@ -186,7 +220,7 @@
                            @"zh-TW"       :@"Chinese (Taiwan) "
                            };
     
-    NSString *str = [dict objectForKey:code];
+    NSString *str = [dict objectForKey:normalizedVoiceLanguage];
     return str;
 }
 

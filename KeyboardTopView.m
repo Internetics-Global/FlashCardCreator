@@ -212,12 +212,12 @@
     
     _backType = Back_Type_Color;
     
-    NSArray *allText2SpeechArray = [Text2SpeechHelper getAllText2SpeechArray];
+    NSArray *titleArray = [Text2SpeechHelper getAllAvailableText2SpeechDescriptionArrayForDisplay];
+    NSArray *allText2SpeechArray = [Text2SpeechHelper getAllAvailableAVSpeechSynthesisVoiceArray];
     
     self.scrollView.contentSize = CGSizeMake(K_Item_Width * [allText2SpeechArray count], CGRectGetHeight(self.frame));
     
     for (int i = 0; i<[allText2SpeechArray count]; i++) {
-        AVSpeechSynthesisVoice *item = allText2SpeechArray[i];
         
         UIButton *myButton = [UIButton buttonWithType:UIButtonTypeCustom];
         myButton.tag = i;
@@ -227,7 +227,7 @@
         [myButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.scrollView addSubview:myButton];
         
-        NSString *title = [Text2SpeechHelper getLocalText2SpeechLanguageDescriptionFromCode:item.language];
+        NSString *title = titleArray[i];
         [myButton setTitle:NSLocalizedString(title,nil) forState:UIControlStateNormal];
         [myButton addTarget:self action:@selector(didClickedText2SpeechChangeButton:) forControlEvents:UIControlEventTouchUpInside];
         

@@ -12,20 +12,13 @@
 @interface Text2SpeechHelper : NSObject
 
 /*
- * Array of AVSpeechSynthesisVoice
-*/
-+ (NSArray *) getAllText2SpeechArray;
-
-/*
  * result can directly be used by AVSpeechSynthesisVoice
 */
 + (NSString *) getSelectedText2SpeechLanguageFromSetting;
-
 + (void)       setSelectedText2SpeechLanguageForSetting:(AVSpeechSynthesisVoice *) languageVoice;
 
-/*
- * description and used to show on screen
-*/
-+ (NSString *) getLocalText2SpeechLanguageDescriptionFromCode:(NSString *) code ;
++ (NSArray *)  getAllAvailableAVSpeechSynthesisVoiceArray;
++ (NSArray *)  getAllAvailableText2SpeechDescriptionArrayForDisplay;
++ (NSString *) getDefaultText2SpeechDescriptionForDisplay;
 
 @end

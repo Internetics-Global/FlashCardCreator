@@ -13,7 +13,8 @@
 @interface SelectText2SpeechLanguage () <UITableViewDelegate, UITableViewDataSource>{
     UITableView *_alertTable;
     
-    NSArray     *_allText2SpeechArray;
+    NSArray     *_allAVSpeechSynthesisVoiceArray;
+    NSArray     *_allText2SpeechDescriptionArrayForDisplay;
 }
 
 @end
@@ -37,7 +38,8 @@
     
     self.title = @"Select Language";
     
-    _allText2SpeechArray = [Text2SpeechHelper getAllText2SpeechArray];
+    _allAVSpeechSynthesisVoiceArray = [Text2SpeechHelper getAllAvailableAVSpeechSynthesisVoiceArray];
+    _allText2SpeechDescriptionArrayForDisplay = [Text2SpeechHelper getAllAvailableText2SpeechDescriptionArrayForDisplay];
     
     
 }
@@ -50,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_allText2SpeechArray count];
+    return [_allAVSpeechSynthesisVoiceArray count];
 }
 
 
@@ -62,12 +64,11 @@
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
+    NSString *title = _allText2SpeechDescriptionArrayForDisplay[indexPath.row];
+    cell.textLabel.text = title;
     
-    cell.textLabel.text = [Text2SpeechHelper getLocalText2SpeechLanguageDescriptionFromCode:item.language];
-    
-    NSString *selectedLanguageName = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
-    if (indexPath.row == [self indexOfText2SpeechArray:selectedLanguageName]) {
+    int selectedIndex = [self getSelectedIndexForSettingDisplayOnly];
+    if (indexPath.row == selectedIndex) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     
@@ -87,19 +88,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
+    AVSpeechSynthesisVoice *item = _allAVSpeechSynthesisVoiceArray[indexPath.row];
     
     [Text2SpeechHelper setSelectedText2SpeechLanguageForSetting:item];
     
     [_alertTable reloadData];
 }
 
-
-- (NSInteger) indexOfText2SpeechArray:(NSString *) languageName {
+- (int) getSelectedIndexForSettingDisplayOnly {
+    NSString *selectedLanguageName = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
     
     int i = 0;
-    for (AVSpeechSynthesisVoice *item in _allText2SpeechArray) {
-        if ([item.language.lowercaseString isEqualToString:languageName.lowercaseString]) {
+    for (AVSpeechSynthesisVoice *item in _allAVSpeechSynthesisVoiceArray) {
+        if ([item.language.lowercaseString isEqualToString:selectedLanguageName.lowercaseString]) {
             return i;
         }
         i++;
@@ -108,7 +109,5 @@
     return -1;
     
 }
-
-
 
 @end

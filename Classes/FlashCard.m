@@ -11935,7 +11935,62 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
     
 - (void) updateText2SpeechButtonsStatus:(id) sender {
-    
+    if (_lastBecomeFirstRespondTextView) {
+        
+        NSArray *targetButtonArray;
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            targetButtonArray = [_keyboardTopViewV2 getCurrentButtonArray];
+        } else {
+            targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
+        }
+        
+        NSString *name;
+        if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+            name = _subheadingText2SpeechQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+            name = _mainText2SpeechQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+            name = _subText2SpeechQuestion;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+            name = _subheadingText2SpeechAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+            name = _mainText2SpeechAnswer;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+            name = _subText2SpeechAnswer;
+        }
+        
+        if (name.length == 0) {
+            name = [Text2SpeechHelper getDefaultText2SpeechDescriptionForDisplay];
+        }
+        
+        BOOL isDefault = YES;
+        
+        int contentOffsetIndex = 0;
+        for (int i = 0;i < [targetButtonArray count];i++) {
+            UIButton *button = targetButtonArray[i];
+            if ([button.titleLabel.text isEqualToString:name]) {
+                [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                contentOffsetIndex = i;
+                isDefault= NO;
+            } else {
+                [button setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+            
+            
+        }
+        
+        if (isDefault) {
+            //第一个是back，所以需要index = 1开始
+            [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+        }
+        
+        if (_lastBecomeFirstRespondTextView.inputView == nil) {
+            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+        } else {
+            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
+        }
+        
+    }
 }
 
 /**
