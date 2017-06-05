@@ -29,7 +29,7 @@
 
 #import "AppAuth.h"
 #import "VerifyStoreReceipt.h"
-
+#import "Text2SpeechHelper.h"
 #import <StoreKit/StoreKit.h>
 
 @import Firebase;
@@ -91,8 +91,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
     
     
     [self setupLog];
-    
-    self.rawLocaleText2SpeechArray = [self getRawLocaleText2SpeechArray];
     
     [self setupAWS];
     
@@ -497,36 +495,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 - (UIView *)progressHUDHolderView {
     return self.window;
 }
-
-/**
- * return AVSpeechSynthesisVoice language arary for current locale
- * The reason why we do this is:
-*  NSLocale and NSLinguisticTagger both use ISO 681 codes to identify languages. AVSpeechSynthesisVoice, however, takes an IETF Language Tag, as specified BCP 47 Document Series. If an utterance string and voice aren’t in the same language, speech synthesis will fail.
- */
-- (NSArray *) getRawLocaleText2SpeechArray {
-    
-    NSMutableArray *array = [NSMutableArray array];
-    
-    NSString * language2RegionStr = [[NSLocale preferredLanguages] objectAtIndex:0];
-    NSString *languageStr = [[language2RegionStr componentsSeparatedByString:@"-"] objectAtIndex:0];
-    
-    NSArray *text2SpeechArray = [AVSpeechSynthesisVoice speechVoices];
-    for (AVSpeechSynthesisVoice *item in text2SpeechArray) {
-        NSString *text2SpeechLanguageStr = [[item.language componentsSeparatedByString:@"-"] objectAtIndex:0];
-        
-        if ([text2SpeechLanguageStr isEqualToString:languageStr]) {
-            [array addObject:item.language];
-        }
-        
-    }
-    
-    NSArray *uniquearray = [[NSSet setWithArray:array] allObjects];
-    
-    
-    return uniquearray;
-    
-}
-
 
 
 - (void)audioRouteChangeListenerCallback:(NSNotification*)notification

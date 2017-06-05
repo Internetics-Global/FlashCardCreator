@@ -72,8 +72,4 @@
 + (NSString *) getShareMessage:(NSString *) shareLink;
 
 
-+ (NSString *) getSelectedText2SpeechLanguage;
-+ (void)       setSelectedText2SpeechLanguage:(NSString *) languageName;
-+ (NSString *) getLanguageLocalFromCode:(NSString *) code ;
-
 @end

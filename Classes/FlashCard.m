@@ -70,6 +70,8 @@
 
 #import "CreateCardViewController.h"
 
+#import "Text2SpeechHelper.h"
+
 extern BOOL isFromNewCreatedCard;
 
 #define kSegmentLeftMarginForiPad 0.0
@@ -11440,7 +11442,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                         speechUtteranceWithString:_textToSpeechArray[0]];
         utterance.rate = (AVSpeechUtteranceMinimumSpeechRate + AVSpeechUtteranceDefaultSpeechRate)*0.75;
         
-        NSString *text2SpeechLanguage = [Common getSelectedText2SpeechLanguage];
+        NSString *text2SpeechLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
         utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechLanguage];
         
         if (self.isMuteText2Speech) {
@@ -11466,7 +11468,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         AVSpeechUtterance *utterance = [AVSpeechUtterance
                                         speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
         
-        NSString *text2SpeechStr = [Common getSelectedText2SpeechLanguage];
+        NSString *text2SpeechStr = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
         utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechStr];
         
         

@@ -8,11 +8,12 @@
 
 #import "SelectText2SpeechLanguage.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Text2SpeechHelper.h"
 
 @interface SelectText2SpeechLanguage () <UITableViewDelegate, UITableViewDataSource>{
     UITableView *_alertTable;
     
-    NSMutableArray     *_allText2SpeechArray;
+    NSArray     *_allText2SpeechArray;
 }
 
 @end
@@ -36,23 +37,7 @@
     
     self.title = @"Select Language";
     
-    _allText2SpeechArray = [NSMutableArray array];
-    NSArray *array = [AVSpeechSynthesisVoice speechVoices];
-
-    //remove duplicte
-    for (AVSpeechSynthesisVoice *item in array) {
-        BOOL exist =false;
-        for (AVSpeechSynthesisVoice *subItem in _allText2SpeechArray) {
-            if ([item.language isEqualToString:subItem.language]) {
-                exist = true;
-                break;
-            }
-        }
-        if (exist == false) {
-            [_allText2SpeechArray addObject:item];
-        }
-        
-    }
+    _allText2SpeechArray = [Text2SpeechHelper getAllText2SpeechArray];
     
     
 }
@@ -79,9 +64,9 @@
     
     AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
     
-    cell.textLabel.text = [Common getLanguageLocalFromCode:item.language];
+    cell.textLabel.text = [Text2SpeechHelper getLanguageLocalFromCode:item.language];
     
-    NSString *selectedLanguageName = [Common getSelectedText2SpeechLanguage];
+    NSString *selectedLanguageName = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
     if (indexPath.row == [self indexOfText2SpeechArray:selectedLanguageName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
@@ -104,7 +89,7 @@
 {
     AVSpeechSynthesisVoice *item = _allText2SpeechArray[indexPath.row];
     
-    [Common setSelectedText2SpeechLanguage:item.language];
+    [Text2SpeechHelper setSelectedText2SpeechLanguageForSetting:item.language];
     
     [_alertTable reloadData];
 }

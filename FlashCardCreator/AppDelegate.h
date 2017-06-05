@@ -55,8 +55,6 @@
  */
 @property (assign, nonatomic) BOOL             isRecordFinished;
 
-@property (strong, nonatomic) NSArray   *rawLocaleText2SpeechArray;
-
 
 /*! @brief The authorization flow session which receives the return URL from
  \SFSafariViewController.

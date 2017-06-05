@@ -317,6 +317,7 @@
 		88F68576177048780083AF7B /* templateScreenshot5_question_iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68574177048780083AF7B /* templateScreenshot5_question_iPad.png */; };
 		88F68577177048780083AF7B /* templateScreenshot5_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 88F68575177048780083AF7B /* templateScreenshot5_question.png */; };
 		88FAB3C71867D12C00D5D53B /* SQLiteVersion.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */; };
+		B44F66BB1EE589D6005F87A9 /* Text2SpeechHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B44F66BA1EE589D6005F87A9 /* Text2SpeechHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -765,6 +766,8 @@
 		88F68575177048780083AF7B /* templateScreenshot5_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = templateScreenshot5_question.png; path = Resources/templateScreenshot5_question.png; sourceTree = "<group>"; };
 		88FAB3C61867D12C00D5D53B /* SQLiteVersion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SQLiteVersion.plist; sourceTree = "<group>"; };
 		AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlashCardCreator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B44F66B91EE589D6005F87A9 /* Text2SpeechHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text2SpeechHelper.h; sourceTree = "<group>"; };
+		B44F66BA1EE589D6005F87A9 /* Text2SpeechHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text2SpeechHelper.m; sourceTree = "<group>"; };
 		CC52A6920CDE851682E8BBE5 /* Pods-FlashCardCreator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1005,6 +1008,8 @@
 				882D56271C39F2A900EBA68E /* UITextField+AutoResizeFont.m */,
 				884057271CDC40BB0092CAB4 /* MutipleTargetHelper.h */,
 				884057281CDC40BB0092CAB4 /* MutipleTargetHelper.m */,
+				B44F66B91EE589D6005F87A9 /* Text2SpeechHelper.h */,
+				B44F66BA1EE589D6005F87A9 /* Text2SpeechHelper.m */,
 				759AAB481DC2DB7A0060B153 /* UIView+FindUIViewController.h */,
 				759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */,
 			);
@@ -2025,7 +2030,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:691893564635:ios:8428be58808fc3ca\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/security/ffc_firebase/ffc_firebase_crash_reporting_private_key\"";
+			shellScript = "exit 0\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:691893564635:ios:8428be58808fc3ca\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/security/ffc_firebase/ffc_firebase_crash_reporting_private_key\"";
 		};
 		79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2187,6 +2192,7 @@
 				880025F117C3297F00A485CE /* FMMoveTableView.m in Sources */,
 				88D2005B1985ED980022E8E9 /* UIViewController+LandscapeOnly.m in Sources */,
 				880025F217C3297F00A485CE /* FMMoveTableViewCell.m in Sources */,
+				B44F66BB1EE589D6005F87A9 /* Text2SpeechHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
