@@ -234,7 +234,11 @@
     
     if (isUserInterfaceIdiomPhone) {
         
-        [self.navigationController popViewControllerAnimated:YES]; 
+        if (self.navigationController) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self dismissViewControllerAnimated:true completion:nil];
+        }
         
     } else {
         [self dismissViewControllerAnimated:true completion:^{
