@@ -2662,6 +2662,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.question.imageFullPath = _questionImageFullPath;
     card.question.imageFullPath2 = _questionImageFullPath2;
     
+    card.question.logoURLLinkage = _logoLinkURL;
+    
     card.question.backgroundImageFullPath = _questionBackgroundImageFullPath;
     
     card.question.movieFullPath = _questionMovieFullPath;
