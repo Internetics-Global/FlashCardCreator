@@ -17,6 +17,8 @@
 + (NSString *) getSelectedText2SpeechLanguageFromSetting;
 + (void)       setSelectedText2SpeechLanguageForSetting:(AVSpeechSynthesisVoice *) languageVoice;
 
++ (NSString *) getText2SpeechDescriptionForDisplayFromVoiceLanguage:(NSString *) voiceLanguage;
+
 + (NSArray *)  getAllAvailableAVSpeechSynthesisVoiceArray;
 + (NSArray *)  getAllAvailableText2SpeechDescriptionArrayForDisplay;
 + (NSString *) getDefaultText2SpeechDescriptionForDisplay;

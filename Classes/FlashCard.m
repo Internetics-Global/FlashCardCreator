@@ -9199,6 +9199,28 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 - (void) changeText2SpeechBarButtonItemClicked:(id) sender{
     
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    int selectedIndex = ((UIButton *)sender).tag;
+    AVSpeechSynthesisVoice *selectedVoice = [Text2SpeechHelper getAllAvailableAVSpeechSynthesisVoiceArray][selectedIndex];
+    NSString *selectText2SpeechStr = selectedVoice.language;
+    
+    UITextView *responderTextView = _lastBecomeFirstRespondTextView;
+    
+    if (responderTextView.tag == kTagSubheadingQuestion){
+        _subheadingText2SpeechQuestion = selectText2SpeechStr;
+    } else if (responderTextView.tag == kTagMainQuestion) {
+        _mainText2SpeechQuestion = selectText2SpeechStr;
+    } else if (responderTextView.tag == kTagSubQuestion) {
+        _subText2SpeechQuestion = selectText2SpeechStr;
+    } else if (responderTextView.tag == kTagSubheadingAnswer) {
+        _subheadingText2SpeechAnswer = selectText2SpeechStr;
+    } else if (responderTextView.tag == kTagMainAnswer) {
+        _mainText2SpeechAnswer = selectText2SpeechStr;
+    } else if (responderTextView.tag == kTagSubAnswer) {
+        _subText2SpeechAnswer = selectText2SpeechStr;
+    }
+    
 }
 
 
@@ -9371,6 +9393,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             break;
         case Type_Toolbar_State_Color:
             [self updateColorButtonsStatus:nil];
+            break;
+        case Type_Toolbar_State_Text2Speech:
+            [self updateText2SpeechButtonsStatus:nil];
             break;
         case Type_Toolbar_State_Unkown:
             break;
@@ -11944,31 +11969,33 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             targetButtonArray = [_keyboardTopViewForInputViewV2 getCurrentButtonArray];
         }
         
-        NSString *name;
+        NSString *language;
         if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
-            name = _subheadingText2SpeechQuestion;
+            language = _subheadingText2SpeechQuestion;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
-            name = _mainText2SpeechQuestion;
+            language = _mainText2SpeechQuestion;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
-            name = _subText2SpeechQuestion;
+            language = _subText2SpeechQuestion;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
-            name = _subheadingText2SpeechAnswer;
+            language = _subheadingText2SpeechAnswer;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
-            name = _mainText2SpeechAnswer;
+            language = _mainText2SpeechAnswer;
         } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
-            name = _subText2SpeechAnswer;
+            language = _subText2SpeechAnswer;
         }
         
-        if (name.length == 0) {
-            name = [Text2SpeechHelper getDefaultText2SpeechDescriptionForDisplay];
+        if (language.length == 0) {
+            language = [Text2SpeechHelper getDefaultText2SpeechDescriptionForDisplay];
         }
+        
+        NSString *text2SpeechDescriptionForDisplay = [Text2SpeechHelper getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];
         
         BOOL isDefault = YES;
         
         int contentOffsetIndex = 0;
         for (int i = 0;i < [targetButtonArray count];i++) {
             UIButton *button = targetButtonArray[i];
-            if ([button.titleLabel.text isEqualToString:name]) {
+            if ([button.titleLabel.text isEqualToString:text2SpeechDescriptionForDisplay]) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 contentOffsetIndex = i;
                 isDefault= NO;
@@ -11985,9 +12012,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if (_lastBecomeFirstRespondTextView.inputView == nil) {
-            [_keyboardTopViewV2 scrollToButtonIndex:contentOffsetIndex];
+            [_keyboardTopViewV2 scrollToText2SpeechButtonIndex:contentOffsetIndex];
         } else {
-            [_keyboardTopViewForInputViewV2 scrollToButtonIndex:contentOffsetIndex];
+            [_keyboardTopViewForInputViewV2 scrollToText2SpeechButtonIndex:contentOffsetIndex];
         }
         
     }

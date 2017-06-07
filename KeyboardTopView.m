@@ -508,5 +508,21 @@
  
 }
 
+- (void) scrollToText2SpeechButtonIndex:(int) index {
+    
+    int offsetX = 0;
+    int screenWidth = [Common getScreenWidthInLandscape];
+    
+    if (self.scrollView.contentSize.width <= screenWidth) {
+        self.scrollView.contentOffset = CGPointMake(0,0);
+    } else {
+        if (index*K_Item_Width*2.5 > screenWidth/2) {
+            offsetX = index*K_Item_Width*2.5 - screenWidth/2;
+        }
+        self.scrollView.contentOffset = CGPointMake(offsetX,0);
+    }
+    
+}
+
 
 @end

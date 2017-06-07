@@ -89,6 +89,8 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 -(NSArray *) getCurrentButtonArray;
 
 - (void) scrollToButtonIndex:(int) index;
+- (void) scrollToText2SpeechButtonIndex:(int) index;
+
 
 
 @end
