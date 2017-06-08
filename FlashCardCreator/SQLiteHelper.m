@@ -150,7 +150,7 @@
 	}
     
     if (![SQLiteHelper tableExists:@"CSS_Tables"]) {
-		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text, subheading_font text, main_font text, sub_font text, subheading_align_vertical text,main_align_vertical text, sub_align_vertical text, subheading_semi_transparent integer,main_semi_transparent integer,sub_semi_transparent integer);"];
+		sqlite3_stmt *createNotes = [SQLiteHelper prepareStatementForQuery:@"create table CSS_Tables (css_id integer,subheading_size integer, subheading_align text, subheading_color text, main_size integer, main_align text, main_color text, sub_size integer, sub_align text, sub_color text, subheading_font text, main_font text, sub_font text, subheading_align_vertical text,main_align_vertical text, sub_align_vertical text, subheading_semi_transparent integer,main_semi_transparent integer,sub_semi_transparent integer, subheading_text2speech text, main_text2speech text, sub_text2speech text);"];
 		sqlite3_step(createNotes);
 		sqlite3_finalize(createNotes);
         
@@ -162,6 +162,11 @@
     } else {
         if (([Common currentInstalledSqliteVersion] <= 6) && ([Common newUpdatingSqliteVersion] == 7)) {
             [self AddFieldForPackFrom6To7];
+        } else if (([Common currentInstalledSqliteVersion] <= 6) && ([Common newUpdatingSqliteVersion] == 8)) {
+            [self AddFieldForPackFrom6To7];
+            [self AddFieldForPackFrom7To8];
+        } else if (([Common currentInstalledSqliteVersion] == 7) && ([Common newUpdatingSqliteVersion] == 8)) {
+            [self AddFieldForPackFrom7To8];
         }
     }
     
@@ -205,6 +210,34 @@
     
     {
         NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN sub_semi_transparent integer "];
+        sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+        sqlite3_step(queryStatement);
+        sqlite3_finalize(queryStatement);
+    }
+    
+    [iConsole info:@"%s",__FUNCTION__];
+    
+    
+}
+
++ (void) AddFieldForPackFrom7To8 {
+    
+    {
+        NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN subheading_text2speech integer "];
+        sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+        sqlite3_step(queryStatement);
+        sqlite3_finalize(queryStatement);
+    }
+    
+    {
+        NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN main_text2speech integer "];
+        sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
+        sqlite3_step(queryStatement);
+        sqlite3_finalize(queryStatement);
+    }
+    
+    {
+        NSString *query = [[NSString alloc] initWithFormat:@"ALTER TABLE CSS_Tables ADD COLUMN sub_text2speech integer "];
         sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
         sqlite3_step(queryStatement);
         sqlite3_finalize(queryStatement);
