@@ -2926,7 +2926,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAlignQuestion = @"Justify";
     }
     
-    //ccaa, let's do it
+    _subheadingText2SpeechQuestion = css.subheadingText2SpeechSound;
     
     //2. main
     //during creating a new card, we used default value
@@ -2979,7 +2979,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAlignQuestion = @"Justify";
     }
     
-    
+    _mainText2SpeechQuestion = css.mainText2SpeechSound;
     
     //3. sub
     //during creating a new card, we used default value
@@ -3032,6 +3032,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAlignQuestion = @"Justify";
     }
     
+    _subText2SpeechQuestion = css.subText2SpeechSound;
     
     //PartB: Answer
     css= _currentCard.answer.css;
@@ -3072,7 +3073,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingColorAnswer = @"White";
     }
     
-    //ccaa,let's do it
     
     if ([css.subheadingAlign isEqualToString:@"Left"]) {
         _subheadingAnswer.textAlignment = NSTextAlignmentLeft;
@@ -3087,6 +3087,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer.textAlignment = NSTextAlignmentJustified;
         _subheadingAlignAnswer = @"Justify";
     }
+    
+    _subheadingText2SpeechAnswer = css.subheadingText2SpeechSound;
     
     
     //2. main
@@ -3139,6 +3141,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAlignAnswer = @"Justify";
     }
     
+    _mainText2SpeechAnswer = css.mainText2SpeechSound;
     
     //3. sub
     //during creating a new card, we used default value
@@ -3189,6 +3192,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer.textAlignment = NSTextAlignmentJustified;
         _subAlignAnswer = @"Justify";
     }
+    
+    _subText2SpeechAnswer = css.subText2SpeechSound;
     
     
     [self setNeedsDisplay];
@@ -11475,17 +11480,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         NSString *targetLanguage = @"";
         if ([dict objectForKey:@"subheadingQuestion"]){
-            targetLanguage = _subheadingText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.subheadingText2SpeechSound;
         } else if ([dict objectForKey:@"mainQuestion"]){
-            targetLanguage = _mainText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.mainText2SpeechSound;
         } else if ([dict objectForKey:@"subQuestion"]){
-            targetLanguage = _subText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.subText2SpeechSound;
         } else if ([dict objectForKey:@"subheadingAnswer"]){
-            targetLanguage = _subheadingText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.subheadingText2SpeechSound;
         } else if ([dict objectForKey:@"mainAnswer"]){
-            targetLanguage = _mainText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.mainText2SpeechSound;
         } else if ([dict objectForKey:@"subAnswer"]){
-            targetLanguage = _subText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.subText2SpeechSound;
         }
         if (targetLanguage.length == 0) {
             targetLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
@@ -11522,17 +11527,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         NSString *targetLanguage = @"";
         if ([dict objectForKey:@"subheadingQuestion"]){
-            targetLanguage = _subheadingText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.subheadingText2SpeechSound;
         } else if ([dict objectForKey:@"mainQuestion"]){
-            targetLanguage = _mainText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.mainText2SpeechSound;
         } else if ([dict objectForKey:@"subQuestion"]){
-            targetLanguage = _subText2SpeechQuestion;
+            targetLanguage = _currentCard.question.css.subText2SpeechSound;
         } else if ([dict objectForKey:@"subheadingAnswer"]){
-            targetLanguage = _subheadingText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.subheadingText2SpeechSound;
         } else if ([dict objectForKey:@"mainAnswer"]){
-            targetLanguage = _mainText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.mainText2SpeechSound;
         } else if ([dict objectForKey:@"subAnswer"]){
-            targetLanguage = _subText2SpeechAnswer;
+            targetLanguage = _currentCard.answer.css.subText2SpeechSound;
         }
         if (targetLanguage.length == 0) {
             targetLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
@@ -11586,44 +11591,44 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         if ((_subheadingQuestion.text.length >0) && (_subheadingQuestion.hidden == NO)) {
             
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subheadingQuestion.text] forKey:@"subheadingQuestion"];
-            
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_subheadingQuestion.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subheadingQuestion"]];
+            }
         }
         
         if ((_mainQuestion.text.length >0)&& (_mainQuestion.hidden == NO)) {
             
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_mainQuestion.text] forKey:@"mainQuestion"];
-            
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_mainQuestion.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"mainQuestion"]];
+            }
         }
         
         if ((_subQuestion.text.length >0)&& (_subQuestion.hidden == NO)) {
             
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subQuestion.text] forKey:@"subQuestion"];
-            
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_subQuestion.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subQuestion"]];
+            }
         }
     } else {
         if ((_subheadingAnswer.text.length >0)&& (_subheadingAnswer.hidden == NO)) {
- 
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subheadingAnswer.text] forKey:@"subheadingAnswer"];
             
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_subheadingAnswer.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subheadingAnswer"]];
+            }
         }
         
         if ((_mainAnswer.text.length >0)&& (_mainAnswer.hidden == NO)) {
             
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_mainAnswer.text] forKey:@"mainAnswer"];
-            
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_mainAnswer.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"mainAnswer"]];
+            }
         }
         
         if ((_subAnswer.text.length >0)&& (_subAnswer.hidden == NO)) {
             
-            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subAnswer.text] forKey:@"subAnswer"];
-            
-            [myArray addObject:dict];
+            for (NSString *item in [self replaceBasicSymbol:_subAnswer.text]) {
+                [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subAnswer"]];
+            }
         }
     }
     

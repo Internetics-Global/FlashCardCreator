@@ -215,7 +215,7 @@
     NSArray *titleArray = [Text2SpeechHelper getAllAvailableText2SpeechDescriptionArrayForDisplay];
     NSArray *allText2SpeechArray = [Text2SpeechHelper getAllAvailableAVSpeechSynthesisVoiceArray];
     
-    self.scrollView.contentSize = CGSizeMake(K_Item_Width * [allText2SpeechArray count], CGRectGetHeight(self.frame));
+    self.scrollView.contentSize = CGSizeMake(K_Item_Width * 2.5 * [allText2SpeechArray count], CGRectGetHeight(self.frame));
     
     for (int i = 0; i<[allText2SpeechArray count]; i++) {
         
