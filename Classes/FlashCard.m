@@ -11465,12 +11465,33 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [iConsole info:@"%s",__FUNCTION__];
     _textToSpeechArray = [self textToSpeechContentArray];
     if ([_textToSpeechArray count] > 0) {
+        
+        NSDictionary *dict = _textToSpeechArray[0];
+        NSString *content = [[dict allValues] firstObject];
+        
         AVSpeechUtterance *utterance = [AVSpeechUtterance
-                                        speechUtteranceWithString:_textToSpeechArray[0]];
+                                        speechUtteranceWithString:content];
         utterance.rate = (AVSpeechUtteranceMinimumSpeechRate + AVSpeechUtteranceDefaultSpeechRate)*0.75;
         
-        NSString *text2SpeechLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
-        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechLanguage];
+        NSString *targetLanguage = @"";
+        if ([dict objectForKey:@"subheadingQuestion"]){
+            targetLanguage = _subheadingText2SpeechQuestion;
+        } else if ([dict objectForKey:@"mainQuestion"]){
+            targetLanguage = _mainText2SpeechQuestion;
+        } else if ([dict objectForKey:@"subQuestion"]){
+            targetLanguage = _subText2SpeechQuestion;
+        } else if ([dict objectForKey:@"subheadingAnswer"]){
+            targetLanguage = _subheadingText2SpeechAnswer;
+        } else if ([dict objectForKey:@"mainAnswer"]){
+            targetLanguage = _mainText2SpeechAnswer;
+        } else if ([dict objectForKey:@"subAnswer"]){
+            targetLanguage = _subText2SpeechAnswer;
+        }
+        if (targetLanguage.length == 0) {
+            targetLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
+        }
+
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:targetLanguage];
         
         if (self.isMuteText2Speech) {
             [utterance setVolume:0];
@@ -11492,12 +11513,32 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     self.textToSpeechContentArrayIndex ++;
     
     if ([_textToSpeechArray count] > self.textToSpeechContentArrayIndex) {
+        
+        NSDictionary *dict = _textToSpeechArray[self.textToSpeechContentArrayIndex];
+        NSString *content = [[dict allValues] firstObject];
+        
         AVSpeechUtterance *utterance = [AVSpeechUtterance
-                                        speechUtteranceWithString:_textToSpeechArray[self.textToSpeechContentArrayIndex]];
+                                        speechUtteranceWithString:content];
         
-        NSString *text2SpeechStr = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
-        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:text2SpeechStr];
+        NSString *targetLanguage = @"";
+        if ([dict objectForKey:@"subheadingQuestion"]){
+            targetLanguage = _subheadingText2SpeechQuestion;
+        } else if ([dict objectForKey:@"mainQuestion"]){
+            targetLanguage = _mainText2SpeechQuestion;
+        } else if ([dict objectForKey:@"subQuestion"]){
+            targetLanguage = _subText2SpeechQuestion;
+        } else if ([dict objectForKey:@"subheadingAnswer"]){
+            targetLanguage = _subheadingText2SpeechAnswer;
+        } else if ([dict objectForKey:@"mainAnswer"]){
+            targetLanguage = _mainText2SpeechAnswer;
+        } else if ([dict objectForKey:@"subAnswer"]){
+            targetLanguage = _subText2SpeechAnswer;
+        }
+        if (targetLanguage.length == 0) {
+            targetLanguage = [Text2SpeechHelper getSelectedText2SpeechLanguageFromSetting];
+        }
         
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:targetLanguage];
         
         utterance.rate = (AVSpeechUtteranceMinimumSpeechRate + AVSpeechUtteranceDefaultSpeechRate)*0.75;
         
@@ -11545,27 +11586,44 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (self.segmentedControl.selectedSegmentIndex == 0) {
         if ((_subheadingQuestion.text.length >0) && (_subheadingQuestion.hidden == NO)) {
             
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subheadingQuestion.text]];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subheadingQuestion.text] forKey:@"subheadingQuestion"];
+            
+            [myArray addObject:dict];
         }
         
         if ((_mainQuestion.text.length >0)&& (_mainQuestion.hidden == NO)) {
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_mainQuestion.text]];
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_mainQuestion.text] forKey:@"mainQuestion"];
+            
+            [myArray addObject:dict];
         }
         
         if ((_subQuestion.text.length >0)&& (_subQuestion.hidden == NO)) {
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subQuestion.text]];
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subQuestion.text] forKey:@"subQuestion"];
+            
+            [myArray addObject:dict];
         }
     } else {
         if ((_subheadingAnswer.text.length >0)&& (_subheadingAnswer.hidden == NO)) {
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subheadingAnswer.text]];
+ 
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subheadingAnswer.text] forKey:@"subheadingAnswer"];
+            
+            [myArray addObject:dict];
         }
         
         if ((_mainAnswer.text.length >0)&& (_mainAnswer.hidden == NO)) {
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_mainAnswer.text]];
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_mainAnswer.text] forKey:@"mainAnswer"];
+            
+            [myArray addObject:dict];
         }
         
         if ((_subAnswer.text.length >0)&& (_subAnswer.hidden == NO)) {
-            [myArray addObjectsFromArray:[self replaceBasicSymbol:_subAnswer.text]];
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:[self replaceBasicSymbol:_subAnswer.text] forKey:@"subAnswer"];
+            
+            [myArray addObject:dict];
         }
     }
     
