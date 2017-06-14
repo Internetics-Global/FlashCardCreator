@@ -411,8 +411,18 @@
 
 - (void) setupSaveButton {
     if (_saveButton == nil) {
+        
+        int offset = 10;
+        if (isUserInterfaceIdiomPhone) {
+            offset = 5;
+        }
+        
         _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10, 0, K_Item_Width - 20, CGRectGetHeight(self.frame));
+        _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
+        _saveButton.titleLabel.font = [UIFont systemFontOfSize:13];
+        _saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        _saveButton.layer.borderWidth = 1;
+        _saveButton.layer.cornerRadius = 3;
         [_saveButton setTitle:NSLocalizedString(@"Title_Save",@"") forState:UIControlStateNormal];
         _saveButton.backgroundColor = [UIColor clearColor];
         [_saveButton addTarget:self action:@selector(didClickedSaveButton:) forControlEvents:UIControlEventTouchDown];
