@@ -77,6 +77,10 @@
         _subSize = 28;
     }
     
+    _subheadingText2SpeechSound = @"";
+    _mainText2SpeechSound= @"";
+    _subText2SpeechSound = @"";
+    
     
 	return self;
 }

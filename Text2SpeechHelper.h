@@ -21,6 +21,8 @@
 
 + (NSArray *)  getAllAvailableAVSpeechSynthesisVoiceArray;
 + (NSArray *)  getAllAvailableText2SpeechDescriptionArrayForDisplay;
+
++ (NSString *) getDefaultText2SpeechVoiceLanguage;
 + (NSString *) getDefaultText2SpeechDescriptionForDisplay;
 
 @end

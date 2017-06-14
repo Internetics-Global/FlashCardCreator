@@ -12050,7 +12050,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if (language.length == 0) {
-            language = [Text2SpeechHelper getDefaultText2SpeechDescriptionForDisplay];
+            language = [Text2SpeechHelper getDefaultText2SpeechVoiceLanguage];
         }
         
         NSString *text2SpeechDescriptionForDisplay = [Text2SpeechHelper getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];
@@ -12323,7 +12323,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self updateColorButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Font",@"")]) {
         [self updateFontButtonsStatus:sender];
-    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Sound",@"")]) {
+    } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Language",@"")]) {
         [self updateText2SpeechButtonsStatus:sender];
     } else if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Symbol",@"")] || [title isEqualToString:NSLocalizedString(@"ToolbarItem_Keyboard",@"")]){
         [self symbolAndKeyboardSwitch:sender];
