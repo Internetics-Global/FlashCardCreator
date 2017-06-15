@@ -11609,6 +11609,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subQuestion"]];
             }
         }
+        
+        if ([myArray count] == 0) {
+            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingQuestion"]]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
+        }
+        
     } else {
         if ((_subheadingAnswer.text.length >0)&& (_subheadingAnswer.hidden == NO)) {
             
@@ -11630,11 +11635,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 [myArray addObject:[NSDictionary dictionaryWithObject:item forKey:@"subAnswer"]];
             }
         }
+        
+        if ([myArray count] == 0) {
+            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingAnswer"]]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
+        }
     }
     
-    if ([myArray count] == 0) {
-        [myArray addObject:@"   "]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
-    }
     
     return myArray;
 }
