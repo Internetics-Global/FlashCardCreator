@@ -8429,6 +8429,36 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             }
         }
+    } else if (_imageSourceType == Type_Image_Source_Background) {
+        
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            if (_questionBackgroundImageFullPath.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_questionBackgroundImageFullPath
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _questionBackgroundImageFullPath];
+                }
+                
+                _questionBackgroundImageFullPath = @"";
+                
+            }
+            
+        } else {
+            
+            if (_answerBackgroundImageFullPath.length != 0) {
+                NSError *error = nil;
+                if (![[NSFileManager defaultManager] removeItemAtPath:_answerBackgroundImageFullPath
+                                                                error:&error])
+                {
+                    [iConsole info:@"[Error] %@ (%@)", error, _answerBackgroundImageFullPath];
+                }
+                
+                _answerBackgroundImageFullPath = @"";
+                
+            }
+            
+        }
     } else {
         if (_segmentedControl.selectedSegmentIndex == 0) {
             if (_questionMovieFullPath2.length != 0) {
