@@ -4892,7 +4892,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAlignVerticalAnswer = @"";
             [self resetVerticalAlignment:_subAnswer];
             
-            _subColorAnswer = @"Red";
+            _subColorAnswer = @"Black";
             _subSizeAnswer = 38;
             
             _imageAnswer.hidden = FALSE;
@@ -5774,7 +5774,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _subAlignVerticalQuestion = @"";
             [self resetVerticalAlignment:_subQuestion];
             
-            _subColorQuestion = @"Red";
+            _subColorQuestion = @"Black";
             _subSizeQuestion = 38;
             
             _imageQuestion.hidden = FALSE;
