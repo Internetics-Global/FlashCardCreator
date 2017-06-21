@@ -234,7 +234,7 @@
     
     if (isUserInterfaceIdiomPhone) {
         
-        if (self.navigationController) {
+        if ([self.navigationController.viewControllers count] > 1) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [self dismissViewControllerAnimated:true completion:nil];
