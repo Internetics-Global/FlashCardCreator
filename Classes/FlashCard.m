@@ -2191,6 +2191,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion.text = _currentCard.question.subheading;
         _mainQuestion.text =_currentCard.question.main;
         _subQuestion.text =_currentCard.question.sub;
+        
+        _logoLinkURL = _currentCard.question.logoURLLinkage;
     }
     
     
