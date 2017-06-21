@@ -394,7 +394,7 @@
         if (i == [self.summaryArray count] -2) {
             myButton.frame = CGRectMake(i*K_Item_Width *3/4, 0, K_Item_Width, CGRectGetHeight(self.frame));
         } else if (i == [self.summaryArray count] -1) {
-            myButton.frame = CGRectMake((i-1)*K_Item_Width *3/4 + 1 * K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
+            myButton.frame = CGRectMake((i-1)*K_Item_Width + 1 * K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
         } else {
             myButton.frame = CGRectMake(i*K_Item_Width *3/4, 0, K_Item_Width *3/4, CGRectGetHeight(self.frame));
         }
