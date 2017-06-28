@@ -395,7 +395,7 @@
             myButton.frame = CGRectMake(i*K_Item_Width *3/4, 0, K_Item_Width, CGRectGetHeight(self.frame));
         } else if (i == [self.summaryArray count] -1) {
             if (isUserInterfaceIdiomPhone) {
-                myButton.frame = CGRectMake((i-1)*K_Item_Width + 1 * K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
+                myButton.frame = CGRectMake((i-1)*K_Item_Width + 0.15 * K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
             } else {
                 myButton.frame = CGRectMake((i-1)*K_Item_Width + 0.15 * K_Item_Width, 0, K_Item_Width, CGRectGetHeight(self.frame));
             }
