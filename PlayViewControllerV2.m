@@ -25,7 +25,7 @@
 
 
 #define K_AutoHideControlPanelDwellSeconds         5
-#define K_IntervalBetweenCardSeconds_ForQAOnly     4
+#define K_IntervalBetweenCardSeconds_ForQAOnly     2
 
 @interface PlayViewControllerV2 () <CycleScrollViewDatasource,CycleScrollViewDelegate,UIGestureRecognizerDelegate,ASValueTrackingSliderDataSource> {
     
