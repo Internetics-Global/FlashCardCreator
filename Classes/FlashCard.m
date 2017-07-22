@@ -9375,7 +9375,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //    frame.size.height = textView.contentSize.height;
     //    textView.frame = frame;
     
-    
+    if (textView.tag == kTagSubheadingQuestion){
+        _currentCard.question.subheading = textView.text;
+    } else if (textView.tag == kTagMainQuestion) {
+        _currentCard.question.main = textView.text;
+    } else if (textView.tag == kTagSubQuestion) {
+        _currentCard.question.sub = textView.text;
+    } else if (textView.tag == kTagSubheadingAnswer) {
+        _currentCard.answer.subheading = textView.text;
+    } else if (textView.tag == kTagMainAnswer) {
+        _currentCard.answer.main = textView.text;
+    } else if (textView.tag == kTagSubAnswer) {
+        _currentCard.answer.sub = textView.text;
+    } else {
+    }
     
     
 }
