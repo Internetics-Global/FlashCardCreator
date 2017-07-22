@@ -2762,9 +2762,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.css.mainFont = _mainFontAnswer;
     _currentCard.answer.css.subFont = _subFontAnswer;
     
-    _currentCard.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5);
-    _currentCard.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5);
-    _currentCard.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5);
+    _currentCard.answer.css.subheadingSemiTransparent = (_subheadingAnswer.alpha == 0.5) || (_subheadingAnswer.textColor == [UIColor clearColor]);
+    _currentCard.answer.css.mainSemiTransparent       = (_mainAnswer.alpha == 0.5) || (_mainAnswer.textColor == [UIColor clearColor]);
+    _currentCard.answer.css.subSemiTransparent        = (_subAnswer.alpha == 0.5) || (_subAnswer.textColor == [UIColor clearColor]);
     
     _currentCard.question.title = _questionTitle.text;
     _currentCard.question.subheading = _subheadingQuestion.text;
@@ -2799,9 +2799,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.question.css.mainFont = _mainFontQuestion;
     _currentCard.question.css.subFont = _subFontQuestion;
     
-    _currentCard.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5);
-    _currentCard.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5);
-    _currentCard.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5);
+    _currentCard.question.css.subheadingSemiTransparent = (_subheadingQuestion.alpha == 0.5) || (_subheadingQuestion.textColor == [UIColor clearColor]);
+    _currentCard.question.css.mainSemiTransparent       = (_mainQuestion.alpha == 0.5) || (_mainQuestion.textColor == [UIColor clearColor]);
+    _currentCard.question.css.subSemiTransparent        = (_subQuestion.alpha == 0.5) || (_subQuestion.textColor == [UIColor clearColor]);
     
     
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
@@ -11942,6 +11942,21 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
             
             
+        }
+        
+        if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
+            _currentCard.question.css.subheadingSemiTransparent = isSemiTransparent;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainQuestion) {
+            _currentCard.question.css.mainSemiTransparent = isSemiTransparent;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubQuestion) {
+            _currentCard.question.css.subSemiTransparent = isSemiTransparent;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingAnswer) {
+            _currentCard.answer.css.subheadingSemiTransparent = isSemiTransparent;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagMainAnswer) {
+            _currentCard.answer.css.mainSemiTransparent = isSemiTransparent;
+        } else if (_lastBecomeFirstRespondTextView.tag == kTagSubAnswer) {
+            _currentCard.answer.css.subSemiTransparent = isSemiTransparent;
+        } else {
         }
         
         if (_lastBecomeFirstRespondTextView.inputView == nil) {
