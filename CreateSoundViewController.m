@@ -138,7 +138,7 @@
     }
     
     if (isExistRecordedSound) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
                                                   initWithCustomView:[FCCBarButton buttonWithImage:[UIImage imageNamed:@"delete_button"] target:self action:@selector(delete)]];
     }
     
