@@ -212,22 +212,18 @@
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
 
-    if ([MutipleTargetHelper isFullVersion]) {
-        return [[User defaultUser].packs count] + 1;
-    } else {
-        return [[User defaultUser].packs count];
-    }
+    return [[User defaultUser].packs count] + 1;
 
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSInteger OFFSET;
-    if ([MutipleTargetHelper isFullVersion]) {
-        OFFSET = 0;
-    } else {
-        OFFSET = -1;  //in view mode, there's no "add pack" cell
-    }
+    NSInteger OFFSET = 0;
+//    if ([MutipleTargetHelper isFullVersion]) {
+//        OFFSET = 0;
+//    } else {
+//        OFFSET = -1;  //in view mode, there's no "add pack" cell
+//    }
     
     
     if (indexPath.row == 0 + OFFSET) {
@@ -324,12 +320,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSInteger OFFSET;
-    if ([MutipleTargetHelper isFullVersion]) {
-        OFFSET = 0;
-    } else {
-        OFFSET = -1;  //in view mode, there's no "add pack" cell
-    }
+    NSInteger OFFSET = 0;
+//    if ([MutipleTargetHelper isFullVersion]) {
+//        OFFSET = 0;
+//    } else {
+//        OFFSET = -1;  //in view mode, there's no "add pack" cell
+//    }
     
     
     if (isUserInterfaceIdiomPhone) {
@@ -465,6 +461,12 @@
 }
 
 - (void) visitStoreButtonClicked:(id)sender {
+    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+    
     if (isUserInterfaceIdiomPhone) {
     } else {
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

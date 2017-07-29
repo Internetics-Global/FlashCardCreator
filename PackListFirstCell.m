@@ -26,7 +26,7 @@
                 self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
             } else {
                 self.addNewPackImageView.image = [UIImage imageNamed:@"create_new_pack.png"];
-                self.addNewPackImageView.alpha = 0.6;
+               // self.addNewPackImageView.alpha = 0.6;
             }
             
             [self.contentView addSubview:self.addNewPackImageView];
@@ -41,8 +41,8 @@
                 desLabel.textColor = [UIColor whiteColor];
                 desLabel.alpha = 1;
             } else {
-                desLabel.textColor = [UIColor darkGrayColor];
-                desLabel.alpha = 0.7;
+                desLabel.textColor = [UIColor whiteColor];
+                desLabel.alpha = 1;
             }
             
             desLabel.backgroundColor = [UIColor clearColor];
@@ -59,7 +59,7 @@
                 self.libraryImageView.image = [UIImage imageNamed:@"ffc_library.png"];
             } else {
                 self.libraryImageView.image = [UIImage imageNamed:@"ffc_library.png"];
-                self.libraryImageView.alpha = 0.6;
+                //self.libraryImageView.alpha = 0.6;
             }
             
             [self.contentView addSubview:self.libraryImageView];
@@ -74,12 +74,13 @@
                 desLabel.textColor = [UIColor whiteColor];
                 desLabel.alpha = 1;
             } else {
-                desLabel.textColor = [UIColor darkGrayColor];
-                desLabel.alpha = 0.7;
+                desLabel.textColor = [UIColor whiteColor];
+                desLabel.alpha = 1;
             }
             
             desLabel.backgroundColor = [UIColor clearColor];
             [self.contentView addSubview:desLabel];
+            
 
         }
         
