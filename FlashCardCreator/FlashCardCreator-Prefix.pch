@@ -211,7 +211,7 @@
 #define kMAX_Auto_Play_Speed                (60)
 #define kMIN_Auto_Play_Speed                (4)
 
-#define kDefault_Pause_For_Answer            (4)  //in seconds
+#define kDefault_Pause_For_Answer            (2)  //in seconds
 #define kMAX_Pause_For_Answer                (20)
 #define kMIN_Pause_For_Answer                (2)
 
