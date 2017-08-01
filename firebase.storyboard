@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D17a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D17a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -97,12 +97,16 @@
                             <constraint firstItem="Lxc-d3-Oqm" firstAttribute="centerX" secondItem="y2n-AH-ew3" secondAttribute="centerX" id="P0Q-03-t3M"/>
                             <constraint firstItem="h73-wR-6p7" firstAttribute="centerX" secondItem="y2n-AH-ew3" secondAttribute="centerX" id="Qlj-hK-OTY"/>
                             <constraint firstItem="qsD-V0-mHG" firstAttribute="top" secondItem="9Cg-Pr-vce" secondAttribute="bottom" constant="24" id="S58-xy-Q6Q"/>
-                            <constraint firstItem="ldf-rR-OYi" firstAttribute="top" secondItem="xkQ-lT-zyc" secondAttribute="bottom" constant="152" id="TOg-8S-go0"/>
+                            <constraint firstItem="ldf-rR-OYi" firstAttribute="top" secondItem="xkQ-lT-zyc" secondAttribute="bottom" constant="152" id="TOg-8S-go0">
+                                <variation key="heightClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="Lxc-d3-Oqm" firstAttribute="top" secondItem="qsD-V0-mHG" secondAttribute="bottom" constant="20" id="U1L-mD-jzy"/>
                             <constraint firstItem="wpm-5h-A8b" firstAttribute="centerX" secondItem="y2n-AH-ew3" secondAttribute="centerX" id="dkh-zd-vUu"/>
                             <constraint firstItem="qsD-V0-mHG" firstAttribute="centerX" secondItem="y2n-AH-ew3" secondAttribute="centerX" id="e6h-90-8fm"/>
                             <constraint firstItem="9Cg-Pr-vce" firstAttribute="centerX" secondItem="y2n-AH-ew3" secondAttribute="centerX" id="j17-UM-2pU"/>
-                            <constraint firstItem="h73-wR-6p7" firstAttribute="top" secondItem="ldf-rR-OYi" secondAttribute="bottom" constant="39" id="muO-N0-JNV"/>
+                            <constraint firstItem="h73-wR-6p7" firstAttribute="top" secondItem="ldf-rR-OYi" secondAttribute="bottom" constant="39" id="muO-N0-JNV">
+                                <variation key="heightClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="wpm-5h-A8b" firstAttribute="top" secondItem="Lxc-d3-Oqm" secondAttribute="bottom" constant="8" id="znL-tP-x13"/>
                         </constraints>
                     </view>
