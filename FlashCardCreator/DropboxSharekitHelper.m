@@ -18,6 +18,8 @@
 #import <MessageUI/MessageUI.h>
 
 #import "FFCTextInputCompactAlertView.h"
+#import "CallbackSLComposeViewController.h"
+#import "CallbackMFMailComposeViewController.h"
 
 @interface DropboxSharekitHelper () <UIActionSheetDelegate,MFMailComposeViewControllerDelegate> {
     NSString *_finalPostMessage; //final share message
@@ -671,8 +673,8 @@
             
             APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
-            if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-                SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            if([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+                SLComposeViewController *controller = [CallbackSLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
                 [controller setInitialText:_finalPostMessage];
                 //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                 [_baseViewController presentViewController:controller animated:YES completion:Nil];
@@ -688,9 +690,9 @@
             
             APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
-            if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+            if ([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
             {
-                SLComposeViewController *controller = [SLComposeViewController
+                SLComposeViewController *controller = [CallbackSLComposeViewController
                                                        composeViewControllerForServiceType:SLServiceTypeTwitter];
                 [controller setInitialText:_finalPostMessage];
                 //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
@@ -707,8 +709,8 @@
             
             APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
-            if ([MFMailComposeViewController canSendMail]) {
-                MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+            if ([CallbackMFMailComposeViewController canSendMail]) {
+                MFMailComposeViewController *composeViewController = [[CallbackMFMailComposeViewController alloc] init];
                 composeViewController.mailComposeDelegate = self;
                 composeViewController.navigationBar.tintColor = [UIColor whiteColor];
                 [composeViewController setSubject:@"Hi"];

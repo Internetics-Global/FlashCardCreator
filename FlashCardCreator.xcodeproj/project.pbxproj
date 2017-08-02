@@ -125,6 +125,8 @@
 		7552D6001DFE3C3300BA08C1 /* GoogleDriveMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552D5FF1DFE3C3300BA08C1 /* GoogleDriveMetadata.m */; };
 		755DF77C1E9CFAA500C13783 /* question-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 755DF77B1E9CFAA500C13783 /* question-gif.gif */; };
 		755DF77E1E9CFAAE00C13783 /* answer-gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 755DF77D1E9CFAAE00C13783 /* answer-gif.gif */; };
+		75663DA11F31C39A00868DDC /* CallbackSLComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75663DA01F31C39A00868DDC /* CallbackSLComposeViewController.m */; };
+		75663DA71F31C41900868DDC /* CallbackMFMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75663DA61F31C41900868DDC /* CallbackMFMailComposeViewController.m */; };
 		757F56941DFE339600C8B498 /* GoogleDriveSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 757F56931DFE339600C8B498 /* GoogleDriveSession.m */; };
 		757F56971DFE37BE00C8B498 /* GoogleDriveRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 757F56961DFE37BE00C8B498 /* GoogleDriveRestClient.m */; };
 		759AAB4A1DC2DB7A0060B153 /* UIView+FindUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */; };
@@ -505,6 +507,10 @@
 		7552D5FF1DFE3C3300BA08C1 /* GoogleDriveMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveMetadata.m; sourceTree = "<group>"; };
 		755DF77B1E9CFAA500C13783 /* question-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "question-gif.gif"; path = "Resources/question-gif.gif"; sourceTree = "<group>"; };
 		755DF77D1E9CFAAE00C13783 /* answer-gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "answer-gif.gif"; path = "Resources/answer-gif.gif"; sourceTree = "<group>"; };
+		75663D9F1F31C39A00868DDC /* CallbackSLComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackSLComposeViewController.h; path = Classes/CallbackSLComposeViewController.h; sourceTree = "<group>"; };
+		75663DA01F31C39A00868DDC /* CallbackSLComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallbackSLComposeViewController.m; path = Classes/CallbackSLComposeViewController.m; sourceTree = "<group>"; };
+		75663DA51F31C41900868DDC /* CallbackMFMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CallbackMFMailComposeViewController.h; path = Classes/CallbackMFMailComposeViewController.h; sourceTree = "<group>"; };
+		75663DA61F31C41900868DDC /* CallbackMFMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallbackMFMailComposeViewController.m; path = Classes/CallbackMFMailComposeViewController.m; sourceTree = "<group>"; };
 		757F56921DFE339600C8B498 /* GoogleDriveSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveSession.h; sourceTree = "<group>"; };
 		757F56931DFE339600C8B498 /* GoogleDriveSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDriveSession.m; sourceTree = "<group>"; };
 		757F56951DFE37BE00C8B498 /* GoogleDriveRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDriveRestClient.h; sourceTree = "<group>"; };
@@ -1012,6 +1018,10 @@
 				B44F66BA1EE589D6005F87A9 /* Text2SpeechHelper.m */,
 				759AAB481DC2DB7A0060B153 /* UIView+FindUIViewController.h */,
 				759AAB491DC2DB7A0060B153 /* UIView+FindUIViewController.m */,
+				75663D9F1F31C39A00868DDC /* CallbackSLComposeViewController.h */,
+				75663DA01F31C39A00868DDC /* CallbackSLComposeViewController.m */,
+				75663DA51F31C41900868DDC /* CallbackMFMailComposeViewController.h */,
+				75663DA61F31C41900868DDC /* CallbackMFMailComposeViewController.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2138,6 +2148,7 @@
 				2D5C180616D1A5F700E1E785 /* SelectTemplateTableViewController.m in Sources */,
 				2D5C181D16D1A62800E1E785 /* Common.m in Sources */,
 				88F5CE6E19B40B4B00107075 /* PECropRectView.m in Sources */,
+				75663DA11F31C39A00868DDC /* CallbackSLComposeViewController.m in Sources */,
 				75DEBDA51E237BB90062AB49 /* FirebaseSignInViewController.m in Sources */,
 				2D5C181E16D1A62800E1E785 /* NSArray+Randomised.m in Sources */,
 				883763E41A1C205D007FD84F /* AMPopTip.m in Sources */,
@@ -2186,6 +2197,7 @@
 				88123DF5192F00480062CA84 /* Constant.m in Sources */,
 				88D453281780DE3900500487 /* EmoticonView.m in Sources */,
 				88C2235617C2BC5E006EB652 /* JSBadgeView.m in Sources */,
+				75663DA71F31C41900868DDC /* CallbackMFMailComposeViewController.m in Sources */,
 				88EA2AC91ABFBF4A00A3663E /* CycleScrollView.m in Sources */,
 				886D8FEF1AE4975E00865101 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				75CF85F41E8F08600055DCBE /* VerifyStoreReceipt.m in Sources */,

@@ -27,6 +27,8 @@
 #import "Common.h"
 
 #import "FFCTextInputCompactAlertView.h"
+#import "CallbackSLComposeViewController.h"
+#import "CallbackMFMailComposeViewController.h"
 
 @import Firebase;
 
@@ -761,8 +763,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 
                 APP_DELEGATE.isToShowShareActinSheet_AWS = true;
                 
-                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-                    SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                if([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+                    SLComposeViewController *controller = [CallbackSLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
                     [controller setInitialText:_finalPostMessage];
                     //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                     [_baseViewController presentViewController:controller animated:YES completion:Nil];
@@ -778,9 +780,9 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 
                 APP_DELEGATE.isToShowShareActinSheet_AWS = true;
                 
-                if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+                if ([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
                 {
-                    SLComposeViewController *controller = [SLComposeViewController
+                    SLComposeViewController *controller = [CallbackSLComposeViewController
                                                            composeViewControllerForServiceType:SLServiceTypeTwitter];
                     [controller setInitialText:_finalPostMessage];
                     //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
@@ -797,8 +799,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 
                 APP_DELEGATE.isToShowShareActinSheet_AWS = true;
                 
-                if ([MFMailComposeViewController canSendMail]) {
-                    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+                if ([CallbackMFMailComposeViewController canSendMail]) {
+                    MFMailComposeViewController *composeViewController = [[CallbackMFMailComposeViewController alloc] init];
                     composeViewController.mailComposeDelegate = self;
                     composeViewController.navigationBar.tintColor = [UIColor whiteColor];
                     [composeViewController setSubject:@"Hi"];
