@@ -58,6 +58,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         self.baseViewController = controller;
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showShareActionSheetAgain) name:SHOW_SHARE_ACTIONSHEET_NOTIFICATION object:nil];
+    
     return self;
 }
 
@@ -137,6 +139,12 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         
     }
     
+}
+
+- (void) showShareActionSheetAgain {
+    if (APP_DELEGATE.isToShowShareActinSheet_AWS){
+        [self showShareActionSheet];
+    }
 }
 
 - (void) showShareActionSheet {
@@ -751,6 +759,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         switch (buttonIndex) {
             case 0: {
                 
+                APP_DELEGATE.isToShowShareActinSheet_AWS = true;
+                
                 if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
                     SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
                     [controller setInitialText:_finalPostMessage];
@@ -765,6 +775,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             }
                 break;
             case 1: {
+                
+                APP_DELEGATE.isToShowShareActinSheet_AWS = true;
                 
                 if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
                 {
@@ -782,6 +794,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             }
                 break;
             case 2: {
+                
+                APP_DELEGATE.isToShowShareActinSheet_AWS = true;
                 
                 if ([MFMailComposeViewController canSendMail]) {
                     MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
@@ -801,6 +815,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 break;
             case 3: {
                 
+                APP_DELEGATE.isToShowShareActinSheet_AWS = true;
+                
                 UIPasteboard *pb = [UIPasteboard generalPasteboard];
                 [pb setString:_finalPostMessage];
                 
@@ -814,6 +830,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             }
                 break;
             default:
+                APP_DELEGATE.isToShowShareActinSheet_AWS = false;
                 break;
         }
     }

@@ -46,6 +46,8 @@
         self.baseViewController = controller;
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showShareActionSheetAgain) name:SHOW_SHARE_ACTIONSHEET_NOTIFICATION object:nil];
+    
     return self;
 }
 
@@ -356,6 +358,12 @@
     }
 }
 
+- (void) showShareActionSheetAgain {
+    if (APP_DELEGATE.isToShowShareActinSheet_Dropbox){
+        [self showShareActionSheet];
+    }
+}
+
 
 - (void) showShareActionSheet {
     
@@ -655,8 +663,13 @@
 
 #pragma mark – UIActionSheet
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    __weak __typeof(&*self)weakSelf = self;
+    
     switch (buttonIndex) {
         case 0: {
+            
+            APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
             if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
                 SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
@@ -672,6 +685,8 @@
         }
             break;
         case 1: {
+            
+            APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
             if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
             {
@@ -689,6 +704,8 @@
         }
             break;
         case 2: {
+            
+            APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
             
             if ([MFMailComposeViewController canSendMail]) {
                 MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
@@ -708,6 +725,8 @@
             break;
         case 3: {
             
+            APP_DELEGATE.isToShowShareActinSheet_Dropbox = true;
+            
             UIPasteboard *pb = [UIPasteboard generalPasteboard];
             [pb setString:_finalPostMessage];
             
@@ -721,6 +740,7 @@
         }
             break;
         default:
+            APP_DELEGATE.isToShowShareActinSheet_Dropbox = false;
             break;
     }
 }

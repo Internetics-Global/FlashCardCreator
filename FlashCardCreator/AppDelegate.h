@@ -34,6 +34,10 @@
 
 @property (assign, nonatomic) BOOL isInAppWebSite;
 
+@property (assign, nonatomic) BOOL isToShowShareActinSheet_Google_Drive;
+@property (assign, nonatomic) BOOL isToShowShareActinSheet_Dropbox;
+@property (assign, nonatomic) BOOL isToShowShareActinSheet_AWS;
+
 /**
  *  正在download的过程中的标志，同isExamplePackDownloadedSuccessful区分
  */
