@@ -30,6 +30,8 @@
 #import "CallbackSLComposeViewController.h"
 #import "CallbackMFMailComposeViewController.h"
 
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+
 @import Firebase;
 
 typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
@@ -825,7 +827,14 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 double delayInSeconds = 0.5;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
+//                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil] show];
+                    
+                    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:NSLocalizedString(@"DIALOG_COPY_DONE",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_SHARE_ACTIONSHEET_NOTIFICATION object:nil userInfo:nil];
+                       }
+                    ];
+                    
+                    
                 });
                 
                 
