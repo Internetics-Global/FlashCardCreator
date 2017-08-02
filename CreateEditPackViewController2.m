@@ -124,11 +124,12 @@
     }
     
     if (isUserInterfaceIdiomPhone) {
-        CGRect rect = CGRectMake(CGRectGetMinX(_coverImageView.frame) + (CGRectGetWidth(_coverImageView.frame) - 88)/2 , CGRectGetMaxY(_coverImageView.frame) - 10, 88, 48);
+        CGRect rect = CGRectMake(CGRectGetMinX(_coverImageView.frame) + (CGRectGetWidth(_coverImageView.frame) - 44)/2, CGRectGetMaxY(_coverImageView.frame) - 5, 88, 44);
 
         _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
+        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
         _saveButton.frame = rect;
+       
         [_saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
         [_saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
         _saveButton.titleLabel.font = [UIFont systemFontOfSize:12];

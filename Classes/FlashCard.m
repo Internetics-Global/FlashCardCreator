@@ -807,7 +807,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
             _creatorText.tintColor = [UIColor blackColor];
         }
-        if (_isPlayingCard == false) {
+        if (_isPlayingCard == false && [self checkCardEditable]) {
             _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
             _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
             _creatorText.layer.borderWidth = 1;
@@ -827,7 +827,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (SYSTEM_VERSION_GREATER_THAN(@"7.0")) {
             _jobTitleText.tintColor = [UIColor blackColor];
         }
-        if (_isPlayingCard == false) {
+        if (_isPlayingCard == false && [self checkCardEditable]) {
             _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
             _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
             _jobTitleText.layer.borderWidth = 1;
@@ -1368,7 +1368,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.textAlignment = NSTextAlignmentLeft;
         _creatorText.backgroundColor = [UIColor clearColor];
         _creatorText.font = [UIFont systemFontOfSize:8];
-        if (self.isPlayingCard) {
+        if (self.isPlayingCard || [self checkCardEditable] == false) {
             _creatorText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
         } else {
             _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
@@ -1397,7 +1397,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.textAlignment = NSTextAlignmentLeft;
         _jobTitleText.backgroundColor = [UIColor clearColor];
         _jobTitleText.font = [UIFont systemFontOfSize:8];
-        if (self.isPlayingCard) {
+        if (self.isPlayingCard || [self checkCardEditable] == false) {
             _jobTitleText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
         } else {
             _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
