@@ -1262,17 +1262,23 @@ enum popover_enum {
         }
     }
     
-    
-    _scrollView.hidden = YES;
-    
-    if (_packInfoView == nil) {
-        [self setupPackInfoView];
-    } else {
-        _packInfoView.hidden = NO;
-        [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:b];
-    }
-    
-    [_currentCardView pauseEmbeddedVideoAndGif];
+    __weak __typeof(&*self)weakSelf = self;
+    double delayInSeconds = 0.3;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        _scrollView.hidden = YES;
+        
+        if (_packInfoView == nil) {
+            [weakSelf setupPackInfoView];
+        } else {
+            _packInfoView.hidden = NO;
+            [_packInfoView scrollTo:self.currentPack WithRebuildScrollView:b];
+        }
+        
+        [_currentCardView pauseEmbeddedVideoAndGif];
+        
+    });
     
     
 }
