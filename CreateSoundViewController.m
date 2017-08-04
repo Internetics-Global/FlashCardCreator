@@ -157,6 +157,8 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
+    [APP_DELEGATE setupAudioWithRecord];
+    
     APP_DELEGATE.isRecordFinished = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"K_CreateSoundViewController_Dimissed_Notification" object:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"is_to_recording"] userInfo:nil];
     
@@ -290,7 +292,7 @@
     
   [self dismissViewControllerAnimated:YES completion:nil];
     
-    [APP_DELEGATE setupAudioWithoutRecord];
+  [APP_DELEGATE setupAudioWithoutRecord];
     
 }
 
