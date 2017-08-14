@@ -47,8 +47,8 @@
 
 - (UIView *)createDemoView
 {
-    UIView *demoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 110)];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 270, 40)];
+    UIView *demoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 290, 80)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 270, 30)];
     [titleLabel setTextColor:[UIColor blackColor]];
     titleLabel.font = [UIFont boldSystemFontOfSize:14];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -56,9 +56,10 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     [demoView addSubview:titleLabel];
     
-    _textInputView = [[UITextView alloc] initWithFrame:CGRectMake(10, 60, 270, 30)];
+    _textInputView = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 270, 30)];
     _textInputView.layer.borderColor = [UIColor blackColor].CGColor;
     _textInputView.layer.borderWidth = 1;
+    _textInputView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textInputView.text = _defaultTextInputValue;
     [_textInputView becomeFirstResponder];
     [demoView addSubview:_textInputView];
