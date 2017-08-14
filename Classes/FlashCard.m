@@ -8526,8 +8526,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         CMTime duration = sourceAsset.duration;
         float seconds = CMTimeGetSeconds(duration);
         if (seconds > 30) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
-            [alertView show];
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ALERT",@"") message:@"Max 30 seconds of video duration is support" delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
+                [alertView show];
+            });
+            [picker dismissViewControllerAnimated:false completion:nil];
             return;
         }
         
