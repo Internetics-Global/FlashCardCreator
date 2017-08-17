@@ -2,8 +2,51 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Pods-FlashCardCreator.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>RMStore.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>RNCryptor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Reachability.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>025AC0066DC478B9EA49EDCAFDAE4867</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0AC55E754182E1FCF070AC7F74379523</key>
 		<dict>
 			<key>primary</key>
@@ -15,6 +58,11 @@
 			<true/>
 		</dict>
 		<key>2DC549F9D200E645025017E1C1C9C966</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>350C3728EDD888A034B98D2E9F5CB21B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -49,6 +97,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A8116496BA3CE8C28375468EEBB2C586</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ABCAC43869FE113EFD50FD18260D73D6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B909E6E3D7FFED0A868B8558AC1F6AFA</key>
 		<dict>
 			<key>primary</key>
@@ -60,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>BEF4CE81B806DD31D97F7B86DB2F9149</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C2529E42CA38554C8D5B8900D612E812</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -85,6 +148,16 @@
 			<true/>
 		</dict>
 		<key>E29B8868BA38043AE72DA3FBC7AD033D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E48FC452BF818A5CE3BABF439CC57A78</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F36B6B41539D673F3C9DBCDEA8D22DBF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

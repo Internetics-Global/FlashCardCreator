@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Slice 1.png",
+      "filename" : "play_button_bottom_highlight2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Slice 1 copy.png",
+      "filename" : "play_button_bottom_highlight2@2x.png",
       "scale" : "2x"
     },
     {
