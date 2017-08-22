@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "play_button_bottom_highlight2.png",
+      "filename" : "play_revised_round_2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "play_button_bottom_highlight2@2x.png",
+      "filename" : "play_revised_round_2@2x.png",
       "scale" : "2x"
     },
     {
