@@ -811,6 +811,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
             _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
             _creatorText.layer.borderWidth = 1;
+        } else {
+            _creatorText.layer.borderWidth = 0;
         }
         _creatorText.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         _creatorText.minimumFontSize = 6;
@@ -831,6 +833,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
             _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
             _jobTitleText.layer.borderWidth = 1;
+        } else {
+            _jobTitleText.layer.borderWidth = 0;
         }
         _jobTitleText.keyboardType = UIKeyboardAppearanceDefault;
         _jobTitleText.returnKeyType = UIReturnKeyDone;
@@ -1370,6 +1374,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _creatorText.font = [UIFont systemFontOfSize:8];
         if (self.isPlayingCard || [self checkCardEditable] == false) {
             _creatorText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
+            _creatorText.layer.borderWidth = 0;
         } else {
             _creatorText.placeholder = NSLocalizedString(@"Label_Creator_Hint",@"");
             _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -1399,6 +1404,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _jobTitleText.font = [UIFont systemFontOfSize:8];
         if (self.isPlayingCard || [self checkCardEditable] == false) {
             _jobTitleText.font =[UIFont systemFontOfSize:8*kFlashCardViewProporation_iPhone];
+            _jobTitleText.layer.borderWidth = 0;
         } else {
             _jobTitleText.placeholder = NSLocalizedString(@"Label_Job_Title",@"");
             _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -2169,6 +2175,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
+    
+    if (self.isPlayingCard || [self checkCardEditable] == false) {
+        _creatorText.layer.borderWidth = 0;
+    } else {
+        _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _creatorText.layer.borderWidth = 1;
+    }
+    
+    if (self.isPlayingCard || [self checkCardEditable] == false) {
+        _jobTitleText.layer.borderWidth = 0;
+    } else {
+        _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _jobTitleText.layer.borderWidth = 1;
+    }
 }
 
 
@@ -2355,6 +2375,20 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             _questionRecordedSoundFullPath = @"";
         }
         
+    }
+    
+    if (self.isPlayingCard || [self checkCardEditable] == false) {
+        _creatorText.layer.borderWidth = 0;
+    } else {
+        _creatorText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _creatorText.layer.borderWidth = 1;
+    }
+    
+    if (self.isPlayingCard || [self checkCardEditable] == false) {
+        _jobTitleText.layer.borderWidth = 0;
+    } else {
+        _jobTitleText.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _jobTitleText.layer.borderWidth = 1;
     }
     
 }
