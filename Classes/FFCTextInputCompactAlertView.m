@@ -9,7 +9,7 @@
 #import "FFCTextInputCompactAlertView.h"
 #import "CustomIOSAlertView.h"
 
-@interface FFCTextInputCompactAlertView () {
+@interface FFCTextInputCompactAlertView () <UITextViewDelegate> {
     UITextView *_textInputView;
     NSString   *_message;
 }
@@ -61,10 +61,20 @@
     _textInputView.layer.borderWidth = 1;
     _textInputView.autocorrectionType = UITextAutocorrectionTypeNo;
     _textInputView.text = _defaultTextInputValue;
+    _textInputView.delegate = self;
+    [_textInputView setReturnKeyType:UIReturnKeyDone];
     [_textInputView becomeFirstResponder];
     [demoView addSubview:_textInputView];
     
     return demoView;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if([text isEqual:@"\n"]) {
+        [textView resignFirstResponder];
+        return false;
+    }
+    return true;
 }
 
 - (void)dealloc {
