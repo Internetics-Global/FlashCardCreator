@@ -425,10 +425,17 @@ CGFloat buttonSpacerHeight = 0;
         keyboardSize.height = keyboardSize.width;
         keyboardSize.width = tmp;
     }
+    
+    CGFloat topMargin = 0;
+    if (isUserInterfaceIdiomPhone) {
+        topMargin = 10;
+    } else {
+        topMargin = (screenSize.height - keyboardSize.height - dialogSize.height)/2;
+    }
 
     [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionTransitionNone
 					 animations:^{
-                         dialogView.frame = CGRectMake((screenSize.width - dialogSize.width) / 2, (screenSize.height - keyboardSize.height - dialogSize.height) / 2, dialogSize.width, dialogSize.height);
+                         dialogView.frame = CGRectMake((screenSize.width - dialogSize.width) / 2, topMargin, dialogSize.width, dialogSize.height);
 					 }
 					 completion:nil
 	 ];
