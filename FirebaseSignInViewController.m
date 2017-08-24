@@ -10,7 +10,7 @@
 
 @import Firebase;
 
-@interface FirebaseSignInViewController ()
+@interface FirebaseSignInViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -26,6 +26,12 @@
     
     UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"DIALOG_CLOSE",@"") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItems = @[rightBarButtonItem];
+    
+    _emailTextField.delegate = self;
+    _passwordTextField.delegate = self;
+    
+    [_emailTextField setReturnKeyType:UIReturnKeyDone];
+    [_passwordTextField setReturnKeyType:UIReturnKeyDone];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -142,6 +148,12 @@
         }
         [weakSelf signedIn:[FIRAuth auth].currentUser];
     }];
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.view endEditing:true];
+    return false;
 }
 
 - (void) dismiss {
