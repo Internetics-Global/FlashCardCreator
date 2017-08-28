@@ -11124,7 +11124,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     UIGraphicsBeginImageContext(thumbnail.size);
     [thumbnail drawInRect:CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height)];
     
-    [playImage drawInRect:CGRectMake(thumbnail.size.width *0.42, thumbnail.size.height *0.4, thumbnail.size.width *0.16, thumbnail.size.width *0.2)];
+    [playImage drawInRect:CGRectMake(thumbnail.size.width *0.33, thumbnail.size.height *0.4, thumbnail.size.width *0.32, thumbnail.size.width *0.4)];
     
     UIImage *compositeThumbNail = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
