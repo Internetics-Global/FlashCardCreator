@@ -11538,6 +11538,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 }
 
 - (void) textToSpeechAllContentNow {
+    [self textToSpeechAllContentNow:false];
+}
+
+/*
+ * if placeHolderMode == true, we simply play it as short as possible
+*/
+- (void) textToSpeechAllContentNow: (BOOL) placeHolderMode {
     
     if (SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(@"7.0")) {
         [iConsole info:@"%s,we don't support <iOS7",__FUNCTION__];
@@ -11550,7 +11557,15 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     [iConsole info:@"%s",__FUNCTION__];
-    _textToSpeechArray = [self textToSpeechContentArray];
+    
+    if (placeHolderMode) {
+        
+        _textToSpeechArray = [NSMutableArray arrayWithObject:[NSDictionary dictionaryWithObject:@" " forKey:@"mainQuestion"]];
+        
+    } else {
+        _textToSpeechArray = [self textToSpeechContentArray];
+    }
+    
     if ([_textToSpeechArray count] > 0) {
         
         NSDictionary *dict = _textToSpeechArray[0];

@@ -224,6 +224,7 @@ typedef enum{
 - (void) muteAudio;
 - (void) unMuteAudio;
 
+- (void) textToSpeechAllContentNow: (BOOL) placeHolderMode;
 - (void) textToSpeechAllContentNow;
 - (void) stopTextToSpeechNow;
 - (BOOL) isTextToSpeeching;

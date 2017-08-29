@@ -1150,7 +1150,11 @@
                         [_timerForDelayedText2Speech invalidate];
                         _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
                             if (_isShuttingDown == false) {
-                                [currentCard textToSpeechAllContentNow];
+                                if ([self isText2Speech]) {
+                                    [currentCard textToSpeechAllContentNow];
+                                } else {
+                                    [currentCard textToSpeechAllContentNow:true];
+                                }
                             }
                             
                             if ([weakSelf isText2Speech] == false && (self.oneOffPlayType == One_Off_Play_Type_Manually) && _previewOnly ==false) {
