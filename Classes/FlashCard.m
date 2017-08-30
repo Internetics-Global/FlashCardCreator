@@ -8398,10 +8398,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [iConsole info:@"%s",__FUNCTION__];
-    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+- (void) removeMediaFromCurrentSelected {
     
     //remove current file
     if (_imageSourceType == Type_Image_Source_Image) {
@@ -8548,6 +8545,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             }
         }
+    }
+}
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [iConsole info:@"%s",__FUNCTION__];
+    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    
+    if (_imageSourceType != Type_Image_Source_Background) {
+        //for Type_Image_Source_Background, we only removed that until crop action is confirmed
+        [self removeMediaFromCurrentSelected];
     }
     
     if ([mediaType isEqualToString:@"public.movie"]){
@@ -12458,6 +12466,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
  */
 - (void)cropViewController:(PECropViewController *)controller didFinishCroppingImage:(UIImage *)croppedImage
 {
+    [self removeMediaFromCurrentSelected];
+    
     float downScaleWidth = CGRectGetWidth(_questionBackgroundImageView.frame);
     float downScaleHeight = CGRectGetHeight(_questionBackgroundImageView.frame);
     
