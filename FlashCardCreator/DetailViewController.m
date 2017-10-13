@@ -573,16 +573,18 @@ enum popover_enum {
     
     PopoverView *shareSelectPopupPopoverView;
     
+    CGPoint point = [((UIButton *)sender) convertPoint:CGPointZero toView:self.view];
+    CGPoint normalizedPoint = CGPointMake(point.x + CGRectGetWidth(((UIButton *)sender).frame)/2, point.y + CGRectGetHeight(((UIButton *)sender).frame));
     if ([MutipleTargetHelper isFullVersion]) {
-        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                               inView:self.navigationController.view
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:normalizedPoint
+                                                               inView:self.view
                                                             withTitle:NSLocalizedString(@"Label_Please_Select",@"")
                                                       withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
                                                              delegate:self];
     } else {
         
-        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                               inView:self.navigationController.view
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:normalizedPoint
+                                                               inView:self.view
                                                             withTitle:NSLocalizedString(@"Label_Please_Select",@"")
                                                       withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), nil]
                                                              delegate:self];
@@ -669,9 +671,11 @@ enum popover_enum {
         
     }
     
+    CGPoint point = [((UIButton *)sender) convertPoint:CGPointZero toView:self.view];
+    CGPoint normalizedPoint = CGPointMake(point.x + CGRectGetWidth(((UIButton *)sender).frame)/2, point.y + CGRectGetHeight(((UIButton *)sender).frame));
     
-    PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                                                inView:self.navigationController.view
+    PopoverView *templateBackgroundSelectPopoverView = [PopoverView showPopoverAtPoint:normalizedPoint
+                                                                                inView:self.view
                                                                              withTitle:NSLocalizedString(@"Label_Color_Select",@"")
                                                                        withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Blue",@""), NSLocalizedString(@"Optional_Coffee",@""),NSLocalizedString(@"Optional_Gray",@""),NSLocalizedString(@"Optional_Purple",@""),NSLocalizedString(@"Optional_Red",@""), nil]
                                                                               delegate:self];
@@ -701,7 +705,8 @@ enum popover_enum {
     }
     
     _settingPopoverController.popoverContentSize = CGSizeMake(320, 490);
-    CGRect rect = CGRectOffset(_settingButton.customView.frame, 0, -49);
+    CGPoint point = [_settingButton.customView convertPoint:CGPointZero toView:self.view];
+    CGRect rect = CGRectMake(point.x, point.y, CGRectGetWidth(_settingButton.customView.frame), CGRectGetHeight(_settingButton.customView.frame));
     [_settingPopoverController presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
     
 }

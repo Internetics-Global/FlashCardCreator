@@ -654,16 +654,19 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)shareButtonClicked:(id) sender {
     
+    CGPoint point = [((UIButton *)sender) convertPoint:CGPointZero toView:self.view];
+    CGPoint normalizedPoint = CGPointMake(point.x + CGRectGetWidth(((UIButton *)sender).frame)/2, point.y + CGRectGetHeight(((UIButton *)sender).frame));
+    
     PopoverView *shareSelectPopupPopoverView;
     if ([MutipleTargetHelper isFullVersion]) {
-        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                 inView:self.navigationController.view
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:normalizedPoint
+                                 inView:self.view
                               withTitle:NSLocalizedString(@"Label_Please_Select",@"")
                         withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), NSLocalizedString(@"Optional_Share_The_Pack",@""), nil]
                                delegate:self];
     } else {
-        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:CGPointMake(CGRectGetMidX(((UIButton *)sender).frame), CGRectGetMaxY(((UIButton *)sender).frame))
-                                                               inView:self.navigationController.view
+        shareSelectPopupPopoverView = [PopoverView showPopoverAtPoint:normalizedPoint
+                                                               inView:self.view
                                                             withTitle:NSLocalizedString(@"Label_Please_Select",@"")
                                                       withStringArray:[NSArray arrayWithObjects:NSLocalizedString(@"Optional_Install_From_The_Code",@""), nil]
                                                              delegate:self];
