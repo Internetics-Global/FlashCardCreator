@@ -654,8 +654,13 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)shareButtonClicked:(id) sender {
     
+    int offset = 0;
+    if (isUserInterfaceIdiomPhone) {
+        offset = 5;
+    }
+    
     CGPoint point = [((UIButton *)sender) convertPoint:CGPointZero toView:self.view];
-    CGPoint normalizedPoint = CGPointMake(point.x + CGRectGetWidth(((UIButton *)sender).frame)/2, point.y + CGRectGetHeight(((UIButton *)sender).frame));
+    CGPoint normalizedPoint = CGPointMake(point.x + CGRectGetWidth(((UIButton *)sender).frame)/2 + offset, point.y + CGRectGetHeight(((UIButton *)sender).frame));
     
     PopoverView *shareSelectPopupPopoverView;
     if ([MutipleTargetHelper isFullVersion]) {
