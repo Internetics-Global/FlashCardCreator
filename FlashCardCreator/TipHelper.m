@@ -25,7 +25,6 @@
 @property (nonatomic, strong) AMPopTip *popTipToolbarBottomRightRecordSound; //on Bottom Toolbar Right
 
 @property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemOpenPack;  //on Top Navigationbar Left
-@property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemCreatePack;  //on Top Navigationbar Left
 @property (nonatomic, strong) AMPopTip *popTipLeftNaviBarItemEditPack;  //on Top Navigationbar Left
 
 
@@ -225,29 +224,6 @@
         };
     }
     [_popTipLeftNaviBarItemOpenPack showText:NSLocalizedString(@"Tip_Open_Pack_Viewer",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
-    
-}
-
-
-- (void) showTipForLeftNaviBarItemCreatePackInView:(UIView *)view fromFrame:(CGRect) frame {
-    
-    if ([_popTipLeftNaviBarItemCreatePack isVisible]) {
-        return;
-    }
-    
-    __weak __typeof(&*self)weakSelf = self;
-    
-    if (_popTipLeftNaviBarItemCreatePack == nil) {
-        _popTipLeftNaviBarItemCreatePack = [AMPopTip popTip];
-        _popTipLeftNaviBarItemCreatePack.arrowSize = CGSizeMake(8, 90);
-        _popTipLeftNaviBarItemCreatePack.popoverColor = [UIColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
-        _popTipLeftNaviBarItemCreatePack.shouldDismissOnTap = YES;
-        _popTipLeftNaviBarItemCreatePack.shouldDismissOnTapOutside = NO;
-        _popTipLeftNaviBarItemCreatePack.dismissHandler = ^() {
-            [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
-        };
-    }
-    [_popTipLeftNaviBarItemCreatePack showText:NSLocalizedString(@"Tip_Create_New_Pack",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
 
@@ -561,7 +537,6 @@
 - (BOOL) isMasterTipVisible_iPhone {
     
     if ((_popTipLeftNaviBarItemOpenPack.isVisible == YES) ||
-        (_popTipLeftNaviBarItemCreatePack.isVisible == YES) ||
         (_popTipLeftNaviBarItemEditPack.isVisible == YES) ||
         (_popTipCreateNewCard.isVisible == YES) ||
         (_popTipRightNaviBarItemHelp.isVisible == YES)||
@@ -579,7 +554,6 @@
 - (BOOL) isMasterTipVisible_iPad {
     
     if ((_popTipLeftNaviBarItemOpenPack.isVisible == YES) ||
-        (_popTipLeftNaviBarItemCreatePack.isVisible == YES) ||
         (_popTipLeftNaviBarItemEditPack.isVisible == YES) ||
         (_popTipCreateNewCard.isVisible == YES)) {
         return YES;
@@ -622,7 +596,6 @@
 - (void) hideMasterTip {
     if (isUserInterfaceIdiomPhone) {
         [_popTipLeftNaviBarItemOpenPack hide];
-        [_popTipLeftNaviBarItemCreatePack hide];
         [_popTipLeftNaviBarItemEditPack hide];
         [_popTipRightNaviBarItemHelp hide];
         [_popTipRightNaviBarItemSetting hide];
@@ -631,7 +604,6 @@
         [_popTipCreateNewCard hide];
     } else {
         [_popTipLeftNaviBarItemOpenPack hide];
-        [_popTipLeftNaviBarItemCreatePack hide];
         [_popTipLeftNaviBarItemEditPack hide];
         [_popTipCreateNewCard hide];
         

@@ -34,7 +34,6 @@ typedef NS_ENUM(NSInteger, Where_Tooltip_Type) {
 
 - (void) showTipForLeftNaviBarItemOpenPackInView:(UIView *)view fromFrame:(CGRect) frame;
 - (void) showTipForLeftNaviBarItemEditPackInView:(UIView *)view fromFrame:(CGRect) frame;
-- (void) showTipForLeftNaviBarItemCreatePackInView:(UIView *)view fromFrame:(CGRect) frame;
 
 - (void) showTipForRightNaviBarItemPlayInView:(UIView *)view fromFrame:(CGRect) frame;
 - (void) showTipForRightNaviBarItemShareInView:(UIView *)view fromFrame:(CGRect) frame;
