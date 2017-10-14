@@ -316,7 +316,7 @@ enum popover_enum {
                     if (isUserInterfaceIdiomPhone == FALSE) {
                         
                         if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE && APP_DELEGATE.isDownloadingPack == FALSE) {
-                            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(weakSelf.view.frame)- 200, 0, 0, 0)];
+                            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:weakSelf.view fromFrame:CGRectMake(CGRectGetWidth(weakSelf.view.frame)- 212, 0, 0, 0)];
                         }
                     }
                     
@@ -867,7 +867,7 @@ enum popover_enum {
     if (isUserInterfaceIdiomPhone == FALSE) {
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:K_Tooltip_Help_Tip_Has_Been_Showed] == FALSE) {
-            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 200, 0, 0, 0)];
+            [[TipHelper defaultHelper] showTipForRightNaviBarItemHelpInView:self.view fromFrame:CGRectMake(CGRectGetWidth(self.view.frame)- 212, 0, 0, 0)];
         }
     }
     
