@@ -9366,16 +9366,19 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     } else {
         //[self saveEdittedCard];
         
-        if (!_HUD) {
-            _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
-        }
-        [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
-        [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
-        
-        _HUD.mode = MBProgressHUDModeIndeterminate;
-        [_HUD show:YES];
-        _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
-        [self performSelector:@selector(execTextFieldDidEndEditingTask:) withObject:textField afterDelay:0.01];
+        __block FlashCard *blockSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.45 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if (!_HUD) {
+                _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
+            }
+            [APP_DELEGATE.progressHUDHolderView insertSubview:_HUD atIndex:0];
+            [APP_DELEGATE.progressHUDHolderView bringSubviewToFront:_HUD];
+            
+            _HUD.mode = MBProgressHUDModeIndeterminate;
+            [_HUD show:YES];
+            _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
+            [blockSelf performSelector:@selector(execTextFieldDidEndEditingTask:) withObject:textField afterDelay:0.01];
+        });
         
     }
     
