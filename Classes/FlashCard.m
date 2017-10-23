@@ -9293,16 +9293,22 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (responderTextView.tag == kTagSubheadingQuestion){
         _subheadingText2SpeechQuestion = selectText2SpeechStr;
+        _currentCard.question.css.subheadingText2SpeechSound = selectText2SpeechStr;
     } else if (responderTextView.tag == kTagMainQuestion) {
         _mainText2SpeechQuestion = selectText2SpeechStr;
+        _currentCard.question.css.mainText2SpeechSound = selectText2SpeechStr;
     } else if (responderTextView.tag == kTagSubQuestion) {
         _subText2SpeechQuestion = selectText2SpeechStr;
+        _currentCard.question.css.subText2SpeechSound = selectText2SpeechStr;
     } else if (responderTextView.tag == kTagSubheadingAnswer) {
         _subheadingText2SpeechAnswer = selectText2SpeechStr;
+        _currentCard.answer.css.subheadingText2SpeechSound = selectText2SpeechStr;
     } else if (responderTextView.tag == kTagMainAnswer) {
         _mainText2SpeechAnswer = selectText2SpeechStr;
+        _currentCard.answer.css.mainText2SpeechSound = selectText2SpeechStr;
     } else if (responderTextView.tag == kTagSubAnswer) {
         _subText2SpeechAnswer = selectText2SpeechStr;
+        _currentCard.answer.css.subText2SpeechSound = selectText2SpeechStr;
     }
     
 }
