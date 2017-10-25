@@ -1532,6 +1532,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark - Editable related
 - (BOOL)checkCardEditable {
     
+    return true;
+    
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result;
     if ([Common isOwner:_currentPack]) {
@@ -2677,7 +2679,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     card.answer.css.subAlign = _subAlignAnswer;
     card.answer.css.subColor = _subColorAnswer;
     card.answer.css.subSize = _subSizeAnswer;
-    card.answer.css.subheadingText2SpeechSound = _subText2SpeechAnswer;
+    card.answer.css.subText2SpeechSound = _subText2SpeechAnswer;
     
     card.answer.css.subheadingAlignVertical = _subheadingAlignVerticalAnswer;
     card.answer.css.mainAlignVertical = _mainAlignVerticalAnswer;
