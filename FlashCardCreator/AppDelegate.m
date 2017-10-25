@@ -45,7 +45,7 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    NSLog(@"Documents Directory: %@", [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
     /**
      *  This should be before [SQLiteHelper verifyDatabase]
      *  In version 1x, it's paid version
