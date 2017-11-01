@@ -95,6 +95,9 @@
     _subheadingAlignVertical = [dataDict valueForKey:@"subheading_align_vertical"];
     _subheadingColor= [dataDict valueForKey:@"subheading_color"];
     _subheadingText2SpeechSound= [dataDict valueForKey:@"subheading_text2speech"];
+    if (IsEmpty(_subheadingText2SpeechSound)) {
+        _subheadingText2SpeechSound = @"";
+    }
     _subheadingFont= [dataDict valueForKey:@"subheading_font"];
     if (IsEmpty(_subheadingFont)) {
         _subheadingFont = @"";
@@ -107,6 +110,9 @@
     _mainColor= [dataDict valueForKey:@"main_color"];
     _mainFont= [dataDict valueForKey:@"main_font"];
     _mainText2SpeechSound= [dataDict valueForKey:@"main_text2speech"];
+    if (IsEmpty(_mainText2SpeechSound)) {
+        _mainText2SpeechSound = @"";
+    }
     if (IsEmpty(_mainFont)) {
         _mainFont = @"";
     }
@@ -118,6 +124,9 @@
     _subColor= [dataDict valueForKey:@"sub_color"];
     _subFont= [dataDict valueForKey:@"sub_font"];
     _subText2SpeechSound = [dataDict valueForKey:@"sub_text2speech"];
+    if (IsEmpty(_subText2SpeechSound)) {
+        _subText2SpeechSound = @"";
+    }
     if (IsEmpty(_subFont)) {
         _subFont = @"";
     }
@@ -142,6 +151,17 @@
 }
 
 -(void)update{
+    
+    if (IsEmpty(_subheadingText2SpeechSound)) {
+        _subheadingText2SpeechSound = @"";
+    }
+    if (IsEmpty(_mainText2SpeechSound)) {
+        _mainText2SpeechSound = @"";
+    }
+    if (IsEmpty(_subText2SpeechSound)) {
+        _subText2SpeechSound = @"";
+    }
+    
     NSString *query = [[NSString alloc] initWithFormat:@"UPDATE CSS_Tables SET subheading_size=%d, subheading_align=\"%@\", subheading_color=\"%@\", main_size=%d, main_align=\"%@\", main_color=\"%@\",sub_size=%d, sub_align=\"%@\", sub_color=\"%@\" , subheading_font=\"%@\" , main_font=\"%@\" , sub_font=\"%@\", subheading_align_vertical=\"%@\", main_align_vertical=\"%@\", sub_align_vertical=\"%@\", subheading_semi_transparent=%d, main_semi_transparent=%d, sub_semi_transparent=%d, subheading_text2speech=\"%@\", main_text2speech=\"%@\", sub_text2speech=\"%@\" WHERE css_id=%ld", (int)_subheadingSize, _subheadingAlign, _subheadingColor, (int)_mainSize, _mainAlign, _mainColor, (int)_subSize, _subAlign, _subColor,_subheadingFont,_mainFont,_subFont, _subheadingAlignVertical,_mainAlignVertical,_subAlignVertical,_subheadingSemiTransparent?1:0,_mainSemiTransparent?1:0,_subSemiTransparent?1:0, _subheadingText2SpeechSound,_mainText2SpeechSound,_subText2SpeechSound,(long)_cssID];
 	sqlite3_stmt *queryStatement = [SQLiteHelper prepareStatementForQuery:query];
 	int error = sqlite3_step(queryStatement);
@@ -153,6 +173,17 @@
 }
 
 -(void)insert{
+    
+    if (IsEmpty(_subheadingText2SpeechSound)) {
+        _subheadingText2SpeechSound = @"";
+    }
+    if (IsEmpty(_mainText2SpeechSound)) {
+        _mainText2SpeechSound = @"";
+    }
+    if (IsEmpty(_subText2SpeechSound)) {
+        _subText2SpeechSound = @"";
+    }
+    
     if (_cssID == -1) {
         _cssID = [[NSDate date] timeIntervalSince1970];
         while ([SQLiteHelper checkIntegerValueExists:_cssID forColumn:@"css_id" inTable:@"CSS_Tables"]) {
@@ -228,7 +259,7 @@
     copy.subheadingAlignVertical = _subheadingAlignVertical;
     copy.subheadingFont = _subheadingFont;
     copy.subheadingSemiTransparent = _subheadingSemiTransparent;
-    copy.subheadingText2SpeechSound = _subheadingText2SpeechSound;
+    copy.subheadingText2SpeechSound = (IsEmpty(_subheadingText2SpeechSound)?@"":_subheadingText2SpeechSound);
     
     copy.mainSize = _mainSize;
     copy.mainColor = _mainColor;
@@ -236,7 +267,7 @@
     copy.mainAlignVertical = _mainAlignVertical;
     copy.mainFont = _mainFont;
     copy.mainSemiTransparent = _mainSemiTransparent;
-    copy.mainText2SpeechSound = _mainText2SpeechSound;
+    copy.mainText2SpeechSound = (IsEmpty(_mainText2SpeechSound)?@"":_mainText2SpeechSound);
     
     copy.subSize = _subSize;
     copy.subColor = _subColor;
@@ -244,7 +275,7 @@
     copy.subAlignVertical = _subAlignVertical;
     copy.subFont = _subFont;
     copy.subSemiTransparent = _subSemiTransparent;
-    copy.subText2SpeechSound = _subText2SpeechSound;
+    copy.subText2SpeechSound = (IsEmpty(_subText2SpeechSound)?@"":_subText2SpeechSound);
     
     return copy;
 }
