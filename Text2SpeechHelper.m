@@ -85,7 +85,7 @@
     
     NSString *defaultLanguage = [userDefaults objectForKey:@"Selected_Text2Speech_Language"];
     
-    if (defaultLanguage == nil) {
+    if (defaultLanguage.length == 0 || [defaultLanguage.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
         defaultLanguage = [self getDefaultText2SpeechVoiceLanguage];
     }
     

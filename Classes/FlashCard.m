@@ -12186,7 +12186,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             language = _subText2SpeechAnswer;
         }
         
-        if (language.length == 0) {
+        if (language.length == 0 || [language.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
             language = [Text2SpeechHelper getDefaultText2SpeechVoiceLanguage];
         }
         
