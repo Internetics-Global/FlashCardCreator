@@ -1531,9 +1531,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark -
 #pragma mark - Editable related
 - (BOOL)checkCardEditable {
-    
-    return true;
-    
+
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result;
     if ([Common isOwner:_currentPack]) {

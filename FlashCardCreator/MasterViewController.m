@@ -2333,15 +2333,37 @@ extern BOOL isFromNewCreatedCard;
             [assembledCard question].css.subheadingAlign = questionDict[@"subheading_align"];
             [assembledCard question].css.subheadingAlignVertical = questionDict[@"subheading_align_vertical"];
             [assembledCard question].css.subheadingColor = questionDict[@"subheading_color"];
-            [assembledCard question].css.subheadingText2SpeechSound = questionDict[@"subheading_text2speech"];
+            
             [assembledCard question].css.mainAlign = questionDict[@"main_align"];
             [assembledCard question].css.mainAlignVertical = questionDict[@"main_align_vertical"];
             [assembledCard question].css.mainColor = questionDict[@"main_color"];
-            [assembledCard question].css.mainText2SpeechSound = questionDict[@"main_text2speech"];
             [assembledCard question].css.subAlign = questionDict[@"sub_align"];
             [assembledCard question].css.subAlignVertical = questionDict[@"sub_align_vertical"];
             [assembledCard question].css.subColor = questionDict[@"sub_color"];
-            [assembledCard question].css.subText2SpeechSound = questionDict[@"sub_text2speech"];
+            
+            {
+                NSString *subheadingText2Speech = questionDict[@"subheading_text2speech"];
+                if (subheadingText2Speech.length == 0 || [subheadingText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    subheadingText2Speech = @"";
+                }
+                [assembledCard question].css.subheadingText2SpeechSound = subheadingText2Speech;
+            }
+            
+            {
+                NSString *mainText2Speech = questionDict[@"main_text2speech"];
+                if (mainText2Speech.length == 0 || [mainText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    mainText2Speech = @"";
+                }
+                [assembledCard question].css.mainText2SpeechSound = mainText2Speech;
+            }
+            
+            {
+                NSString *subText2Speech = questionDict[@"sub_text2speech"];
+                if (subText2Speech.length == 0 || [subText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    subText2Speech = @"";
+                }
+                [assembledCard question].css.subText2SpeechSound = subText2Speech;
+            }
             
             [assembledCard question].css.subheadingFont = questionDict[@"subheading_font"];
             [assembledCard question].css.mainFont = questionDict[@"main_font"];
@@ -2707,15 +2729,38 @@ extern BOOL isFromNewCreatedCard;
             [assembledCard answer].css.subheadingAlign = answerDict[@"subheading_align"];
             [assembledCard answer].css.subheadingAlignVertical = answerDict[@"subheading_align_vertical"];
             [assembledCard answer].css.subheadingColor = answerDict[@"subheading_color"];
-            [assembledCard answer].css.subText2SpeechSound = answerDict[@"subheading_text2speech"];
+            
             [assembledCard answer].css.mainAlign = answerDict[@"main_align"];
             [assembledCard answer].css.mainAlignVertical = answerDict[@"main_align_vertical"];
             [assembledCard answer].css.mainColor = answerDict[@"main_color"];
-            [assembledCard answer].css.mainText2SpeechSound = answerDict[@"main_text2speech"];
+            
             [assembledCard answer].css.subAlign = answerDict[@"sub_align"];
             [assembledCard answer].css.subAlignVertical = answerDict[@"sub_align_vertical"];
             [assembledCard answer].css.subColor = answerDict[@"sub_color"];
-            [assembledCard answer].css.subText2SpeechSound = answerDict[@"sub_text2speech"];
+            
+            {
+                NSString *subheadingText2Speech = answerDict[@"subheading_text2speech"];
+                if (subheadingText2Speech.length == 0 || [subheadingText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    subheadingText2Speech = @"";
+                }
+                [assembledCard answer].css.subheadingText2SpeechSound = subheadingText2Speech;
+            }
+            
+            {
+                NSString *mainText2Speech = answerDict[@"main_text2speech"];
+                if (mainText2Speech.length == 0 || [mainText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    mainText2Speech = @"";
+                }
+                [assembledCard answer].css.mainText2SpeechSound = mainText2Speech;
+            }
+            
+            {
+                NSString *subText2Speech = answerDict[@"sub_text2speech"];
+                if (subText2Speech.length == 0 || [subText2Speech.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+                    subText2Speech = @"";
+                }
+                [assembledCard answer].css.subText2SpeechSound = subText2Speech;
+            }
             
             [assembledCard answer].css.subheadingFont = answerDict[@"subheading_font"];
             [assembledCard answer].css.mainFont = answerDict[@"main_font"];
