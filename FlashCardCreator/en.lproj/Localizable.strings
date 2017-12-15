@@ -225,6 +225,7 @@
 "Title_Record_Stop" = "Stop";
 "Title_Playback" = "Play";
 "Title_Save" = "Save";
+"Title_Dismiss" = "Dismiss";
 "Title_Delete" = "Delete";
 "Title_Reading_Timer" = "Reading Timer";
 "Title_Question_Pause" = "Question Pause";

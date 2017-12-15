@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedText2SpeechChangeButton:(id) sender;
 
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id) sender;
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedCancelButton:(id) sender;
 
 /**
  *  指第一级的button, symbol， align, size, color, font,但是不包括save

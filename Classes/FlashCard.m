@@ -12445,6 +12445,10 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self dismissKeyBoard:sender withSaveComing:true];
 }
 
+- (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedCancelButton:(id)sender {
+    [self dismissKeyBoard:sender withSaveComing:false];
+}
+
 
 - (void)keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedMainButton:(id)sender {
     

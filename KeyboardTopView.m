@@ -26,6 +26,7 @@
     
     UIImageView *_backImageView;
     UIButton *_saveButton;
+    UIButton *_cancelButton;
 }
 
 @end
@@ -200,10 +201,11 @@
     
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
+    [self setupCancelButton];
 }
     
 - (void) setupText2SpeechArray {
@@ -233,10 +235,11 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
+    [self setupCancelButton];
     
 }
 
@@ -273,10 +276,12 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
+    [self setupCancelButton];
+    
     
 }
 
@@ -321,10 +326,11 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
+    [self setupCancelButton];
 }
 
 - (void) didClickedAlignChangeButton:(id) sender {
@@ -360,10 +366,11 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 2 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
+    [self setupCancelButton];
     
 }
 
@@ -416,6 +423,7 @@
     _backImageView.hidden = YES;
     
     [self setupSaveButton];
+    [self setupCancelButton];
     
 }
 
@@ -443,11 +451,45 @@
     
 }
 
+- (void) setupCancelButton {
+    if (_cancelButton == nil) {
+        
+        int offset = 10;
+        if (isUserInterfaceIdiomPhone) {
+            offset = 5;
+        }
+        
+        _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _cancelButton.frame = CGRectMake(CGRectGetWidth(self.frame) - (K_Item_Width - 10) * 2, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
+        _cancelButton.titleLabel.font = [UIFont systemFontOfSize:13];
+        _cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        _cancelButton.layer.borderWidth = 1;
+        _cancelButton.layer.cornerRadius = 3;
+        [_cancelButton setTitle:NSLocalizedString(@"Title_Dismiss",@"") forState:UIControlStateNormal];
+        _cancelButton.backgroundColor = [UIColor clearColor];
+        [_cancelButton addTarget:self action:@selector(didClickedCancelButton:) forControlEvents:UIControlEventTouchDown];
+    }
+    if (_cancelButton.superview == nil) {
+        [self addSubview:_cancelButton];
+    }
+    
+}
+
 
 - (void) didClickedSaveButton:(id) sender {
     
     if (self.delegate) {
         [self.delegate keyboardTopView:self didClickedSaveButton:sender];
+    } else {
+        //NSAssert(FALSE, @"You need to assign delete");
+    }
+    
+}
+
+- (void) didClickedCancelButton:(id) sender {
+    
+    if (self.delegate) {
+        [self.delegate keyboardTopView:self didClickedCancelButton:sender];
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
