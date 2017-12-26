@@ -12199,7 +12199,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         for (int i = 0;i < [targetButtonArray count];i++) {
             UIButton *button = targetButtonArray[i];
             if ([button.titleLabel.text isEqualToString:text2SpeechDescriptionForDisplay]) {
-                [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                if ([button currentBackgroundImage] != nil) {
+                    //deselect it
+                    [button setBackgroundImage:nil forState:UIControlStateNormal];
+                } else {
+                    [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
+                }
                 contentOffsetIndex = i;
             } else {
                 [button setBackgroundImage:nil forState:UIControlStateNormal];
