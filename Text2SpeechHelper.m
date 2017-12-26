@@ -99,12 +99,6 @@
     [userDefaults synchronize];
 }
 
-
-+ (NSString *) getDefaultText2SpeechDescriptionForDisplay {
-    NSString *voiceLanguage = [self getDefaultText2SpeechVoiceLanguage];
-    return [self getText2SpeechDescriptionForDisplayFromVoiceLanguage:voiceLanguage];
-}
-
 + (NSString *) getDefaultText2SpeechVoiceLanguage {
     
     NSArray *rawArray = [Text2SpeechHelper getRawText2SpeechArrayForCurrentLocale];
@@ -169,6 +163,10 @@
  *  Since there's no way to automatically mapping this relationship. review should be done when upgrading iOS
  */
 + (NSString *) getText2SpeechDescriptionForDisplayFromVoiceLanguage:(NSString *) voiceLanguage {
+    
+    if ([Common isEmptyString:voiceLanguage]) {
+        return @"";
+    }
     
     NSString *normalizedVoiceLanguage;
     NSArray *array = [voiceLanguage componentsSeparatedByString:@"-"];

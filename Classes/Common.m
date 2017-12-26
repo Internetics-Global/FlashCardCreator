@@ -406,5 +406,17 @@
                                                                                                                                                 
 }
 
++ (BOOL) isEmptyString: (NSString *) str {
+    if (str.length == 0) {
+        return true;
+    }
+    
+    if ([str.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
+        return true;
+    }
+    
+    return false;
+}
+
 
 @end

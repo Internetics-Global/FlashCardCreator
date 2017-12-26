@@ -9281,7 +9281,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-- (void) changeText2SpeechBarButtonItemClicked:(id) sender{
+- (void) changeText2SpeechBarButtonItemClicked:(UIButton *) sender{
     
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -9290,6 +9290,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     NSString *selectText2SpeechStr = selectedVoice.language;
     
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
+    
+    //Allow people to deselect a language in a language panel by clicking it again (and the underline is removed)
+    if (responderTextView.tag == sender.tag) {
+        selectText2SpeechStr = @"";
+    }
     
     if (responderTextView.tag == kTagSubheadingQuestion){
         _subheadingText2SpeechQuestion = selectText2SpeechStr;
@@ -12184,13 +12189,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             language = _subText2SpeechAnswer;
         }
         
-        if (language.length == 0 || [language.lowercaseString rangeOfString:@"null"].location != NSNotFound) {
-            language = [Text2SpeechHelper getDefaultText2SpeechVoiceLanguage];
+        if ([Common isEmptyString:language]) {
+            language = @"";
         }
         
         NSString *text2SpeechDescriptionForDisplay = [Text2SpeechHelper getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];
-        
-        BOOL isDefault = YES;
         
         int contentOffsetIndex = 0;
         for (int i = 0;i < [targetButtonArray count];i++) {
@@ -12198,17 +12201,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             if ([button.titleLabel.text isEqualToString:text2SpeechDescriptionForDisplay]) {
                 [button setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 contentOffsetIndex = i;
-                isDefault= NO;
             } else {
                 [button setBackgroundImage:nil forState:UIControlStateNormal];
             }
             
             
-        }
-        
-        if (isDefault) {
-            //第一个是back，所以需要index = 1开始
-            [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
         if (_lastBecomeFirstRespondTextView.inputView == nil) {

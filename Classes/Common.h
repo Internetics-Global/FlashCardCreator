@@ -71,5 +71,6 @@
 
 + (NSString *) getShareMessage:(NSString *) shareLink;
 
++ (BOOL) isEmptyString: (NSString *) str;
 
 @end
