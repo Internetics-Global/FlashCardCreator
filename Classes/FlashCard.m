@@ -12185,7 +12185,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([Common isEmptyString:language]) {
-            language = [Text2SpeechHelper getDefaultText2SpeechVoiceLanguage];
+            language = @"";
         }
         
         NSString *text2SpeechDescriptionForDisplay = [Text2SpeechHelper getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];
