@@ -9291,11 +9291,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
-    //Allow people to deselect a language in a language panel by clicking it again (and the underline is removed)
-    if (responderTextView.tag == sender.tag) {
-        selectText2SpeechStr = @"";
-    }
-    
     if (responderTextView.tag == kTagSubheadingQuestion){
         _subheadingText2SpeechQuestion = selectText2SpeechStr;
         _currentCard.question.css.subheadingText2SpeechSound = selectText2SpeechStr;
@@ -12190,7 +12185,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([Common isEmptyString:language]) {
-            language = @"";
+            language = [Text2SpeechHelper getDefaultText2SpeechVoiceLanguage];
         }
         
         NSString *text2SpeechDescriptionForDisplay = [Text2SpeechHelper getText2SpeechDescriptionForDisplayFromVoiceLanguage:language];

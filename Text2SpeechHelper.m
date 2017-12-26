@@ -164,10 +164,6 @@
  */
 + (NSString *) getText2SpeechDescriptionForDisplayFromVoiceLanguage:(NSString *) voiceLanguage {
     
-    if ([Common isEmptyString:voiceLanguage]) {
-        return @"";
-    }
-    
     NSString *normalizedVoiceLanguage;
     NSArray *array = [voiceLanguage componentsSeparatedByString:@"-"];
     if ([array count] != 2) {
