@@ -480,6 +480,10 @@
     
     if (self.delegate) {
         [self.delegate keyboardTopView:self didClickedSaveButton:sender];
+        if (_backImageView.isHidden == false) {
+            [self didClickedBackButton];
+        }
+        
     } else {
         //NSAssert(FALSE, @"You need to assign delete");
     }
