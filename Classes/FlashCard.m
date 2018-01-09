@@ -9287,7 +9287,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     int selectedIndex = ((UIButton *)sender).tag;
     AVSpeechSynthesisVoice *selectedVoice = [Text2SpeechHelper getAllAvailableAVSpeechSynthesisVoiceArray][selectedIndex];
-    NSString *selectText2SpeechStr = selectedVoice.language;
+    NSString *selectText2SpeechStr;
+    if ([sender currentBackgroundImage] == nil) {
+        selectText2SpeechStr = selectedVoice.language;
+    } else {
+        //deselect
+        selectText2SpeechStr = @"";
+    }
     
     UITextView *responderTextView = _lastBecomeFirstRespondTextView;
     
