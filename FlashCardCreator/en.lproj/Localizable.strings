@@ -207,8 +207,8 @@
 "Label_Select"      = "Select";
 "Label_Color_Select"      = "Select Color";
 
-"Title_Add_A_New_Pack" = "Add a new pack";
-"Title_Create_A_Pack" = "Create a pack";
+"Title_Add_A_New_Pack" = "Create a new pack";
+"Title_Create_A_Pack" = "Create a new pack";
 "Title_FFC_Library" = "Free Library";
 "Title_Create_A_New_Card" = "Create a new card";
 "Title_About" = "About us";
