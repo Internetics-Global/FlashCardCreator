@@ -458,9 +458,9 @@
         if (isUserInterfaceIdiomPhone) {
             offset = 5;
         }
-        
+
         _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _cancelButton.frame = CGRectMake(CGRectGetWidth(self.frame) - (K_Item_Width - 10) * 2, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
+         _cancelButton.frame = CGRectMake(CGRectGetWidth(self.frame) - (K_Item_Width + 10) * 2, offset, K_Item_Width + 20, CGRectGetHeight(self.frame) - offset *2);
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:13];
         _cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
         _cancelButton.layer.borderWidth = 1;
