@@ -95,6 +95,14 @@
     rect.size.height = rect.size.height * scaleValue;
     return rect;
 }
++ (CGRect) getScaledViewRectComparedToBaseIPhone320Height:(UIView *) view {
+    CGRect rect = view.frame;
+    rect.origin.x = rect.origin.x * kHeightRatioWith320_iPhone;
+    rect.origin.y = rect.origin.y * kHeightRatioWith320_iPhone;
+    rect.size.width = rect.size.width * kHeightRatioWith320_iPhone;
+    rect.size.height = rect.size.height * kHeightRatioWith320_iPhone;
+    return rect;
+}
 
 
 + (BOOL) validateUrl: (NSString *) str {

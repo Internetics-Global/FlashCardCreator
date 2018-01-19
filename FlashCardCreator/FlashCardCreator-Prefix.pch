@@ -118,7 +118,7 @@
 #define IPHONE_UI_TAB_BAR_HEIGHT               49
 #define IPHONE_UI_STATUS_BAR_HEIGHT            20
 #define IPHONE_UI_WIDTH                        (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")?([[UIScreen mainScreen] bounds].size.width):([[UIScreen mainScreen] bounds].size.height))
-#define IPHONE_UI_HEIGHT                       320
+#define IPHONE_UI_HEIGHT                       ([[UIScreen mainScreen] bounds].size.height)
 
 //Based on landscape
 #define IPAD_UI_NAVIGATION_BAR_HEIGHT          44
@@ -175,6 +175,9 @@
 
 #pragma mark – Card size (iPad)
 
+//In hisotry, All our origional assumption is based on iPhone 320 height, kind of history debet
+#define kHeightRatioWith320_iPhone     (([[UIScreen mainScreen] bounds].size.height)/320)
+
 //total height
 //kFlashCardViewHeight_Detail_iPad = kFlashCardViewHeight_Detail_iPad_Pure + kSegmentButtomMarginForiPad + kSegmentHeightForiPad + segment top margin
 #define kFlashCardViewWidth_Detail_iPad        800.0
@@ -192,8 +195,8 @@
 
 //kFlashCardViewHeight_Detail_iPhone = kFlashCardViewHeight_Detail_iPhone_Pure + kSegmentButtomMarginForiPhone + kSegmentHeightForiPhone + segment top margin
 #define kFlashCardViewWidth_Detail_iPhone      (kFlashCardViewHeight_Detail_iPhone_Pure * kFlashCardViewWidth_Detail_iPad /kFlashCardViewHeight_Detail_iPad_Pure)
-#define kFlashCardViewHeight_Detail_iPhone     (280.0)     //NOT is the scroll view's height; don't include question/answer segment
-#define kFlashCardViewHeight_Detail_iPhone_Pure  235     //only card view part
+#define kFlashCardViewHeight_Detail_iPhone     (280.0 *  kHeightRatioWith320_iPhone)     //NOT is the scroll view's height; don't include question/answer segment
+#define kFlashCardViewHeight_Detail_iPhone_Pure  (235 *  kHeightRatioWith320_iPhone)     //only card view part
 #define kFalshCardViewHeight_QASegment_iPhone  (45.0)
 #define kSegmentHeightForiPhone                28.0
 #define kSegmentButtomMarginForiPhone          10.0
@@ -205,8 +208,8 @@
 
 #define kFlashCardViewProporation_iPhone       1.2//放大比例
 
-#define kFlashCardSidebarWidth_iPhone      (25.0)
-#define kFlashCardHeaderHeight_iPhone      (47.0)   //title view part
+#define kFlashCardSidebarWidth_iPhone      (25.0 )
+#define kFlashCardHeaderHeight_iPhone      (47.0 * kHeightRatioWith320_iPhone)   //title view part
 
 #define kDefault_Auto_Play_Speed            (kMIN_Auto_Play_Speed)  //in seconds
 #define kMAX_Auto_Play_Speed                (60)
