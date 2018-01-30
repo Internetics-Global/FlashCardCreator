@@ -31,9 +31,9 @@
             
             [self.contentView addSubview:self.addNewPackImageView];
             
-            UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 250, 20)];
+            UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 250, 25)];
             desLabel.textAlignment = NSTextAlignmentCenter;
-            desLabel.font = [UIFont boldSystemFontOfSize:20];
+            desLabel.font = [UIFont boldSystemFontOfSize:18];
             desLabel.text = NSLocalizedString(@"Title_Create_A_Pack",@"");
             desLabel.numberOfLines = 1;
             
@@ -64,9 +64,9 @@
             
             [self.contentView addSubview:self.libraryImageView];
             
-            UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 210, 250, 20)];
+            UILabel *desLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 210, 250, 25)];
             desLabel.textAlignment = NSTextAlignmentCenter;
-            desLabel.font = [UIFont boldSystemFontOfSize:20];
+            desLabel.font = [UIFont boldSystemFontOfSize:18];
             desLabel.text = NSLocalizedString(@"Title_FFC_Library",@"");
             desLabel.numberOfLines = 1;
             
