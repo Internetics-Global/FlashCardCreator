@@ -461,7 +461,11 @@
     _scrollView.isCycle = NO;
     
     if (isUserInterfaceIdiomPhone){
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30, 5, 30, 30);
+        int rightMarginForIPhoneXSafeArea = 0;
+        if (@available(iOS 11.0, *)) {
+            rightMarginForIPhoneXSafeArea = [UIApplication sharedApplication].keyWindow.safeAreaInsets.right;
+        }
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30-rightMarginForIPhoneXSafeArea, 5, 30, 30);
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT); //全屏
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-50, 20, 30, 30);
