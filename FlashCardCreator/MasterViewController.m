@@ -472,7 +472,12 @@ enum popover_enum {
         createPackController = [[CreateEditPackViewController2 alloc] initWithNibName:@"CreateEditPackViewController2_iPad" bundle:nil];
     }
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:createPackController];
-    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    if (isUserInterfaceIdiomPhone) {
+        navController.modalPresentationStyle = UIModalPresentationFullScreen;
+    } else {
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [self presentModalViewController:navController animated:YES];
     

@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollview;
 
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 

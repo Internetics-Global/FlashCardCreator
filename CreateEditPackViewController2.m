@@ -24,8 +24,6 @@
     
     UIPopoverController *_imagePickerPopover;
     UIImagePickerController *_picker;
-    
-    UIButton *_saveButton;
 }
 
 @end
@@ -124,37 +122,23 @@
     }
     
     if (isUserInterfaceIdiomPhone) {
-        CGRect rect = CGRectMake(CGRectGetMinX(_coverImageView.frame) + (CGRectGetWidth(_coverImageView.frame) - 44)/2, CGRectGetMaxY(_coverImageView.frame) - 5, 88, 44);
-
-        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
-        _saveButton.frame = rect;
-       
-        [_saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
-        [_saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
-        _saveButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        [_saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -40, 0)];//set ur title insects myButton
-        [self.view addSubview:_saveButton];
         [_saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
     } else {
         
         CGRect rect = CGRectMake(CGRectGetMaxX(self.view.frame)- 110, CGRectGetMaxY(self.view.frame)- 110, 88, 48);
         
-        _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _saveButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
-        _saveButton.frame = rect;
-        [_saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
-        [_saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
-        _saveButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        [_saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -55, 0)];//set ur title insects myButton
-        [self.view addSubview:_saveButton];
-        [_saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
+        UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        saveButton.frame = rect;
+        [saveButton setImage:[UIImage imageNamed:@"save_button"] forState:UIControlStateNormal];
+        [saveButton setTitle:NSLocalizedString(@"ToolbarItem_Save",@"") forState:UIControlStateNormal];
+        saveButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [saveButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -50, -55, 0)];//set ur title insects myButton
+        [self.view addSubview:saveButton];
+        [saveButton addTarget:self action:@selector(saveAndCloseCreatePackView) forControlEvents:UIControlEventTouchUpInside];
     }
     
     
 }
-
-
 
 
 - (void) setupNavigationBar {
