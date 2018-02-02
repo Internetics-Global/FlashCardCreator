@@ -1358,6 +1358,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _logoLinkageButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 54 - 30, 24, 12, 12);
         _logoLinkageButton.frame = [Common getScaledViewRectComparedToBaseIPhone320Height:_logoLinkageButton];
+        CGPoint center = _logoLinkageButton.center;
+        center.x = _logoImage.center.x;
+        center.y = CGRectGetMaxY(_logoImage.frame) + CGRectGetHeight(_logoLinkageButton.frame)/2 + 5;
+        _logoLinkageButton.center = center;
+        
         if (self.isPlayingCard) {
             _logoLinkageButton.frame = [Common getScaledViewRect:_logoLinkageButton withProportion:kFlashCardViewProporation_iPhone];
         }
