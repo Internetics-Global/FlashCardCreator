@@ -212,7 +212,11 @@ enum popover_enum {
     }
     
     if (isUserInterfaceIdiomPhone) {
-        self.tableView = [[FMMoveTableView alloc] initWithFrame:CGRectMake(0, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+        int leftSafeAread = 0;
+        if (@available(iOS 11.0, *)) {
+            leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+        }
+        self.tableView = [[FMMoveTableView alloc] initWithFrame:CGRectMake(leftSafeAread, 0, IPHONE_UI_MASTER_TABLE_WIDTH, IPHONE_UI_HEIGHT-IPHONE_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     } else {
         self.tableView = [[FMMoveTableView alloc] initWithFrame:CGRectMake(0, 0, IPAD_UI_MASTER_WIDTH, IPAD_UI_HEIGHT-IPAD_UI_NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     }
@@ -332,11 +336,15 @@ enum popover_enum {
     
     if (_addCardButton == nil) {
         if (isUserInterfaceIdiomPhone) {
+            int leftSafeAread = 0;
+            if (@available(iOS 11.0, *)) {
+                leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+            }
             _addCardButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0,0, 160, 60)];
             _addCardButtonBackground.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"add_card_background.png"]];
             _addCardButtonBackground.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
             _addCardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-            _addCardButton.center = CGPointMake(80,IPHONE_UI_HEIGHT-30);
+            _addCardButton.center = CGPointMake(80 + leftSafeAread,IPHONE_UI_HEIGHT-30);
             
             
             

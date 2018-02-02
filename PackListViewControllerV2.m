@@ -119,15 +119,23 @@
     
     self.userNewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.userNewButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-    self.userNewButton.frame = CGRectMake(14, CGRectGetHeight(self.view.frame) - 40, 84, 30);
+    int leftSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    self.userNewButton.frame = CGRectMake(14 + leftSafeAread, CGRectGetHeight(self.view.frame) - 40, 84, 30);
     [self.userNewButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.userNewButton setTitle:NSLocalizedString(@"Label_New_User",@"") forState:UIControlStateNormal];
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
     
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:NSLocalizedString(@"Label_Recently_Created",@""),NSLocalizedString(@"Label_Recently_Viewed",@""), nil]];
-    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 -5, CGRectGetHeight(self.view.frame) - 40, 250, 29);
+    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 - rightSafeAread -5, CGRectGetHeight(self.view.frame) - 40, 250, 29);
     self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sortSegmentedControl];
     
