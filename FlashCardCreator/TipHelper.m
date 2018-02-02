@@ -133,6 +133,7 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_FlashCard];
         };
     }
+    
     [_popTipToolbarBottomRightChangeTemplate showText:NSLocalizedString(@"Tip_Template",@"") direction:AMPopTipDirectionUp maxWidth:150 inView:view fromFrame:frame duration:0];
     
 }
@@ -223,7 +224,14 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipLeftNaviBarItemOpenPack showText:NSLocalizedString(@"Tip_Open_Pack_Viewer",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    
+    int leftSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    CGRect rect = CGRectOffset(frame, leftSafeAread, 0);
+    
+    [_popTipLeftNaviBarItemOpenPack showText:NSLocalizedString(@"Tip_Open_Pack_Viewer",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -246,7 +254,14 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Master];
         };
     }
-    [_popTipLeftNaviBarItemEditPack showText:NSLocalizedString(@"Tip_Edit_Pack",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:frame duration:0];
+    
+    int leftSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    CGRect rect = CGRectOffset(frame, leftSafeAread, 0);
+    
+    [_popTipLeftNaviBarItemEditPack showText:NSLocalizedString(@"Tip_Edit_Pack",@"") direction:AMPopTipDirectionDown maxWidth:150 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -388,7 +403,15 @@
             [weakSelf setTootipActiveFlag:Where_Tooltip_Detail];
         };
     }
-    [_popTipRightNaviBarItemPalette showText:NSLocalizedString(@"Tip_Palette",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    CGRect rect = CGRectOffset(frame, -rightSafeAread, 0);
+    
+    
+    [_popTipRightNaviBarItemPalette showText:NSLocalizedString(@"Tip_Palette",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -425,7 +448,15 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:K_Tooltip_Help_Tip_Has_Been_Showed];
         };
     }
-    [_popTipRightNaviBarItemHelp showText:NSLocalizedString(@"Tip_Toggle",@"") direction:AMPopTipDirectionDown maxWidth:310 inView:view fromFrame:frame duration:0];
+    
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    CGRect rect = CGRectOffset(frame, -rightSafeAread, 0);
+    
+    
+    [_popTipRightNaviBarItemHelp showText:NSLocalizedString(@"Tip_Toggle",@"") direction:AMPopTipDirectionDown maxWidth:310 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -455,7 +486,15 @@
             }
         };
     }
-    [_popTipRightNaviBarItemSetting showText:NSLocalizedString(@"Tip_App_Setting",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    CGRect rect = CGRectOffset(frame, -rightSafeAread, 0);
+    
+    
+    [_popTipRightNaviBarItemSetting showText:NSLocalizedString(@"Tip_App_Setting",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -486,7 +525,15 @@
             
         };
     }
-    [_popTipRightNaviBarItemShare showText:NSLocalizedString(@"Tip_Share",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    CGRect rect = CGRectOffset(frame, -rightSafeAread, 0);
+    
+    
+    [_popTipRightNaviBarItemShare showText:NSLocalizedString(@"Tip_Share",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:rect duration:0];
     
 }
 
@@ -516,7 +563,15 @@
             }
         };
     }
-    [_popTipRightNaviBarItemPlay showText:NSLocalizedString(@"Tip_Play",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:frame duration:0];
+    
+    int rightSafeAread = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    CGRect rect = CGRectOffset(frame, -rightSafeAread, 0);
+    
+    
+    [_popTipRightNaviBarItemPlay showText:NSLocalizedString(@"Tip_Play",@"") direction:AMPopTipDirectionDown maxWidth:200 inView:view fromFrame:rect duration:0];
     
 }
 
