@@ -1436,9 +1436,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_isPlayingCard == NO) {
         if (_functionAreaView == nil) {
             _functionAreaView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 100, CGRectGetMinY(_segmentedControl.frame), 100, CGRectGetHeight(_segmentedControl.frame))];
-            CGPoint center = _functionAreaView.center;
-            center.x = self.center.x;
-            _functionAreaView.center = center;
             _functionAreaView.backgroundColor = [UIColor darkGrayColor];
             _functionAreaView.layer.borderColor = [[UIColor grayColor]CGColor];
             _functionAreaView.layer.borderWidth = 0;
