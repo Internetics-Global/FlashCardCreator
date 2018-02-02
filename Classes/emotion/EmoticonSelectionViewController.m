@@ -34,6 +34,25 @@
     return self;
 }
 
+- (int) getLeftSafeArea {
+    
+    int leftSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    
+    return leftSafeArea;
+}
+
+- (int) getRightSafeArea {
+    
+    int rightSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    
+    return rightSafeArea;
+}
 
 /*
  * 需要额外注意几点：
@@ -52,16 +71,17 @@
     NSInteger emoticonsPerPage = _emoticonRowCount * _emoticonColumnCount;
     NSInteger pageCount = ceilf(([_emoticons count] + K_No_Doulbe_Width)/(emoticonsPerPage*1.0));  //由于我们由3个symbol占据了两个width
     
-    CGRect scrollViewFrame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    CGRect scrollViewFrame = CGRectMake([self getLeftSafeArea], 0, self.view.bounds.size.width - [self getLeftSafeArea] - [self getRightSafeArea], self.view.bounds.size.height);
     _emoticonScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];
     _emoticonScrollView.clipsToBounds = NO;
     _emoticonScrollView.showsHorizontalScrollIndicator = NO;
     _emoticonScrollView.showsVerticalScrollIndicator = NO;
     _emoticonScrollView.delegate = self;
     _emoticonScrollView.pagingEnabled = YES;
+    //_emoticonScrollView.backgroundColor = [UIColor redColor];
     //_emoticonScrollView.backgroundColor = [UIColor blueColor]
     _emoticonScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
-    _emoticonScrollView.contentSize = CGSizeMake(self.view.bounds.size.width * pageCount, self.view.bounds.size.height);
+    _emoticonScrollView.contentSize = CGSizeMake(_emoticonScrollView.bounds.size.width * pageCount, _emoticonScrollView.bounds.size.height);
     [self.view addSubview:_emoticonScrollView];
     
     _pageControl = [[ColorPageControl alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 20, self.view.bounds.size.width, 20)];
@@ -76,8 +96,6 @@
     
     [self.view addSubview:_pageControl];
     
-    
-    int screenWidth = [Common getScreenWidthInLandscape];
 
     NSRange subRange = NSMakeRange(0, emoticonsPerPage);;
     for (int i = 0 ; i < pageCount ; i ++) {
@@ -93,10 +111,10 @@
         }
         
         NSArray *subArray = [_emoticons subarrayWithRange:subRange];
-        EmoticonGridView *emoticonGridView = [[EmoticonGridView alloc] initWithEmoticons:subArray atPage:i];
+        EmoticonGridView *emoticonGridView = [[EmoticonGridView alloc] initWithEmoticons:subArray width:CGRectGetWidth(_emoticonScrollView.frame) atPage:i];
         emoticonGridView.delegate = self;
         //emoticonGridView.backgroundColor = [UIColor redColor];
-        emoticonGridView.frame = CGRectOffset(_emoticonScrollView.bounds, i * screenWidth, 0) ;
+        emoticonGridView.frame = CGRectOffset(_emoticonScrollView.bounds, i * CGRectGetWidth(_emoticonScrollView.frame), 0) ;
         [_emoticonGridViews addObject:emoticonGridView];
         [_emoticonScrollView addSubview:emoticonGridView];
         

@@ -21,7 +21,7 @@
 #pragma mark -
 #pragma mark UIView
 
-- (id)initWithEmoticons:(NSArray *)emoticons atPage:(int) page{
+- (id)initWithEmoticons:(NSArray *)emoticons width:(int)width atPage:(int) page{
     self.currentPage = page;
     
     int columnCount;
@@ -33,13 +33,12 @@
         columnCount = DEFAULT_COLUMN_COUNT_IPAD;
         rowCount = DEFAULT_ROW_COUNT_IPAD;
     }
-    return [self initWithEmoticons:emoticons rowCount:rowCount columnCount:columnCount atPage:page];
+    return [self initWithEmoticons:emoticons width: width rowCount:rowCount columnCount:columnCount atPage:page];
 }
 
 
-- (id)initWithEmoticons:(NSArray *)emoticons rowCount:(NSInteger)rowCount columnCount:(NSInteger)columnCount atPage:(int) page{
-    
-    int screenWidth = [Common getScreenWidthInLandscape];
+- (id)initWithEmoticons:(NSArray *)emoticons width:(int)width rowCount:(NSInteger)rowCount columnCount:(NSInteger)columnCount atPage:(int) page{
+
     int height = 0;
     if (isUserInterfaceIdiomPhone) {
         height = 162;
@@ -47,7 +46,7 @@
         height =350;
     }
     
-    if (self = [super initWithFrame:CGRectMake(0, 0, screenWidth, height)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, width, height)]) {
         _rowCount = rowCount;
         _columnCount = columnCount;
         
@@ -55,7 +54,7 @@
         _emoticons = emoticons;
         _emoticonViews = [[NSMutableArray alloc] initWithCapacity:[emoticons count]];
         
-        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 4, screenWidth - 8, height)];
+        _gridContainerView = [[UIView alloc] initWithFrame:CGRectMake(8, 4, width - 8, height)];
         _gridContainerView.backgroundColor = [UIColor clearColor];
         [self addSubview:_gridContainerView];
         
