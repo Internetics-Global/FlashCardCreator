@@ -52,10 +52,11 @@
 }
 
 - (void)baseInit {
+    int leftSafeArea = [self getLeftSafeArea];
     _toolbarState = Type_Toolbar_State_Main;
     _backImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"back_button"]];
     _backImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _backImageView.frame = CGRectMake(0, 0, K_Item_Width, CGRectGetHeight(self.frame));
+    _backImageView.frame = CGRectMake(leftSafeArea, 0, K_Item_Width, CGRectGetHeight(self.frame));
     _backImageView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
     [self addSubview:_backImageView];
     _backImageView.userInteractionEnabled = YES;
@@ -63,7 +64,7 @@
     oneTap.numberOfTapsRequired = 1;
     [_backImageView addGestureRecognizer:oneTap];
     
-    self.scrollView = [ [UIScrollView alloc ] initWithFrame:self.bounds];
+    self.scrollView = [ [UIScrollView alloc ] initWithFrame:CGRectInset(self.bounds, leftSafeArea, 0)];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.scrollView.userInteractionEnabled = YES;
     self.scrollView.backgroundColor = [UIColor clearColor];
@@ -201,7 +202,7 @@
     
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width + [self getLeftSafeArea], 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width - [self getRightSafeArea] -[self getLeftSafeArea] - 10, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
@@ -235,7 +236,7 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width + [self getLeftSafeArea], 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width - [self getRightSafeArea] - [self getLeftSafeArea] - 10, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
@@ -276,13 +277,33 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width + [self getLeftSafeArea], 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width - [self getRightSafeArea] - [self getLeftSafeArea] - 10, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
     [self setupCancelButton];
     
     
+}
+
+- (int) getLeftSafeArea {
+    
+    int leftSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    
+    return leftSafeArea;
+}
+
+- (int) getRightSafeArea {
+    
+    int rightSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    
+    return rightSafeArea;
 }
 
 - (void) didClickedColorChangeButton:(id) sender {
@@ -326,7 +347,7 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width + [self getLeftSafeArea], 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width -  [self getRightSafeArea] - [self getLeftSafeArea] - 10, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
@@ -366,7 +387,7 @@
         
     }
     
-    self.scrollView.frame = CGRectMake(K_Item_Width, 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width, CGRectGetHeight(self.frame));
+    self.scrollView.frame = CGRectMake(K_Item_Width + [self getLeftSafeArea], 0, CGRectGetWidth(self.frame) - 3 * K_Item_Width - [self getRightSafeArea] - [self getLeftSafeArea] - 10, CGRectGetHeight(self.frame));
     _backImageView.hidden = NO;
     
     [self setupSaveButton];
@@ -419,7 +440,7 @@
         [myButton addTarget:self action:@selector(didClickedSummaryButton:) forControlEvents:UIControlEventTouchDown];
         
     }
-    self.scrollView.frame = self.bounds;
+    self.scrollView.frame = CGRectInset(self.bounds, [self getLeftSafeArea], 0);  //(since left and right same the same, )
     _backImageView.hidden = YES;
     
     [self setupSaveButton];
@@ -435,8 +456,9 @@
             offset = 5;
         }
         
+        int rightSafeAread = [self getRightSafeArea];
         _saveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
+        _saveButton.frame = CGRectMake(CGRectGetWidth(self.frame) - K_Item_Width +10 - rightSafeAread, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
         _saveButton.titleLabel.font = [UIFont systemFontOfSize:13];
         _saveButton.layer.borderColor = [UIColor whiteColor].CGColor;
         _saveButton.layer.borderWidth = 1;
@@ -458,9 +480,10 @@
         if (isUserInterfaceIdiomPhone) {
             offset = 5;
         }
-
+        
+        int rightSafeAread = [ self getRightSafeArea];
         _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-         _cancelButton.frame = CGRectMake(CGRectGetWidth(self.frame) - (K_Item_Width - 10) * 2, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
+         _cancelButton.frame = CGRectMake(CGRectGetWidth(self.frame) - (K_Item_Width - 10) * 2 - rightSafeAread, offset, K_Item_Width - 20, CGRectGetHeight(self.frame) - offset *2);
         _cancelButton.titleLabel.font = [UIFont systemFontOfSize:13];
         _cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
         _cancelButton.layer.borderWidth = 1;
