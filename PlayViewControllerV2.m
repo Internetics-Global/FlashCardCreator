@@ -461,11 +461,7 @@
     _scrollView.isCycle = NO;
     
     if (isUserInterfaceIdiomPhone){
-        int rightMarginForIPhoneXSafeArea = 0;
-        if (@available(iOS 11.0, *)) {
-            rightMarginForIPhoneXSafeArea = [UIApplication sharedApplication].keyWindow.safeAreaInsets.right;
-        }
-        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30-rightMarginForIPhoneXSafeArea, 5, 30, 30);
+        _closeButton.frame = CGRectMake(IPHONE_UI_WIDTH-30-[self getRightSafeArea], 5, 30, 30);
         _scrollView.frame = CGRectMake(0, 0, IPHONE_UI_WIDTH, IPHONE_UI_HEIGHT); //全屏
     } else {
         _closeButton.frame = CGRectMake(IPAD_UI_WIDTH-50, 20, 30, 30);
@@ -482,7 +478,7 @@
     //step4: control panel
     
     if (isUserInterfaceIdiomPhone) {
-        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 460)/2, CGRectGetHeight(self.view.frame) - 5 -30, 460, 30)];
+        _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 460)/2, CGRectGetHeight(self.view.frame) - 5 -30 - [self getBottomSafeArea], 460, 30)];
     } else {
         _controlPanel = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 460)/2, CGRectGetHeight(self.view.frame) - 25 -30, 460, 30)];
     }
@@ -1765,6 +1761,26 @@
     
     [_timerForDelayedPlaybackOnCard invalidate];
     _timerForDelayedPlaybackOnCard = nil;
+}
+
+- (int) getRightSafeArea {
+    
+    int rightSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    
+    return rightSafeArea;
+}
+
+- (int) getBottomSafeArea {
+    
+    int bottomSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        bottomSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom;
+    }
+    
+    return bottomSafeArea;
 }
 
 
