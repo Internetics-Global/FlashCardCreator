@@ -119,23 +119,15 @@
     
     self.userNewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.userNewButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin;
-    int leftSafeAread = 0;
-    if (@available(iOS 11.0, *)) {
-        leftSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
-    }
-    self.userNewButton.frame = CGRectMake(14 + leftSafeAread, CGRectGetHeight(self.view.frame) - 40, 84, 30);
+
+    self.userNewButton.frame = CGRectMake(14 + [self getLeftSafeArea], CGRectGetHeight(self.view.frame) - 40 - [self getBottomSafeArea], 84, 30);
     [self.userNewButton titleLabel].font = [UIFont systemFontOfSize:16];
     [self.userNewButton setTitle:NSLocalizedString(@"Label_New_User",@"") forState:UIControlStateNormal];
     [self.userNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.userNewButton];
     
-    
-    int rightSafeAread = 0;
-    if (@available(iOS 11.0, *)) {
-        rightSafeAread = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
-    }
     self.sortSegmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:NSLocalizedString(@"Label_Recently_Created",@""),NSLocalizedString(@"Label_Recently_Viewed",@""), nil]];
-    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 - rightSafeAread -5, CGRectGetHeight(self.view.frame) - 40, 250, 29);
+    self.sortSegmentedControl.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 250 - [self getRightSafeArea] -5, CGRectGetHeight(self.view.frame) - 40 - [self getBottomSafeArea], 250, 29);
     self.sortSegmentedControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sortSegmentedControl];
     
@@ -769,6 +761,36 @@
 
 - (void) libraryImageViewClicked {
   [self visitStoreButtonClicked:nil];
+}
+
+- (int) getLeftSafeArea {
+    
+    int leftSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        leftSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.left;
+    }
+    
+    return leftSafeArea;
+}
+
+- (int) getRightSafeArea {
+    
+    int rightSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        rightSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.right;
+    }
+    
+    return rightSafeArea;
+}
+
+- (int) getBottomSafeArea {
+    
+    int bottomSafeArea = 0;
+    if (@available(iOS 11.0, *)) {
+        bottomSafeArea = UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom;
+    }
+    
+    return bottomSafeArea;
 }
 
 #pragma mark -
