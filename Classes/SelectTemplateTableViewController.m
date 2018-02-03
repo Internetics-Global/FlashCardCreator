@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Title_Select_Template",@"");
+    self.tableView.separatorColor = [UIColor clearColor];
     self.view.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     
 }
