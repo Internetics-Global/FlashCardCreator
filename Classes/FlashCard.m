@@ -1331,7 +1331,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_logoImage == nil){
         _logoImage = [[UIImageView  alloc] init];
         _logoImage.contentMode = UIViewContentModeScaleAspectFit;
-        _logoImage.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 59, 5, 54, 30);
+        _logoImage.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 54, 10, 54, 30);
+        _logoImage.frame = [Common getScaledViewRectComparedToBaseIPhone320Height:_logoImage];
+        CGRect rect = _logoImage.frame;
+        rect.origin.x = kFlashCardViewWidth_Detail_iPhone - CGRectGetWidth(_logoImage.frame) - CGRectGetMinY(_logoImage.frame);
+        _logoImage.frame = rect;
         if (self.isPlayingCard) {
             _logoImage.frame = [Common getScaledViewRect:_logoImage withProportion:kFlashCardViewProporation_iPhone];
         }
@@ -1357,10 +1361,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_logoLinkageButton == nil) {
         _logoLinkageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _logoLinkageButton.frame = CGRectMake(kFlashCardViewWidth_Detail_iPhone - 54 - 30, 24, 12, 12);
-        _logoLinkageButton.frame = [Common getScaledViewRectComparedToBaseIPhone320Height:_logoLinkageButton];
         CGPoint center = _logoLinkageButton.center;
-        center.x = _logoImage.center.x;
-        center.y = CGRectGetMaxY(_logoImage.frame) + CGRectGetHeight(_logoLinkageButton.frame)/2 + 5;
+        _logoLinkageButton.frame = [Common getScaledViewRectComparedToBaseIPhone320Height:_logoLinkageButton];
         _logoLinkageButton.center = center;
         
         if (self.isPlayingCard) {
