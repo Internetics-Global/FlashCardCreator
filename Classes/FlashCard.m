@@ -1556,6 +1556,16 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
+- (void) setYoutubePlayClickableArea:(MultimediaView *) view {
+    if (_isPlayingCard) {
+        float width = CGRectGetWidth(view.frame);
+        float height = CGRectGetHeight(view.frame);
+        [view setHitTestEdgeInsets:UIEdgeInsetsMake(height*0.4, width*0.33, height*0.33, width*0.4)];
+    } else {
+        [view setHitTestEdgeInsets:UIEdgeInsetsZero];
+    }
+}
+
 - (void) disableCardEdit{
     [iConsole info:@"%s",__FUNCTION__];
     _logoLinkageButton.hidden = TRUE;
@@ -1570,6 +1580,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath]) {
             
+            [self setYoutubePlayClickableArea:_imageQuestion];
             UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
             [_imageQuestion addGestureRecognizer:imageSingeTap];
             
@@ -1584,6 +1595,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         if ([Common isValidYoutubeLinkage:_currentCard.question.movieFullPath2]) {
             
+            [self setYoutubePlayClickableArea:_imageQuestion2];
             UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
             [_imageQuestion2 addGestureRecognizer:imageSingeTap];
             
@@ -1605,7 +1617,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath]) {
-            
+            [self setYoutubePlayClickableArea:_imageAnswer];
             UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
             [_imageAnswer addGestureRecognizer:imageSingeTap];
             
@@ -1619,7 +1631,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([Common isValidYoutubeLinkage:_currentCard.answer.movieFullPath2]) {
-            
+            [self setYoutubePlayClickableArea:_imageAnswer2];
             UITapGestureRecognizer *imageSingeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped2:)];
             [_imageAnswer2 addGestureRecognizer:imageSingeTap];
             
