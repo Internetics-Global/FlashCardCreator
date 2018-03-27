@@ -52,49 +52,25 @@
 @property (nonatomic, copy) NSString *main;
 @property (nonatomic, copy) NSString *sub;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy, getter=getImageFullPath) NSString *imageFullPath;
 
-/**
- *  完整path,而不是只是一个文件名
- */
+
 @property (nonatomic, copy, getter=getImageFullPath2) NSString *imageFullPath2;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getMovieFullPath) NSString *movieFullPath;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getMovieFullPath2) NSString *movieFullPath2;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getBackgroundImageFullPath) NSString *backgroundImageFullPath;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getRecordedSoundFullPath) NSString *recordedSoundFullPath;
 
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getLogoFullPath) NSString *logoFullPath;
 
 
 @property (nonatomic, assign) NSInteger templateID;
 
-/**
- *  autoresize logic to determine best font. only for non-editable card
- *  0：允许；1， 不允许
- */
 @property (nonatomic, assign) NSInteger autoresizeFlag;
 
 @property (assign, nonatomic) NSInteger lineNoSubheading;

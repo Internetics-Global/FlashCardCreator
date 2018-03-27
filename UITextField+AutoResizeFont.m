@@ -25,13 +25,10 @@
         NSAttributedString *attributedText =  [[NSAttributedString alloc] initWithString:self.text
                                                                               attributes:@ { NSFontAttributeName: newFont  }];
         
-        
-        //我们认为，无论isVertically如何，在计算时，取小的
         CGRect labelRect = [attributedText boundingRectWithSize:(CGSize){CGFLOAT_MAX, MIN(frameSize.height, frameSize.width)} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         
         BOOL isResizeNecessary = NO;
         if (isVertically) {
-            //在竖直的文本中， frameSize是个类似的值(width = 60, height = 400),而labelSize是（width = 760, height = 23)。两者方向不一样
             if(labelRect.size.width >= frameSize.height) {
                 isResizeNecessary = YES;
                 

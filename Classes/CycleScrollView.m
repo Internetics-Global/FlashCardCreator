@@ -14,11 +14,7 @@
     NSInteger      _totalPages;
     NSInteger      _curPage;
     NSMutableArray * _curViews;
-    
-    /**
-     *  在fixed delay模式下的使用。在smart delay模式（即文本读完后才到下一张卡片）不使用
 
-     */
     NSTimer        * _autoScrollTimerForFixedDelay;
     
     /**
@@ -84,8 +80,7 @@
 
 - (void)setDwellSecondsTotally:(float)dwellSeconds{
     _dwellSecondsTotally = dwellSeconds;
-    
-    //因为_dwellSecondsTotally会影响最终的auto scroll timer的时间计算
+
     [self resetAutoScrollTimer];
     
 }
@@ -94,9 +89,6 @@
     _dwellSecondsOnQuestion = dwellSecondsOnQuestion;
 }
 
-/**
- *  Only for fixed delay mode;在auto delay mode中，我们是另外处理
- */
 - (void)setIntervalBetweenCardSeconds:(float)intervalBetweenCardSeconds{
     _intervalBetweenCardSeconds = intervalBetweenCardSeconds;
     [self resetAutoScrollTimer];
@@ -129,7 +121,7 @@
     if (_isFixedDelayAutoScroll && self.isAutoScroll) {
         _autoScrollTimerForFixedDelay = [NSTimer scheduledTimerWithTimeInterval:(_dwellSecondsTotally + _intervalBetweenCardSeconds) target:self selector:@selector(autoScrollViewTimerForFixedDelay) userInfo:nil repeats:YES];
     } else {
-       //当_isFixedDelayAutoScroll == NO时，在text2Speech 完成后，callback调用[scrollview scrollNow]，而不是采用NSTimer的方式
+      
     }
     
     [self resetDwellOnQuestionExpireTimerForFixedDelay];
@@ -173,9 +165,6 @@
     
 }
 
-/**
- *  实际上会load 3个卡片，其中前后作为一种缓存形式（用于提前auto resize)
- */
 - (void)resetPageViewAtIndex:(NSInteger)page withDirectionToNextPage:(BOOL) isToNextPage {
     
     [self cleanupPageViews];
@@ -439,20 +428,14 @@
 
 #pragma mark – Autoscroll NSTimer
 
-/**
- *  通过定时器调用，仅仅当_isFixedDelayAutoScroll ＝ YES下使用
- *  在smart delay模式下，当Text2Speech完成后，调用[self scrollNow]自动切换到下张卡片
- */
 - (void) autoScrollViewTimerForFixedDelay {
     
-    //由于是个延时调用，所以需要重新check
     if (self.isAutoScroll == FALSE || (self.isAutoScroll && (self.isFixedDelayAutoScroll == FALSE))) {
         return;
     }
     
     [self scrollNow];
     
-    //每次通过定时器scroll到下一个page时，都需要重新设置
     [self resetDwellOnQuestionExpireTimerForFixedDelay];
 }
 
@@ -471,7 +454,6 @@
     if (_isCycle) {
         _notAllowReloadData = FALSE;
         [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:TRUE];
-        //这段delay是关键，因为setContentOffset是个动画过程，需要一段时间
         double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -481,7 +463,6 @@
         if (_curPage < _totalPages -1) {
             _notAllowReloadData = FALSE;
             [_scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame)*(2),0) animated:TRUE];
-            //这段delay是关键，因为setContentOffset是个动画过程，需要一段时间
             double delayInSeconds = 0.5;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -519,10 +500,6 @@
 
 #pragma mark – Memory management
 
-/**
- *  _curViews中的有些资源需要释放，尤其是在执行resetPageViewAtIndex时，因为如果不释放就会成为野指针
- *  注意同cleanupNSTimer 区别
- */
 - (void) cleanupPageViews {
     
     for (UIView *myView in _curViews) {

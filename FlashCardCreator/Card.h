@@ -31,9 +31,6 @@
 @property (nonatomic, assign) NSInteger cardSN;
 @property (nonatomic, copy) NSString *cardName;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getCoverImageURL) NSString *coverImageURL;
 
 @property (nonatomic, copy) NSString *templateBackgroundName;

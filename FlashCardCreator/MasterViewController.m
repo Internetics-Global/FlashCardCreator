@@ -88,20 +88,12 @@ const float DEFAULT_FONT_RATIO_FROM_NON_IOS = 1.4;
     AWSS3UploadHelper          *_amazonShareHelper;
     DropboxSharekitHelper      *_dropboxShareHelper;
     GoogleDriveShareKitHelper  *_googleDriveShareHelper;
-    
-    /**
-     *  不是当前的设备宽度，而是download时source device的宽度。
-     */
+
     int       _downloadedPackSourceDeviceWidth;
     
     
     UIImageView   *_adImageView;
     
-    
-    /**
-     *  General pack info (like pack image and no of cards) on the right.
-     *  Only applicable for iPhone (on iPad, we have the similar logic on the detail view)
-     */
     PackInfoView *_packInfoView;
 
 }
@@ -171,7 +163,6 @@ enum popover_enum {
          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iapPurchaseSuccessNotification:) name:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil];
         
         if (isUserInterfaceIdiomPhone == false) {
-            //在iPhone中，不需要这逻辑
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTooltipNotification:) name:SHOW_TOOLTIPS_NOTIFICATION object:nil];
         } else {
             
@@ -975,7 +966,7 @@ extern BOOL isFromNewCreatedCard;
     NSString *notificationStr = (NSString *)[notification object];
     
     //Update current pack and all cards in packs
-    NSMutableArray *packs = [[User defaultUser] packs]; //重新获所有的pack
+    NSMutableArray *packs = [[User defaultUser] packs];
     for (Pack *pack in packs) {
         if (pack.packID == self.currentPack.packID) {
             self.currentPack = pack;
@@ -1017,8 +1008,6 @@ extern BOOL isFromNewCreatedCard;
 - (void) showPackListAfterDismiss :(NSNotification *) notification {
     
     if (self.view.window == nil) {
-        //The view's window property is non-nil if a view is currently visible, http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
-        //当在当前view controller弹出一个对话框时，则self.view.window不是nil,这也就是为什么需要额外参数APP_DELEGATE.isAllowToShowPackList的原因
         return;
     }
     
@@ -1033,8 +1022,6 @@ extern BOOL isFromNewCreatedCard;
     
     
     if (self.view.window == nil) {
-        //The view's window property is non-nil if a view is currently visible, http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
-        //当在当前view controller弹出一个对话框时，则self.view.window不是nil,这也就是为什么需要额外参数APP_DELEGATE.isAllowToShowPackList的原因
         return;
     }
     
@@ -2084,11 +2071,7 @@ extern BOOL isFromNewCreatedCard;
     NSArray *sortedFileListArray = fileListArray;
     if ([fileListArray count] > 0) {
         if (((NSString *)[fileListArray firstObject]).length > 10) {
-            //iOS风格的zip (历史原因）
-            //比如card14424425751939907424.zip。因为命名是按照timeIntervalSince1970的顺序排序的，所以不需要重排
         } else {
-            //Android风格的zip (历史原因）
-            //类似这种形式：card6.zip，由于card10.zip会在card8前面，所以需要重新排序
             sortedFileListArray = [fileListArray sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
                 long aNumber = [[a substringWithRange:NSMakeRange(4, a.length - 4 - 4)] integerValue];
                 long bNumber = [[b substringWithRange:NSMakeRange(4, b.length - 4 - 4)] integerValue];
@@ -2104,7 +2087,6 @@ extern BOOL isFromNewCreatedCard;
             assembledCard = [self unzipFileThenAssembleCard:zippedCardFullPath platform:pack.platform];
             if (assembledCard) {
                 if (assembledCard.cardSN == -1) {
-                    //如果meta info无法提供，则我们需要赋值（这个出现在Android only 中）
                     assembledCard.cardSN = cardSNIndex + 1;
                 }
                 [array addObject:assembledCard];
@@ -2332,10 +2314,8 @@ extern BOOL isFromNewCreatedCard;
             assembledCard.creator = questionDict[@"creator"];
             
             if (((NSString *)questionDict[@"cardSN"]).length > 0) {
-                //表明，将使用meta info的数值（iOS的做法）
                 assembledCard.cardSN = [questionDict[@"cardSN"] intValue];
             } else {
-                //meta info为空，表明，我们需要后续手动赋值(见上面fileListArray部分的逻辑）。
                 assembledCard.cardSN = -1;
                 [iConsole info:@"%s: no cardSN field in questionTextContent.json",__FUNCTION__];
             }
@@ -2436,9 +2416,9 @@ extern BOOL isFromNewCreatedCard;
             
             
             error = nil;
-            if ([questionDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) { //Android的格式
+            if ([questionDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) {
                 newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
-            } else if ([questionDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) { //iOS的格式
+            } else if ([questionDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) {
                 newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
             }
             if ([questionDict[@"audio"] length] > 0) {
@@ -2479,7 +2459,7 @@ extern BOOL isFromNewCreatedCard;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
                 [iConsole info:@"You are using iPhone and pack was made on iPad"];
                 
-                if (subheadingSize <30 || mainSize < 30 || subSize < 30) { //理想情况应该是建立一个calibaration table，需要未来执行。实践发现，当字体太小时，offset就不能太大
+                if (subheadingSize <30 || mainSize < 30 || subSize < 30) {
                     [assembledCard question].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
                     [assembledCard question].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
                     [assembledCard question].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE - FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
@@ -2491,39 +2471,12 @@ extern BOOL isFromNewCreatedCard;
                 
             } else if ((isUserInterfaceIdiomPhone) && (![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 [iConsole info:@"You are using iPhone and pack was made on non-iOS platform"];
-                
-                //the ideal default size would be subheadingSize = 16, mainSize = 20, subSize = 16
-                //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
-                
-                //之所以comment out，因为这不是一个make sense的逻辑
-                //                float factor = 0;
-                //                if ((subheadingSize < 16) && (subheadingSize >0)) {
-                //                    factor = subheadingSize/16.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==16
-                //                    [assembledCard question].css.mainSize = mainSize/factor;
-                //                    [assembledCard question].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((mainSize < 20) && (mainSize >0)) {
-                //                    factor = mainSize/20.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard question].css.mainSize = mainSize/factor; // ==20
-                //                    [assembledCard question].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((subSize < 16) && (subSize >0)) {
-                //                    factor = subSize/16.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard question].css.mainSize = mainSize/factor;
-                //                    [assembledCard question].css.subSize = subSize/factor;  // ==16
-                //                    baseActionDone = YES;
-                //                }
                 
                 if (baseActionDone == NO) {
                     
                     float ratio = 1;
                     if (_downloadedPackSourceDeviceWidth > 0) {
-                        //注意以下公式中不能用IPHONE_UI_WIDTH
-                        //因为相同的DP宽度，iPhone下text size更大，所以需要用K_Weight_From_Android_To_IOS修正
                         ratio = (float)_downloadedPackSourceDeviceWidth/480 / K_Weight_From_Android_To_IOS;
                     }
                     
@@ -2564,32 +2517,7 @@ extern BOOL isFromNewCreatedCard;
                 
             } else if ((!isUserInterfaceIdiomPhone) &&(![packPlatformStr isEqualToString:@"iPhone"]) && (![packPlatformStr isEqualToString:@"iPad"])) {
                 [iConsole info:@"You are using iPad and pack was made on non-iOS platform"];
-                
-                //the ideal default size would be subheadingSize = 32, mainSize = 40, subSize = 32
-                //如果尺寸太小，取一个为base，其它进行比例缩放
                 BOOL baseActionDone = NO;
-                
-                //之所以comment out，因为这不是一个make sense的逻辑
-                //                float factor = 0;
-                //                if ((subheadingSize < 32) && (subheadingSize >0)) {
-                //                    factor = subheadingSize/32.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;// ==32
-                //                    [assembledCard question].css.mainSize = mainSize/factor;
-                //                    [assembledCard question].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((mainSize < 40) && (mainSize >0)) {
-                //                    factor = mainSize/40.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard question].css.mainSize = mainSize/factor; // ==40
-                //                    [assembledCard question].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((subSize < 32) && (subSize >0)) {
-                //                    factor = subSize/32.0;
-                //                    [assembledCard question].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard question].css.mainSize = mainSize/factor;
-                //                    [assembledCard question].css.subSize = subSize/factor;  // ==32
-                //                    baseActionDone = YES;
-                //                }
                 
                 if (baseActionDone == NO) {
                     
@@ -2828,9 +2756,9 @@ extern BOOL isFromNewCreatedCard;
             }
             
             error = nil;
-            if ([answerDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) { //Android的格式
+            if ([answerDict[@"audio"] rangeOfString:@".3gp"].location != NSNotFound) {
                 newFileName = [FileOperationHelper generateUniqueAudio3GPFilePathUnderImagesFolder];
-            } else if ([answerDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) { //iOS的格式
+            } else if ([answerDict[@"audio"] rangeOfString:@".aac"].location != NSNotFound) {
                 newFileName = [FileOperationHelper generateUniqueAudioAACFilePathUnderImagesFolder];
             }
             if ([answerDict[@"audio"] length] > 0) {
@@ -2868,7 +2796,7 @@ extern BOOL isFromNewCreatedCard;
                 [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPHONE_TO_IPAD;
             } else if ([packPlatformStr isEqualToString:@"iPad"] && (isUserInterfaceIdiomPhone)){
                 
-                if (subheadingSize <30 || mainSize < 30 || subSize < 30) { //理想情况应该是建立一个calibaration table，需要未来执行。实践发现，当字体太小时，offset就不能太大
+                if (subheadingSize <30 || mainSize < 30 || subSize < 30) { 
                     [assembledCard answer].css.subheadingSize = subheadingSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
                     [assembledCard answer].css.mainSize = mainSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
                     [assembledCard answer].css.subSize = subSize * FONT_FACTOR_FROM_IPAD_TO_IPHONE -FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28;
@@ -2886,33 +2814,10 @@ extern BOOL isFromNewCreatedCard;
                 float factor = 0;
                 BOOL baseActionDone = NO;
                 
-                //之所以comment out，因为这不是一个make sense的逻辑
-                //                if ((subheadingSize < 16) && (subheadingSize >0)) {
-                //                    factor = subheadingSize/16.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==16
-                //                    [assembledCard answer].css.mainSize = mainSize/factor;
-                //                    [assembledCard answer].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((mainSize < 20) && (mainSize >0)) {
-                //                    factor = mainSize/20.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard answer].css.mainSize = mainSize/factor; // ==20
-                //                    [assembledCard answer].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((subSize < 16) && (subSize >0)) {
-                //                    factor = subSize/16.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard answer].css.mainSize = mainSize/factor;
-                //                    [assembledCard answer].css.subSize = subSize/factor;  // ==16
-                //                    baseActionDone = YES;
-                //                }
-                
                 if (baseActionDone == NO) {
                     
                     float ratio = 1;
                     if (_downloadedPackSourceDeviceWidth > 0) {
-                        //注意以下公式中不能用IPHONE_UI_WIDTH
-                        //因为相同的DP宽度，iPhone下text size更大，所以需要用K_Weight_From_Android_To_IOS修正
                         ratio = (float)_downloadedPackSourceDeviceWidth/480/K_Weight_From_Android_To_IOS;
                     }
                     
@@ -2963,27 +2868,6 @@ extern BOOL isFromNewCreatedCard;
                 //need to take care when it's too small. we don't need to worry when it's too big because we have resize logic later
                 float factor = 0;
                 BOOL baseActionDone = NO;
-                
-                //之所以comment out，因为这不是一个make sense的逻辑
-                //                if ((subheadingSize < 32) && (subheadingSize >0)) {
-                //                    factor = subheadingSize/32.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;// ==32
-                //                    [assembledCard answer].css.mainSize = mainSize/factor;
-                //                    [assembledCard answer].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((mainSize < 40) && (mainSize >0)) {
-                //                    factor = mainSize/40.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard answer].css.mainSize = mainSize/factor; // ==40
-                //                    [assembledCard answer].css.subSize = subSize/factor;
-                //                    baseActionDone = YES;
-                //                } else if ((subSize < 32) && (subSize >0)) {
-                //                    factor = subSize/32.0;
-                //                    [assembledCard answer].css.subheadingSize = subheadingSize/factor;
-                //                    [assembledCard answer].css.mainSize = mainSize/factor;
-                //                    [assembledCard answer].css.subSize = subSize/factor;  // ==32
-                //                    baseActionDone = YES;
-                //                }
                 
                 
                 if (baseActionDone == NO) {
@@ -3306,10 +3190,6 @@ extern BOOL isFromNewCreatedCard;
 
 
 #pragma mark – Popover
-//当通过dismissPopoverAnimated执行时，不会call到这个method
-//当点击popover外面区域时，会调用这个方法
-//具体见这里：http://stackoverflow.com/questions/3567033/dismissing-uipopovercontroller-with-dismisspopoveranimated-wont-call-delegate
-//为了让这个方法能被called，我们的做法是：[self.popController.delegate popoverControllerDidDismissPopover:self.popController];
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     
     if (isUserInterfaceIdiomPhone == FALSE) {
@@ -3353,16 +3233,6 @@ extern BOOL isFromNewCreatedCard;
 
 #pragma mark – NSURLConnectionDataDelegate
 
-/**
- *  这个方法在请求将要被发送出去之前会调用
- *  返回值是一个NSURLRequest就是那个真正将要被发送的请求
- *  第二个参数request就是被重定向处理过后的请求 在这里就可以拿到需要的URL
- *  第三个参数response是一个将要触发重定向的请求
- 
- *  在FFC项目中，
- *  1. 如果没有重定向，比如这种（http://tinyurl.com/xpppxxxxxxxxx），response为nil。此方法执行后，调用connectionDidFinishLoading结束
- *  2. 如果有重定向，比如这种（http://tinyurl.com/yahoo)，则会被调用3次，1次response为nil，2次是reponse中包含重定向的url.最后，同上面一样，调用connectionDidFinishLoading结束。值得注意的，我们实际中只调用了二次，因为我们用了：return  nil;
- */
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -3404,16 +3274,12 @@ extern BOOL isFromNewCreatedCard;
         
         
     } else {
-        //不能再这里执行[_HUD removeFromSuperview]，因为redirect会导致本方法会被调用的多次
     }
     
     
     return request;
 }
 
-/**
- *  如果connection:willSendRequest:redirectResponse返回nil,就不会执行此方法  (也就是说，如果我们的share code正确，就不会执行到这里
- */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection; {
     
     [iConsole info:@"%s",__FUNCTION__];
@@ -3516,8 +3382,6 @@ extern BOOL isFromNewCreatedCard;
     
     //Dropbox only
     if (!([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
-        //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
-        //不需要在本类中设置dropboxLinkedNotification
         [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
                                             controller:APP_DELEGATE.window.rootViewController
                                                openURL:^(NSURL *url) {

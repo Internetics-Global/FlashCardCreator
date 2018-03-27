@@ -31,9 +31,6 @@
 @synthesize css = _css;
 @synthesize templateID = _templateID;
 
-/**
- *  0：允许进行autoresize,否则不允许。默认可以的
- */
 @synthesize autoresizeFlag = _autoresizeFlag;
 
 @synthesize backgroundImageFullPath = _backgroundImageFullPath;

@@ -20,8 +20,7 @@
     } else {
       realSize = CGSizeMake(size.height*ratio, size.height);
     }
-    
-    //确保最终的图片至少大于size
+
     float widthRatio = size.width/realSize.width;
     float heightRatio = size.height/realSize.height;
     if (widthRatio >1 || heightRatio > 1) {

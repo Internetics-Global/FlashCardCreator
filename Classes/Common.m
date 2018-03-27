@@ -63,9 +63,6 @@
 }
 
 
-/**
- *  当前app所用的版本
- */
 + (int) currentInstalledSqliteVersion {
     int currentVersion = [[NSUserDefaults standardUserDefaults] integerForKey:@"SQLiteVersion"];
     return currentVersion;
@@ -76,9 +73,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-/**
- *  即将升级的新版本
- */
 + (int) newUpdatingSqliteVersion {
     NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"SQLiteVersion" ofType:@"plist"]];
     double newVersion = [[dict valueForKeyPath:@"SQLiteVersion"] doubleValue];
@@ -112,9 +106,6 @@
     return [urlTest evaluateWithObject:str];
 }
 
-/**
- *  由于可获得的字体有几百个，我们手动选择其中几个。第一个必须是default
- */
 + (NSArray *) recommendedFonts {
     
     NSMutableArray *fontNames = [[NSMutableArray alloc] initWithObjects:@"Default",@"Arial-BoldMT",@"Chalkduster",@"Courier",@"Papyrus",@"Futura-Medium",@"ChalkboardSE-Bold",@"Zapfino", nil];
@@ -185,10 +176,6 @@
     return finalStr;
 }
 
-/**
- *  由于不是所有字体都支持unicode(特别是在interchangeability中），所以需要通过这个方法判断
- *  判断是否有symobl包含在str中，当前的方法是一种非有效做法，期待更好的方案
- */
 + (BOOL) isSymbolIncluded:(NSString *)str {
     
     if (str.length == 0) {
@@ -222,9 +209,6 @@
     return str;
 }
 
-/**
- *  这个array必须是一个NSString类型的，但是可以转换成int的。而且必须从小到大预先排列好
- */
 + (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element {
     
     if (element <= [[array firstObject] integerValue]) {
@@ -290,9 +274,6 @@
 }
 
 
-/**
- *  我们只检查是否是目录的字符串格式，而不检查是否存在
- */
 + (BOOL) isDirectoryFormat:(NSString *) filePath {
     
 //we can not use this way

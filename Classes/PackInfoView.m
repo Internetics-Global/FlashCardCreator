@@ -29,10 +29,7 @@
     int       _currentPage;
     
     BOOL      _isDirtyScrollView; //used to detemrine whether to rebuild scroll view or not
-    
-    /**
-     *    我们只希望在通过back/forward button触发时才调用
-     */
+
     BOOL      _isUsingBackForwardNavButton;
 }
 

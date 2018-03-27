@@ -6,10 +6,6 @@
 //  Copyright (c) 2013 Internetics. All rights reserved.
 //
 
-/* 一些重要的说明 （区别于已存在card的情况）
- * 1. 我们只有在用户点击了"save" button后，才进行保存操作，所以要避免所有的其它的save操作
- * 2. 由于我们的question和answer字段共享，而在切换segment后会丢失数据，所以需要在切换时，进行数据的暂存（保存到_currentCard中，由FlashView对象负责）
-*/
 
 #import "CreateCardViewController.h"
 #import "FlashCard.h"
@@ -111,7 +107,6 @@ BOOL isFromNewCreatedCard = NO;
         }
 //        _newCardView.backgroundColor = [UIColor redColor];
         
-        //Step3: Response (这个非常重要)
         _newCardView.tag = NEW_FLASHCARDVIEW_TAG;  
         
         //Step4: Show
@@ -207,7 +202,6 @@ BOOL isFromNewCreatedCard = NO;
     }
     
     //Step5: set flag
-    //涉及到一些异步任务，比如delayed execUpdatelogoImageForAllCards，需要采用这种方式
     double delayInSeconds = .5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

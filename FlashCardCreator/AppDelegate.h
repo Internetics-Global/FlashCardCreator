@@ -38,12 +38,9 @@
 @property (assign, nonatomic) BOOL isToShowShareActinSheet_Dropbox;
 @property (assign, nonatomic) BOOL isToShowShareActinSheet_AWS;
 
-/**
- *  正在download的过程中的标志，同isExamplePackDownloadedSuccessful区分
- */
 @property (assign, nonatomic) BOOL isDownloadingSamplePack;
 
-@property (assign, nonatomic) BOOL isAllowToShowTooltip; //在第一次启动下载sample,packlist等对话框存在下，不允许显示
+@property (assign, nonatomic) BOOL isAllowToShowTooltip; 
 
 @property (assign, nonatomic) BOOL isAllowToShowPackList;
 

@@ -30,10 +30,7 @@
     NSString *_fileNameOnAWS;  //AWS or Dropbox
     
     NSString *_platform;
-    
-    /**
-     *  当下载后，会判断是否允许share（false if maxDownloadCount = 1，且不是本人创建）
-     */
+
     BOOL     _isAllowShare;
 }
 
@@ -41,9 +38,6 @@
 @property (nonatomic, copy                        ) NSString                       *packName;
 @property (nonatomic, copy                        ) NSString                       *sidebarTitle;
 
-/**
- *  完整path,而不是只是一个文件名
- */
 @property (nonatomic, copy,getter=getCoverImageURL) NSString                       *coverImageURL;
 
 @property (nonatomic, assign                      ) NSInteger                      userID;

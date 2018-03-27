@@ -84,7 +84,6 @@
                 int update = [[FileOperationHelper convertStringToNSDate:updateDate] timeIntervalSince1970];
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
-//                if (update < share) {  //之所以disable这个逻辑，因为这个会引起误解，不如用户没有改变任何的数据，但是想改变max downloaded和password。所以，这里索性无论何种情况，都重新来一次。
                 if (false) {
                     [iConsole info:@"updateDate is earlier than shareDate"];
                     [self shareAction:shareLink];
@@ -220,7 +219,6 @@
         } else if (errorCode == 0) {
             
             //step2: update local meta info
-            //同时为了处理老版本，所以有了额外逻辑（老版本都是类似：Pack1449621320-134252191.zip）
             if (weakSelf.currentPack.fileNameOnAWS.length == 0 || ([weakSelf.currentPack.fileNameOnAWS.lowercaseString rangeOfString:@"pack"].location == 0)) {
                 weakSelf.currentPack.fileNameOnAWS = [FileOperationHelper generateUniqueFileNameOnCloud:weakSelf.currentPack];
                 [weakSelf.currentPack savePackOnly];
@@ -272,7 +270,6 @@
         
         _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     } else {
-        //已经是短链接，不需要再处理
         _finalShareLinkBeforeRedirect = shareLinkage;
     }
     
@@ -311,8 +308,7 @@
         double delayInSeconds = 0.4;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            //1.生成short linkage
+
             NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
             if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
                 _HUD.hidden = YES;
@@ -348,9 +344,6 @@
             [self showShareActionSheet];
         });
     } else {
-        //已经是短链接了，可以直接处理
-        
-        //保证shareLink存在
         if (self.currentPack.shareLink.length == 0) {
             self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
             [self.currentPack savePackOnly];
@@ -535,7 +528,6 @@
         _HUD = nil;
     }
 	
-	//这时是有cancel button，之后的 create share link的indicator复用这个，也是有进度条的
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
@@ -560,7 +552,6 @@
         _HUD = nil;
     }
     
-    //这时是没有cancel button或进度条的
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
@@ -600,8 +591,6 @@
 	}
     _progressivePercent = 0;
     
-    //一旦uploading完成后，就转成processing
-    ///这时是有cancel button，create share link的indicator复用这个，也是有进度条的
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
     
@@ -678,10 +667,8 @@
             if([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
                 SLComposeViewController *controller = [CallbackSLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
                 [controller setInitialText:_finalPostMessage];
-                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                 [_baseViewController presentViewController:controller animated:YES completion:Nil];
             } else {
-                //iOS6下，会自动提示，iOS7则需要手工加入
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_FACEBOOK",@"") message:NSLocalizedString(@"DIALOG_NO_FACEBOOK_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -697,10 +684,8 @@
                 SLComposeViewController *controller = [CallbackSLComposeViewController
                                                        composeViewControllerForServiceType:SLServiceTypeTwitter];
                 [controller setInitialText:_finalPostMessage];
-                //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                 [_baseViewController presentViewController:controller animated:YES completion:nil];
             } else {
-                //iOS6下，会自动提示，iOS7则需要手工加入
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                 [alertView show];
             }

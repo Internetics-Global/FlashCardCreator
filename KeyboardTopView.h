@@ -41,9 +41,6 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedSaveButton:(id) sender;
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedCancelButton:(id) sender;
 
-/**
- *  指第一级的button, symbol， align, size, color, font,但是不包括save
- */
 - (void) keyboardTopView:(KeyboardTopView *)keyboardTopView didClickedMainButton:(id) sender;
 
 @end
@@ -55,13 +52,8 @@ typedef NS_ENUM(NSInteger, Type_Toolbar_State) {
 
 @property (weak, nonatomic) id<KeyboardTopViewDelegate> delegate;
 
-/**
- *  keyboard inputview上现实的值，在iPhone上 ＝ 真实值；在iPad则不等于
- */
 @property (strong, nonatomic) NSArray *nominalSizeArray;
-/**
- *  实际font size大小，与nominalSizeArray一一对应。实际的字体大小等于realSizeArray ＝ nominalSizeArray[i] * scale
- */
+
 @property (strong, nonatomic,getter = getRealSizeArray) NSArray *realSizeArray;
 
 @property (strong, nonatomic) NSArray *colorArray;

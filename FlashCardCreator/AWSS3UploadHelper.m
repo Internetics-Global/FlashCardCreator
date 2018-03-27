@@ -96,7 +96,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 int update = [[FileOperationHelper convertStringToNSDate:updateDate] timeIntervalSince1970];
                 int share = [[FileOperationHelper convertStringToNSDate:shareDate] timeIntervalSince1970];
                 
-//                if (update < share) {  //之所以disable这个逻辑，因为这个会引起误解，不如用户没有改变任何的数据，但是想改变max downloaded和password。所以，这里索性无论何种情况，都重新来一次。
                 if (false) {
                     [iConsole info:@"updateDate is earlier than shareDate"];
                     [self shareAction:shareLink];
@@ -292,7 +291,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     
     NSAssert([FIRAuth auth].currentUser != nil, @"[FIRAuth auth].currentUser should exist");
-    NSString *expectedBucketName = [[FIRAuth auth].currentUser.email lowercaseString]; //aws要求bucket必须是小写的   //ccaa, to do
+    NSString *expectedBucketName = [[FIRAuth auth].currentUser.email lowercaseString];
     
     expectedBucketName = [Common removeAllCharactersExceptAlphanumericFromString:expectedBucketName];
     
@@ -358,8 +357,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         if (success == NO) {
             
             [self hideHud];
-            
-            //有可能到这里，因为：The bucket namespace is shared by all users of the system. Please select a different name and try again.
+
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_ERROR",@"") message:NSLocalizedString(@"DIALOG_FAILURE_TO_CREATE_BUCKET",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
             [alertView show];
             return;
@@ -419,7 +417,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     [[_transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
         
-        [FileOperationHelper removeAssembleFactoryDirectory];//因为我们在任何情况下都是需要重新上传，所以这个是没有问题的。
+        [FileOperationHelper removeAssembleFactoryDirectory];
         
         if (task.error) {
             [iConsole error:@"%s:%@",__FUNCTION__,[task.error  description]];
@@ -479,8 +477,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         return nil;
     }];
     
-    
-    //4.在uploadProgress中自动更新进度
     switch (uploadRequest.state) {
         case AWSS3TransferManagerRequestStateRunning: {
             
@@ -517,7 +513,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         
         _finalShareLinkBeforeRedirect = [[NSString stringWithFormat:@"%@?from=%@",urlSchemeLinkage,_currentPack.creatorNickName] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     } else {
-        //已经是短链接，不需要再处理
         _finalShareLinkBeforeRedirect = shareLinkage;
     }
 
@@ -563,7 +558,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     if ([_finalShareLinkBeforeRedirect containsString:@"tinyurl"] == false) {
         
         _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
-        _HUD.buttonTitle = nil;  //与Dropbox不同的是，我们不需要有cancel逻辑（在Dropbox，我们有额外create share linkage的步骤）
+        _HUD.buttonTitle = nil;
         [_HUD show:YES];
         
         __weak __typeof(&*self)weakSelf = self;
@@ -571,7 +566,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            //1.生成short linkage
             NSString *redirectedStr =[self redirectURL:_finalShareLinkBeforeRedirect];
             if ((redirectedStr == nil) || (redirectedStr.length == 0)) {
                 [weakSelf hideHud];
@@ -609,9 +603,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
             [self showShareActionSheet];
         });
     } else {
-        //已经是短链接了，可以直接处理
-        
-        //保证shareLink存在
         if (self.currentPack.shareLink.length == 0) {
             self.currentPack.shareLink = _finalShareLinkBeforeRedirect;
             [self.currentPack savePackOnly];
@@ -637,7 +628,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         _HUD = nil;
     }
     
-    //这时是没有cancel button或进度条的
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelText = NSLocalizedString(@"Indicator_Share_Process_Processing",@"");
@@ -657,7 +647,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
         _HUD = nil;
     }
 	
-    ///这时是有cancel button
     _HUD = [[MBProgressHUD alloc] initWithView:APP_DELEGATE.progressHUDHolderView];
     _HUD.mode = MBProgressHUDModeDeterminate;
     _HUD.delegate = self;
@@ -675,7 +664,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void)hudTappedButton:(MBProgressHUD *)hud {
     
-    [_transferManager cancelAll];  //与Dropbox不同的是，AWS没有create share linkage的概念。
+    [_transferManager cancelAll];
     
     [_HUD hide:YES];
     [_HUD removeFromSuperview];
@@ -689,7 +678,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 	}
     _progressivePercent = 0;
     
-    //暂时这里保留cancel button,但是后面我们将.buttonTitle = nil.因为AWS没有create share linkage的步骤，所以没有必要有cancel逻辑（同时shorted linkage是不可以cancel的）
     _HUD.mode = MBProgressHUDModeIndeterminate;
 ;
     
@@ -697,7 +685,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
     [iConsole info:@"%s",__FUNCTION__];
-	//[_HUD removeFromSuperview];  //我们需要多次的hide/show，所以需要comment out这段默认的逻辑
 }
 
 - (void) hideHud {
@@ -708,9 +695,6 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
 }
 
 
-/**
- *  生成短连接，通过tinyurl.com
- */
 - (NSString *) redirectURL:(NSString *)urlStr {
     [iConsole info:@"%s, url to be redirected:%@",__FUNCTION__,urlStr];
     NSString *returnURL;
@@ -768,10 +752,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                 if([CallbackSLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
                     SLComposeViewController *controller = [CallbackSLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
                     [controller setInitialText:_finalPostMessage];
-                    //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                     [_baseViewController presentViewController:controller animated:YES completion:Nil];
                 } else {
-                    //iOS6下，会自动提示，iOS7则需要手工加入
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_FACEBOOK",@"") message:NSLocalizedString(@"DIALOG_NO_FACEBOOK_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }
@@ -787,10 +769,8 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
                     SLComposeViewController *controller = [CallbackSLComposeViewController
                                                            composeViewControllerForServiceType:SLServiceTypeTwitter];
                     [controller setInitialText:_finalPostMessage];
-                    //在iOS7下，如果是通过keywindow.rootviewcontroller会有问题
                     [_baseViewController presentViewController:controller animated:YES completion:nil];
                 } else {
-                    //iOS6下，会自动提示，iOS7则需要手工加入
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DIALOG_NO_Twitter",@"") message:NSLocalizedString(@"DIALOG_NO_TWITTER_DETAIL",@"") delegate:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_OK",@"") otherButtonTitles:nil, nil];
                     [alertView show];
                 }

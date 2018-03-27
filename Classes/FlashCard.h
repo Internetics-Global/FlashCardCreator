@@ -42,27 +42,21 @@ typedef enum{
 @interface FlashCard : UIView <UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate, UIAlertViewDelegate, UITextFieldDelegate,MFMailComposeViewControllerDelegate,EmoticonSelectionViewControllerDelegate,UIPopoverControllerDelegate,AVAudioPlayerDelegate,PopoverViewDelegate,AVSpeechSynthesizerDelegate> {
     JSBadgeView *_cardSNText;
     
-    //sound record related
-    /**
-     *  需要非常清楚的是，有两种情况，一种是youtube，一种是本地链接，这两种情况在interchangeability中非常不一样，前者可以直接赋值，后者需要记性lastPathComponent处理
-     */
+
     NSString     *_questionRecordedSoundFullPath;
     
-    /**
-     *  需要非常清楚的是，有两种情况，一种是youtube，一种是本地链接，这两种情况在interchangeability中非常不一样，前者可以直接赋值，后者需要记性lastPathComponent处理
-    */
     NSString     *_answerRecordedSoundFullPath;
     
     //background related
     UIButton     *_backgroundImageSelectButton;
-    UIImageView  *_questionBackgroundImageView; //允许随便从library选择
-    UIImageView  *_answerBackgroundImageView;//允许随便从library选择
+    UIImageView  *_questionBackgroundImageView;
+    UIImageView  *_answerBackgroundImageView;
     NSString     *_questionBackgroundImageFullPath;
     NSString     *_answerBackgroundImageFullPath;
     
     //template related
     UIButton     *_changeTemplateButton;
-    UIImageView  *_templateBackgroundImageView; //存在于NSBundle,不允许随便从library选择
+    UIImageView  *_templateBackgroundImageView;
     NSString     *_templateBackgroundImageName;
     
     UIButton     *_copyButton;
@@ -85,10 +79,10 @@ typedef enum{
     NSString     *_answerMovieFullPath2; //youtube linkage or an local url
     
     //image or thubmnail(video)
-    NSString     *_questionImageFullPath; //如果播放的是mov，则是Mov的thumbnail
-    NSString     *_questionImageFullPath2; //如果播放的是mov，则是Mov的thumbnail
-    NSString     *_answerImageFullPath; //如果播放的是mov，则是Mov的thumbnail
-    NSString     *_answerImageFullPath2; //如果播放的是mov，则是Mov的thumbnail
+    NSString     *_questionImageFullPath;
+    NSString     *_questionImageFullPath2;
+    NSString     *_answerImageFullPath;
+    NSString     *_answerImageFullPath2; 
     
     UIScrollView *_verticalScrollView;
     
@@ -202,11 +196,6 @@ typedef enum{
 - (void) refreshAll;
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying;
 
-/**
- *  执行两个动作：
- *  1. commit所有相关的值到_currentCard
- *  2. 写入到数据库
- */
 - (void) saveEdittedCard;
 
 - (void)segmentedControlQAClicked:(id)sender;
@@ -215,9 +204,6 @@ typedef enum{
 
 - (void) reSceenshotAll: (RescreenshotReason) why withStringVal: (NSString *) val;  //Re-screenshot all cards under current pack
 
-/**
- *  @param isMute          只是用来set volume = 0
- */
 - (void) playAudioWithManualClick:(BOOL) isManualClicked withMute:(BOOL)isMute;
 
 - (void) stopAudio;

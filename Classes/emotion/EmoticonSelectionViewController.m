@@ -54,12 +54,6 @@
     return rightSafeArea;
 }
 
-/*
- * 需要额外注意几点：
- * 由于我们有几个特殊的symbol占据了double width的位置，所以我们在计算如下时需要额外注意
- * 1. 每个page最多的symbol数
- * 2. 某个symbol占据的宽度
-*/
 - (void)layoutEmotions{
     self.view.backgroundColor = [UIColor colorWithRed:213/255.0 green:215/255.0 blue:217/255.0 alpha:1];
     
@@ -69,7 +63,7 @@
     [self.view addSubview:sepatator];
     
     NSInteger emoticonsPerPage = _emoticonRowCount * _emoticonColumnCount;
-    NSInteger pageCount = ceilf(([_emoticons count] + K_No_Doulbe_Width)/(emoticonsPerPage*1.0));  //由于我们由3个symbol占据了两个width
+    NSInteger pageCount = ceilf(([_emoticons count] + K_No_Doulbe_Width)/(emoticonsPerPage*1.0));  
     
     CGRect scrollViewFrame = CGRectMake([self getLeftSafeArea], 0, self.view.bounds.size.width - [self getLeftSafeArea] - [self getRightSafeArea], self.view.bounds.size.height);
     _emoticonScrollView = [[UIScrollView alloc] initWithFrame:scrollViewFrame];

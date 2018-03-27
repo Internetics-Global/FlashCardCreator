@@ -24,7 +24,4 @@ NSString *const S3BaseURL = @"https://s3.amazonaws.com";
 //NSString *const S3SamplePackURL =  @"http://7o51o0.com1.z0.glb.clouddn.com/Pack1440729625-2043618070.zip";
 NSString *const S3SamplePackURL = @"https://s3-us-west-1.amazonaws.com/ffcmaster/FlipFlashCards.zip?from=Flipflashcards&type=demo";
 
-/**
- *  因为aws的bucket namespace is shared by all users of the system，所以需要保证我们的命名是尽可能唯一的（虽然这不是最佳方案）
- */
 NSString *const BucketPostfixAfterUserName = @"55b5aa55673793805862";

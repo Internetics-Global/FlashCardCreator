@@ -76,13 +76,13 @@
 
 
 //Special symbol
-#define K_No_Doulbe_Width      3       //占据2个普通宽度的symbol的数目，这里是3个
-#define K_Space_Bar    @"Space Bar"    // 与emotions.txt保持一致
-#define K_Line_Break   @"Line Break"   // 与emotions.txt保持一致
-#define K_Delete       @"Delete"       // 与emotions.txt保持一致
-#define K_Space_Bar_Index     10       //在sybmol表中的位置
-#define K_Line_Break_Index    21       //在sybmol表中的位置
-#define K_Delete_Index        32       //在sybmol表中的位置
+#define K_No_Doulbe_Width      3
+#define K_Space_Bar    @"Space Bar"
+#define K_Line_Break   @"Line Break"
+#define K_Delete       @"Delete"
+#define K_Space_Bar_Index     10
+#define K_Line_Break_Index    21
+#define K_Delete_Index        32      
 
 /**
  * weight when resizing from Android to iOS, not including ratio
@@ -144,10 +144,10 @@
 #define NEW_FLASHCARDVIEW_TAG                  113
 #define OTHER_FLASHCARDVIEW_TAG                114
 
-#define FONT_FACTOR_FROM_IPAD_TO_IPHONE     0.5 //这个数字越大，表示：在iPhone上查看在iPad上制作的pack时，字体会更大；在iPad上查看iPhone制作的pack时。缩放后的字体，要比实际大一些。这样后续可以微调。但是如果太小，并不一定可以通过下一步的step1进行调整（比如同样还是三行，但是字体很小）
+#define FONT_FACTOR_FROM_IPAD_TO_IPHONE     0.5
 #define FONT_FACTOR_FROM_IPHONE_TO_IPAD     2.3
 #define FONT_OFFSET_FROM_IPAD_TO_IPHONE     4
-#define FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28     2     //当text size很小时
+#define FONT_OFFSET_FROM_IPAD_TO_IPHONE_TEXT_SIZE_LESS_28     2     
 
 #define CSS_EMOTION_VIEW_HEIGHT_IPHONE         162   
 #define CSS_EMOTION_VIEW_HEIGHT_IPAD           350
@@ -164,7 +164,7 @@
 
 
 //Amazon SimpleDB service
-#define SimpleDB_DOMAIN_NAME_FOR_THIS_APP     @"flashcardcreator"  //必须同AWS上的IAM role规则中的保持一致。
+#define SimpleDB_DOMAIN_NAME_FOR_THIS_APP     @"flashcardcreator"  
 
 
 //Tooltip related

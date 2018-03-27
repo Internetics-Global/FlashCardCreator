@@ -8,8 +8,8 @@
 
 #import "EmoticonView.h"
 
-#define EMOTICON_VIEW_DEFAULT_WIDTH 40  //不是最终值
-#define EMOTICON_VIEW_DEFAULT_HEIGHT 60  //不是最终值
+#define EMOTICON_VIEW_DEFAULT_WIDTH 40  
+#define EMOTICON_VIEW_DEFAULT_HEIGHT 60
 
 @implementation EmoticonView
 

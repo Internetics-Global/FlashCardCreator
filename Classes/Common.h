@@ -50,10 +50,6 @@
 
 + (int) nearestIndexForStringArray:(NSArray *) array withElement:(int) element;
 
-/*
- * default path is kind of answer_placeholder_content,question_placeholder_logo,default_pack_cover_image, etc
- * 在本项目中，所有非default图片都是由数字组成
- */
 + (BOOL) isPlaceholderFilePathOrDirectory :(NSString *) pathStr;
 
 + (BOOL) isDirectoryFormat:(NSString *) filePath;

@@ -23,39 +23,16 @@ typedef NS_ENUM(NSInteger, Type_Card_Position) {
 @property (nonatomic,assign,setter = setDataSource:          ) id<CycleScrollViewDatasource> datasource;
 @property (nonatomic,assign,setter = setDelegate:            ) id<CycleScrollViewDelegate  > delegate;
 
-/**
- *  循环播放
- */
 @property (nonatomic,assign,setter = setCycle:               ) BOOL                      isCycle;
 
-/**
- *  auto play分两种，被isAutoScroll总控制
- *  1. YES:固定时间间隔的播放
- *  2. NO :isSmartDelay
- */
 @property (nonatomic,assign,setter = setFixedDelayAutoScroll:) BOOL                      isFixedDelayAutoScroll;
 
-
-/**
- *  总控制
- */
 @property (nonatomic,assign                                  ) BOOL                      isAutoScroll;
 
-
-/**
- *  在某一张卡片（包括question和answer)上的停留时间
- *  注意，包括_pauseForAnswer的值
- */
 @property (nonatomic,assign,setter = setDwellSecondsTotally:) float                      dwellSecondsTotally;
 
-/**
- *  仅在question上的停留时间，但注意，不包括_pauseForAnswer的值
- */
 @property (nonatomic,assign,setter = setDwellSecondsOnQuestion:) float                   dwellSecondsOnQuestion;
 
-/**
- *  两张卡片之间的停留时间
- */
 @property (nonatomic,assign,setter = setIntervalBetweenCardSeconds:) float                intervalBetweenCardSeconds;
 
 
@@ -87,9 +64,6 @@ typedef NS_ENUM(NSInteger, Type_Card_Position) {
 - (void)didScrollToPage:(NSInteger)index;
 - (void)didScroll:(NSInteger)index;
 
-/**
- *  当超过dwellSecondsOnQuestion后被触发
- */
 - (void) didFinishDwellOnQuestionCard;
 
 @end

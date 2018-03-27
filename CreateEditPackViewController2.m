@@ -345,9 +345,7 @@
 }
 
 #pragma mark – ASValueTrackingSliderDataSource
-/**
- *  仅能用来更新indicator string，而不能做其它逻辑。原因在于这个方法会在重画/或重布局时被调用，而不是只有值改变时才被调用
- */
+
 - (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
 {
     NSString *s;

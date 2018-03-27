@@ -99,7 +99,6 @@ enum popover_enum {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNavigationBarNotification:) name:SHOW_NAVIGATION_BAR_NOTIFICATION object:nil];
         
         if (isUserInterfaceIdiomPhone) {
-            //需要在进入后台时，隐藏键盘并重新显示navigationbar,否则再次进入前台会导致navigation bar消失。
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:nil];
         }
         
@@ -431,7 +430,7 @@ enum popover_enum {
         [_currentCardView segmentedControlQAClicked:nil];
     }
     
-    _scrollView.userInteractionEnabled = YES; //在特殊情况下scrollviewdidenddecelerating（这里会重置_scrollView.userInteractionEnabled = YES）没有被调用，导致界面完全失去响应，所以这里需要加一个backup
+    _scrollView.userInteractionEnabled = YES; 
     
 }
 
@@ -886,7 +885,6 @@ enum popover_enum {
     self.currentPack = (Pack *)[notification object];
     
     if (isUserInterfaceIdiomPhone) {
-        //iPhone中并不存在如下的逻辑
         return;
     }
     
@@ -902,7 +900,6 @@ enum popover_enum {
     self.currentPack = (Pack *)[notification object];
     
     if (isUserInterfaceIdiomPhone) {
-        //iPhone中并不存在如下的逻辑
         return;
     }
     
@@ -1332,16 +1329,6 @@ enum popover_enum {
 
 #pragma mark – NSURLConnectionDataDelegate
 
-/**
- *  这个方法在请求将要被发送出去之前会调用
- *  返回值是一个NSURLRequest就是那个真正将要被发送的请求
- *  第二个参数request就是被重定向处理过后的请求 在这里就可以拿到需要的URL
- *  第三个参数response是一个将要触发重定向的请求
- 
- *  在FFC项目中，
- *  1. 如果没有重定向，比如这种（http://tinyurl.com/xpppxxxxxxxxx），response为nil。此方法执行后，调用connectionDidFinishLoading结束
- *  2. 如果有重定向，比如这种（http://tinyurl.com/yahoo)，则会被调用3次，1次response为nil，2次是reponse中包含重定向的url.最后，同上面一样，调用connectionDidFinishLoading结束。值得注意的，我们实际中只调用了二次，因为我们用了：return  nil;
- */
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
@@ -1383,16 +1370,12 @@ enum popover_enum {
         
         
     } else {
-        //不能再这里执行[_HUD removeFromSuperview]，因为redirect会导致本方法会被调用的多次
     }
     
     
     return request;
 }
 
-/**
- *  如果connection:willSendRequest:redirectResponse返回nil,就不会执行此方法  (也就是说，如果我们的share code正确，就不会执行到这里
- */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection; {
     
     [iConsole info:@"%s",__FUNCTION__];
@@ -1496,8 +1479,6 @@ enum popover_enum {
     
     //Dropbox only
     if (!([DropboxClientsManager authorizedClient] != nil || [DropboxClientsManager authorizedTeamClient] != nil)) {
-        //会通过application:(UIApplication *)application openURL 到达MasterViewController的dropboxLinkedNotification
-        //不需要在本类中设置dropboxLinkedNotification
         [DropboxClientsManager authorizeFromController:[UIApplication sharedApplication]
                                             controller:APP_DELEGATE.window.rootViewController
                                                openURL:^(NSURL *url) {

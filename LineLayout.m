@@ -31,7 +31,7 @@
     if (self) {
         self.itemSize = CGSizeMake(ITEM_SIZE_WIDTH, ITEM_SIZE_Height);
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        self.sectionInset = UIEdgeInsetsMake(10, 0, 30, 10.0); //要留给底部的segment和new users
+        self.sectionInset = UIEdgeInsetsMake(10, 0, 30, 10.0); 
         self.minimumLineSpacing = 30.0;
 
     }

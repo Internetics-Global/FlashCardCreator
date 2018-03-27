@@ -168,7 +168,6 @@
 - (IBAction)playButtonClicked:(id)sender {
     
     NSError *error;
-    //不能声明为局部变量，否则无法播放
     _player = [[AVAudioPlayer alloc] initWithContentsOfURL:[self tempRecordedFilePath]
                                                                    error:&error];
     _player.delegate = self;

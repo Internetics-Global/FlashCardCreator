@@ -24,11 +24,6 @@ typedef NS_ENUM(NSInteger, One_Off_Play_Type) {
 
 @property (assign, nonatomic) BOOL isFromPackList;
 
-/**
- *  用于判断来源于popover的选项（manual, auto, auto with loop)
- *  本质上只使用一次
- *  //一旦disable auto scroll或从fixed delay到auto delay，我们都会重置成One_Off_Play_Type_Unkown
- */
 @property (assign, nonatomic) One_Off_Play_Type oneOffPlayType;
 
 - (void) text2SpeechFinished:(NSNumber*)isQuestionShowing;

@@ -38,19 +38,10 @@
     
     NSDate                       *_startDate;
     
-    
-    /**
-     *  实际中，auto scroll分两种
-     *  1. 通过定时器控制的固定间隔的auto scroll
-     *  2. 通过Text2Speech回调控制的smart delay的auto scroll
-     */
     BOOL  _isAutoScroll;
     
     BOOL  _isCyclePlay;
     
-    /**
-     *  实际上不是真正的mute
-     */
     BOOL  _isNotMute;
     
     BOOL  _isShuttingDown;
@@ -66,16 +57,8 @@
     UILabel               *_minPauseForAnswerLabel;;
     UILabel               *_maxPauseForAnswerLabel;
     
-    UIView                *_messageToastBaseView; //是否出现，逻辑同_countDownLabel完全一致
+    UIView                *_messageToastBaseView;
     
-    /**
-     *  _dwellTimeSlider.value + _pauseForAnswerSlider.value 为整个卡片（包括question和answer)的停留时间
-     *  无论是question only，还是both question and answer,则question/answer上的停留时间都是_dwellTimeSlider.value
-     *  取值范围
-     *  1. 如果 == 最小值，则是[self isSmartDelay] = YES
-     *  2. 否则其它情况，则为一般固定间隔
-     *
-     */
     ASValueTrackingSlider *_dwellTimeSlider;
     UILabel               *_minDwellTimeLabel;
     UILabel               *_maxDwellTimeLabel;
@@ -95,10 +78,6 @@
     BOOL      _isDeviceRotating;
     BOOL      _isRotationJustFinish;
     
-    
-    /**
-     *  如果是SmartDelay，则忽略_autoSwitchQATimerForFixedDelay。而是通过text2SpeechFinished回调来自动切换
-     */
     NSTimer  *_autoSwitchQATimerForFixedDelay;
     
     NSTimer  *_autoHideControlPanelTimer;
@@ -108,11 +87,8 @@
     NSTimer  *_firstPageDelay_FixedMode_Timer;
     NSTimer  *_firstPageDelay_AutoDelayMode_Timer;
     
-    NSTimer  *_timerForDelayedText2Speech; //通过计算recording时间，用于recording结束后，进行自动text to speech
+    NSTimer  *_timerForDelayedText2Speech;
     
-    /**
-     *  当dwell on answer card expire后，自动触发，比如关闭正在播放的text to speech
-     */
     NSTimer  * _timerForDwellOnAnswerExpire_FixedDelayModeOnly;
     
     UILabel  * _countDownLabel;
@@ -120,27 +96,15 @@
     
     int       _currentPage;
     
-    /**
-     *  _isAutoShowQuestionOnly时，用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
-     */
     NSTimer  *_timerAForText2SpeechFinished;
     
-    /**
-     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing时，用于切换到answer的delay(_pauseForAnswerSlider.value)
-     */
     NSTimer  *_timerBForText2SpeechFinished;
     
     
     NSTimer  *_timerForDelayedPlaybackOnCard;
     
-    /**
-     *  _isAutoShowQuestionOnly ＝ false，且isQuestionShowing = false时,用于切换到下一个卡片的固定的delay（ K_IntervalBetweenCardSeconds_ForQAOnly）
-     */
     NSTimer  *_timerCForText2SpeechFinished;
     
-    /**
-     *  用于执行在view controller生命周期内的仅仅一次的标志。不能用disp_once，因为dis_once是application生命周期仅仅一次执行。
-     */
     BOOL     _OneOffExecution_Flag;
 }
 
@@ -232,7 +196,6 @@
     [self setupMotionSensor];
     
     
-    //初始化_dwellTimeSlider值
     if (_OneOffExecution_Flag) {
         
         switch (self.oneOffPlayType) {
@@ -319,9 +282,7 @@
                 if ((_isAutoScroll == false)
                     && (_oneOffPlayType != One_Off_Play_Type_Auto_Play)
                     && (_oneOffPlayType != One_Off_Play_Type_Auto_Play_Loop)) {
-                    
-                    
-                    //第一次初始化
+  
                     
                     int rollRadius = motion.attitude.roll;
                     
@@ -799,7 +760,7 @@
     }
     
     
-    flashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    flashCardView.calledViewController = self;
     [flashCardView refreshAll:isDisableAutoResize withIndexPlaying:(int)index];
     [flashCardView disableCardEdit];
     [flashCardView.segmentedControl setHidden:YES];
@@ -842,7 +803,7 @@
             break;
     }
     
-    flashCardView.calledViewController = self;//在iPad中，PlayViewControllerV2是通过modal方式出现的，这时如果点击logo image，通过rootViewController进行modal是不可行的，所以需要通过在calledViewController进行modal展示
+    flashCardView.calledViewController = self;
     [flashCardView refreshAll:isDisableAutoResize withIndexPlaying:(int)index];
     [flashCardView disableCardEdit];
     [flashCardView.segmentedControl setHidden:YES];
@@ -919,9 +880,6 @@
 }
 
 
-/**
- *  由于是个延时调用，我们必须重新check
- */
 - (void) switchQAFromTimerForFixedDelay {
     
     if (_isAutoScroll == FALSE) {
@@ -954,11 +912,6 @@
 }
 
 
-
-/**
- *  isManulally == YES: 来自CMMotionManager或tap或gesture action
- *  isManulally == NO: 来自NSTimer或text2SpeechFinished自动回调
- */
 - (void) switchQuestionAnswerViewWithHand:(BOOL)isManually{
     
     if (_isAutoScroll && isManually) {
@@ -976,8 +929,6 @@
         return;
     }
     
-    
-    //加入这段代码的原因是为了防止误操作 (进入play mode后，1秒内不准切换到answer)
     NSDate*methodFinish =[NSDate date];
     NSTimeInterval executionTime =[methodFinish timeIntervalSinceDate:_startDate];
     if (executionTime <1.0) {
@@ -1059,8 +1010,6 @@
     }
     
     [self resetAutoHideControlPanelTimer];
-    
-    //当移动到最后一个卡片时，这时如果点击cycle button，则会自动触发重新开始。在fixed delay模式下，由于定时器一直在工作，所以不用加额外逻辑，而在auto delay模式下，则需要模拟一个text2SpeechFinished事件
     if (_isAutoScroll && [self isSmartDelay] && (_currentPage == [[self.currentPack cards] count] -1)) {
         [self text2SpeechFinished:[NSNumber numberWithBool:NO]];
     }
@@ -1068,9 +1017,6 @@
     
 }
 
-/**
- *  同dwellTimeSliderClicked逻辑一样，简单化：先停止一切运行的，然后重启
- */
 - (void) autoScrollButtonClicked:(UIButton *) button {
     
     FlashCard *currentCard = [self getCurrrentCard];
@@ -1086,7 +1032,7 @@
     } else {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
         
-        self.oneOffPlayType = One_Off_Play_Type_Unkown; //因为是one off的，所以一旦有新动作，需要重置
+        self.oneOffPlayType = One_Off_Play_Type_Unkown;
         
         [_dwellTimeSlider showPopUpViewAnimated:NO];
         [_pauseForAnswerSlider showPopUpViewAnimated:NO];
@@ -1117,7 +1063,7 @@
         if ([self isText2Speech] || [self isSmartDelay]) {
             
             if ([self isText2Speech] == FALSE) {
-                currentCard.isMuteText2Speech = YES;  //这时我们进行mute播放
+                currentCard.isMuteText2Speech = YES;  
             } else {
                 currentCard.isMuteText2Speech = NO;
             }
@@ -1145,7 +1091,7 @@
                         [currentCard textToSpeechAllContentNow];
                     } else {
                         [currentCard playAudioWithManualClick:NO withMute:_isNotMute == false];
-                        double delayInSeconds = durationForRecordedSound + 1;  ////这里1秒是适当的，因为_pauseForAnswerSlider或K_IntervalBetweenCardSeconds_ForQAOnly都远大于这个数
+                        double delayInSeconds = durationForRecordedSound + 1;
                         
                         [_timerForDelayedText2Speech invalidate];
                         _timerForDelayedText2Speech = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
@@ -1281,7 +1227,7 @@
     
     FlashCard *currentCard = [self getCurrrentCard];
     _previousCard = currentCard;
-    [self playbackOnCard:currentCard]; //这时，只是播放，而没有回调(自动切换到下一个page）的功能
+    [self playbackOnCard:currentCard]; 
     
     [self resetQASwitchTimer];
     
@@ -1334,7 +1280,6 @@
 - (void) pauseForAnswerSliderClicked:(UISlider *) slider {
     
     if ([self isSmartDelay] == false) {
-        //在smart delay中，我们并没有用到这个参数
         _scrollView.intervalBetweenCardSeconds = slider.value;
     }
     
@@ -1352,13 +1297,6 @@
 }
 
 
-/**
- *  为避免复杂的逻辑，一刀切，简单化，执行如下操作
- *  1. 停止所有的声音播放
- *  2. 停止所有的count down逻辑 （包括显示和toast message）
- *  3. 停止所有的delay timer （包括auto hide)
- *  4. 重启
- */
 - (void) dwellTimeSliderClicked:(ASValueTrackingSlider *) slider {
     
     //1.
@@ -1382,7 +1320,7 @@
         _scrollView.isFixedDelayAutoScroll = NO;
     } else {
         _scrollView.isFixedDelayAutoScroll = YES;
-        self.oneOffPlayType = One_Off_Play_Type_Unkown;  //因为是one off的，所以一旦有新动作，需要重置
+        self.oneOffPlayType = One_Off_Play_Type_Unkown;
     }
     
     if (_isAutoShowQuestionOnly) {
@@ -1409,12 +1347,9 @@
     
 }
 
-/**
- *  在fixed delay模式中，在answer中，如果时间超过_dwellTimeSlider.value，则需要关闭text to speech
- */
 - (void) didFinishDwellOnAnswerCard_FixedDelayModeOnly {
     
-    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
+    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) {
         FlashCard *currentCard = [self getCurrrentCard];
         [currentCard stopTextToSpeechNow];
     }
@@ -1422,11 +1357,8 @@
 
 #pragma mark – CycleScrollViewDelegate
 
-/**
- *  在fixed delay模式中，在question中，如果时间超过_dwellTimeSlider.value，则需要关闭text to speech
- */
 - (void)didFinishDwellOnQuestionCard {
-    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { //需要限制条件
+    if ([self isText2Speech] && ([self isSmartDelay] == FALSE)) { 
         FlashCard *currentCard = [self getCurrrentCard];
         [currentCard stopTextToSpeechNow];
     }
@@ -1490,9 +1422,6 @@
     [self resetQASwitchTimer];
 }
 
-/**
- *  仅仅用于fixed delay mode
- */
 - (void) resetQASwitchTimer {
     
     float seconds = (_dwellTimeSlider.value + _pauseForAnswerSlider.value);
@@ -1648,7 +1577,6 @@
             double delayInSeconds = _pauseForAnswerSlider.value;
             [_timerAForText2SpeechFinished invalidate];
             _timerAForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
-                //我们需要这些条件，因为这是一个延时操作
                 if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                     [_scrollView scrollNow];
                 }
@@ -1659,7 +1587,7 @@
                 double delayInSeconds = _pauseForAnswerSlider.value;
                 [_timerBForText2SpeechFinished invalidate];
                 _timerBForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
-                    //我们需要这些条件，因为这是一个延时操作
+
                     if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                         [weakSelf switchQuestionAnswerViewWithHand:NO];
                     }
@@ -1669,7 +1597,6 @@
                 double delayInSeconds = K_IntervalBetweenCardSeconds_ForQAOnly;
                 [_timerCForText2SpeechFinished invalidate];
                 _timerCForText2SpeechFinished = [NSTimer bk_scheduledTimerWithTimeInterval:delayInSeconds block:^(NSTimer *timer) {
-                    //我们需要这些条件，因为这是一个延时操作
                     if ((_isShuttingDown == FALSE) && _isAutoScroll && [self isSmartDelay]) {
                         [_scrollView scrollNow];
                     }
@@ -1688,17 +1615,10 @@
     return b;
 }
 
-/**
- *  是Auto play中的其中一种（另外一种是fixed delay，就是用NSTimer进行固定时间间隔的切换卡片
- *  这是一种智能的方式，只有文本读完了，才切换到下一个卡片
- */
 - (BOOL) isSmartDelay {
-    //我们采用了一种非常特殊的方法，就是slider的值到了最小值时，isSmartDelay ＝ YES
-    
     if (self.oneOffPlayType == One_Off_Play_Type_Auto_Play || self.oneOffPlayType == One_Off_Play_Type_Auto_Play_Loop) {
         return YES;
     } else {
-        //我们不check else的状态
     }
     
     
@@ -1710,9 +1630,7 @@
 }
 
 #pragma mark – ASValueTrackingSliderDataSource
-/**
- *  仅能用来更新indicator string，而不能做其它逻辑。原因在于这个方法会在重画/或重布局时被调用，而不是只有值改变时才被调用
- */
+
 - (NSString *)slider:(ASValueTrackingSlider *)slider stringForValue:(float)value;
 {
     NSString *s;

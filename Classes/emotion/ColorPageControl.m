@@ -8,9 +8,9 @@
 
 #import "ColorPageControl.h"
 
-// 圆点的直径
+
 #define kPageBallWidth      8.0
-// 圆点之间的间隔
+
 #define kPageBallGap        6.0
 
 

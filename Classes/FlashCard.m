@@ -6,12 +6,6 @@
 //  Copyright (c) 2013 Internetics. All rights reserved.
 //
 
-/* 一些重要的说明 （区别于已存在card的情况）
- * 1. 保存操作是写入到数据库，即[_currentCard save]
- * 2. 我们数据的参考对象是_currentCard，而不是界面上的view，所有要确保他们之间一致（a, 初始化时保持一致;b,view内容变化时，要及时更新_currentCard）
- */
-
-
 #import "FlashCard.h"
 #import "JSBadgeView.h"
 #import "Pack.h"
@@ -146,8 +140,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     Type_Image_Source    _imageSourceType;
     AVAudioPlayer          *_audioPlayer;
     
-    //_keyboardTopViewV2和_keyboardTopViewForInputViewV2内容一样的两份拷贝，
-    //其中_keyboardTopViewV2是为setInputAccessoryView,而_keyboardTopViewForInputViewV2则是inputView的一部分
     KeyboardTopView        *_keyboardTopViewV2;
     KeyboardTopView        *_keyboardTopViewForInputViewV2;
     
@@ -184,9 +176,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 @property (strong, nonatomic) AVSpeechSynthesizer *synth;
 @property (assign, nonatomic) int textToSpeechContentArrayIndex;
 
-/**
- *  比较特殊，由于vertical alignment是通过改变contentOffset实现的，我们特地设立了这个值。
- */
 @property (assign, nonatomic) CGFloat contentYOffsetForVerticalAlignment;
 
 
@@ -529,7 +518,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
         
-        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero;  //很关键
+        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero;
         
         if (_subheadingFontQuestion.length == 0) {
             _subheadingQuestion.font =[UIFont boldSystemFontOfSize:28];
@@ -555,7 +544,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion = [[UITextView alloc]init];
         _mainQuestion.tag = kTagMainQuestion;
         
-        _mainQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        _mainQuestion.textContainerInset = UIEdgeInsetsZero;
         
         if (_mainFontQuestion.length == 0) {
             _mainQuestion.font =[UIFont boldSystemFontOfSize:28];
@@ -583,7 +572,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion = [[UITextView alloc]init];
         _subQuestion.tag = kTagSubQuestion;
         
-        _subQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subQuestion.textContainerInset = UIEdgeInsetsZero;
         
         if (_subFontQuestion.length == 0) {
             _subQuestion.font =[UIFont boldSystemFontOfSize:28];
@@ -626,7 +615,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer = [[UITextView alloc]init];
         _subheadingAnswer.tag = kTagSubheadingAnswer;
         
-        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero;
         
         if (_subheadingFontAnswer.length == 0) {
             _subheadingAnswer.font =[UIFont boldSystemFontOfSize:28];
@@ -654,7 +643,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainAnswer = [[UITextView alloc]init];
         _mainAnswer.tag = kTagMainAnswer;
         
-        _mainAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _mainAnswer.textContainerInset = UIEdgeInsetsZero;
         
         if (_mainFontAnswer.length == 0) {
             _mainAnswer.font =[UIFont boldSystemFontOfSize:28];
@@ -683,7 +672,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer = [[UITextView alloc]init];
         _subAnswer.tag = kTagSubAnswer;
         
-        _subAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subAnswer.textContainerInset = UIEdgeInsetsZero;
         
         if (_subFontAnswer.length == 0) {
             _subAnswer.font =[UIFont boldSystemFontOfSize:28];
@@ -1140,7 +1129,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingQuestion = [[UITextView alloc]init];
         _subheadingQuestion.tag = kTagSubheadingQuestion;
         
-        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subheadingQuestion.textContainerInset = UIEdgeInsetsZero;
         
         _subheadingQuestion.userInteractionEnabled = FALSE;
         _subheadingQuestion.keyboardType = UIKeyboardAppearanceDefault;
@@ -1161,7 +1150,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _mainQuestion = [[UITextView alloc]init];
         _mainQuestion.tag = kTagMainQuestion;
         
-        _mainQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        _mainQuestion.textContainerInset = UIEdgeInsetsZero;
         
         _mainQuestion.userInteractionEnabled = FALSE;
         _mainQuestion.keyboardType = UIKeyboardAppearanceDefault;
@@ -1183,7 +1172,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subQuestion = [[UITextView alloc]init];
         _subQuestion.tag = kTagSubQuestion;
         
-        _subQuestion.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subQuestion.textContainerInset = UIEdgeInsetsZero;
         
         _subQuestion.userInteractionEnabled = FALSE;
         _subQuestion.contentMode = UIViewContentModeScaleAspectFit;
@@ -1233,7 +1222,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subheadingAnswer = [[UITextView alloc]init];
         _subheadingAnswer.tag = kTagSubheadingAnswer;
         
-        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subheadingAnswer.textContainerInset = UIEdgeInsetsZero;
         
         _subheadingAnswer.userInteractionEnabled = FALSE;
         _subheadingAnswer.keyboardType = UIKeyboardAppearanceDefault;
@@ -1254,7 +1243,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_mainAnswer ==  nil) {
         _mainAnswer = [[UITextView alloc]init];
         
-        _mainAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _mainAnswer.textContainerInset = UIEdgeInsetsZero;
         
         _mainAnswer.tag = kTagMainAnswer;
         _mainAnswer.userInteractionEnabled = FALSE;
@@ -1277,7 +1266,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _subAnswer = [[UITextView alloc]init];
         _subAnswer.tag = kTagSubAnswer;
         
-        _subAnswer.textContainerInset = UIEdgeInsetsZero; //很关键
+        _subAnswer.textContainerInset = UIEdgeInsetsZero;
         
         _subAnswer.userInteractionEnabled = FALSE;
         _subAnswer.keyboardType = UIKeyboardAppearanceDefault;
@@ -1780,14 +1769,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self refreshAll:isDisableAutoResize withIndexPlaying:indexPlaying isFromSegmentSwitch:false];
 }
 
-/**
- *  刷新操作，考虑：
- *  1. play mode和 edit mode下的scroll view
- *  2. 卡片可编辑，或不可编辑
- *  @param isDisableAutoResize 如果为NO，满足下面的条件执行
- *  @param indexPlaying        indexPlaying =0时，表明为第一个card，这时如果已经被缓存过（isDisableAutoResize = YES），则不会执行
-  *  @param isFromSegmentSwitch
- */
 - (void) refreshAll:(BOOL) isDisableAutoResize withIndexPlaying: (int) indexPlaying isFromSegmentSwitch:(BOOL) isFromSegmentSwitch {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -1807,8 +1788,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self showQuestionOrAnswer];
     [self updateQuestionOrAnswerTemplate];
     if (_isPlayingCard == FALSE) {
-        //在playingCard时，如果执行这个逻辑会引起布局的稍微扰动，会影响体验。这主要是默认的padding不是零，而我们reset成了0.这在edit card时没什么问题，但是play的时候就会影响体验。后续可以改进：resetUITextViewPadding设置成默认的padding，而不是一刀切为0
-        [self resetUITextViewPadding];//由于我们在切换card时，不是重新创建cardview,所以需要重置所有的参数，包括padding
+        [self resetUITextViewPadding];
     }
     [self updateQuestionAndAnswerCSS]; // need to be careful, since two properties (color/size) will replace with those in updateQuestionAndAnswerTemplate
     [self refreshQuestionAndAnswerContent];
@@ -1834,9 +1814,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self adjustAllTextViewsToFitIfNecessary];
         } else {
             if ([Common isOwner:_currentPack] == FALSE) {
-                //几种情况
-                //1. 如果是刚进入play mode，显示第一个card，这时indexPlaying = 0， isDisableAutoResize = NO；
-                //2. 其它情况下，我们不直接渲染第一个card，而是通过previous/next card进行提前渲染
                 if (((self.tag != CURRENT_FLASHCARDVIEW_TAG) && (isDisableAutoResize == NO))
                     || ((indexPlaying == 0) && (isDisableAutoResize == NO))){
                     
@@ -1854,7 +1831,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     [self hideAllSemiTransparentTextViews];
 
     
-    [self updateQuestionAnswerAllTextViewVeriticalAlignment];//由于此方法的执行跟内容相关，一般放在最后
+    [self updateQuestionAnswerAllTextViewVeriticalAlignment];
     
     if ([_synth isSpeaking]) {
         [_synth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
@@ -1965,7 +1942,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionRecordedSoundFullPath = path;
     }
     
-    //是否显示soundButton的逻辑
     if ([MutipleTargetHelper isFullVersion]) {
         
         if (_segmentedControl.selectedSegmentIndex == 0) {
@@ -2109,9 +2085,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             }
         }
         
-        
-        
-        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
         if ([_currentCard.answer.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
             _isPlayingCard) {
             float width = CGRectGetWidth(_imageAnswer.frame);
@@ -2161,9 +2134,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 }
             }
         }
-    
-        
-        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+
         if ([_currentCard.answer.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
             _isPlayingCard) {
             float width = CGRectGetWidth(_imageAnswer2.frame);
@@ -2286,9 +2257,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             }
         }
-        
-        
-        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+
         if ([_currentCard.question.movieFullPath.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
             _isPlayingCard) {
             float width = CGRectGetWidth(_imageQuestion.frame);
@@ -2337,8 +2306,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 
             }
         }
-        
-        //客户要求，touch的范围必须在icon内，而不是在imageview frame内
+
         if ([_currentCard.question.movieFullPath2.lowercaseString rangeOfString:@"youtube"].location != NSNotFound &&
             _isPlayingCard) {
             float width = CGRectGetWidth(_imageQuestion2.frame);
@@ -2592,7 +2560,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     //This is very important.In this case, the answer card is not still full inflated (correct templated ID is not assigned yet) and you can not caclucate line numbe correctly
     //it does not matter even we can not edit the card. (we don't save card in non-edittable card)
     if (sender != nil) {  //do it only when manually click segmented control
-        if (_segmentedControl.selectedSegmentIndex == 1) { //我们将切换到answer，所以计算question的
+        if (_segmentedControl.selectedSegmentIndex == 1) {
             _currentCard.question.lineNoSubheading = [self lineNumberWithUITextView:_subheadingQuestion];
             _currentCard.question.lineNoMain = [self lineNumberWithUITextView:_mainQuestion];
             _currentCard.question.lineNoSub = [self lineNumberWithUITextView:_subQuestion];
@@ -2665,10 +2633,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/**
- *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
- *  无比保持同commitQuestionAndAnswerData一致（除了pack部分）
- */
 - (Card *) copyCurrentUnsavedCardForPreview {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -2774,10 +2738,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
-/**
- *  不是保存到数据库中，而是保存到_currentCard中。主要场景用在create new card
- */
 - (void) commitQuestionAndAnswerData {
     [iConsole info:@"%s",__FUNCTION__];
     _currentCard.answer.title = _answerTitle.text;
@@ -2793,7 +2753,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     _currentCard.answer.movieFullPath2 = _answerMovieFullPath2;
     
     if (isFromNewCreatedCard) {
-        //我们不做什么，因为已经在CreateSoundViewController中进行commit了
     } else {
         _currentCard.answer.recordedSoundFullPath = _answerRecordedSoundFullPath;
         _currentCard.question.recordedSoundFullPath = _questionRecordedSoundFullPath;
@@ -2894,15 +2853,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     float textHeight = [self getTextSizeHeight:textView];
     float lineHeight = textView.font.lineHeight;
     
-    
-    //实际中，你会看到numLines是一个非常接近整数的数值。比如如下
-    //2.030135 ---- 2
-    //3.008099 ---- 3
-    //在从2行到3行的逐渐变化中，numLines起先是在2.02附近；然后一旦到了3行，则突然跳跃到3.00附近。
-    //也就是说numLines永远不可能是一个3.5， 3.9的数，而是一个非常接近round的数
-    //以下一个真实的debug数据：
-    //font size= 24.600000,numLines = 4.019534, textHeight = 118.000000, lineHeight = 29.356640 with TextView = {{3, 29}, {304.5, 153}}
-    //font size= 24.500000,numLines = 3.009853, textHeight = 88.000000, lineHeight = 29.237305 with TextView = {{3, 29}, {304.5, 153}}
     
     CGFloat numLines = textHeight / lineHeight;
     
@@ -3264,9 +3214,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 #pragma mark -
 #pragma mark - Update template (postion and css, but css will be rewrited by updateCSS)
 
-/**
- *  规定，所有UITextView默认（正常）contentSize = 0
- */
 - (void) resetAllUITextViewContentOffset {
     [iConsole info:@"%s",__FUNCTION__];
     _mainQuestion.contentOffset = CGPointZero;
@@ -3294,8 +3241,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self updateAnswerViewTemplateForiPad];
         }
     }
-    
-    //之所以加上这个，主要是在.frame 时，contentOffset会莫名其妙的改变
+
     [self resetAllUITextViewContentOffset];
 }
 
@@ -3310,7 +3256,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [self updateAnswerViewTemplateForiPad];
     }
     
-    //之所以加上这个，主要是在.frame 时，contentOffset会莫名其妙的改变
     [self resetAllUITextViewContentOffset];
 }
 
@@ -7833,8 +7778,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             });
         }
     } else {
-        //只是关闭键盘
-        //每当只是关闭键盘时，这时如果是NEW_FLASHCARDVIEW_TAG，我们需要把数据暂存一下，以免segement QA切换会引起数据丢失
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             [self commitQuestionAndAnswerData];
             [self hideAllSemiTransparentTextViews];
@@ -7954,7 +7897,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     //step2:
     _isUITextViewFocused = NO;
-    [_lastBecomeFirstRespondTextView resignFirstResponder];  //这个必须在前面，因为resignFirstResponder会导致调用shouldChangeTextInRange
+    [_lastBecomeFirstRespondTextView resignFirstResponder];
     
     //reset contentSize which is used by user for manually scroll up/down
     CGSize size = _verticalScrollView.contentSize;
@@ -7969,7 +7912,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         if ([weakSelf isVerticalAlignment:_lastBecomeFirstRespondTextView]) {
-            //由于vertical center是通过改变contentOffSet改变的，所以不能重置为CGPointMake(0, 0)
             [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, self.contentYOffsetForVerticalAlignment) animated:YES];
         } else {
             [_lastBecomeFirstRespondTextView setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -7984,10 +7926,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-
-/**
- *  isVerticalAlignment的状态值存储于_mainAlignVerticalQuestion等变量中
- */
 - (BOOL) isVerticalAlignment:(UITextView *) textView {
     BOOL result = FALSE;
     
@@ -8335,7 +8273,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     
     NSError *error;
-    //不能声明为局部变量，否则无法播放
     NSString *normalizedPath;
     if (_segmentedControl.selectedSegmentIndex == 0) {
         normalizedPath = [[FileOperationHelper imagesDirectory] stringByAppendingPathComponent:[_currentCard.question.recordedSoundFullPath lastPathComponent]];
@@ -8436,13 +8373,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
-/**
- *  Common function for select image from library
- *
- *  @param sender    必须是UITapGestureRecognizer
- *  @param isArrowUp _imagePickerPopover剪头方向
- */
 - (void)selectFromImageLibrary:(UIView *)sender withPopoverArrowUp:(BOOL) isArrowUp supportMov:(BOOL) isSupportMovie {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -9295,7 +9225,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         selectAlignStr = @"Justify";
     }
     
-    //Vertical barbutton item实际上当作一个switch，选中或没有选中
     if ([title isEqualToString:NSLocalizedString(@"ToolbarItem_Align_Vertical",nil)]) {
         if ([self isVerticalAlignment:responderTextView]) {
             [self resetVerticalAlignment:responderTextView];
@@ -9359,7 +9288,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if (responderTextView.alpha == 0.5) {
             responderTextView.alpha = 1;
         } else {
-            responderTextView.alpha = 0.5;  //只有两种情况会成为0.5，另外一种是键盘出现
+            responderTextView.alpha = 0.5;
         }
         
     } else {
@@ -9547,7 +9476,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark -
 #pragma mark - UITextViewDelegate
-//只要内容一改变，就会call
+
 - (void)textViewDidChange:(UITextView *)textView {
     [iConsole info:@"%s",__FUNCTION__];
     //    CGRect frame = textView.frame;
@@ -9572,7 +9501,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-//当点击，并还没有开始改变内容时
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [iConsole info:@"%s",__FUNCTION__];
     
@@ -9602,7 +9530,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         textView.textColor = textColor;
-        textView.alpha = 0.5; //只有两种情况会成为0.5，另外一种是点击"make visible按钮"
+        textView.alpha = 0.5;
     }
     
     _lastBecomeFirstRespondTextView = textView;
@@ -9638,7 +9566,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     return TRUE;
 }
 
-//是否允许更改
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     [iConsole info:@"%s",__FUNCTION__];
@@ -9689,9 +9616,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     BOOL couldTriggerToResetContentOffset = FALSE;
     
-    //这时实际中可能因为键盘输入速度太快，导致无法及时完成setContentOffset，所以需要包含：textView.contentSize.height == height
     if ([text isEqualToString:@""] == FALSE) {
-        if ((textView.contentSize.height >= height) && (height != 0)) { //增加行数（增加文字）
+        if ((textView.contentSize.height >= height) && (height != 0)) {
             if (gap > 0) {
                 offset.y = offset.y + gap;
                 [_verticalScrollView setContentOffset:offset animated:YES];
@@ -9700,7 +9626,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
     } else {
-        if ((textView.contentSize.height <= height)&& (height != 0)) { //删除行（减少文字）
+        if ((textView.contentSize.height <= height)&& (height != 0)) {
             if (gap < 0) {
                 offset.y = offset.y - fabsf(gap);
                 [_verticalScrollView setContentOffset:offset animated:YES];
@@ -9710,7 +9636,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
     }
     
-    if ((offset.y <= 0) && couldTriggerToResetContentOffset) {  //因为offset永远是大于0的
+    if ((offset.y <= 0) && couldTriggerToResetContentOffset) {
         offset.y = 0;
         [_verticalScrollView setContentOffset:offset animated:YES];
         couldTriggerToResetContentOffset = FALSE;
@@ -9834,11 +9760,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 
-/**
- *  第一步
- *  1.先确保在frame里面（减小字体大小）
- *  maxLineNo的唯一作用是传递给triggerResizeTextToSameLineNo
- */
 - (BOOL) triggerResizeTextToFitFrame:(UITextView *) textView withMaxLineNumber: (long) maxLineNo{
     
     __weak __typeof(&*self)weakSelf = self;
@@ -9853,7 +9774,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         float delta;
         
         if (isUserInterfaceIdiomPhone == YES) {
-            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
             delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:targetLineNoFloat];
         } else {
             if (textView.contentSize.height > CGRectGetHeight(textView.frame) +  3* textView.font.lineHeight) {
@@ -9870,7 +9790,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         NSLog(@"triggerResizeTextToFitFrame: font size = %f on text = %@ with delta = %f",textView.font.pointSize,textView.text, delta);
         
         
-        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];  //是异步更新的，即如果这时去拿text height等参数时，不正确（实际中，发现即便使用setNeedDisplay, setNeedLayout,甚至layoutifneeded也不行），所以需要通过disptach到下一个runloop中去
+        [textView setFont:[textView.font fontWithSize:(textView.font.pointSize  - delta)]];
         
         double delayInSeconds = 0.02;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -9895,11 +9815,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
-/**
- *  用于resize的decrease/increase的differnce
- *  返回永远是正数（永远不会是0）。如果目标行数与现有一致或者本身文本为空，则返回0.15
- */
 - (float) getAbsDifferenceForResizingText:(UITextView *) textView withTargetLineNo:(float) targetLineNoFloat {
     
     if (textView.text.length == 0) {
@@ -9909,15 +9824,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     float fontSize = textView.font.pointSize;
     float lineHeight = textView.font.lineHeight;
     float textHeight = [self getTrustableTextHeight:textView];
-    int   lineNo     = round(textHeight/lineHeight); //textHeight/lineHeight一定是一个接近于整数的数值，这个由getTrustableTextHeight保证
+    int   lineNo     = round(textHeight/lineHeight);
     
     
-    //如何得到以下公式：测试发现，当行数希望达到原来的一倍时，这时字体的大小大约为1.8-2.2之间，为了安全期间，我们设定为1.5-2.5之间。
     float delta = fabsf(targetLineNoFloat - lineNo)/lineNo * fontSize  *0.5;
     
     NSLog(@"getAbsDifferenceForResizingText: targetLineNoFloat =%f,lineNo =%d,fontSize = %f, delta = %f on textView = %@",targetLineNoFloat,lineNo,fontSize,delta,textView.text);
     
-    if (delta < 0.15) {  //为了避免无休止的循环或迭代次数太多，比如有可能delta = 0.0001
+    if (delta < 0.15) {
         delta = 0.15;
     }
     
@@ -9925,13 +9839,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
-/**
- *  返回是一个float，这个需要注意，因为这个在只有一行的情况下很重要，比如如果只有一行，则int就有可能为0
- *  计算文本高度有4种（http://stackoverflow.com/questions/34207289/4-alternative-ways-to-calculate-text-height-in-a-uitextview-ios7-but-which-o?noredirect=1#comment56160153_34207289), 里面提到了以下的两种方法，但是没有一种是完全可靠的，但是有个规律，如下。
- *  值得注意的是，最近发现sizeThatFits可能是最佳答案，因为这个方法不需要经过run loop就能更新，但是为了安全起见，我们还是使用老的。将来如果发现问题，则
- *   我们还没有把这种计算方法应用到全部中，因为我们没有100%的把握（虽然已经有了99%），后续会全部运用。
- */
 - (float) getTrustableTextHeight:(UITextView *) textView {
     
     if (textView.text.length == 0) {
@@ -9942,7 +9849,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     CGFloat textHeight;
     
-    //第一种方法，实践中，我们发现，当textHeight/lineHeight足够接近一个整数时，才可以信任
     textHeight = textView.contentSize.height;
     if (fabs(textHeight/lineHeight - round(textHeight/lineHeight)) < 0.1) {
         return textHeight;
@@ -9950,7 +9856,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         NSLog(@"Untrustable textHeight calculation = %f, we will use another way",textHeight/lineHeight);
     }
     
-    //如果第一种方法不行，则使用第二种方法
     float fudgeFactor = [self getTextViewLeftMargin:textView];
     CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
     
@@ -9966,11 +9871,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 }
 
-/**
- *  第二步
- *  如果行数太少1，则增大字体大小 （注意，这时需要加上：(textView.contentSize.height <= CGRectGetHeight(textView.frame) )）
- *  先执行：triggerResizeTextToFitFrame，然后再执行triggerResizeTextToSameLineNo
- */
 - (BOOL) triggerResizeTextToSameLineNo_Bigger:(UITextView *) textView withMaxLineNumber: (long) maxLineNo {
     
     __weak __typeof(&*self)weakSelf = self;
@@ -9984,13 +9884,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if ((maxLineNo > lineNumber) && (maxLineNo != 0) && (lineNumber > 0)
               && (textView.contentSize.height <= CGRectGetHeight(textView.frame))
-                     && (textView.text.length >0)) {  //文字不超过frame,这个很重要
+                     && (textView.text.length >0)) {
         
     
         
         float delta;
         if (isUserInterfaceIdiomPhone == YES) {
-            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
             delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:maxLineNo];
         } else {
             if (maxLineNo > lineNumber + 3) {
@@ -10030,14 +9929,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/**
- *  第三步。
- *  3. 再， 如果字体有点大，则缩小。
- *  路径：
- *  a. 有可能是先经过第一步resize，然后第二步resize，最后到这里;
- *  b. 也有可能是直接调用
- *  c. 也有可能是先经过第一步的resize，然后到这里
- */
 - (BOOL) triggerResizeTextToSameLineNo_Smaller:(UITextView *) textView withMaxLineNumber: (long) maxLineNo {
     
     
@@ -10059,7 +9950,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         float delta;
         
         if (isUserInterfaceIdiomPhone == YES) {
-            //TODO:虽然这个逻辑也适合iPad，但是在接近releae状态下，我们不想冒这个风险。将来再仔细验证
             delta = [self getAbsDifferenceForResizingText:textView withTargetLineNo:maxLineNo];
         } else {
             if (maxLineNo > lineNumber + 3) {
@@ -10230,9 +10120,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-/** 
- *  Deprecated*******不再使用
- */
 - (BOOL) adjustAllTextViewsToFitIfNecessary_Old {
     
     if (([self.currentPack.platform isEqualToString:@"iPhone"] && (isUserInterfaceIdiomPhone)) ||
@@ -10262,7 +10149,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     if (_segmentedControl.selectedSegmentIndex == 0) {
         
         
-        //------行数不一致时，增大字体 （初调，步长大）-------
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
         while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
@@ -10292,10 +10178,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             i++;
             usleep(1000);
         }
-        
-        
-        //------粗粒度的调整）-------
-        
+ 
         if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:Resize_Accuracy_Type_Low]){
             result= YES;
         }
@@ -10308,7 +10191,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
 
-        //-----行数太小时，增大字体 （还是用粗粒度，通过最后的adjustFontToFit进行保证），这种做法的原因是lineNumberWithUITextView精度无法保证-----
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
         while ((_currentCard.question.lineNoSubheading > lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
@@ -10339,7 +10221,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             usleep(1000);
         }
         
-        //------减少字体大小（精细，步长小）-------
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingQuestion];
         while ((_currentCard.question.lineNoSubheading < lineNumber) && (_currentCard.question.lineNoSubheading != 0) && (i<kMax) && (lineNumber > 0)) {
@@ -10372,7 +10253,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         
-        //------以防万一，我们需要再做一次高粒度的fit------
         if ([self adjustFontToFit:_subheadingQuestion withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
@@ -10383,21 +10263,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         if ([self adjustFontToFit:_subQuestion withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
-    
-        
-        
-//        //这样下次就不会进行autoresize操作了 （除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
-//        if (result == YES) {
-//            _currentCard.question.autoresizeFlag = 0;
-//        }
-        
-        
+
         
         
     } else {
         
-        
-        //-------行数太小时，增大字体 （粗调，步长大）-------
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
         while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
@@ -10434,9 +10304,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             usleep(5000);
         }
 
-        
-        //---- 粗粒度的调整----
-        
         if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:Resize_Accuracy_Type_Low]){
             
             result= YES;
@@ -10449,14 +10316,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
 
         
-        //----------行数太小时，增大字体 （还是用粗粒度，通过最后的adjustFontToFit进行保证），这种做法的原因是lineNumberWithUITextView精度无法保证-----
+        
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
         while ((_currentCard.answer.lineNoSubheading > lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
             
             [_subheadingAnswer setFont:[_subheadingAnswer.font fontWithSize:(_subheadingAnswer.font.pointSize + 1)]];
             lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
-            //[iConsole info:@"%s:_currentCard.answer.lineNoSubheading = %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSubheading ,lineNumber];
             i++;
             usleep(1000);
         }
@@ -10468,7 +10334,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
             [_mainAnswer setFont:[_mainAnswer.font fontWithSize:(_mainAnswer.font.pointSize + 1)]];
             lineNumber = [self lineNumberWithUITextView:_mainAnswer];
-            //[iConsole info:@"%s:_currentCard.answer.lineNoMain= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoMain,lineNumber];
+        
             i++;
             usleep(1000);
         }
@@ -10480,13 +10346,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
             [_subAnswer setFont:[_subAnswer.font fontWithSize:(_subAnswer.font.pointSize + 1)]];
             lineNumber = [self lineNumberWithUITextView:_subAnswer];
-            //[iConsole info:@"%s:_currentCard.answer.lineNoSub= %d,lineNumber=%d",__FUNCTION__,_currentCard.answer.lineNoSub,lineNumber];
             i++;
             usleep(5000);
         }
 
-        
-        //----行数太多，减少字体大小 （精调，步长小）-----
+    
         i = 0;
         lineNumber = [self lineNumberWithUITextView:_subheadingAnswer];
         while ((_currentCard.answer.lineNoSubheading < lineNumber)&& (_currentCard.answer.lineNoSubheading != 0)&& (i<kMax)&& (lineNumber > 0)) {
@@ -10522,9 +10386,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             usleep(5000);
         }
 
-        
-        //---- 以防万一，我们需要再做一次高粒度的fit----
-        
+
         if ([self adjustFontToFit:_subheadingAnswer withHighAccuracy:Resize_Accuracy_Type_Extreme]){
             result= YES;
         }
@@ -10535,12 +10397,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             result= YES;
         }
         
-        
-        
-        //这样下次就不会进行autoresize操作了。除非切换到另外一个pack或fore to restart。此autoresizeFlag字段不会写入数据库）
-//        if (result == YES) {
-//            _currentCard.answer.autoresizeFlag = 0;
-//        }
     }
 
     
@@ -10548,15 +10404,11 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     return result;
 }
 
-
-/**
- *  这只是一个经验值，经过仔细的样本采集
- */
 - (float) getTextViewLeftMargin:(UITextView *) textView {
     
-    return 0.0;  //最新逻辑. 因为我们已经设置了textContainerInset ＝ UIEdgeInsetsZero;
+    return 0.0;
 
-    int delta = 3;  //delta引入是让计算更保守，让行数的计算结果宁可比实际多，也不要少，有机会让程序通过最后的adjustFontToFit来完成
+    int delta = 3;
     
     float size = textView.font.pointSize;
     
@@ -10584,25 +10436,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/**
- * 用于计算行数
- */
 - (float) getTextSizeHeight:(UITextView *) textView{
     
     
-    if (TRUE) { //这是正确的做法******
-        
-        //最终我们是通过这种方法计算行数的： float rawLineNumber = (_textView.contentSize.height - _textView.textContainerInset.top - _textView.textContainerInset.bottom) / _textView.font.lineHeight;
-        //则这里需要直接返回textView.contentSize.height
+    if (TRUE) {
         
         return textView.contentSize.height;
         
     } else {
-        
-        //这是错误的计算方法****
-        //实践中发现，这种方法在计算行数时，会造成突变，比如从font size = 25.8到25.7这么小的一个变化时，行高会突然从120到100。这是不可接受的
-        
-        //[iConsole info:@"%s",__FUNCTION__];
         float fudgeFactor = [self getTextViewLeftMargin:textView];
         CGSize tallerSize = CGSizeMake(textView.frame.size.width-fudgeFactor*2,999);
         
@@ -10615,7 +10456,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 stringSize = [textView.text sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:UILineBreakModeWordWrap];
             }
             
-            CGFloat textHeight = stringSize.height; //textView.contentSize.height不准确
+            CGFloat textHeight = stringSize.height;
             return textHeight;
             
         } else {
@@ -10628,7 +10469,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                                                           attributes:attr
                                                              context:nil];
             
-            CGFloat textHeight = labelBounds.size.height; //textView.contentSize.height不准确
+            CGFloat textHeight = labelBounds.size.height;
             return textHeight;
         }
     }
@@ -10640,13 +10481,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 
 
-/**
- *  当字体太大时，自动调整font size以适合textView frame]。同时为了不让字体过小，也设置了下限
- *  有几个前提条件（同时满足下）触发这个方法
- *  1. 必须是不可编辑的卡片
- *  2. textview必须有内容
- *  3. 文字高度超出了[textView frame]。当文字很小，导致高度很小时，我们不作调整，而是默认为10号字体
- */
 - (BOOL) adjustFontToFit:(UITextView *) textView withHighAccuracy:(Resize_Accuracy_Type) accuracyType {
     [iConsole info:@"%s",__FUNCTION__];
     BOOL result = NO;
@@ -10663,14 +10497,14 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    [textView layoutSubviews]; //否则textHeight可能为<0
+    [textView layoutSubviews];
     CGFloat frameHeight = textView.frame.size.height;
     CGFloat textHeight = [self getTextSizeHeight:textView];
     
     CGFloat originalTextHeight = textHeight;
     BOOL outputFlag = FALSE;
     
-    //it could be possible。实际情况中发生了，具体原因不明
+
     while (textHeight <0) {
         
         [iConsole error:@"%s:......Fuck textHeight <0",__FUNCTION__];
@@ -10694,22 +10528,12 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     float orginalFontSize = textView.font.pointSize;
     
-    //为了防止字体太小而设立
     int gate;
     if (_isPlayingCard) {
         gate = 10;
     } else {
         gate = 8;
     }
-    
-    
-    /**
-     *  以下逻辑关键是提前设置了textview.textContainerInset ＝ UIEdgeInsetsZero;
-     *  最早我们使用了一个经验值作为inset.top和inset.bottom的数值（frameHeight/5）
-     *  但是后来我们发现，如果没有设置UIEdgeInsetsZero（默认是top/bottom margin = 8)，当高度小（比如＜40），文本可容纳的高度 != textHeight + inset.top + inset.bottom。只有在高度达到一定成都时，才成立。
-     *  最终，我们发现设置UIEdgeInsetsZero会完美解决这个问题，因为我们在任何情况以下都成立:文本可容纳的高度 ＝ textHeight
-     */
-    
     
     
     
@@ -10720,7 +10544,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         CGFloat pointSize = textView.font.pointSize;
         
         if (pointSize <=gate) {
-            //字体越小，size变化越明显
             [iConsole warn:@"%s:......textView.font.pointSize <gate:%@",__FUNCTION__,textView.text];
             break;
         }
@@ -10758,7 +10581,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
         } else if (accuracyType == Resize_Accuracy_Type_Extreme) {
             
-            //设置成与Resize_Accuracy_Type_High一致，在实际中发现，如果粒度太小，会耗费时间（甚至模拟器上可能会花费>2秒时间）
             if (pointSize < 10.0) {
                 delta = 0.15;
             } else if (pointSize < 12.0) {
@@ -10785,10 +10607,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
     
-    if ([self checkCardEditable]) { //只有当Edittable才有这个必要
-        
-        //必须把auto resize的最终字体大小限制在离散值内
-        //_keyboardTopViewV2和_keyboardTopViewForInputViewV2返回一样的sizeArray，任取一都可以
+    if ([self checkCardEditable]) { 
         if (textView.font.pointSize > [[_keyboardTopViewV2.realSizeArray firstObject] intValue]) {
             
             int index = [Common nearestIndexForStringArray:_keyboardTopViewV2.realSizeArray withElement:textView.font.pointSize];
@@ -10833,7 +10652,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     [self commitQuestionAndAnswerData];
     
-    //在操作后，我们不需要返回之前的现场，因为我们是在new card save操作(窗口将被关闭）
     if ((self.tag == NEW_FLASHCARDVIEW_TAG) && (_segmentedControl.selectedSegmentIndex == 1)) {
         [_segmentedControl setSelectedSegmentIndex:0];
         [self refreshAll];
@@ -10871,9 +10689,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _HUD.mode = MBProgressHUDModeIndeterminate;
         [_HUD show:YES];
         _HUD.labelText = NSLocalizedString(@"DIALOG_APPLY_TO_ALL_CARD",@"");
-        
-        
-        //在creating view中，execUpdatelogoImageForAllCards适用于:job title,name, sidebar, logo引起的需要全部更新sidebar thumbnail情况。TODO:未来需要重构这段逻辑
+
         [self performSelector:@selector(execUpdatelogoImageForAllCards:) withObject:_logoImageFullPath afterDelay:0.01];
         
         _isAllCardsNeedToBeUpdateForNewCardOnly = NO;
@@ -11622,10 +11438,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark – Hittest
 
-/**
- *  适用于iphone且playmode下。
- *  在playmode下，playsoundbutton和mutebutton由于在Flashcard的frame外面，导致它们无法接收touch事件，所以需要重写hitTest
- */
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     if (isUserInterfaceIdiomPhone && _isPlayingCard) {
@@ -11850,7 +11662,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([myArray count] == 0) {
-            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingQuestion"]]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
+            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingQuestion"]]; 
         }
         
     } else {
@@ -11876,7 +11688,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if ([myArray count] == 0) {
-            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingAnswer"]]; //需要有个默认的，否则在auto delay play时，如果当前卡片没有内容，则就无法回调到下一张卡片了
+            [myArray addObject:[NSDictionary dictionaryWithObject:@"   " forKey:@"subheadingAnswer"]]; 
         }
     }
     
@@ -11988,9 +11800,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
 
 #pragma mark – Vertical Alignment special logic
 
-/**
- *  更新InputView中的Alignment中Veritcal barbutton item的状态（颜色）
- */
 - (void) updateVerticalAlignmentBarButtonStatus {
     
     NSArray *targetButtonArray;
@@ -12042,7 +11851,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             //
         }
         
-        int nominalFontSize = [_keyboardTopViewV2 getNominalSizeFromRealSize:size]; //这里_keyboardTopViewV2和_keyboardTopViewForInputViewV2 其实是一样的
+        int nominalFontSize = [_keyboardTopViewV2 getNominalSizeFromRealSize:size];
         int contentOffsetIndex = 0;
         for (int i = 0;i < [targetButtonArray count];i++) {
             UIButton *button = targetButtonArray[i];
@@ -12108,13 +11917,9 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if (isDefault) {
-            //第一个是back，所以需要index = 1开始
             [targetButtonArray[1] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
-        
-        //semi-transparent logic update
-        //需要放在最后面
         BOOL isSemiTransparent = false;
         {
             if (_lastBecomeFirstRespondTextView.tag == kTagSubheadingQuestion){
@@ -12211,7 +12016,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         }
         
         if (isDefault) {
-            //第一个是back，所以需要index = 1开始
             [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
         }
         
@@ -12224,10 +12028,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-/**
- *  更新InputView中的Alignment中所有barbutton的状态,包括left, right, center,justify和veritcal
- 
- */
+
 - (void) updateAlignButtonsStatus:(id) sender {
     if (_lastBecomeFirstRespondTextView) {
         
@@ -12245,7 +12046,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         int contentOffsetIndex = 0;
         switch (_lastBecomeFirstRespondTextView.textAlignment) {
             case NSTextAlignmentLeft:
-                contentOffsetIndex = 0;  //从1开始，因为第一个是backbutton
+                contentOffsetIndex = 0;
                 [targetButtonArray[0] setBackgroundImage:[UIImage imageNamed:@"circle_selected_button"] forState:UIControlStateNormal];
                 break;
             case NSTextAlignmentCenter:
@@ -12264,7 +12065,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 break;
         }
         
-        for (int i =0; i<[targetButtonArray count] - 1; i++) {  //不包含最后一个Vertical，也不包含第一个backbutton
+        for (int i =0; i<[targetButtonArray count] - 1; i++) {
             if (i != contentOffsetIndex) {
                 [targetButtonArray[i] setBackgroundImage:nil forState:UIControlStateNormal];
             }
@@ -12342,9 +12143,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
 }
 
-/**
- *  当选择了“vertical alignment”会执行这个
- */
 - (void) setVerticalAlignment:(UITextView *) textView {
     
     if (textView == nil) {
@@ -12404,12 +12202,7 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     }
     
 }
- 
-/**
- *  KVO
- *  仅适用于[self isVerticalAlignment:tv] ＝ YES
- *  当内容改变时，自动进行vertical alignment调整
- */
+
 -(void)observeValueForKeyPath:(NSString *)keyPath   ofObject:(id)object   change:(NSDictionary *)change   context:(void *)context
 {
     if ([@"contentSize" isEqualToString:keyPath]) {
@@ -12426,10 +12219,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-
-/**
- *  我们不能使用hidden属性，因为triggerResizeTextToFitFrame的中间过程中会局部hidden
- */
 - (void) hideAllSemiTransparentTextViews {
     
     /*
@@ -12465,9 +12254,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
 }
 
-/**
- *  注意，由于alignment跟内容相关，所以必须等到内容填充好后才允许执行
- */
 - (void) updateQuestionAnswerAllTextViewVeriticalAlignment {
     
     //question part
@@ -12616,17 +12402,13 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
         if ([Common isPlaceholderFilePathOrDirectory:_questionBackgroundImageFullPath]) {
-            //虽然最终保存的是JPG格式，但是我们统一以PNG作为后缀（整个Pack的所有图片资源的后缀都是PNG格式的）
             _questionBackgroundImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
         } else {
-            //当之前已经有图片时，我们才操作
-            //step1: 拷贝一份更改前的图片到undoCardBackGroundImageForQuestionPath
             NSError *error;
             NSString *undoCardBackGroundImageForQuestionPath = [FileOperationHelper undoCardBackGroundImageForQuestionPath];
             [[NSFileManager defaultManager] removeItemAtPath:undoCardBackGroundImageForQuestionPath error:nil];
             [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:_questionBackgroundImageFullPath] toURL:[NSURL fileURLWithPath:undoCardBackGroundImageForQuestionPath] error:&error];
             
-            //step1: 写入文件，并置K_Is_Allow_Undo_Question_Background_Image，允许下次undo
             if (error) {
                 [iConsole error:@"%s:Error when copyItem.%@",__FUNCTION__,[error description]];
             } else {
@@ -12658,7 +12440,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         _questionBackgroundImageView.image = [UIImage imageWithData:imageData];
     } else {
         if ([Common isPlaceholderFilePathOrDirectory:_answerBackgroundImageFullPath]) {
-            //虽然最终保存的是JPG格式，但是我们统一以PNG作为后缀（整个Pack的所有图片资源的后缀都是PNG格式的）
             _answerBackgroundImageFullPath = [FileOperationHelper generateUniquePNGImageFilePathUnderImagesFolder];
         }else {
             
@@ -13165,8 +12946,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 }
             }
             
-            
-            //step3: 我们不支持多级的undo，所以需要重置
             NSMutableDictionary *cardMutableDict;
             cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
             
@@ -13191,8 +12970,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
                 }
             }
             
-            
-            //我们不支持多级的undo，所以需要重置
             NSMutableDictionary *cardMutableDict;
             cardMutableDict = [NSMutableDictionary dictionaryWithDictionary:cardDict];
             
@@ -13202,8 +12979,6 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             [self setUndoForCardBackgroundImage:cardMutableDict];
             
         }
-        
-        //step4: 保存
         if (self.tag == NEW_FLASHCARDVIEW_TAG) {
             //we will save until after we press the save button
             if (_segmentedControl.selectedSegmentIndex == 0) {

@@ -96,9 +96,6 @@
 #pragma mark -
 #pragma mark Private Methods
 
-/**
- *  这里的Index是emotion list的index
- */
 - (CGRect)_frameForEmoticonViewAtIndex:(NSInteger)index{
     
     CGFloat emoticonViewWidth = _gridContainerView.bounds.size.width / _columnCount;
@@ -147,21 +144,17 @@
     
     NSInteger row = point.y / emoticonViewHeight;
     NSInteger column = point.x / emoticonViewWidth;
-    
-    //这里的index非实际的symbol box的列表index。
-    //由于我们的grid view非真正grid view，其中有两个symbol占据了4个grid item
+
     NSInteger index =  row * _columnCount + column;
     
     if (self.currentPage == 0) {
         if (index <K_Space_Bar_Index) {
             return [_emoticons objectAtIndex:index];
         } else if ((index == K_Space_Bar_Index) || (index == K_Space_Bar_Index + 1)) {
-            //这是一个Space Bar
             return [_emoticons objectAtIndex:K_Space_Bar_Index];
         } else if (index < K_Line_Break_Index + 1) {
             return [_emoticons objectAtIndex:index - 1];
         } else if ((index == K_Line_Break_Index + 1) || (index == K_Line_Break_Index + 1 + 1)) {
-            //这是一个Space Bar
             return [_emoticons objectAtIndex:K_Line_Break_Index];
         } else if (index < K_Delete_Index + 2) {
             return [_emoticons objectAtIndex:index - 2];

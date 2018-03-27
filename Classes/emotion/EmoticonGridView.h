@@ -28,9 +28,6 @@
 @property (nonatomic,assign ) CGSize                   emoticonThumbSize;
 @property (nonatomic, assign) id<EmoticonGridViewDelegate> delegate;
 
-/**
- *  在实际中，第一个page中有一个space bar需要特殊处理
- */
 - (id)initWithEmoticons:(NSArray *)emoticons width:(int)width atPage:(int) page;
 
 @end

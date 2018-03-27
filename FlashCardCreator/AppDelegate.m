@@ -300,7 +300,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 - (void) setupAudioWithoutRecord {
     
     NSError *error;
-    //这个为必须的，否则无法
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
     
@@ -325,7 +324,6 @@ const NSString * global_bundleIdentifier = @"com.flipflash.FlipFlashCards";
 - (void) setupAudioWithRecord {
     
     NSError *error;
-    //这个为必须的，否则无法
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
 
