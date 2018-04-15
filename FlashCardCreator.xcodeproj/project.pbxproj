@@ -2335,7 +2335,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",
-					"$(PROJECT_DIR)/Libraries/Parse",
 					"$(PROJECT_DIR)/Libraries",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2385,7 +2384,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Libraries/**",
-					"$(PROJECT_DIR)/Libraries/Parse",
 					"$(PROJECT_DIR)/Libraries",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
