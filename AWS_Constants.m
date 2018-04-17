@@ -22,6 +22,6 @@ NSString *const CognitoIdentityPoolId = @"us-east-1:19efa782-177f-476a-a62b-c504
 NSString *const S3BaseURL = @"https://s3.amazonaws.com";
 
 //NSString *const S3SamplePackURL =  @"http://7o51o0.com1.z0.glb.clouddn.com/Pack1440729625-2043618070.zip";
-NSString *const S3SamplePackURL = @"https://s3-us-west-1.amazonaws.com/ffcmaster/FlipFlashCards.zip?from=Flipflashcards&type=demo";
+NSString *const S3SamplePackURL = @"https://s3.amazonaws.com/kimflipflashcardscom-55b5aa55673793805862/SAMPLECARDES1508045661293390394.zip?from=Flipflashcards&type=demo";
 
 NSString *const BucketPostfixAfterUserName = @"55b5aa55673793805862";
