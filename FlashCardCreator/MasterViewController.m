@@ -1203,7 +1203,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showIntroductionVideoNotification:(NSNotification *) notification {
     
-    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/newuser"];
+    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/getting-started/new-user/?theme=internetics_blank"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
@@ -1218,7 +1218,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showVisitStoreNotification:(NSNotification *) notification {
     
-    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/packs"];
+    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/tutorials/tutorial-videos/?theme=internetics_blank"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
@@ -1232,7 +1232,7 @@ extern BOOL isFromNewCreatedCard;
 
 - (void) showHelpNotification:(NSNotification *) notification {
     
-    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/quick-start-tutorial/"];
+    NSURL *url = [NSURL URLWithString:@"http://www.flipflashcards.com/tutorial-packs/ios-tutorial-packs/?theme=internetics_blank"];
     SimpleWebBrowserController *controller = [[SimpleWebBrowserController alloc] initWithURL:url];
     controller.hidesToolbar = NO;
     if (isUserInterfaceIdiomPhone) {
