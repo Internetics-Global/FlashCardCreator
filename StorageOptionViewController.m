@@ -39,6 +39,10 @@
     
     self.title = @"Storage";
     
+    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideFFCDrive)];
+    fiveTap.numberOfTapsRequired = 5;
+    [self.view addGestureRecognizer:fiveTap];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,7 +65,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
+    if (showFFC) {
+        return 3;
+    } else {
+        return 2;
+    }
 }
 
 
@@ -118,6 +127,13 @@
     cell.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1];
     cell.textLabel.textColor = [UIColor whiteColor];
     return cell;
+}
+
+- (void) hideFFCDrive {
+    int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
+    [[NSUserDefaults standardUserDefaults] setBool:!showFFC forKey:@"K_Show_FFC_Drive"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [_alertTable reloadData];
 }
 
 
