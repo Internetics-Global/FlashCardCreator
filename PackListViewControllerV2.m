@@ -760,11 +760,6 @@
 }
 
 - (void) freeLibraryImageViewClicked {
-  
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-        return;
-    }
     
     if (isUserInterfaceIdiomPhone) {
     } else {
