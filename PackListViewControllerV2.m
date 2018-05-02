@@ -234,7 +234,7 @@
         cell.addNewPackImageView.userInteractionEnabled = YES;
         [cell.addNewPackImageView addGestureRecognizer:addNewPackTapGesture];
         
-        UITapGestureRecognizer *libraryTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(libraryImageViewClicked)];
+        UITapGestureRecognizer *libraryTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(freeLibraryImageViewClicked)];
         libraryTapGesture.numberOfTapsRequired = 1;
         cell.libraryImageView.userInteractionEnabled = YES;
         [cell.libraryImageView addGestureRecognizer:libraryTapGesture];
@@ -759,8 +759,22 @@
   [self createNewPackButtonClicked:nil];
 }
 
-- (void) libraryImageViewClicked {
-  [self visitStoreButtonClicked:nil];
+- (void) freeLibraryImageViewClicked {
+  
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
+        return;
+    }
+    
+    if (isUserInterfaceIdiomPhone) {
+    } else {
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        [self.popController dismissPopoverAnimated:YES];
+        [self.popController.delegate popoverControllerDidDismissPopover:self.popController];
+        
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_FREE_LIBRARY_NOTIFICATION object:self];
 }
 
 - (int) getLeftSafeArea {
