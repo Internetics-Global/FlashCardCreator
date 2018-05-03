@@ -37,7 +37,7 @@
 
 + (BOOL) isNoAdVersion {
     
-   
+    //   return true;
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_No_Ad_Version_Flag];
     return val;
