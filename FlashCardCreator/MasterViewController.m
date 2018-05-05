@@ -265,11 +265,7 @@ enum popover_enum {
                                              initWithCustomView:newPackButton];
     
     
-    if ([MutipleTargetHelper isFullVersion]) {
-        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
-    } else {
-        _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button_dimmed.png"] target:self action:@selector(editButtonClicked:)];
-    }
+    _editButton = [FCCBarButton buttonWithImage:[UIImage imageNamed:@"edit_button.png"] target:self action:@selector(editButtonClicked:)];
     UIBarButtonItem *editBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:_editButton];
     
     
@@ -736,10 +732,6 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)editButtonClicked:(id) sender
 {
-    if ([MutipleTargetHelper isFullVersion] == false) {
-        [MutipleTargetHelper showAlertToUpgradeToFullVersion];
-        return;
-    }
     
     if (self.tableView.editing == FALSE) {
         self.tableView.editing = TRUE;
@@ -1465,6 +1457,10 @@ extern BOOL isFromNewCreatedCard;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if ([MutipleTargetHelper isFullVersion] == false) {
+        return;
+    }
     
     
     [iConsole info:@"%s",__FUNCTION__];
