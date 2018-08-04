@@ -39,9 +39,9 @@
     
     self.title = @"Storage";
     
-    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideFFCDrive)];
-    fiveTap.numberOfTapsRequired = 5;
-    [self.view addGestureRecognizer:fiveTap];
+//    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideFFCDrive)];
+//    fiveTap.numberOfTapsRequired = 5;
+//    [self.view addGestureRecognizer:fiveTap];
     
 }
 
