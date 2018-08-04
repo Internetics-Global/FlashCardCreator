@@ -213,20 +213,31 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
     [[RMStore defaultStore] restoreTransactionsOnSuccess:^(NSArray *transactions){
         NSLog(@"Transactions restored");
         
+        BOOL isExpectedTransaction = false;
+        NSString *productIdentifiers = @"productIdentifier";
+        
         for (SKPaymentTransaction *item in transactions) {
             if ([item.payment.productIdentifier isEqualToString:IAPProductID_1_Dollar]){
+                isExpectedTransaction = true;
                 [MutipleTargetHelper setNoAdVersionFlag:YES];
                 [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
             } else if ([item.payment.productIdentifier isEqualToString:IAPProductID_5_Dollar]) {
+                isExpectedTransaction = true;
                 [MutipleTargetHelper setFullVersionFlag:YES];
                 [[NSNotificationCenter defaultCenter] postNotificationName:IAP_PURCHASE_SUCCESS_NOTIFICATION object:nil userInfo:nil];
             }
+            productIdentifiers = [NSString stringWithFormat:@"%@: %@",productIdentifiers,item.payment.productIdentifier];
         }
         
         [self dismiss];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Successfully restored, please restart the app to be effective" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        if (isExpectedTransaction) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Successfully restored, please restart the app to be effective" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"Unexpected transactions with: %@", productIdentifiers] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
         
     } failure:^(NSError *error) {
         NSLog(@"%s:%@",__FUNCTION__,error);
