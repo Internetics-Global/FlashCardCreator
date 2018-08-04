@@ -65,8 +65,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
-    if (showFFC) {
+    //int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
+    if (false) {
         return 3;
     } else {
         return 2;
