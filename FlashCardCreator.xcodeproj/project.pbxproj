@@ -117,6 +117,7 @@
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
 		51BF5B2E990D0D495A4B1394 /* libPods-FlashCardCreator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */; };
+		52031655215BA274008A277C /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52031654215BA274008A277C /* libc++abi.tbd */; };
 		751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751234671DFA2EBF001F0065 /* StorageOptionViewController.m */; };
 		7512346C1DFA306B001F0065 /* GoogleDriveShareKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveShareKitHelper.m */; };
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
@@ -250,7 +251,6 @@
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
-		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886726301C1164CF007E86CE /* PlayOptionViewController.m */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
@@ -492,6 +492,8 @@
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
+		52031652215BA25A008A277C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		52031654215BA274008A277C /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.release.xcconfig"; sourceTree = "<group>"; };
 		751234661DFA2EBF001F0065 /* StorageOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageOptionViewController.h; sourceTree = "<group>"; };
 		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
@@ -782,9 +784,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52031655215BA274008A277C /* libc++abi.tbd in Frameworks */,
 				7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */,
 				759C45231DB4934600789008 /* Photos.framework in Frameworks */,
-				88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
@@ -1382,6 +1384,8 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52031654215BA274008A277C /* libc++abi.tbd */,
+				52031652215BA25A008A277C /* libc++.tbd */,
 				7538848E1DB9A9B500AF106B /* AVKit.framework */,
 				759C45221DB4934600789008 /* Photos.framework */,
 				88620B5F1AB104120046B64E /* libstdc++.6.dylib */,
