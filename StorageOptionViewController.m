@@ -39,9 +39,9 @@
     
     self.title = @"Storage";
     
-//    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideFFCDrive)];
-//    fiveTap.numberOfTapsRequired = 5;
-//    [self.view addGestureRecognizer:fiveTap];
+    UITapGestureRecognizer *fiveTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideFFCDrive)];
+    fiveTap.numberOfTapsRequired = 5;
+    [self.view addGestureRecognizer:fiveTap];
     
 }
 
@@ -65,8 +65,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
-    if (false) {
+    int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
+    if (showFFC) {
         return 3;
     } else {
         return 2;
