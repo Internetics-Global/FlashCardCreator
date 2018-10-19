@@ -8396,7 +8396,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:_imagePickerController animated:YES];
     } else {
         
-        UIView *rootView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        UIView *rootView = appDelegate.splitViewController.view;
         
         CGPoint point;
         if (sender == nil) {
