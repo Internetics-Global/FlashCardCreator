@@ -708,7 +708,7 @@ enum popover_enum {
         }
     }
     
-    _settingPopoverController.popoverContentSize = CGSizeMake(320, 490);
+    _settingPopoverController.popoverContentSize = CGSizeMake(320, 550);
     CGPoint point = [_settingButton.customView convertPoint:CGPointZero toView:self.view];
     CGRect rect = CGRectMake(point.x, point.y, CGRectGetWidth(_settingButton.customView.frame), CGRectGetHeight(_settingButton.customView.frame));
     [_settingPopoverController presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
