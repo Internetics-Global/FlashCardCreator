@@ -117,6 +117,7 @@
 		2DF980E516C26CC60092AAF6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF980E416C26CC60092AAF6 /* CoreText.framework */; };
 		2DF981E916C4F2660092AAF6 /* CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF981E816C4F2650092AAF6 /* CSS.m */; };
 		51BF5B2E990D0D495A4B1394 /* libPods-FlashCardCreator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA088441375F16144923E81 /* libPods-FlashCardCreator.a */; };
+		52031655215BA274008A277C /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52031654215BA274008A277C /* libc++abi.tbd */; };
 		751234681DFA2EBF001F0065 /* StorageOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 751234671DFA2EBF001F0065 /* StorageOptionViewController.m */; };
 		7512346C1DFA306B001F0065 /* GoogleDriveShareKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512346B1DFA306B001F0065 /* GoogleDriveShareKitHelper.m */; };
 		753884881DB89F6800AF106B /* MultimediaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 753884871DB89F6800AF106B /* MultimediaView.m */; };
@@ -491,6 +492,8 @@
 		2DF980E416C26CC60092AAF6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		2DF981E716C4F2640092AAF6 /* CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSS.h; sourceTree = "<group>"; };
 		2DF981E816C4F2650092AAF6 /* CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSS.m; sourceTree = "<group>"; };
+		52031652215BA25A008A277C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		52031654215BA274008A277C /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		54FEB0872C9B0E0EB668BD72 /* Pods-FlashCardCreator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashCardCreator.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlashCardCreator/Pods-FlashCardCreator.release.xcconfig"; sourceTree = "<group>"; };
 		751234661DFA2EBF001F0065 /* StorageOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageOptionViewController.h; sourceTree = "<group>"; };
 		751234671DFA2EBF001F0065 /* StorageOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorageOptionViewController.m; sourceTree = "<group>"; };
@@ -781,6 +784,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52031655215BA274008A277C /* libc++abi.tbd in Frameworks */,
 				7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */,
 				759C45231DB4934600789008 /* Photos.framework in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
@@ -1380,6 +1384,8 @@
 		2DCE0B0A16798E04007A8CAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52031654215BA274008A277C /* libc++abi.tbd */,
+				52031652215BA25A008A277C /* libc++.tbd */,
 				7538848E1DB9A9B500AF106B /* AVKit.framework */,
 				759C45221DB4934600789008 /* Photos.framework */,
 				88620B5F1AB104120046B64E /* libstdc++.6.dylib */,
@@ -2357,7 +2363,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "68ff393b-c6ab-4a64-9ebe-c679adca2d8e";
 				"PROVISIONING_PROFILE[sdk=*]" = "cbcafb6e-a6ca-4a3b-9f4c-42ef33048fe8";
-				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAppStore160318;
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdHoc181018;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2406,7 +2412,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "68ff393b-c6ab-4a64-9ebe-c679adca2d8e";
 				"PROVISIONING_PROFILE[sdk=*]" = "cbcafb6e-a6ca-4a3b-9f4c-42ef33048fe8";
-				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAppStore160318;
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdHoc181018;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

@@ -235,15 +235,13 @@ typedef NS_ENUM(NSInteger, Purchase_Type) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Successfully restored, please restart the app to be effective" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:[NSString stringWithFormat:@"Unexpected transactions with: %@", productIdentifiers] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You haven't purchased it" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
         }
         
     } failure:^(NSError *error) {
         NSLog(@"%s:%@",__FUNCTION__,error);
-        
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Restore failed, please try again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restore failed, please try again" message:[NSString stringWithFormat:@"%@",error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         
     }];
