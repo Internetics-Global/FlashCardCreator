@@ -250,7 +250,6 @@
 		885C3DD41926281C0090F63C /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885C3DD11926281C0090F63C /* PopoverView.m */; };
 		885C4FD51700013C00238FD5 /* card_cover_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 885C4FD41700013C00238FD5 /* card_cover_image_placeholder.png */; };
 		886075031932B167009C16EE /* DKCircleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 886075021932B167009C16EE /* DKCircleButton.m */; };
-		88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88620B5F1AB104120046B64E /* libstdc++.6.dylib */; };
 		886726311C1164CF007E86CE /* PlayOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 886726301C1164CF007E86CE /* PlayOptionViewController.m */; };
 		8867CAC0179351BE007298EF /* bar_button_black@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CABF179351BE007298EF /* bar_button_black@2X.png */; };
 		8867CAE317935279007298EF /* bar_button_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 8867CAE217935279007298EF /* bar_button_black.png */; };
@@ -784,7 +783,6 @@
 			files = (
 				7538848F1DB9A9B500AF106B /* AVKit.framework in Frameworks */,
 				759C45231DB4934600789008 /* Photos.framework in Frameworks */,
-				88620B601AB104130046B64E /* libstdc++.6.dylib in Frameworks */,
 				88E93D7A1A634DF8007CB7A2 /* AudioToolbox.framework in Frameworks */,
 				880E6727182720CE0054DDD0 /* CoreVideo.framework in Frameworks */,
 				880E6725182720C60054DDD0 /* AVFoundation.framework in Frameworks */,
@@ -2040,7 +2038,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:691893564635:ios:8428be58808fc3ca\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/security/ffc_firebase/ffc_firebase_crash_reporting_private_key\"";
+			shellScript = "exit 0\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:691893564635:ios:8428be58808fc3ca\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/security/ffc_firebase/ffc_firebase_crash_reporting_private_key\"\n";
 		};
 		79C7E1B255B4120EDE33892D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
