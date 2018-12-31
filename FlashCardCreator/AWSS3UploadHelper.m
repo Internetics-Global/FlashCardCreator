@@ -156,14 +156,14 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     if (isUserInterfaceIdiomPhone) {
         actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:@"Exit" destructiveButtonTitle:nil otherButtonTitles:
-                       @"Facebook",
+                    //   @"Facebook",
                        @"Twitter",
                        @"Email",
                        @"Copy",
                        nil];
     } else {
         actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DIALOG_SHARE",@"") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:
-                       @"Facebook",
+                 //      @"Facebook",
                        @"Twitter",
                        @"Email",
                        @"Copy",
@@ -744,7 +744,7 @@ typedef NS_ENUM(NSUInteger, Type_ActionSheet) {
     
     if (actionSheet.tag == Type_ActionSheet_Share) {
         
-        switch (buttonIndex) {
+        switch (buttonIndex + 1) {
             case 0: {
                 
                 APP_DELEGATE.isToShowShareActinSheet_AWS = true;
