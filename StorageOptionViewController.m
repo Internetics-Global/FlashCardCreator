@@ -67,9 +67,9 @@
 {
     int showFFC = [[NSUserDefaults standardUserDefaults] boolForKey:@"K_Show_FFC_Drive"];
     if (showFFC) {
-        return 3;
-    } else {
         return 2;
+    } else {
+        return 1;
     }
 }
 
@@ -93,17 +93,7 @@
         
         
     }
-    else if (indexPath.row == 1)
-    {
-        cell.textLabel.text = NSLocalizedString(@"Table_Item_Google_Drive",@"");
-        
-        UISwitch *mySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-        [mySwitch addTarget:self action:@selector(googeDriveLogInOutAction:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = mySwitch;
-        BOOL b = [[GoogleDriveSession sharedSession] isLinked];
-        [mySwitch setOn:b];
-
-    }
+    
     
     else if (indexPath.row == 2)
     {
