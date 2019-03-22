@@ -3102,7 +3102,7 @@ extern BOOL isFromNewCreatedCard;
                     } else {
                         
                         __weak __typeof(&*self)weakSelf = self;
-                        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_STORAGE_SELECTION",@"") message:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_STORAGE_SELECTION_DROPBOX",@""), NSLocalizedString(@"DIALOG_STORAGE_SELECTION_GOOGLE_DRIVE",@""),nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_STORAGE_SELECTION",@"") message:nil cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_STORAGE_SELECTION_DROPBOX",@""),nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                             
                             if (buttonIndex == 0) {
                                 //cancel button
