@@ -18,7 +18,7 @@
 
 + (BOOL) isFullVersion {
     
-    return true;
+//    return true;
     
     BOOL val = [[NSUserDefaults standardUserDefaults] boolForKey:K_Full_Version_Flag];
     return val;
