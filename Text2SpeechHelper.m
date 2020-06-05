@@ -134,7 +134,7 @@
         if (b) {
             return @"en-GB";
         } else {
-            return @"en-au";
+            return @"en-AU";
         }
     }
     
@@ -183,6 +183,7 @@
                            @"en-AU"       :@"English (Australia) ",
                            @"en-GB"       :@"English (United Kingdom) ",
                            @"en-IE"       :@"English (Ireland) ",
+                           @"en-IN"       :@"English (India) ",
                            @"en-US"       :@"English (United States) ",
                            @"en-ZA"       :@"English (South Africa) ",
                            @"es-ES"       :@"Spanish (Spain) ",
@@ -215,6 +216,7 @@
                            };
     
     NSString *str = [dict objectForKey:normalizedVoiceLanguage];
+ //   NSLog(@"%@", str);
     return str;
 }
 

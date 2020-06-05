@@ -762,7 +762,12 @@ enum popover_enum {
     
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+// clive iOS13 fix to display popup modal as full screen - was displaying as a square
+    playViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [keyWindow.rootViewController presentViewController:playViewController animated:YES completion:nil];
+    
+    
     
 }
 
