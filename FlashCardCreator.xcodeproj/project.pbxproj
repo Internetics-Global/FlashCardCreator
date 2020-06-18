@@ -1823,6 +1823,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 2DCE0AFC16798E04007A8CAD;
@@ -2363,7 +2364,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "68ff393b-c6ab-4a64-9ebe-c679adca2d8e";
 				"PROVISIONING_PROFILE[sdk=*]" = "cbcafb6e-a6ca-4a3b-9f4c-42ef33048fe8";
-				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAppStore260319;
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdHoc260520;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;
@@ -2412,7 +2413,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "68ff393b-c6ab-4a64-9ebe-c679adca2d8e";
 				"PROVISIONING_PROFILE[sdk=*]" = "cbcafb6e-a6ca-4a3b-9f4c-42ef33048fe8";
-				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAppStore260319;
+				PROVISIONING_PROFILE_SPECIFIER = FlipFlashCardsAdHoc260520;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "Libraries/ShareKit/**";
 				WRAPPER_EXTENSION = app;

@@ -648,6 +648,8 @@ extern BOOL isFromNewCreatedCard;
     
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+// clive iOS13 fix to display popup modal as full screen - was displaying as a square
+    playViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
     
     
@@ -1178,6 +1180,8 @@ extern BOOL isFromNewCreatedCard;
     }
     
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+// clive iOS13 fix to display popup modal as full screen - was displaying as a square
+    playViewController.modalPresentationStyle = UIModalPresentationFullScreen;
     [keyWindow.rootViewController presentModalViewController:playViewController animated:YES];
     
     
