@@ -8058,11 +8058,17 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         
         __weak __typeof(&*self)weakSelf = self;
         
-//        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-//            
-//            [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
-//            
-//        }];
+        if (isUserInterfaceIdiomPhone) {
+        
+        [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"DIALOG_IMAGE_VIDEO_SELECTION",@"") message:NSLocalizedString(@"Title_Image_Copyright",@"") cancelButtonTitle:NSLocalizedString(@"DIALOG_CANCEL",@"") otherButtonTitles:[NSArray arrayWithObjects:NSLocalizedString(@"DIALOG_INSERT_YOUTUBE_URL",@""), NSLocalizedString(@"DIALOG_SELECT_FROM_LIBRARY",@""),NSLocalizedString(@"DIALOG_REMOVE_VIDEO_IMAGE",@""), nil] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            
+            [weakSelf imageSelectAlertViewClickedAtIndex: buttonIndex];
+            
+        }];
+            
+        }
+        
+        else {
         
         //show dialog
         {
@@ -8107,7 +8113,8 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
             
         }
         
-        
+        }
+        //end iPhone
         
 
     }
@@ -11063,16 +11070,26 @@ typedef NS_ENUM(NSInteger, Type_PopoverView) {
         [alertView show];
     }
     
-    MPMoviePlayerController *theMovie = [[MPMoviePlayerController alloc] initWithContentURL:url];
+//    MPMoviePlayerController *theMovie = [[MPMoviePlayerController alloc] initWithContentURL:url];
+//    theMovie.view.frame = CGRectMake(0, 0, CGRectGetWidth(pickerImageView.frame) * 2, CGRectGetHeight(pickerImageView.frame) * 2);
+//    theMovie.controlStyle = MPMovieControlStyleNone;
+//    theMovie.shouldAutoplay=NO;
+    
+    AVPlayerViewController *theMovie = [[AVPlayerViewController alloc] init];
     theMovie.view.frame = CGRectMake(0, 0, CGRectGetWidth(pickerImageView.frame) * 2, CGRectGetHeight(pickerImageView.frame) * 2);
-    theMovie.controlStyle = MPMovieControlStyleNone;
-    theMovie.shouldAutoplay=NO;
+//    theMovie.controlStyle = MPMovieControlStyleNone;
+//    theMovie.shouldAutoplay=NO;
+
+
+    
+    
+    
     UIImage *thumbnail;
     if ([[url absoluteString].lowercaseString rangeOfString:@"http"].location == 0) {
         // it's a http format web video. Considering performance/cost to fetch online content, we skip it.
     } else {
         //it's a local video
-        thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
+//        thumbnail = [theMovie thumbnailImageAtTime:0 timeOption:MPMovieTimeOptionExact];
     }
     if (thumbnail == nil) {
         thumbnail = [UIImage imageNamed:@"video_default"];

@@ -12,7 +12,7 @@
 #import "SimpleWebBrowserController.h"
 
 #import <MediaPlayer/MediaPlayer.h>
-
+#import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "PopoverView.h"
 
